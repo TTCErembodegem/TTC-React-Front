@@ -1,5 +1,3 @@
-/*! React Starter Kit | MIT License | http://www.reactstarterkit.com/ */
-
 import React from 'react';
 import Router from 'react-routing/src/Router';
 import http from './core/HttpClient';
@@ -24,7 +22,8 @@ const router = new Router(on => {
   on('/register', async () => <RegisterPage />);
 
   on('*', async (state) => {
-    const content = await http.get(`/api/content?path=${state.path}`);
+    //const content = await http.get(`/api/content?path=${state.path}`);
+    const content = {content: 'WebApi calls comes here... called: ' + state.path};
     return content && <ContentPage {...content} />;
   });
 

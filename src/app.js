@@ -1,5 +1,3 @@
-/*! React Starter Kit | MIT License | http://www.reactstarterkit.com/ */
-
 import 'babel-core/polyfill';
 import ReactDOM from 'react-dom';
 import FastClick from 'fastclick';
@@ -63,6 +61,7 @@ function run() {
       state: location.state,
       context,
     });
+    console.log('locationchange', location, currentState)
     render(currentState);
   });
 

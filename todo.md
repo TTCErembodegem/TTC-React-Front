@@ -1,5 +1,3 @@
 -> Replace Flux with Redux
--> Remove Express
--> Remove Jade
 -> Add Flow
 -> Replace React-Routing with React-Router
