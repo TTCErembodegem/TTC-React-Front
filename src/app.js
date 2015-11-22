@@ -5,10 +5,10 @@ import Router from './routes';
 import Location from './core/Location';
 import { addEventListener, removeEventListener } from './utils/DOMUtils';
 
-let cssContainer = document.getElementById('css');
+//let cssContainer = document.getElementById('css');
 const appContainer = document.getElementById('app');
 const context = {
-  onSetTitle: value => document.title = value,
+  onSetTitle: value => document.title = value || 'TTC Erembodegem',
   onSetMeta: (name, content) => {
     // Remove and create a new <meta /> tag in order to make it work
     // with bookmarks in Safari
@@ -35,12 +35,12 @@ function render(state) {
         window.scrollTo(0, 0);
       }
 
-      // Remove the pre-rendered CSS because it's no longer used
-      // after the React app is launched
-      if (cssContainer) {
-        cssContainer.parentNode.removeChild(cssContainer);
-        cssContainer = null;
-      }
+      // // Remove the pre-rendered CSS because it's no longer used
+      // // after the React app is launched
+      // if (cssContainer) {
+      //   cssContainer.parentNode.removeChild(cssContainer);
+      //   cssContainer = null;
+      // }
     });
   });
 }

@@ -1,3 +1,4 @@
 -> Replace Flux with Redux
 -> Add Flow
 -> Replace React-Routing with React-Router
+-> Frontend routing with # only!
