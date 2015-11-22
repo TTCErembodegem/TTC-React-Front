@@ -44,8 +44,6 @@ export default task('start', async () => {
     files: [
       'build/public/**/*.css',
       'build/public/**/*.html',
-      'build/content/**/*.*',
-      'build/templates/**/*.*',
     ],
   });
 });
