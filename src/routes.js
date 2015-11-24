@@ -1,6 +1,6 @@
 import React from 'react';
 import Router from 'react-routing/src/Router';
-//import http from './core/HttpClient';
+import http from './core/HttpClient';
 import App from './components/App';
 import ContentPage from './components/ContentPage';
 import LoginPage from './components/LoginPage';
@@ -16,8 +16,7 @@ const router = new Router(on => {
   on('/login', async () => <LoginPage />);
 
   on('*', async (state) => {
-    //const content = await http.get(`/api/content?path=${state.path}`);
-    const content = {content: 'WebApi calls comes here... called: ' + state.path};
+    const content = {content: await http.get(`/api/Config`), path: state.path};
     return content && <ContentPage {...content} />;
   });
 
