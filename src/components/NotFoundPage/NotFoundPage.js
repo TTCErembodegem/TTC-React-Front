@@ -14,8 +14,8 @@ class NotFoundPage extends Component {
 
   render() {
     const title = 'Page Not Found';
-    this.context.onSetTitle(title);
-    this.context.onPageNotFound();
+    //this.context.onSetTitle(title);
+    //this.context.onPageNotFound();
     return (
       <div>
         <h1>{title}</h1>

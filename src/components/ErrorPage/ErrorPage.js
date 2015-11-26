@@ -14,7 +14,7 @@ class ErrorPage extends Component {
 
   render() {
     const title = 'Error';
-    this.context.onSetTitle(title);
+    //this.context.onSetTitle(title);
     return (
       <div>
         <h1>{title}</h1>

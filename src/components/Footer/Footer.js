@@ -20,7 +20,7 @@ class Footer extends Component {
   render() {
     // This is just an example how one can render CSS
     const { width, height } = this.props.viewport;
-    this.renderCss(`.Footer-viewport:after {content:' ${width}x${height}';}`);
+    //this.renderCss(`.Footer-viewport:after {content:' ${width}x${height}';}`);
 
     return (
       <div className="Footer">

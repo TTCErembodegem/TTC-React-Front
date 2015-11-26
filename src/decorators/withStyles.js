@@ -40,31 +40,31 @@ function withStyles(styles) {
             this.refCount++;
           }
         } else {
-          this.context.onInsertCss(css);
+          //this.context.onInsertCss(css);
         }
       }.bind(this);
     }
 
     componentWillMount() {
-      if (canUseDOM) {
-        invariant(styles.use, `The style-loader must be configured with reference-counted API.`);
-        styles.use();
-      } else {
-        this.context.onInsertCss(styles.toString());
-      }
+      // if (canUseDOM) {
+      //   invariant(styles.use, `The style-loader must be configured with reference-counted API.`);
+      //   styles.use();
+      // } else {
+      //   this.context.onInsertCss(styles.toString());
+      // }
     }
 
     componentWillUnmount() {
-      styles.unuse();
-      if (this.styleId) {
-        this.refCount--;
-        if (this.refCount < 1) {
-          const style = document.getElementById(this.styleId);
-          if (style) {
-            style.parentNode.removeChild(style);
-          }
-        }
-      }
+      // styles.unuse();
+      // if (this.styleId) {
+      //   this.refCount--;
+      //   if (this.refCount < 1) {
+      //     const style = document.getElementById(this.styleId);
+      //     if (style) {
+      //       style.parentNode.removeChild(style);
+      //     }
+      //   }
+      // }
     }
 
     render() {

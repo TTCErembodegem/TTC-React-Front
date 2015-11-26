@@ -13,7 +13,7 @@ class LoginPage extends Component {
 
   render() {
     const title = 'Log In';
-    this.context.onSetTitle(title);
+    //this.context.onSetTitle(title);
     return (
       <div className="LoginPage">
         <div className="LoginPage-container">
