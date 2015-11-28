@@ -1,2 +1,3 @@
--> Add Flow
+-> Add Flow (or at least evaluate...)
 -> Frontend routing with # only!
+-> Update Babel to 6 (http://babeljs.io/blog/2015/10/31/setting-up-babel-6/)
