@@ -22,15 +22,15 @@ function withContext(ComposedComponent) {
       onPageNotFound: PropTypes.func.isRequired,
     };
 
-    // getChildContext() {
-    //   const context = this.props.context;
-    //   return {
-    //     onInsertCss: context.onInsertCss || emptyFunction,
-    //     onSetTitle: context.onSetTitle || emptyFunction,
-    //     onSetMeta: context.onSetMeta || emptyFunction,
-    //     onPageNotFound: context.onPageNotFound || emptyFunction,
-    //   };
-    // }
+    getChildContext() {
+      const context = this.props.context;
+      return {
+        onInsertCss: context.onInsertCss || emptyFunction,
+        onSetTitle: context.onSetTitle || emptyFunction,
+        onSetMeta: context.onSetMeta || emptyFunction,
+        onPageNotFound: context.onPageNotFound || emptyFunction,
+      };
+    }
 
     render() {
       const { context, ...other } = this.props; // eslint-disable-line no-unused-vars
