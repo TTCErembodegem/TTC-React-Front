@@ -1,5 +1,3 @@
-/*! React Starter Kit | MIT License | http://www.reactstarterkit.com/ */
-
 import React, { PropTypes, Component } from 'react'; // eslint-disable-line no-unused-vars
 import emptyFunction from 'fbjs/lib/emptyFunction';
 
@@ -23,7 +21,7 @@ function withContext(ComposedComponent) {
     };
 
     getChildContext() {
-      const context = this.props.context;
+      const context = this.props.context || {};
       return {
         onInsertCss: context.onInsertCss || emptyFunction,
         onSetTitle: context.onSetTitle || emptyFunction,

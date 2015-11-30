@@ -9,6 +9,9 @@ const context = {
   onSetTitle: value => document.title = value || 'TTC Erembodegem'
 };
 
+// Make taps on links and buttons work fast on mobiles
+//FastClick.attach(document.body);
+
 const __DEVTOOLS__= false;
 if (__DEVTOOLS__) {
   const { DebugPanel, DevTools, LogMonitor } = require('redux-devtools/lib/react');
@@ -84,9 +87,6 @@ if (__DEVTOOLS__) {
 // function run() {
 //   let currentLocation = null;
 //   let currentState = null;
-
-//   // Make taps on links and buttons work fast on mobiles
-//   FastClick.attach(document.body);
 
 //   // Re-render the app when window.location changes
 //   const unlisten = Location.listen(location => {
