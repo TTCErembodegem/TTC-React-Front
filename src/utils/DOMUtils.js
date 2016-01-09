@@ -1,5 +1,3 @@
-/*! React Starter Kit | MIT License | http://www.reactstarterkit.com/ */
-
 export function addEventListener(node, event, listener) {
   if (node.addEventListener) {
     node.addEventListener(event, listener, false);

@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import Immutable from 'immutable';
 
-
 export default class TodoList extends Component {
   static propTypes = {
     todos: PropTypes.instanceOf(Immutable.List).isRequired,
@@ -49,4 +48,3 @@ export default class TodoList extends Component {
     this.props.deleteTodo(index);
   }
 }
-
