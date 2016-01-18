@@ -1,7 +1,11 @@
 import request from 'superagent';
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import assert from 'assert';
 
 function getUrl(path) {
+  assert(path[0] === '/', 'HttpClient: path passed should start with a /');
+  assert(path.substring(0, 5) !== '/api/', 'HttpClient: path passed should not be prefixed with /api');
+  path = '/api' + path;
   return process.env.WEBSITE_HOSTNAME ?
     `http://${process.env.WEBSITE_HOSTNAME}${path}` :
     `http://localhost:49730${path}`;
@@ -25,7 +29,6 @@ const HttpClient = {
         }
       });
   }),
-
 };
 
 export default HttpClient;
