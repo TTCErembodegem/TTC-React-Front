@@ -12,6 +12,7 @@ import * as playerActionCreators from '../../actions/players.js';
 @connect(state => {
   return {
     players: state.players,
+    clubs: state.clubs
   };
 }, playerActionCreators)
 @withContext
@@ -24,12 +25,19 @@ export default class App extends Component {
 
   componentDidMount() {
     var self = this;
-    var promise = http.get('/players');
-    promise.then(function(data) {
-      self.props.playersLoaded(data);
-    }, function(err) {
-      console.error(err);
-    });
+    http.get('/players')
+      .then(function(data) {
+        self.props.playersLoaded(data);
+      }, function(err) {
+        console.error(err);
+      });
+
+    http.get('/clubs')
+      .then(function(data) {
+        self.props.clubsLoaded(data);
+      }, function(err) {
+        console.error(err);
+      });
   }
 
   render() {
@@ -37,7 +45,7 @@ export default class App extends Component {
       <div>
         <Header />
         {this.props.children}
-        {this.props.players.map(ply => <div>{ply.Naam}</div>)}
+        {this.props.clubs.map(ply => <div key={ply.id}>{ply.id + ': ' + ply.name}</div>)}
         <Footer />
       </div>
     );

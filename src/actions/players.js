@@ -6,3 +6,10 @@ export function playersLoaded(players) {
     payload: players
   };
 }
+
+export function clubsLoaded(players) {
+  return {
+    type: ActionTypes.CLUBS_LOADED,
+    payload: players
+  };
+}
