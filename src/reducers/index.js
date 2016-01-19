@@ -1,11 +1,12 @@
 import { combineReducers } from 'redux';
 import { routerStateReducer as router } from 'redux-router';
 
-import { players, clubs } from './players.js';
+import { players, clubs, calendar } from './players.js';
 
 const rootReducer = combineReducers({
   players,
   clubs,
+  calendar,
   router
 });
 

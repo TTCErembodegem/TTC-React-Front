@@ -1,15 +1,22 @@
 import * as ActionTypes from './ActionTypes';
 
-export function playersLoaded(players) {
+export function playersLoaded(data) {
   return {
     type: ActionTypes.PLAYERS_LOADED,
-    payload: players
+    payload: data
   };
 }
 
-export function clubsLoaded(players) {
+export function clubsLoaded(data) {
   return {
     type: ActionTypes.CLUBS_LOADED,
-    payload: players
+    payload: data
+  };
+}
+
+export function calendarLoaded(data) {
+  return {
+    type: ActionTypes.CALENDAR_LOADED,
+    payload: data
   };
 }

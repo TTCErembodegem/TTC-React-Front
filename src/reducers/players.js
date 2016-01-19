@@ -16,6 +16,17 @@ export function clubs(state = [], action = null) {
   const { type, payload } = action;
   switch (type) {
   case ActionTypes.CLUBS_LOADED:
+    //console.log(payload);
+    return payload;
+  default:
+    return state;
+  }
+}
+
+export function calendar(state = [], action = null) {
+  const { type, payload } = action;
+  switch (type) {
+  case ActionTypes.CALENDAR_LOADED:
     console.log(payload);
     return payload;
   default:
