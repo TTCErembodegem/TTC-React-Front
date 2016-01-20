@@ -3,7 +3,6 @@ import emptyFunction from 'fbjs/lib/emptyFunction';
 
 function withContext(ComposedComponent) {
   return class WithContext extends Component {
-
     static propTypes = {
       context: PropTypes.shape({
         onInsertCss: PropTypes.func,
@@ -34,7 +33,6 @@ function withContext(ComposedComponent) {
       const { context, ...other } = this.props; // eslint-disable-line no-unused-vars
       return <ComposedComponent {...other} />;
     }
-
   };
 }
 

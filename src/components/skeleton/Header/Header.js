@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router'
+
 import styles from './Header.css';
-import withStyles from '../../decorators/withStyles';
-import Link from '../Link';
+import withStyles from '../../../decorators/withStyles.js';
+
 import Navigation from '../Navigation';
 
 @withStyles(styles)
@@ -10,10 +12,10 @@ export default class Header extends Component {
     return (
       <div className="Header">
         <div className="Header-container">
-          <a className="Header-brand" href="/" onClick={Link.handleClick}>
-            <img className="Header-brandImg" src={require('./logo-small.png')} width="38" height="38" alt="React" />
+          <Link className="Header-brand" to="/">
+            <img className="Header-brandImg" src={require('./logo-small.png')} width="38" height="38" alt={'TTC Erembodegem'} />
             <span className="Header-brandTxt">TTC Erembodegem</span>
-          </a>
+          </Link>
           <Navigation className="Header-nav" />
         </div>
       </div>

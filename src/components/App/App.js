@@ -1,11 +1,12 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
-import http from '../../core/HttpClient.js';
-import styles from './App.css';
+
 import withContext from '../../decorators/withContext.js';
 import withStyles from '../../decorators/withStyles.js';
-import Header from '../Header';
-import Footer from '../Footer';
+import styles from './App.css';
+
+import Header from '../skeleton/Header';
+import Footer from '../skeleton/Footer';
 
 import * as playerActionCreators from '../../actions/players.js';
 
@@ -21,39 +22,11 @@ import * as playerActionCreators from '../../actions/players.js';
 @withStyles(styles)
 export default class App extends Component {
   static propTypes = {
-    //children: PropTypes.element.isRequired,
-    //error: PropTypes.object,
+    children: PropTypes.element,
   };
 
   componentDidMount() {
-    var self = this;
-    http.get('/players')
-      .then(function(data) {
-        self.props.playersLoaded(data);
-      }, function(err) {
-        console.error(err);
-      });
-
-    http.get('/clubs')
-      .then(function(data) {
-        self.props.clubsLoaded(data);
-      }, function(err) {
-        console.error(err);
-      });
-
-    http.get('/calendar')
-      .then(function(data) {
-        self.props.calendarLoaded(data);
-      }, function(err) {
-        console.error(err);
-      });
-
-    http.get('/teams')
-      .then(function(data) {
-        self.props.teamsLoaded(data);
-      }, function(err) {
-        console.error(err);
-      });
+    require('./initialLoad.js')(this.props);
   }
 
   render() {
@@ -61,7 +34,6 @@ export default class App extends Component {
       <div>
         <Header />
         {this.props.children}
-        {this.props.players.map(ply => <div key={ply.id}>{ply.id + ': ' + ply.name}</div>)}
         <Footer />
       </div>
     );

@@ -3,8 +3,9 @@ import { reduxReactRouter } from 'redux-router';
 import { devTools } from 'redux-devtools';
 import { createHashHistory as createHistory } from 'history';
 import createLogger from 'redux-logger';
-import routes from '../routes';
 import thunk from 'redux-thunk';
+
+import routes from '../routes.js';
 import rootReducer from '../reducers';
 
 // TODO: rethink about logger

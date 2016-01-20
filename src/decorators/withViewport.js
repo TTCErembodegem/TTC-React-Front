@@ -13,7 +13,7 @@ function handleWindowResize() {
   }
 }
 
-function withViewport(ComposedComponent) {
+export default function withViewport(ComposedComponent) {
   return class WithViewport extends Component {
 
     constructor() {
@@ -50,8 +50,5 @@ function withViewport(ComposedComponent) {
     handleResize(value) {
       this.setState({viewport: value}); // eslint-disable-line react/no-set-state
     }
-
   };
 }
-
-export default withViewport;

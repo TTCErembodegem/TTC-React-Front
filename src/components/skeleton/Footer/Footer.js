@@ -1,13 +1,13 @@
 import React, { PropTypes, Component } from 'react';
+import { Link } from 'react-router'
+
 import styles from './Footer.css';
-import withViewport from '../../decorators/withViewport';
-import withStyles from '../../decorators/withStyles';
-import Link from '../Link';
+import withViewport from '../../../decorators/withViewport.js';
+import withStyles from '../../../decorators/withStyles.js';
 
 @withViewport
 @withStyles(styles)
-class Footer extends Component {
-
+export default class Footer extends Component {
   static propTypes = {
     viewport: PropTypes.shape({
       width: PropTypes.number.isRequired,
@@ -23,18 +23,15 @@ class Footer extends Component {
     return (
       <div className="Footer">
         <div className="Footer-container">
-          <a className="Footer-link" href="/" onClick={Link.handleClick}>Home</a>
+          <Link className="Footer-link" to="/">Home</Link>
           <span className="Footer-spacer">·</span>
-          <a className="Footer-link" href="/privacy" onClick={Link.handleClick}>Privacy</a>
+          <Link className="Footer-link" to="/privacy">Privacy</Link>
           <span className="Footer-spacer">·</span>
-          <a className="Footer-link" href="/not-found" onClick={Link.handleClick}>Not Found</a>
+          <Link className="Footer-link" to="/not-found">Not Found</Link>
           <span className="Footer-spacer"> | </span>
-          <span ref="viewport" className="Footer-viewport Footer-text Footer-text--muted">Viewport:</span>
+          <span ref="viewport" className="Footer-viewport Footer-text Footer-text--muted">Viewport: {`${width}x${height}`}</span>
         </div>
       </div>
     );
   }
-
 }
-
-export default Footer;
