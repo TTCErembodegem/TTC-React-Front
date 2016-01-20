@@ -13,7 +13,8 @@ import * as playerActionCreators from '../../actions/players.js';
   return {
     players: state.players,
     clubs: state.clubs,
-    calendar: state.calendar
+    calendar: state.calendar,
+    teams: state.teams,
   };
 }, playerActionCreators)
 @withContext
@@ -46,6 +47,13 @@ export default class App extends Component {
       }, function(err) {
         console.error(err);
       });
+
+    http.get('/teams')
+      .then(function(data) {
+        self.props.teamsLoaded(data);
+      }, function(err) {
+        console.error(err);
+      });
   }
 
   render() {
@@ -53,7 +61,7 @@ export default class App extends Component {
       <div>
         <Header />
         {this.props.children}
-        {this.props.calendar.map(ply => <div key={ply.id}>{ply.id + ': ' + ply.name}</div>)}
+        {this.props.players.map(ply => <div key={ply.id}>{ply.id + ': ' + ply.name}</div>)}
         <Footer />
       </div>
     );

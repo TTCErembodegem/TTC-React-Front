@@ -20,3 +20,10 @@ export function calendarLoaded(data) {
     payload: data
   };
 }
+
+export function teamsLoaded(data) {
+  return {
+    type: ActionTypes.TEAMS_LOADED,
+    payload: data
+  };
+}
