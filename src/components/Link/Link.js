@@ -10,7 +10,6 @@ function isModifiedEvent(event) {
 }
 
 class Link extends Component {
-
   static propTypes = {
     to: PropTypes.string.isRequired,
     state: PropTypes.object,
@@ -47,7 +46,6 @@ class Link extends Component {
     const { to, query, ...props } = this.props;
     return <a href={Location.createHref(to, query)} onClick={Link.handleClick.bind(this)} {...props} />;
   }
-
 }
 
 export default Link;

@@ -5,8 +5,7 @@ import Link from '../Link';
 import Navigation from '../Navigation';
 
 @withStyles(styles)
-class Header extends Component {
-
+export default class Header extends Component {
   render() {
     return (
       <div className="Header">
@@ -20,7 +19,4 @@ class Header extends Component {
       </div>
     );
   }
-
 }
-
-export default Header;
