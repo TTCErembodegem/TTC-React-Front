@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router'
 
 import styles from './Header.css';
-import withStyles from '../../../decorators/withStyles.js';
+import withStyles from '../../../utils/decorators/withStyles.js';
 
 import Navigation from '../Navigation';
 

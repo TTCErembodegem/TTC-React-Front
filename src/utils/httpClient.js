@@ -1,5 +1,4 @@
 import request from 'superagent';
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import assert from 'assert';
 
 function getUrl(path) {

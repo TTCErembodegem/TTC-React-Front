@@ -1,8 +1,8 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 
-import withContext from '../../decorators/withContext.js';
-import withStyles from '../../decorators/withStyles.js';
+import withContext from '../../utils/decorators/withContext.js';
+import withStyles from '../../utils/decorators/withStyles.js';
 import styles from './App.css';
 
 import Header from '../skeleton/Header';
@@ -26,7 +26,7 @@ export default class App extends Component {
   };
 
   componentDidMount() {
-    require('./initialLoad.js')(this.props);
+    require('../../core/initialLoad.js')(this.props);
   }
 
   render() {

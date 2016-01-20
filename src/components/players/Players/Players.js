@@ -1,8 +1,8 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 
-import withContext from '../../../decorators/withContext.js';
-import withStyles from '../../../decorators/withStyles.js';
+import withContext from '../../../utils/decorators/withContext.js';
+import withStyles from '../../../utils/decorators/withStyles.js';
 import styles from './Players.css';
 
 import * as playerActionCreators from '../../../actions/players.js';

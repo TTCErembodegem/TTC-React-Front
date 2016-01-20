@@ -1,4 +1,4 @@
-import http from '../../core/HttpClient.js';
+import http from '../utils/httpClient.js';
 
 export default function(props) {
   http.get('/players')

@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import styles from './LoginPage.css';
-import withStyles from '../../decorators/withStyles';
+import withStyles from '../../utils/decorators/withStyles';
 
 @withStyles(styles)
 class LoginPage extends Component {

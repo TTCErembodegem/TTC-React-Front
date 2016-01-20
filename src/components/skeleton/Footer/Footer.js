@@ -2,8 +2,8 @@ import React, { PropTypes, Component } from 'react';
 import { Link } from 'react-router'
 
 import styles from './Footer.css';
-import withViewport from '../../../decorators/withViewport.js';
-import withStyles from '../../../decorators/withStyles.js';
+import withViewport from '../../../utils/decorators/withViewport.js';
+import withStyles from '../../../utils/decorators/withStyles.js';
 
 @withViewport
 @withStyles(styles)

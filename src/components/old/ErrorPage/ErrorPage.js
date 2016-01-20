@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import withStyles from '../../decorators/withStyles';
+import withStyles from '../../utils/decorators/withStyles';
 import styles from './ErrorPage.css';
 
 @withStyles(styles)

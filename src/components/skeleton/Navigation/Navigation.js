@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { Link } from 'react-router'
 import classNames from 'classnames';
 
-import withStyles from '../../../decorators/withStyles.js';
+import withStyles from '../../../utils/decorators/withStyles.js';
 import styles from './Navigation.css';
 
 @withStyles(styles)
