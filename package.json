@@ -11,7 +11,6 @@
     "express": "4.13.3",
     "fastclick": "1.0.6",
     "fbjs": "0.3.2",
-    "front-matter": "1.0.0",
     "history": "1.12.5",
     "immutable": "^3.7.5",
     "normalize.css": "3.0.3",
