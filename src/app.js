@@ -7,10 +7,6 @@ import FastClick from 'fastclick';
 
 import store from './core/store.js';
 
-const context = {
-  onSetTitle: value => document.title = value || 'TTC Erembodegem'
-};
-
 // Make taps on links and buttons work fast on mobiles
 FastClick.attach(document.body);
 
@@ -38,3 +34,8 @@ if (__DEVTOOLS__) {
     document.getElementById('app')
   );
 }
+
+// TODO: onSetTitle doesn't work. Fix when needed :)
+const context = {
+  onSetTitle: value => document.title = value || 'TTC Erembodegem'
+};
