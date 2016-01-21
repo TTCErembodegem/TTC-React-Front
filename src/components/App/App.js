@@ -26,7 +26,7 @@ export default class App extends Component {
   };
 
   componentDidMount() {
-    require('../../core/initialLoad.js')(this.props);
+    require('../../api/initialLoad.js')(this.props);
   }
 
   render() {
