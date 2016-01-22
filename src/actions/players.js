@@ -1,29 +1,9 @@
-import * as ActionTypes from './ActionTypes';
+import * as ActionTypes from './ActionTypes.js';
+import http from '../utils/httpClient.js';
 
-export function playersLoaded(data) {
-  return {
-    type: ActionTypes.PLAYERS_LOADED,
-    payload: data
-  };
-}
-
-export function clubsLoaded(data) {
-  return {
-    type: ActionTypes.CLUBS_LOADED,
-    payload: data
-  };
-}
-
-export function calendarLoaded(data) {
-  return {
-    type: ActionTypes.CALENDAR_LOADED,
-    payload: data
-  };
-}
-
-export function teamsLoaded(data) {
-  return {
-    type: ActionTypes.TEAMS_LOADED,
-    payload: data
-  };
-}
+// export function calendarLoaded(data) {
+//   return {
+//     type: ActionTypes.CALENDAR_LOADED,
+//     payload: data
+//   };
+// }

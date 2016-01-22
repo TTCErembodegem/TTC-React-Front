@@ -8,7 +8,6 @@ import thunk from 'redux-thunk';
 import routes from '../routes.js';
 import rootReducer from '../reducers';
 
-// TODO: rethink about logger
 const finalCreateStore = compose(
   applyMiddleware(thunk),
   reduxReactRouter({ routes, createHistory }),

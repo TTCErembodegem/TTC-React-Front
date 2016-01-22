@@ -7,8 +7,8 @@ import FastClick from 'fastclick';
 
 import store from './core/store.js';
 
-// Make taps on links and buttons work fast on mobiles
-FastClick.attach(document.body);
+import initialLoad from './actions/initialLoad.js';
+store.dispatch(initialLoad());
 
 const __DEVTOOLS__= false;
 if (__DEVTOOLS__) {
@@ -29,11 +29,13 @@ if (__DEVTOOLS__) {
   render(
     <Provider store={store}>
       <ReduxRouter />
-    </Provider>
-    ,
+    </Provider>,
     document.getElementById('app')
   );
 }
+
+// Make taps on links and buttons work fast on mobiles
+FastClick.attach(document.body);
 
 // TODO: onSetTitle doesn't work. Fix when needed :)
 const context = {

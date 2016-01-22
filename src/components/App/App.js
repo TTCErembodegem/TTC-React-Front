@@ -8,8 +8,6 @@ import styles from './App.css';
 import Header from '../skeleton/Header';
 import Footer from '../skeleton/Footer';
 
-import * as playerActionCreators from '../../actions/players.js';
-
 @connect(state => {
   return {
     players: state.players,
@@ -17,17 +15,13 @@ import * as playerActionCreators from '../../actions/players.js';
     calendar: state.calendar,
     teams: state.teams,
   };
-}, playerActionCreators)
+})
 @withContext
 @withStyles(styles)
 export default class App extends Component {
   static propTypes = {
     children: PropTypes.element,
   };
-
-  componentDidMount() {
-    require('../../api/initialLoad.js')(this.props);
-  }
 
   render() {
     return (
