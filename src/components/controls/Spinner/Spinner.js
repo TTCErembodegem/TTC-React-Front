@@ -3,8 +3,10 @@ import React, { PropTypes, Component } from 'react';
 import withStyles from '../../../utils/decorators/withStyles.js';
 import styles from './Spinner.css';
 
+import Icon from '../Icon';
+
 @withStyles(styles)
-export default class App extends Component {
+export default class Spinner extends Component {
   // static propTypes = {
   //   config: PropTypes.object,
   //   players: PropTypes.array,
@@ -13,7 +15,7 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        <i className="fa fa-spinner fa-pulse"></i>
+        <Icon fa="fa fa-spinner fa-pulse" />
       </div>
     );
   }

@@ -20,7 +20,7 @@ import { players as playerActionCreators } from '../../../actions/players.js';
 }, playerActionCreators)
 @withContext
 @withStyles(styles)
-export default class App extends Component {
+export default class Players extends Component {
   static propTypes = {
     config: PropTypes.object,
     players: PropTypes.array,
