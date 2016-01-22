@@ -4,6 +4,16 @@ import _ from 'lodash';
 
 import Player from '../models/Player.js';
 
+export function config(state = { initialLoadCompleted: false}, action = null) {
+  const { type, payload } = action;
+  switch (type) {
+  case ActionTypes.INITIAL_LOADED:
+    return { initialLoadCompleted: true};
+  default:
+    return state;
+  }
+}
+
 export function players(state = [], action = null) {
   const { type, payload } = action;
   switch (type) {

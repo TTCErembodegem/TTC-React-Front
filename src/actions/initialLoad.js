@@ -20,6 +20,11 @@ function teamsLoaded(data) {
     payload: data
   };
 }
+function initialLoadCompleted() {
+  return {
+    type: ActionTypes.INITIAL_LOADED
+  }
+}
 
 export default function() {
   return dispatch => {
@@ -39,6 +44,6 @@ export default function() {
       initialRequest('/clubs', clubsLoaded),
       initialRequest('/calendar', calendarLoaded),
       initialRequest('/teams', teamsLoaded),
-    ]);
+    ]).then(() => dispatch(initialLoadCompleted()));
   }
 }

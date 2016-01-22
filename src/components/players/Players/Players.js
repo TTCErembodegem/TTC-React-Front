@@ -5,10 +5,11 @@ import withContext from '../../../utils/decorators/withContext.js';
 import withStyles from '../../../utils/decorators/withStyles.js';
 import styles from './Players.css';
 
-import * as playerActionCreators from '../../../actions/players.js';
+import { players as playerActionCreators } from '../../../actions/players.js';
 
 @connect(state => {
   return {
+    config: state.config,
     players: state.players,
     clubs: state.clubs,
     calendar: state.calendar,
@@ -19,13 +20,16 @@ import * as playerActionCreators from '../../../actions/players.js';
 @withStyles(styles)
 export default class App extends Component {
   static propTypes = {
+    config: PropTypes.object,
     players: PropTypes.array,
   };
 
   render() {
     return (
       <div>
-        {this.props.players.map(ply => <div key={ply.id}>{ply.id + ': ' + ply.name}</div>)}
+        {this.props.config.initialLoadCompleted
+          ? this.props.players.map(ply => <div key={ply.id}>{ply.id + ': ' + ply.name}</div>)
+          : 'Oh noes... Loading... :p'}
       </div>
     );
   }

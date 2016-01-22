@@ -10,6 +10,7 @@ import Footer from '../skeleton/Footer';
 
 @connect(state => {
   return {
+    config: state.config,
     players: state.players,
     clubs: state.clubs,
     calendar: state.calendar,

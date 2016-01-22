@@ -5,4 +5,5 @@ export default keyMirror({
   CLUBS_LOADED: '',
   CALENDAR_LOADED: '',
   TEAMS_LOADED: '',
+  INITIAL_LOADED: '',
 });
