@@ -1,6 +1,8 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 
+import Spinner from '../../controls/Spinner';
+
 import withContext from '../../../utils/decorators/withContext.js';
 import withStyles from '../../../utils/decorators/withStyles.js';
 import styles from './Players.css';
@@ -25,11 +27,13 @@ export default class App extends Component {
   };
 
   render() {
+    if (!this.props.config.initialLoadCompleted) {
+      return <Spinner />;
+    }
+
     return (
       <div>
-        {this.props.config.initialLoadCompleted
-          ? this.props.players.map(ply => <div key={ply.id}>{ply.id + ': ' + ply.name}</div>)
-          : 'Oh noes... Loading... :p'}
+        {this.props.players.map(ply => <div key={ply.id}>{ply.id + ': ' + ply.name}</div>)}
       </div>
     );
   }
