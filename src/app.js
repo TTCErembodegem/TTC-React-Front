@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { ReduxRouter } from 'redux-router';
 import FastClick from 'fastclick';
 
-import store from './core/store.js';
+import store from './store.js';
 
 import initialLoad from './actions/initialLoad.js';
 store.dispatch(initialLoad());
