@@ -11,9 +11,6 @@ import store from './store.js';
 import initialLoad from './actions/initialLoad.js';
 store.dispatch(initialLoad());
 
-// import initLocales from './actions/initLocales.js';
-// store.dispatch(initLocales());
-
 const __DEVTOOLS__= false;
 if (__DEVTOOLS__) {
   const { DebugPanel, DevTools, LogMonitor } = require('redux-devtools/lib/react');

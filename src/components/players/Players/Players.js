@@ -8,7 +8,7 @@ import withStyles from '../../../utils/decorators/withStyles.js';
 import styles from './Players.css';
 
 import { players as playerActionCreators } from '../../../actions/players.js';
-// playerActionCreators: no longer called from here (but illustration how actionCreators can be passed as props)
+// TODO: playerActionCreators: no longer called from here (but illustration how actionCreators can be passed as props)
 
 @connect(state => {
   return {
@@ -28,7 +28,7 @@ export default class Players extends Component {
   };
 
   componentDidMount() {
-    this.context.setTitle('Spelers overzicht');
+    this.context.setTitle('players.title', {a: 5}); // TODO: just an example of context, setTitle and translation with params
   }
 
   render() {

@@ -6,5 +6,4 @@ export default keyMirror({
   CALENDAR_LOADED: '',
   TEAMS_LOADED: '',
   INITIAL_LOADED: '',
-  //TRANS_LOADED: '',
 });

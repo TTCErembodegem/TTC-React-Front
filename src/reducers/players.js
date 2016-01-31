@@ -4,16 +4,6 @@ import _ from 'lodash';
 
 import Player from '../models/Player.js';
 
-// export function trans(state = {}, action = null) {
-//   const { type, payload } = action;
-//   switch (type) {
-//   case ActionTypes.TRANS_LOADED:
-//     return payload;
-//   default:
-//     return state;
-//   }
-// }
-
 export function config(state = { initialLoadCompleted: false}, action = null) {
   const { type, payload } = action;
   switch (type) {
