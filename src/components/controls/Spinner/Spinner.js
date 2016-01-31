@@ -7,15 +7,19 @@ import Icon from '../Icon';
 
 @withStyles(styles)
 export default class Spinner extends Component {
-  // static propTypes = {
-  //   config: PropTypes.object,
-  //   players: PropTypes.array,
-  // };
+
+  static defaultProps = {
+    size: 1,
+  };
+
+  static propTypes = {
+    size: PropTypes.number,
+  };
 
   render() {
     return (
       <div>
-        <Icon fa="fa fa-spinner fa-pulse" />
+        <Icon fa={'fa fa-spinner fa-pulse fa-' + this.props.size + 'x'} />
       </div>
     );
   }

@@ -33,7 +33,7 @@ export default class Players extends Component {
 
   render() {
     if (!this.props.config.initialLoadCompleted) {
-      return <Spinner />;
+      return <Spinner size={5} />;
     }
 
     return (
