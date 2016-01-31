@@ -3,6 +3,7 @@ import * as ActionTypes from '../actions/ActionTypes.js';
 import _ from 'lodash';
 
 import Player from '../models/Player.js';
+import Match from '../models/Match.js';
 
 export function config(state = { initialLoadCompleted: false}, action = null) {
   const { type, payload } = action;
@@ -43,7 +44,7 @@ export function teams(state = [], action = null) {
   const { type, payload } = action;
   switch (type) {
   case ActionTypes.TEAMS_LOADED:
-    //console.log('teams', payload[0]);
+    console.log('teams', payload[0]);
     return payload;
   default:
     return state;
@@ -54,8 +55,8 @@ export function calendar(state = [], action = null) {
   const { type, payload } = action;
   switch (type) {
   case ActionTypes.CALENDAR_LOADED:
-    //console.log('matches', payload[0]);
-    return payload;
+    console.log('match', new Match(payload[0]));
+    return payload.map(x => new Match(x));
   default:
     return state;
   }

@@ -6,7 +6,10 @@ export default function(key, params) {
   }
   var str = key.split('.').reduce((o, i) => o[i], trans);
 
-  if (params) {
+  if (typeof params === 'string') {
+    return str.replace('${}', params);
+
+  } else if (typeof params === 'object') {
     Object.keys(params).forEach(function(paramKey) {
       str = str.replace('${' + paramKey + '}', params[paramKey]);
     });

@@ -12,7 +12,7 @@ function withContext(ComposedComponent) {
 
     getChildContext() {
       return {
-        setTitle: (value, params) => document.title = t(value, params) || t('fullClubName'),
+        setTitle: (value, params) => document.title = value ? t(value, params) : t('fullClubName'),
         t: t
       };
     }
