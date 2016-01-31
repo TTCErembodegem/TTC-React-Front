@@ -3,11 +3,12 @@ import { connect } from 'react-redux';
 
 import Spinner from '../../controls/Spinner';
 
-import withContext from '../../../utils/decorators/withContext.js';
+import { contextTypes } from '../../../utils/decorators/withContext.js';
 import withStyles from '../../../utils/decorators/withStyles.js';
 import styles from './Players.css';
 
 import { players as playerActionCreators } from '../../../actions/players.js';
+// playerActionCreators: no longer called from here (but illustration how actionCreators can be passed as props)
 
 @connect(state => {
   return {
@@ -18,13 +19,17 @@ import { players as playerActionCreators } from '../../../actions/players.js';
     teams: state.teams,
   };
 }, playerActionCreators)
-@withContext
 @withStyles(styles)
 export default class Players extends Component {
+  static contextTypes = contextTypes;
   static propTypes = {
     config: PropTypes.object,
     players: PropTypes.array,
   };
+
+  componentDidMount() {
+    this.context.setTitle('Spelers overzicht');
+  }
 
   render() {
     if (!this.props.config.initialLoadCompleted) {
@@ -33,7 +38,7 @@ export default class Players extends Component {
 
     return (
       <div>
-        {this.props.players.map(ply => <div key={ply.id}>{ply.id + ': ' + ply.name}</div>)}
+        {this.props.players.filter(x => x.id < 10).map(ply => <div key={ply.id}>{ply.id + ': ' + ply.name}</div>)}
       </div>
     );
   }

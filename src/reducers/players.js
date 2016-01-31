@@ -4,6 +4,16 @@ import _ from 'lodash';
 
 import Player from '../models/Player.js';
 
+// export function trans(state = {}, action = null) {
+//   const { type, payload } = action;
+//   switch (type) {
+//   case ActionTypes.TRANS_LOADED:
+//     return payload;
+//   default:
+//     return state;
+//   }
+// }
+
 export function config(state = { initialLoadCompleted: false}, action = null) {
   const { type, payload } = action;
   switch (type) {
@@ -18,10 +28,10 @@ export function players(state = [], action = null) {
   const { type, payload } = action;
   switch (type) {
   case ActionTypes.PLAYERS_LOADED:
-    console.log('pls', payload[0]);
+    //console.log('pls', payload[0]);
     //var result = payload.map(x => _.extend(new Player(), x));
     var result = payload.map(x => new Player(x));
-    console.log('pls-class', result[0]);
+    //console.log('pls-class', result[0]);
     return result;
   default:
     return state;
