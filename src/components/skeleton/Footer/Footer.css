@@ -5,13 +5,6 @@
   color: #fff;
 }
 
-.Footer-container {
-  margin: 0 auto;
-  padding: 20px 15px;
-  max-width: var(--max-content-width);
-  text-align: center;
-}
-
 .Footer-text {
   color: rgba(255, 255, 255, .5);
 }
@@ -39,4 +32,28 @@
 
 .Footer-link:hover {
   color: rgba(255, 255, 255, 1);
+}
+
+.text {
+  text-align: left;
+}
+
+@media (max-width:  1200px) {
+  .Footer-container {
+    margin: 0 auto;
+    padding: 20px 15px;
+    max-width: var(--max-content-width);
+    height: 200px;
+    text-align: center;
+  }
+}
+
+@media (min-width:  1200px) {
+  .Footer-container {
+    margin: 0 auto;
+    padding: 20px 15px;
+    max-width: var(--max-content-width);
+    height: 100px;
+    text-align: center;
+  }
 }
