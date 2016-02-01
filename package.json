@@ -13,6 +13,7 @@
     "fbjs": "0.3.2",
     "history": "1.12.5",
     "immutable": "^3.7.5",
+    "moment": "^2.11.1",
     "normalize.css": "3.0.3",
     "react": "0.14.0",
     "react-dom": "0.14.0",

@@ -7,6 +7,10 @@ export default {
     },
     players: {
       title: 'Spelers overzicht ${a}'
-    }
+    },
+    match: {
+      date: '${}u',
+      vs: '${home} vs ${away}'
+    },
   }
 };
