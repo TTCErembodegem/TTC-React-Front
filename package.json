@@ -34,7 +34,6 @@
     "babel-plugin-react-transform": "^1.1.1",
     "browser-sync": "^2.9.11",
     "css-loader": "^0.19.0",
-    "csscomb": "^3.1.8",
     "del": "^2.0.2",
     "eslint": "^1.6.0",
     "eslint-config-airbnb": "0.1.0",
@@ -77,8 +76,6 @@
   },
   "scripts": {
     "lint": "eslint src tools && jscs src tools",
-    "csslint": "csscomb src/components --lint --verbose",
-    "csscomb": "csscomb src/components --verbose",
     "test": "eslint src && jest",
     "clean": "babel-node --eval \"require('./tools/clean')().catch(err => console.error(err.stack))\"",
     "copy": "babel-node --eval \"require('./tools/copy')().catch(err => console.error(err.stack))\"",
