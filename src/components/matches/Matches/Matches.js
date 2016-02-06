@@ -29,7 +29,7 @@ export default class Matches extends Component {
   render() {
     return (
       <div>
-        {this.props.calendar.map(x => <Match {...x}/>)}
+        {this.props.calendar.map((match, i) => <Match {...match} key={i}/>)}
       </div>
     );
   }

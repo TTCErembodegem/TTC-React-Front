@@ -5,7 +5,11 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { ReduxRouter } from 'redux-router';
 
-import FastClick from 'fastclick';
+//import FastClick from 'fastclick';
+// Make taps on links and buttons work fast on mobiles
+//FastClick.attach(document.body);
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
 
 import store from './store.js';
 import initialLoad from './actions/initialLoad.js';
@@ -35,5 +39,3 @@ if (__DEVTOOLS__) {
   );
 }
 
-// Make taps on links and buttons work fast on mobiles
-FastClick.attach(document.body);
