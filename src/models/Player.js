@@ -5,9 +5,9 @@ export default class Player {
     }
 
 
-  }
+  };
 
   // get club() {
   //   return this.id;
-  // }
-}
+  // };
+};

@@ -10,17 +10,17 @@ export default class Match {
     }
 
     this.date = Moment(this.date);
-  }
+  };
 
   getOpponentDesc = function() {
     const clubs = store.getState().clubs;
     var club = _.find(clubs, x => x.id === this.opponent.clubId);
     return `${club.name} ${this.opponent.teamCode}`;
-  }
+  };
 
   getTeamDesc = function() {
     const teams = store.getState().teams;
     var team = _.find(teams, x => x.reeksId == this.reeksId);
     return `${team.competition} ${team.teamCode}`;
-  }
-}
+  };
+};
