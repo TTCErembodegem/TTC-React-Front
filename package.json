@@ -39,6 +39,7 @@
     "eslint-config-airbnb": "0.1.0",
     "eslint-loader": "^1.1.0",
     "eslint-plugin-react": "^3.5.1",
+    "esprima-harmony-jscs": "^1.1.0-bin",
     "file-loader": "^0.8.4",
     "gaze": "^0.5.2",
     "git-repository": "^0.1.1",

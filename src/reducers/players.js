@@ -5,18 +5,18 @@ import * as ActionTypes from '../actions/ActionTypes.js';
 import Player from '../models/Player.js';
 import Match from '../models/Match.js';
 
-export function config(state = { initialLoadCompleted: false}, action = null) {
-  const { type } = action;
+export function config(state = {initialLoadCompleted: false}, action = null) {
+  const {type} = action;
   switch (type) {
   case ActionTypes.INITIAL_LOADED:
-    return { initialLoadCompleted: true};
+    return {initialLoadCompleted: true};
   default:
     return state;
   }
 }
 
 export function players(state = [], action = null) {
-  const { type, payload } = action;
+  const {type, payload} = action;
   switch (type) {
   case ActionTypes.PLAYERS_LOADED:
     //console.log('pls', payload[0]);
@@ -30,7 +30,7 @@ export function players(state = [], action = null) {
 }
 
 export function clubs(state = [], action = null) {
-  const { type, payload } = action;
+  const {type, payload} = action;
   switch (type) {
   case ActionTypes.CLUBS_LOADED:
     //console.log('clubs', payload[0]);
@@ -41,7 +41,7 @@ export function clubs(state = [], action = null) {
 }
 
 export function teams(state = [], action = null) {
-  const { type, payload } = action;
+  const {type, payload} = action;
   switch (type) {
   case ActionTypes.TEAMS_LOADED:
     console.log('teams', payload[0]);
@@ -52,7 +52,7 @@ export function teams(state = [], action = null) {
 }
 
 export function calendar(state = [], action = null) {
-  const { type, payload } = action;
+  const {type, payload} = action;
   switch (type) {
   case ActionTypes.CALENDAR_LOADED:
     console.log('match', new Match(payload[0]));

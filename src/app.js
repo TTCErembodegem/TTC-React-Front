@@ -15,9 +15,9 @@ import store from './store.js';
 import initialLoad from './actions/initialLoad.js';
 store.dispatch(initialLoad());
 
-const __DEVTOOLS__= false;
-if (__DEVTOOLS__) {
-  const { DebugPanel, DevTools, LogMonitor } = require('redux-devtools/lib/react');
+const enableDevTools = false;
+if (enableDevTools) {
+  const {DebugPanel, DevTools, LogMonitor} = require('redux-devtools/lib/react');
 
   render(
     <div>

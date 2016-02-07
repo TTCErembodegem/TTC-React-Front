@@ -10,7 +10,7 @@ import rootReducer from './reducers';
 
 const finalCreateStore = compose(
   applyMiddleware(thunk),
-  reduxReactRouter({ routes, createHistory }),
+  reduxReactRouter({routes, createHistory}),
   devTools(),
   applyMiddleware(createLogger({collapsed: true}))
 )(createStore);

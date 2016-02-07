@@ -5,8 +5,6 @@ export default class Player {
         this[prop] = json[prop];
       }
     }
-
-
   }
 
   // get club() {

@@ -4,7 +4,7 @@ import invariant from 'fbjs/lib/invariant';
 let count = 0;
 
 function withStyles(styles) {
-  return (ComposedComponent) => class WithStyles extends Component {
+  return ComposedComponent => class WithStyles extends Component {
     constructor() {
       super();
       this.refCount = 0;
@@ -35,7 +35,7 @@ function withStyles(styles) {
     }
 
     componentWillMount() {
-      invariant(styles.use, `The style-loader must be configured with reference-counted API.`);
+      invariant(styles.use, 'The style-loader must be configured with reference-counted API.');
       styles.use();
     }
 
