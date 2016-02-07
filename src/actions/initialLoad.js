@@ -23,7 +23,7 @@ function teamsLoaded(data) {
 function initialLoadCompleted() {
   return {
     type: ActionTypes.INITIAL_LOADED
-  }
+  };
 }
 
 export default function() {
@@ -35,7 +35,7 @@ export default function() {
         .then(function(data) {
           dispatch(loadedAction(data));
         }, function(err) {
-          console.error(err);
+          console.error(err); // eslint-disable-line
         });
     }
 
@@ -45,5 +45,5 @@ export default function() {
       initialRequest('/calendar', calendarLoaded),
       initialRequest('/teams', teamsLoaded),
     ]).then(() => dispatch(initialLoadCompleted()));
-  }
+  };
 }

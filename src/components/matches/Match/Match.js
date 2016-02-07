@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { connect } from 'react-redux';
+import MatchModel from '../../../models/Match.js';
 
 import { contextTypes } from '../../../utils/decorators/withContext.js';
 import withStyles from '../../../utils/decorators/withStyles.js';
@@ -12,25 +12,32 @@ import Icon from '../../controls/Icon';
 export default class Match extends Component {
   static contextTypes = contextTypes;
 
+  static propTypes = {
+    match: PropTypes.instanceOf(MatchModel).isRequired
+  }
+
   _formatMatchDate() {
-    if (this.props.date.minutes()) {
-      return this.props.date.format('D/M HH:mm');
+    var match = this.props.match;
+    if (match.date.minutes()) {
+      return match.date.format('D/M HH:mm');
     }
-    return this.props.date.format('D/M HH');
+    return match.date.format('D/M HH');
   }
 
   render() {
+    var match = this.props.match;
+
     var score;
-    if (this.props.score) {
+    if (match.score) {
       score = (
-        <Badge badgeContent={this.props.score} secondary badgeStyle={{top: 12, right: 6}}/>
+        <Badge badgeContent={match.score} secondary badgeStyle={{top: 12, right: 6}}/>
       );
     }
 
     return (
       <div className="match">
         <span>{this.context.t('match.date', this._formatMatchDate())}</span>
-        <span>{this.context.t('match.vs', {home: this.props.getTeamDesc(), away: this.props.getOpponentDesc()})}</span>
+        <span>{this.context.t('match.vs', {home: match.getTeamDesc(), away: match.getOpponentDesc()})}</span>
         {score}
         <Icon fa="fa fa-caret-right" />
       </div>

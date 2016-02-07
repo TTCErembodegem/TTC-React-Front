@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 
+import MatchModel from '../../../models/Match.js';
 import { contextTypes } from '../../../utils/decorators/withContext.js';
 import withStyles from '../../../utils/decorators/withStyles.js';
 import styles from './Matches.css';
@@ -22,6 +23,10 @@ import Match from '../Match/';
 export default class Matches extends Component {
   static contextTypes = contextTypes;
 
+  static propTypes = {
+    calendar: PropTypes.arrayOf(MatchModel)
+  }
+
   componentDidMount() {
     this.context.setTitle();
   }
@@ -29,7 +34,7 @@ export default class Matches extends Component {
   render() {
     return (
       <div>
-        {this.props.calendar.map((match, i) => <Match {...match} key={i}/>)}
+        {this.props.calendar.map((match, i) => <Match match={match} key={i}/>)}
       </div>
     );
   }

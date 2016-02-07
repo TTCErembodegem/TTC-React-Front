@@ -20,10 +20,10 @@ import { players as playerActionCreators } from '../../../actions/players.js';
 @withStyles(styles)
 export default class Players extends Component {
   static contextTypes = contextTypes;
-  // static propTypes = {
-  //   config: PropTypes.object,
-  //   players: PropTypes.array,
-  // };
+  static propTypes = {
+    config: PropTypes.object,
+    players: PropTypes.array,
+  };
 
   componentDidMount() {
     this.context.setTitle('players.title', {a: 5}); // TODO: just an example of context, setTitle and translation with params

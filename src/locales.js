@@ -1,4 +1,4 @@
-import { lang, trans } from './utils/locales-nl.js';
+import { trans } from './utils/locales-nl.js';
 
 export default function(key, params) {
   if (key.indexOf('.') === -1) {

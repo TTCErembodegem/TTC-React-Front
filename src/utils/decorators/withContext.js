@@ -1,11 +1,6 @@
 import React, { PropTypes, Component } from 'react'; // eslint-disable-line no-unused-vars
 import t from '../../locales.js';
 
-var contextTypes = {
-  setTitle: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired,
-};
-
 function withContext(ComposedComponent) {
   return class WithContext extends Component {
     static childContextTypes = contextTypes;
@@ -23,5 +18,9 @@ function withContext(ComposedComponent) {
   };
 }
 
-export var contextTypes;
+export var contextTypes = {
+  setTitle: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired,
+};
+
 export default withContext;

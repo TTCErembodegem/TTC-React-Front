@@ -1,5 +1,5 @@
 import * as ActionTypes from './ActionTypes.js';
-import http from '../utils/httpClient.js';
+//import http from '../utils/httpClient.js';
 
 export function calendarLoaded(data) {
   return {

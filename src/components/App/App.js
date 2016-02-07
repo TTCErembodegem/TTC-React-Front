@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 
-import withContext, { contextTypes } from '../../utils/decorators/withContext.js';
+import withContext from '../../utils/decorators/withContext.js';
 import withStyles from '../../utils/decorators/withStyles.js';
 import styles from './App.css';
 
@@ -36,6 +36,9 @@ function renderApp(children) {
 @withStyles(styles)
 export default class App extends Component {
   static propTypes = {
+    config: PropTypes.shape({
+      initialLoadCompleted: PropTypes.bool.isRequired
+    }).isRequired,
     children: PropTypes.element,
   };
 

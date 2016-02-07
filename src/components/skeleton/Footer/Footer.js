@@ -1,5 +1,4 @@
-import React, { PropTypes, Component } from 'react';
-import { Link } from 'react-router'
+import React, { Component } from 'react';
 
 import { contextTypes } from '../../../utils/decorators/withContext.js';
 import styles from './Footer.css';
@@ -11,11 +10,9 @@ import Icon from '../../controls/Icon';
 @withViewport
 @withStyles(styles)
 export default class Footer extends Component {
-
   static contextTypes = contextTypes;
 
   render() {
-
     return (
       <div className="Footer">
         <div className="Footer-container">

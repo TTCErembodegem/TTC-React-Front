@@ -1,12 +1,12 @@
-import { List, Map } from 'immutable';
+//import { List, Map } from 'immutable';
 import * as ActionTypes from '../actions/ActionTypes.js';
-import _ from 'lodash';
+//import _ from 'lodash';
 
 import Player from '../models/Player.js';
 import Match from '../models/Match.js';
 
 export function config(state = { initialLoadCompleted: false}, action = null) {
-  const { type, payload } = action;
+  const { type } = action;
   switch (type) {
   case ActionTypes.INITIAL_LOADED:
     return { initialLoadCompleted: true};

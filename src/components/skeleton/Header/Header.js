@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router'
+import { Link } from 'react-router';
 
 import styles from './Header.css';
 import withStyles from '../../../utils/decorators/withStyles.js';
