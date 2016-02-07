@@ -24,7 +24,7 @@ export default class Matches extends Component {
   static contextTypes = contextTypes;
 
   static propTypes = {
-    calendar: PropTypes.arrayOf(MatchModel)
+    calendar: PropTypes.arrayOf(PropTypes.instanceOf(MatchModel).isRequired).isRequired
   }
 
   componentDidMount() {
