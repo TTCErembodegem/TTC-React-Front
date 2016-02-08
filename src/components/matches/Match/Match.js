@@ -5,7 +5,7 @@ import { contextTypes } from '../../../utils/decorators/withContext.js';
 import withStyles from '../../../utils/decorators/withStyles.js';
 import styles from './Match.css';
 
-import Badge from 'material-ui/lib/badge';
+import MatchScore from '../MatchScore';
 import Icon from '../../controls/Icon';
 
 @withStyles(styles)
@@ -26,13 +26,7 @@ export default class Match extends Component {
 
   render() {
     var match = this.props.match;
-
-    var score;
-    if (match.report && match.report.scoreType !== 'NotYetPlayed') {
-      score = (
-        <Badge badgeContent={match.report.score.home + '-' + match.report.score.out} secondary badgeStyle={{top: 12, right: 6, width: 35}}/>
-      );
-    }
+    var score = match.report ? <MatchScore report={match.report} /> : null;
 
     return (
       <div className="match">

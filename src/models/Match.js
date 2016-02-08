@@ -1,5 +1,6 @@
 import store from '../store.js';
 
+import keyMirror from 'fbjs/lib/keyMirror';
 import Moment from 'moment';
 import _ from 'lodash';
 
@@ -12,6 +13,9 @@ export default class Match {
     }
 
     this.date = Moment(this.date);
+    if (this.report) {
+      this.report = new MatchReport(this.report);
+    }
   }
 
   getOpponentDesc() {
@@ -24,5 +28,32 @@ export default class Match {
     const teams = store.getState().teams;
     var team = _.find(teams, x => x.reeksId === this.reeksId);
     return `${team.competition} ${team.teamCode}`;
+  }
+}
+
+export var matchOutcome = keyMirror({
+  NotYetPlayed: '',
+  Won: '',
+  Lost: '',
+  Draw: '',
+  WalkOver: '',
+});
+
+export class MatchReport {
+  constructor(json) {
+    for (let prop in json) {
+      if (json.hasOwnProperty(prop)) {
+        this[prop] = json[prop];
+      }
+    }
+
+    this.isPlayed = this.scoreType !== matchOutcome.NotYetPlayed && this.scoreType !== matchOutcome.WalkOver;
+  }
+
+  getScore() {
+    if (!this.isPlayed) {
+      return;
+    }
+    return this.score.home + ' - ' + this.score.out;
   }
 }

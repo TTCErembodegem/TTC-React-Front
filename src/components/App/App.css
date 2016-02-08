@@ -163,3 +163,11 @@ textarea {
     page-break-after: avoid;
   }
 }
+
+
+/*
+ * Own custom styles
+ * ========================================================================== */
+.label-as-badge {
+  border-radius: 1em;
+}

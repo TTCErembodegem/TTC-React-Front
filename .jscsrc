@@ -8,7 +8,7 @@
   "disallowKeywordsOnNewLine": [ "else" ],
   "disallowKeywords": [ "with" ],
   "disallowMixedSpacesAndTabs": true,
-  "disallowMultipleLineBreaks": true,
+  "disallowMultipleLineBreaks": null,
   "disallowMultipleLineStrings": true,
   "disallowMultipleVarDecl": null,
   "disallowPaddingNewlinesInBlocks": null,
