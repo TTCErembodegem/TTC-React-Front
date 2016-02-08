@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react';
+import moment from 'moment';
 import { connect } from 'react-redux';
 
 import MatchModel from '../../../models/Match.js';
@@ -13,6 +14,7 @@ import Match from '../Match/';
 @connect(state => {
   return {
     config: state.config,
+    user: state.user,
     players: state.players,
     clubs: state.clubs,
     calendar: state.calendar,
@@ -24,7 +26,8 @@ export default class Matches extends Component {
   static contextTypes = contextTypes;
 
   static propTypes = {
-    calendar: PropTypes.arrayOf(PropTypes.instanceOf(MatchModel).isRequired).isRequired
+    calendar: PropTypes.arrayOf(PropTypes.instanceOf(MatchModel).isRequired).isRequired,
+    user: PropTypes.object.isRequired,
   }
 
   componentDidMount() {
@@ -32,9 +35,33 @@ export default class Matches extends Component {
   }
 
   render() {
+    var today = moment();
+    var matchesToday = this.props.calendar.filter(cal => cal.date.isSame(today, 'day'));
+    var matchesNext = this.props.calendar.filter(cal => cal.date.isAfter(today, 'day'));
+    var matchesPlayed = this.props.calendar.filter(cal => cal.date.isBefore(today, 'day'));
+
     return (
       <div>
-        {this.props.calendar.map((match, i) => <Match match={match} key={i}/>)}
+        {this._renderMatches(matchesToday, Match)}
+        {matchesToday.length && (matchesNext.length || matchesPlayed.length) ? this._renderDivider() : null}
+        {this._renderMatches(matchesNext, Match)}
+        {matchesNext.length && matchesPlayed.length ? this._renderDivider() : null}
+        {this._renderMatches(matchesPlayed, Match)}
+      </div>
+    );
+  }
+  _renderDivider() {
+    return <div className="row"></div>;
+  }
+
+  _renderMatches(matches, MatchComponent) {
+    if (matches.length === 0) {
+      return null;
+    }
+
+    return (
+      <div className="row">
+        {matches.map((match, i) => <MatchComponent match={match} key={i} userTeams={this.props.user.teams} />)}
       </div>
     );
   }

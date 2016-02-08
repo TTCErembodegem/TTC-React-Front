@@ -14,6 +14,10 @@ injectTapEventPlugin();
 import store from './store.js';
 import initialLoad from './actions/initialLoad.js';
 store.dispatch(initialLoad());
+store.dispatch({
+  type: 'LOGIN',
+  payload: {playerId: 20, teams: [245, 250]}
+});
 
 const enableDevTools = false;
 if (enableDevTools) {

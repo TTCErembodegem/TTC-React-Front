@@ -5,6 +5,16 @@ import * as ActionTypes from '../actions/ActionTypes.js';
 import Player from '../models/Player.js';
 import Match from '../models/Match.js';
 
+export function user(state = {teams: []}, action = null) {
+  const {type, payload} = action;
+  switch (type) {
+  case ActionTypes.LOGIN:
+    return payload;
+  default:
+    return state;
+  }
+}
+
 export function config(state = {initialLoadCompleted: false}, action = null) {
   const {type} = action;
   switch (type) {

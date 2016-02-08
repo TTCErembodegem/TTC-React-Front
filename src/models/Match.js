@@ -1,7 +1,7 @@
 import store from '../store.js';
 
 import keyMirror from 'fbjs/lib/keyMirror';
-import Moment from 'moment';
+import moment from 'moment';
 import _ from 'lodash';
 
 export default class Match {
@@ -12,7 +12,7 @@ export default class Match {
       }
     }
 
-    this.date = Moment(this.date);
+    this.date = moment(this.date);
     if (this.report) {
       this.report = new MatchReport(this.report);
     }

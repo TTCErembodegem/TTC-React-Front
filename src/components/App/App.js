@@ -15,7 +15,7 @@ function renderApp(children) {
   return (
     <div>
       <Header />
-      <div className="">
+      <div className="container" style={{paddingTop: 5}}>
         {children}
       </div>
       <Footer />

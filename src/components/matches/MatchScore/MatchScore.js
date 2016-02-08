@@ -27,6 +27,10 @@ export default class MatchScore extends Component {
       return null;
     }
 
-    return (<span className={cn('label label-as-badge', getClassName(report.scoreType))}>{report.getScore()}</span>);
+    return (
+      <span className={cn('match-score label label-as-badge', getClassName(report.scoreType))}>
+        {report.getScore()}
+      </span>
+    );
   }
 }
