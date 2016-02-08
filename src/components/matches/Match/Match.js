@@ -28,9 +28,9 @@ export default class Match extends Component {
     var match = this.props.match;
 
     var score;
-    if (match.score) {
+    if (match.report && match.report.scoreType !== 'NotYetPlayed') {
       score = (
-        <Badge badgeContent={match.score} secondary badgeStyle={{top: 12, right: 6}}/>
+        <Badge badgeContent={match.report.score.home + '-' + match.report.score.out} secondary badgeStyle={{top: 12, right: 6, width: 35}}/>
       );
     }
 
