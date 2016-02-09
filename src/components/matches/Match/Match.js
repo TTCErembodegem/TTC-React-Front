@@ -74,7 +74,7 @@ export class MatchPlayed extends Component {
     if (this.props.match.report && this.props.match.report.players.length) {
       let report = this.props.match.report;
 
-      players = report.getOwnClubPlayers().map(player => <div>{player.name + ': ' + player.won}</div>);
+      players = report.getOwnClubPlayers().map(player => <div key={player.position}>{player.name + ': ' + player.won}</div>);
     }
 
     return (

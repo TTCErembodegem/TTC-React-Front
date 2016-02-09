@@ -9,11 +9,10 @@ export default class MatchReportModel {
     }
 
     this.isPlayed = this.scoreType && this.scoreType !== matchOutcome.NotYetPlayed && this.scoreType !== matchOutcome.WalkOver;
-    this.hasExtendedInfo = this.players.length || this.description;
+    this.hasExtendedInfo = this.players.length || this.description || false;
 
     this.homeFilter = function(isHomePlayer) {
       return (isHomeMatch && isHomePlayer) || (!isHomeMatch && !isHomePlayer);
-      //return isHomeMatch === isHomePlayer;
     };
   }
 

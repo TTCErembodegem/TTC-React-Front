@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { MatchModel, matchOutcome } from '../../../models/MatchModel.js';
+import MatchModel, { matchOutcome } from '../../../models/MatchModel.js';
 
 import { contextTypes } from '../../../utils/decorators/withContext.js';
 import cn from 'classnames';
