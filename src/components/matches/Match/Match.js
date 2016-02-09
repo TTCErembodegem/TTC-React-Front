@@ -76,10 +76,12 @@ export class MatchPlayed extends Component {
   static contextTypes = contextTypes;
   static propTypes = matchPropTypes;
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
     this.state = {
-      openTabKey: 1
+      openTabKey: 1,
+      selectedPlayerId: props.user.playerId
     };
   }
 
@@ -136,17 +138,17 @@ export class MatchPlayed extends Component {
       return null;
     }
 
-    var iPlayerId = this.props.user.playerId;
-    var getRowClassName = function(game) {
-      if (game.home.playerId === iPlayerId || game.out.playerId === iPlayerId) {
-        return 'success';
-      }
-    };
-
     var getVictoryIcon = function(game) {
       if (game.outcome === matchOutcome.Won) {
         return <Icon fa="fa fa-trophy" color="#FCB514" />;
       }
+    };
+
+    var getPlayerDesc = function(player) {
+      if (!player.home) {
+        return `${player.nameShort} (${player.ranking})`;
+      }
+      return player.nameShort;
     };
 
     var matchResult = {
@@ -167,11 +169,14 @@ export class MatchPlayed extends Component {
         <tbody>
           {report.getGameMatches().map(game => {
             matchResult[game.homeSets > game.outSets ? 'home' : 'out']++;
+            var isMarked = this.state.selectedPlayerId === game.home.playerId || this.state.selectedPlayerId === game.out.playerId;
             return (
-              <tr key={game.matchNumber} className={getRowClassName(game)}>
+              <tr key={game.matchNumber} className={isMarked ? 'success' : ''}
+                onMouseOver={this._onIndividualMatchChange.bind(this, game.home.playerId || game.out.playerId)}
+                onClick={this._onIndividualMatchChange.bind(this, game.home.playerId || game.out.playerId)}>
                 <td>{getVictoryIcon(game)}</td>
-                <td>{game.home.nameShort}</td>
-                <td>{game.out.nameShort}</td>
+                <td>{getPlayerDesc(game.home)}</td>
+                <td>{getPlayerDesc(game.out)}</td>
                 <td>{`${game.homeSets}-${game.outSets}`}</td>
                 <td>{`${matchResult.home}-${matchResult.out}`}</td>
               </tr>
@@ -181,6 +186,11 @@ export class MatchPlayed extends Component {
       </Table>
     );
   }
+  _onIndividualMatchChange(selectedPlayerId) {
+    this.setState({selectedPlayerId});
+  }
+
+
   _renderReport() {
     return (
       <div></div>
