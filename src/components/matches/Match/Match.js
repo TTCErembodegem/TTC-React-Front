@@ -11,7 +11,7 @@ import FavoriteMatch from '../FavoriteMatch.js';
 const cardClosedSize = 4;
 const cardOpenedSize = 8;
 
-//import Icon from '../../controls/Icon';
+import Icon from '../../controls/Icon';
 
 import Card from 'material-ui/lib/card/card';
 //import CardActions from 'material-ui/lib/card/card-actions';
@@ -25,7 +25,7 @@ import Table from 'react-bootstrap/lib/Table';
 
 const matchPropTypes = {
   match: PropTypes.instanceOf(MatchModel).isRequired,
-  userTeams: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 @withStyles(styles)
@@ -136,30 +136,47 @@ export class MatchPlayed extends Component {
       return null;
     }
 
-    var getRowClassName = function(mo) {
-      switch (mo) {
-      case matchOutcome.Won:
-        return 'info';
-      case matchOutcome.Lost:
-        return 'warning';
+    var iPlayerId = this.props.user.playerId;
+    var getRowClassName = function(game) {
+      if (game.home.playerId === iPlayerId || game.out.playerId === iPlayerId) {
+        return 'success';
       }
+    };
+
+    var getVictoryIcon = function(game) {
+      if (game.outcome === matchOutcome.Won) {
+        return <Icon fa="fa fa-trophy" color="#FCB514" />;
+      }
+    };
+
+    var matchResult = {
+      home: 0,
+      out: 0
     };
 
     return (
       <Table condensed hover style={{width: '50%'}}>
         <thead>
           <tr>
-            <th>{this.context.t('match.individual.matchTitle')}</th>
+            <th>&nbsp;</th>
+            <th colSpan={2}>{this.context.t('match.individual.matchTitle')}</th>
             <th>{this.context.t('match.individual.setsTitle')}</th>
+            <th>{this.context.t('match.individual.resultTitle')}</th>
           </tr>
         </thead>
         <tbody>
-          {report.getGameMatches().map(game => (
-            <tr key={game.matchNumber} className={getRowClassName(game.outcome)}>
-              <td>{this.context.t('match.vs', {home: game.home.name, away: game.out.name})}</td>
-              <td>{game.sets}</td>
-            </tr>
-          ))}
+          {report.getGameMatches().map(game => {
+            matchResult[game.homeSets > game.outSets ? 'home' : 'out']++;
+            return (
+              <tr key={game.matchNumber} className={getRowClassName(game)}>
+                <td>{getVictoryIcon(game)}</td>
+                <td>{game.home.nameShort}</td>
+                <td>{game.out.nameShort}</td>
+                <td>{`${game.homeSets}-${game.outSets}`}</td>
+                <td>{`${matchResult.home}-${matchResult.out}`}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </Table>
     );
@@ -176,7 +193,7 @@ class Match extends Component {
   static contextTypes = contextTypes;
   static propTypes = {
     match: PropTypes.instanceOf(MatchModel).isRequired,
-    userTeams: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
+    user: PropTypes.object.isRequired,
     backgroundColor: PropTypes.string,
     children: PropTypes.node,
   }
@@ -191,7 +208,7 @@ class Match extends Component {
   render() {
     var match = this.props.match;
     var score = match.report ? <MatchScore match={match} /> : null;
-    var iPlay = this.props.userTeams.indexOf(match.reeksId) !== -1;
+    var iPlay = this.props.user.teams.indexOf(match.reeksId) !== -1;
     var cardStyle = this.props.backgroundColor ? {backgroundColor: this.props.backgroundColor} : null;
 
     return (

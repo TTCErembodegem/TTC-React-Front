@@ -1,5 +1,12 @@
 import { matchOutcome } from './MatchModel.js';
 
+function getFirstName(fullName) {
+  if (fullName.indexOf(' ') === -1) {
+    return fullName;
+  }
+  return fullName.substr(0, fullName.indexOf(' '));
+}
+
 export default class MatchReportModel {
   constructor(json, isHomeMatch) {
     for (let prop in json) {
@@ -12,9 +19,31 @@ export default class MatchReportModel {
     this.hasExtendedInfo = this.players.length || this.description || false;
 
     this._isHomeMatch = isHomeMatch;
-    this.homeFilter = function(isHomePlayer) {
-      return (isHomeMatch && isHomePlayer) || (!isHomeMatch && !isHomePlayer);
-    };
+    this._fixPlayerNameCollisions();
+    this._fixHomeProp();
+  }
+
+  _isOwnClubPlayer(isHomePlayer) {
+    return (this._isHomeMatch && isHomePlayer) || (!this._isHomeMatch && !isHomePlayer);
+  }
+  _fixPlayerNameCollisions() {
+    // Fix in case two people are called 'Dirk' etc
+    this.players.forEach(ply => {
+      ply.nameShort = getFirstName(ply.name);
+    });
+    this.players.forEach(ply => {
+      var otherPlayers = this.players.filter(otherPly => ply.position !== otherPly.position);
+      if (otherPlayers.find(otherPly => getFirstName(otherPly.nameShort) === ply.nameShort)) {
+        ply.nameShort += ply.name.substr(ply.name.indexOf(' '));
+      }
+    });
+  }
+  _fixHomeProp() {
+    // Change the meaning of 'home' from 'was the player playing in his own club'
+    // to 'is the player a member of TTC Erembodegem'
+    this.players.forEach(ply => {
+      ply.home = this._isOwnClubPlayer(ply.home);
+    });
   }
 
   getScore() {
@@ -25,10 +54,10 @@ export default class MatchReportModel {
   }
 
   getOwnPlayers() {
-    return this.players.filter(player => this.homeFilter(player.home)).sort((a, b) => a.position - b.position);
+    return this.players.filter(player => player.home).sort((a, b) => a.position - b.position);
   }
   getTheirPlayers() {
-    return this.players.filter(player => !this.homeFilter(player.home)).sort((a, b) => a.position - b.position);
+    return this.players.filter(player => !player.home).sort((a, b) => a.position - b.position);
   }
 
   getGamePlayer(uniqueIndex) {
@@ -45,7 +74,8 @@ export default class MatchReportModel {
         matchNumber: game.matchNumber,
         home: this.getGamePlayer(game.homePlayerUniqueIndex),
         out: this.getGamePlayer(game.outPlayerUniqueIndex),
-        sets: `${game.homePlayerSets}-${game.outPlayerSets}`
+        homeSets: game.homePlayerSets,
+        outSets: game.outPlayerSets
       };
 
       result.outcome = game.homePlayerSets > game.outPlayerSets ? matchOutcome.Won : matchOutcome.Lost;

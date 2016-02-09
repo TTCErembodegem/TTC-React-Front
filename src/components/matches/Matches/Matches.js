@@ -61,7 +61,7 @@ export default class Matches extends Component {
 
     return (
       <div className="row">
-        {matches.map(match => <MatchComponent match={match} key={match.id} userTeams={this.props.user.teams} />)}
+        {matches.map(match => <MatchComponent match={match} key={match.id} user={this.props.user} />)}
       </div>
     );
   }

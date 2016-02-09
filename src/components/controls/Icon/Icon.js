@@ -7,9 +7,10 @@ import styles from './Icon.css';
 export default class Icon extends Component {
   static propTypes = {
     fa: PropTypes.string.isRequired,
+    color: PropTypes.string
   };
 
   render() {
-    return (<i className={this.props.fa}></i>);
+    return (<i className={this.props.fa} style={{color: this.props.color}}></i>);
   }
 }

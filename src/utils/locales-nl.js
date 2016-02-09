@@ -13,7 +13,7 @@ export default {
       vs: '${home} vs ${away}',
       tabs: {
         players: 'Spelers',
-        playersTitle: 'Spelers Erembodegem',
+        playersTitle: 'Het verdict',
         matches: 'Individueel',
         matchesTitle: 'Individuele matchuitslagen',
         report: 'Verslag',
@@ -23,7 +23,8 @@ export default {
       playersOpponentsTitle: 'Tegenstanders',
       individual: {
         matchTitle: 'Match',
-        setsTitle: 'Sets'
+        setsTitle: 'Sets',
+        resultTitle: 'Uitslag',
       }
     },
     footer: {
