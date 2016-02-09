@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { MatchReport as MatchReportModel, matchOutcome } from '../../../models/Match.js';
+import { MatchModel, matchOutcome } from '../../../models/MatchModel.js';
 
 import { contextTypes } from '../../../utils/decorators/withContext.js';
 import cn from 'classnames';
@@ -18,17 +18,18 @@ export default class MatchScore extends Component {
   static contextTypes = contextTypes;
 
   static propTypes = {
-    report: PropTypes.instanceOf(MatchReportModel).isRequired
+    match: PropTypes.instanceOf(MatchModel).isRequired
   }
 
   render() {
-    var report = this.props.report;
+    var report = this.props.match.report;
     if (!report.isPlayed) {
       return null;
     }
 
+    var classColor = this.props.match.isDerby ? getClassName(matchOutcome.Won) : getClassName(report.scoreType);
     return (
-      <span className={cn('match-score label label-as-badge', getClassName(report.scoreType))}>
+      <span className={cn('match-score label label-as-badge', classColor)}>
         {report.getScore()}
       </span>
     );

@@ -2,8 +2,8 @@
 import * as ActionTypes from '../actions/ActionTypes.js';
 //import _ from 'lodash';
 
-import Player from '../models/Player.js';
-import Match from '../models/Match.js';
+import PlayerModel from '../models/PlayerModel.js';
+import MatchModel from '../models/MatchModel.js';
 
 export function user(state = {teams: []}, action = null) {
   const {type, payload} = action;
@@ -29,9 +29,7 @@ export function players(state = [], action = null) {
   const {type, payload} = action;
   switch (type) {
   case ActionTypes.PLAYERS_LOADED:
-    //console.log('pls', payload[0]);
-    //var result = payload.map(x => _.extend(new Player(), x));
-    var result = payload.map(x => new Player(x));
+    var result = payload.map(x => new PlayerModel(x));
     //console.log('pls-class', result[0]);
     return result;
   default:
@@ -54,7 +52,7 @@ export function teams(state = [], action = null) {
   const {type, payload} = action;
   switch (type) {
   case ActionTypes.TEAMS_LOADED:
-    console.log('teams', payload[0]);
+    //console.log('teams', payload[0]);
     return payload;
   default:
     return state;
@@ -65,8 +63,10 @@ export function calendar(state = [], action = null) {
   const {type, payload} = action;
   switch (type) {
   case ActionTypes.CALENDAR_LOADED:
-    console.log('match', new Match(payload[0]));
-    return payload.map(x => new Match(x));
+    //console.log('match', new MatchModel(payload[0]));
+    var result = payload.map(x => new MatchModel(x));
+    //console.log('matches', result);
+    return result;
   default:
     return state;
   }

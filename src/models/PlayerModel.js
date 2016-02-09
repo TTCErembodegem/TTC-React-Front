@@ -1,4 +1,4 @@
-export default class Player {
+export default class PlayerModel {
   constructor(json) {
     for (let prop in json) {
       if (json.hasOwnProperty(prop)) {

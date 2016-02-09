@@ -4,7 +4,19 @@ import keyMirror from 'fbjs/lib/keyMirror';
 import moment from 'moment';
 import _ from 'lodash';
 
-export default class Match {
+import MatchReportModel from './MatchReportModel.js';
+import { OwnClubId } from './ClubModel.js';
+
+export var matchOutcome = keyMirror({
+  NotYetPlayed: '',
+  Won: '',
+  Lost: '',
+  Draw: '',
+  WalkOver: '',
+});
+
+
+export default class MatchModel {
   constructor(json) {
     for (let prop in json) {
       if (json.hasOwnProperty(prop)) {
@@ -13,9 +25,16 @@ export default class Match {
     }
 
     this.date = moment(this.date);
-    if (this.report) {
-      this.report = new MatchReport(this.report);
+    this.isDerby = this.opponent.clubId === OwnClubId;
+
+    this.report = new MatchReportModel(this.report, this.isHomeMatch);
+  }
+
+  getDisplayDate() {
+    if (this.date.minutes()) {
+      return this.date.format('ddd D/M HH:mm');
     }
+    return this.date.format('ddd D/M HH');
   }
 
   getOpponentDesc() {
@@ -28,32 +47,5 @@ export default class Match {
     const teams = store.getState().teams;
     var team = _.find(teams, x => x.reeksId === this.reeksId);
     return `${team.competition} ${team.teamCode}`;
-  }
-}
-
-export var matchOutcome = keyMirror({
-  NotYetPlayed: '',
-  Won: '',
-  Lost: '',
-  Draw: '',
-  WalkOver: '',
-});
-
-export class MatchReport {
-  constructor(json) {
-    for (let prop in json) {
-      if (json.hasOwnProperty(prop)) {
-        this[prop] = json[prop];
-      }
-    }
-
-    this.isPlayed = this.scoreType !== matchOutcome.NotYetPlayed && this.scoreType !== matchOutcome.WalkOver;
-  }
-
-  getScore() {
-    if (!this.isPlayed) {
-      return;
-    }
-    return this.score.home + ' - ' + this.score.out;
   }
 }

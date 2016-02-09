@@ -11,6 +11,9 @@ import { ReduxRouter } from 'redux-router';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
+import moment from 'moment';
+moment.locale('nl');
+
 import store from './store.js';
 import initialLoad from './actions/initialLoad.js';
 store.dispatch(initialLoad());

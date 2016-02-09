@@ -2,14 +2,14 @@ import React, { PropTypes, Component } from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
 
-import MatchModel from '../../../models/Match.js';
+import MatchModel from '../../../models/MatchModel.js';
 import { contextTypes } from '../../../utils/decorators/withContext.js';
 import withStyles from '../../../utils/decorators/withStyles.js';
 import styles from './Matches.css';
 
 import { players as playerActionCreators } from '../../../actions/players.js';
 
-import Match from '../Match/';
+import { MatchToday, MatchNext, MatchPlayed } from '../Match/';
 
 @connect(state => {
   return {
@@ -42,11 +42,11 @@ export default class Matches extends Component {
 
     return (
       <div>
-        {this._renderMatches(matchesToday, Match)}
+        {this._renderMatches(matchesToday, MatchToday)}
         {matchesToday.length && (matchesNext.length || matchesPlayed.length) ? this._renderDivider() : null}
-        {this._renderMatches(matchesNext, Match)}
+        {this._renderMatches(matchesNext, MatchNext)}
         {matchesNext.length && matchesPlayed.length ? this._renderDivider() : null}
-        {this._renderMatches(matchesPlayed, Match)}
+        {this._renderMatches(matchesPlayed, MatchPlayed)}
       </div>
     );
   }
@@ -61,7 +61,7 @@ export default class Matches extends Component {
 
     return (
       <div className="row">
-        {matches.map((match, i) => <MatchComponent match={match} key={i} userTeams={this.props.user.teams} />)}
+        {matches.map(match => <MatchComponent match={match} key={match.id} userTeams={this.props.user.teams} />)}
       </div>
     );
   }
