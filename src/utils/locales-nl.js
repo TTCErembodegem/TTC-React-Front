@@ -10,7 +10,21 @@ export default {
     },
     match: {
       date: '${}u',
-      vs: '${home} vs ${away}'
+      vs: '${home} vs ${away}',
+      tabs: {
+        players: 'Spelers',
+        playersTitle: 'Spelers Erembodegem',
+        matches: 'Individueel',
+        matchesTitle: 'Individuele matchuitslagen',
+        report: 'Verslag',
+        reportTitle: 'Het wedstrijdverslag',
+      },
+      playersVictoryTitle: 'Overwinningen',
+      playersOpponentsTitle: 'Tegenstanders',
+      individual: {
+        matchTitle: 'Match',
+        setsTitle: 'Sets'
+      }
     },
     footer: {
       location: 'Groeneweg 28, 9300 Erembodegem',
