@@ -9,7 +9,7 @@ import styles from './Matches.css';
 
 import { players as playerActionCreators } from '../../../actions/players.js';
 
-import { MatchToday, MatchNext, MatchPlayed } from '../Match/';
+import { MatchToday, MatchNext, MatchPlayed } from '../Match/Match.js';
 
 @connect(state => {
   return {
