@@ -9,7 +9,7 @@ import styles from './Matches.css';
 
 import { players as playerActionCreators } from '../../../actions/players.js';
 
-import { MatchToday, MatchNext, MatchPlayed } from '../Match/Match.js';
+import MatchCard from '../Match/MatchCard.js';
 
 @connect(state => {
   return {
@@ -42,11 +42,11 @@ export default class Matches extends Component {
 
     return (
       <div>
-        {this._renderMatches(matchesToday, MatchToday)}
+        {this._renderMatches(matchesToday, 'today')}
         {matchesToday.length && (matchesNext.length || matchesPlayed.length) ? this._renderDivider() : null}
-        {this._renderMatches(matchesNext, MatchNext)}
+        {this._renderMatches(matchesNext, 'next')}
         {matchesNext.length && matchesPlayed.length ? this._renderDivider() : null}
-        {this._renderMatches(matchesPlayed, MatchPlayed)}
+        {this._renderMatches(matchesPlayed, 'played')}
       </div>
     );
   }
@@ -54,14 +54,15 @@ export default class Matches extends Component {
     return <div className="row"></div>;
   }
 
-  _renderMatches(matches, MatchComponent) {
+  _renderMatches(matches, matchType) {
     if (matches.length === 0) {
       return null;
     }
 
+    console.log('type is', matchType);
     return (
       <div className="row">
-        {matches.map(match => <MatchComponent match={match} key={match.id} user={this.props.user} />)}
+        {matches.map(match => <MatchCard match={match} key={match.id} user={this.props.user} type={matchType} />)}
       </div>
     );
   }

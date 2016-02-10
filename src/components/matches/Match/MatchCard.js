@@ -1,59 +1,85 @@
 import React, { PropTypes, Component } from 'react';
+import MatchModel, { matchOutcome } from '../../../models/MatchModel.js';
+
 import { contextTypes } from '../../../utils/decorators/withContext.js';
 
-import MatchModel from '../../../models/MatchModel.js';
+import MatchCardHeader from './MatchCardHeader.js';
+import MatchPlayers from './MatchPlayers.js';
+import IndividualMatches from './IndividualMatches.js';
 
-import FavoriteMatch from '../FavoriteMatch.js';
-import MatchScore from '../MatchScore';
+// import Icon from '../../controls/Icon';
 
-import Card from 'material-ui/lib/card/card';
-import CardHeader from 'material-ui/lib/card/card-header';
+import CardText from 'material-ui/lib/card/card-text';
 
-const cardClosedSize = 4;
-const cardOpenedSize = 8;
+import Nav from 'react-bootstrap/lib/Nav';
+import NavItem from 'react-bootstrap/lib/NavItem';
+// import cn from 'classnames';
 
 export default class MatchCard extends Component {
-  constructor() {
-    super();
-    this.state = {
-      columnSize: cardClosedSize
-    };
-  }
-
   static contextTypes = contextTypes;
   static propTypes = {
     match: PropTypes.instanceOf(MatchModel).isRequired,
     user: PropTypes.object.isRequired,
-    backgroundColor: PropTypes.string,
-    children: PropTypes.node.isRequired,
+    type: PropTypes.string.isRequired
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      openTabKey: 1
+    };
   }
 
   render() {
-    var match = this.props.match;
-    var score = match.report ? <MatchScore match={match} /> : null;
-    var iPlay = this.props.user.teams.indexOf(match.reeksId) !== -1;
-    var cardStyle = this.props.backgroundColor ? {backgroundColor: this.props.backgroundColor} : null;
-
     return (
-      <div className={'col-md-' + this.state.columnSize} style={{padding: 5}}>
-        <Card style={cardStyle} onExpandChange={::this._onExpandChange}>
-          <CardHeader
-            title={this.context.t('match.vs', {
-              [match.isHomeMatch ? 'home' : 'away']: match.getTeamDesc(),
-              [match.isHomeMatch ? 'away' : 'home']: match.getOpponentDesc()
-            })}
-            subtitle={this.context.t('match.date', match.getDisplayDate())}
-            showExpandableButton={true}
-            avatar={iPlay ? <FavoriteMatch /> : null}>
-            {score}
-          </CardHeader>
-          {this.props.children}
-        </Card>
-      </div>
+      <MatchCardHeader {...this.props} backgroundColor="#fafafa">
+        <CardText expandable={true} style={{paddingTop: 0}}>
+          <Nav bsStyle="tabs" activeKey={this.state.openTabKey} onSelect={::this._onTabSelect}>
+            <NavItem eventKey={1} title={this.context.t('match.tabs.playersTitle')}>{this.context.t('match.tabs.players')}</NavItem>
+            <NavItem eventKey={2} title={this.context.t('match.tabs.matchesTitle')}>{this.context.t('match.tabs.matches')}</NavItem>
+            <NavItem eventKey={3} title={this.context.t('match.tabs.reportTitle')}>{this.context.t('match.tabs.report')}</NavItem>
+          </Nav>
+          {this._renderTabContent()}
+        </CardText>
+      </MatchCardHeader>
     );
   }
+  _onTabSelect(eventKey) {
+    this.setState({openTabKey: eventKey});
+  }
 
-  _onExpandChange(isOpen) {
-    this.setState({columnSize: isOpen ? cardOpenedSize : cardClosedSize});
+  _renderTabContent() {
+    switch (this.state.openTabKey) {
+    case 1:
+      return this._renderPlayers();
+    case 2:
+      return this._renderIndividualMatches();
+    }
+    return this._renderReport();
+  }
+
+  _renderPlayers() {
+    var report = this.props.match.report;
+    if (!report.players.length) {
+      return null;
+    }
+
+    return <MatchPlayers report={report} team={this.props.match.getTeam()} t={this.context.t} />;
+  }
+
+
+  _renderIndividualMatches() {
+    var report = this.props.match.report;
+    if (!report.games.length) {
+      return null;
+    }
+
+    return <IndividualMatches report={report} ownPlayerId={this.props.user.playerId} t={this.context.t} />;
+  }
+
+  _renderReport() {
+    return (
+      <div></div>
+    );
   }
 }
