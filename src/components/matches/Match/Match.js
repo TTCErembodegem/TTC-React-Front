@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import MatchModel, { matchOutcome } from '../../../models/MatchModel.js';
+import { getPlayersPerTeam } from '../../../models/TeamModel.js';
 
 import { contextTypes } from '../../../utils/decorators/withContext.js';
 import withStyles from '../../../utils/decorators/withStyles.js';
@@ -68,8 +69,11 @@ export class MatchNext extends Component {
   }
 }
 
-const Opponent = ({ply}) => (
-  <div>{`${ply.name} (${ply.ranking}): ${ply.won}`}</div>
+const Opponent = ({ply, t}) => (
+  <div>
+    {ply.name}
+    <small> {ply.ranking + ' '}{ply.won ? t('match.enemyVictory', ply.won) : null}</small>
+  </div>
 );
 
 const rankings = ['A', 'B0', 'B2', 'B4', 'B6', 'C0', 'C2', 'C4', 'C6', 'D0', 'D2', 'D4', 'D6', 'E0', 'E2', 'E4', 'E6', 'F', 'NG'];
@@ -77,29 +81,54 @@ function rankingSorter(a, b) {
   return rankings.indexOf(a) - rankings.indexOf(b);
 }
 
-const OwnPlayer = ({report, ply}) => {
+const OwnPlayer = ({report, ply, team}) => {
   var getAdversaryRanking = game => game.home.uniqueIndex === ply.uniqueIndex ? game.out.ranking : game.home.ranking;
   var getRankingResults = function() {
     var plyMatches = report.getGameMatches().filter(game => game.ownPlayer === ply);
+    if (plyMatches.every(game => game.outCome === 'WalkOver')) {
+      return {
+        win: [],
+        lost: [],
+        wo: true
+      };
+    }
     var win = plyMatches.filter(game => game.outcome === matchOutcome.Won);
     var lost = plyMatches.filter(game => game.outcome === matchOutcome.Lost);
     return {
       win: win.map(getAdversaryRanking).sort(rankingSorter),
-      lost: lost.map(getAdversaryRanking).sort(rankingSorter)
+      lost: lost.map(getAdversaryRanking).sort(rankingSorter),
+      wo: false
     };
   };
 
   var result = getRankingResults();
-  var wins = result.win.join(', ');
-  if (result.win.length > 1) {
-    if (result.win.reduce((prev, cur) => prev === cur ? prev : false)) {
-      wins = `${result.win.length}x${result.win[0]}`;
+  var winNode = '';
+  if (result.win.length > 0) {
+    let wins = {};
+    for (let i = 0; i < result.win.length; i++) {
+      let curWin = result.win[i];
+      if (!wins[curWin]) {
+        wins[curWin] = 1;
+      } else {
+        wins[curWin]++;
+      }
     }
+
+    Object.keys(wins).forEach(key => {
+      if (wins[key] === 1) {
+        winNode += ', ' + key;
+      } else {
+        winNode += `, ${wins[key]}x${key}`;
+      }
+    });
+    var playersPerTeam = getPlayersPerTeam(team.competition);
+    winNode = result.win.length === playersPerTeam ? <Icon fa="fa fa-thumbs-up" /> : <small>{winNode.substr(2)}</small>;
   }
+
   return (
     <div>
-      <span className="accentuate">{ply.name} </span>
-      <small>{wins}</small>
+      <span className={cn('accentuate', {irrelevant: result.wo})} style={{marginRight: 7}}>{ply.name}</span>
+      {winNode}
     </div>
   );
 };
@@ -157,12 +186,12 @@ export class MatchPlayed extends Component {
         <div className="col-md-6">
           <h3>{this.context.t('match.playersVictoryTitle')}</h3>
           {report.getOwnPlayers().map(ply => (
-            <OwnPlayer report={report} ply={ply} key={ply.position} />
+            <OwnPlayer report={report} ply={ply} team={this.props.match.getTeam()} key={ply.position} />
           ))}
         </div>
         <div className="col-md-6">
           <h3>{this.context.t('match.playersOpponentsTitle')}</h3>
-          {report.getTheirPlayers().map(ply => <Opponent ply={ply} key={ply.position} />)}
+          {report.getTheirPlayers().map(ply => <Opponent ply={ply} key={ply.position} t={this.context.t} />)}
         </div>
       </div>
     );
@@ -194,7 +223,7 @@ export class MatchPlayed extends Component {
     };
 
     return (
-      <Table condensed hover style={{width: '50%'}}>
+      <Table condensed>
         <thead>
           <tr>
             <th>&nbsp;</th>
@@ -204,7 +233,7 @@ export class MatchPlayed extends Component {
           </tr>
         </thead>
         <tbody>
-          {report.getGameMatches().map(game => {
+          {report.getGameMatches().sort((a, b) => a.matchNumber - b.matchNumber).map(game => {
             matchResult[game.homeSets > game.outSets ? 'home' : 'out']++;
             return (
               <tr key={game.matchNumber}

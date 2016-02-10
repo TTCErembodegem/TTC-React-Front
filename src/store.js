@@ -26,3 +26,15 @@ if (module.hot) {
 }
 
 export default store;
+
+export const util = {
+  getReeks(reeksId) {
+    const teams = store.getState().teams;
+    return teams.find(team => team.reeksId === reeksId);
+  },
+
+  getClub(clubId) {
+    const clubs = store.getState().clubs;
+    return clubs.find(club => club.id === clubId);
+  },
+};

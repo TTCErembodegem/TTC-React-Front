@@ -32,7 +32,7 @@ export default class MatchReportModel {
       ply.nameShort = getFirstName(ply.name);
     });
     this.players.forEach(ply => {
-      var otherPlayers = this.players.filter(otherPly => ply.position !== otherPly.position);
+      var otherPlayers = this.getTheirPlayers().filter(otherPly => ply.position !== otherPly.position);
       if (otherPlayers.find(otherPly => getFirstName(otherPly.nameShort) === ply.nameShort)) {
         ply.nameShort += ply.name.substr(ply.name.indexOf(' '));
       }
@@ -79,10 +79,15 @@ export default class MatchReportModel {
       };
 
       result.ownPlayer = result.home.playerId ? result.home : result.out;
-      result.outcome = game.homePlayerSets > game.outPlayerSets ? matchOutcome.Won : matchOutcome.Lost;
-      if (!this._isHomeMatch) {
-        result.outcome = result.outcome === matchOutcome.Won ? matchOutcome.Lost : matchOutcome.Won;
+      if (game.walkOver === 'None') {
+        result.outcome = game.homePlayerSets > game.outPlayerSets ? matchOutcome.Won : matchOutcome.Lost;
+        if (!this._isHomeMatch) {
+          result.outcome = result.outcome === matchOutcome.Won ? matchOutcome.Lost : matchOutcome.Won;
+        }
+      } else {
+        result.outCome = matchOutcome.WalkOver;
       }
+
       return result;
     });
   }

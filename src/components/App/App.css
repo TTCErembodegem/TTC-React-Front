@@ -175,3 +175,7 @@ textarea {
 .accentuate {
   font-weight: 500;
 }
+
+.irrelevant {
+  text-decoration: line-through;
+}

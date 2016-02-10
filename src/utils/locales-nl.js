@@ -25,7 +25,8 @@ export default {
         matchTitle: 'Match',
         setsTitle: 'Sets',
         resultTitle: 'Uitslag',
-      }
+      },
+      enemyVictory: '${}ov.',
     },
     footer: {
       location: 'Groeneweg 28, 9300 Erembodegem',

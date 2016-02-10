@@ -1,8 +1,7 @@
-import store from '../store.js';
+import { util as storeUtils} from '../store.js';
 
 import keyMirror from 'fbjs/lib/keyMirror';
 import moment from 'moment';
-import _ from 'lodash';
 
 import MatchReportModel from './MatchReportModel.js';
 import { OwnClubId } from './ClubModel.js';
@@ -38,14 +37,16 @@ export default class MatchModel {
   }
 
   getOpponentDesc() {
-    const clubs = store.getState().clubs;
-    var club = _.find(clubs, x => x.id === this.opponent.clubId);
+    var club = storeUtils.getClub(this.opponent.clubId);
     return `${club.name} ${this.opponent.teamCode}`;
   }
 
   getTeamDesc() {
-    const teams = store.getState().teams;
-    var team = _.find(teams, x => x.reeksId === this.reeksId);
+    var team = storeUtils.getReeks(this.reeksId);
     return `${team.competition} ${team.teamCode}`;
+  }
+
+  getTeam() {
+    return storeUtils.getReeks(this.reeksId);
   }
 }
