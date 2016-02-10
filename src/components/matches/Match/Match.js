@@ -77,9 +77,7 @@ function rankingSorter(a, b) {
   return rankings.indexOf(a) - rankings.indexOf(b);
 }
 
-const OwnPlayer = ({report, ply, t}) => {
-  //console.log('own', report.getGameMatches(), ply);
-
+const OwnPlayer = ({report, ply}) => {
   var getAdversaryRanking = game => game.home.uniqueIndex === ply.uniqueIndex ? game.out.ranking : game.home.ranking;
   var getRankingResults = function() {
     var plyMatches = report.getGameMatches().filter(game => game.ownPlayer === ply);
@@ -92,12 +90,16 @@ const OwnPlayer = ({report, ply, t}) => {
   };
 
   var result = getRankingResults();
+  var wins = result.win.join(', ');
+  if (result.win.length > 1) {
+    if (result.win.reduce((prev, cur) => prev === cur ? prev : false)) {
+      wins = `${result.win.length}x${result.win[0]}`;
+    }
+  }
   return (
     <div>
       <span className="accentuate">{ply.name} </span>
-      <span className="accentuate">{result.win.join(', ')} </span>
-      {result.win.length && result.lost.length ? t('and') : null}
-      {result.lost.length ? <span style={{color: '#FF6A6A'}}> {result.lost.join(', ')}</span> : null}
+      <small>{wins}</small>
     </div>
   );
 };
@@ -155,7 +157,7 @@ export class MatchPlayed extends Component {
         <div className="col-md-6">
           <h3>{this.context.t('match.playersVictoryTitle')}</h3>
           {report.getOwnPlayers().map(ply => (
-            <OwnPlayer report={report} ply={ply} t={this.context.t} key={ply.position} />
+            <OwnPlayer report={report} ply={ply} key={ply.position} />
           ))}
         </div>
         <div className="col-md-6">
