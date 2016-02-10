@@ -16,7 +16,7 @@ export default class MatchReportModel {
     }
 
     this.isPlayed = this.scoreType && this.scoreType !== matchOutcome.NotYetPlayed && this.scoreType !== matchOutcome.WalkOver;
-    this.hasExtendedInfo = this.players.length || this.description || false;
+    //this.hasExtendedInfo = !!(this.players.length || this.description || false);
 
     this._isHomeMatch = isHomeMatch;
     this._fixPlayerNameCollisions();
@@ -75,9 +75,10 @@ export default class MatchReportModel {
         home: this.getGamePlayer(game.homePlayerUniqueIndex),
         out: this.getGamePlayer(game.outPlayerUniqueIndex),
         homeSets: game.homePlayerSets,
-        outSets: game.outPlayerSets
+        outSets: game.outPlayerSets,
       };
 
+      result.ownPlayer = result.home.playerId ? result.home : result.out;
       result.outcome = game.homePlayerSets > game.outPlayerSets ? matchOutcome.Won : matchOutcome.Lost;
       if (!this._isHomeMatch) {
         result.outcome = result.outcome === matchOutcome.Won ? matchOutcome.Lost : matchOutcome.Won;

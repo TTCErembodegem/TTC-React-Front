@@ -171,3 +171,7 @@ textarea {
 .label-as-badge {
   border-radius: 1em;
 }
+
+.accentuate {
+  font-weight: 500;
+}

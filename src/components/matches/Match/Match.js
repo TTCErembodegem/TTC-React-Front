@@ -22,6 +22,7 @@ import CardText from 'material-ui/lib/card/card-text';
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
 import Table from 'react-bootstrap/lib/Table';
+import cn from 'classnames';
 
 const matchPropTypes = {
   match: PropTypes.instanceOf(MatchModel).isRequired,
@@ -70,6 +71,36 @@ export class MatchNext extends Component {
 const Opponent = ({ply}) => (
   <div>{`${ply.name} (${ply.ranking}): ${ply.won}`}</div>
 );
+
+const rankings = ['A', 'B0', 'B2', 'B4', 'B6', 'C0', 'C2', 'C4', 'C6', 'D0', 'D2', 'D4', 'D6', 'E0', 'E2', 'E4', 'E6', 'F', 'NG'];
+function rankingSorter(a, b) {
+  return rankings.indexOf(a) - rankings.indexOf(b);
+}
+
+const OwnPlayer = ({report, ply, t}) => {
+  //console.log('own', report.getGameMatches(), ply);
+
+  var getAdversaryRanking = game => game.home.uniqueIndex === ply.uniqueIndex ? game.out.ranking : game.home.ranking;
+  var getRankingResults = function() {
+    var plyMatches = report.getGameMatches().filter(game => game.ownPlayer === ply);
+    var win = plyMatches.filter(game => game.outcome === matchOutcome.Won);
+    var lost = plyMatches.filter(game => game.outcome === matchOutcome.Lost);
+    return {
+      win: win.map(getAdversaryRanking).sort(rankingSorter),
+      lost: lost.map(getAdversaryRanking).sort(rankingSorter)
+    };
+  };
+
+  var result = getRankingResults();
+  return (
+    <div>
+      <span className="accentuate">{ply.name} </span>
+      <span className="accentuate">{result.win.join(', ')} </span>
+      {result.win.length && result.lost.length ? t('and') : null}
+      {result.lost.length ? <span style={{color: '#FF6A6A'}}> {result.lost.join(', ')}</span> : null}
+    </div>
+  );
+};
 
 @withStyles(styles)
 export class MatchPlayed extends Component {
@@ -123,7 +154,9 @@ export class MatchPlayed extends Component {
       <div>
         <div className="col-md-6">
           <h3>{this.context.t('match.playersVictoryTitle')}</h3>
-          {report.getOwnPlayers().map(ply => <div key={ply.position}>{ply.name + ': ' + ply.won}</div>)}
+          {report.getOwnPlayers().map(ply => (
+            <OwnPlayer report={report} ply={ply} t={this.context.t} key={ply.position} />
+          ))}
         </div>
         <div className="col-md-6">
           <h3>{this.context.t('match.playersOpponentsTitle')}</h3>
@@ -132,6 +165,8 @@ export class MatchPlayed extends Component {
       </div>
     );
   }
+
+
   _renderIndividualMatches() {
     var report = this.props.match.report;
     if (!report.games.length) {
@@ -169,11 +204,14 @@ export class MatchPlayed extends Component {
         <tbody>
           {report.getGameMatches().map(game => {
             matchResult[game.homeSets > game.outSets ? 'home' : 'out']++;
-            var isMarked = this.state.selectedPlayerId === game.home.playerId || this.state.selectedPlayerId === game.out.playerId;
             return (
-              <tr key={game.matchNumber} className={isMarked ? 'success' : ''}
-                onMouseOver={this._onIndividualMatchChange.bind(this, game.home.playerId || game.out.playerId)}
-                onClick={this._onIndividualMatchChange.bind(this, game.home.playerId || game.out.playerId)}>
+              <tr key={game.matchNumber}
+                className={cn({
+                  success: game.ownPlayer.playerId === this.state.selectedPlayerId,
+                  accentuate: game.ownPlayer.playerId === this.props.user.playerId
+                })}
+                onMouseOver={this._onIndividualMatchChange.bind(this, game.ownPlayer.playerId)}
+                onClick={this._onIndividualMatchChange.bind(this, game.ownPlayer.playerId)}>
                 <td>{getVictoryIcon(game)}</td>
                 <td>{getPlayerDesc(game.home)}</td>
                 <td>{getPlayerDesc(game.out)}</td>
