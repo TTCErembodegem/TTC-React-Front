@@ -1,11 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 
-import withStyles from '../../../utils/decorators/withStyles.js';
-import styles from './Spinner.css';
+import Icon from './Icon.js';
 
-import Icon from '../Icon';
-
-@withStyles(styles)
 export default class Spinner extends Component {
 
   static defaultProps = {

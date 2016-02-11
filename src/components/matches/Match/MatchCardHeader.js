@@ -4,7 +4,7 @@ import { contextTypes } from '../../../utils/decorators/withContext.js';
 import MatchModel from '../../../models/MatchModel.js';
 
 import FavoriteMatch from '../FavoriteMatch.js';
-import MatchScore from '../MatchScore';
+import MatchScore from '../MatchScore.js';
 
 import Card from 'material-ui/lib/card/card';
 import CardHeader from 'material-ui/lib/card/card-header';

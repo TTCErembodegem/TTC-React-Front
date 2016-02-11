@@ -8,7 +8,7 @@ import styles from './App.css';
 import Header from '../skeleton/Header';
 import Footer from '../skeleton/Footer';
 
-import Spinner from '../controls/Spinner';
+import Spinner from '../controls/Spinner.js';
 import Matches from '../matches/Matches';
 
 function renderApp(children) {

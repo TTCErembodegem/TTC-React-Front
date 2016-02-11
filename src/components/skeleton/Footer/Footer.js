@@ -5,7 +5,7 @@ import styles from './Footer.css';
 import withViewport from '../../../utils/decorators/withViewport.js';
 import withStyles from '../../../utils/decorators/withStyles.js';
 
-import Icon from '../../controls/Icon';
+import Icon from '../../controls/Icon.js';
 
 @withViewport
 @withStyles(styles)

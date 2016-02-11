@@ -2,7 +2,9 @@ import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 
 import Avatar from 'material-ui/lib/avatar';
-import Icon from '../../controls/Icon';
+import Icon from '../controls/Icon.js';
+
+// TODO: Not yet in use.
 
 @connect(state => {
   return {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Icon from '../../controls/Icon';
+import Icon from '../../controls/Icon.js';
 import Telephone from '../../controls/Telephone.js';
 
 const OpponentClubLocations = ({club, t}) => (

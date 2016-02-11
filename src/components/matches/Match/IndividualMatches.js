@@ -3,7 +3,7 @@ import React, { PropTypes, Component } from 'react';
 import { matchOutcome } from '../../../models/MatchModel.js';
 import MatchReportModel from '../../../models/MatchReportModel.js';
 
-import Icon from '../../controls/Icon';
+import Icon from '../../controls/Icon.js';
 import Table from 'react-bootstrap/lib/Table';
 import cn from 'classnames';
 

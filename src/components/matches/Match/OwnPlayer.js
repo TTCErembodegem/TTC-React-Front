@@ -4,7 +4,7 @@ import { matchOutcome } from '../../../models/MatchModel.js';
 import { getPlayersPerTeam } from '../../../models/TeamModel.js';
 import rankingSorter from '../../../models/utils/rankingSorter.js';
 
-import Icon from '../../controls/Icon';
+import Icon from '../../controls/Icon.js';
 import cn from 'classnames';
 
 const OwnPlayer = ({report, ply, team}) => {

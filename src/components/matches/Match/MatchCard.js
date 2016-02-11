@@ -11,7 +11,7 @@ import MatchPlayers from './MatchPlayers.js';
 import IndividualMatches from './IndividualMatches.js';
 import OpponentClubLocations from './OpponentClubLocations.js';
 
-import Icon from '../../controls/Icon';
+import Icon from '../../controls/Icon.js';
 import Telephone from '../../controls/Telephone.js';
 import CardText from 'material-ui/lib/card/card-text';
 import Nav from 'react-bootstrap/lib/Nav';

@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import Icon from './Icon';
+import Icon from './Icon.js';
 
 export default class Telephone extends Component {
   static propTypes = {
