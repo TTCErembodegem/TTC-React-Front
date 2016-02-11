@@ -36,6 +36,10 @@ export default class MatchModel {
     return this.date.format('ddd D/M HH');
   }
 
+  getOpponentClub() {
+    return storeUtils.getClub(this.opponent.clubId);
+  }
+
   getOpponentDesc() {
     var club = storeUtils.getClub(this.opponent.clubId);
     return `${club.name} ${this.opponent.teamCode}`;

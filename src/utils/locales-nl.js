@@ -18,6 +18,8 @@ export default {
         matchesTitle: 'Individuele matchuitslagen',
         report: 'Verslag',
         reportTitle: 'Het wedstrijdverslag',
+        club: 'Lokaal',
+        clubTitle: 'Clublokaal tegenstanders',
       },
       playersVictoryTitle: 'Overwinningen',
       playersOpponentsTitle: 'Tegenstanders',
@@ -27,6 +29,10 @@ export default {
         resultTitle: 'Uitslag',
       },
       enemyVictory: '${}ov.',
+      club: {
+        locationTitle: 'Clublokaal',
+        locationUnknown: 'Niet gekend',
+      }
     },
     footer: {
       location: 'Groeneweg 28, 9300 Erembodegem',

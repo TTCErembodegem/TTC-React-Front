@@ -179,3 +179,9 @@ textarea {
 .irrelevant {
   text-decoration: line-through;
 }
+
+.iconize div {
+  display: inline-block;
+  margin-left: 12px;
+  margin-top: -2px;
+}

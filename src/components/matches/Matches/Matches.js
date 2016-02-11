@@ -42,6 +42,9 @@ export default class Matches extends Component {
 
     return (
       <div>
+        <div className="row">
+          <button>Alle matchen</button> <button>Mijn matchen</button> (use pills?)
+        </div>
         {this._renderMatches(matchesToday, 'today')}
         {matchesToday.length && (matchesNext.length || matchesPlayed.length) ? this._renderDivider() : null}
         {this._renderMatches(matchesNext, 'next')}
@@ -59,10 +62,11 @@ export default class Matches extends Component {
       return null;
     }
 
-    console.log('type is', matchType);
     return (
-      <div className="row">
-        {matches.map(match => <MatchCard match={match} key={match.id} user={this.props.user} type={matchType} />)}
+      <div>
+        <div className="row">
+          {matches.map(match => <MatchCard match={match} key={match.id} user={this.props.user} type={matchType} />)}
+        </div>
       </div>
     );
   }
