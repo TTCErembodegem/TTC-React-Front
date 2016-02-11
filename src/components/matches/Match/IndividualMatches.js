@@ -29,7 +29,7 @@ export default class IndividualMatches extends Component {
     };
 
     return (
-      <Table condensed>
+      <Table condensed className="match-card-tab-individual-matches">
         <thead>
           <tr>
             <th>&nbsp;</th>

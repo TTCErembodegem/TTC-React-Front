@@ -33,7 +33,7 @@ export function players(state = [], action = null) {
   switch (type) {
   case ActionTypes.PLAYERS_LOADED:
     var result = payload.map(x => new PlayerModel(x));
-    console.log('PLAYERS_LOADED', result[0]);
+    console.log('PLAYERS_LOADED', result[0]); // eslint-disable-line
     return result;
   default:
     return state;
@@ -45,7 +45,7 @@ export function clubs(state = [], action = null) {
   switch (type) {
   case ActionTypes.CLUBS_LOADED:
     var result = payload.map(x => new ClubModel(x));
-    console.log('CLUBS_LOADED', result[0]);
+    console.log('CLUBS_LOADED', result[0]); // eslint-disable-line
     return result;
   default:
     return state;
@@ -57,7 +57,7 @@ export function teams(state = [], action = null) {
   switch (type) {
   case ActionTypes.TEAMS_LOADED:
     var result = payload.map(x => new TeamModel(x));
-    console.log('TEAMS_LOADED', result[0]);
+    console.log('TEAMS_LOADED', result[0]); // eslint-disable-line
     return result;
   default:
     return state;
@@ -69,7 +69,7 @@ export function calendar(state = [], action = null) {
   switch (type) {
   case ActionTypes.CALENDAR_LOADED:
     var result = payload.map(x => new MatchModel(x));
-    console.log('CALENDAR_LOADED', result[0]);
+    console.log('CALENDAR_LOADED', result[0]); // eslint-disable-line
     return result;
   default:
     return state;

@@ -17,7 +17,10 @@ export default class TeamModel {
   }
 
   getPlayers() {
-    var result = this.players.map(ply => Object.assign({}, storeUtils.getPlayer(ply.playerId), {type: ply.type}));
+    var result = this.players.map(ply => ({
+      player: storeUtils.getPlayer(ply.playerId),
+      type: ply.type
+    }));
     return result;
   }
 }

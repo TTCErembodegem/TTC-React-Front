@@ -10,6 +10,7 @@ import MatchCardHeader from './MatchCardHeader.js';
 import MatchPlayers from './MatchPlayers.js';
 import IndividualMatches from './IndividualMatches.js';
 import OpponentClubLocations from './OpponentClubLocations.js';
+import PlayerAvatarList from '../../players/PlayerAvatarList.js';
 
 import Icon from '../../controls/Icon.js';
 import Telephone from '../../controls/Telephone.js';
@@ -52,7 +53,9 @@ export default class MatchCard extends Component {
             {!match.isHomeMatch ? this._renderNavItem(tabEventKeys.opponentClub, 'club') : null}
             {this._renderNavItem(tabEventKeys.report, 'report')}
           </Nav>
-          {this._renderTabContent()}
+          <div className="match-card-tab">
+            {this._renderTabContent()}
+          </div>
         </CardText>
       </MatchCardHeader>
     );
@@ -103,6 +106,9 @@ export default class MatchCard extends Component {
       return <MatchPlayers report={report} team={this.props.match.getTeam()} t={this.context.t} />;
     }
 
+    //if (report.players.length === getPlayersPerTeam(team.competition)) {
+    //}
+
     //if (this.props.type === 'today' && match starts in 30min) {
     //}
 
@@ -110,7 +116,14 @@ export default class MatchCard extends Component {
   }
 }
 
+import List from 'material-ui/lib/lists/list';
+import ListItem from 'material-ui/lib/lists/list-item';
 
+const teamPlayerType = {
+  standard: 'Standard',
+  captain: 'Captain',
+  reserve: 'Reserve',
+};
 
 class PlayersSelect extends Component {
   static propTypes = {
@@ -119,16 +132,12 @@ class PlayersSelect extends Component {
   }
 
   render() {
-    console.log(this.props.match);
-
     var content;
     if (!this.props.user.playerId) {
       content = 'Classified :)';
 
     } else if (this.props.user.canManageTeams(this.props.match.teamId)) {
-      let team = this.props.match.getTeam();
-      console.log(team.getPlayers());
-      content = <span>{team.getPlayers().map(x => x.name)}</span>;
+      content = this._renderPlayersSelectForm();
 
     } else if (!this.props.match.report.players.length) {
       content = 'Nog geen spelers ';
@@ -140,9 +149,21 @@ class PlayersSelect extends Component {
 
     return (
       <div>
-        <h3>Kies spelers</h3>
         {content}
       </div>
     );
   }
+
+  _renderPlayersSelectForm() {
+    var team = this.props.match.getTeam();
+
+    return (
+      <div>
+
+        <PlayerAvatarList players={team.getPlayers()} />
+      </div>
+    );
+  }
 }
+
+//{team.getPlayers().map(({player, type}) => <PlayerCard player={player} type={type} key={player.id} />)}

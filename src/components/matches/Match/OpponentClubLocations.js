@@ -4,10 +4,8 @@ import Icon from '../../controls/Icon.js';
 import Telephone from '../../controls/Telephone.js';
 
 const OpponentClubLocations = ({club, t}) => (
-  <div>
-    <div className="col-md-6">
-      <OpponentClubLocation loc={club.mainLocation} t={t} />
-    </div>
+  <div className="match-card-tab-content">
+    <OpponentClubLocation loc={club.mainLocation} t={t} />
   </div>
 );
 
