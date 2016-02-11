@@ -47,6 +47,7 @@
     "glob": "^5.0.15",
     "jest-cli": "^0.5.10",
     "jscs": "^2.3.1",
+    "jscs-import-spaces": "^1.0.0",
     "lodash.merge": "^3.3.2",
     "mkdirp": "^0.5.1",
     "ncp": "^2.0.0",

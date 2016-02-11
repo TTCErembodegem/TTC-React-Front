@@ -1,5 +1,6 @@
 {
   "esnext": true,
+  "plugins": ["jscs-import-spaces"],
 
   "disallowCommaBeforeLineBreak": null,
   "disallowDanglingUnderscores": null,
