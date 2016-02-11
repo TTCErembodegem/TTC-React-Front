@@ -7,7 +7,7 @@ import { contextTypes } from '../../../utils/decorators/withContext.js';
 import withStyles from '../../../utils/decorators/withStyles.js';
 import styles from './Matches.css';
 
-import { players as playerActionCreators } from '../../../actions/players.js';
+//import { players as playerActionCreators } from '../../../actions/players.js';
 
 import MatchCard from '../Match/MatchCard.js';
 
@@ -20,7 +20,7 @@ import MatchCard from '../Match/MatchCard.js';
     calendar: state.calendar,
     teams: state.teams,
   };
-}, playerActionCreators)
+}/*, playerActionCreators*/)
 @withStyles(styles)
 export default class Matches extends Component {
   static contextTypes = contextTypes;

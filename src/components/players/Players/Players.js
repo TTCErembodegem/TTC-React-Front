@@ -5,7 +5,7 @@ import { contextTypes } from '../../../utils/decorators/withContext.js';
 import withStyles from '../../../utils/decorators/withStyles.js';
 import styles from './Players.css';
 
-import { players as playerActionCreators } from '../../../actions/players.js';
+//import { players as playerActionCreators } from '../../../actions/players.js';
 // TODO: playerActionCreators: no longer called from here (but illustration how actionCreators can be passed as props)
 
 @connect(state => {
@@ -16,7 +16,7 @@ import { players as playerActionCreators } from '../../../actions/players.js';
     calendar: state.calendar,
     teams: state.teams,
   };
-}, playerActionCreators)
+}/*, playerActionCreators*/)
 @withStyles(styles)
 export default class Players extends Component {
   static contextTypes = contextTypes;

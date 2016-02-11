@@ -14,7 +14,7 @@ Lucid Chart
 https://www.lucidchart.com/invitations/accept/75107705-57fa-4359-831a-e4ba0289a0d4
 
 Dit is het model zoals beschikbaar in de Redux store.  
-(Grijs = this.state.xxx)  
+(Grijs = this.state.xxx; behalve `matches`, die zitten onder `calendar`)  
 ![Backend TTC.Model](ModelDiagram.png)
 
 
