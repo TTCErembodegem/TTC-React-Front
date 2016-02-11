@@ -31,7 +31,7 @@ export default class MatchCardPlaceHolder extends Component {
   render() {
     var match = this.props.match;
     var score = match.report ? <MatchScore match={match} /> : null;
-    var iPlay = this.props.user.teams.indexOf(match.reeksId) !== -1;
+    var iPlay = this.props.user.playsIn(match.reeksId);
     var cardStyle = this.props.backgroundColor ? {backgroundColor: this.props.backgroundColor} : null;
 
     return (

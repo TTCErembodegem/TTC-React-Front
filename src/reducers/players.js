@@ -4,12 +4,15 @@ import * as ActionTypes from '../actions/ActionTypes.js';
 
 import PlayerModel from '../models/PlayerModel.js';
 import MatchModel from '../models/MatchModel.js';
+import UserModel from '../models/UserModel.js';
+import TeamModel from '../models/TeamModel.js';
+import ClubModel from '../models/ClubModel.js';
 
 export function user(state = {teams: []}, action = null) {
   const {type, payload} = action;
   switch (type) {
   case ActionTypes.LOGIN:
-    return payload;
+    return new UserModel(payload);
   default:
     return state;
   }
@@ -30,7 +33,7 @@ export function players(state = [], action = null) {
   switch (type) {
   case ActionTypes.PLAYERS_LOADED:
     var result = payload.map(x => new PlayerModel(x));
-    //console.log('pls-class', result[0]);
+    //console.log('ply', result[0]);
     return result;
   default:
     return state;
@@ -41,8 +44,9 @@ export function clubs(state = [], action = null) {
   const {type, payload} = action;
   switch (type) {
   case ActionTypes.CLUBS_LOADED:
-    //console.log('clubs', payload[0]);
-    return payload;
+    var result = payload.map(x => new ClubModel(x));
+    //console.log('clubs', result[0]);
+    return result;
   default:
     return state;
   }
@@ -52,8 +56,9 @@ export function teams(state = [], action = null) {
   const {type, payload} = action;
   switch (type) {
   case ActionTypes.TEAMS_LOADED:
-    //console.log('teams', payload[0]);
-    return payload;
+    var result = payload.map(x => new TeamModel(x));
+    //console.log('teams', result[0]);
+    return result;
   default:
     return state;
   }
@@ -63,9 +68,8 @@ export function calendar(state = [], action = null) {
   const {type, payload} = action;
   switch (type) {
   case ActionTypes.CALENDAR_LOADED:
-    //console.log('match', new MatchModel(payload[0]));
     var result = payload.map(x => new MatchModel(x));
-    //console.log('matches', result);
+    //console.log('matches', result[0]);
     return result;
   default:
     return state;

@@ -17,16 +17,16 @@ export var matchOutcome = keyMirror({
 
 export default class MatchModel {
   constructor(json) {
-    for (let prop in json) {
-      if (json.hasOwnProperty(prop)) {
-        this[prop] = json[prop];
-      }
-    }
+    this.id = json.id;
+    this.isHomeMatch = json.isHomeMatch;
+    this.frenoyMatchId = json.frenoyMatchId;
+    this.reeksId = json.reeksId;
+    this.week = json.week;
+    this.opponent = json.opponent;
+    this.date = moment(json.date);
 
-    this.date = moment(this.date);
+    this.report = new MatchReportModel(json.report, this.isHomeMatch);
     this.isDerby = this.opponent.clubId === OwnClubId;
-
-    this.report = new MatchReportModel(this.report, this.isHomeMatch);
   }
 
   getDisplayDate() {

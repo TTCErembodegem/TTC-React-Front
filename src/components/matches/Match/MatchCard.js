@@ -106,7 +106,7 @@ export default class MatchCard extends Component {
     //if (this.props.type === 'today' && match starts in 30min) {
     //}
 
-    return <PlayersSelect match={this.props.match} />;
+    return <PlayersSelect match={this.props.match} user={this.props.user} />;
   }
 }
 
@@ -115,12 +115,34 @@ export default class MatchCard extends Component {
 class PlayersSelect extends Component {
   static propTypes = {
     match: PropTypes.instanceOf(MatchModel).isRequired,
+    user: PropTypes.instanceOf(UserModel).isRequired,
   }
 
   render() {
     console.log(this.props.match);
+
+    var content;
+    if (!this.props.user.playerId) {
+      content = 'Classified :)';
+
+    } else if (this.props.user.canManageTeams(this.props.match.reeksId)) {
+      let team = this.props.match.getTeam();
+      console.log(team.getPlayers());
+      content = <span>{team.getPlayers().map(x => x.name)}</span>;
+
+    } else if (!this.props.match.report.players.length) {
+      content = 'Nog geen spelers ';
+
+
+    } else {
+      content = 'whee';
+    }
+
     return (
-      <span>testy</span>
+      <div>
+        <h3>Kies spelers</h3>
+        {content}
+      </div>
     );
   }
 }

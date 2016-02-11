@@ -18,10 +18,13 @@ import store from './store.js';
 import initialLoad from './actions/initialLoad.js';
 store.dispatch(initialLoad());
 
-import UserModel from './models/UserModel.js';
 store.dispatch({
   type: 'LOGIN',
-  payload: new UserModel({playerId: 20, teams: [245, 250]})
+  payload: {
+    playerId: 20,
+    teams: [245, 250],
+    security: ['CAN_MANAGETEAM']
+  }
 });
 
 const enableDevTools = false;

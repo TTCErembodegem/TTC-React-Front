@@ -37,4 +37,9 @@ export const util = {
     const clubs = store.getState().clubs;
     return clubs.find(club => club.id === clubId);
   },
+
+  getPlayer(playerId) {
+    const players = store.getState().players;
+    return players.find(ply => ply.id === playerId);
+  }
 };

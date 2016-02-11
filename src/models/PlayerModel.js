@@ -1,13 +1,12 @@
 export default class PlayerModel {
   constructor(json) {
-    for (let prop in json) {
-      if (json.hasOwnProperty(prop)) {
-        this[prop] = json[prop];
-      }
-    }
+    this.alias = json.alias;
+    this.contact = json.contact;
+    this.id = json.id;
+    this.active = json.active;
+    this.name = json.name;
+    this.sporta = json.sporta;
+    this.vttl = json.vttl;
+    this.style = json.style;
   }
-
-  // get club() {
-  //   return this.id;
-  // };
 }
