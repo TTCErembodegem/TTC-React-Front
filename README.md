@@ -9,7 +9,14 @@ Diagram van Ttc.Model
 IEnumerables van Club, Team, Match en Player zijn de state aan de frontend.  
 Links tussen deze zijn altijd via int clubId, playerId, etc
 
+Lucid Chart
+-----------
+https://www.lucidchart.com/invitations/accept/75107705-57fa-4359-831a-e4ba0289a0d4
+
+Dit is het model zoals beschikbaar in de Redux store.  
+(Grijs = this.state.xxx)  
 ![Backend TTC.Model](ModelDiagram.png)
+
 
 Linters
 -------
