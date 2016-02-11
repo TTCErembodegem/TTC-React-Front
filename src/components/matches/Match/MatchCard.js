@@ -125,7 +125,7 @@ class PlayersSelect extends Component {
     if (!this.props.user.playerId) {
       content = 'Classified :)';
 
-    } else if (this.props.user.canManageTeams(this.props.match.reeksId)) {
+    } else if (this.props.user.canManageTeams(this.props.match.teamId)) {
       let team = this.props.match.getTeam();
       console.log(team.getPlayers());
       content = <span>{team.getPlayers().map(x => x.name)}</span>;

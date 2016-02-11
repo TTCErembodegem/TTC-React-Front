@@ -28,9 +28,9 @@ if (module.hot) {
 export default store;
 
 export const util = {
-  getReeks(reeksId) {
+  getTeam(teamId) {
     const teams = store.getState().teams;
-    return teams.find(team => team.reeksId === reeksId);
+    return teams.find(team => team.id === teamId);
   },
 
   getClub(clubId) {

@@ -8,7 +8,7 @@ export default class TeamModel {
   constructor(json) {
     this.competition = json.competition;
     this.divisionName = json.divisionName;
-    this.reeksId = json.reeksId;
+    this.id = json.id;
     this.teamCode = json.teamCode;
     this.year = json.year;
     this.frenoy = json.frenoy;

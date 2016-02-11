@@ -20,7 +20,7 @@ export default class MatchModel {
     this.id = json.id;
     this.isHomeMatch = json.isHomeMatch;
     this.frenoyMatchId = json.frenoyMatchId;
-    this.reeksId = json.reeksId;
+    this.teamId = json.teamId;
     this.week = json.week;
     this.opponent = json.opponent;
     this.date = moment(json.date);
@@ -46,11 +46,11 @@ export default class MatchModel {
   }
 
   getTeamDesc() {
-    var team = storeUtils.getReeks(this.reeksId);
+    var team = storeUtils.getTeam(this.teamId);
     return `${team.competition} ${team.teamCode}`;
   }
 
   getTeam() {
-    return storeUtils.getReeks(this.reeksId);
+    return storeUtils.getTeam(this.teamId);
   }
 }
