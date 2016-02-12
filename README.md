@@ -4,6 +4,9 @@ Front: React-Redux
 The port for the backend is atm hardcoded in:  
 `src/utils/httpClient.js`
 
+Template used:  
+https://github.com/kriasoft/react-starter-kit
+
 Diagram van Ttc.Model
 ---------------------
 IEnumerables van Club, Team, Match en Player zijn de state aan de frontend.  
