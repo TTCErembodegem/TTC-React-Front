@@ -64,9 +64,9 @@ export default class IndividualMatches extends Component {
 
   _getPlayerDesc(player) {
     if (!player.home) {
-      return `${player.nameShort} (${player.ranking})`;
+      return `${player.alias} (${player.ranking})`;
     }
-    return player.nameShort;
+    return player.alias;
   }
 
   _getVictoryIcon(game) {

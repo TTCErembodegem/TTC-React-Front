@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import moment from 'moment';
 import { connect } from 'react-redux';
 
@@ -26,7 +27,7 @@ export default class Matches extends Component {
   static contextTypes = contextTypes;
 
   static propTypes = {
-    matches: PropTypes.arrayOf(PropTypes.instanceOf(MatchModel).isRequired).isRequired,
+    matches: ImmutablePropTypes.listOf(PropTypes.instanceOf(MatchModel).isRequired).isRequired,
     user: PropTypes.object.isRequired,
   }
 
@@ -46,9 +47,9 @@ export default class Matches extends Component {
           <button>Alle matchen</button> <button>Mijn matchen</button> (use pills?)
         </div>
         {this._renderMatches(matchesToday, 'today')}
-        {matchesToday.length && (matchesNext.length || matchesPlayed.length) ? this._renderDivider() : null}
+        {matchesToday.size && (matchesNext.size || matchesPlayed.size) ? this._renderDivider() : null}
         {this._renderMatches(matchesNext, 'next')}
-        {matchesNext.length && matchesPlayed.length ? this._renderDivider() : null}
+        {matchesNext.size && matchesPlayed.size ? this._renderDivider() : null}
         {this._renderMatches(matchesPlayed, 'played')}
       </div>
     );
@@ -58,7 +59,7 @@ export default class Matches extends Component {
   }
 
   _renderMatches(matches, matchType) {
-    if (matches.length === 0) {
+    if (matches.size === 0) {
       return null;
     }
 

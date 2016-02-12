@@ -1,4 +1,4 @@
-//import { List, Map } from 'immutable';
+import Immutable from 'immutable';
 import * as ActionTypes from '../actions/ActionTypes.js';
 //import _ from 'lodash';
 
@@ -7,7 +7,7 @@ import UserModel from '../models/UserModel.js';
 import TeamModel from '../models/TeamModel.js';
 import ClubModel from '../models/ClubModel.js';
 
-export function user(state = {teams: []}, action = null) {
+export function user(state = {teams: Immutable.List([])}, action = null) {
   const {type, payload} = action;
   switch (type) {
   case ActionTypes.LOGIN:
@@ -17,47 +17,47 @@ export function user(state = {teams: []}, action = null) {
   }
 }
 
-export function config(state = {initialLoadCompleted: false}, action = null) {
+export function config(state = Immutable.Map({initialLoadCompleted: false}), action = null) {
   const {type} = action;
   switch (type) {
   case ActionTypes.INITIAL_LOADED:
-    return {initialLoadCompleted: true};
+    return Immutable.Map({initialLoadCompleted: true});
   default:
     return state;
   }
 }
 
-export function players(state = [], action = null) {
+export function players(state = Immutable.List([]), action = null) {
   const {type, payload} = action;
   switch (type) {
   case ActionTypes.PLAYERS_LOADED:
     var result = payload.map(x => new PlayerModel(x));
     console.log('PLAYERS_LOADED', result[0]); // eslint-disable-line
-    return result;
+    return Immutable.List(result);
   default:
     return state;
   }
 }
 
-export function clubs(state = [], action = null) {
+export function clubs(state = Immutable.List([]), action = null) {
   const {type, payload} = action;
   switch (type) {
   case ActionTypes.CLUBS_LOADED:
     var result = payload.map(x => new ClubModel(x));
     console.log('CLUBS_LOADED', result[0]); // eslint-disable-line
-    return result;
+    return Immutable.List(result);
   default:
     return state;
   }
 }
 
-export function teams(state = [], action = null) {
+export function teams(state = Immutable.List([]), action = null) {
   const {type, payload} = action;
   switch (type) {
   case ActionTypes.TEAMS_LOADED:
     var result = payload.map(x => new TeamModel(x));
     console.log('TEAMS_LOADED', result[0]); // eslint-disable-line
-    return result;
+    return Immutable.List(result);
   default:
     return state;
   }

@@ -43,7 +43,7 @@ export default class MatchCard extends Component {
 
   render() {
     var match = this.props.match;
-    var showIndividualMatches = match.report.players.length !== 0;
+    var showIndividualMatches = match.report.players.size !== 0;
     return (
       <MatchCardHeader {...this.props} backgroundColor="#fafafa">
         <CardText expandable={true} style={{paddingTop: 0}}>
@@ -102,11 +102,11 @@ export default class MatchCard extends Component {
   _renderPlayers() {
     var report = this.props.match.report;
     var team = this.props.match.getTeam();
-    if (report.players.length === getPlayersPerTeam(team.competition) * 2) {
+    if (report.players.size === getPlayersPerTeam(team.competition) * 2) {
       return <MatchPlayers report={report} team={this.props.match.getTeam()} t={this.context.t} />;
     }
 
-    //if (report.players.length === getPlayersPerTeam(team.competition)) {
+    //if (report.players.size === getPlayersPerTeam(team.competition)) {
     //}
 
     //if (this.props.type === 'today' && match starts in 30min) {
@@ -139,7 +139,7 @@ class PlayersSelect extends Component {
     } else if (this.props.user.canManageTeams(this.props.match.teamId)) {
       content = this._renderPlayersSelectForm();
 
-    } else if (!this.props.match.report.players.length) {
+    } else if (!this.props.match.report.players.size) {
       content = 'Nog geen spelers ';
 
 

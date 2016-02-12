@@ -29,9 +29,9 @@ const OwnPlayer = ({report, ply, team}) => {
 
   var result = getRankingResults();
   var winNode = '';
-  if (result.win.length > 0) {
+  if (result.win.size > 0) {
     let wins = {};
-    for (let i = 0; i < result.win.length; i++) {
+    for (let i = 0; i < result.win.size; i++) {
       let curWin = result.win[i];
       if (!wins[curWin]) {
         wins[curWin] = 1;
@@ -48,7 +48,7 @@ const OwnPlayer = ({report, ply, team}) => {
       }
     });
     var playersPerTeam = getPlayersPerTeam(team.competition);
-    winNode = result.win.length === playersPerTeam ? <Icon fa="fa fa-thumbs-up" /> : <small>{winNode.substr(2)}</small>;
+    winNode = result.win.size === playersPerTeam ? <Icon fa="fa fa-thumbs-up" /> : <small>{winNode.substr(2)}</small>;
   }
 
   return (

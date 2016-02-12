@@ -1,50 +1,16 @@
+import Immutable from 'immutable';
 import { matchOutcome } from './MatchModel.js';
 
-function getFirstName(fullName) {
-  if (fullName.indexOf(' ') === -1) {
-    return fullName;
-  }
-  return fullName.substr(0, fullName.indexOf(' '));
-}
-
 export default class MatchReportModel {
-  constructor(json, isHomeMatch) {
-    for (let prop in json) {
-      if (json.hasOwnProperty(prop)) {
-        this[prop] = json[prop];
-      }
-    }
+  constructor(json) {
+    this.description = json.description;
+    this.playerId = json.playerId;
+    this.score = json.score;
+    this.scoreType = json.scoreType;
+    this.isPlayed = json.isPlayed;
 
-    this.isPlayed = this.scoreType && this.scoreType !== matchOutcome.NotYetPlayed && this.scoreType !== matchOutcome.WalkOver;
-    //this.hasExtendedInfo = !!(this.players.length || this.description || false);
-
-    this._isHomeMatch = isHomeMatch;
-    this._fixPlayerNameCollisions();
-    this._fixHomeProp();
-  }
-
-  _isOwnClubPlayer(isHomePlayer) {
-    return (this._isHomeMatch && isHomePlayer) || (!this._isHomeMatch && !isHomePlayer);
-  }
-  _fixPlayerNameCollisions() {
-    // Fix in case two people are called 'Dirk' etc
-    this.players.forEach(ply => {
-      console.log('p', ply);
-      ply.nameShort = getFirstName(ply.name);
-    });
-    this.players.forEach(ply => {
-      var otherPlayers = this.getTheirPlayers().filter(otherPly => ply.position !== otherPly.position);
-      if (otherPlayers.find(otherPly => getFirstName(otherPly.nameShort) === ply.nameShort)) {
-        ply.nameShort += ply.name.substr(ply.name.indexOf(' '));
-      }
-    });
-  }
-  _fixHomeProp() {
-    // Change the meaning of 'home' from 'was the player playing in his own club'
-    // to 'is the player a member of TTC Erembodegem'
-    this.players.forEach(ply => {
-      ply.home = this._isOwnClubPlayer(ply.home);
-    });
+    this.players = Immutable.List(json.players);
+    this.games = Immutable.List(json.games);
   }
 
   getScore() {
@@ -66,7 +32,7 @@ export default class MatchReportModel {
   }
 
   getGameMatches() {
-    if (!this.games.length) {
+    if (!this.games.size) {
       return null;
     }
 

@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import { connect } from 'react-redux';
 
 import withContext from '../../utils/decorators/withContext.js';
@@ -36,14 +37,12 @@ function renderApp(children) {
 @withStyles(styles)
 export default class App extends Component {
   static propTypes = {
-    config: PropTypes.shape({
-      initialLoadCompleted: PropTypes.bool.isRequired
-    }).isRequired,
+    config: ImmutablePropTypes.map.isRequired,
     children: PropTypes.element,
   };
 
   render() {
-    if (!this.props.config.initialLoadCompleted) {
+    if (!this.props.config.get('initialLoadCompleted')) {
       return renderApp(<Spinner size={5} />);
     }
     return renderApp(this.props.children || <Matches />);

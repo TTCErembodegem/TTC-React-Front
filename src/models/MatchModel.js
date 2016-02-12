@@ -26,7 +26,7 @@ export default class MatchModel {
     this.opponent = json.opponent;
     this.date = moment(json.date);
 
-    this.report = new MatchReportModel(json.report, this.isHomeMatch);
+    this.report = new MatchReportModel(json.report);
     this.isDerby = this.opponent.clubId === OwnClubId;
   }
 
