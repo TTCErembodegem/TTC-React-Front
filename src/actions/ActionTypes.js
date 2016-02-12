@@ -7,4 +7,7 @@ export default keyMirror({
   TEAMS_LOADED: '',
   INITIAL_LOADED: '',
   LOGIN: '',
+
+
+  CALENDAR_PLAYER_SELECT: '',
 });

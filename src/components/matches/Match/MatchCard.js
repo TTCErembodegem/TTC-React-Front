@@ -160,7 +160,7 @@ class PlayersSelect extends Component {
     return (
       <div>
 
-        <PlayerAvatarList players={team.getPlayers()} />
+        <PlayerAvatarList players={team.getPlayers()} match={this.props.match} />
       </div>
     );
   }

@@ -71,6 +71,8 @@ export function calendar(state = [], action = null) {
     var result = payload.map(x => new MatchModel(x));
     console.log('CALENDAR_LOADED', result[0]); // eslint-disable-line
     return result;
+  case ActionTypes.CALENDAR_PLAYER_SELECT:
+    return state;
   default:
     return state;
   }

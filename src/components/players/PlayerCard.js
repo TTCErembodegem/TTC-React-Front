@@ -3,6 +3,8 @@ import PlayerModel from '../../models/PlayerModel.js';
 
 import PlayerAvatarList from './PlayerAvatarList.js';
 
+// Not in use
+
 export default class PlayerCard extends Component {
   static propTypes = {
     player: PropTypes.instanceOf(PlayerModel).isRequired,

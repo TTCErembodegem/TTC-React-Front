@@ -28,6 +28,22 @@ const HttpClient = {
         }
       });
   }),
+  post: (url, data) => new Promise((resolve, reject) => {
+    //console.log(getUrl(url), data);
+    request
+      .post(getUrl(url))
+      .send(data)
+      .set('Accept', 'application/json')
+      .set('Content-Type', 'application/json')
+      .end(function(err, res) {
+        console.log('uhoh', err, res);
+        if (err || !res.ok) {
+          reject();
+        } else {
+          resolve(res.body);
+        }
+      });
+  })
 };
 
 export default HttpClient;

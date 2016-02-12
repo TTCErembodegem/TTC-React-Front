@@ -1,6 +1,6 @@
 import * as ActionTypes from './ActionTypes.js';
 import http from '../utils/httpClient.js';
-import { calendarLoaded } from './calendar.js';
+import { loaded as calendarLoaded } from './calendarActions.js';
 
 function playersLoaded(data) {
   return {
