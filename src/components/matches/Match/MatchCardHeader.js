@@ -44,6 +44,7 @@ export default class MatchCardPlaceHolder extends Component {
             })}
             subtitle={this.context.t('match.date', match.getDisplayDate())}
             showExpandableButton={true}
+            actAsExpander={true}
             avatar={iPlay ? <FavoriteMatch /> : null}>
             {score}
           </CardHeader>
