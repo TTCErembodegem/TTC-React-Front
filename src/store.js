@@ -41,5 +41,10 @@ export const util = {
   getPlayer(playerId) {
     const players = store.getState().players;
     return players.find(ply => ply.id === playerId);
+  },
+
+  getMatch(matchId) {
+    const matches = store.getState().matches;
+    return matches.find(match => match.id === matchId);
   }
 };

@@ -3,6 +3,7 @@ import { util as storeUtils} from '../store.js';
 import keyMirror from 'fbjs/lib/keyMirror';
 import moment from 'moment';
 
+import PlayerModel from './PlayerModel.js';
 import MatchReportModel from './MatchReportModel.js';
 import { OwnClubId } from './ClubModel.js';
 
@@ -52,5 +53,12 @@ export default class MatchModel {
 
   getTeam() {
     return storeUtils.getTeam(this.teamId);
+  }
+
+  plays(playerId) {
+    if (playerId instanceof PlayerModel) {
+      playerId = playerId.id;
+    }
+    return this.report.players.some(ply => ply.playerId === playerId);
   }
 }

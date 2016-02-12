@@ -1,6 +1,6 @@
 import * as ActionTypes from './ActionTypes.js';
 import http from '../utils/httpClient.js';
-//import store from '../store.js';
+import { util as storeUtil } from '../store.js';
 
 export function loaded(data) {
   return {
@@ -30,7 +30,16 @@ function selectedPlayer(data) {
 
 export function selectPlayer(matchId, playerId) {
   return (dispatch, getState) => {
-    //dispatch(initialLoadStarted());
+    var match = storeUtil.getMatch(matchId);
+    var team = storeUtil.getTeam(match.teamId);
+    var player = storeUtil.getPlayer(playerId);
+    console.log(match, speler, team);
+
+    if (match.plays(player)) {
+
+    }
+
+    dispatch(addedPlayer());
 
     //console.log('selectPlayer', getState());
 
