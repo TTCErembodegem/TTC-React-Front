@@ -1,6 +1,6 @@
 import * as ActionTypes from './ActionTypes.js';
 import http from '../utils/httpClient.js';
-import { loaded as calendarLoaded } from './calendarActions.js';
+import { loaded as matchesLoaded } from './matchActions.js';
 
 function playersLoaded(data) {
   return {
@@ -42,7 +42,7 @@ export default function() {
     return Promise.all([
       initialRequest('/players', playersLoaded),
       initialRequest('/clubs', clubsLoaded),
-      initialRequest('/calendar', calendarLoaded),
+      initialRequest('/matches', matchesLoaded),
       initialRequest('/teams', teamsLoaded),
     ]).then(() => dispatch(initialLoadCompleted()));
   };

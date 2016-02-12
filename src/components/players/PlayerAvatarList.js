@@ -10,16 +10,16 @@ import ListItem from 'material-ui/lib/lists/list-item';
 import Divider from 'material-ui/lib/divider';
 import Icon from '../controls/Icon.js';
 
-import * as calendarActions from '../../actions/calendarActions.js';
+import * as matchActions from '../../actions/matchActions.js';
 
 @connect(state => {
   return {
     config: state.config,
     clubs: state.clubs,
-    calendar: state.calendar,
+    matches: state.matches,
     teams: state.teams,
   };
-}, calendarActions)
+}, matchActions)
 export default class PlayerAvatarList extends Component {
   static propTypes = {
     players: PropTypes.arrayOf(PropTypes.shape({
@@ -35,7 +35,7 @@ export default class PlayerAvatarList extends Component {
       <List>
         {this.props.players.map(({player, type}) => {
           var color;
-          if (this.props.match.plays(player.id)) {
+          if (this.props.match.plays(player)) {
             color = '#FFB00F';
           }
           return <PlayerAvatar player={player} select={this._onPlayerSelect.bind(this, player.id)} backgroundColor={color} key={player.id} />;

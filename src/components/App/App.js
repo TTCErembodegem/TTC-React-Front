@@ -28,7 +28,7 @@ function renderApp(children) {
     config: state.config,
     // players: state.players,
     // clubs: state.clubs,
-    // calendar: state.calendar,
+    // matches: state.matches,
     // teams: state.teams
   };
 })

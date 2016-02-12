@@ -3,7 +3,6 @@ import * as ActionTypes from '../actions/ActionTypes.js';
 //import _ from 'lodash';
 
 import PlayerModel from '../models/PlayerModel.js';
-import MatchModel from '../models/MatchModel.js';
 import UserModel from '../models/UserModel.js';
 import TeamModel from '../models/TeamModel.js';
 import ClubModel from '../models/ClubModel.js';
@@ -59,20 +58,6 @@ export function teams(state = [], action = null) {
     var result = payload.map(x => new TeamModel(x));
     console.log('TEAMS_LOADED', result[0]); // eslint-disable-line
     return result;
-  default:
-    return state;
-  }
-}
-
-export function calendar(state = [], action = null) {
-  const {type, payload} = action;
-  switch (type) {
-  case ActionTypes.CALENDAR_LOADED:
-    var result = payload.map(x => new MatchModel(x));
-    console.log('CALENDAR_LOADED', result[0]); // eslint-disable-line
-    return result;
-  case ActionTypes.CALENDAR_PLAYER_SELECT:
-    return state;
   default:
     return state;
   }

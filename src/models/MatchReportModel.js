@@ -29,6 +29,7 @@ export default class MatchReportModel {
   _fixPlayerNameCollisions() {
     // Fix in case two people are called 'Dirk' etc
     this.players.forEach(ply => {
+      console.log('p', ply);
       ply.nameShort = getFirstName(ply.name);
     });
     this.players.forEach(ply => {

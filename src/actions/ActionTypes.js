@@ -3,11 +3,12 @@ import keyMirror from 'fbjs/lib/keyMirror';
 export default keyMirror({
   PLAYERS_LOADED: '',
   CLUBS_LOADED: '',
-  CALENDAR_LOADED: '',
+  MATCHES_LOADED: '',
   TEAMS_LOADED: '',
   INITIAL_LOADED: '',
   LOGIN: '',
 
 
-  CALENDAR_PLAYER_SELECT: '',
+  MATCHES_PLAYER_SELECT: '',
+  MATCHES_PLAYER_TOGGLE: '',
 });

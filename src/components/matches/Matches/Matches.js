@@ -17,7 +17,7 @@ import MatchCard from '../Match/MatchCard.js';
     user: state.user,
     players: state.players,
     clubs: state.clubs,
-    calendar: state.calendar,
+    matches: state.matches,
     teams: state.teams,
   };
 }/*, playerActionCreators*/)
@@ -26,7 +26,7 @@ export default class Matches extends Component {
   static contextTypes = contextTypes;
 
   static propTypes = {
-    calendar: PropTypes.arrayOf(PropTypes.instanceOf(MatchModel).isRequired).isRequired,
+    matches: PropTypes.arrayOf(PropTypes.instanceOf(MatchModel).isRequired).isRequired,
     user: PropTypes.object.isRequired,
   }
 
@@ -36,9 +36,9 @@ export default class Matches extends Component {
 
   render() {
     var today = moment();
-    var matchesToday = this.props.calendar.filter(cal => cal.date.isSame(today, 'day'));
-    var matchesNext = this.props.calendar.filter(cal => cal.date.isAfter(today, 'day'));
-    var matchesPlayed = this.props.calendar.filter(cal => cal.date.isBefore(today, 'day'));
+    var matchesToday = this.props.matches.filter(cal => cal.date.isSame(today, 'day'));
+    var matchesNext = this.props.matches.filter(cal => cal.date.isAfter(today, 'day'));
+    var matchesPlayed = this.props.matches.filter(cal => cal.date.isBefore(today, 'day'));
 
     return (
       <div>

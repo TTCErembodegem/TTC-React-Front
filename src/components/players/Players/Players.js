@@ -13,7 +13,7 @@ import styles from './Players.css';
     config: state.config,
     players: state.players,
     clubs: state.clubs,
-    calendar: state.calendar,
+    matches: state.matches,
     teams: state.teams,
   };
 }/*, playerActionCreators*/)
