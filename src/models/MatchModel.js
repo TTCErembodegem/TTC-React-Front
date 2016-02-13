@@ -108,7 +108,7 @@ export default class MatchModel {
       result.ownPlayer = result.home.playerId ? result.home : result.out;
       if (game.walkOver === 'None') {
         result.outcome = game.homePlayerSets > game.outPlayerSets ? matchOutcome.Won : matchOutcome.Lost;
-        if (!this._isHomeMatch) {
+        if (!this.isHomeMatch) {
           result.outcome = result.outcome === matchOutcome.Won ? matchOutcome.Lost : matchOutcome.Won;
         }
       } else {

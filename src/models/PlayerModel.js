@@ -9,4 +9,8 @@ export default class PlayerModel {
     this.vttl = json.vttl;
     this.style = json.style;
   }
+
+  getCompetition(competition) {
+    return competition === 'Vttl' ? this.vttl : this.sporta;
+  }
 }

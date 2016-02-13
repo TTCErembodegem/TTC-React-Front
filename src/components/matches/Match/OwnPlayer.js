@@ -28,7 +28,6 @@ const OwnPlayer = ({match, ply, team}) => {
   };
 
   var result = getRankingResults();
-
   var winNode = '';
   if (result.win.size > 0) {
     let wins = {};

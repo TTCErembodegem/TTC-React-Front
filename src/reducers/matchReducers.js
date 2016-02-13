@@ -15,40 +15,47 @@ export default function matches(state = Immutable.List([]), action = null) {
   case ActionTypes.MATCHES_PLAYER_TOGGLE:
     //console.log(payload);
 
-    var {match, player} = payload;
-    if (match.plays(player)) {
+    // var {match, player} = payload;
+    // if (match.plays(player)) {
 
-    } else {
-      var matchPlayer = {
-        playerId: player.id
-      };
+    // } else {
+    // var comp = player.getCompetition(match.getTeam().competition);
+    // var matchPlayer = {
+    //   playerId: player.id,
+    //   home: true,
+    //   position: match.players.size + 1,
+    //   ranking: comp.ranking,
+    //   name: player.alias,
+    //   alias: player.alias,
+    //   uniqueIndex: comp.uniqueIndex
+    // };
 
-      //var newMatch = Object.a(match);
+    //var newMatch = Object.a(match);
 
-      // var newPlayers = newMatch.players.push(matchPlayer);
-      // var newMatch = new MatchModel(match);
+    // var newPlayers = newMatch.players.push(matchPlayer);
+    // var newMatch = new MatchModel(match);
 
-      // console.log('tes', newMatch);
+    // console.log('tes', newMatch);
 
-      // console.log(newMatch.players);
+    // console.log(newMatch.players);
 
 
-      //var newMatch = ma
+    //var newMatch = ma
 
-      // var newState = state.update(
-      //   state.findIndex(function(m) {
-      //     return m === match.id;
-      //   }), function() {
-      //     return newMatch;
-      //   }
-      // );
+    // var newState = state.update(
+    //   state.findIndex(function(m) {
+    //     return m === match.id;
+    //   }), function() {
+    //     return newMatch;
+    //   }
+    // );
 
-      // var uhoh = state.find(x => x.id === match.id);
-      // var uhohNew = newState.find(x => x.id === match.id);
+    // var uhoh = state.find(x => x.id === match.id);
+    // var uhohNew = newState.find(x => x.id === match.id);
 
-      // console.log(uhoh === uhohNew, uhoh, uhohNew);
-      return state;
-    }
+    // console.log(uhoh === uhohNew, uhoh, uhohNew);
+    //   return state;
+    // }
 
 
 
