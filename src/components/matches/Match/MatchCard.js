@@ -3,7 +3,6 @@ import { contextTypes } from '../../../utils/decorators/withContext.js';
 
 import UserModel from '../../../models/UserModel.js';
 import MatchModel from '../../../models/MatchModel.js';
-import MatchReportModel from '../../../models/MatchReportModel.js';
 import { getPlayersPerTeam } from '../../../models/TeamModel.js';
 
 import MatchCardHeader from './MatchCardHeader.js';
@@ -43,7 +42,7 @@ export default class MatchCard extends Component {
 
   render() {
     var match = this.props.match;
-    var showIndividualMatches = match.report.players.size !== 0;
+    var showIndividualMatches = match.players.size !== 0;
     return (
       <MatchCardHeader {...this.props} backgroundColor="#fafafa">
         <CardText expandable={true} style={{paddingTop: 0}}>
@@ -88,7 +87,7 @@ export default class MatchCard extends Component {
     return <OpponentClubLocations club={this.props.match.getOpponentClub()} t={this.context.t} />;
   }
   _renderIndividualMatches() {
-    return <IndividualMatches report={this.props.match.report} ownPlayerId={this.props.user.playerId} t={this.context.t} />;
+    return <IndividualMatches match={this.props.match} ownPlayerId={this.props.user.playerId} t={this.context.t} />;
   }
 
 
@@ -100,13 +99,13 @@ export default class MatchCard extends Component {
 
 
   _renderPlayers() {
-    var report = this.props.match.report;
-    var team = this.props.match.getTeam();
-    if (report.players.size === getPlayersPerTeam(team.competition) * 2) {
-      return <MatchPlayers report={report} team={this.props.match.getTeam()} t={this.context.t} />;
+    var match = this.props.match;
+    var team = match.getTeam();
+    if (match.players.size === getPlayersPerTeam(team.competition) * 2) {
+      return <MatchPlayers match={match} team={this.props.match.getTeam()} t={this.context.t} />;
     }
 
-    //if (report.players.size === getPlayersPerTeam(team.competition)) {
+    //if (match.players.size === getPlayersPerTeam(team.competition)) {
     //}
 
     //if (this.props.type === 'today' && match starts in 30min) {
@@ -139,7 +138,7 @@ class PlayersSelect extends Component {
     } else if (this.props.user.canManageTeams(this.props.match.teamId)) {
       content = this._renderPlayersSelectForm();
 
-    } else if (!this.props.match.report.players.size) {
+    } else if (!this.props.match.players.size) {
       content = 'Nog geen spelers ';
 
 

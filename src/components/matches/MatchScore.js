@@ -22,15 +22,15 @@ export default class MatchScore extends Component {
   }
 
   render() {
-    var report = this.props.match.report;
-    if (!report.isPlayed) {
+    var match = this.props.match;
+    if (!match.isPlayed) {
       return null;
     }
 
-    var classColor = this.props.match.isDerby ? getClassName(matchOutcome.Won) : getClassName(report.scoreType);
+    var classColor = this.props.match.isDerby ? getClassName(matchOutcome.Won) : getClassName(match.scoreType);
     return (
       <span className={cn('match-score label label-as-badge', classColor)}>
-        {report.getScore()}
+        {match.getScore()}
       </span>
     );
   }

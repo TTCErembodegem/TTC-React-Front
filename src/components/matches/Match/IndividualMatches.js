@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 
 import { matchOutcome } from '../../../models/MatchModel.js';
-import MatchReportModel from '../../../models/MatchReportModel.js';
+import MatchModel from '../../../models/MatchModel.js';
 
 import Icon from '../../controls/Icon.js';
 import Table from 'react-bootstrap/lib/Table';
@@ -9,7 +9,7 @@ import cn from 'classnames';
 
 export default class IndividualMatches extends Component {
   static propTypes = {
-    report: PropTypes.instanceOf(MatchReportModel),
+    match: PropTypes.instanceOf(MatchModel),
     t: PropTypes.func.isRequired,
     ownPlayerId: PropTypes.number
   }
@@ -39,7 +39,7 @@ export default class IndividualMatches extends Component {
           </tr>
         </thead>
         <tbody>
-          {this.props.report.getGameMatches().sort((a, b) => a.matchNumber - b.matchNumber).map(game => {
+          {this.props.match.getGameMatches().sort((a, b) => a.matchNumber - b.matchNumber).map(game => {
             matchResult[game.homeSets > game.outSets ? 'home' : 'out']++;
             return (
               <tr key={game.matchNumber}

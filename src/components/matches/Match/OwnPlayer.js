@@ -7,10 +7,10 @@ import rankingSorter from '../../../models/utils/rankingSorter.js';
 import Icon from '../../controls/Icon.js';
 import cn from 'classnames';
 
-const OwnPlayer = ({report, ply, team}) => {
+const OwnPlayer = ({match, ply, team}) => {
   var getAdversaryRanking = game => game.home.uniqueIndex === ply.uniqueIndex ? game.out.ranking : game.home.ranking;
   var getRankingResults = function() {
-    var plyMatches = report.getGameMatches().filter(game => game.ownPlayer === ply);
+    var plyMatches = match.getGameMatches().filter(game => game.ownPlayer === ply);
     if (plyMatches.every(game => game.outCome === 'WalkOver')) {
       return {
         win: [],
@@ -28,11 +28,12 @@ const OwnPlayer = ({report, ply, team}) => {
   };
 
   var result = getRankingResults();
+
   var winNode = '';
   if (result.win.size > 0) {
     let wins = {};
     for (let i = 0; i < result.win.size; i++) {
-      let curWin = result.win[i];
+      let curWin = result.win.get(i);
       if (!wins[curWin]) {
         wins[curWin] = 1;
       } else {

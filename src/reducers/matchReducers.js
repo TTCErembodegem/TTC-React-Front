@@ -19,18 +19,18 @@ export default function matches(state = Immutable.List([]), action = null) {
     if (match.plays(player)) {
 
     } else {
-      var reportPlayer = {
+      var matchPlayer = {
         playerId: player.id
       };
 
       //var newMatch = Object.a(match);
 
-      // var newPlayers = newMatch.report.players.push(reportPlayer);
+      // var newPlayers = newMatch.players.push(matchPlayer);
       // var newMatch = new MatchModel(match);
 
       // console.log('tes', newMatch);
 
-      // console.log(newMatch.report.players);
+      // console.log(newMatch.players);
 
 
       //var newMatch = ma
