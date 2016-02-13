@@ -45,18 +45,18 @@ export function selectPlayer(matchId, playerId) {
       uniqueIndex: comp.uniqueIndex
     };
     var newMatch = new MatchModel(Object.assign({}, match, {players: [matchPlayer]}));
-    console.log('n', newMatch);
 
-    dispatch(togglePlayerSelection(matchPlayer));
+    dispatch(togglePlayerSelection(newMatch));
 
-    if (!match.plays(player)) {
-      return http.post('/matches/AddPlayer', matchPlayer)
-        .then(function(data) {
-          dispatch(selectedPlayer(data));
+    //if (!match.plays(player)) {
+    return http.post('/matches/TogglePlayer', matchPlayer)
+      .then(function(data) {
+        console.log('match return', data);
+        dispatch(selectedPlayer(data));
 
-        }, function(err) {
-          console.log('erreur!', err); // eslint-disable-line
-        });
-    }
+      }, function(err) {
+        console.log('erreur!', err); // eslint-disable-line
+      });
+    //}
   };
 }

@@ -30,7 +30,6 @@ export default class MatchCardPlaceHolder extends Component {
 
   render() {
     var match = this.props.match;
-    var score = match.score ? <MatchScore match={match} /> : null;
     var iPlay = this.props.user.playsIn(match.teamId);
     var cardStyle = this.props.backgroundColor ? {backgroundColor: this.props.backgroundColor} : null;
 
@@ -46,7 +45,7 @@ export default class MatchCardPlaceHolder extends Component {
             showExpandableButton={true}
             actAsExpander={true}
             avatar={iPlay ? <FavoriteMatch /> : null}>
-            {score}
+            <MatchScore match={match} />
           </CardHeader>
           {this.props.children}
         </Card>

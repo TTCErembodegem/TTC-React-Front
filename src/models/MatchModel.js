@@ -73,13 +73,6 @@ export default class MatchModel {
 
 
 
-  getScore() {
-    if (!this.isPlayed) {
-      return;
-    }
-    return this.score.home + ' - ' + this.score.out;
-  }
-
   getOwnPlayers() {
     return this.players.filter(player => player.home).sort((a, b) => a.position - b.position);
   }
