@@ -32,7 +32,6 @@ export default class MatchModel {
     this.score = json.score;
     this.scoreType = json.scoreType;
     this.isPlayed = json.isPlayed;
-    console.log(this.isPlayed);
     this.players = Immutable.List(json.players);
     this.games = Immutable.List(json.games);
 

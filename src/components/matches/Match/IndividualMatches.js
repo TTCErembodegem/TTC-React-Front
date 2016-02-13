@@ -18,7 +18,8 @@ export default class IndividualMatches extends Component {
     super(props);
 
     this.state = {
-      selectedPlayerId: props.ownPlayerId
+      //hoverPlayerId: null,
+      pinnedPlayerId: props.ownPlayerId
     };
   }
 
@@ -44,10 +45,10 @@ export default class IndividualMatches extends Component {
             return (
               <tr key={game.matchNumber}
                 className={cn({
-                  success: game.ownPlayer.playerId === this.state.selectedPlayerId,
+                  success: this._isMarkedPlayer(game.ownPlayer.playerId),
                   accentuate: game.ownPlayer.playerId === this.props.ownPlayerId
                 })}
-                onMouseOver={this._onIndividualMatchChange.bind(this, game.ownPlayer.playerId)}
+                //onMouseOver={this._onIndividualMatchHover.bind(this, game.ownPlayer.playerId)}
                 onClick={this._onIndividualMatchChange.bind(this, game.ownPlayer.playerId)}>
                 <td>{this._getVictoryIcon(game)}</td>
                 <td>{this._getPlayerDesc(game.home)}</td>
@@ -60,6 +61,10 @@ export default class IndividualMatches extends Component {
         </tbody>
       </Table>
     );
+  }
+
+  _isMarkedPlayer(playerId) {
+    return playerId === this.state.pinnedPlayerId; // || (!this.state.pinnedPlayerId && playerId === this.state.hoverPlayerId);
   }
 
   _getPlayerDesc(player) {
@@ -75,7 +80,10 @@ export default class IndividualMatches extends Component {
     }
   }
 
+  // _onIndividualMatchHover(selectedPlayerId) {
+  //   this.setState({hoverPlayerId: selectedPlayerId});
+  // }
   _onIndividualMatchChange(selectedPlayerId) {
-    this.setState({selectedPlayerId});
+    this.setState({pinnedPlayerId: this.state.pinnedPlayerId === selectedPlayerId ? null : selectedPlayerId});
   }
 }
