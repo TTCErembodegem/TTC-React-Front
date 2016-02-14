@@ -11,20 +11,10 @@ export function loaded(data) {
   };
 }
 
-function togglePlayerSelection(match, player) {
+function updateMatch(match) {
   return {
-    type: ActionTypes.MATCHES_PLAYER_TOGGLE,
-    payload: {
-      match,
-      player
-    }
-  };
-}
-
-function selectedPlayer(data) {
-  return {
-    type: ActionTypes.MATCHES_PLAYER_SELECT,
-    payload: data
+    type: ActionTypes.MATCHES_UPDATE,
+    payload: match
   };
 }
 
@@ -34,29 +24,26 @@ export function selectPlayer(matchId, playerId) {
     var player = storeUtil.getPlayer(playerId);
     var comp = player.getCompetition(match.getTeam().competition);
 
-    var matchPlayer = {
-      matchId: match.id,
-      playerId: player.id,
-      home: true,
-      position: match.players.size + 1,
-      ranking: comp.ranking,
-      name: player.alias,
-      alias: player.alias,
-      uniqueIndex: comp.uniqueIndex
-    };
-    var newMatch = new MatchModel(Object.assign({}, match, {players: [matchPlayer]}));
+    var matchPlayer = match.plays(player);
+    if (!matchPlayer) {
+      matchPlayer = {
+        matchId: match.id,
+        playerId: player.id,
+        home: true,
+        position: match.players.size + 1,
+        ranking: comp.ranking,
+        name: player.alias,
+        alias: player.alias,
+        uniqueIndex: comp.uniqueIndex
+      };
+    }
 
-    dispatch(togglePlayerSelection(newMatch));
-
-    //if (!match.plays(player)) {
     return http.post('/matches/TogglePlayer', matchPlayer)
       .then(function(data) {
-        console.log('match return', data);
-        dispatch(selectedPlayer(data));
+        dispatch(updateMatch(data));
 
       }, function(err) {
         console.log('erreur!', err); // eslint-disable-line
       });
-    //}
   };
 }

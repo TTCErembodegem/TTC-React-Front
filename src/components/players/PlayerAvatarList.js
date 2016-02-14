@@ -38,7 +38,7 @@ export default class PlayerAvatarList extends Component {
           if (this.props.match.plays(player)) {
             color = '#FFB00F';
           }
-          return <PlayerAvatar player={player} select={this._onPlayerSelect.bind(this, player.id)} backgroundColor={color} key={player.id} />;
+          return <PlayerAvatar player={player} select={this._onPlayerSelect.bind(this, player.id)} backgroundColor={color}  />;
         })}
         <Divider />
 

@@ -67,7 +67,7 @@ export default class MatchModel {
     if (playerId instanceof PlayerModel) {
       playerId = playerId.id;
     }
-    return this.players.some(ply => ply.playerId === playerId);
+    return this.players.find(ply => ply.playerId === playerId);
   }
 
   getPreviousMatch() {

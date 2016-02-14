@@ -36,8 +36,8 @@ const HttpClient = {
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .end(function(err, res) {
-        console.log(url, err || '', res);
         if (err || !res.ok) {
+          console.log(url, err || '', res);
           reject();
         } else {
           resolve(res.body);

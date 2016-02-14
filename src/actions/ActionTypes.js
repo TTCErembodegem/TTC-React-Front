@@ -9,6 +9,6 @@ export default keyMirror({
   LOGIN: '',
 
 
-  MATCHES_PLAYER_SELECT: '',
-  MATCHES_PLAYER_TOGGLE: '',
+  MATCHES_UPDATE: '',
+  //MATCHES_PLAYER_TOGGLE: '',
 });
