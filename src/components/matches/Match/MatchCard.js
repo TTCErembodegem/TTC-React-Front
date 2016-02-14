@@ -119,27 +119,26 @@ export default class MatchCard extends Component {
     var match = this.props.match;
     var team = match.getTeam();
 
-    if (match.scoreType === 'NotYetPlayed' && !this.props.user.playerId) {
-      return <div>Classified :)</div>; // TODO: show some default info for normal visitors
-    }
-
     if (match.players.size === getPlayersPerTeam(team.competition) * 2) {
       return <MatchPlayers match={match} team={this.props.match.getTeam()} t={this.context.t} />;
     }
 
-    if (match.players.size === getPlayersPerTeam(team.competition) && !this.state.forceEditPlayers) {
-      return <PlayersGallery players={this.props.match.getOwnPlayerModels()} user={this.props.user} />;
+    if (this.props.user.playerId) {
+      if (match.players.size === getPlayersPerTeam(team.competition) && !this.state.forceEditPlayers) {
+        return <PlayersGallery players={this.props.match.getOwnPlayerModels()} user={this.props.user} />;
+      }
+
+      if (this.props.user.canManageTeams(this.props.match.teamId)) {
+        return <SelectPlayersForm match={this.props.match} user={this.props.user} />;
+      }
+
+      if (match.players.size) {
+        return <PlayersGallery players={match.getOwnPlayerModels()} user={this.props.user} />;
+      }
     }
 
-    if (this.props.user.canManageTeams(this.props.match.teamId)) {
-      return <SelectPlayersForm match={this.props.match} user={this.props.user} />;
-    }
-
-    if (match.players.size) {
-      return <PlayersGallery players={match.getOwnPlayerModels()} user={this.props.user} />;
-    }
-
-    return <div className="match-card-tab-content"><h3>{this.context.t('match.formationUnknown')}</h3></div>;
+    var standardPlayers = team.getPlayers('standard').map(ply => ply.player);
+    return <PlayersGallery players={standardPlayers} user={this.props.user} />;
   }
 }
 
@@ -169,7 +168,7 @@ const PlayersGallery = ({players, user}) => (
         <GridTile
           key={ply.id}
           title={ply.alias}
-          subtitle={<Telephone number={ply.contact.mobile} />}>
+          subtitle={user.playerId ? <Telephone number={ply.contact.mobile} /> : null}>
           <PlayerImage playerId={ply.id} />
         </GridTile>
       ))}
