@@ -185,3 +185,15 @@ textarea {
   margin-left: 12px;
   margin-top: -2px;
 }
+
+.match-lost {
+  background-color: #FF6666;
+}
+
+.match-won {
+  background-color: #f0ad4e;
+}
+
+.match-draw {
+  background-color: #A2C93A;
+}

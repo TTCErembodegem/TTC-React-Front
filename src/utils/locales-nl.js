@@ -2,6 +2,7 @@ export default {
   lang: 'nl',
   trans: {
     fullClubName: 'TTC Erembodegem',
+    clubName: 'Erembodegem',
     nav: {
       players: 'Spelers'
     },

@@ -70,7 +70,9 @@ export default class MatchModel {
     return this.players.some(ply => ply.playerId === playerId);
   }
 
+  getPreviousMatch() {
 
+  }
 
 
   getOwnPlayers() {

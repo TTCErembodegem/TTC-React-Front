@@ -7,11 +7,11 @@ import cn from 'classnames';
 function getClassName(scoreType) {
   switch (scoreType) {
   case matchOutcome.Won:
-    return 'label-info';
+    return 'match-won';
   case matchOutcome.Draw:
-    return 'label-default';
+    return 'match-draw';
   }
-  return 'label-warning';
+  return 'match-lost';
 }
 
 export default class MatchScore extends Component {
@@ -24,7 +24,10 @@ export default class MatchScore extends Component {
   render() {
     var match = this.props.match;
     if (!match.score || (match.score.home === 0 && match.score.out === 0)) {
-      return null;
+      match = match.getPreviousMatch();
+      if (!match) {
+        return null;
+      }
     }
 
     var classColor = this.props.match.isDerby ? getClassName(matchOutcome.Won) : getClassName(match.scoreType);

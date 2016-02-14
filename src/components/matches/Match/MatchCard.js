@@ -42,7 +42,7 @@ export default class MatchCard extends Component {
 
   render() {
     var match = this.props.match;
-    var showIndividualMatches = match.players.size !== 0;
+    var showIndividualMatches = match.games.size !== 0;
     return (
       <MatchCardHeader {...this.props} backgroundColor="#fafafa">
         <CardText expandable={true} style={{paddingTop: 0}}>
