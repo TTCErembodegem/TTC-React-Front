@@ -19,6 +19,7 @@ function updateMatch(match) {
 }
 
 export function selectPlayer(matchId, playerId) {
+  console.log('dispatch selectPlayer', matchId, playerId, arguments);
   return (dispatch, getState) => {
     var match = storeUtil.getMatch(matchId);
     var player = storeUtil.getPlayer(playerId);

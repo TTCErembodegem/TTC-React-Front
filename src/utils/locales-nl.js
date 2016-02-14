@@ -33,7 +33,8 @@ export default {
       club: {
         locationTitle: 'Clublokaal',
         locationUnknown: 'Niet gekend',
-      }
+      },
+      chooseOtherPlayer: 'Andere speler opstellen'
     },
     footer: {
       location: 'Groeneweg 28, 9300 Erembodegem',

@@ -16,7 +16,7 @@ function sortMappedPlayers(competition) {
     if (!bComp) {
       return 1;
     }
-    return aComp.rankingIndex - bComp.rankingIndex;
+    return aComp.position - bComp.position;
   };
 }
 
@@ -63,6 +63,6 @@ export function sortPlayers(competition) {
     if (!bComp) {
       return 1;
     }
-    return aComp.rankingIndex - bComp.rankingIndex;
+    return aComp.position - bComp.position;
   };
 }

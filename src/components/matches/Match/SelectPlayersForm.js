@@ -1,5 +1,7 @@
 import React, { PropTypes, Component } from 'react';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import { connect } from 'react-redux';
+import { contextTypes } from '../../../utils/decorators/withContext.js';
 
 import PlayerModel from '../../../models/PlayerModel.js';
 import MatchModel from '../../../models/MatchModel.js';
@@ -9,40 +11,90 @@ import Avatar from 'material-ui/lib/avatar';
 import List from 'material-ui/lib/lists/list';
 import ListItem from 'material-ui/lib/lists/list-item';
 import Divider from 'material-ui/lib/divider';
+import AutoComplete from 'material-ui/lib/auto-complete';
+import MenuItem from 'material-ui/lib/menus/menu-item';
 
 import * as matchActions from '../../../actions/matchActions.js';
 
+@connect(state => {
+  return {
+    players: state.players,
+  };
+}, matchActions)
 export default class SelectPlayersForm extends Component {
   static propTypes = {
+    players: ImmutablePropTypes.listOf(PropTypes.instanceOf(PlayerModel).isRequired).isRequired,
     match: PropTypes.instanceOf(MatchModel).isRequired,
     user: PropTypes.instanceOf(UserModel).isRequired,
+    selectPlayer: PropTypes.func.isRequired,
   }
 
   render() {
     var team = this.props.match.getTeam();
     var reservePlayers = team.getPlayers('reserve');
 
+    // Add one time team players
+    var selectedFromTeam = team.getPlayers().map(ply => ply.player.id);
+    var otherSelectedPlayers = this.props.match.getOwnPlayerModels()
+      .filter(ply => selectedFromTeam.indexOf(ply.id) === -1)
+      .map(ply => ({
+        player: ply,
+        type: 'Invaller'
+      }));
+    reservePlayers = reservePlayers.concat(otherSelectedPlayers.toArray());
+
     return (
       <div>
-        <PlayerAvatarList players={team.getPlayers('standard')} match={this.props.match} />
-        {reservePlayers.size ? <Divider /> : null}
-        {reservePlayers.size ? <PlayerAvatarList players={reservePlayers} match={this.props.match} /> : null}
+        <PlayerAvatarList players={team.getPlayers('standard')} match={this.props.match} selectPlayer={this.props.selectPlayer} />
+        {reservePlayers.length ? <Divider /> : null}
+        {reservePlayers.length ? <PlayerAvatarList players={reservePlayers} match={this.props.match} selectPlayer={this.props.selectPlayer} /> : null}
         <Divider />
+        <PlayerSelector players={this.props.players} selectPlayer={this.props.selectPlayer.bind(this, this.props.match.id)} />
       </div>
     );
   }
 }
 
-@connect(state => {
-  return {
-    matches: state.matches, // TODO: check how to connect the selectPlayer action only
-  };
-}, matchActions)
+class PlayerSelector extends Component {
+  static contextTypes = contextTypes;
+  static propTypes = {
+    players: ImmutablePropTypes.listOf(PropTypes.instanceOf(PlayerModel).isRequired).isRequired,
+    selectPlayer: PropTypes.func.isRequired,
+  }
+
+  _onPlayerSelected(text) {
+    if (text) {
+      var matchedPlayers = this.props.players.filter(ply => ply.alias.toUpperCase() === text.toUpperCase());
+      if (matchedPlayers.size === 1) {
+        this.props.selectPlayer(matchedPlayers.first().id);
+      }
+    }
+  }
+
+  render() {
+    var players = this.props.players.map(ply => ({
+      text: ply.alias,
+      value: <MenuItem primaryText={ply.alias} />,
+    }));
+
+    return (
+      <AutoComplete
+        style={{marginLeft: 10}}
+        hintText={this.context.t('match.chooseOtherPlayer')}
+        filter={AutoComplete.fuzzyFilter}
+        onNewRequest={::this._onPlayerSelected}
+        triggerUpdateOnFocus={false}
+        dataSource={players.toArray()} />
+    );
+  }
+}
+
+
 class PlayerAvatarList extends Component {
   static propTypes = {
     players: PropTypes.arrayOf(PropTypes.shape({
       player: PropTypes.instanceOf(PlayerModel).isRequired,
-      type: PropTypes.oneOf(['Standard', 'Captain', 'Reserve']).isRequired,
+      type: PropTypes.oneOf(['Standard', 'Captain', 'Reserve', 'Invaller']).isRequired,
     })),
     match: PropTypes.instanceOf(MatchModel).isRequired,
     selectPlayer: PropTypes.func.isRequired
