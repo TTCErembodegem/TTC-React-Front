@@ -9,7 +9,7 @@ import MatchCardHeader from './MatchCardHeader.js';
 import MatchPlayers from './MatchPlayers.js';
 import IndividualMatches from './IndividualMatches.js';
 import OpponentClubLocations from './OpponentClubLocations.js';
-import PlayerAvatarList from '../../players/PlayerAvatarList.js';
+import SelectPlayersForm from './SelectPlayersForm.js';
 
 import Icon from '../../controls/Icon.js';
 import Telephone from '../../controls/Telephone.js';
@@ -69,7 +69,9 @@ export default class MatchCard extends Component {
     var match = this.props.match;
     var team = match.getTeam();
     var playerSelectionComplete = match.players.size === getPlayersPerTeam(team.competition);
-    return playerSelectionComplete ? <Icon fa="fa fa-pencil-square-o" onClick={::this._onStartEditPlayers} className="match-card-tab-icon" /> : null;
+    var isAllowedToEdit = this.props.user.canManageTeams(this.props.match.teamId);
+    return playerSelectionComplete && isAllowedToEdit ? (
+      <Icon fa="fa fa-pencil-square-o" onClick={::this._onStartEditPlayers} className="match-card-tab-icon" />) : null;
   }
   _onStartEditPlayers() {
     this.setState({forceEditPlayers: !this.state.forceEditPlayers});
@@ -119,24 +121,29 @@ export default class MatchCard extends Component {
 
     if (match.scoreType === 'NotYetPlayed' && !this.props.user.playerId) {
       return <div>Classified :)</div>; // TODO: show some default info for normal visitors
-
-    } else if (match.players.size === getPlayersPerTeam(team.competition) * 2) {
-      return <MatchPlayers match={match} team={this.props.match.getTeam()} t={this.context.t} />;
-
-    } else if (match.players.size === getPlayersPerTeam(team.competition) && !this.state.forceEditPlayers) {
-      //return <PlayersSelected match={this.props.match} user={this.props.user} />;
-      return <PlayersSelectedFull match={this.props.match} user={this.props.user} />;
     }
 
-    return <PlayersSelect match={this.props.match} user={this.props.user} />;
+    if (match.players.size === getPlayersPerTeam(team.competition) * 2) {
+      return <MatchPlayers match={match} team={this.props.match.getTeam()} t={this.context.t} />;
+    }
+
+    if (match.players.size === getPlayersPerTeam(team.competition) && !this.state.forceEditPlayers) {
+      return <PlayersGallery players={this.props.match.getOwnPlayerModels()} user={this.props.user} />;
+    }
+
+    if (this.props.user.canManageTeams(this.props.match.teamId)) {
+      return <SelectPlayersForm match={this.props.match} user={this.props.user} />;
+    }
+
+    if (match.players.size) {
+      return <PlayersGallery players={match.getOwnPlayerModels()} user={this.props.user} />;
+    }
+
+    return <div className="match-card-tab-content"><h3>{this.context.t('match.formationUnknown')}</h3></div>;
   }
 }
 
-const teamPlayerType = {
-  standard: 'Standard',
-  captain: 'Captain',
-  reserve: 'Reserve',
-};
+
 
 const gridStyles = {
   root: {
@@ -151,17 +158,14 @@ const gridStyles = {
     marginBottom: -8
   },
 };
-
-
-
 // TODO: cols must be set to two on small devices
-const PlayersSelectedFull = ({match, user}) => (
+const PlayersGallery = ({players, user}) => (
   <div style={gridStyles.root}>
     <GridList
       cellHeight={200}
       cols={4}
       style={gridStyles.gridList}>
-      {match.getOwnPlayerModels().map(ply => (
+      {players.map(ply => (
         <GridTile
           key={ply.id}
           title={ply.alias}
@@ -173,49 +177,8 @@ const PlayersSelectedFull = ({match, user}) => (
   </div>
 );
 
+
+
 const PlayerImage = ({playerId}) => (
   <img src={'/img/players/' + playerId + '.jpg'} />
 );
-
-class PlayersSelect extends Component {
-  static propTypes = {
-    match: PropTypes.instanceOf(MatchModel).isRequired,
-    user: PropTypes.instanceOf(UserModel).isRequired,
-  }
-
-  render() {
-    var content;
-
-
-    if (this.props.user.canManageTeams(this.props.match.teamId)) {
-      content = this._renderPlayersSelectForm();
-
-    } else if (!this.props.match.players.size) {
-      content = 'Nog geen spelers ';
-
-
-    } else {
-      content = 'whee';
-    }
-
-    return (
-      <div>
-        {content}
-      </div>
-    );
-  }
-
-  _renderPlayersSelectForm() {
-    var team = this.props.match.getTeam();
-    var reservePlayers = team.getPlayers('reserve');
-
-    return (
-      <div>
-        <PlayerAvatarList players={team.getPlayers('standard')} match={this.props.match} />
-        {reservePlayers.size ? <Divider /> : null}
-        {reservePlayers.size ? <PlayerAvatarList players={reservePlayers} match={this.props.match} /> : null}
-        <Divider />
-      </div>
-    );
-  }
-}

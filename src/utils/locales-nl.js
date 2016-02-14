@@ -33,7 +33,8 @@ export default {
       club: {
         locationTitle: 'Clublokaal',
         locationUnknown: 'Niet gekend',
-      }
+      },
+      formationUnknown: 'Nog geen opstelling'
     },
     footer: {
       location: 'Groeneweg 28, 9300 Erembodegem',

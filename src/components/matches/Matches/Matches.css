@@ -1,10 +1,5 @@
 /* @import '../variables.css'; */
 
-.match-score {
-  font-size: 16px;
-  margin-left: 12px;
-}
-
 .match-card-tab {
   background-color: white;
   border-left: 1px solid #ddd;
@@ -20,8 +15,6 @@
   /*padding-left: 24px;*/
   padding-bottom: 8px;
   padding-top: 1px;
-
-
 }
 
 .match-card-tab-content {

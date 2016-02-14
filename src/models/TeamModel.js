@@ -4,6 +4,12 @@ export function getPlayersPerTeam(competition) {
   return competition === 'Vttl' ? 4 : 3;
 }
 
+const teamPlayerType = {
+  standard: 'Standard',
+  captain: 'Captain',
+  reserve: 'Reserve',
+};
+
 export default class TeamModel {
   constructor(json) {
     this.competition = json.competition;
@@ -19,9 +25,9 @@ export default class TeamModel {
   getPlayers(type) {
     var players = this.players;
     if (type === 'reserve') {
-      players = players.filter(ply => ply.type === 'Reserve');
+      players = players.filter(ply => ply.type === teamPlayerType.reserve);
     } else if (type === 'standard') {
-      players = players.filter(ply => ply.type !== 'Reserve');
+      players = players.filter(ply => ply.type !== teamPlayerType.reserve);
     }
 
     players = players.map(ply => ({

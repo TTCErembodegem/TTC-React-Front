@@ -2,7 +2,7 @@ import * as ActionTypes from './ActionTypes.js';
 import http from '../utils/httpClient.js';
 import { util as storeUtil } from '../store.js';
 
-import MatchModel from '../models/MatchModel.js';
+//import MatchModel from '../models/MatchModel.js';
 
 export function loaded(data) {
   return {
@@ -29,7 +29,7 @@ export function selectPlayer(matchId, playerId) {
       matchPlayer = {
         matchId: match.id,
         playerId: player.id,
-        home: true,
+        home: match.isHomeMatch,
         position: match.players.size + 1,
         ranking: comp.ranking,
         name: player.alias,

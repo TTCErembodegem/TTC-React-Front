@@ -34,11 +34,12 @@ export default class MatchCardPlaceHolder extends Component {
     var score = <MatchScore match={match} />;
     var cardStyle = this.props.backgroundColor ? {backgroundColor: this.props.backgroundColor} : null;
 
+    // TODO: debugging display of match.id below
     return (
       <div className={'col-md-' + this.state.columnSize} style={{padding: 5}}>
         <Card style={cardStyle} onExpandChange={::this._onExpandChange}>
           <CardHeader
-            title={this.context.t('match.vs', {
+            title={match.id + ' - ' + this.context.t('match.vs', {
               [match.isHomeMatch ? 'home' : 'away']: match.getTeamDesc(),
               [match.isHomeMatch ? 'away' : 'home']: match.getOpponentDesc()
             })}
