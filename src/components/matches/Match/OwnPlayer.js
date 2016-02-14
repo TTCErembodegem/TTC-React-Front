@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { matchOutcome } from '../../../models/MatchModel.js';
-import { getPlayersPerTeam } from '../../../models/TeamModel.js';
+//import { getPlayersPerTeam } from '../../../models/TeamModel.js';
 import rankingSorter from '../../../models/utils/rankingSorter.js';
 
 import Icon from '../../controls/Icon.js';
@@ -47,8 +47,7 @@ const OwnPlayer = ({match, ply, team}) => {
         winNode += `, ${wins[key]}x${key}`;
       }
     });
-    var playersPerTeam = getPlayersPerTeam(team.competition);
-    winNode = result.win.size === playersPerTeam ? <Icon fa="fa fa-thumbs-up" /> : <small>{winNode.substr(2)}</small>;
+    winNode = result.win.size === team.getTeamPlayerCount() ? <Icon fa="fa fa-thumbs-up" /> : <small>{winNode.substr(2)}</small>;
   }
 
   return (

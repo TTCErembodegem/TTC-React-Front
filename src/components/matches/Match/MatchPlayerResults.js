@@ -3,7 +3,7 @@ import React from 'react';
 import OpponentPlayer from './OpponentPlayer.js';
 import OwnPlayer from './OwnPlayer.js';
 
-const MatchPlayers = ({match, team, t}) => (
+const MatchPlayerResults = ({match, team, t}) => (
   <div className="match-card-tab-content">
     <div>
       <h3>{t('match.playersVictoryTitle')}</h3>
@@ -18,4 +18,4 @@ const MatchPlayers = ({match, team, t}) => (
   </div>
 );
 
-export default MatchPlayers;
+export default MatchPlayerResults;

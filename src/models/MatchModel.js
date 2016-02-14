@@ -5,6 +5,7 @@ import moment from 'moment';
 import { util as storeUtils} from '../store.js';
 import PlayerModel from './PlayerModel.js';
 import { OwnClubId } from './ClubModel.js';
+import { sortPlayers } from './TeamModel.js';
 
 export var matchOutcome = keyMirror({
   NotYetPlayed: '',
@@ -75,7 +76,10 @@ export default class MatchModel {
   }
 
   getOwnPlayerModels() {
-    return this.getOwnPlayers().map(ply => storeUtils.getPlayer(ply.playerId));
+    var team = this.getTeam();
+    return this.getOwnPlayers()
+      .map(ply => storeUtils.getPlayer(ply.playerId))
+      .sort(sortPlayers(team.competition));
   }
 
   getOwnPlayers() {

@@ -1,14 +1,24 @@
 import { util as storeUtils} from '../store.js';
 
-export function getPlayersPerTeam(competition) {
-  return competition === 'Vttl' ? 4 : 3;
-}
-
 const teamPlayerType = {
   standard: 'Standard',
   captain: 'Captain',
   reserve: 'Reserve',
 };
+
+function sortMappedPlayers(competition) {
+  return (plyA, plyB) => {
+    var aComp = plyA.player.getCompetition(competition);
+    var bComp = plyB.player.getCompetition(competition);
+    if (!aComp) {
+      return -1;
+    }
+    if (!bComp) {
+      return 1;
+    }
+    return aComp.rankingIndex - bComp.rankingIndex;
+  };
+}
 
 export default class TeamModel {
   constructor(json) {
@@ -20,6 +30,10 @@ export default class TeamModel {
     this.frenoy = json.frenoy;
     this.opponents = json.opponents;
     this.players = json.players;
+  }
+
+  getTeamPlayerCount() {
+    return this.competition === 'Vttl' ? 4 : 3;
   }
 
   getPlayers(type) {
@@ -35,8 +49,20 @@ export default class TeamModel {
       type: ply.type
     }));
 
-    return players;
-    //return players.sort((a, b) => a.player.getCompetition(this.competition).ranking - b.player.getCompetition(this.competition).ranking);
-    // TODO: sort on position of competition
+    return players.sort(sortMappedPlayers(this.competition));
   }
+}
+
+export function sortPlayers(competition) {
+  return (plyA, plyB) => {
+    var aComp = plyA.getCompetition(competition);
+    var bComp = plyB.getCompetition(competition);
+    if (!aComp) {
+      return -1;
+    }
+    if (!bComp) {
+      return 1;
+    }
+    return aComp.rankingIndex - bComp.rankingIndex;
+  };
 }

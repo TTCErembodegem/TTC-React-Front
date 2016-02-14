@@ -17,7 +17,7 @@ export default class UserModel {
     return this._security.indexOf(what) !== -1;
   }
 
-  canManageTeams(teamId) {
+  canManageTeam(teamId) {
     return this.playsIn(teamId) || this.can(security.CAN_MANAGETEAM);
   }
 }

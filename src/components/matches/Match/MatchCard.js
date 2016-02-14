@@ -3,10 +3,9 @@ import { contextTypes } from '../../../utils/decorators/withContext.js';
 
 import UserModel from '../../../models/UserModel.js';
 import MatchModel from '../../../models/MatchModel.js';
-import { getPlayersPerTeam } from '../../../models/TeamModel.js';
 
 import MatchCardHeader from './MatchCardHeader.js';
-import MatchPlayers from './MatchPlayers.js';
+import MatchPlayerResults from './MatchPlayerResults.js';
 import IndividualMatches from './IndividualMatches.js';
 import OpponentClubLocations from './OpponentClubLocations.js';
 import SelectPlayersForm from './SelectPlayersForm.js';
@@ -68,8 +67,8 @@ export default class MatchCard extends Component {
   _getPlayersEditIcon() {
     var match = this.props.match;
     var team = match.getTeam();
-    var playerSelectionComplete = match.players.size === getPlayersPerTeam(team.competition);
-    var isAllowedToEdit = this.props.user.canManageTeams(this.props.match.teamId);
+    var playerSelectionComplete = match.players.size === team.getTeamPlayerCount();
+    var isAllowedToEdit = this.props.user.canManageTeam(this.props.match.teamId);
     return playerSelectionComplete && isAllowedToEdit ? (
       <Icon fa="fa fa-pencil-square-o" onClick={::this._onStartEditPlayers} className="match-card-tab-icon" />) : null;
   }
@@ -119,17 +118,17 @@ export default class MatchCard extends Component {
     var match = this.props.match;
     var team = match.getTeam();
 
-    if (match.players.size === getPlayersPerTeam(team.competition) * 2) {
-      return <MatchPlayers match={match} team={this.props.match.getTeam()} t={this.context.t} />;
+    if (match.players.size === team.getTeamPlayerCount() * 2) {
+      return <MatchPlayerResults match={match} team={match.getTeam()} t={this.context.t} />;
     }
 
     if (this.props.user.playerId) {
-      if (match.players.size === getPlayersPerTeam(team.competition) && !this.state.forceEditPlayers) {
-        return <PlayersGallery players={this.props.match.getOwnPlayerModels()} user={this.props.user} />;
+      if (match.players.size === team.getTeamPlayerCount() && !this.state.forceEditPlayers) {
+        return <PlayersGallery players={match.getOwnPlayerModels()} user={this.props.user} />;
       }
 
-      if (this.props.user.canManageTeams(this.props.match.teamId)) {
-        return <SelectPlayersForm match={this.props.match} user={this.props.user} />;
+      if (this.props.user.canManageTeam(match.teamId)) {
+        return <SelectPlayersForm match={match} user={this.props.user} />;
       }
 
       if (match.players.size) {

@@ -39,7 +39,7 @@ export default class Matches extends Component {
     var today = moment();
     var matchesToday = this.props.matches.filter(cal => cal.date.isSame(today, 'day'));
     var matchesNext = this.props.matches.filter(cal => cal.date.isAfter(today, 'day'));
-    var matchesPlayed = this.props.matches.filter(cal => cal.date.isBefore(today, 'day'));
+    var matchesPlayed = this.props.matches.filter(cal => cal.date.isBefore(today, 'day')).sort(cal => cal.date);
 
     return (
       <div>
