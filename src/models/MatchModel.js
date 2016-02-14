@@ -30,8 +30,8 @@ export default class MatchModel {
     this.description = json.description;
     this.playerId = json.playerId;
     this.score = json.score;
-    this.scoreType = json.scoreType;
-    this.isPlayed = json.isPlayed;
+    this.scoreType = json.scoreType; // NotYetPlayed, Won, Lost, Draw, WalkOver, BeingPlayed
+    //this.isPlayed = json.isPlayed;
     this.players = Immutable.List(json.players);
     this.games = Immutable.List(json.games);
 
@@ -74,6 +74,9 @@ export default class MatchModel {
 
   }
 
+  getOwnPlayerModels() {
+    return this.getOwnPlayers().map(ply => storeUtils.getPlayer(ply.playerId));
+  }
 
   getOwnPlayers() {
     return this.players.filter(player => player.home).sort((a, b) => a.position - b.position);

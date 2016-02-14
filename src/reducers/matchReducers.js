@@ -16,12 +16,20 @@ export default function matches(state = Immutable.List([]), action = null) {
     //dispatch(togglePlayerSelection(newMatch));
 
     var match = payload;
-    var newState = state.update(state.findIndex(function(m) {
-      return m === match.matchId;
-    }), function() {
+    var toReplaceIndex = state.findIndex(m => m.id === match.id);
+
+    // console.log('replace', match);
+    // console.log('old', state.toJSON());
+    // console.log('intro', toReplaceIndex, match.id);
+
+
+
+    var newState = state.update(toReplaceIndex, function() {
       return new MatchModel(match);
     });
+
     //console.log('new', newState.toJSON());
+
     return newState;
 
   default:

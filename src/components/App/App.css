@@ -180,6 +180,10 @@ textarea {
   text-decoration: line-through;
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 .iconize div {
   display: inline-block;
   margin-left: 12px;

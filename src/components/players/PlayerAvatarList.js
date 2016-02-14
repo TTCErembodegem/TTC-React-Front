@@ -38,10 +38,8 @@ export default class PlayerAvatarList extends Component {
           if (this.props.match.plays(player)) {
             color = '#FFB00F';
           }
-          return <PlayerAvatar player={player} select={this._onPlayerSelect.bind(this, player.id)} backgroundColor={color}  />;
+          return <PlayerAvatar player={player} select={this._onPlayerSelect.bind(this, player.id)} backgroundColor={color} key={player.id} />;
         })}
-        <Divider />
-
       </List>
     );
   }
@@ -54,6 +52,7 @@ class PlayerAvatar extends Component {
   static propTypes = {
     player: PropTypes.instanceOf(PlayerModel).isRequired,
     select: PropTypes.func.isRequired,
+    backgroundColor: PropTypes.string,
   }
 
   render() {
@@ -61,27 +60,13 @@ class PlayerAvatar extends Component {
     return (
       <ListItem
         leftAvatar={this._renderAvatar(player)}
-        onTouchTap={this.props.select}>
-        {player.alias}
-      </ListItem>
+        onTouchTap={this.props.select}
+        primaryText={player.alias}
+        secondaryText={player.contact.mobile} />
     );
-    //return <Avatar>{this.props.letter}</Avatar>;
-    // var icon;
-    // if (this.props.player.hasImage) {
-    //   return <Avatar src={<PlayerImage ply={this.props.player} />} />;
-    // }
-    // icon = <Icon fa="fa fa-star" />;
-
-    // return (
-    //   <Avatar backgroundColor="#FFB00F" icon={icon} />
-    // );
   }
   _renderAvatar(player) {
     return <Avatar backgroundColor={this.props.backgroundColor}>{player.alias[0]}</Avatar>;
   }
 }
-
-const PlayerImage = ({ply}) => (
-  <img src={'/img/players/' + ply.id + '.jpg'} />
-);
 

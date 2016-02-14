@@ -16,11 +16,21 @@ export default class TeamModel {
     this.players = json.players;
   }
 
-  getPlayers() {
-    var result = this.players.map(ply => ({
+  getPlayers(type) {
+    var players = this.players;
+    if (type === 'reserve') {
+      players = players.filter(ply => ply.type === 'Reserve');
+    } else if (type === 'standard') {
+      players = players.filter(ply => ply.type !== 'Reserve');
+    }
+
+    players = players.map(ply => ({
       player: storeUtils.getPlayer(ply.playerId),
       type: ply.type
     }));
-    return result;
+
+    return players;
+    //return players.sort((a, b) => a.player.getCompetition(this.competition).ranking - b.player.getCompetition(this.competition).ranking);
+    // TODO: sort on position of competition
   }
 }

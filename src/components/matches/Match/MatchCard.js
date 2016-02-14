@@ -13,7 +13,12 @@ import PlayerAvatarList from '../../players/PlayerAvatarList.js';
 
 import Icon from '../../controls/Icon.js';
 import Telephone from '../../controls/Telephone.js';
+
 import CardText from 'material-ui/lib/card/card-text';
+import Divider from 'material-ui/lib/divider';
+import GridList from 'material-ui/lib/grid-list/grid-list';
+import GridTile from 'material-ui/lib/grid-list/grid-tile';
+
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
 // import cn from 'classnames';
@@ -36,7 +41,8 @@ export default class MatchCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      openTabKey: tabEventKeys.players
+      openTabKey: tabEventKeys.players,
+      forceEditPlayers: false
     };
   }
 
@@ -47,7 +53,7 @@ export default class MatchCard extends Component {
       <MatchCardHeader {...this.props} backgroundColor="#fafafa">
         <CardText expandable={true} style={{paddingTop: 0}}>
           <Nav bsStyle="tabs" activeKey={this.state.openTabKey} onSelect={::this._onTabSelect}>
-            {this._renderNavItem(tabEventKeys.players, 'players')}
+            {this._renderNavItem(tabEventKeys.players, 'players', this._getPlayersEditIcon())}
             {showIndividualMatches ? this._renderNavItem(tabEventKeys.individualMatches, 'matches') : null}
             {!match.isHomeMatch ? this._renderNavItem(tabEventKeys.opponentClub, 'club') : null}
             {this._renderNavItem(tabEventKeys.report, 'report')}
@@ -59,10 +65,19 @@ export default class MatchCard extends Component {
       </MatchCardHeader>
     );
   }
-  _renderNavItem(eventKey, tKey) {
+  _getPlayersEditIcon() {
+    var match = this.props.match;
+    var team = match.getTeam();
+    var playerSelectionComplete = match.players.size === getPlayersPerTeam(team.competition);
+    return playerSelectionComplete ? <Icon fa="fa fa-pencil-square-o" onClick={::this._onStartEditPlayers} className="match-card-tab-icon" /> : null;
+  }
+  _onStartEditPlayers() {
+    this.setState({forceEditPlayers: !this.state.forceEditPlayers});
+  }
+  _renderNavItem(eventKey, tKey, children = null) {
     return (
       <NavItem eventKey={eventKey} title={this.context.t(`match.tabs.${tKey}Title`)}>
-        {this.context.t(`match.tabs.${tKey}`)}
+        {this.context.t(`match.tabs.${tKey}`)} {children}
       </NavItem>
     );
   }
@@ -101,28 +116,66 @@ export default class MatchCard extends Component {
   _renderPlayers() {
     var match = this.props.match;
     var team = match.getTeam();
-    if (match.players.size === getPlayersPerTeam(team.competition) * 2) {
+
+    if (match.scoreType === 'NotYetPlayed' && !this.props.user.playerId) {
+      return <div>Classified :)</div>; // TODO: show some default info for normal visitors
+
+    } else if (match.players.size === getPlayersPerTeam(team.competition) * 2) {
       return <MatchPlayers match={match} team={this.props.match.getTeam()} t={this.context.t} />;
+
+    } else if (match.players.size === getPlayersPerTeam(team.competition) && !this.state.forceEditPlayers) {
+      //return <PlayersSelected match={this.props.match} user={this.props.user} />;
+      return <PlayersSelectedFull match={this.props.match} user={this.props.user} />;
     }
-
-    //if (match.players.size === getPlayersPerTeam(team.competition)) {
-    //}
-
-    //if (this.props.type === 'today' && match starts in 30min) {
-    //}
 
     return <PlayersSelect match={this.props.match} user={this.props.user} />;
   }
 }
-
-import List from 'material-ui/lib/lists/list';
-import ListItem from 'material-ui/lib/lists/list-item';
 
 const teamPlayerType = {
   standard: 'Standard',
   captain: 'Captain',
   reserve: 'Reserve',
 };
+
+const gridStyles = {
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+  },
+  gridList: {
+    width: '100%',
+    height: '100%',
+    overflowY: 'auto',
+    marginBottom: -8
+  },
+};
+
+
+
+// TODO: cols must be set to two on small devices
+const PlayersSelectedFull = ({match, user}) => (
+  <div style={gridStyles.root}>
+    <GridList
+      cellHeight={200}
+      cols={4}
+      style={gridStyles.gridList}>
+      {match.getOwnPlayerModels().map(ply => (
+        <GridTile
+          key={ply.id}
+          title={ply.alias}
+          subtitle={<Telephone number={ply.contact.mobile} />}>
+          <PlayerImage playerId={ply.id} />
+        </GridTile>
+      ))}
+    </GridList>
+  </div>
+);
+
+const PlayerImage = ({playerId}) => (
+  <img src={'/img/players/' + playerId + '.jpg'} />
+);
 
 class PlayersSelect extends Component {
   static propTypes = {
@@ -132,10 +185,9 @@ class PlayersSelect extends Component {
 
   render() {
     var content;
-    if (!this.props.user.playerId) {
-      content = 'Classified :)';
 
-    } else if (this.props.user.canManageTeams(this.props.match.teamId)) {
+
+    if (this.props.user.canManageTeams(this.props.match.teamId)) {
       content = this._renderPlayersSelectForm();
 
     } else if (!this.props.match.players.size) {
@@ -155,14 +207,15 @@ class PlayersSelect extends Component {
 
   _renderPlayersSelectForm() {
     var team = this.props.match.getTeam();
+    var reservePlayers = team.getPlayers('reserve');
 
     return (
       <div>
-
-        <PlayerAvatarList players={team.getPlayers()} match={this.props.match} />
+        <PlayerAvatarList players={team.getPlayers('standard')} match={this.props.match} />
+        {reservePlayers.size ? <Divider /> : null}
+        {reservePlayers.size ? <PlayerAvatarList players={reservePlayers} match={this.props.match} /> : null}
+        <Divider />
       </div>
     );
   }
 }
-
-//{team.getPlayers().map(({player, type}) => <PlayerCard player={player} type={type} key={player.id} />)}
