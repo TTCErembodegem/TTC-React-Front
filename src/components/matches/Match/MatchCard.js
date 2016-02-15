@@ -109,7 +109,7 @@ export default class MatchCard extends Component {
 
   _renderReport() {
     return (
-      <div></div>
+      <div>{this.props.match.id}</div>
     );
   }
 

@@ -35,16 +35,20 @@ export default class MatchCardPlaceHolder extends Component {
     var score = <MatchScore match={match} />;
     var cardStyle = this.props.backgroundColor ? {backgroundColor: this.props.backgroundColor} : null;
 
-    // TODO: debugging display of match.id below
+    var subtitle = [];
+    if (match.date.isSame(moment(), 'day') && match.isHomeMatch) {
+      subtitle.push(<span style={{marginRight: 9}}>{match.frenoyMatchId}</span>);
+    }
+    subtitle.push(<span>{match.date > moment() ? this.context.t('match.date', match.getDisplayDate()) : match.date.fromNow()}</span>);
     return (
       <div className={'col-md-' + this.state.columnSize} style={{padding: 5}}>
         <Card style={cardStyle} onExpandChange={::this._onExpandChange}>
           <CardHeader
-            title={match.id + ' - ' + this.context.t('match.vs', {
+            title={this.context.t('match.vs', {
               [match.isHomeMatch ? 'home' : 'away']: match.getTeamDesc(),
               [match.isHomeMatch ? 'away' : 'home']: match.getOpponentDesc()
             })}
-            subtitle={match.date > moment() ? this.context.t('match.date', match.getDisplayDate()) : match.date.fromNow()}
+            subtitle={subtitle}
             showExpandableButton={true}
             actAsExpander={true}
             avatar={iPlay ? <FavoriteMatch /> : null}>

@@ -10,6 +10,8 @@ import styles from './Matches.css';
 
 //import { players as playerActionCreators } from '../../../actions/players.js';
 
+import Divider from 'material-ui/lib/divider';
+
 import MatchCard from '../Match/MatchCard.js';
 
 @connect(state => {
@@ -38,8 +40,8 @@ export default class Matches extends Component {
   render() {
     var today = moment();
     var matchesToday = this.props.matches.filter(cal => cal.date.isSame(today, 'day'));
-    var matchesNext = this.props.matches.filter(cal => cal.date.isAfter(today, 'day'));
-    var matchesPlayed = this.props.matches.filter(cal => cal.date.isBefore(today, 'day')).sort(cal => cal.date);
+    var matchesNext = this.props.matches.filter(cal => cal.date.isAfter(today, 'day') && cal.date.diff(today, 'days') <= 2); // TODO: hardcoded values
+    var matchesPlayed = this.props.matches.filter(cal => cal.date.isBefore(today, 'day') && cal.date.diff(today, 'days') >= -8).sort(cal => cal.date);
 
     return (
       <div>
@@ -55,7 +57,8 @@ export default class Matches extends Component {
     );
   }
   _renderDivider() {
-    return <div className="row"></div>;
+    return <div className="row"><Divider /></div>;
+    // return <Divider />;
   }
 
   _renderMatches(matches, matchType) {
