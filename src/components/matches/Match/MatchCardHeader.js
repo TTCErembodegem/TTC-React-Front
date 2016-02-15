@@ -37,9 +37,11 @@ export default class MatchCardPlaceHolder extends Component {
 
     var subtitle = [];
     if (match.date.isSame(moment(), 'day') && match.isHomeMatch) {
-      subtitle.push(<span style={{marginRight: 9}}>{match.frenoyMatchId}</span>);
+      subtitle.push(<span style={{marginRight: 9}} key="1">{match.frenoyMatchId}</span>);
+      subtitle.push(<span key="2">{this.context.t('match.date', match.getDisplayDate())}</span>);
+    } else {
+      subtitle.push(<span key="2">{match.date > moment() ? this.context.t('match.date', match.getDisplayDate()) : match.date.fromNow()}</span>);
     }
-    subtitle.push(<span>{match.date > moment() ? this.context.t('match.date', match.getDisplayDate()) : match.date.fromNow()}</span>);
     return (
       <div className={'col-md-' + this.state.columnSize} style={{padding: 5}}>
         <Card style={cardStyle} onExpandChange={::this._onExpandChange}>

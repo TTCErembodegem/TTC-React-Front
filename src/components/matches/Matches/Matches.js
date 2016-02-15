@@ -49,16 +49,15 @@ export default class Matches extends Component {
           <button>Alle matchen</button> <button>Mijn matchen</button> (use pills?)
         </div>
         {this._renderMatches(matchesToday, 'today')}
-        {matchesToday.size && (matchesNext.size || matchesPlayed.size) ? this._renderDivider() : null}
+        {matchesToday.size && (matchesNext.size || matchesPlayed.size) ? this._renderDivider(this.context.t('match.nextMatches')) : null}
         {this._renderMatches(matchesNext, 'next')}
-        {matchesNext.size && matchesPlayed.size ? this._renderDivider() : null}
+        {matchesNext.size && matchesPlayed.size ? this._renderDivider(this.context.t('match.playedMatches')) : null}
         {this._renderMatches(matchesPlayed, 'played')}
       </div>
     );
   }
-  _renderDivider() {
-    return <div className="row"><Divider /></div>;
-    // return <Divider />;
+  _renderDivider(text) {
+    return <div className="strike"><span>{text}</span></div>;
   }
 
   _renderMatches(matches, matchType) {
