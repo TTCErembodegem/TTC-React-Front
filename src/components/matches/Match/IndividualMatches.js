@@ -51,8 +51,8 @@ export default class IndividualMatches extends Component {
                 //onMouseOver={this._onIndividualMatchHover.bind(this, game.ownPlayer.playerId)}
                 onClick={this._onIndividualMatchChange.bind(this, game.ownPlayer.playerId)}>
                 <td>{this._getVictoryIcon(game)}</td>
-                <td>{this._getPlayerDesc(game.home)}</td>
-                <td>{this._getPlayerDesc(game.out)}</td>
+                <td className={cn({accentuate: game.outcome === matchOutcome.Won})}>{this._getPlayerDesc(game.home)}</td>
+                <td className={cn({accentuate: game.outcome === matchOutcome.Won})}>{this._getPlayerDesc(game.out)}</td>
                 <td>{`${game.homeSets}-${game.outSets}`}</td>
                 <td>{`${matchResult.home}-${matchResult.out}`}</td>
               </tr>

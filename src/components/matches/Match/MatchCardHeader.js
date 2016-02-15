@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import { contextTypes } from '../../../utils/decorators/withContext.js';
+import moment from 'moment';
 
 import MatchModel from '../../../models/MatchModel.js';
 
@@ -43,7 +44,7 @@ export default class MatchCardPlaceHolder extends Component {
               [match.isHomeMatch ? 'home' : 'away']: match.getTeamDesc(),
               [match.isHomeMatch ? 'away' : 'home']: match.getOpponentDesc()
             })}
-            subtitle={this.context.t('match.date', match.getDisplayDate())}
+            subtitle={match.date > moment() ? this.context.t('match.date', match.getDisplayDate()) : match.date.fromNow()}
             showExpandableButton={true}
             actAsExpander={true}
             avatar={iPlay ? <FavoriteMatch /> : null}>

@@ -32,7 +32,7 @@ export default class MatchModel {
     this.playerId = json.playerId;
     this.score = json.score;
     this.scoreType = json.scoreType; // NotYetPlayed, Won, Lost, Draw, WalkOver, BeingPlayed
-    //this.isPlayed = json.isPlayed;
+    //this.isPlayed = json.isPlayed; // TODO: set in backend but never used?
     this.players = Immutable.List(json.players);
     this.games = Immutable.List(json.games);
 
