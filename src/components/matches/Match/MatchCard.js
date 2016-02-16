@@ -112,7 +112,7 @@ export default class MatchCard extends Component {
   }
   _renderScoreSheet() {
     var competition = this.props.match.getTeam().competition;
-    // TODO: display this in table exactly like on the scoresheet...
+    // TODO: display this in table exactly like on the scoresheet... (like IndividualMatches.js)
     return (
       <div className="match-card-tab-content">
         <h3>{this.context.t('match.tabs.scoresheet')}</h3>
@@ -149,7 +149,7 @@ export default class MatchCard extends Component {
 
     if (this.props.user.playerId) {
       if (match.players.size === team.getTeamPlayerCount() && !this.state.forceEditPlayers) {
-        return <PlayersGallery players={match.getOwnPlayerModels()} user={this.props.user} />;
+        return <PlayersGallery players={match.getOwnPlayerModels()} user={this.props.user} competition={team.competition} />;
       }
 
       if (this.props.user.canManageTeam(match.teamId) && match.date.isAfter(moment(), 'hours')) {
@@ -157,12 +157,12 @@ export default class MatchCard extends Component {
       }
 
       if (match.players.size) {
-        return <PlayersGallery players={match.getOwnPlayerModels()} user={this.props.user} />;
+        return <PlayersGallery players={match.getOwnPlayerModels()} user={this.props.user} competition={team.competition} />;
       }
     }
 
     var standardPlayers = team.getPlayers('standard').map(ply => ply.player);
-    return <PlayersGallery players={standardPlayers} user={this.props.user} />;
+    return <PlayersGallery players={standardPlayers} user={this.props.user} competition={team.competition} />;
   }
 }
 
@@ -181,8 +181,8 @@ const gridStyles = {
     marginBottom: -8
   },
 };
-// TODO: cols must be set to two on small devices
-const PlayersGallery = ({players, user}) => (
+// TODO: cols must be set to two on small devices (window.innerWidth + need onResize eventHandler)
+const PlayersGallery = ({players, user, competition}) => (
   <div style={gridStyles.root}>
     <GridList
       cellHeight={200}
@@ -191,7 +191,7 @@ const PlayersGallery = ({players, user}) => (
       {players.map(ply => (
         <GridTile
           key={ply.id}
-          title={ply.name}
+          title={<span><span>{ply.name}</span> <small>{ply.getCompetition(competition).ranking}</small></span>}
           subtitle={!user.playerId ? <Telephone number={ply.contact.mobile} /> : <PlayerPlayingStyle ply={ply} />}>
           <PlayerImage playerId={ply.id} />
         </GridTile>
