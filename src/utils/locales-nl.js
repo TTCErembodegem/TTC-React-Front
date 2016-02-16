@@ -23,6 +23,8 @@ export default {
         reportTitle: 'Het wedstrijdverslag',
         club: 'Lokaal',
         clubTitle: 'Clublokaal tegenstanders',
+        scoresheet: 'Wedstrijdblad',
+        scoresheetTitle: '',
       },
       playersVictoryTitle: 'Overwinningen',
       playersOpponentsTitle: 'Tegenstanders',

@@ -27,7 +27,8 @@ const tabEventKeys = {
   players: 1,
   individualMatches: 2,
   report: 3,
-  opponentClub: 4
+  opponentClub: 4,
+  scoresheet: 5,
 };
 
 export default class MatchCard extends Component {
@@ -56,6 +57,7 @@ export default class MatchCard extends Component {
             {this._renderNavItem(tabEventKeys.players, 'players', this._getPlayersEditIcon())}
             {showIndividualMatches ? this._renderNavItem(tabEventKeys.individualMatches, 'matches') : null}
             {!match.isHomeMatch ? this._renderNavItem(tabEventKeys.opponentClub, 'club') : null}
+            {match.isHomeMatch && !match.isPlayed ? this._renderNavItem(tabEventKeys.scoresheet, 'scoresheet') : null}
             {this._renderNavItem(tabEventKeys.report, 'report')}
           </Nav>
           <div className="match-card-tab">
@@ -87,8 +89,6 @@ export default class MatchCard extends Component {
     this.setState({openTabKey: eventKey});
   }
   _renderTabContent() {
-    // TODO: extra tab: if game is busy (isBeingPlayed)
-    // Show competition details (all the stuff that needs to be on the wedstrijdblad)
     switch (this.state.openTabKey) {
     case tabEventKeys.players:
       return this._renderPlayers();
@@ -98,6 +98,8 @@ export default class MatchCard extends Component {
       return this._renderReport();
     case tabEventKeys.opponentClub:
       return this._renderOpponentClub();
+    case tabEventKeys.scoresheet:
+      return this._renderScoreSheet();
     }
     return 'Unknown';
   }
@@ -107,6 +109,26 @@ export default class MatchCard extends Component {
   }
   _renderIndividualMatches() {
     return <IndividualMatches match={this.props.match} ownPlayerId={this.props.user.playerId} t={this.context.t} />;
+  }
+  _renderScoreSheet() {
+    var competition = this.props.match.getTeam().competition;
+    // TODO: display this in table exactly like on the scoresheet...
+    return (
+      <div className="match-card-tab-content">
+        <h3>{this.context.t('match.tabs.scoresheet')}</h3>
+        {this.props.match.getOwnPlayerModels().map(player => {
+          var comp = player.getCompetition(competition);
+          return (
+            <div>
+              {player.name}<br />
+              {comp.ranking}<br />
+              {comp.position}<br />
+              {comp.uniqueIndex}<br />
+            </div>
+          );
+        })}
+      </div>
+    );
   }
 
 
