@@ -38,10 +38,18 @@ export default class Matches extends Component {
   }
 
   render() {
+    // TODO: put in some global config (or perhaps server config?)
+    const showFutureMatchesDays = 4;
+    const showPlayedMatchesDays = 20;
+
     var today = moment();
     var matchesToday = this.props.matches.filter(cal => cal.date.isSame(today, 'day'));
-    var matchesNext = this.props.matches.filter(cal => cal.date.isAfter(today, 'day') && cal.date.diff(today, 'days') <= 2); // TODO: hardcoded values
-    var matchesPlayed = this.props.matches.filter(cal => cal.date.isBefore(today, 'day') && cal.date.diff(today, 'days') >= -8).sort(cal => cal.date);
+    var matchesNext = this.props.matches
+      .filter(cal => cal.date.isAfter(today, 'day') && cal.date.diff(today, 'days') <= showFutureMatchesDays)
+      .sort((a, b) => a.date - b.date);
+    var matchesPlayed = this.props.matches
+      .filter(cal => cal.date.isBefore(today, 'day') && cal.date.diff(today, 'days') >= -showPlayedMatchesDays)
+      .sort((a, b) => b.date - a.date);
 
     return (
       <div>

@@ -11,7 +11,7 @@ const OwnPlayer = ({match, ply, team}) => {
   var getAdversaryRanking = game => game.home.uniqueIndex === ply.uniqueIndex ? game.out.ranking : game.home.ranking;
   var getRankingResults = function() {
     var plyMatches = match.getGameMatches().filter(game => game.ownPlayer === ply);
-    if (plyMatches.every(game => game.outCome === 'WalkOver')) {
+    if (plyMatches.every(game => game.outcome === 'WalkOver')) {
       return {
         win: [],
         lost: [],

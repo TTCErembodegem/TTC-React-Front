@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import { contextTypes } from '../../../utils/decorators/withContext.js';
+import moment from 'moment';
 
 import UserModel from '../../../models/UserModel.js';
 import MatchModel from '../../../models/MatchModel.js';
@@ -86,6 +87,8 @@ export default class MatchCard extends Component {
     this.setState({openTabKey: eventKey});
   }
   _renderTabContent() {
+    // TODO: extra tab: if game is busy (isBeingPlayed)
+    // Show competition details (all the stuff that needs to be on the wedstrijdblad)
     switch (this.state.openTabKey) {
     case tabEventKeys.players:
       return this._renderPlayers();
@@ -127,7 +130,7 @@ export default class MatchCard extends Component {
         return <PlayersGallery players={match.getOwnPlayerModels()} user={this.props.user} />;
       }
 
-      if (this.props.user.canManageTeam(match.teamId)) {
+      if (this.props.user.canManageTeam(match.teamId) && match.date.isAfter(moment(), 'hours')) {
         return <SelectPlayersForm match={match} user={this.props.user} />;
       }
 
@@ -166,8 +169,8 @@ const PlayersGallery = ({players, user}) => (
       {players.map(ply => (
         <GridTile
           key={ply.id}
-          title={ply.alias}
-          subtitle={user.playerId ? <Telephone number={ply.contact.mobile} /> : null}>
+          title={ply.name}
+          subtitle={!user.playerId ? <Telephone number={ply.contact.mobile} /> : <PlayerPlayingStyle ply={ply} />}>
           <PlayerImage playerId={ply.id} />
         </GridTile>
       ))}
@@ -175,6 +178,9 @@ const PlayersGallery = ({players, user}) => (
   </div>
 );
 
+const PlayerPlayingStyle = ({ply}) => (
+  <span>{ply.style.name}<br />{ply.style.bestStroke}</span>
+);
 
 
 const PlayerImage = ({playerId}) => (

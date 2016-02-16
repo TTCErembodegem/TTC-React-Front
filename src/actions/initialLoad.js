@@ -39,6 +39,8 @@ export default function() {
         });
     }
 
+    // TODO: Performance: Load logged in user matches and today matches in initial load? (measure...)
+    // TODO: dispatch immediately to get the next VTTL/Sporta match of the logged in user (if not yet loaded)
     return Promise.all([
       initialRequest('/players', playersLoaded),
       initialRequest('/clubs', clubsLoaded),

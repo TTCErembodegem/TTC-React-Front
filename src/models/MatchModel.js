@@ -90,7 +90,7 @@ export default class MatchModel {
   }
 
   getGamePlayer(uniqueIndex) {
-    return this.players.find(ply => ply.uniqueIndex === uniqueIndex);
+    return this.players.find(ply => ply.uniqueIndex === uniqueIndex) || {};
   }
 
   getGameMatches() {
@@ -99,24 +99,22 @@ export default class MatchModel {
     }
 
     return this.games.map(game => {
+      var homePlayer = this.getGamePlayer(game.homePlayerUniqueIndex);
+      var outPlayer = this.getGamePlayer(game.outPlayerUniqueIndex);
       var result = {
         matchNumber: game.matchNumber,
-        home: this.getGamePlayer(game.homePlayerUniqueIndex),
-        out: this.getGamePlayer(game.outPlayerUniqueIndex),
+        home: homePlayer,
+        out: outPlayer,
         homeSets: game.homePlayerSets,
         outSets: game.outPlayerSets,
+        outcome: game.outcome,
       };
 
-      result.ownPlayer = result.home.playerId ? result.home : result.out;
-      if (game.walkOver === 'None') {
-        result.outcome = game.homePlayerSets > game.outPlayerSets ? matchOutcome.Won : matchOutcome.Lost;
-        if (!this.isHomeMatch) {
-          result.outcome = result.outcome === matchOutcome.Won ? matchOutcome.Lost : matchOutcome.Won;
-        }
+      if (result.home && result.out) {
+        result.ownPlayer = result.home.playerId ? result.home : result.out;
       } else {
-        result.outCome = matchOutcome.WalkOver;
+        result.ownPlayer = {};
       }
-
       return result;
     });
   }
