@@ -57,7 +57,7 @@ export default class MatchCard extends Component {
             {this._renderNavItem(tabEventKeys.players, 'players', this._getPlayersEditIcon())}
             {showIndividualMatches ? this._renderNavItem(tabEventKeys.individualMatches, 'matches') : null}
             {!match.isHomeMatch ? this._renderNavItem(tabEventKeys.opponentClub, 'club') : null}
-            {match.isHomeMatch && !match.isPlayed ? this._renderNavItem(tabEventKeys.scoresheet, 'scoresheet') : null}
+            {!match.isPlayed ? this._renderNavItem(tabEventKeys.scoresheet, 'scoresheet') : null}
             {this._renderNavItem(tabEventKeys.report, 'report')}
           </Nav>
           <div className="match-card-tab">

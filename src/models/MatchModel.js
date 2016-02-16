@@ -2,7 +2,7 @@ import Immutable from 'immutable';
 import keyMirror from 'fbjs/lib/keyMirror';
 import moment from 'moment';
 
-import { util as storeUtils} from '../store.js';
+import store, { util as storeUtils} from '../store.js';
 import PlayerModel from './PlayerModel.js';
 import { OwnClubId } from './ClubModel.js';
 import { sortPlayers } from './TeamModel.js';
@@ -72,7 +72,13 @@ export default class MatchModel {
   }
 
   getPreviousMatch() {
+    var otherMatch = store.getState().matches
+      .find(m => m.teamId === this.teamId &&
+        m.opponent.clubId === this.opponent.clubId &&
+        m.opponent.teamCode === this.opponent.teamCode &&
+        m.date < this.date);
 
+    return otherMatch;
   }
 
   getOwnPlayerModels() {

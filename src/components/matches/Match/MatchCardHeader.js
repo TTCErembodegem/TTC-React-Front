@@ -12,6 +12,7 @@ import CardHeader from 'material-ui/lib/card/card-header';
 
 const cardClosedSize = 4;
 const cardOpenedSize = 8;
+const daysAgoBackFullDate = 7;
 
 export default class MatchCardPlaceHolder extends Component {
   constructor() {
@@ -40,7 +41,12 @@ export default class MatchCardPlaceHolder extends Component {
       subtitle.push(<span style={{marginRight: 9}} key="1">{match.frenoyMatchId}</span>);
       subtitle.push(<span key="2">{this.context.t('match.date', match.getDisplayDate())}</span>);
     } else {
-      subtitle.push(<span key="2">{match.date > moment() ? this.context.t('match.date', match.getDisplayDate()) : match.date.fromNow()}</span>);
+      subtitle.push(
+        <span key="2">{match.date > moment() || match.date < moment().add(-daysAgoBackFullDate, 'day') ?
+          this.context.t('match.date', match.getDisplayDate())
+          : match.date.fromNow()}
+        </span>
+      );
     }
     return (
       <div className={'col-md-' + this.state.columnSize} style={{padding: 5}}>
