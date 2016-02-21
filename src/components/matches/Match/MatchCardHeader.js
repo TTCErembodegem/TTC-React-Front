@@ -18,7 +18,8 @@ export default class MatchCardHeader extends Component {
   constructor() {
     super();
     this.state = {
-      columnSize: cardClosedSize
+      columnSize: cardClosedSize,
+      requestedOpponentMatches: false
     };
   }
 
@@ -73,7 +74,7 @@ export default class MatchCardHeader extends Component {
         <div>
           {this._renderOwnTeamTitle(team)}
           {!match.isPlayed ? this._renderOwnTeamPosition(team) : ' '}
-          <span>{this.context.t('match.vs')}</span>
+          <span className="match-opponent-team">{this.context.t('match.vs')}</span>
           {!match.isPlayed ? this._renderOpponentPosition(match) : ' '}
           {this._renderOpponentTitle(match)}
         </div>
@@ -83,7 +84,7 @@ export default class MatchCardHeader extends Component {
         <div>
           {this._renderOpponentTitle(match)}
           {!match.isPlayed ? this._renderOpponentPosition(match) : ' '}
-          <span>{this.context.t('match.vs')}</span>
+          <span className="match-opponent-team">{this.context.t('match.vs')}</span>
           {!match.isPlayed ? this._renderOwnTeamPosition(team) : ' '}
           {this._renderOwnTeamTitle(team)}
         </div>
@@ -104,7 +105,7 @@ export default class MatchCardHeader extends Component {
 
   _renderOpponentTitle(match) {
     var club = match.getOpponentClub();
-    return (<span>{club.name} {match.opponent.teamCode}</span>);
+    return (<span className="match-opponent-team">{club.name} {match.opponent.teamCode}</span>);
   }
   _renderOpponentPosition(match) {
     var club = match.getOpponentClub();
@@ -117,9 +118,10 @@ export default class MatchCardHeader extends Component {
   }
 
   _onExpandChange(isOpen) {
-    if (isOpen) {
-      // TODO: request only once
-      //this.props.getLastOpponentMatches(this.props.match.opponent);
+    if (isOpen && !this.state.requestedOpponentMatches) {
+      // TODO: here check for matches using storeUtils - http request only if matches not yet present in state...
+      this.setState({requestedOpponentMatches: true});
+      this.props.getLastOpponentMatches(this.props.match.teamId, this.props.match.opponent);
     }
     this.setState({columnSize: isOpen ? cardOpenedSize : cardClosedSize});
   }

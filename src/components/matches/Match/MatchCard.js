@@ -24,7 +24,8 @@ import GridTile from 'material-ui/lib/grid-list/grid-tile';
 
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
-// import cn from 'classnames';
+import Table from 'react-bootstrap/lib/Table';
+import cn from 'classnames';
 
 const tabEventKeys = {
   players: 1,
@@ -129,18 +130,32 @@ export default class MatchCard extends Component {
     return <IndividualMatches match={this.props.match} ownPlayerId={this.props.user.playerId} t={this.context.t} />;
   }
   _renderOpponentsIntel() {
-    console.log(this.props.match);
-    // TODO: ophalen van de x vorige matchen van de tegenstander
-
-    var matches = storeUtils.matches.getFromOpponent(this.props.match.opponent);
-    console.log('_renderOpponentsIntel', matches);
-
+    var matches = storeUtils.matches
+      .getFromOpponent(this.props.match.opponent)
+      .sort((a, b) => a.date.isBefore(b.date) ? 1 : -1);
+    //console.log('_renderOpponentsIntel', matches.toArray());
 
     return (
-      <div className="match-card-tab-content">
-        <h3>Laatste matchen</h3>
-
-      </div>
+      <Table condensed className="match-card-tab-table">
+        <thead>
+          <tr>
+            <th>{this.context.t('match.opponents.date')}</th>
+            <th>{this.context.t('match.opponents.homeTeam')}</th>
+            <th>{this.context.t('match.opponents.awayTeam')}</th>
+            <th>{this.context.t('match.opponents.outcome')}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {matches.map(match => (
+            <tr key={match.id} className={match.won(this.props.match.opponent) ? 'accentuate success' : ''}>
+              <td>{match.getDisplayDate('d')}</td>
+              <td>{match.getClub('home').name} {match.home.teamCode}</td>
+              <td>{match.getClub('away').name} {match.away.teamCode}</td>
+              <td>{match.score.home} - {match.score.out}</td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
     );
   }
 

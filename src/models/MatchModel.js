@@ -18,28 +18,38 @@ export var matchOutcome = keyMirror({
 
 export default class MatchModel {
   constructor(json) {
-    // match
     this.id = json.id;
-    this.isHomeMatch = json.isHomeMatch;
     this.frenoyMatchId = json.frenoyMatchId;
-    this.teamId = json.teamId;
     this.week = json.week;
-    this.opponent = json.opponent;
     this.date = moment(json.date);
 
-    // verslag
-    this.description = json.description;
-    this.playerId = json.playerId;
     this.score = json.score;
     this.scoreType = json.scoreType; // NotYetPlayed, Won, Lost, Draw, WalkOver, BeingPlayed
     this.isPlayed = json.isPlayed;
     this.players = Immutable.List(json.players);
     this.games = Immutable.List(json.games);
 
-    this.isDerby = this.opponent.clubId === OwnClubId;
+    if (json.opponent) {
+      // TTC Erembodegem Match
+      this.isHomeMatch = json.isHomeMatch;
+      this.teamId = json.teamId;
+      this.description = json.description;
+      this.reportPlayerId = json.reportPlayerId;
+
+      this.opponent = json.opponent;
+      this.isDerby = json.opponent.clubId === OwnClubId;
+    } else {
+      // OtherMatch
+      this.home = json.home;
+      this.away = json.away;
+    }
   }
 
-  getDisplayDate() {
+  getDisplayDate(format) {
+    if (format === 'd') {
+      return this.date.format('ddd D/M');
+    }
+
     if (this.date.minutes()) {
       return this.date.format('ddd D/M HH:mm');
     }
@@ -47,7 +57,34 @@ export default class MatchModel {
   }
 
   getOpponentClub() {
+    if (this.home) {
+      console.error('called getOpponentClub on OtherMatch'); // eslint-disable-line
+    }
     return storeUtils.getClub(this.opponent.clubId);
+  }
+  getClub(which) {
+    if (this.opponent) {
+      console.log('MatchModel.getClub: use getOpponentClub for TTC Erembodegem matches'); // eslint-disable-line
+    }
+    if (which === 'home') {
+      return storeUtils.getClub(this.home.clubId);
+    }
+    if (which === 'away') {
+      return storeUtils.getClub(this.away.clubId);
+    }
+    console.error('MatchModel.getClub passed ' + which, 'expected home or away.'); // eslint-disable-line
+  }
+
+  won(opponent) {
+    if (this.score.home === this.score.out) {
+      return false;
+    }
+
+    var won = this.score.home > this.score.out;
+    if (this.away.clubId === opponent.clubId && this.away.teamCode === opponent.teamCode) {
+      won = !won;
+    }
+    return won;
   }
 
   getTeam() {

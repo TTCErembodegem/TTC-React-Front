@@ -11,16 +11,9 @@ export function loaded(data) {
   };
 }
 
-function updateMatch(match) {
-  return {
-    type: ActionTypes.MATCHES_UPDATE,
-    payload: match
-  };
-}
-
-export function getLastOpponentMatches(opponent) {
+export function getLastOpponentMatches(teamId, opponent) {
   return dispatch => {
-    return http.get('/matches/GetLastOpponentMatches', opponent)
+    return http.get('/matches/GetLastOpponentMatches', {teamId, ...opponent})
       .then(function(data) {
         dispatch(loaded(data));
       }, function(err) {
@@ -51,7 +44,7 @@ export function selectPlayer(matchId, playerId) {
 
     return http.post('/matches/TogglePlayer', matchPlayer)
       .then(function(data) {
-        dispatch(updateMatch(data));
+        dispatch(loaded(data));
 
       }, function(err) {
         console.log('TogglePlayer!', err); // eslint-disable-line

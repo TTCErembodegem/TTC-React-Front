@@ -35,6 +35,12 @@ export default {
         setsTitle: 'Sets',
         resultTitle: 'Uitslag',
       },
+      opponents: {
+        date: 'Datum',
+        homeTeam: 'Thuis',
+        awayTeam: 'Uit',
+        outcome: 'Uitslag',
+      },
       enemyVictory: '${}ov.',
       club: {
         locationTitle: 'Clublokaal',

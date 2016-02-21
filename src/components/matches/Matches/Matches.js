@@ -43,11 +43,13 @@ export default class Matches extends Component {
     const showPlayedMatchesDays = 20;
 
     var today = moment();
-    var matchesToday = this.props.matches.filter(cal => cal.date.isSame(today, 'day'));
-    var matchesNext = this.props.matches
+    var ownMatches = this.props.matches.filter(cal => cal.isHomeMatch === true || cal.isHomeMatch === false);
+
+    var matchesToday = ownMatches.filter(cal => cal.date.isSame(today, 'day'));
+    var matchesNext = ownMatches
       .filter(cal => cal.date.isAfter(today, 'day') && cal.date.diff(today, 'days') <= showFutureMatchesDays)
       .sort((a, b) => a.date - b.date);
-    var matchesPlayed = this.props.matches
+    var matchesPlayed = ownMatches
       .filter(cal => cal.date.isBefore(today, 'day') && cal.date.diff(today, 'days') >= -showPlayedMatchesDays)
       .sort((a, b) => b.date - a.date);
 
