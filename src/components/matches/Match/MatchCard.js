@@ -138,7 +138,7 @@ export default class MatchCard extends Component {
 
     return (
       <div className="match-card-tab-content">
-        <h3>Hun laatste matchen</h3>
+        <h3>Laatste matchen</h3>
 
       </div>
     );
@@ -170,7 +170,7 @@ export default class MatchCard extends Component {
 
   _renderReport() {
     return (
-      <div>{this.props.match.id}</div>
+      <div>{this.props.match.id} {this.props.match.frenoyMatchId}</div>
     );
   }
 

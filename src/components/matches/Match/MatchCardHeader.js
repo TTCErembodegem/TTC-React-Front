@@ -53,10 +53,7 @@ export default class MatchCardHeader extends Component {
       <div className={'col-md-' + this.state.columnSize} style={{padding: 5}}>
         <Card style={cardStyle} onExpandChange={::this._onExpandChange}>
           <CardHeader
-            title={this.context.t('match.vs', {
-              [match.isHomeMatch ? 'home' : 'away']: match.getTeamDesc(),
-              [match.isHomeMatch ? 'away' : 'home']: match.getOpponentDesc()
-            })}
+            title={this._renderTitle(match)}
             subtitle={subtitle}
             showExpandableButton={true}
             actAsExpander={true}
@@ -66,6 +63,56 @@ export default class MatchCardHeader extends Component {
           {this.props.children}
         </Card>
       </div>
+    );
+  }
+
+  _renderTitle(match) {
+    var team = match.getTeam();
+    if (match.isHomeMatch) {
+      return (
+        <div>
+          {this._renderOwnTeamTitle(team)}
+          {!match.isPlayed ? this._renderOwnTeamPosition(team) : ' '}
+          <span>{this.context.t('match.vs')}</span>
+          {!match.isPlayed ? this._renderOpponentPosition(match) : ' '}
+          {this._renderOpponentTitle(match)}
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          {this._renderOpponentTitle(match)}
+          {!match.isPlayed ? this._renderOpponentPosition(match) : ' '}
+          <span>{this.context.t('match.vs')}</span>
+          {!match.isPlayed ? this._renderOwnTeamPosition(team) : ' '}
+          {this._renderOwnTeamTitle(team)}
+        </div>
+      );
+    }
+  }
+
+  _renderOwnTeamTitle(team) {
+    return (<span>{team.competition} {team.teamCode}</span>);
+  }
+  _renderOwnTeamPosition(team) {
+    return (
+      <span className="label label-as-badge label-info" style={{marginLeft: 5, marginRight: 5, paddingTop: 25}}>
+        {team.getDivisionRanking().position}
+      </span>
+    );
+  }
+
+  _renderOpponentTitle(match) {
+    var club = match.getOpponentClub();
+    return (<span>{club.name} {match.opponent.teamCode}</span>);
+  }
+  _renderOpponentPosition(match) {
+    var club = match.getOpponentClub();
+    var ranking = match.getTeam().getDivisionRanking(club.id, match.opponent.teamCode);
+    return (
+      <span className="label label-as-badge label-info" style={{marginLeft: 5, marginRight: 5, paddingTop: 25}}>
+        {ranking.position}
+      </span>
     );
   }
 

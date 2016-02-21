@@ -13,7 +13,7 @@ export default {
       nextMatches: 'volgende matchen',
       playedMatches: 'gespeelde matchen',
       date: '${}u',
-      vs: '${home} vs ${away}',
+      vs: 'vs',
       tabs: {
         players: 'Spelers',
         playersTitle: 'Het verdict',

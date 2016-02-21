@@ -50,16 +50,6 @@ export default class MatchModel {
     return storeUtils.getClub(this.opponent.clubId);
   }
 
-  getOpponentDesc() {
-    var club = storeUtils.getClub(this.opponent.clubId);
-    return `${club.name} ${this.opponent.teamCode}`;
-  }
-
-  getTeamDesc() {
-    var team = storeUtils.getTeam(this.teamId);
-    return `${team.competition} ${team.teamCode}`;
-  }
-
   getTeam() {
     return storeUtils.getTeam(this.teamId);
   }

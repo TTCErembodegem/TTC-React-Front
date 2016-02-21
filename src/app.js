@@ -22,7 +22,7 @@ store.dispatch({
   type: 'LOGIN',
   payload: {
     playerId: 20,
-    teams: [245, 250],
+    teams: [25],
     security: ['CAN_MANAGETEAM']
   }
 });

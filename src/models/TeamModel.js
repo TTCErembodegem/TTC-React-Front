@@ -26,14 +26,24 @@ export default class TeamModel {
     this.divisionName = json.divisionName;
     this.id = json.id;
     this.teamCode = json.teamCode;
+    this.clubId = json.clubId;
     this.year = json.year;
     this.frenoy = json.frenoy;
     this.opponents = json.opponents;
     this.players = json.players;
+    this.ranking = json.ranking;
   }
 
   getTeamPlayerCount() {
     return this.competition === 'Vttl' ? 4 : 3;
+  }
+
+  getDivisionRanking(clubId, teamCode) {
+    if (!clubId && !teamCode) {
+      return this.getDivisionRanking(this.clubId, this.teamCode);
+    }
+    var result = this.ranking.find(x => x.clubId === clubId && x.teamCode === teamCode);
+    return result;
   }
 
   getPlayers(type) {
