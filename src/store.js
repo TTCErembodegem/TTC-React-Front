@@ -46,5 +46,12 @@ export const util = {
   getMatch(matchId) {
     const matches = store.getState().matches;
     return matches.find(match => match.id === matchId);
-  }
+  },
+
+  matches: {
+    getFromOpponent(opponent) {
+      const matches = store.getState().matches;
+      return matches.filter(m => m == opponent.clubId && m == opponent.teamCode);
+    }
+  },
 };

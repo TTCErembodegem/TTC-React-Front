@@ -18,8 +18,18 @@ function updateMatch(match) {
   };
 }
 
+export function getLastOpponentMatches(opponent) {
+  return dispatch => {
+    return http.get('/matches/GetLastOpponentMatches', opponent)
+      .then(function(data) {
+        dispatch(loaded(data));
+      }, function(err) {
+        console.log('GetLastOpponentMatches!', err); // eslint-disable-line
+      });
+  };
+}
+
 export function selectPlayer(matchId, playerId) {
-  console.log('dispatch selectPlayer', matchId, playerId, arguments);
   return (dispatch, getState) => {
     var match = storeUtil.getMatch(matchId);
     var player = storeUtil.getPlayer(playerId);
@@ -44,7 +54,7 @@ export function selectPlayer(matchId, playerId) {
         dispatch(updateMatch(data));
 
       }, function(err) {
-        console.log('erreur!', err); // eslint-disable-line
+        console.log('TogglePlayer!', err); // eslint-disable-line
       });
   };
 }

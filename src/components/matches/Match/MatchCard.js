@@ -1,9 +1,12 @@
 import React, { PropTypes, Component } from 'react';
+import { connect } from 'react-redux';
 import { contextTypes } from '../../../utils/decorators/withContext.js';
 import moment from 'moment';
 
 import UserModel from '../../../models/UserModel.js';
 import MatchModel from '../../../models/MatchModel.js';
+import * as matchActions from '../../../actions/matchActions.js';
+import { util as storeUtils } from '../../../store.js';
 
 import MatchCardHeader from './MatchCardHeader.js';
 import MatchPlayerResults from './MatchPlayerResults.js';
@@ -29,14 +32,26 @@ const tabEventKeys = {
   report: 3,
   opponentClub: 4,
   scoresheet: 5,
+  opponents: 6,
 };
 
+@connect(state => {
+  return {
+    config: state.config,
+    // user: state.user,
+    // players: state.players,
+    // clubs: state.clubs,
+    // matches: state.matches,
+    // teams: state.teams,
+  };
+}, matchActions)
 export default class MatchCard extends Component {
   static contextTypes = contextTypes;
   static propTypes = {
     match: PropTypes.instanceOf(MatchModel).isRequired,
     user: PropTypes.instanceOf(UserModel).isRequired,
-    type: PropTypes.string.isRequired
+    type: PropTypes.string.isRequired,
+    getLastOpponentMatches: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -58,6 +73,7 @@ export default class MatchCard extends Component {
             {showIndividualMatches ? this._renderNavItem(tabEventKeys.individualMatches, 'matches') : null}
             {!match.isHomeMatch ? this._renderNavItem(tabEventKeys.opponentClub, 'club') : null}
             {!match.isPlayed ? this._renderNavItem(tabEventKeys.scoresheet, 'scoresheet') : null}
+            {!match.isPlayed ? this._renderNavItem(tabEventKeys.opponents, 'opponents') : null}
             {this._renderNavItem(tabEventKeys.report, 'report')}
           </Nav>
           <div className="match-card-tab">
@@ -100,6 +116,8 @@ export default class MatchCard extends Component {
       return this._renderOpponentClub();
     case tabEventKeys.scoresheet:
       return this._renderScoreSheet();
+    case tabEventKeys.opponents:
+      return this._renderOpponentsIntel();
     }
     return 'Unknown';
   }
@@ -110,12 +128,30 @@ export default class MatchCard extends Component {
   _renderIndividualMatches() {
     return <IndividualMatches match={this.props.match} ownPlayerId={this.props.user.playerId} t={this.context.t} />;
   }
+  _renderOpponentsIntel() {
+    console.log(this.props.match);
+    // TODO: ophalen van de x vorige matchen van de tegenstander
+
+    var matches = storeUtils.matches.getFromOpponent(this.props.match.opponent);
+    console.log('_renderOpponentsIntel', matches);
+
+
+    return (
+      <div className="match-card-tab-content">
+        <h3>Laatste encounters</h3>
+
+      </div>
+    );
+  }
+
+
+
   _renderScoreSheet() {
     var competition = this.props.match.getTeam().competition;
     // TODO: display this in table exactly like on the scoresheet... (like IndividualMatches.js)
     return (
       <div className="match-card-tab-content">
-        <h3>{this.context.t('match.tabs.scoresheet')}</h3>
+        <h3>{this.props.match.frenoyMatchId}</h3>
         {this.props.match.getOwnPlayerModels().map(player => {
           var comp = player.getCompetition(competition);
           return (

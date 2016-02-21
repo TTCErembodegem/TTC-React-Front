@@ -44,7 +44,7 @@ export default function() {
     return Promise.all([
       initialRequest('/players', playersLoaded),
       initialRequest('/clubs', clubsLoaded),
-      initialRequest('/matches', matchesLoaded),
+      initialRequest('/matches/GetRelevantMatches', matchesLoaded),
       initialRequest('/teams', teamsLoaded),
     ]).then(() => dispatch(initialLoadCompleted()));
   };

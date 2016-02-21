@@ -51,6 +51,8 @@ export default class Matches extends Component {
       .filter(cal => cal.date.isBefore(today, 'day') && cal.date.diff(today, 'days') >= -showPlayedMatchesDays)
       .sort((a, b) => b.date - a.date);
 
+    // TODO: implement buttonbar
+    // TODO: debug inputfield: get and display a (frenoy)matchId -> also implement auto fetch if not present...
     return (
       <div>
         <div className="row">

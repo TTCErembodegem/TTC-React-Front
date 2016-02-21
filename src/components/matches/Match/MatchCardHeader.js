@@ -14,7 +14,7 @@ const cardClosedSize = 4;
 const cardOpenedSize = 8;
 const daysAgoBackFullDate = 7;
 
-export default class MatchCardPlaceHolder extends Component {
+export default class MatchCardHeader extends Component {
   constructor() {
     super();
     this.state = {
@@ -28,6 +28,7 @@ export default class MatchCardPlaceHolder extends Component {
     user: PropTypes.object.isRequired,
     backgroundColor: PropTypes.string,
     children: PropTypes.node.isRequired,
+    getLastOpponentMatches: PropTypes.func.isRequired
   }
 
   render() {
@@ -69,6 +70,10 @@ export default class MatchCardPlaceHolder extends Component {
   }
 
   _onExpandChange(isOpen) {
+    if (isOpen) {
+      // TODO: request only once
+      //this.props.getLastOpponentMatches(this.props.match.opponent);
+    }
     this.setState({columnSize: isOpen ? cardOpenedSize : cardClosedSize});
   }
 }

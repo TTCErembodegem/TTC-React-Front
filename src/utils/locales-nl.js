@@ -25,6 +25,8 @@ export default {
         clubTitle: 'Clublokaal tegenstanders',
         scoresheet: 'Wedstrijdblad',
         scoresheetTitle: '',
+        opponents: 'Tegenstanders',
+        opponentsTitle: '',
       },
       playersVictoryTitle: 'Overwinningen',
       playersOpponentsTitle: 'Tegenstanders',

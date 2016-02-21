@@ -8,12 +8,15 @@ export default function matches(state = Immutable.List([]), action = null) {
   switch (type) {
   case ActionTypes.MATCHES_LOADED:
     var result = payload.map(x => new MatchModel(x));
-    console.log('MATCHES_LOADED', result[0]); // eslint-disable-line
+    console.log('MATCHES_LOADED', result); // eslint-disable-line
     return Immutable.List(result);
 
   case ActionTypes.MATCHES_UPDATE:
     //let newMatch = new MatchModel(Object.assign({}, match, {players: [matchPlayer]}));
     //dispatch(togglePlayerSelection(newMatch));
+
+    // TODO: just one event: MATCHES_LOADED
+    // which updates and inserts...
 
     var match = payload;
     var toReplaceIndex = state.findIndex(m => m.id === match.id);
