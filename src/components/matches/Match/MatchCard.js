@@ -138,7 +138,7 @@ export default class MatchCard extends Component {
 
     return (
       <div className="match-card-tab-content">
-        <h3>Laatste encounters</h3>
+        <h3>Hun laatste matchen</h3>
 
       </div>
     );

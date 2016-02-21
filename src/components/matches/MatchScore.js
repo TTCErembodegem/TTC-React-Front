@@ -26,14 +26,14 @@ export default class MatchScore extends Component {
   render() {
     var text = null;
     var match = this.props.match;
-    // if (!match.score || (match.score.home === 0 && match.score.out === 0)) {
-    //   match = match.getPreviousMatch();
-    //   if (!match) {
-    //     return null;
-    //   } else {
-    //     text = <Icon fa="fa fa-long-arrow-left" style={{marginRight: 7}} />;
-    //   }
-    // }
+    if (!match.score || (match.score.home === 0 && match.score.out === 0)) {
+      match = match.getPreviousMatch();
+      if (!match) {
+        return null;
+      } else {
+        text = <Icon fa="fa fa-long-arrow-left" style={{marginRight: 7}} />;
+      }
+    }
 
     if (!match || !match.score) {
       return null;
