@@ -1,4 +1,5 @@
 import Immutable from 'immutable';
+import * as immutableHelpers from './immutableHelpers.js';
 import * as ActionTypes from '../actions/ActionTypes.js';
 //import _ from 'lodash';
 
@@ -6,6 +7,7 @@ import PlayerModel from '../models/PlayerModel.js';
 import UserModel from '../models/UserModel.js';
 import TeamModel from '../models/TeamModel.js';
 import ClubModel from '../models/ClubModel.js';
+import MatchModel from '../models/MatchModel.js';
 
 export function user(state = {teams: Immutable.List([])}, action = null) {
   const {type, payload} = action;
@@ -22,6 +24,16 @@ export function config(state = Immutable.Map({initialLoadCompleted: false}), act
   switch (type) {
   case ActionTypes.INITIAL_LOADED:
     return Immutable.Map({initialLoadCompleted: true});
+  default:
+    return state;
+  }
+}
+
+export function readonlyMatches(state = Immutable.List([]), action = null) {
+  const {type, payload} = action;
+  switch (type) {
+  case ActionTypes.READONLY_MATCHES_LOADED:
+    return immutableHelpers.merge(state, payload, x => new MatchModel(x));
   default:
     return state;
   }

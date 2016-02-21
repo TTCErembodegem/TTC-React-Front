@@ -11,11 +11,18 @@ export function loaded(data) {
   };
 }
 
+export function readOnlyLoaded(data) {
+  return {
+    type: ActionTypes.READONLY_MATCHES_LOADED,
+    payload: data
+  };
+}
+
 export function getLastOpponentMatches(teamId, opponent) {
   return dispatch => {
     return http.get('/matches/GetLastOpponentMatches', {teamId, ...opponent})
       .then(function(data) {
-        dispatch(loaded(data));
+        dispatch(readOnlyLoaded(data));
       }, function(err) {
         console.log('GetLastOpponentMatches!', err); // eslint-disable-line
       });

@@ -10,6 +10,7 @@ export default {
       title: 'Spelers overzicht ${a}'
     },
     match: {
+      todayMatches: 'vandaag',
       nextMatches: 'volgende matchen',
       playedMatches: 'gespeelde matchen',
       date: '${}u',

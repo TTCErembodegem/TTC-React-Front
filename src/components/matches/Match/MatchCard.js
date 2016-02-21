@@ -13,6 +13,7 @@ import MatchPlayerResults from './MatchPlayerResults.js';
 import IndividualMatches from './IndividualMatches.js';
 import OpponentClubLocations from './OpponentClubLocations.js';
 import SelectPlayersForm from './SelectPlayersForm.js';
+import OpponentsLastMatches from './OpponentsLastMatches.js';
 
 import Icon from '../../controls/Icon.js';
 import Telephone from '../../controls/Telephone.js';
@@ -130,33 +131,7 @@ export default class MatchCard extends Component {
     return <IndividualMatches match={this.props.match} ownPlayerId={this.props.user.playerId} t={this.context.t} />;
   }
   _renderOpponentsIntel() {
-    var matches = storeUtils.matches
-      .getFromOpponent(this.props.match.opponent)
-      .sort((a, b) => a.date.isBefore(b.date) ? 1 : -1);
-    //console.log('_renderOpponentsIntel', matches.toArray());
-
-    return (
-      <Table condensed className="match-card-tab-table">
-        <thead>
-          <tr>
-            <th>{this.context.t('match.opponents.date')}</th>
-            <th>{this.context.t('match.opponents.homeTeam')}</th>
-            <th>{this.context.t('match.opponents.awayTeam')}</th>
-            <th>{this.context.t('match.opponents.outcome')}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {matches.map(match => (
-            <tr key={match.id} className={match.won(this.props.match.opponent) ? 'accentuate success' : ''}>
-              <td>{match.getDisplayDate('d')}</td>
-              <td>{match.getClub('home').name} {match.home.teamCode}</td>
-              <td>{match.getClub('away').name} {match.away.teamCode}</td>
-              <td>{match.score.home} - {match.score.out}</td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-    );
+    return <OpponentsLastMatches match={this.props.match} />;
   }
 
 
@@ -233,6 +208,7 @@ const gridStyles = {
   },
 };
 // TODO: cols must be set to two on small devices (window.innerWidth + need onResize eventHandler)
+// TODO: !user.playerId --> remove the ! before PRD!
 const PlayersGallery = ({players, user, competition}) => (
   <div style={gridStyles.root}>
     <GridList

@@ -50,16 +50,9 @@ export const util = {
 
   matches: {
     getFromOpponent(opponent) {
-      const matches = store.getState().matches;
-      var result = matches
-        .filter(m => m.isHomeMatch !== true && m.isHomeMatch !== false);
-
-      console.log('result', result.toArray());
-
-      result = result.filter(m => (m.home.clubId === opponent.clubId && m.home.teamCode === opponent.teamCode) ||
+      const matches = store.getState().readonlyMatches;
+      var result = matches.filter(m => (m.home.clubId === opponent.clubId && m.home.teamCode === opponent.teamCode) ||
           (m.away.clubId === opponent.clubId && m.away.teamCode === opponent.teamCode));
-
-      console.log('result', result.toArray());
 
       return result;
     }

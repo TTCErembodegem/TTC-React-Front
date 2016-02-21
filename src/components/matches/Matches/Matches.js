@@ -43,7 +43,7 @@ export default class Matches extends Component {
     const showPlayedMatchesDays = 20;
 
     var today = moment();
-    var ownMatches = this.props.matches.filter(cal => cal.isHomeMatch === true || cal.isHomeMatch === false);
+    var ownMatches = this.props.matches;
 
     var matchesToday = ownMatches.filter(cal => cal.date.isSame(today, 'day'));
     var matchesNext = ownMatches
@@ -57,9 +57,7 @@ export default class Matches extends Component {
     // TODO: debug inputfield: get and display a (frenoy)matchId -> also implement auto fetch if not present...
     return (
       <div>
-        <div className="row">
-          <button>Alle matchen</button> <button>Mijn matchen</button> (use pills?)
-        </div>
+        {matchesToday.size ? this._renderDivider(this.context.t('match.todayMatches')) : null}
         {this._renderMatches(matchesToday, 'today')}
         {matchesNext.size || matchesPlayed.size ? this._renderDivider(this.context.t('match.nextMatches')) : null}
         {this._renderMatches(matchesNext, 'next')}
