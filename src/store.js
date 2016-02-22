@@ -54,7 +54,40 @@ export const util = {
       var result = matches.filter(m => (m.home.clubId === opponent.clubId && m.home.teamCode === opponent.teamCode) ||
           (m.away.clubId === opponent.clubId && m.away.teamCode === opponent.teamCode));
 
+      // TODO: this would become much easier if the backend returned a DivisionId with a match?
+
       return result;
+    },
+
+    getFormation(match) {
+      var opponent = match.opponent;
+      const matches = store.getState().readonlyMatches;
+      var resultHome = matches.filter(m => m.home.clubId === opponent.clubId && m.home.teamCode === opponent.teamCode);
+      var resultAway = matches.filter(m => m.away.clubId === opponent.clubId && m.away.teamCode === opponent.teamCode);
+
+      var opponentPlayers = resultHome.map(m => m.players).flatten().filter(m => m.home);
+      opponentPlayers = opponentPlayers.concat(resultAway.map(m => m.players).flatten().filter(m => !m.home));
+      //console.log('opponentPlayers', opponentPlayers.toArray());
+
+      var result = {};
+      opponentPlayers.forEach(ply => {
+        if (result[ply.uniqueIndex]) {
+          result[ply.uniqueIndex].count++;
+          result[ply.uniqueIndex].won += +ply.won || 0;
+
+        } else {
+          result[ply.uniqueIndex] = {
+            player: ply,
+            count: 1,
+            won: +ply.won || 0,
+          };
+        }
+      });
+
+      var matchesPerPlayer = match.getTeam().getTeamPlayerCount();
+      //console.log('result', result);
+
+      return Object.values(result).map(ply => Object.assign(ply, {lost: (matchesPerPlayer * ply.count) - ply.won}));
     }
   },
 };

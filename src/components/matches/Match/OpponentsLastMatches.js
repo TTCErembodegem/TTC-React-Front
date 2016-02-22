@@ -7,6 +7,8 @@ import MatchModel from '../../../models/MatchModel.js';
 import Table from 'react-bootstrap/lib/Table';
 import OpponentPlayer from './OpponentPlayer.js';
 
+const AmountOfOpponentMatchesToShow = 5;
+
 export default class OpponentsLastMatches extends Component {
   static contextTypes = contextTypes;
   static propTypes = {
@@ -21,7 +23,8 @@ export default class OpponentsLastMatches extends Component {
   render() {
     var matches = storeUtils.matches
       .getFromOpponent(this.props.match.opponent)
-      .sort((a, b) => a.date.isBefore(b.date) ? 1 : -1);
+      .sort((a, b) => a.date.isBefore(b.date) ? 1 : -1)
+      .take(AmountOfOpponentMatchesToShow);
 
     return (
       <Table condensed className="match-card-tab-table">

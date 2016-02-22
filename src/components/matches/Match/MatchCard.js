@@ -34,7 +34,8 @@ const tabEventKeys = {
   report: 3,
   opponentClub: 4,
   scoresheet: 5,
-  opponents: 6,
+  opponentsRanking: 6,
+  opponentsFormation: 7,
 };
 
 @connect(state => {
@@ -75,7 +76,8 @@ export default class MatchCard extends Component {
             {showIndividualMatches ? this._renderNavItem(tabEventKeys.individualMatches, 'matches') : null}
             {!match.isHomeMatch ? this._renderNavItem(tabEventKeys.opponentClub, 'club') : null}
             {!match.isPlayed ? this._renderNavItem(tabEventKeys.scoresheet, 'scoresheet') : null}
-            {!match.isPlayed ? this._renderNavItem(tabEventKeys.opponents, 'opponents') : null}
+            {!match.isPlayed ? this._renderNavItem(tabEventKeys.opponentsRanking, 'opponentsRanking') : null}
+            {!match.isPlayed ? this._renderNavItem(tabEventKeys.opponentsFormation, 'opponentsFormation') : null}
             {this._renderNavItem(tabEventKeys.report, 'report')}
           </Nav>
           <div className="match-card-tab">
@@ -118,8 +120,10 @@ export default class MatchCard extends Component {
       return this._renderOpponentClub();
     case tabEventKeys.scoresheet:
       return this._renderScoreSheet();
-    case tabEventKeys.opponents:
-      return this._renderOpponentsIntel();
+    case tabEventKeys.opponentsRanking:
+      return this._renderOpponentsRanking();
+    case tabEventKeys.opponentsFormation:
+      return this._renderOpponentFormation();
     }
     return 'Unknown';
   }
@@ -130,10 +134,43 @@ export default class MatchCard extends Component {
   _renderIndividualMatches() {
     return <IndividualMatches match={this.props.match} ownPlayerId={this.props.user.playerId} t={this.context.t} />;
   }
-  _renderOpponentsIntel() {
+  _renderOpponentsRanking() {
     return <OpponentsLastMatches match={this.props.match} />;
   }
+  _renderOpponentFormation() {
+    var formations = storeUtils.matches
+      .getFormation(this.props.match)
+      .sort((a, b) => a.count < b.count ? 1 : -1);
 
+    return (
+      <Table condensed className="match-card-tab-table">
+        <thead>
+          <tr>
+            <th>{this.context.t('match.opponents.player')}</th>
+            <th>{this.context.t('match.opponents.playerRanking')}</th>
+            <th>{this.context.t('match.opponents.timesPlayed')}</th>
+            <th colSpan={2}>{this.context.t('match.opponents.victories')}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {formations.map(f => (
+            <tr key={f.player.uniqueIndex}>
+              <td>{f.player.name}</td>
+              <td>{f.player.ranking}</td>
+              <td>{f.count}</td>
+              <td>
+                <Icon fa="fa fa-thumbs-o-up" style={{marginRight: 5, color: '#D3D3D3'}} />
+                {f.won}
+                <Icon fa="fa fa-thumbs-o-down" style={{marginRight: 5, marginLeft: 5, color: '#D3D3D3'}} />
+                {f.lost}
+              </td>
+              <td>{(f.won / (f.lost + f.won) * 100).toFixed(0) + '%'}</td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    );
+  }
 
 
   _renderScoreSheet() {
