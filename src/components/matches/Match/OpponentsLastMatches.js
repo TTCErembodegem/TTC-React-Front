@@ -24,6 +24,7 @@ export default class OpponentsLastMatches extends Component {
     var matches = storeUtils.matches
       .getFromOpponent(this.props.match.opponent)
       .sort((a, b) => a.date.isBefore(b.date) ? 1 : -1)
+      .filter(match => match.score)
       .take(AmountOfOpponentMatchesToShow);
 
     return (
