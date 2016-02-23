@@ -47,6 +47,7 @@ export default {
         player: 'Speler',
         playerRanking: '',
         victories: 'Overwinningen / Nederlagen',
+        formation: 'Opstelling'
       },
       enemyVictory: '${}ov.',
       club: {

@@ -34,21 +34,34 @@ export default class OpponentsLastMatches extends Component {
             <th>{this.context.t('match.opponents.date')}</th>
             <th>{this.context.t('match.opponents.homeTeam')}</th>
             <th>{this.context.t('match.opponents.awayTeam')}</th>
+            <th>{this.context.t('match.opponents.formation')}</th>
             <th>{this.context.t('match.opponents.outcome')}</th>
           </tr>
         </thead>
         <tbody>
-          {matches.map(match => [
-            <tr key={match.id} className={'clickable ' + (match.won(this.props.match.opponent) ? 'accentuate success' : '')}
-              onClick={this._onOpenOpponentMatch.bind(this, match.id)}>
+          {matches.map(match => {
+            var opponent = this.props.match.opponent;
+            var opponentFormation;
+            var isHomeMatch = match.home.clubId === opponent.clubId && match.home.teamCode === opponent.teamCode;
+            if (isHomeMatch) {
+              opponentFormation = match.players.filter(m => m.home);
+            } else {
+              opponentFormation = match.players.filter(m => !m.home);
+            }
 
-              <td>{match.getDisplayDate('d')}</td>
-              <td>{match.getClub('home').name} {match.home.teamCode}</td>
-              <td>{match.getClub('away').name} {match.away.teamCode}</td>
-              <td>{match.score.home} - {match.score.out}</td>
-            </tr>,
-            this._getMatchDetails(match)
-          ])}
+            return [
+              <tr key={match.id} className={'clickable ' + (match.won(opponent) ? 'accentuate success' : '')}
+                onClick={this._onOpenOpponentMatch.bind(this, match.id)}>
+
+                <td>{match.getDisplayDate('d')}</td>
+                <td>{match.getClub('home').name} {match.home.teamCode}</td>
+                <td>{match.getClub('away').name} {match.away.teamCode}</td>
+                <td>{opponentFormation.map(ply => ply.ranking).join(', ')}</td>
+                <td>{match.score.home} - {match.score.out}</td>
+              </tr>,
+              this._getMatchDetails(match)
+            ];
+          })}
         </tbody>
       </Table>
     );
