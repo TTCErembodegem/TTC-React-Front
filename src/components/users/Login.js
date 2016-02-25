@@ -1,6 +1,5 @@
 import React, { PropTypes, Component } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import moment from 'moment';
 import { connect } from 'react-redux';
 import { contextTypes } from '../../utils/decorators/withContext.js';
 
@@ -9,7 +8,6 @@ import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 
 import PlayerModel from '../../models/PlayerModel.js';
 
-import AutoComplete from 'material-ui/lib/auto-complete';
 import TextField from 'material-ui/lib/text-field';
 import RaisedButton from 'material-ui/lib/raised-button';
 import Paper from 'material-ui/lib/paper';

@@ -3,7 +3,7 @@ import 'babel-core/polyfill';
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { ReduxRouter } from 'redux-router';
+import Routes from './routes.js';
 
 //import FastClick from 'fastclick';
 // Make taps on links and buttons work fast on mobiles
@@ -25,7 +25,7 @@ if (enableDevTools) {
   render(
     <div>
       <Provider store={store}>
-        <ReduxRouter />
+        <Routes />
       </Provider>
       <DebugPanel top right bottom>
         <DevTools store={store} monitor={LogMonitor} />
@@ -36,7 +36,7 @@ if (enableDevTools) {
 } else {
   render(
     <Provider store={store}>
-      <ReduxRouter />
+      <Routes />
     </Provider>,
     document.getElementById('app')
   );
