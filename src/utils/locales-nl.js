@@ -4,7 +4,17 @@ export default {
     fullClubName: 'TTC Erembodegem',
     clubName: 'TTC Erembodegem',
     nav: {
-      players: 'Spelers'
+      players: 'Spelers',
+      login: 'Log in',
+    },
+    login: {
+      title: 'Aanmelden',
+      introText: 'Neem deel aan de interactieve delen van de site',
+      loginName: 'Spelersnaam',
+      password: 'Paswoord',
+      passwordHint: 'Hetzelfde paswoord als de oude site',
+      loginButton: 'Login',
+      fail: 'Incorrect paswoord voor ${}'
     },
     players: {
       title: 'Spelers overzicht ${a}'

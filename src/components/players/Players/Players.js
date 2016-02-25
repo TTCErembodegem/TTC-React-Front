@@ -22,7 +22,7 @@ export default class Players extends Component {
   static contextTypes = contextTypes;
   static propTypes = {
     config: PropTypes.object,
-    players: PropTypes.array,
+    players: PropTypes.object,
   };
 
   componentDidMount() {

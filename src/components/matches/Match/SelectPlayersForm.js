@@ -14,6 +14,8 @@ import Divider from 'material-ui/lib/divider';
 import AutoComplete from 'material-ui/lib/auto-complete';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 
+import PlayerAutoComplete from '../../players/PlayerAutoComplete.js';
+
 import * as matchActions from '../../../actions/matchActions.js';
 
 @connect(state => {
@@ -22,6 +24,7 @@ import * as matchActions from '../../../actions/matchActions.js';
   };
 }, matchActions)
 export default class SelectPlayersForm extends Component {
+  static contextTypes = contextTypes;
   static propTypes = {
     players: ImmutablePropTypes.listOf(PropTypes.instanceOf(PlayerModel).isRequired).isRequired,
     match: PropTypes.instanceOf(MatchModel).isRequired,
@@ -49,42 +52,12 @@ export default class SelectPlayersForm extends Component {
         {reservePlayers.length ? <Divider /> : null}
         {reservePlayers.length ? <PlayerAvatarList players={reservePlayers} match={this.props.match} selectPlayer={this.props.selectPlayer} /> : null}
         <Divider />
-        <PlayerSelector players={this.props.players} selectPlayer={this.props.selectPlayer.bind(this, this.props.match.id)} />
+        <PlayerAutoComplete
+          players={this.props.players}
+          selectPlayer={this.props.selectPlayer.bind(this, this.props.match.id)}
+          style={{marginLeft: 10}}
+          hintText={this.context.t('match.chooseOtherPlayer')} />
       </div>
-    );
-  }
-}
-
-class PlayerSelector extends Component {
-  static contextTypes = contextTypes;
-  static propTypes = {
-    players: ImmutablePropTypes.listOf(PropTypes.instanceOf(PlayerModel).isRequired).isRequired,
-    selectPlayer: PropTypes.func.isRequired,
-  }
-
-  _onPlayerSelected(text) {
-    if (text) {
-      var matchedPlayers = this.props.players.filter(ply => ply.alias.toUpperCase() === text.toUpperCase());
-      if (matchedPlayers.size === 1) {
-        this.props.selectPlayer(matchedPlayers.first().id);
-      }
-    }
-  }
-
-  render() {
-    var players = this.props.players.map(ply => ({
-      text: ply.alias,
-      value: <MenuItem primaryText={ply.alias} />,
-    }));
-
-    return (
-      <AutoComplete
-        style={{marginLeft: 10}}
-        hintText={this.context.t('match.chooseOtherPlayer')}
-        filter={AutoComplete.fuzzyFilter}
-        onNewRequest={::this._onPlayerSelected}
-        triggerUpdateOnFocus={false}
-        dataSource={players.toArray()} />
     );
   }
 }

@@ -12,7 +12,7 @@ const finalCreateStore = compose(
   applyMiddleware(thunk),
   reduxReactRouter({routes, createHistory}),
   devTools(),
-  //applyMiddleware(createLogger({collapsed: true}))
+  applyMiddleware(createLogger({collapsed: true}))
 )(createStore);
 
 const store = finalCreateStore(rootReducer);
@@ -55,6 +55,7 @@ export const util = {
           (m.away.clubId === opponent.clubId && m.away.teamCode === opponent.teamCode));
 
       // TODO: this would become much easier if the backend returned a DivisionId with a match?
+      // Probably a good idea to store DivisionId in match table?
 
       return result;
     },

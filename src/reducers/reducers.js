@@ -4,26 +4,19 @@ import * as ActionTypes from '../actions/ActionTypes.js';
 //import _ from 'lodash';
 
 import PlayerModel from '../models/PlayerModel.js';
-import UserModel from '../models/UserModel.js';
 import TeamModel from '../models/TeamModel.js';
 import ClubModel from '../models/ClubModel.js';
 import MatchModel from '../models/MatchModel.js';
 
-export function user(state = {teams: Immutable.List([])}, action = null) {
+export function config(state = Immutable.Map({initialLoadCompleted: false}), action = null) {
   const {type, payload} = action;
   switch (type) {
-  case ActionTypes.LOGIN:
-    return new UserModel(payload);
-  default:
-    return state;
-  }
-}
-
-export function config(state = Immutable.Map({initialLoadCompleted: false}), action = null) {
-  const {type} = action;
-  switch (type) {
   case ActionTypes.INITIAL_LOADED:
-    return Immutable.Map({initialLoadCompleted: true});
+    return state.set('initialLoadCompleted', true);
+  case ActionTypes.LOGIN_FAIL:
+    return state.set('snackbar', payload);
+  case ActionTypes.CONFIG_CLEAR_SNACKBAR:
+    return state.remove('snackbar');
   default:
     return state;
   }

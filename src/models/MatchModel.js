@@ -29,6 +29,7 @@ export default class MatchModel {
     this.players = Immutable.List(json.players);
     this.games = Immutable.List(json.games);
 
+    // TODO: probably better to split MatchModel and ReadOnlyMatchModel/OtherMatchModel
     if (json.opponent) {
       // TTC Erembodegem Match
       this.isHomeMatch = json.isHomeMatch;

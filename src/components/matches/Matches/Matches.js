@@ -43,6 +43,7 @@ export default class Matches extends Component {
     const showPlayedMatchesDays = 20;
 
     var today = moment();
+    //var yesterday = moment().subtract(1, 'days');  || cal.date.isSame(yesterday, 'day')
     var ownMatches = this.props.matches;
 
     var matchesToday = ownMatches.filter(cal => cal.date.isSame(today, 'day'));

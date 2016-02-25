@@ -18,15 +18,6 @@ import store from './store.js';
 import initialLoad from './actions/initialLoad.js';
 store.dispatch(initialLoad());
 
-store.dispatch({
-  type: 'LOGIN',
-  payload: {
-    playerId: 20,
-    teams: [31],
-    security: ['CAN_MANAGETEAM']
-  }
-});
-
 const enableDevTools = false;
 if (enableDevTools) {
   const {DebugPanel, DevTools, LogMonitor} = require('redux-devtools/lib/react');
@@ -50,4 +41,3 @@ if (enableDevTools) {
     document.getElementById('app')
   );
 }
-

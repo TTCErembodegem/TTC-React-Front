@@ -8,21 +8,11 @@ import styles from './App.css';
 
 import Header from '../skeleton/Header';
 import Footer from '../skeleton/Footer';
-
 import Spinner from '../controls/Spinner.js';
 import Matches from '../matches/Matches';
 
-function renderApp(children) {
-  return (
-    <div>
-      <Header />
-      <div className="container" style={{paddingTop: 5}}>
-        {children}
-      </div>
-      <Footer />
-    </div>
-  );
-}
+import Snackbar from 'material-ui/lib/snackbar';
+import * as configActions from '../../actions/configActions.js';
 
 @connect(state => {
   return {
@@ -32,19 +22,36 @@ function renderApp(children) {
     // matches: state.matches,
     // teams: state.teams
   };
-})
+}, configActions)
 @withContext
 @withStyles(styles)
 export default class App extends Component {
   static propTypes = {
     config: ImmutablePropTypes.map.isRequired,
     children: PropTypes.element,
+    clearSnackbar: PropTypes.func.isRequired,
   };
 
   render() {
-    if (!this.props.config.get('initialLoadCompleted')) {
-      return renderApp(<Spinner size={5} />);
-    }
-    return renderApp(this.props.children || <Matches />);
+    return (
+      <div>
+        <Header />
+        <div className="container" style={{paddingTop: 5}}>
+          {!this.props.config.get('initialLoadCompleted') ?
+            <Spinner size={5} /> :
+            this.props.children || <Matches />
+          }
+        </div>
+        <Footer />
+        <Snackbar
+          open={!!this.props.config.get('snackbar')}
+          message={this.props.config.get('snackbar') || ''}
+          autoHideDuration={4000}
+          onRequestClose={::this._onCloseSnackbar} />
+      </div>
+    );
+  }
+  _onCloseSnackbar() {
+    this.props.clearSnackbar();
   }
 }
