@@ -14,6 +14,7 @@ import IndividualMatches from './IndividualMatches.js';
 import OpponentClubLocations from './OpponentClubLocations.js';
 import SelectPlayersForm from './SelectPlayersForm.js';
 import OpponentsLastMatches from './OpponentsLastMatches.js';
+import Scoresheet from './Scoresheet.js';
 
 import Icon from '../../controls/Icon.js';
 import Telephone from '../../controls/Telephone.js';
@@ -174,24 +175,7 @@ export default class MatchCard extends Component {
 
 
   _renderScoreSheet() {
-    var competition = this.props.match.getTeam().competition;
-    // TODO: display this in table exactly like on the scoresheet... (like IndividualMatches.js)
-    return (
-      <div className="match-card-tab-content">
-        <h3>{this.props.match.frenoyMatchId}</h3>
-        {this.props.match.getOwnPlayerModels().map(player => {
-          var comp = player.getCompetition(competition);
-          return (
-            <div>
-              {player.name}<br />
-              {comp.ranking}<br />
-              {comp.position}<br />
-              {comp.uniqueIndex}<br />
-            </div>
-          );
-        })}
-      </div>
-    );
+    return (<Scoresheet match={this.props.match} t={this.context.t} />);
   }
 
 

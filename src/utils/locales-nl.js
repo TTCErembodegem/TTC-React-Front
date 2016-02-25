@@ -26,6 +26,12 @@ export default {
       playedMatches: 'gespeelde matchen',
       date: '${}u',
       vs: 'vs',
+      scoresheet: {
+        uniqueIndex: 'LIDK. nr.',
+        ranking: 'Klassement',
+        rankingValue: 'Waarde',
+        teamValue: 'Ploegwaarde',
+      },
       tabs: {
         players: 'Spelers',
         playersTitle: 'Het verdict',

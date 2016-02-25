@@ -75,7 +75,7 @@ export default class OpponentsLastMatches extends Component {
     }
     return (
       <tr key={match.id + '_details'}>
-        <td colSpan={4}>
+        <td colSpan={5}>
           <h4 style={{marginTop: 5}}>{match.getClub('home').name} {match.home.teamCode}</h4>
           {match.getOwnPlayers().map(ply => <OpponentPlayer ply={ply} key={ply.position} t={this.context.t} />)}
 
