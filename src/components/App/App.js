@@ -9,6 +9,7 @@ import styles from './App.css';
 import Header from '../skeleton/Header';
 import Footer from '../skeleton/Footer';
 import Spinner from '../controls/Spinner.js';
+import CircularProgress from 'material-ui/lib/circular-progress';
 import Matches from '../matches/Matches';
 
 import Snackbar from 'material-ui/lib/snackbar';
@@ -40,7 +41,7 @@ export default class App extends Component {
         <Header user={this.props.user} />
         <div className="container" style={{paddingTop: 5}}>
           {!this.props.config.get('initialLoadCompleted') ?
-            <Spinner size={5} /> :
+            <div style={{width: 300, marginLeft: 'auto', marginRight: 'auto'}}><CircularProgress size={3} /></div> :
             this.props.children || <Matches />
           }
         </div>
