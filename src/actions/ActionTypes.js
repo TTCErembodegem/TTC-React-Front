@@ -8,6 +8,7 @@ export default keyMirror({
 
   LOGIN_SUCCESS: '',
   LOGIN_FAIL: '',
+  LOGIN_LOGOUT: '',
 
   CONFIG_CLEAR_SNACKBAR: '',
 

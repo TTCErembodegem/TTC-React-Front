@@ -3,8 +3,13 @@ import { Link } from 'react-router';
 
 import { contextTypes } from '../../../utils/decorators/withContext.js';
 
+import Icon from '../../controls/Icon.js';
+
 export default class Navigation extends Component {
   static contextTypes = contextTypes;
+  static propTypes = {
+    user: PropTypes.object
+  }
 
   render() {
     return (
@@ -12,7 +17,10 @@ export default class Navigation extends Component {
         <Link className="Header-link" to="/spelers">{this.context.t('nav.players')}</Link>
 
         <span className="Header-spacer"> | </span>
-        <Link className="Header-link" to="/login">{this.context.t('nav.login')}</Link>
+        {!this.props.user.playerId ?
+          <Link className="Header-link" to="/login">{this.context.t('nav.login')}</Link> :
+          <Link className="Header-link" to="/profiel"><Icon fa="fa fa-user" /></Link>
+        }
       </div>
     );
   }

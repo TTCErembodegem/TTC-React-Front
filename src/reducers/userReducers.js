@@ -13,14 +13,24 @@ var startState = new UserModel({
 
 // Security: ['CAN_MANAGETEAM']
 
+function gotoDefaultPage() {
+  browserHistory.push('/');
+}
+
 export default function user(state = startState, action = null) {
   const {type, payload} = action;
   switch (type) {
   case ActionTypes.LOGIN_SUCCESS:
-    browserHistory.push('/');
+    gotoDefaultPage();
     return new UserModel(payload);
+
   case ActionTypes.LOGIN_FAIL:
     return startState;
+
+  case ActionTypes.LOGIN_LOGOUT:
+    gotoDefaultPage();
+    return startState;
+
   default:
     return state;
   }

@@ -14,6 +14,7 @@ export default {
       password: 'Paswoord',
       passwordHint: 'Hetzelfde paswoord als de oude site',
       loginButton: 'Login',
+      logoutButton: 'Uitloggen',
       fail: 'Incorrect paswoord voor ${}'
     },
     players: {

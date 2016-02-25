@@ -18,6 +18,11 @@ function logFailed(playerName) {
   };
 }
 
+export function logout() {
+  return {
+    type: ActionTypes.LOGIN_LOGOUT
+  };
+}
 
 export function login(creds) {
   var player = storeUtil.getPlayer(creds.playerId);

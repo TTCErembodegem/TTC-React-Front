@@ -17,6 +17,7 @@ import * as configActions from '../../actions/configActions.js';
 @connect(state => {
   return {
     config: state.config,
+    user: state.user,
     // players: state.players,
     // clubs: state.clubs,
     // matches: state.matches,
@@ -28,6 +29,7 @@ import * as configActions from '../../actions/configActions.js';
 export default class App extends Component {
   static propTypes = {
     config: ImmutablePropTypes.map.isRequired,
+    user: PropTypes.object,
     children: PropTypes.element,
     clearSnackbar: PropTypes.func.isRequired,
   };
@@ -35,7 +37,7 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        <Header />
+        <Header user={this.props.user} />
         <div className="container" style={{paddingTop: 5}}>
           {!this.props.config.get('initialLoadCompleted') ?
             <Spinner size={5} /> :
