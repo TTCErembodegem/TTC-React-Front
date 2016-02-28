@@ -86,7 +86,8 @@ const config = {
         onImport: files => files.forEach(this.addDependency),
       }),
       require('postcss-nested')(),
-      require('postcss-cssnext')({ autoprefixer: AUTOPREFIXER_BROWSERS }),
+      require('postcss-calc')(),
+      require('postcss-cssnext')({autoprefixer: AUTOPREFIXER_BROWSERS}),
     ];
   },
 };

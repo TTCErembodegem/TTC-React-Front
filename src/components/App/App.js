@@ -37,13 +37,16 @@ export default class App extends Component {
 
   render() {
     return (
-      <div>
-        <Header user={this.props.user} />
-        <div className="container" style={{paddingTop: 5}}>
-          {!this.props.config.get('initialLoadCompleted') ?
-            <div style={{width: 300, marginLeft: 'auto', marginRight: 'auto'}}><CircularProgress size={3} /></div> :
-            this.props.children || <Matches />
-          }
+      <div id="react">
+        <div className="wrapper">
+          <Header user={this.props.user} />
+          <div className="container" style={{paddingTop: 5}}>
+            {!this.props.config.get('initialLoadCompleted') ?
+              <div style={{width: 300, marginLeft: 'auto', marginRight: 'auto'}}><CircularProgress size={3} /></div> :
+              this.props.children || <Matches />
+            }
+          </div>
+          <div className="push"></div>
         </div>
         <Footer />
         <Snackbar
