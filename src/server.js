@@ -5,7 +5,12 @@ import express from 'express';
 const server = global.server = express();
 
 server.set('port', (process.env.PORT || 5000));
-server.use(express.static(path.join(__dirname, 'public')));
+
+const publicPath = path.join(__dirname, 'public');
+server.use(express.static(publicPath));
+server.use(function(req, res) {
+  res.sendFile(publicPath + '/index.html');
+});
 
 // Launch the server
 // -----------------------------------------------------------------------------

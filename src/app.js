@@ -5,7 +5,6 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import Routes from './routes.js';
 
-// TODO: make server.js serve the same index page on all routes
 // TODO: change webpack config to add sourcemaps
 
 //import FastClick from 'fastclick';
