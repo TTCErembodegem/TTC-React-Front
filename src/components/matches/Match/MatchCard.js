@@ -76,7 +76,7 @@ export default class MatchCard extends Component {
             {this._renderNavItem(tabEventKeys.players, 'players', this._getPlayersEditIcon())}
             {showIndividualMatches ? this._renderNavItem(tabEventKeys.individualMatches, 'matches') : null}
             {!match.isHomeMatch ? this._renderNavItem(tabEventKeys.opponentClub, 'club') : null}
-            {!match.isPlayed ? this._renderNavItem(tabEventKeys.scoresheet, 'scoresheet') : null}
+            {match.scoreType === 'BeingPlayed' ? this._renderNavItem(tabEventKeys.scoresheet, 'scoresheet') : null}
             {!match.isPlayed ? this._renderNavItem(tabEventKeys.opponentsRanking, 'opponentsRanking') : null}
             {!match.isPlayed ? this._renderNavItem(tabEventKeys.opponentsFormation, 'opponentsFormation') : null}
             {this._renderNavItem(tabEventKeys.report, 'report')}
@@ -195,6 +195,9 @@ export default class MatchCard extends Component {
     }
 
     if (this.props.user.playerId) {
+      // TODO: don't check for logged in but check for match.scoreType === 'BeingPlayed' / 'IsPlayed'
+      // --> a non logged in use can not see the formation/opstelling when the match is NotYetPlayed
+      //     and since "opstellingen" will (later) not be returned from the backend when not logged in, this logic becomes simpler
       if (match.players.size === team.getTeamPlayerCount() && !this.state.forceEditPlayers) {
         return <PlayersGallery players={match.getOwnPlayerModels()} user={this.props.user} competition={team.competition} />;
       }
@@ -236,14 +239,17 @@ const PlayersGallery = ({players, user, competition}) => (
       cellHeight={200}
       cols={4}
       style={gridStyles.gridList}>
-      {players.map(ply => (
-        <GridTile
-          key={ply.id}
-          title={<span><span>{ply.name}</span> <small>{ply.getCompetition(competition).ranking}</small></span>}
-          subtitle={!user.playerId ? <Telephone number={ply.contact.mobile} /> : <PlayerPlayingStyle ply={ply} />}>
-          <PlayerImage playerId={ply.id} />
-        </GridTile>
-      ))}
+      {players.map(ply => {
+        var comp = ply.getCompetition(competition);
+        return (
+          <GridTile
+            key={ply.id}
+            title={<span><span>{ply.name}</span> <small>{comp ? comp.ranking : '??'}</small></span>}
+            subtitle={user.playerId ? <Telephone number={ply.contact.mobile} /> : <PlayerPlayingStyle ply={ply} />}>
+            <PlayerImage playerId={ply.id} />
+          </GridTile>
+        );
+      })}
     </GridList>
   </div>
 );

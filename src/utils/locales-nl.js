@@ -26,11 +26,17 @@ export default {
       playedMatches: 'gespeelde matchen',
       date: '${}u',
       vs: 'vs',
-      scoresheet: {
+      scoresheetSporta: {
         uniqueIndex: 'LIDK. nr.',
         ranking: 'Klassement',
         rankingValue: 'Waarde',
         teamValue: 'Ploegwaarde',
+      },
+      scoresheetVttl: {
+        uniqueIndex: 'Computer nummer',
+        rankingIndex: 'Volgnummer',
+        index: 'Index',
+        ranking: 'Klassement',
       },
       tabs: {
         players: 'Spelers',
