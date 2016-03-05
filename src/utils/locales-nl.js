@@ -2,7 +2,7 @@ export default {
   lang: 'nl',
   trans: {
     fullClubName: 'TTC Erembodegem',
-    clubName: 'TTC Erembodegem',
+    clubName: 'Erembodegem',
     nav: {
       matches: 'Matchen',
       players: 'Spelers',
@@ -82,8 +82,8 @@ export default {
     },
     footer: {
       location: 'Groeneweg 28, 9300 Erembodegem',
-      trainingDays: 'Training: Dinsdag en donderdag vanaf 20u',
-      competitionDays: 'Competitie: Maandag, woensdag en vrijdag om 20u',
+      trainingDays: 'Training: di. en do. vanaf 20u',
+      competitionDays: 'Competitie: ma., wo. en vr. om 20u',
       telephoneNumber: '0495/24 94 20',
       adultMembership: '€90 voor volwassenen',
       youthMembership: '€50 voor -18 jarigen',

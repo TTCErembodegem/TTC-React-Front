@@ -32,7 +32,7 @@ export default class Header extends Component {
     return (
       <div>
         <AppBar
-          title={<Link className="Header-link" to="/">{this.context.t('fullClubName')}</Link>}
+          title={<Link className="Header-link" to="/">{this.context.t('clubName')}</Link>}
           iconElementRight={loginOrProfile}
           onLeftIconButtonTouchTap={::this._openNav} />
 
