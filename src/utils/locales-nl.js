@@ -6,6 +6,7 @@ export default {
     nav: {
       players: 'Spelers',
       login: 'Log in',
+      links: 'Links'
     },
     login: {
       title: 'Aanmelden',
@@ -87,6 +88,20 @@ export default {
       adultMembership: '€90 voor volwassenen',
       youthMembership: '€50 voor -18 jarigen',
       contact: 'Contacteer ons'
+    },
+    links: {
+      federations: 'De bonden & hun uitslagenborden',
+      vttl: 'VTTL',
+      vttlovl: 'VTTL Oost-Vlaanderen',
+      sporta: 'Sporta',
+      ittf: 'ITTF',
+      vttlResults: 'Resultaten VTTL',
+      sportaResults: 'Resultaten Sporta',
+      varia: 'Varia',
+      vttlCalculation: 'Klassementsberekening VTTL',
+      sportaCalculation: 'Klassementsberekening Sporta',
+      francis: 'Francis tafeltennisshop',
+      ttactua: 'Tafeltennisactua'
     }
   }
 };

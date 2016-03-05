@@ -15,6 +15,7 @@ export default class Navigation extends Component {
     return (
       <div className="Header-nav" role="navigation">
         <Link className="Header-link" to="/spelers">{this.context.t('nav.players')}</Link>
+        <Link className="Header-link" to="/links">{this.context.t('nav.links')}</Link>
 
         <span className="Header-spacer"> | </span>
         {!this.props.user.playerId ?
