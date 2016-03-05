@@ -6,7 +6,7 @@ import Players from './components/players/Players';
 import Login from './components/users/Login.js';
 import Profile from './components/users/Profile.js';
 import Links from './components/links/Links.js';
-
+import Matches from './components/matches/Matches';
 
 const Routes = () => (
   <Router history={browserHistory }>
