@@ -1,54 +1,15 @@
 @import '../../variables.css';
 
 :root {
-  --brand-color: #E3E3E3;
-}
-
-.Header {
-  background: #3B8BC4;
-  color: #fff;
-}
-
-.Header-container {
-  margin: 0 auto;
-  padding: 8px 0;
-  max-width: var(--max-content-width);
-}
-
-.Header-brand {
-  color: color(var(--brand-color) lightness(+10%));
-  text-decoration: none;
-  color: var(--brand-color);
-  font-size: 1.75em;
-}
-
-.Header-brand:active,
-.Header-brand:hover,
-.Header-brand:visited {
-  color: var(--brand-color);
-  text-decoration: none;
-}
-
-.Header-brandTxt {
-  margin-left: 10px;
-}
-
-
-
-
-.Header-nav {
-  float: right;
-  margin-top: 6px;
+  --brand-color: #fff;
 }
 
 .Header-link {
-  display: inline-block;
-  padding: 3px 8px;
+  color: var(--brand-color);
   text-decoration: none;
-  font-size: 1.125em; /* ~18px */
 }
 
-.Header-link,
+.Header-link:link,
 .Header-link:active,
 .Header-link:hover,
 .Header-link:visited {
@@ -56,6 +17,8 @@
   text-decoration: none;
 }
 
-.Header-spacer {
-  color: rgba(255, 255, 255, .3);
+.Header-icon-right {
+  display: inline-block;
+  padding-top: 10px;
+  padding-right: 8px;
 }
