@@ -35,6 +35,7 @@ export default class PlayerAutoComplete extends Component {
         triggerUpdateOnFocus={false}
         {...this.props}
         onNewRequest={::this._onPlayerSelected}
+        onUpdateInput={::this._onPlayerSelected}
         dataSource={players.toArray()} />
     );
   }

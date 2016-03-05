@@ -40,8 +40,8 @@ export default class Login extends Component {
 
   render() {
     var paperStyle = {
-      height: 310,
-      width: 320,
+      height: 280,
+      width: 290,
       margin: 20,
       textAlign: 'center',
       display: 'inline-block',

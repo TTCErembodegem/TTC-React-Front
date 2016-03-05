@@ -10,7 +10,7 @@ export default {
     },
     login: {
       title: 'Aanmelden',
-      introText: 'Neem deel aan de interactieve delen van de site',
+      introText: '',
       loginName: 'Spelersnaam',
       password: 'Paswoord',
       passwordHint: 'Hetzelfde paswoord als de oude site',
