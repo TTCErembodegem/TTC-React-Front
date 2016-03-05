@@ -15,6 +15,7 @@ const Routes = () => (
       <Route path="/login" component={Login} />
       <Route path="/profiel" component={Profile} />
       <Route path="/links" component={Links} />
+      <Route path="/matchen" component={Matches} />
     </Route>
   </Router>
 );
