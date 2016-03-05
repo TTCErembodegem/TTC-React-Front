@@ -30,6 +30,7 @@ class Navigation extends Component {
       <LeftNav open={this.props.navOpen} width={200}>
         <MenuItem onTouchTap={this._goto.bind(this, '/matchen')}>{this.context.t('nav.matches')}</MenuItem>
         <MenuItem onTouchTap={this._goto.bind(this, '/spelers')}>{this.context.t('nav.players')}</MenuItem>
+        <MenuItem onTouchTap={this._goto.bind(this, '/links')}>{this.context.t('nav.links')}</MenuItem>
       </LeftNav>
     );
   }

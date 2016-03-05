@@ -5,6 +5,7 @@ import App from './components/App';
 import Players from './components/players/Players';
 import Login from './components/users/Login.js';
 import Profile from './components/users/Profile.js';
+import Links from './components/links/Links.js';
 import Matches from './components/matches/Matches';
 
 const Routes = () => (
@@ -13,6 +14,7 @@ const Routes = () => (
       <Route path="/spelers" component={Players} />
       <Route path="/login" component={Login} />
       <Route path="/profiel" component={Profile} />
+      <Route path="/links" component={Links} />
       <Route path="/matchen" component={Matches} />
     </Route>
   </Router>
