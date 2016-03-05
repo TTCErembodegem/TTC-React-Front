@@ -232,7 +232,6 @@ const gridStyles = {
   },
 };
 // TODO: cols must be set to two on small devices (window.innerWidth + need onResize eventHandler)
-// TODO: !user.playerId --> remove the ! before PRD!
 const PlayersGallery = ({players, user, competition}) => (
   <div style={gridStyles.root}>
     <GridList
