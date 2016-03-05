@@ -4,6 +4,7 @@ export default {
     fullClubName: 'TTC Erembodegem',
     clubName: 'TTC Erembodegem',
     nav: {
+      matches: 'Matchen',
       players: 'Spelers',
       login: 'Log in',
     },
