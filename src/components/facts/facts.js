@@ -44,23 +44,21 @@ export default class Facts extends Component {
             <p>
               {this.context.t('facts.serviceSectionOneComponentSeventeen')}
             </p>
-            <div className="centerImage">
-              <figure>
+              <figure className="centerImage">
                 <img src="/img/facts/service1.gif" alt="serviceFigureOne" />
                 <figcaption>{this.context.t('facts.serviceFigureCaptionOne')}</figcaption>
               </figure>
-            </div>
             <br />
             <h4>{this.context.t('facts.serviceSectionOneComponentEightteen')}</h4>
             <p>
               {this.context.t('facts.serviceSectionOneComponentNineteen')}
+            </p>
               <br />
-              <div className="centerImage">
-                <figure>
+                <figure className="centerImage">
                   <img src="/img/facts/service2.gif" alt="serviceFigureTwo" />
                   <figcaption>{this.context.t('facts.serviceFigureCaptionTwo')}</figcaption>
                 </figure>
-              </div>
+            <p>
               <br /><br />
               {this.context.t('facts.serviceSectionOneComponentTwenty')}
               <br /><br />
@@ -95,9 +93,9 @@ export default class Facts extends Component {
               <br /><br />
               {this.context.t('facts.serviceSectionTwoComponentFour')}
           </p>
-          <div className="centerImage">
+          <figure className="centerImage">
             <img src="/img/facts/longpimples.jpg" alt="longPimples" />
-          </div>
+          </figure>
           <br />
           <p>
             {this.context.t('facts.serviceSectionTwoComponentFive')}

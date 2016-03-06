@@ -1,20 +1,5 @@
 @import '../variables.css';
 
-:root {
-  --footer-height-desktop: 10em;
-  --footer-height-mobile: 14em;
-}
-
-html, body, #app, #react {
-  height: 100%;
-}
-
-.wrapper {
-  min-height: 100%;
-  height: auto !important;
-  height: 100%;
-}
-
 .centerImage {
   text-align: center;
 }
