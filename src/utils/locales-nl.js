@@ -28,6 +28,7 @@ export default {
       playedMatches: 'gespeelde matchen',
       date: '${}u',
       vs: 'vs',
+      previousEncounterScore: 'Uitslag heenronde',
       scoresheetSporta: {
         uniqueIndex: 'LIDK. nr.',
         ranking: 'Klassement',

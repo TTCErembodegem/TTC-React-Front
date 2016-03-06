@@ -39,10 +39,27 @@ const tabEventKeys = {
   opponentsFormation: 7,
 };
 
+export class RoutedMatch extends Component {
+  static propTypes = {
+    params: PropTypes.shape({
+      matchId: PropTypes.string.isRequired
+    })
+  }
+
+  _getMatch() {
+    var matchId = parseInt(this.props.params.matchId, 10);
+    return storeUtils.getMatch(matchId);
+  }
+
+  render() {
+    return <MatchCard match={this._getMatch()} />;
+  }
+}
+
 @connect(state => {
   return {
-    config: state.config,
-    // user: state.user,
+    //config: state.config,
+    user: state.user,
     // players: state.players,
     // clubs: state.clubs,
     // matches: state.matches,
@@ -54,7 +71,6 @@ export default class MatchCard extends Component {
   static propTypes = {
     match: PropTypes.instanceOf(MatchModel).isRequired,
     user: PropTypes.instanceOf(UserModel).isRequired,
-    type: PropTypes.string.isRequired,
     getLastOpponentMatches: PropTypes.func.isRequired,
   }
 
@@ -66,11 +82,16 @@ export default class MatchCard extends Component {
     };
   }
 
+  componentDidMount() {
+    // TODO: here check for matches using storeUtils - http request only if matches not yet present in state...
+    this.props.getLastOpponentMatches(this.props.match.teamId, this.props.match.opponent);
+  }
+
   render() {
     var match = this.props.match;
     var showIndividualMatches = match.games.size !== 0;
     return (
-      <MatchCardHeader {...this.props} backgroundColor="#fafafa">
+      <MatchCardHeader {...this.props} backgroundColor="#fafafa" isOpen={true}>
         <CardText expandable={true} style={{paddingTop: 0}}>
           <Nav bsStyle="tabs" activeKey={this.state.openTabKey} onSelect={::this._onTabSelect}>
             {this._renderNavItem(tabEventKeys.players, 'players', this._getPlayersEditIcon())}

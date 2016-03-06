@@ -6,6 +6,10 @@ export default function(key, params) {
   }
   var str = key.split('.').reduce((o, i) => o[i], trans);
 
+  if (str === undefined) {
+    return key;
+  }
+
   if (str.indexOf('${}') !== -1) {
     return str.replace('${}', params);
 

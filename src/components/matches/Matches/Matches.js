@@ -5,14 +5,8 @@ import { connect } from 'react-redux';
 
 import MatchModel from '../../../models/MatchModel.js';
 import { contextTypes } from '../../../utils/decorators/withContext.js';
-import withStyles from '../../../utils/decorators/withStyles.js';
-import styles from './Matches.css';
 
-//import { players as playerActionCreators } from '../../../actions/players.js';
-
-import Divider from 'material-ui/lib/divider';
-
-import MatchCard from '../Match/MatchCard.js';
+import MatchCardHeader from '../Match/MatchCardHeader.js';
 
 @connect(state => {
   return {
@@ -23,8 +17,7 @@ import MatchCard from '../Match/MatchCard.js';
     matches: state.matches,
     teams: state.teams,
   };
-}/*, playerActionCreators*/)
-@withStyles(styles)
+})
 export default class Matches extends Component {
   static contextTypes = contextTypes;
 
@@ -59,11 +52,11 @@ export default class Matches extends Component {
     return (
       <div>
         {matchesToday.size ? this._renderDivider(this.context.t('match.todayMatches')) : null}
-        {this._renderMatches(matchesToday, 'today')}
+        {this._renderMatches(matchesToday)}
         {matchesNext.size || matchesPlayed.size ? this._renderDivider(this.context.t('match.nextMatches')) : null}
-        {this._renderMatches(matchesNext, 'next')}
+        {this._renderMatches(matchesNext)}
         {matchesNext.size && matchesPlayed.size ? this._renderDivider(this.context.t('match.playedMatches')) : null}
-        {this._renderMatches(matchesPlayed, 'played')}
+        {this._renderMatches(matchesPlayed)}
       </div>
     );
   }
@@ -71,7 +64,7 @@ export default class Matches extends Component {
     return <div className="strike"><span>{text}</span></div>;
   }
 
-  _renderMatches(matches, matchType) {
+  _renderMatches(matches) {
     if (matches.size === 0) {
       return null;
     }
@@ -79,7 +72,11 @@ export default class Matches extends Component {
     return (
       <div>
         <div className="row">
-          {matches.map(match => <MatchCard match={match} key={match.id} user={this.props.user} type={matchType} />)}
+          {matches.map(match => (
+            <div className={'col-md-4'} style={{padding: 5}} key={match.id}>
+              <MatchCardHeader match={match} user={this.props.user} isOpen={false} />
+            </div>
+          ))}
         </div>
       </div>
     );

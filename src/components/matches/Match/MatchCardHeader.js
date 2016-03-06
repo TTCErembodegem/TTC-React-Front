@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react';
+import { browserHistory } from 'react-router';
 import { contextTypes } from '../../../utils/decorators/withContext.js';
 import moment from 'moment';
 
@@ -10,33 +11,20 @@ import MatchScore from '../MatchScore.js';
 import Card from 'material-ui/lib/card/card';
 import CardHeader from 'material-ui/lib/card/card-header';
 
-const cardClosedSize = 4;
-const cardOpenedSize = 8;
 const daysAgoBackFullDate = 7;
 
 export default class MatchCardHeader extends Component {
-  constructor() {
-    super();
-    this.state = {
-      columnSize: cardClosedSize,
-      requestedOpponentMatches: false
-    };
-  }
-
   static contextTypes = contextTypes;
   static propTypes = {
     match: PropTypes.instanceOf(MatchModel).isRequired,
+    children: PropTypes.node,
     user: PropTypes.object.isRequired,
-    backgroundColor: PropTypes.string,
-    children: PropTypes.node.isRequired,
-    getLastOpponentMatches: PropTypes.func.isRequired
+    isOpen: PropTypes.bool.isRequired,
   }
 
   render() {
     var match = this.props.match;
     var iPlay = this.props.user.playsIn(match.teamId);
-    var score = <MatchScore match={match} />;
-    var cardStyle = this.props.backgroundColor ? {backgroundColor: this.props.backgroundColor} : null;
 
     var subtitle = [];
     if (match.date.isSame(moment(), 'day') && match.isHomeMatch) {
@@ -51,19 +39,17 @@ export default class MatchCardHeader extends Component {
       );
     }
     return (
-      <div className={'col-md-' + this.state.columnSize} style={{padding: 5}}>
-        <Card style={cardStyle} onExpandChange={::this._onExpandChange}>
-          <CardHeader
-            title={this._renderTitle(match)}
-            subtitle={subtitle}
-            showExpandableButton={false}
-            actAsExpander={true}
-            avatar={iPlay ? <FavoriteMatch /> : null}>
-            {score}
-          </CardHeader>
-          {this.props.children}
-        </Card>
-      </div>
+      <Card style={{backgroundColor: '#fafafa'}} onExpandChange={::this._onExpandChange} initiallyExpanded={this.props.isOpen}>
+        <CardHeader
+          title={this._renderTitle(match)}
+          subtitle={subtitle}
+          showExpandableButton={false}
+          actAsExpander={!this.props.isOpen}
+          avatar={iPlay ? <FavoriteMatch /> : null}>
+          <MatchScore match={match} />
+        </CardHeader>
+        {this.props.children}
+      </Card>
     );
   }
 
@@ -71,7 +57,7 @@ export default class MatchCardHeader extends Component {
     var team = match.getTeam();
     if (match.isHomeMatch) {
       return (
-        <div title="">
+        <div>
           {this._renderOwnTeamTitle(team)}
           {!match.isPlayed ? this._renderOwnTeamPosition(team) : ' '}
           <span className="match-opponent-team">{this.context.t('match.vs')}</span>
@@ -81,7 +67,7 @@ export default class MatchCardHeader extends Component {
       );
     } else {
       return (
-        <div title="">
+        <div>
           {this._renderOpponentTitle(match)}
           {!match.isPlayed ? this._renderOpponentPosition(match) : ' '}
           <span className="match-opponent-team">{this.context.t('match.vs')}</span>
@@ -117,12 +103,7 @@ export default class MatchCardHeader extends Component {
     );
   }
 
-  _onExpandChange(isOpen) {
-    if (isOpen && !this.state.requestedOpponentMatches) {
-      // TODO: here check for matches using storeUtils - http request only if matches not yet present in state...
-      this.setState({requestedOpponentMatches: true});
-      this.props.getLastOpponentMatches(this.props.match.teamId, this.props.match.opponent);
-    }
-    this.setState({columnSize: isOpen ? cardOpenedSize : cardClosedSize});
+  _onExpandChange(/*isOpen*/) {
+    browserHistory.push('/match/' + this.props.match.id);
   }
 }

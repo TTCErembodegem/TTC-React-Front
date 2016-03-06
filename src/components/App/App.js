@@ -36,6 +36,7 @@ export default class App extends Component {
   };
 
   render() {
+    //TODO: CircularProgress: position in middle on mobile and desktop...
     return (
       <div id="react">
         <div className="wrapper">

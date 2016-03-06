@@ -25,6 +25,7 @@ export default class MatchScore extends Component {
 
   render() {
     var text = null;
+    var title;
     var match = this.props.match;
     if (!match.score || (match.score.home === 0 && match.score.out === 0)) {
       match = match.getPreviousMatch();
@@ -32,6 +33,7 @@ export default class MatchScore extends Component {
         return null;
       } else {
         text = <Icon fa="fa fa-long-arrow-left" style={{marginRight: 7}} />;
+        title = this.context.t('match.previousEncounterScore');
       }
     }
 
@@ -41,7 +43,7 @@ export default class MatchScore extends Component {
 
     var classColor = this.props.match.isDerby ? getClassName(matchOutcome.Won) : getClassName(match.scoreType);
     return (
-      <span className={cn('match-score label label-as-badge', classColor)}>
+      <span className={cn('match-score label label-as-badge', classColor)} title={title}>
         {text}
         {match.score.home + ' - ' + match.score.out}
       </span>
