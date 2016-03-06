@@ -31,6 +31,7 @@ class Navigation extends Component {
         <MenuItem onTouchTap={this._goto.bind(this, '/matchen')}>{this.context.t('nav.matches')}</MenuItem>
         <MenuItem onTouchTap={this._goto.bind(this, '/spelers')}>{this.context.t('nav.players')}</MenuItem>
         <MenuItem onTouchTap={this._goto.bind(this, '/links')}>{this.context.t('nav.links')}</MenuItem>
+        <MenuItem onTouchTap={this._goto.bind(this, '/facts')}>{this.context.t('nav.facts')}</MenuItem>
       </LeftNav>
     );
   }
