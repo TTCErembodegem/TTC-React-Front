@@ -56,7 +56,7 @@ export default class MatchCardHeader extends Component {
           <CardHeader
             title={this._renderTitle(match)}
             subtitle={subtitle}
-            showExpandableButton={true}
+            showExpandableButton={false}
             actAsExpander={true}
             avatar={iPlay ? <FavoriteMatch /> : null}>
             {score}
@@ -71,7 +71,7 @@ export default class MatchCardHeader extends Component {
     var team = match.getTeam();
     if (match.isHomeMatch) {
       return (
-        <div>
+        <div title="">
           {this._renderOwnTeamTitle(team)}
           {!match.isPlayed ? this._renderOwnTeamPosition(team) : ' '}
           <span className="match-opponent-team">{this.context.t('match.vs')}</span>
@@ -81,7 +81,7 @@ export default class MatchCardHeader extends Component {
       );
     } else {
       return (
-        <div>
+        <div title="">
           {this._renderOpponentTitle(match)}
           {!match.isPlayed ? this._renderOpponentPosition(match) : ' '}
           <span className="match-opponent-team">{this.context.t('match.vs')}</span>
