@@ -96,6 +96,14 @@ export default class MatchCardHeader extends Component {
   _renderOpponentPosition(match) {
     var club = match.getOpponentClub();
     var ranking = match.getTeam().getDivisionRanking(club.id, match.opponent.teamCode);
+    if (!ranking) {
+      // TODO: check what is going on here? Galmaarden E heeft algemeen forfait gegeven ofzo?
+      // console.log('_renderOpponentPosition', club.id, match.opponent.teamCode);
+      // console.log('_renderOpponentPosition', match.getTeam());
+      // console.log('_renderOpponentPosition', match);
+      ranking = {position: '?'};
+    }
+
     return (
       <span className="label label-as-badge label-info" style={{marginLeft: 5, marginRight: 5, paddingTop: 25}}>
         {ranking.position}
