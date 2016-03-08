@@ -20,4 +20,8 @@ export default class UserModel {
   canManageTeam(teamId) {
     return this.playsIn(teamId) || this.can(security.CAN_MANAGETEAM);
   }
+
+  isAdmin() {
+    return true; // TODO: true is not admin
+  }
 }

@@ -6,9 +6,9 @@ import thunk from 'redux-thunk';
 import rootReducer from './reducers';
 
 const finalCreateStore = compose(
+  applyMiddleware(createLogger({collapsed: true})),
   applyMiddleware(thunk),
   devTools(),
-  applyMiddleware(createLogger({collapsed: true}))
 )(createStore);
 
 const store = finalCreateStore(rootReducer);

@@ -14,6 +14,8 @@ import IndividualMatches from './IndividualMatches.js';
 import OpponentClubLocations from './OpponentClubLocations.js';
 import SelectPlayersForm from './SelectPlayersForm.js';
 import OpponentsLastMatches from './OpponentsLastMatches.js';
+import OpponentsFormation from './OpponentsFormation.js';
+import MatchReport from './MatchReport.js';
 import Scoresheet from './Scoresheet.js';
 
 import Icon from '../../controls/Icon.js';
@@ -118,6 +120,7 @@ export default class MatchCard extends Component {
             {!match.isPlayed ? this._renderNavItem(tabEventKeys.opponentsRanking, 'opponentsRanking') : null}
             {!match.isPlayed ? this._renderNavItem(tabEventKeys.opponentsFormation, 'opponentsFormation') : null}
             {this._renderNavItem(tabEventKeys.report, 'report')}
+            {this.props.user.isAdmin() ? this._renderNavItem('admin', 'admin') : null}
           </Nav>
           <div className="match-card-tab">
             {this._renderTabContent()}
@@ -131,7 +134,8 @@ export default class MatchCard extends Component {
     var team = match.getTeam();
     var playerSelectionComplete = match.players.size === team.getTeamPlayerCount();
     var isAllowedToEdit = this.props.user.canManageTeam(this.props.match.teamId);
-    return (playerSelectionComplete && isAllowedToEdit) || !playerSelectionComplete ? (
+    // TODO: stop allowEdit when frenoySync=true
+    return isAllowedToEdit ? (
       <Icon fa="fa fa-pencil-square-o" onClick={::this._onStartEditPlayers} className="match-card-tab-icon" />) : null;
   }
   _onStartEditPlayers() {
@@ -163,6 +167,8 @@ export default class MatchCard extends Component {
       return this._renderOpponentsRanking();
     case tabEventKeys.opponentsFormation:
       return this._renderOpponentFormation();
+    case 'admin':
+      return <div>ID={this.props.match.id}<br />FrenoyId={this.props.match.frenoyMatchId}</div>;
     }
     return 'Unknown';
   }
@@ -180,49 +186,13 @@ export default class MatchCard extends Component {
     var formations = storeUtils.matches
       .getFormation(this.props.match)
       .sort((a, b) => a.count < b.count ? 1 : -1);
-
-    return (
-      <Table condensed className="match-card-tab-table">
-        <thead>
-          <tr>
-            <th>{this.context.t('match.opponents.player')}</th>
-            <th>{this.context.t('match.opponents.playerRanking')}</th>
-            <th>{this.context.t('match.opponents.timesPlayed')}</th>
-            <th colSpan={2}>{this.context.t('match.opponents.victories')}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {formations.map(f => (
-            <tr key={f.player.uniqueIndex}>
-              <td>{f.player.name}</td>
-              <td>{f.player.ranking}</td>
-              <td>{f.count}</td>
-              <td>
-                <Icon fa="fa fa-thumbs-o-up" style={{marginRight: 5, color: '#D3D3D3'}} />
-                {f.won}
-                <Icon fa="fa fa-thumbs-o-down" style={{marginRight: 5, marginLeft: 5, color: '#D3D3D3'}} />
-                {f.lost}
-              </td>
-              <td>{(f.won / (f.lost + f.won) * 100).toFixed(0) + '%'}</td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-    );
+    return <OpponentsFormation formations={formations} />;
   }
-
-
   _renderScoreSheet() {
     return (<Scoresheet match={this.props.match} t={this.context.t} />);
   }
-
-
   _renderReport() {
-    return (
-      <div>
-        {this.props.match.id} {this.props.match.frenoyMatchId}
-      </div>
-    );
+    return <MatchReport match={this.props.match} t={this.context.t} user={this.props.user} />;
   }
 
 
