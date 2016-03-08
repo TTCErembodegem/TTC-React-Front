@@ -39,6 +39,11 @@ const tabEventKeys = {
   opponentsFormation: 7,
 };
 
+@connect(state => {
+  return {
+    matches: state.matches,
+  };
+})
 export class RoutedMatch extends Component {
   static propTypes = {
     params: PropTypes.shape({
@@ -46,13 +51,25 @@ export class RoutedMatch extends Component {
     })
   }
 
-  _getMatch() {
-    var matchId = parseInt(this.props.params.matchId, 10);
-    return storeUtils.getMatch(matchId);
+  _setMatchId(props) {
+    var matchId = parseInt(props.params.matchId, 10);
+    this.state = {
+      match: storeUtils.getMatch(matchId)
+    };
+  }
+
+  componentWillReceiveProps(props) {
+    this._setMatchId(props);
+  }
+
+
+  constructor(props) {
+    super(props);
+    this._setMatchId(props);
   }
 
   render() {
-    return <MatchCard match={this._getMatch()} />;
+    return <MatchCard match={this.state.match} />;
   }
 }
 
@@ -114,7 +131,7 @@ export default class MatchCard extends Component {
     var team = match.getTeam();
     var playerSelectionComplete = match.players.size === team.getTeamPlayerCount();
     var isAllowedToEdit = this.props.user.canManageTeam(this.props.match.teamId);
-    return playerSelectionComplete && isAllowedToEdit ? (
+    return (playerSelectionComplete && isAllowedToEdit) || !playerSelectionComplete ? (
       <Icon fa="fa fa-pencil-square-o" onClick={::this._onStartEditPlayers} className="match-card-tab-icon" />) : null;
   }
   _onStartEditPlayers() {
@@ -202,7 +219,9 @@ export default class MatchCard extends Component {
 
   _renderReport() {
     return (
-      <div>{this.props.match.id} {this.props.match.frenoyMatchId}</div>
+      <div>
+        {this.props.match.id} {this.props.match.frenoyMatchId}
+      </div>
     );
   }
 
@@ -212,8 +231,15 @@ export default class MatchCard extends Component {
     var team = match.getTeam();
 
     if (match.players.size === team.getTeamPlayerCount() * 2) {
+      // TODO: check here for Frenoy sync?
       return <MatchPlayerResults match={match} team={match.getTeam()} t={this.context.t} />;
     }
+
+    if (this.state.forceEditPlayers) {
+      return <SelectPlayersForm match={match} user={this.props.user} />;
+    }
+
+    // TODO: if canmanageteams and match.players.size !== team.getTeamPlayerCount() * 2 == manage teams
 
     if (this.props.user.playerId) {
       // TODO: don't check for logged in but check for match.scoreType === 'BeingPlayed' / 'IsPlayed'
@@ -223,7 +249,7 @@ export default class MatchCard extends Component {
         return <PlayersGallery players={match.getOwnPlayerModels()} user={this.props.user} competition={team.competition} />;
       }
 
-      if (this.props.user.canManageTeam(match.teamId) && match.date.isAfter(moment(), 'hours')) {
+      if (this.props.user.canManageTeam(match.teamId) && (match.date.isAfter(moment(), 'hours') || match.players.size !== team.getTeamPlayerCount())) {
         return <SelectPlayersForm match={match} user={this.props.user} />;
       }
 
