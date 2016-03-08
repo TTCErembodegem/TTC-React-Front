@@ -1,5 +1,13 @@
 export default {
   lang: 'nl',
+  routes: {
+    players: '/spelers',
+    login: '/login',
+    profile: '/profiel',
+    links: '/links',
+    matches: '/matchen',
+    match: '/match/:matchId',
+  },
   trans: {
     fullClubName: 'TTC Erembodegem',
     clubName: 'Erembodegem',

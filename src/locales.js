@@ -1,6 +1,6 @@
-import { trans } from './utils/locales-nl.js';
+import { trans, routes } from './utils/locales-nl.js';
 
-export default function(key, params) {
+var translate = function(key, params) {
   if (key.indexOf('.') === -1) {
     return trans[key];
   }
@@ -20,4 +20,18 @@ export default function(key, params) {
   }
 
   return str;
-}
+};
+
+translate.route = function(routeName, params) {
+  var route = routes[routeName];
+  if (!params) {
+    return route;
+  }
+
+  Object.keys(params).forEach(function(paramKey) {
+    route = route.replace(':' + paramKey, params[paramKey]);
+  });
+  return route;
+};
+
+export default translate;

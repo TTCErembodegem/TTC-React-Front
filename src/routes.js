@@ -10,16 +10,18 @@ import Matches from './components/matches/Matches.js';
 import { RoutedMatch } from './components/matches/Match/MatchCard.js';
 import Facts from './components/other/Facts.js';
 
+import t from './locales.js';
+
 const Routes = () => (
   <Router history={browserHistory }>
     <Route path="/" component={App}>
-      <Route path="/spelers" component={Players} />
-      <Route path="/login" component={Login} />
-      <Route path="/profiel" component={Profile} />
-      <Route path="/links" component={Links} />
-      <Route path="/matchen" component={Matches} />
-      <Route path="/weetjes" component={Facts} />
-      <Route path="/match/:matchId" component={RoutedMatch}/>
+      <Route path={t.route('players')} component={Players} />
+      <Route path={t.route('login')} component={Login} />
+      <Route path={t.route('profiel')} component={Profile} />
+      <Route path={t.route('weetjes')} component={Links} />
+      <Route path={t.route('matchen')} component={Matches} />
+      <Route path={t.route('facts')} component={Facts} />
+      <Route path={t.route('match')} component={RoutedMatch}/>
       <Route path="*" component={Matches}/>
     </Route>
   </Router>

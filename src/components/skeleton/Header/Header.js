@@ -25,14 +25,15 @@ export default class Header extends Component {
   }
 
   render() {
+    var t = this.context.t;
     var loginOrProfile = !this.props.user.playerId ?
-      <FlatButton label={this.context.t('nav.login')} onClick={() => browserHistory.push('/login')} /> :
+      <FlatButton label={t('nav.login')} onClick={() => browserHistory.push(t.route('login'))} /> :
       <Link className="Header-link Header-icon-right" to="/profiel"><Icon fa="fa fa-2x fa-user" /></Link>;
 
     return (
       <div>
         <AppBar
-          title={<Link className="Header-link" to="/">{this.context.t('clubName')}</Link>}
+          title={<Link className="Header-link" to="/">{t('clubName')}</Link>}
           iconElementRight={loginOrProfile}
           onLeftIconButtonTouchTap={::this._openNav} />
 

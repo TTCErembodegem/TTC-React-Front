@@ -112,6 +112,7 @@ export default class MatchCardHeader extends Component {
   }
 
   _onExpandChange(/*isOpen*/) {
-    browserHistory.push('/match/' + this.props.match.id);
+    var matchRoute = this.context.t.route('match', {matchId: this.props.match.id});
+    browserHistory.push(matchRoute);
   }
 }

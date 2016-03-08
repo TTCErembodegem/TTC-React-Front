@@ -26,12 +26,13 @@ class Navigation extends Component {
   }
 
   render() {
+    var t = this.context.t;
     return (
       <LeftNav open={this.props.navOpen} width={200}>
-        <MenuItem onTouchTap={this._goto.bind(this, '/matchen')}>{this.context.t('nav.matches')}</MenuItem>
-        <MenuItem onTouchTap={this._goto.bind(this, '/spelers')}>{this.context.t('nav.players')}</MenuItem>
-        <MenuItem onTouchTap={this._goto.bind(this, '/links')}>{this.context.t('nav.links')}</MenuItem>
-        <MenuItem onTouchTap={this._goto.bind(this, '/weetjes')}>{this.context.t('nav.facts')}</MenuItem>
+        <MenuItem onTouchTap={this._goto.bind(this, t.route('matches'))}>{t('nav.matches')}</MenuItem>
+        <MenuItem onTouchTap={this._goto.bind(this, t.route('players'))}>{t('nav.players')}</MenuItem>
+        <MenuItem onTouchTap={this._goto.bind(this, t.route('links'))}>{t('nav.links')}</MenuItem>
+        <MenuItem onTouchTap={this._goto.bind(this, t.route('facts'))}>{t('nav.facts')}</MenuItem>
       </LeftNav>
     );
   }
