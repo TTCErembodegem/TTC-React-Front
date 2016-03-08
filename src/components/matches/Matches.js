@@ -3,10 +3,10 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import moment from 'moment';
 import { connect } from 'react-redux';
 
-import MatchModel from '../../../models/MatchModel.js';
-import { contextTypes } from '../../../utils/decorators/withContext.js';
+import MatchModel from '../../models/MatchModel.js';
+import { contextTypes } from '../../utils/decorators/withContext.js';
 
-import MatchCardHeader from '../Match/MatchCardHeader.js';
+import MatchCardHeader from './Match/MatchCardHeader.js';
 
 @connect(state => {
   return {

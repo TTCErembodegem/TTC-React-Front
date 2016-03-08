@@ -10,7 +10,7 @@ import Header from '../skeleton/Header';
 import Footer from '../skeleton/Footer';
 import Spinner from '../controls/Spinner.js';
 import CircularProgress from 'material-ui/lib/circular-progress';
-import Matches from '../matches/Matches';
+import Matches from '../matches/Matches.js';
 
 import Snackbar from 'material-ui/lib/snackbar';
 import * as configActions from '../../actions/configActions.js';

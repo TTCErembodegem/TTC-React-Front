@@ -1,18 +1,9 @@
-import React, { PropTypes, Component } from 'react';
-import ImmutablePropTypes from 'react-immutable-proptypes';
-import moment from 'moment';
-import { connect } from 'react-redux';
-
+import React, { Component } from 'react';
 import { contextTypes } from '../../utils/decorators/withContext.js';
-import withStyles from '../../utils/decorators/withStyles.js';
-import styles from './Facts.css';
-import withViewport from '../../utils/decorators/withViewport.js';
+
 import Accordion from 'react-bootstrap/lib/Accordion';
 import Panel from 'react-bootstrap/lib/Panel';
 
-
-@withViewport
-@withStyles(styles)
 export default class Facts extends Component {
   static contextTypes = contextTypes;
 
@@ -44,7 +35,7 @@ export default class Facts extends Component {
             <p>
               {this.context.t('facts.serviceSectionOneComponentSeventeen')}
             </p>
-              <figure className="centerImage">
+              <figure style={{textAlign: 'center'}}>
                 <img src="/img/facts/service1.gif" alt="serviceFigureOne" />
                 <figcaption>{this.context.t('facts.serviceFigureCaptionOne')}</figcaption>
               </figure>
@@ -54,7 +45,7 @@ export default class Facts extends Component {
               {this.context.t('facts.serviceSectionOneComponentNineteen')}
             </p>
               <br />
-                <figure className="centerImage">
+                <figure style={{textAlign: 'center'}}>
                   <img src="/img/facts/service2.gif" alt="serviceFigureTwo" />
                   <figcaption>{this.context.t('facts.serviceFigureCaptionTwo')}</figcaption>
                 </figure>
@@ -93,7 +84,7 @@ export default class Facts extends Component {
               <br /><br />
               {this.context.t('facts.serviceSectionTwoComponentFour')}
           </p>
-          <figure className="centerImage">
+          <figure style={{textAlign: 'center'}}>
             <img src="/img/facts/longpimples.jpg" alt="longPimples" />
           </figure>
           <br />
