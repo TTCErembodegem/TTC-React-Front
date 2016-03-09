@@ -7,6 +7,7 @@ import MatchModel from '../../../models/MatchModel.js';
 
 import FavoriteMatch from '../FavoriteMatch.js';
 import MatchScore from '../MatchScore.js';
+import Icon from '../../controls/Icon.js';
 
 import Card from 'material-ui/lib/card/card';
 import CardHeader from 'material-ui/lib/card/card-header';
@@ -35,6 +36,14 @@ export default class MatchCardHeader extends Component {
         <span key="2">{match.date > moment() || match.date < moment().add(-daysAgoBackFullDate, 'day') ?
           this.context.t('match.date', match.getDisplayDate())
           : match.date.fromNow()}
+        </span>
+      );
+    }
+    if (match.comments.size || match.description) {
+      subtitle.push(
+        <span key="3" style={{marginLeft: 9, color: '#d3d3d3'}}>
+          {match.comments.size ? <small>{match.comments.size}</small> : null}
+          <Icon fa="fa fa-comment-o" />
         </span>
       );
     }

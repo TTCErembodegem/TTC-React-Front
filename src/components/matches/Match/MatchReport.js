@@ -16,7 +16,7 @@ import FlatButton from 'material-ui/lib/flat-button';
 @connect(state => {
   return {};
 }, matchActions)
-export default class OpponentsFormation extends Component {
+export default class MatchReport extends Component {
   static contextTypes = contextTypes;
   static propTypes = {
     user: PropTypes.instanceOf(UserModel).isRequired,
@@ -137,8 +137,10 @@ export default class OpponentsFormation extends Component {
 
   _onCommentForm() {
     if (this.state.commentFormOpen) {
-      this.props.postComment(this.props.match.id, this.state.comment);
-      this.setState({commentFormOpen: false, comment: ''});
+      if (this.state.comment) {
+        this.props.postComment(this.props.match.id, this.state.comment);
+        this.setState({commentFormOpen: false, comment: ''});
+      }
     } else {
       this.setState({commentFormOpen: true});
     }
