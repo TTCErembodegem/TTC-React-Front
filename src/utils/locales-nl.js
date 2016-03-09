@@ -7,6 +7,7 @@ export default {
     links: '/links',
     matches: '/matchen',
     match: '/match/:matchId',
+    facts: '/weetjes'
   },
   trans: {
     fullClubName: 'TTC Erembodegem',
@@ -123,7 +124,18 @@ export default {
       vttlCalculation: 'Klassementsberekening VTTL',
       sportaCalculation: 'Klassementsberekening Sporta',
       francis: 'Francis tafeltennisshop',
-      ttactua: 'Tafeltennisactua'
+      ttactua: 'Tafeltennisactua',
+      sponsors: 'Sponsors',
+      slagerij: 'Slagerij Guy',
+      slagerijAddress: 'Erembodegem Dorp 72 - 9320 Erembodegem',
+      slagerijTelephone: '053 / 21 13 59',
+      bakkerij: 'Bakkerij Karel Van Lierde',
+      bakkerijAddress: 'Hogeweg 113 - 9320 Erembodegem',
+      bakkerijTelephone: '053 / 21 27 20',
+      restaurant: ' Restaurant ‘t Klein Offer',
+      keuken: 'VDH Keukens',
+      symphony: 'Doopsuiker Symphony',
+
     },
     facts: {
       service: 'De Service',

@@ -84,8 +84,8 @@ export default class Facts extends Component {
               <br /><br />
               {this.context.t('facts.serviceSectionTwoComponentFour')}
           </p>
-          <figure style={{textAlign: 'center'}}>
-            <img src="/img/facts/longpimples.jpg" alt="longPimples" />
+          <figure>
+            <img src="/img/facts/longpimples.jpg" className="img-responsive center-block" alt="longPimples" />
           </figure>
           <br />
           <p>
