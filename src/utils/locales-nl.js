@@ -7,6 +7,7 @@ export default {
     links: '/links',
     matches: '/matchen',
     match: '/match/:matchId',
+    facts: '/weetjes'
   },
   trans: {
     fullClubName: 'TTC Erembodegem',
