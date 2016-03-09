@@ -36,6 +36,7 @@ export default class MatchModel {
       this.teamId = json.teamId;
       this.description = json.description;
       this.reportPlayerId = json.reportPlayerId;
+      this.comments = Immutable.List(json.comments);
 
       this.opponent = json.opponent;
       this.isDerby = json.opponent.clubId === OwnClubId;

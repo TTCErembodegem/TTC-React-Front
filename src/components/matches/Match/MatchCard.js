@@ -41,6 +41,8 @@ const tabEventKeys = {
   opponentsFormation: 7,
 };
 
+// TODO: request match if not yet present in store
+
 @connect(state => {
   return {
     matches: state.matches,
@@ -71,7 +73,7 @@ export class RoutedMatch extends Component {
   }
 
   render() {
-    return <MatchCard match={this.state.match} />;
+    return <div style={{marginBottom: 20, marginTop: 20}}><MatchCard match={this.state.match} /></div>;
   }
 }
 
@@ -120,7 +122,7 @@ export default class MatchCard extends Component {
             {!match.isPlayed ? this._renderNavItem(tabEventKeys.opponentsRanking, 'opponentsRanking') : null}
             {!match.isPlayed ? this._renderNavItem(tabEventKeys.opponentsFormation, 'opponentsFormation') : null}
             {this._renderNavItem(tabEventKeys.report, 'report')}
-            {this.props.user.isAdmin() ? this._renderNavItem('admin', 'admin') : null}
+            {this.props.user.isDev() ? this._renderNavItem('admin', 'admin') : null}
           </Nav>
           <div className="match-card-tab">
             {this._renderTabContent()}

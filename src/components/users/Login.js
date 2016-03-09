@@ -63,7 +63,7 @@ export default class Login extends Component {
 
         <RaisedButton
           label={this.context.t('login.loginButton')}
-          secondary={true}
+          primary={true}
           style={{marginTop: 15}}
           onClick={::this._onLogin}
           disabled={!this.state.playerId} />

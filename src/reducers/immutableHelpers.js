@@ -20,7 +20,7 @@ export function merge(state, payload, classify) {
     for (let i = 0; i < payload.length; i++) {
       newState = replaceMatch(newState, payload[i], classify);
     }
-    console.log('MATCHES_LOADED END', newState.toArray());
+    console.log('MATCHES_LOADED END', newState.toArray()[0]);
     return newState;
 
   } else {

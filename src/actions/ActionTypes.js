@@ -10,7 +10,8 @@ export default keyMirror({
   LOGIN_FAIL: '',
   LOGIN_LOGOUT: '',
 
-  CONFIG_CLEAR_SNACKBAR: '',
+  SHOW_SNACKBAR: '',
+  CLEAR_SNACKBAR: '',
 
   MATCHES_LOADED: '', // TTC Erembodegem match
   READONLY_MATCHES_LOADED: '', // ReadOnly other match

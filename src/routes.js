@@ -17,9 +17,9 @@ const Routes = () => (
     <Route path="/" component={App}>
       <Route path={t.route('players')} component={Players} />
       <Route path={t.route('login')} component={Login} />
-      <Route path={t.route('profiel')} component={Profile} />
-      <Route path={t.route('weetjes')} component={Links} />
-      <Route path={t.route('matchen')} component={Matches} />
+      <Route path={t.route('profile')} component={Profile} />
+      <Route path={t.route('links')} component={Links} />
+      <Route path={t.route('matches')} component={Matches} />
       <Route path={t.route('facts')} component={Facts} />
       <Route path={t.route('match')} component={RoutedMatch}/>
       <Route path="*" component={Matches}/>

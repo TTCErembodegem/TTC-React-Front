@@ -1,5 +1,8 @@
 const security = {
-  CAN_MANAGETEAM: 'CAN_MANAGETEAM'
+  CAN_MANAGETEAM: 'CAN_MANAGETEAM',
+  CAN_EDITALLREPORTS: 'CAN_EDITALLREPORTS',
+  IS_ADMIN: 'IS_ADMIN',
+  IS_DEV: 'IS_DEV',
 };
 
 export default class UserModel {
@@ -20,8 +23,14 @@ export default class UserModel {
   canManageTeam(teamId) {
     return this.playsIn(teamId) || this.can(security.CAN_MANAGETEAM);
   }
+  canPostReport(teamId) {
+    return this.playsIn(teamId) || this.can(security.CAN_EDITALLREPORTS);
+  }
 
   isAdmin() {
-    return true; // TODO: true is not admin
+    return this.can(security.IS_ADMIN);
+  }
+  isDev() {
+    return this.can(security.IS_DEV);
   }
 }

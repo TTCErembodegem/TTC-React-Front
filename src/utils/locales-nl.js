@@ -66,6 +66,17 @@ export default {
         opponentsFormation: 'Opstelling',
         opponentsFormationTitle: '',
       },
+      report: {
+        title: 'Wedstrijdverslag',
+        noReport: 'Nog niets te bespeuren...',
+        placeHolder: 'Vertel...',
+        postReport: 'Bewaren',
+        reportPosted: 'Wedstrijdverslag bewaard',
+        reportWrittenBy: 'door ${}:',
+        commentsTitle: 'Opvolging',
+        commentsOpenForm: 'Reageren',
+        commentPosted: 'Verklarende aantekening toegevoegd',
+      },
       playersVictoryTitle: 'Overwinningen',
       playersOpponentsTitle: 'Tegenstanders',
       individual: {

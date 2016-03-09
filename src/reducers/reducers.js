@@ -14,8 +14,9 @@ export function config(state = Immutable.Map({initialLoadCompleted: false}), act
   case ActionTypes.INITIAL_LOADED:
     return state.set('initialLoadCompleted', true);
   case ActionTypes.LOGIN_FAIL:
+  case ActionTypes.SHOW_SNACKBAR:
     return state.set('snackbar', payload);
-  case ActionTypes.CONFIG_CLEAR_SNACKBAR:
+  case ActionTypes.CLEAR_SNACKBAR:
     return state.remove('snackbar');
   default:
     return state;

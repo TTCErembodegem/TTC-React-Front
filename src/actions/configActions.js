@@ -4,7 +4,14 @@ import * as ActionTypes from './ActionTypes.js';
 
 export function clearSnackbar() {
   return {
-    type: ActionTypes.CONFIG_CLEAR_SNACKBAR,
+    type: ActionTypes.CLEAR_SNACKBAR,
     payload: null
+  };
+}
+
+export function showSnackbar(msg) {
+  return {
+    type: ActionTypes.SHOW_SNACKBAR,
+    payload: msg
   };
 }

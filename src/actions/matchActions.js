@@ -1,6 +1,8 @@
 import * as ActionTypes from './ActionTypes.js';
 import http from '../utils/httpClient.js';
 import { util as storeUtil } from '../store.js';
+import { showSnackbar } from './configActions.js';
+import trans from '../locales.js';
 
 //import MatchModel from '../models/MatchModel.js';
 
@@ -55,6 +57,34 @@ export function selectPlayer(matchId, playerId) {
 
       }, function(err) {
         console.log('TogglePlayer!', err); // eslint-disable-line
+      });
+  };
+}
+
+export function postReport(matchId, reportText) {
+  return (dispatch, getState) => {
+    var user = storeUtil.getUser();
+    return http.post('/matches/Report', {matchId, text: reportText, playerId: user.playerId})
+      .then(function(data) {
+        dispatch(loaded(data));
+        dispatch(showSnackbar(trans('match.report.reportPosted')));
+
+      }, function(err) {
+        console.log('Report!', err); // eslint-disable-line
+      });
+  };
+}
+
+export function postComment(matchId, commentText) {
+  return (dispatch, getState) => {
+    var user = storeUtil.getUser();
+    return http.post('/matches/Comment', {matchId, text: commentText, playerId: user.playerId})
+      .then(function(data) {
+        dispatch(loaded(data));
+        dispatch(showSnackbar(trans('match.report.commentPosted')));
+
+      }, function(err) {
+        console.log('Comment!', err); // eslint-disable-line
       });
   };
 }

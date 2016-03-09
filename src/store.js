@@ -24,6 +24,10 @@ if (module.hot) {
 export default store;
 
 export const util = {
+  getUser() {
+    return store.getState().user;
+  },
+
   getTeam(teamId) {
     const teams = store.getState().teams;
     return teams.find(team => team.id === teamId);
