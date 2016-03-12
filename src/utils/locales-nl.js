@@ -30,7 +30,16 @@ export default {
       fail: 'Incorrect paswoord voor ${}'
     },
     players: {
-      title: 'Spelers overzicht ${a}'
+      title: 'Spelers overzicht ${a}',
+      index: 'Index',
+      vttlMemberNumber: 'Lidnummer',
+      name: 'Naam',
+      vttl: 'VTTL',
+      sporta: 'Sporta',
+      style: 'Stijl',
+      bestStroke: 'Beste slag',
+      ranking: 'Klassement',
+      value: 'Waarde'
     },
     match: {
       todayMatches: 'vandaag',
