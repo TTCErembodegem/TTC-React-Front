@@ -5,7 +5,7 @@ export default {
     login: '/login',
     profile: '/profiel',
     links: '/links',
-    matches: '/matchen',
+    matches: '/kalender',
     match: '/match/:matchId',
     facts: '/weetjes'
   },
@@ -13,7 +13,7 @@ export default {
     fullClubName: 'TTC Erembodegem',
     clubName: 'Erembodegem',
     nav: {
-      matches: 'Matchen',
+      matches: 'Kalender',
       players: 'Spelers',
       login: 'Log in',
       links: 'Links',

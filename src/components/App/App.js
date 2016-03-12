@@ -11,6 +11,8 @@ import Footer from '../skeleton/Footer';
 import Spinner from '../controls/Spinner.js';
 import CircularProgress from 'material-ui/lib/circular-progress';
 import Matches from '../matches/Matches.js';
+import Intro from './Intro.js';
+import Grid from 'react-bootstrap/lib/Grid';
 
 import Snackbar from 'material-ui/lib/snackbar';
 import * as configActions from '../../actions/configActions.js';
@@ -41,12 +43,12 @@ export default class App extends Component {
       <div id="react">
         <div className="wrapper">
           <Header user={this.props.user} />
-          <div className="container" style={{paddingTop: 5}}>
-            {!this.props.config.get('initialLoadCompleted') ?
-              <div style={{width: 300, marginLeft: 'auto', marginRight: 'auto', paddingTop: 75}}><CircularProgress size={3} /></div> :
-              this.props.children || <Matches />
+          <Grid style={{paddingTop: 5}}>
+            {this.props.children ?
+              (!this.props.config.get('initialLoadCompleted') ? <WaitForIt /> : this.props.children) :
+              <Intro />
             }
-          </div>
+          </Grid>
           <div className="push"></div>
         </div>
         <Footer />
@@ -62,3 +64,7 @@ export default class App extends Component {
     this.props.clearSnackbar();
   }
 }
+
+const WaitForIt = () => (
+  <div style={{width: 300, marginLeft: 'auto', marginRight: 'auto', paddingTop: 75}}><CircularProgress size={3} /></div>
+);
