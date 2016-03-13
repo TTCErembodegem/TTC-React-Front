@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import MatchModel from '../../models/MatchModel.js';
 import { contextTypes } from '../../utils/decorators/withContext.js';
 
+import Strike from '../controls/Strike.js';
 import MatchCardHeader from './Match/MatchCardHeader.js';
 
 @connect(state => {
@@ -51,17 +52,14 @@ export default class Matches extends Component {
     // TODO: debug inputfield: get and display a (frenoy)matchId -> also implement auto fetch if not present...
     return (
       <div>
-        {matchesToday.size ? this._renderDivider(this.context.t('match.todayMatches')) : null}
+        {matchesToday.size ? <Strike text={this.context.t('match.todayMatches')} /> : null}
         {this._renderMatches(matchesToday)}
-        {matchesNext.size || matchesPlayed.size ? this._renderDivider(this.context.t('match.nextMatches')) : null}
+        {matchesNext.size || matchesPlayed.size ? <Strike text={this.context.t('match.nextMatches')} /> : null}
         {this._renderMatches(matchesNext)}
-        {matchesNext.size && matchesPlayed.size ? this._renderDivider(this.context.t('match.playedMatches')) : null}
+        {matchesNext.size && matchesPlayed.size ? <Strike text={this.context.t('match.playedMatches')} /> : null}
         {this._renderMatches(matchesPlayed)}
       </div>
     );
-  }
-  _renderDivider(text) {
-    return <div className="strike"><span>{text}</span></div>;
   }
 
   _renderMatches(matches) {

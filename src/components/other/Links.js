@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { contextTypes } from '../../utils/decorators/withContext.js';
-import Icon from '../controls/Icon.js';
 
 export default class Links extends Component {
   static contextTypes = contextTypes;

@@ -24,6 +24,20 @@ export function logout() {
   };
 }
 
+export function validateToken(token) {
+  return dispatch => {
+    return http.post('/users/ValidateToken', {token})
+      .then(function(data) {
+        if (data) {
+          dispatch(loggedIn(data));
+        }
+      }, function(err) {
+        dispatch(logFailed('John Doe'));
+        console.log('ValidateToken!', err); // eslint-disable-line
+      });
+  };
+}
+
 export function login(creds) {
   var player = storeUtil.getPlayer(creds.playerId);
   var playerName = player ? player.alias : 'John Doe';

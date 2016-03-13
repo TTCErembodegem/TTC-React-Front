@@ -1,5 +1,6 @@
 import request from 'superagent';
 import assert from 'assert';
+import { util as storeUtil } from '../store.js';
 
 function getUrl(path) {
   assert(path[0] === '/', 'HttpClient: path passed should start with a /');
@@ -11,11 +12,19 @@ function getUrl(path) {
   // `http://127.0.0.1:${global.server.get('port')}${path}`;
 }
 
+function bearer(req) {
+  var token = localStorage.getItem('token');
+  if (token) {
+    req.set('Authorization', 'Bearer ' + token);
+  }
+}
+
 const HttpClient = {
   get: (path, qs) => new Promise((resolve, reject) => {
     request
       .get(getUrl(path))
       .query(qs)
+      .use(bearer)
       .accept('application/json')
       .end((err, res) => {
         if (err) {
@@ -34,6 +43,7 @@ const HttpClient = {
     request
       .post(getUrl(url))
       .send(data)
+      .use(bearer)
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .end(function(err, res) {

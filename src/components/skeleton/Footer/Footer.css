@@ -1,8 +1,8 @@
 @import '../../variables.css';
 
 :root {
-  --footer-height-desktop: 10em;
-  --footer-height-mobile: 14em;
+  --footer-height-desktop: 8em;
+  --footer-height-mobile: 13em;
 }
 
 html, body, #app, #react {
@@ -39,7 +39,7 @@ html, body, #app, #react {
   text-align: center;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 768px) {
   .Footer, .push {
     height: var(--footer-height-mobile);
   }
@@ -49,7 +49,7 @@ html, body, #app, #react {
   }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 768px) {
   .Footer, .push {
     height: var(--footer-height-desktop);
   }

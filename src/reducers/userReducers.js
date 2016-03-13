@@ -21,7 +21,9 @@ export default function user(state = startState, action = null) {
   const {type, payload} = action;
   switch (type) {
   case ActionTypes.LOGIN_SUCCESS:
+    console.log('LOGIN_SUCCESS', payload);
     gotoDefaultPage();
+    localStorage.setItem('token', payload.token);
     return new UserModel(payload);
 
   case ActionTypes.LOGIN_FAIL:
@@ -29,6 +31,7 @@ export default function user(state = startState, action = null) {
 
   case ActionTypes.LOGIN_LOGOUT:
     gotoDefaultPage();
+    localStorage.removeItem('token');
     return startState;
 
   default:
