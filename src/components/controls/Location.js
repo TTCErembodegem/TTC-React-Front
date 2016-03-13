@@ -19,7 +19,7 @@ const Location = ({loc, t}) => (
       )}
     </div>
     <Telephone number={loc.mobile} />
-    {loc.website ? (<Website site={loc.website} description={t('match.club.websiteKnown')} />) : (<div>{t('match.club.websiteUnknown')}</div>)}
+    {loc.website ? (<Website site={loc.website} description={t('match.club.websiteKnown')} />) : null}
   </div>
 );
 

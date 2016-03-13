@@ -118,7 +118,6 @@ export default {
       club: {
         locationTitle: 'Clublokaal',
         locationUnknown: 'Niet gekend',
-        websiteUnknown: 'Geen website beschikbaar',
         websiteKnown: 'Ga naar website'
       },
       chooseOtherPlayer: 'Andere speler opstellen'
