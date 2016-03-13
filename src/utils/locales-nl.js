@@ -1,3 +1,4 @@
+/*eslint-disable */
 export default {
   lang: 'nl',
   routes: {
@@ -18,6 +19,14 @@ export default {
       login: 'Log in',
       links: 'Links',
       facts: 'TT Weetjes'
+    },
+    intro: {
+      title: 'Tafeltennisclub TTC Erembodegem',
+      text: 'Een kleine, toffe club met ${players} leden. Ondanks onze beperkte kern, slagen we er toch in om met ${teamsVttl} ploegen VTTL en ${teamsSporta} Sporta in competitie te treden. Fairplay en gezelligheid staan centraal bij al onze tafeltennis-activiteiten!',
+      matchesToday: 'matchen vandaag',
+      trainingToday: 'vandaag training vanaf 20u',
+      playedMatches: 'laatst gespeelde matchen',
+      loading: 'Laden...',
     },
     login: {
       title: 'Aanmelden',
@@ -134,17 +143,6 @@ export default {
       sportaCalculation: 'Klassementsberekening Sporta',
       francis: 'Francis tafeltennisshop',
       ttactua: 'Tafeltennisactua',
-      sponsors: 'Sponsors',
-      slagerij: 'Slagerij Guy',
-      slagerijAddress: 'Erembodegem Dorp 72 - 9320 Erembodegem',
-      slagerijTelephone: '053 / 21 13 59',
-      bakkerij: 'Bakkerij Karel Van Lierde',
-      bakkerijAddress: 'Hogeweg 113 - 9320 Erembodegem',
-      bakkerijTelephone: '053 / 21 27 20',
-      restaurant: ' Restaurant ‘t Klein Offer',
-      keuken: 'VDH Keukens',
-      symphony: 'Doopsuiker Symphony',
-
     },
     facts: {
       service: 'De Service',

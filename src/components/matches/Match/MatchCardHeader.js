@@ -23,6 +23,8 @@ export default class MatchCardHeader extends Component {
     isOpen: PropTypes.bool.isRequired,
   }
 
+  // TODO: op heenronde score klikken: naar match gaan
+
   render() {
     var match = this.props.match;
     var iPlay = this.props.user.playsIn(match.teamId);

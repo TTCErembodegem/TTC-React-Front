@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { contextTypes } from '../../utils/decorators/withContext.js';
-import Icon from '../controls/Icon.js';
 
 export default class Links extends Component {
   static contextTypes = contextTypes;
@@ -50,41 +49,6 @@ export default class Links extends Component {
             </tr>
             <tr>
               <td><a href="http://www.tafeltennisactua.be/" target="_blank">{this.context.t('links.ttactua')}</a></td>
-            </tr>
-          </tbody>
-        </table>
-        <br />
-        <table className="table table-striped table-bordered table-hover">
-          <tbody>
-            <tr className="info">
-              <td className="tableHeader">{this.context.t('links.sponsors')}</td>
-            </tr>
-            <tr>
-              <td><a href="http://vdhkeukens.be/" target="_blank">{this.context.t('links.keuken')}</a></td>
-            </tr>
-            <tr>
-              <td><a href="http://www.doopsuikersymphony.be/" target="_blank">{this.context.t('links.symphony')}</a></td>
-            </tr>
-            <tr>
-              <td><a href="http://www.tkleinoffer.be/" target="_blank">{this.context.t('links.restaurant')}</a></td>
-            </tr>
-            <tr>
-              <td>
-                <address>
-                    &nbsp;&nbsp;&nbsp;{this.context.t('links.bakkerij')}<br />
-                    <Icon fa="fa fa-map-marker" />&nbsp;{this.context.t('links.bakkerijAddress')}<br />
-                    <Icon fa="fa fa-phone" />&nbsp;{this.context.t('links.bakkerijTelephone')}
-                </address>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <address>
-                    &nbsp;&nbsp;&nbsp;{this.context.t('links.slagerij')}<br />
-                    <Icon fa="fa fa-map-marker" />&nbsp;{this.context.t('links.slagerijAddress')}<br />
-                    <Icon fa="fa fa-phone" />&nbsp;{this.context.t('links.slagerijTelephone')}
-                </address>
-              </td>
             </tr>
           </tbody>
         </table>
