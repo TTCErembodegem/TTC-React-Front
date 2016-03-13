@@ -59,6 +59,7 @@ export default class App extends Component {
       postalCode: 9550,
       city: 'Herzele',
       mobile: '053 / 62 71 16',
+      website: 'http://www.doopsuikersymphony.be/'
     };
 
     const kleinoffer = {
@@ -67,6 +68,7 @@ export default class App extends Component {
       postalCode: 9320,
       city: 'Erembodegem',
       mobile: '053 / 82 86 41',
+      website: 'http://www.tkleinoffer.be/'
     };
 
     const vdhKeukens = {
@@ -75,6 +77,7 @@ export default class App extends Component {
       postalCode: 9620,
       city: 'Zottegem',
       mobile: '09 / 398 29 84',
+      website: 'http://vdhkeukens.be/'
     };
 
     const paperStyle = {
