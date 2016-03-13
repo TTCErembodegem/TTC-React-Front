@@ -1,6 +1,7 @@
 import * as ActionTypes from './ActionTypes.js';
 import http from '../utils/httpClient.js';
 import { util as storeUtil } from '../store.js';
+import initialLoad from './initialLoad.js';
 
 import trans from '../locales.js';
 
@@ -49,6 +50,7 @@ export function login(creds) {
           dispatch(logFailed(playerName));
         } else {
           dispatch(loggedIn(data));
+          dispatch(initialLoad());
         }
       }, function(err) {
         dispatch(logFailed(playerName));
