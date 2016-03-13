@@ -17,6 +17,13 @@ import moment from 'moment';
 moment.locale('nl');
 
 import store from './store.js';
+
+import { validateToken } from './actions/userActions.js';
+var token = localStorage.getItem('token');
+if (token) {
+  store.dispatch(validateToken(token));
+}
+
 import initialLoad from './actions/initialLoad.js';
 store.dispatch(initialLoad());
 
