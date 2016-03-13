@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import Icon from './Icon.js';
 
-export default class Telephone extends Component {
+export default class Website extends Component {
   static propTypes = {
     site: PropTypes.string,
     description: PropTypes.string
