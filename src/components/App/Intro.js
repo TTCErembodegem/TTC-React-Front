@@ -53,6 +53,30 @@ export default class App extends Component {
       mobile: '053 / 21 27 20',
     };
 
+    const symphony = {
+      description: 'Doopsuiker Symphony',
+      address: 'Kerkstraat 21',
+      postalCode: 9550,
+      city: 'Herzele',
+      mobile: '053 / 62 71 16',
+    };
+
+    const kleinoffer = {
+      description: '‘t Klein Offer',
+      address: 'Erembodegem Dorp 47',
+      postalCode: 9320,
+      city: 'Erembodegem',
+      mobile: '053 / 82 86 41',
+    };
+
+    const vdhKeukens = {
+      description: 'VDH Keukens',
+      address: 'Steenweg op Aalst 141A',
+      postalCode: 9620,
+      city: 'Zottegem',
+      mobile: '09 / 398 29 84',
+    };
+
     const paperStyle = {
       height: 120,
       width: 240,
@@ -81,7 +105,7 @@ export default class App extends Component {
     return (
       <div>
         <Row>
-          <Col xsHidden xs={3} />
+          <Col xsHidden xs={2} />
           <Col xs={1}>
             <Paper style={paperStyle}>
               <Location loc={bakkerijVanLierde} t={this.context.t} />
@@ -92,6 +116,12 @@ export default class App extends Component {
               <Location loc={slagerijGuy} t={this.context.t} />
             </Paper>
           </Col>
+          <Col xsHidden xs={2} />
+          <Col xs={1} xsOffset={3}>
+            <Paper style={paperStyle}>
+              <Location loc={symphony} t={this.context.t} />
+            </Paper>
+          </Col>
         </Row>
         <Row style={{marginTop: 25}}>
           <Col md={3}>
@@ -99,17 +129,29 @@ export default class App extends Component {
           </Col>
           <Col md={6}>
             <h1>Tafeltennisclub TTC Erembodegem</h1>
-            Een kleine, toffe club met {inClub.players} leden.
+            Wij zijn een kleine, toffe club met {inClub.players} leden.
             Ondanks onze beperkte kern, slagen we er toch in om
-             met {inClub.teamsVttl} ploegen VTTL en {inClub.teamsSporta} Sporta
-             in competitie te treden. Fairplay en gezelligheid staan centraal bij al onze
+            met {inClub.teams} ploegen in competitie te treden,
+            namelijk {inClub.teamsVttl} ploegen in VTTL en {inClub.teamsSporta} in Sporta.
+            Fairplay en gezelligheid staan centraal bij al onze
             tafeltennis-activiteiten!
 
             {this.props.config.get('initialLoadCompleted') ? null : null}
           </Col>
         </Row>
+        <br />
         <Row>
-          nog meer sponsers
+          <Col xsHidden xs={2} />
+          <Col xs={1}>
+            <Paper style={paperStyle}>
+              <Location loc={kleinoffer} t={this.context.t} />
+            </Paper>
+          </Col>
+          <Col xs={1} xsOffset={3}>
+            <Paper style={paperStyle}>
+              <Location loc={vdhKeukens} t={this.context.t} />
+            </Paper>
+          </Col>
         </Row>
       </div>
     );
