@@ -22,9 +22,11 @@ export default function user(state = startState, action = null) {
   switch (type) {
   case ActionTypes.LOGIN_SUCCESS:
     console.log('LOGIN_SUCCESS', payload);
-    gotoDefaultPage();
-    localStorage.setItem('token', payload.token);
-    return new UserModel(payload);
+    if (payload.redirect) {
+      window.history.back();
+    }
+    localStorage.setItem('token', payload.user.token);
+    return new UserModel(payload.user);
 
   case ActionTypes.LOGIN_FAIL:
     return startState;
