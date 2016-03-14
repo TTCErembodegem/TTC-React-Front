@@ -43,7 +43,7 @@ export default class App extends Component {
       <div id="react">
         <div className="wrapper">
           <Header user={this.props.user} />
-          <Grid style={{paddingTop: 5}}>
+          <Grid>
             {this.props.children ?
               (!this.props.config.get('initialLoadCompleted') ? <WaitForIt /> : this.props.children) :
               <Intro />
