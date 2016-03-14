@@ -20,6 +20,7 @@ export default class MatchModel {
   constructor(json) {
     this.id = json.id;
     this.frenoyMatchId = json.frenoyMatchId;
+    this.isSyncedWithFrenoy = json.isSyncedWithFrenoy;
     this.week = json.week;
     this.date = moment(json.date);
 

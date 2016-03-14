@@ -117,10 +117,10 @@ export default class MatchCard extends Component {
           <Nav bsStyle="tabs" activeKey={this.state.openTabKey} onSelect={::this._onTabSelect}>
             {this._renderNavItem(tabEventKeys.players, 'players', this._getPlayersEditIcon())}
             {showIndividualMatches ? this._renderNavItem(tabEventKeys.individualMatches, 'matches') : null}
-            {!match.isHomeMatch ? this._renderNavItem(tabEventKeys.opponentClub, 'club') : null}
+            {!match.isHomeMatch && !match.isPlayed ? this._renderNavItem(tabEventKeys.opponentClub, 'club') : null}
             {match.scoreType === 'BeingPlayed' ? this._renderNavItem(tabEventKeys.scoresheet, 'scoresheet') : null}
-            {!match.isPlayed ? this._renderNavItem(tabEventKeys.opponentsRanking, 'opponentsRanking') : null}
-            {!match.isPlayed ? this._renderNavItem(tabEventKeys.opponentsFormation, 'opponentsFormation') : null}
+            {this._renderNavItem(tabEventKeys.opponentsRanking, 'opponentsRanking')}
+            {this._renderNavItem(tabEventKeys.opponentsFormation, 'opponentsFormation')}
             {this._renderNavItem(tabEventKeys.report, 'report')}
             {this.props.user.isDev() ? this._renderNavItem('admin', 'admin') : null}
           </Nav>
@@ -133,11 +133,8 @@ export default class MatchCard extends Component {
   }
   _getPlayersEditIcon() {
     var match = this.props.match;
-    var team = match.getTeam();
-    var playerSelectionComplete = match.players.size === team.getTeamPlayerCount();
-    var isAllowedToEdit = this.props.user.canManageTeam(this.props.match.teamId);
-    // TODO: stop allowEdit when frenoySync=true
-    return isAllowedToEdit ? (
+    var isAllowedToEdit = this.props.user.canManageTeam(match.teamId);
+    return isAllowedToEdit && !match.isSyncedWithFrenoy ? (
       <Icon fa="fa fa-pencil-square-o" onClick={::this._onStartEditPlayers} className="match-card-tab-icon" />) : null;
   }
   _onStartEditPlayers() {
@@ -202,36 +199,20 @@ export default class MatchCard extends Component {
     var match = this.props.match;
     var team = match.getTeam();
 
-    if (match.players.size === team.getTeamPlayerCount() * 2) {
-      // TODO: check here for Frenoy sync?
+    if (match.isSyncedWithFrenoy) {
       return <MatchPlayerResults match={match} team={match.getTeam()} t={this.context.t} />;
     }
 
-    if (this.state.forceEditPlayers) {
+    if (this.state.forceEditPlayers || (this.props.user.canManageTeam(match.teamId) && match.players.size < team.getTeamPlayerCount())) {
       return <SelectPlayersForm match={match} user={this.props.user} />;
     }
 
-    // TODO: if canmanageteams and match.players.size !== team.getTeamPlayerCount() * 2 == manage teams
-
-    if (this.props.user.playerId) {
-      // TODO: don't check for logged in but check for match.scoreType === 'BeingPlayed' / 'IsPlayed'
-      // --> a non logged in use can not see the formation/opstelling when the match is NotYetPlayed
-      //     and since "opstellingen" will (later) not be returned from the backend when not logged in, this logic becomes simpler
-      if (match.players.size === team.getTeamPlayerCount() && !this.state.forceEditPlayers) {
-        return <PlayersGallery players={match.getOwnPlayerModels()} user={this.props.user} competition={team.competition} />;
-      }
-
-      if (this.props.user.canManageTeam(match.teamId) && (match.date.isAfter(moment(), 'hours') || match.players.size !== team.getTeamPlayerCount())) {
-        return <SelectPlayersForm match={match} user={this.props.user} />;
-      }
-
-      if (match.players.size) {
-        return <PlayersGallery players={match.getOwnPlayerModels()} user={this.props.user} competition={team.competition} />;
-      }
+    if (match.players.size === 0 || !this.props.user.playerId) {
+      let standardPlayers = team.getPlayers('standard').map(ply => ply.player);
+      return <PlayersGallery players={standardPlayers} user={this.props.user} competition={team.competition} />;
     }
 
-    var standardPlayers = team.getPlayers('standard').map(ply => ply.player);
-    return <PlayersGallery players={standardPlayers} user={this.props.user} competition={team.competition} />;
+    return <PlayersGallery players={match.getOwnPlayerModels()} user={this.props.user} competition={team.competition} />;
   }
 }
 
