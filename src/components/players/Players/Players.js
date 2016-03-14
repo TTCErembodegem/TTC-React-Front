@@ -3,28 +3,23 @@ import Tabs from 'material-ui/lib/tabs/tabs';
 import Tab from 'material-ui/lib/tabs/tab';
 import Icon from '../../controls/Icon.js';
 
-
 import { connect } from 'react-redux';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-
 
 import PlayerModel from '../../../models/PlayerModel.js';
 import { contextTypes } from '../../../utils/decorators/withContext.js';
 import withStyles from '../../../utils/decorators/withStyles.js';
 import styles from './Players.css';
 
-//import { players as playerActionCreators } from '../../../actions/players.js';
-// TODO: playerActionCreators: no longer called from here (but illustration how actionCreators can be passed as props)
-
 @connect(state => {
   return {
     config: state.config,
     players: state.players,
-    clubs: state.clubs,
-    matches: state.matches,
-    teams: state.teams,
+    //clubs: state.clubs,
+    //matches: state.matches,
+    //teams: state.teams,
   };
-}/*, playerActionCreators*/)
+})
 @withStyles(styles)
 export default class Players extends Component {
   static contextTypes = contextTypes;
@@ -33,17 +28,14 @@ export default class Players extends Component {
     players: ImmutablePropTypes.listOf(PropTypes.instanceOf(PlayerModel).isRequired).isRequired,
   };
 
-  componentDidMount() {
-    this.context.setTitle('players.title', {a: 5}); // TODO: just an example of context, setTitle and translation with params
-  };
-
   render() {
+    // TODO: abstract this away in PlayerModel
     var baseUrlVTTLPartOne = 'http://competitie.vttl.be/index.php?menu=6&sel=';
     var baseUrlVTTLPartTwo = '&result=1';
     var baseUrlSportaPartOne = 'http://tafeltennis.sporcrea.be/competitie/index.php?menu=6&sel=';
     var baseUrlSportaPartTwo = '&result=1';
-    var playersVTTL = this.props.players.filter(x => x.vttl != null).sort(function(a, b){return a.vttl.position - b.vttl.position});
-    var playersSporta = this.props.players.filter(x => x.sporta != null).sort(function(a, b){return a.sporta.position - b.sporta.position});
+    var playersVTTL = this.props.players.filter(x => x.vttl).sort((a, b) => a.vttl.position - b.vttl.position);
+    var playersSporta = this.props.players.filter(x => x.sporta).sort((a, b) => a.sporta.position - b.sporta.position);
     return (
       <Tabs>
         <Tab label={this.context.t('players.vttl')} >
