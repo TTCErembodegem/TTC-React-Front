@@ -81,9 +81,9 @@ export default {
         scoresheet: 'Wedstrijdblad',
         scoresheetTitle: '',
         opponentsRanking: 'Tegenstanders',
-        opponentsRankingTitle: '',
+        opponentsRankingTitle: 'Hun laatste resultaten',
         opponentsFormation: 'Opstelling',
-        opponentsFormationTitle: '',
+        opponentsFormationTitle: 'Hun opstellingen',
       },
       report: {
         title: 'Wedstrijdverslag',
