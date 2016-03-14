@@ -37,7 +37,7 @@ export default class Players extends Component {
     var playersVTTL = this.props.players.filter(x => x.vttl).sort((a, b) => a.vttl.position - b.vttl.position);
     var playersSporta = this.props.players.filter(x => x.sporta).sort((a, b) => a.sporta.position - b.sporta.position);
     return (
-      <Tabs>
+      <Tabs style={{marginTop: 10}}>
         <Tab label={this.context.t('players.vttl')} >
          <div>
           <table className="table table-striped table-bordered table-hover">

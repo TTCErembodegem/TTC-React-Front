@@ -7,7 +7,7 @@ export default class Links extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{marginTop: 10}}>
         <table className="table table-striped table-bordered table-hover">
           <tbody>
             <tr className="info">

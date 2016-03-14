@@ -9,7 +9,7 @@ export default class Facts extends Component {
 
   render() {
     return (
-       <Accordion>
+       <Accordion style={{marginTop: 10}}>
           <Panel header={this.context.t('facts.service')} eventKey="1">
             <h1>{this.context.t('facts.serviceHeaderOne')}</h1>
             <p>

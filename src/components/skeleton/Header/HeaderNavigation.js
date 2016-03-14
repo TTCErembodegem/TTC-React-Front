@@ -5,6 +5,7 @@ import { contextTypes } from '../../../utils/decorators/withContext.js';
 
 import LeftNav from 'material-ui/lib/left-nav';
 import MenuItem from 'material-ui/lib/menus/menu-item';
+import Divider from 'material-ui/lib/divider';
 
 class Navigation extends Component {
   static contextTypes = contextTypes;
@@ -31,6 +32,7 @@ class Navigation extends Component {
       <LeftNav open={this.props.navOpen} width={200}>
         <MenuItem onTouchTap={this._goto.bind(this, t.route('matches'))}>{t('nav.matches')}</MenuItem>
         <MenuItem onTouchTap={this._goto.bind(this, t.route('players'))}>{t('nav.players')}</MenuItem>
+        <Divider />
         <MenuItem onTouchTap={this._goto.bind(this, t.route('links'))}>{t('nav.links')}</MenuItem>
         <MenuItem onTouchTap={this._goto.bind(this, t.route('facts'))}>{t('nav.facts')}</MenuItem>
       </LeftNav>
