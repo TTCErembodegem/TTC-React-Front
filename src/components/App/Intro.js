@@ -98,13 +98,13 @@ export default class App extends Component {
         <Row style={{marginTop: 25, marginBottom: 15}}>
           <div style={{width: 850, margin: 'auto'}}>
             <Paper style={bottomSponsorsStyle}>
-              <a href="http://www.tkleinoffer.be/"><img src="/img/sponsors/tkleinoffer.png" /></a>
+              <a href="http://www.tkleinoffer.be/" target="_blank"><img src="/img/sponsors/tkleinoffer.png" /></a>
             </Paper>
             <Paper style={{...bottomSponsorsStyle, marginLeft: 10}}>
-              <a href="http://vdhkeukens.be/"><img src="/img/sponsors/vdhkeukens.png" /></a>
+              <a href="http://vdhkeukens.be/" target="_blank"><img src="/img/sponsors/vdhkeukens.png" /></a>
             </Paper>
             <Paper style={{...bottomSponsorsStyle, marginLeft: 10}}>
-              <a href="http://www.doopsuikersymphony.be/"><img src="/img/sponsors/symphony.jpg" /></a>
+              <a href="http://www.doopsuikersymphony.be/" target="_blank"><img src="/img/sponsors/symphony.jpg" /></a>
             </Paper>
           </div>
         </Row>
