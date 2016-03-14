@@ -19,6 +19,20 @@ function logFailed(playerName) {
   };
 }
 
+function passwordChanged(playerName) {
+  return {
+    type: ActionTypes.PASSWORD_CHANGE_SUCCESS,
+    payload: trans('changePassword.success', playerName)
+  };
+}
+
+function passwordChangedFailed(playerName) {
+  return {
+    type: ActionTypes.PASSWORD_CHANGE_FAIL,
+    payload: trans('changePassword.fail', playerName)
+  };
+}
+
 export function logout() {
   return {
     type: ActionTypes.LOGIN_LOGOUT
@@ -55,6 +69,26 @@ export function login(creds) {
       }, function(err) {
         dispatch(logFailed(playerName));
         console.log('Login!', err); // eslint-disable-line
+      });
+  };
+}
+
+export function changePassword(creds) {
+  var player = storeUtil.getPlayer(creds.playerId);
+  var playerName = player ? player.alias : 'John Doe';
+
+  return dispatch => {
+    return http.post('/users/ChangePassword', creds)
+      .then(function(data) {
+        if (!data) {
+          dispatch(passwordChangedFailed(playerName));
+        } else {
+          dispatch(passwordChanged(playerName));
+          dispatch(initialLoad());
+        }
+      }, function(err) {
+        dispatch(passwordChangedFailed(playerName));
+        console.log('ChangePassword!', err); // eslint-disable-line
       });
   };
 }

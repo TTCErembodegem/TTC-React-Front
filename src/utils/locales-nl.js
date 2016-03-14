@@ -4,6 +4,7 @@ export default {
   routes: {
     players: '/spelers',
     login: '/login',
+    changePassword: '/changePassword',
     profile: '/profiel',
     links: '/links',
     matches: '/kalender',
@@ -17,6 +18,7 @@ export default {
       matches: 'Kalender',
       players: 'Spelers',
       login: 'Log in',
+      changePassword: 'Paswoord vergeten?',
       links: 'Links',
       facts: 'TT Weetjes'
     },
@@ -37,6 +39,17 @@ export default {
       loginButton: 'Login',
       logoutButton: 'Uitloggen',
       fail: 'Incorrect paswoord voor ${}'
+    },
+    changePassword: {
+      title: 'Paswoord Wijzigen',
+      introText: '',
+      loginName: 'Spelersnaam',
+      password: 'Nieuw Paswoord',
+      passwordHint: 'Nieuws paswoord voor de site',
+      changePasswordButton: 'Wijzig Paswoord',
+      logoutButton: 'Uitloggen',
+      success: 'Paswoord succesvol gewijzigd voor ${}',
+      fail: 'Paswoord wijzigen is mislukt voor ${}'
     },
     players: {
       title: 'Spelers overzicht ${a}',

@@ -10,6 +10,9 @@ export default keyMirror({
   LOGIN_FAIL: '',
   LOGIN_LOGOUT: '',
 
+  PASSWORD_CHANGE_SUCCESS: '',
+  PASSWORD_CHANGE_FAIL: '',
+
   SHOW_SNACKBAR: '',
   CLEAR_SNACKBAR: '',
 
