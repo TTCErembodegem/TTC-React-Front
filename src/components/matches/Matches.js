@@ -74,7 +74,7 @@ export default class Matches extends Component {
       <div>
         <div className="row">
           {matches.map(match => (
-            <div className={'col-md-4'} style={{padding: 5}} key={match.id}>
+            <div className="col-lg-4 col-md-6" style={{paddingBottom: 5, paddingTop: 5}} key={match.id}>
               <MatchCardHeader match={match} user={this.props.user} isOpen={false} />
             </div>
           ))}

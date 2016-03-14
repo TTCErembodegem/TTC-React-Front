@@ -96,7 +96,7 @@ export default class MatchReport extends Component {
             <Editor
               tag="pre"
               text={this.state.comment}
-              style={{height: 55}}
+              style={{height: 55, width: '100%'}}
               onChange={::this._reportCommentChange}
               options={editorOptions} />
           ) : null}
@@ -104,7 +104,8 @@ export default class MatchReport extends Component {
           {this.props.user.playerId ? (
             <FlatButton
               label={this.context.t('match.report.commentsOpenForm')}
-              onClick={::this._onCommentForm} />
+              onClick={::this._onCommentForm}
+              style={{paddingLeft: 0}} />
           ) : null}
         </div>
       );
