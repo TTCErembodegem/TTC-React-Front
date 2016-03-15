@@ -77,7 +77,7 @@ export default {
         report: 'Verslag',
         reportTitle: 'Het wedstrijdverslag',
         club: 'Lokaal',
-        clubTitle: 'Clublokaal tegenstanders',
+        clubTitle: 'Hun clublokaal',
         scoresheet: 'Wedstrijdblad',
         scoresheetTitle: '',
         opponentsRanking: 'Tegenstanders',

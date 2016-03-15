@@ -214,10 +214,16 @@ export default class MatchCard extends Component {
 
     if (match.players.size === 0 || !this.props.user.playerId) {
       let standardPlayers = team.getPlayers('standard').map(ply => ply.player);
-      return <PlayersGallery players={standardPlayers} user={this.props.user} competition={team.competition} />;
+      return <PlayersGallery players={standardPlayers} user={this.props.user} competition={team.competition} viewport={this.props.viewport} />;
     }
 
-    return <PlayersGallery players={match.getOwnPlayerModels()} user={this.props.user} competition={team.competition} />;
+    return (
+      <PlayersGallery
+        players={match.getOwnPlayerModels()}
+        user={this.props.user}
+        competition={team.competition}
+        viewport={this.props.viewport} />
+    );
   }
 }
 
@@ -236,12 +242,13 @@ const gridStyles = {
     marginBottom: -8
   },
 };
-// TODO: cols must be set to two on small devices (window.innerWidth + need onResize eventHandler)
-const PlayersGallery = ({players, user, competition}) => (
+
+const PlayersImageWidth = 200;
+const PlayersGallery = ({players, user, competition, viewport}) => (
   <div style={gridStyles.root}>
     <GridList
       cellHeight={200}
-      cols={4}
+      cols={Math.floor(viewport.width / PlayersImageWidth)}
       style={gridStyles.gridList}>
       {players.map(ply => {
         var comp = ply.getCompetition(competition);
