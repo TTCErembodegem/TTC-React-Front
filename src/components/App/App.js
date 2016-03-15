@@ -41,7 +41,6 @@ export default class App extends Component {
   };
 
   render() {
-    //TODO: CircularProgress: position in middle on mobile and desktop...
     return (
       <div id="react">
         <div className="wrapper">
@@ -69,5 +68,5 @@ export default class App extends Component {
 }
 
 const WaitForIt = () => (
-  <div style={{width: 300, marginLeft: 'auto', marginRight: 'auto', paddingTop: 75}}><CircularProgress size={3} /></div>
+  <div style={{width: 210, margin: 'auto', paddingTop: 75}}><CircularProgress size={3} /></div>
 );
