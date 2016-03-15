@@ -3,6 +3,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
+import withViewport from '../../utils/decorators/withViewport.js';
 import withContext, { contextTypes } from '../../utils/decorators/withContext.js';
 import withStyles from '../../utils/decorators/withStyles.js';
 import styles from './App.css';
@@ -27,6 +28,7 @@ import Location from '../controls/Location.js';
   };
 })
 @withContext
+@withViewport
 @withStyles(styles)
 export default class App extends Component {
   static contextTypes = contextTypes;
@@ -36,6 +38,7 @@ export default class App extends Component {
     players: ImmutablePropTypes.list.isRequired,
     matches: ImmutablePropTypes.list.isRequired,
     teams: ImmutablePropTypes.list.isRequired,
+    viewport: PropTypes.object.isRequired,
   };
 
   render() {
@@ -55,13 +58,6 @@ export default class App extends Component {
       mobile: '053 / 21 27 20',
     };
 
-    const topSponsorPaperStyle = {
-      height: 100,
-      width: 220,
-      padding: 15,
-      display: 'inline-block',
-    };
-
     var inClub = {
       players: this.props.players.size,
       teamsSporta: this.props.teams.filter(t => t.competition === 'Sporta').size,
@@ -74,8 +70,17 @@ export default class App extends Component {
       display: 'inline-block'
     };
 
-    return (
-      <div>
+    const showTopSponsors = this.props.viewport.width > 500;
+    var topSponsors;
+    if (showTopSponsors) {
+      const topSponsorPaperStyle = {
+        height: 100,
+        width: 220,
+        padding: 15,
+        display: 'inline-block',
+      };
+
+      topSponsors = (
         <Row style={{marginTop: 10}}>
           <div style={{width: 450, margin: 'auto'}}>
             <Paper style={topSponsorPaperStyle}>
@@ -86,7 +91,19 @@ export default class App extends Component {
             </Paper>
           </div>
         </Row>
-        <Row style={{marginTop: 25}}>
+      );
+    }
+
+    const topSponsorsOnBottomPaperStyle = {
+      padding: 15,
+      width: 220,
+      margin: 'auto',
+    };
+
+    return (
+      <div>
+        {topSponsors}
+        <Row style={{marginTop: showTopSponsors ? 25 : undefined}}>
           <Col sm={6} style={{verticalAlign: 'top'}}>
             <h1>{this.context.t('intro.title')}</h1>
             {this.context.t('intro.text', inClub)}
@@ -95,19 +112,36 @@ export default class App extends Component {
             {!this.props.config.get('initialLoadCompleted') ? <Loading t={this.context.t} /> : <TodaysEvents {...this.props} />}
           </Col>
         </Row>
-        <Row style={{marginTop: 25, marginBottom: 15}}>
-          <div style={{width: 850, margin: 'auto'}}>
-            <Paper style={bottomSponsorsStyle}>
-              <a href="http://www.tkleinoffer.be/" target="_blank"><img src="/img/sponsors/tkleinoffer.png" /></a>
-            </Paper>
-            <Paper style={{...bottomSponsorsStyle, marginLeft: 10}}>
-              <a href="http://vdhkeukens.be/" target="_blank"><img src="/img/sponsors/vdhkeukens.png" /></a>
-            </Paper>
-            <Paper style={{...bottomSponsorsStyle, marginLeft: 10}}>
-              <a href="http://www.doopsuikersymphony.be/" target="_blank"><img src="/img/sponsors/symphony.jpg" /></a>
-            </Paper>
-          </div>
-        </Row>
+        {this.props.viewport.width > 1000 ? (
+          <Row style={{marginTop: 25, marginBottom: 15}}>
+            <div style={{width: 850, margin: 'auto'}}>
+              <Paper style={bottomSponsorsStyle}>
+                <a href="http://www.tkleinoffer.be/" target="_blank"><img src="/img/sponsors/tkleinoffer.png" /></a>
+              </Paper>
+              <Paper style={{...bottomSponsorsStyle, marginLeft: 10}}>
+                <a href="http://vdhkeukens.be/" target="_blank"><img src="/img/sponsors/vdhkeukens.png" /></a>
+              </Paper>
+              <Paper style={{...bottomSponsorsStyle, marginLeft: 10}}>
+                <a href="http://www.doopsuikersymphony.be/" target="_blank"><img src="/img/sponsors/symphony.jpg" /></a>
+              </Paper>
+            </div>
+          </Row>
+        ) : null}
+        {!showTopSponsors ? (
+          <Row style={{margin: 10}}>
+            <Strike text={this.context.t('intro.ourSponsors')} style={{marginBottom: 5}} />
+            <Col>
+              <Paper style={topSponsorsOnBottomPaperStyle}>
+                <Location loc={bakkerijVanLierde} t={this.context.t} />
+              </Paper>
+            </Col>
+            <Col style={{marginTop: 20}}>
+              <Paper style={topSponsorsOnBottomPaperStyle}>
+                <Location loc={slagerijGuy} t={this.context.t} />
+              </Paper>
+            </Col>
+          </Row>
+        ) : null}
       </div>
     );
   }

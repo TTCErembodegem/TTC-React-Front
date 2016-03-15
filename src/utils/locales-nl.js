@@ -27,6 +27,7 @@ export default {
       trainingToday: 'vandaag training vanaf 20u',
       playedMatches: 'laatst gespeelde matchen',
       loading: 'Laden...',
+      ourSponsors: 'onze sponsers',
     },
     login: {
       title: 'Aanmelden',
