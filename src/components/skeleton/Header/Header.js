@@ -27,9 +27,7 @@ export default class Header extends Component {
   render() {
     var t = this.context.t;
     var loginOrProfile = !this.props.user.playerId ?
-      <div className="userLinks">
-      <FlatButton label={t('nav.login')} onClick={() => browserHistory.push(t.route('login'))} />
-      <FlatButton label={t('nav.changePassword')} onClick={() => browserHistory.push(t.route('changePassword'))} /> </div> :
+      <FlatButton label={t('nav.login')} onClick={() => browserHistory.push(t.route('login'))} /> :
       <Link className="Header-link Header-icon-right" to={t.route('profile')}><Icon fa="fa fa-2x fa-user" /></Link>;
 
     return (

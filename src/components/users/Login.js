@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
+import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { contextTypes } from '../../utils/decorators/withContext.js';
 
@@ -39,8 +40,9 @@ export default class Login extends Component {
   }
 
   render() {
+    var t = this.context.t;
     var paperStyle = {
-      height: 280,
+      height: 380,
       width: 290,
       margin: 20,
       textAlign: 'center',
@@ -67,6 +69,9 @@ export default class Login extends Component {
           style={{marginTop: 15}}
           onClick={::this._onLogin}
           disabled={!this.state.playerId} />
+        <br />
+        <RaisedButton label={t('nav.changePassword')} primary={true}
+          style={{marginTop: 15}} onClick={() => browserHistory.push(t.route('changePassword'))} />
       </Paper>
     );
   }

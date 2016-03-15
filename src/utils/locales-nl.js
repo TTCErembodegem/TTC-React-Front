@@ -18,7 +18,7 @@ export default {
       matches: 'Kalender',
       players: 'Spelers',
       login: 'Log in',
-      changePassword: 'Paswoord vergeten?',
+      changePassword: 'Verander Paswoord',
       links: 'Links',
       facts: 'TT Weetjes'
     },
@@ -44,12 +44,17 @@ export default {
       title: 'Paswoord Wijzigen',
       introText: '',
       loginName: 'Spelersnaam',
-      password: 'Nieuw Paswoord',
-      passwordHint: 'Nieuws paswoord voor de site',
+      oldPassword: 'Huidig Paswoord',
+      oldPasswordHint: 'Huidig paswoord voor de site',
+      newPassword: 'Nieuw Paswoord',
+      newPasswordHint: 'Nieuw paswoord voor de site',
       changePasswordButton: 'Wijzig Paswoord',
+      NewPasswordButton: 'Paswoord vergeten?',
       logoutButton: 'Uitloggen',
       success: 'Paswoord succesvol gewijzigd voor ${}',
-      fail: 'Paswoord wijzigen is mislukt voor ${}'
+      fail: 'Paswoord wijzigen is mislukt voor ${}',
+      newPasswordSuccess: 'Nieuw paswoord succesvol verstuurd',
+      newPasswordFail: 'Nieuw paswoord versturen is mislukt'
     },
     players: {
       title: 'Spelers overzicht ${a}',

@@ -28,19 +28,21 @@ export default class ChangePassword extends Component {
     players: ImmutablePropTypes.listOf(PropTypes.instanceOf(PlayerModel).isRequired).isRequired,
     user: PropTypes.object.isRequired,
     changePassword: PropTypes.func.isRequired,
+    newPassword: PropTypes.func.isRequired
   }
 
   constructor() {
     super();
     this.state = {
       playerId: null,
-      password: null,
+      oldpassword: null,
+      newpassword: null,
     };
   }
 
   render() {
     var paperStyle = {
-      height: 280,
+      height: 380,
       width: 290,
       margin: 20,
       textAlign: 'center',
@@ -56,10 +58,16 @@ export default class ChangePassword extends Component {
           floatingLabelText={this.context.t('changePassword.loginName')} />
 
         <TextField
-          floatingLabelText={this.context.t('changePassword.password')}
-          hintText={this.context.t('changePassword.passwordHint')}
+          floatingLabelText={this.context.t('changePassword.oldPassword')}
+          hintText={this.context.t('changePassword.oldPasswordHint')}
           type="password"
-          onChange={::this._onPasswordChange} />
+          onChange={::this._onOldPasswordChange} />
+
+        <TextField
+          floatingLabelText={this.context.t('changePassword.newPassword')}
+          hintText={this.context.t('changePassword.newPasswordHint')}
+          type="password"
+          onChange={::this._onNewPasswordChange} />
 
         <RaisedButton
           label={this.context.t('changePassword.changePasswordButton')}
@@ -67,16 +75,29 @@ export default class ChangePassword extends Component {
           style={{marginTop: 15}}
           onClick={::this._onChangePassword}
           disabled={!this.state.playerId} />
+
+        <RaisedButton
+          label={this.context.t('changePassword.NewPasswordButton')}
+          primary={true}
+          style={{marginTop: 15}}
+          onClick={::this._onNewPasswordNeeded}
+          disabled={!this.state.playerId} />
       </Paper>
     );
   }
   _onSelectPlayer(id) {
     this.setState({playerId: id});
   }
-  _onPasswordChange(e) {
-    this.setState({password: e.target.value});
+  _onOldPasswordChange(e) {
+    this.setState({oldpassword: e.target.value});
+  }
+  _onNewPasswordChange(e) {
+    this.setState({newpassword: e.target.value});
   }
   _onChangePassword() {
     this.props.changePassword(this.state);
+  }
+  _onNewPasswordNeeded() {
+    this.props.newPassword(this.state);
   }
 }

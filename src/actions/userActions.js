@@ -33,6 +33,20 @@ function passwordChangedFailed(playerName) {
   };
 }
 
+function passwordNewNeededSuccess() {
+  return {
+    type: ActionTypes.PASSWORD_NEW_NEEDED_FAIL,
+    payload: trans('changePassword.newPasswordSuccess')
+  };
+}
+
+function passwordNewNeededFailed() {
+  return {
+    type: ActionTypes.PASSWORD_CHANGE_FAIL,
+    payload: trans('changePassword.newPasswordFail')
+  };
+}
+
 export function logout() {
   return {
     type: ActionTypes.LOGIN_LOGOUT
@@ -84,11 +98,26 @@ export function changePassword(creds) {
           dispatch(passwordChangedFailed(playerName));
         } else {
           dispatch(passwordChanged(playerName));
-          dispatch(initialLoad());
         }
       }, function(err) {
         dispatch(passwordChangedFailed(playerName));
         console.log('ChangePassword!', err); // eslint-disable-line
+      });
+  };
+}
+
+export function newPassword(creds) {
+  return dispatch => {
+    return http.post('/users/NewPassword', creds)
+      .then(function(data) {
+        if (!data) {
+          dispatch(passwordNewNeededSuccess);
+        } else {
+          dispatch(passwordNewNeededFailed);
+        }
+      }, function(err) {
+        dispatch(passwordNewNeededFailed);
+        console.log('newPassword!', err); // eslint-disable-line
       });
   };
 }
