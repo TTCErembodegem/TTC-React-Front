@@ -7,6 +7,10 @@
 @import 'medium-editor/dist/css/medium-editor.css';
 @import 'medium-editor/dist/css/themes/default.css';
 
+pre {
+  font-family: Roboto;
+}
+
 .label-as-badge {
   border-radius: 1em;
 }
