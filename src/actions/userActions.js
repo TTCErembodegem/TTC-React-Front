@@ -2,6 +2,7 @@ import * as ActionTypes from './ActionTypes.js';
 import http from '../utils/httpClient.js';
 import { util as storeUtil } from '../store.js';
 import initialLoad from './initialLoad.js';
+import { showSnackbar } from './configActions.js';
 
 import trans from '../locales.js';
 
@@ -16,13 +17,6 @@ function logFailed(playerName) {
   return {
     type: ActionTypes.LOGIN_FAIL,
     payload: trans('login.fail', playerName)
-  };
-}
-
-function passwordChanged(playerName) {
-  return {
-    type: ActionTypes.PASSWORD_CHANGE_SUCCESS,
-    payload: trans('changePassword.success', playerName)
   };
 }
 
@@ -97,7 +91,7 @@ export function changePassword(creds) {
         if (!data) {
           dispatch(passwordChangedFailed(playerName));
         } else {
-          dispatch(passwordChanged(playerName));
+          dispatch(showSnackbar(trans('changePassword.success', playerName)));
         }
       }, function(err) {
         dispatch(passwordChangedFailed(playerName));
