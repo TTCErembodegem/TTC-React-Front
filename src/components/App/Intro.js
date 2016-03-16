@@ -109,7 +109,7 @@ export default class App extends Component {
             {this.context.t('intro.text', inClub)}
           </Col>
           <Col sm={6}>
-            {this.props.config.get('initialLoadCompleted') ? <Loading t={this.context.t} bigScreen={this.props.viewport.width > 768} /> : <TodaysEvents {...this.props} />}
+            {!this.props.config.get('initialLoadCompleted') ? <Loading t={this.context.t} bigScreen={this.props.viewport.width > 768} /> : <TodaysEvents {...this.props} />}
           </Col>
         </Row>
         {this.props.viewport.width > 1000 ? (
