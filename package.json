@@ -25,6 +25,7 @@
     "react-redux": "^4.0.0",
     "react-router": "^2.0.0",
     "react-tap-event-plugin": "^0.2.2",
+    "react-typist": "^0.3.0",
     "redux": "^3.0.4",
     "redux-thunk": "^1.0.0",
     "source-map-support": "0.3.2",

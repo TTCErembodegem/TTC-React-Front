@@ -10,13 +10,13 @@ import styles from './App.css';
 
 import Strike from '../controls/Strike.js';
 import MatchCardHeader from '../matches/Match/MatchCardHeader.js';
+import Location from '../controls/Location.js';
 
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import Paper from 'material-ui/lib/paper';
-
-import Location from '../controls/Location.js';
+import Typist from 'react-typist';
 
 @connect(state => {
   return {
@@ -109,7 +109,7 @@ export default class App extends Component {
             {this.context.t('intro.text', inClub)}
           </Col>
           <Col sm={6}>
-            {!this.props.config.get('initialLoadCompleted') ? <Loading t={this.context.t} /> : <TodaysEvents {...this.props} />}
+            {this.props.config.get('initialLoadCompleted') ? <Loading t={this.context.t} bigScreen={this.props.viewport.width > 768} /> : <TodaysEvents {...this.props} />}
           </Col>
         </Row>
         {this.props.viewport.width > 1000 ? (
@@ -147,14 +147,22 @@ export default class App extends Component {
   }
 }
 
-const Loading = ({t}) => (
-  <div>
+
+const Loading = ({t, bigScreen}) => (
+  <div style={bigScreen ? undefined : {width: 310, margin: 'auto', marginBottom: 15, marginTop: 15}}>
     <img
       src="/img/schlager.gif"
       style={{borderRadius: 25}}
       title={t('intro.loading')} />
+
+    <div style={{position: 'absolute', top: 5, width: 310, margin: 'auto'}}>
+      <div style={{width: 310, textAlign: 'center', color: 'white'}}>
+        <Typist cursor={{show: false}} startDelay={1000}>{t('intro.loading')}</Typist>
+      </div>
+    </div>
   </div>
 );
+
 
 class TodaysEvents extends Component {
   static contextTypes = contextTypes;
