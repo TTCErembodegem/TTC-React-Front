@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { util as storeUtils } from '../../../store.js';
+import withViewport from '../../../utils/decorators/withViewport.js';
 import { contextTypes } from '../../../utils/decorators/withContext.js';
 
 import MatchModel from '../../../models/MatchModel.js';
@@ -9,10 +10,12 @@ import OpponentPlayer from './OpponentPlayer.js';
 
 const AmountOfOpponentMatchesToShow = 5;
 
+@withViewport
 export default class OpponentsLastMatches extends Component {
   static contextTypes = contextTypes;
   static propTypes = {
     match: PropTypes.instanceOf(MatchModel).isRequired,
+    viewport: PropTypes.object.isRequired,
   }
 
   constructor(props) {
@@ -21,6 +24,8 @@ export default class OpponentsLastMatches extends Component {
   }
 
   render() {
+    const widthRemoveColumn = 450; // combine Home&Away columns to just one Opponent column on small devices
+
     var matches = storeUtils.matches
       .getFromOpponent(this.props.match.opponent)
       .sort((a, b) => a.date.isBefore(b.date) ? 1 : -1)
@@ -31,11 +36,15 @@ export default class OpponentsLastMatches extends Component {
       <Table condensed className="match-card-tab-table">
         <thead>
           <tr>
-            <th>{this.context.t('match.opponents.date')}</th>
-            <th>{this.context.t('match.opponents.homeTeam')}</th>
-            <th>{this.context.t('match.opponents.awayTeam')}</th>
-            <th>{this.context.t('match.opponents.formation')}</th>
-            <th>{this.context.t('match.opponents.outcome')}</th>
+            <th key="1">{this.context.t('match.opponents.date')}</th>
+            {this.props.viewport.width > widthRemoveColumn ? [
+              <th key="2">{this.context.t('match.opponents.homeTeam')}</th>,
+              <th key="3">{this.context.t('match.opponents.awayTeam')}</th>
+            ] : (
+              <th key="4">{this.context.t('match.opponents.vsTeam')}</th>
+            )}
+            <th key="5">{this.context.t('match.opponents.formation')}</th>
+            <th key="6">{this.context.t('match.opponents.outcome')}</th>
           </tr>
         </thead>
         <tbody>
@@ -53,11 +62,18 @@ export default class OpponentsLastMatches extends Component {
               <tr key={match.id} className={'clickable ' + (match.won(opponent) ? 'accentuate success' : '')}
                 onClick={this._onOpenOpponentMatch.bind(this, match.id)}>
 
-                <td>{match.getDisplayDate('d')}</td>
-                <td>{match.getClub('home').name} {match.home.teamCode}</td>
-                <td>{match.getClub('away').name} {match.away.teamCode}</td>
-                <td>{opponentFormation.map(ply => ply.ranking).join(', ')}</td>
-                <td>{match.score.home} - {match.score.out}</td>
+                <td key="1">{match.getDisplayDate('d')}</td>
+                {this.props.viewport.width > widthRemoveColumn ? [
+                  <td key="2">{match.getClub('home').name} {match.home.teamCode}</td>,
+                  <td key="3">{match.getClub('away').name} {match.away.teamCode}</td>
+                ] : (
+                  <td key="4">
+                    {isHomeMatch ? (match.getClub('away').name + ' ' + match.away.teamCode) : (match.getClub('home').name + ' ' + match.home.teamCode)}
+                  </td>
+                )}
+
+                <td key="5">{opponentFormation.map(ply => ply.ranking).join(', ')}</td>
+                <td key="6">{match.score.home} - {match.score.out}</td>
               </tr>,
               this._getMatchDetails(match)
             ];

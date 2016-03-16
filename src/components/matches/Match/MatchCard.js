@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import { contextTypes } from '../../../utils/decorators/withContext.js';
-import moment from 'moment';
+import withViewport from '../../../utils/decorators/withViewport.js';
 
 import UserModel from '../../../models/UserModel.js';
 import MatchModel from '../../../models/MatchModel.js';
@@ -22,14 +22,13 @@ import Icon from '../../controls/Icon.js';
 import Telephone from '../../controls/Telephone.js';
 
 import CardText from 'material-ui/lib/card/card-text';
-import Divider from 'material-ui/lib/divider';
 import GridList from 'material-ui/lib/grid-list/grid-list';
 import GridTile from 'material-ui/lib/grid-list/grid-tile';
 
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
-import Table from 'react-bootstrap/lib/Table';
-import cn from 'classnames';
+import PanelGroup from 'react-bootstrap/lib/PanelGroup';
+import Panel from 'react-bootstrap/lib/Panel';
 
 const tabEventKeys = {
   players: 1,
@@ -43,40 +42,7 @@ const tabEventKeys = {
 
 // TODO: request match if not yet present in store
 
-@connect(state => {
-  return {
-    matches: state.matches,
-  };
-})
-export class RoutedMatch extends Component {
-  static propTypes = {
-    params: PropTypes.shape({
-      matchId: PropTypes.string.isRequired
-    })
-  }
-
-  _setMatchId(props) {
-    var matchId = parseInt(props.params.matchId, 10);
-    this.state = {
-      match: storeUtils.getMatch(matchId)
-    };
-  }
-
-  componentWillReceiveProps(props) {
-    this._setMatchId(props);
-  }
-
-
-  constructor(props) {
-    super(props);
-    this._setMatchId(props);
-  }
-
-  render() {
-    return <div style={{marginBottom: 20, marginTop: 20}}><MatchCard match={this.state.match} /></div>;
-  }
-}
-
+@withViewport
 @connect(state => {
   return {
     //config: state.config,
@@ -93,6 +59,7 @@ export default class MatchCard extends Component {
     match: PropTypes.instanceOf(MatchModel).isRequired,
     user: PropTypes.instanceOf(UserModel).isRequired,
     getLastOpponentMatches: PropTypes.func.isRequired,
+    viewport: PropTypes.object.isRequired,
   }
 
   constructor(props) {
@@ -108,19 +75,46 @@ export default class MatchCard extends Component {
     this.props.getLastOpponentMatches(this.props.match.teamId, this.props.match.opponent);
   }
 
+  _showAccordeon() {
+    // Otherwise show tabs
+    return this.props.viewport.width < 600;
+  }
+
   render() {
     var match = this.props.match;
-    var showIndividualMatches = match.games.size !== 0;
+    const showIndividualMatches = match.games.size !== 0;
+    const showOpponentClubLocation = !match.isHomeMatch && !match.isPlayed;
+    const showScoresheet = match.scoreType === 'BeingPlayed';
+
+    if (this._showAccordeon()) {
+      return (
+        <MatchCardHeader {...this.props} backgroundColor="#fafafa" isOpen={true} style={{margin: 50}}>
+          <CardText expandable={true} style={{paddingTop: 0, paddingLeft: 5, paddingRight: 5}}>
+            <PanelGroup activeKey={this.state.openTabKey} onSelect={::this._onTabSelect} accordion>
+              {this._renderNavItem(tabEventKeys.players, 'players', this._getPlayersEditIcon())}
+              {showIndividualMatches ? this._renderNavItem(tabEventKeys.individualMatches, 'matches') : null}
+              {showOpponentClubLocation ? this._renderNavItem(tabEventKeys.opponentClub, 'club') : null}
+              {showScoresheet ? this._renderNavItem(tabEventKeys.scoresheet, 'scoresheet') : null}
+              {this._renderNavItem(tabEventKeys.opponentsRanking, 'opponentsRanking')}
+              {this._renderNavItem(tabEventKeys.opponentsFormation, 'opponentsFormation')}
+              {this._renderNavItem(tabEventKeys.report, 'report')}
+              {this.props.user.isDev() ? this._renderNavItem('admin', 'admin') : null}
+            </PanelGroup>
+          </CardText>
+        </MatchCardHeader>
+      );
+    }
+
     return (
       <MatchCardHeader {...this.props} backgroundColor="#fafafa" isOpen={true}>
         <CardText expandable={true} style={{paddingTop: 0}}>
           <Nav bsStyle="tabs" activeKey={this.state.openTabKey} onSelect={::this._onTabSelect}>
             {this._renderNavItem(tabEventKeys.players, 'players', this._getPlayersEditIcon())}
             {showIndividualMatches ? this._renderNavItem(tabEventKeys.individualMatches, 'matches') : null}
-            {!match.isHomeMatch ? this._renderNavItem(tabEventKeys.opponentClub, 'club') : null}
-            {match.scoreType === 'BeingPlayed' ? this._renderNavItem(tabEventKeys.scoresheet, 'scoresheet') : null}
-            {!match.isPlayed ? this._renderNavItem(tabEventKeys.opponentsRanking, 'opponentsRanking') : null}
-            {!match.isPlayed ? this._renderNavItem(tabEventKeys.opponentsFormation, 'opponentsFormation') : null}
+            {showOpponentClubLocation ? this._renderNavItem(tabEventKeys.opponentClub, 'club') : null}
+            {showScoresheet ? this._renderNavItem(tabEventKeys.scoresheet, 'scoresheet') : null}
+            {this._renderNavItem(tabEventKeys.opponentsRanking, 'opponentsRanking')}
+            {this._renderNavItem(tabEventKeys.opponentsFormation, 'opponentsFormation')}
             {this._renderNavItem(tabEventKeys.report, 'report')}
             {this.props.user.isDev() ? this._renderNavItem('admin', 'admin') : null}
           </Nav>
@@ -133,28 +127,36 @@ export default class MatchCard extends Component {
   }
   _getPlayersEditIcon() {
     var match = this.props.match;
-    var team = match.getTeam();
-    var playerSelectionComplete = match.players.size === team.getTeamPlayerCount();
-    var isAllowedToEdit = this.props.user.canManageTeam(this.props.match.teamId);
-    // TODO: stop allowEdit when frenoySync=true
-    return isAllowedToEdit ? (
+    var isAllowedToEdit = this.props.user.canManageTeam(match.teamId);
+    return isAllowedToEdit && !match.isSyncedWithFrenoy ? (
       <Icon fa="fa fa-pencil-square-o" onClick={::this._onStartEditPlayers} className="match-card-tab-icon" />) : null;
   }
   _onStartEditPlayers() {
     this.setState({forceEditPlayers: !this.state.forceEditPlayers});
   }
-  _renderNavItem(eventKey, tKey, children = null) {
+  _renderNavItem(eventKey, transKey, headerChildren = null) {
+    if (!this._showAccordeon()) {
+      // Tabs
+      return (
+        <NavItem eventKey={eventKey} title={this.context.t(`match.tabs.${transKey}Title`)}>
+          {this.context.t(`match.tabs.${transKey}`)} {headerChildren}
+        </NavItem>
+      );
+    }
+
+    // Accordeon
+    var header = <div>{this.context.t(`match.tabs.${transKey}`)} {headerChildren}</div>;
     return (
-      <NavItem eventKey={eventKey} title={this.context.t(`match.tabs.${tKey}Title`)}>
-        {this.context.t(`match.tabs.${tKey}`)} {children}
-      </NavItem>
+      <Panel header={header} eventKey={eventKey} title={this.context.t(`match.tabs.${transKey}Title`)} className="match-card-panel">
+        {this._renderTabContent(eventKey)}
+      </Panel>
     );
   }
   _onTabSelect(eventKey) {
     this.setState({openTabKey: eventKey});
   }
-  _renderTabContent() {
-    switch (this.state.openTabKey) {
+  _renderTabContent(eventKey) {
+    switch (eventKey || this.state.openTabKey) {
     case tabEventKeys.players:
       return this._renderPlayers();
     case tabEventKeys.individualMatches:
@@ -202,36 +204,26 @@ export default class MatchCard extends Component {
     var match = this.props.match;
     var team = match.getTeam();
 
-    if (match.players.size === team.getTeamPlayerCount() * 2) {
-      // TODO: check here for Frenoy sync?
+    if (match.isSyncedWithFrenoy) {
       return <MatchPlayerResults match={match} team={match.getTeam()} t={this.context.t} />;
     }
 
-    if (this.state.forceEditPlayers) {
+    if (this.state.forceEditPlayers || (this.props.user.canManageTeam(match.teamId) && match.players.size < team.getTeamPlayerCount())) {
       return <SelectPlayersForm match={match} user={this.props.user} />;
     }
 
-    // TODO: if canmanageteams and match.players.size !== team.getTeamPlayerCount() * 2 == manage teams
-
-    if (this.props.user.playerId) {
-      // TODO: don't check for logged in but check for match.scoreType === 'BeingPlayed' / 'IsPlayed'
-      // --> a non logged in use can not see the formation/opstelling when the match is NotYetPlayed
-      //     and since "opstellingen" will (later) not be returned from the backend when not logged in, this logic becomes simpler
-      if (match.players.size === team.getTeamPlayerCount() && !this.state.forceEditPlayers) {
-        return <PlayersGallery players={match.getOwnPlayerModels()} user={this.props.user} competition={team.competition} />;
-      }
-
-      if (this.props.user.canManageTeam(match.teamId) && (match.date.isAfter(moment(), 'hours') || match.players.size !== team.getTeamPlayerCount())) {
-        return <SelectPlayersForm match={match} user={this.props.user} />;
-      }
-
-      if (match.players.size) {
-        return <PlayersGallery players={match.getOwnPlayerModels()} user={this.props.user} competition={team.competition} />;
-      }
+    if (match.players.size === 0 || !this.props.user.playerId) {
+      let standardPlayers = team.getPlayers('standard').map(ply => ply.player);
+      return <PlayersGallery players={standardPlayers} user={this.props.user} competition={team.competition} viewport={this.props.viewport} />;
     }
 
-    var standardPlayers = team.getPlayers('standard').map(ply => ply.player);
-    return <PlayersGallery players={standardPlayers} user={this.props.user} competition={team.competition} />;
+    return (
+      <PlayersGallery
+        players={match.getOwnPlayerModels()}
+        user={this.props.user}
+        competition={team.competition}
+        viewport={this.props.viewport} />
+    );
   }
 }
 
@@ -250,12 +242,13 @@ const gridStyles = {
     marginBottom: -8
   },
 };
-// TODO: cols must be set to two on small devices (window.innerWidth + need onResize eventHandler)
-const PlayersGallery = ({players, user, competition}) => (
+
+const PlayersImageWidth = 200;
+const PlayersGallery = ({players, user, competition, viewport}) => (
   <div style={gridStyles.root}>
     <GridList
       cellHeight={200}
-      cols={4}
+      cols={Math.floor(viewport.width / PlayersImageWidth)}
       style={gridStyles.gridList}>
       {players.map(ply => {
         var comp = ply.getCompetition(competition);

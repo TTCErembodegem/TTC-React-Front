@@ -33,8 +33,9 @@ export default class Matches extends Component {
 
   render() {
     // TODO: put in some global config (or perhaps server config?)
-    const showFutureMatchesDays = 4;
-    const showPlayedMatchesDays = 20;
+    const matchesToShow = 5;
+    //const showFutureMatchesDays = 7;
+    //const showPlayedMatchesDays = 20;
 
     var today = moment();
     //var yesterday = moment().subtract(1, 'days');  || cal.date.isSame(yesterday, 'day')
@@ -42,11 +43,13 @@ export default class Matches extends Component {
 
     var matchesToday = ownMatches.filter(cal => cal.date.isSame(today, 'day'));
     var matchesNext = ownMatches
-      .filter(cal => cal.date.isAfter(today, 'day') && cal.date.diff(today, 'days') <= showFutureMatchesDays)
-      .sort((a, b) => a.date - b.date);
+      .filter(cal => cal.date.isAfter(today, 'day')) // && cal.date.diff(today, 'days') <= showFutureMatchesDays)
+      .sort((a, b) => a.date - b.date)
+      .take(matchesToShow);
     var matchesPlayed = ownMatches
-      .filter(cal => cal.date.isBefore(today, 'day') && cal.date.diff(today, 'days') >= -showPlayedMatchesDays)
-      .sort((a, b) => b.date - a.date);
+      .filter(cal => cal.date.isBefore(today, 'day')) // && cal.date.diff(today, 'days') >= -showPlayedMatchesDays)
+      .sort((a, b) => b.date - a.date)
+      .take(matchesToShow);
 
     // TODO: implement buttonbar
     // TODO: debug inputfield: get and display a (frenoy)matchId -> also implement auto fetch if not present...
@@ -71,7 +74,7 @@ export default class Matches extends Component {
       <div>
         <div className="row">
           {matches.map(match => (
-            <div className={'col-md-4'} style={{padding: 5}} key={match.id}>
+            <div className="col-lg-4 col-md-6" style={{paddingBottom: 5, paddingTop: 5}} key={match.id}>
               <MatchCardHeader match={match} user={this.props.user} isOpen={false} />
             </div>
           ))}

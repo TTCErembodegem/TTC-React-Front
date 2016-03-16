@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { connect } from 'react-redux';
 
+import withViewport from '../../utils/decorators/withViewport.js';
 import withContext from '../../utils/decorators/withContext.js';
 import withStyles from '../../utils/decorators/withStyles.js';
 import styles from './App.css';
@@ -28,6 +29,7 @@ import * as configActions from '../../actions/configActions.js';
   };
 }, configActions)
 @withContext
+@withViewport
 @withStyles(styles)
 export default class App extends Component {
   static propTypes = {
@@ -35,15 +37,15 @@ export default class App extends Component {
     user: PropTypes.object,
     children: PropTypes.element,
     clearSnackbar: PropTypes.func.isRequired,
+    viewport: PropTypes.object.isRequired,
   };
 
   render() {
-    //TODO: CircularProgress: position in middle on mobile and desktop...
     return (
       <div id="react">
         <div className="wrapper">
           <Header user={this.props.user} />
-          <Grid style={{paddingTop: 5}}>
+          <Grid style={this.props.viewport.width < 600 ? {paddingLeft: 5, paddingRight: 5} : undefined}>
             {this.props.children ?
               (!this.props.config.get('initialLoadCompleted') ? <WaitForIt /> : this.props.children) :
               <Intro />
@@ -66,5 +68,5 @@ export default class App extends Component {
 }
 
 const WaitForIt = () => (
-  <div style={{width: 300, marginLeft: 'auto', marginRight: 'auto', paddingTop: 75}}><CircularProgress size={3} /></div>
+  <div style={{width: 210, margin: 'auto', paddingTop: 75}}><CircularProgress size={3} /></div>
 );

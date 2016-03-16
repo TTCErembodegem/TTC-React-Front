@@ -6,10 +6,10 @@ import { showSnackbar } from './configActions.js';
 
 import trans from '../locales.js';
 
-function loggedIn(user) {
+function loggedIn(user, redirect = true) {
   return {
     type: ActionTypes.LOGIN_SUCCESS,
-    payload: user
+    payload: {user, redirect}
   };
 }
 
@@ -59,7 +59,7 @@ export function validateToken(token) {
     return http.post('/users/ValidateToken', {token})
       .then(function(data) {
         if (data) {
-          dispatch(loggedIn(data));
+          dispatch(loggedIn(data, false));
         }
       }, function(err) {
         dispatch(logFailed('John Doe'));

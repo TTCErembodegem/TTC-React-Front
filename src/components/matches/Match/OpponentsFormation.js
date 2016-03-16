@@ -1,13 +1,16 @@
 import React, { Component, PropTypes } from 'react';
 import { contextTypes } from '../../../utils/decorators/withContext.js';
+import withViewport from '../../../utils/decorators/withViewport.js';
 
 import Icon from '../../controls/Icon.js';
 import Table from 'react-bootstrap/lib/Table';
 
+@withViewport
 export default class OpponentsFormation extends Component {
   static contextTypes = contextTypes;
   static propTypes = {
     formations: PropTypes.array.isRequired,
+    viewport: PropTypes.object.isRequired,
   }
 
   render() {
@@ -17,7 +20,7 @@ export default class OpponentsFormation extends Component {
           <tr>
             <th>{this.context.t('match.opponents.player')}</th>
             <th>{this.context.t('match.opponents.playerRanking')}</th>
-            <th>{this.context.t('match.opponents.timesPlayed')}</th>
+            <th>{this.props.viewport.width > 600 ? this.context.t('match.opponents.timesPlayed') : null}</th>
             <th colSpan={2}>{this.context.t('match.opponents.victories')}</th>
           </tr>
         </thead>
