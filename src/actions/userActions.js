@@ -20,6 +20,13 @@ function logFailed(playerName) {
   };
 }
 
+ function passwordChanged(playerName) {
+   return {
+     type: ActionTypes.PASSWORD_CHANGE_SUCCESS,
+     payload: trans('changePassword.success', playerName)
+   };
+ }
+
 function passwordChangedFailed(playerName) {
   return {
     type: ActionTypes.PASSWORD_CHANGE_FAIL,
@@ -29,14 +36,14 @@ function passwordChangedFailed(playerName) {
 
 function passwordNewNeededSuccess() {
   return {
-    type: ActionTypes.PASSWORD_NEW_NEEDED_FAIL,
+    type: ActionTypes.PASSWORD_NEW_NEEDED_SUCCESS,
     payload: trans('changePassword.newPasswordSuccess')
   };
 }
 
 function passwordNewNeededFailed() {
   return {
-    type: ActionTypes.PASSWORD_CHANGE_FAIL,
+    type: ActionTypes.PASSWORD_NEW_NEEDED_FAIL,
     payload: trans('changePassword.newPasswordFail')
   };
 }
@@ -94,8 +101,6 @@ export function changePassword(creds) {
         } else {
           dispatch(passwordChanged(playerName));
           dispatch(showSnackbar(trans('changePassword.success')));
-          dispatch(showSnackbar(trans('changePassword.success', playerName)));
-
         }
       }, function(err) {
         dispatch(passwordChangedFailed(playerName));
