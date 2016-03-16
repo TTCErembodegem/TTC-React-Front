@@ -7,9 +7,7 @@ import MatchModel from '../../../models/MatchModel.js';
 import * as matchActions from '../../../actions/matchActions.js';
 import UserModel from '../../../models/UserModel.js';
 
-import Icon from '../../controls/Icon.js';
-import Table from 'react-bootstrap/lib/Table';
-import Editor from 'react-medium-editor';
+import Editor from '../../controls/Editor.js';
 import RaisedButton from 'material-ui/lib/raised-button';
 import FlatButton from 'material-ui/lib/flat-button';
 
@@ -57,8 +55,6 @@ export default class MatchReport extends Component {
       );
     }
 
-    // TODO: disableEditing doesn't work: https://github.com/wangzuo/react-medium-editor/issues/15
-
     var canPostReport = this.props.user.canPostReport(this.props.match.teamId);
     var reportText = (
       <div>
@@ -68,8 +64,8 @@ export default class MatchReport extends Component {
           text={this.state.text}
           style={{height: canPostReport ? editorHeight : undefined}}
           onChange={::this._reportTextChange}
-          options={editorOptions}
-          disableEditing={!canPostReport} />
+          options={{...editorOptions, disableEditing: !canPostReport}}
+          contentEditable={canPostReport} />
 
         {canPostReport ? (
           <RaisedButton
@@ -81,16 +77,17 @@ export default class MatchReport extends Component {
       </div>
     );
 
-    if (!canPostReport && !this.state.text) {
+    var canComment = this.props.user.playerId;
+    if (!canComment && !this.state.text) {
       reportText = this.context.t('match.report.noReport');
     }
 
     var comments;
-    var showComments = this.props.user.playerId || this.props.match.comments.size;
+    var showComments = canComment || this.props.match.comments.size;
     if (showComments) {
       comments = (
         <div>
-          <h3 style={{marginTop: canPostReport ? 55 : 0}}>{this.context.t('match.report.commentsTitle')}</h3>
+          <h3 style={{marginTop: canComment ? 55 : 0}}>{this.context.t('match.report.commentsTitle')}</h3>
           {this.props.match.comments.map(::this._renderComment)}
           {this.state.commentFormOpen ? (
             <Editor
@@ -98,7 +95,8 @@ export default class MatchReport extends Component {
               text={this.state.comment}
               style={{height: 55, width: '100%'}}
               onChange={::this._reportCommentChange}
-              options={editorOptions} />
+              options={{...editorOptions, disableEditing: !canComment}}
+              contentEditable={canComment} />
           ) : null}
 
           {this.props.user.playerId ? (
@@ -123,8 +121,9 @@ export default class MatchReport extends Component {
   _renderComment(comment) {
     var poster = storeUtils.getPlayer(comment.playerId);
     return (
-      <div>
-        <Editor text={poster.alias + ':' + comment.text} disableEditing={true} />
+      <div key={comment.id}>
+        {poster.alias}
+        <div dangerouslySetInnerHTML={{__html: comment.text}} />
       </div>
     );
   }
