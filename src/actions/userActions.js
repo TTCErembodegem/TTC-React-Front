@@ -20,13 +20,6 @@ function logFailed(playerName) {
   };
 }
 
-function passwordChanged(playerName) {
-  return {
-    type: ActionTypes.PASSWORD_CHANGE_SUCCESS,
-    payload: trans('changePassword.success', playerName)
-  };
-}
-
 function passwordChangedFailed(playerName) {
   return {
     type: ActionTypes.PASSWORD_CHANGE_FAIL,
@@ -101,6 +94,8 @@ export function changePassword(creds) {
         } else {
           dispatch(passwordChanged(playerName));
           dispatch(showSnackbar(trans('changePassword.success')));
+          dispatch(showSnackbar(trans('changePassword.success', playerName)));
+
         }
       }, function(err) {
         dispatch(passwordChangedFailed(playerName));
