@@ -72,7 +72,7 @@ export default class MatchCard extends Component {
     this.props.getLastOpponentMatches(this.props.match.teamId, this.props.match.opponent);
   }
 
-  _showAccordeon() {
+  _showAccordion() {
     // Otherwise show tabs
     return this.props.viewport.width < 600;
   }
@@ -83,7 +83,7 @@ export default class MatchCard extends Component {
     const showOpponentClubLocation = !match.isHomeMatch && !match.isPlayed;
     const showScoresheet = match.scoreType === 'BeingPlayed';
 
-    if (this._showAccordeon()) {
+    if (this._showAccordion()) {
       return (
         <MatchCardHeader {...this.props} backgroundColor="#fafafa" isOpen={true} style={{margin: 50}}>
           <CardText expandable={true} style={{paddingTop: 0, paddingLeft: 5, paddingRight: 5}}>
@@ -132,7 +132,7 @@ export default class MatchCard extends Component {
     this.setState({forceEditPlayers: !this.state.forceEditPlayers});
   }
   _renderNavItem(eventKey, transKey, headerChildren = null) {
-    if (!this._showAccordeon()) {
+    if (!this._showAccordion()) {
       // Tabs
       return (
         <NavItem eventKey={eventKey} title={this.context.t(`match.tabs.${transKey}Title`)}>
@@ -141,10 +141,10 @@ export default class MatchCard extends Component {
       );
     }
 
-    // Accordeon
+    // Accordion
     var header = <div>{this.context.t(`match.tabs.${transKey}Title`)} {headerChildren}</div>;
     return (
-      <Panel header={header} eventKey={eventKey} className="match-card-panel">
+      <Panel header={header} eventKey={eventKey} className="match-card-panel clickable" onClick={this._onTabSelect.bind(this, eventKey)}>
         {this._renderTabContent(eventKey)}
       </Panel>
     );
