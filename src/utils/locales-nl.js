@@ -90,7 +90,7 @@ export default {
       },
       tabs: {
         players: 'Spelers',
-        playersTitle: 'Het verdict',
+        playersTitle: 'Onze opstelling',
         matches: 'Individueel',
         matchesTitle: 'Individuele matchuitslagen',
         report: 'Verslag',
@@ -100,9 +100,9 @@ export default {
         scoresheet: 'Wedstrijdblad',
         scoresheetTitle: '',
         opponentsRanking: 'Tegenstanders',
-        opponentsRankingTitle: 'Hun laatste resultaten',
+        opponentsRankingTitle: 'Hun laatste uitslagen',
         opponentsFormation: 'Opstelling',
-        opponentsFormationTitle: 'Hun opstellingen',
+        opponentsFormationTitle: 'Hun opstelling',
       },
       report: {
         title: 'Wedstrijdverslag',

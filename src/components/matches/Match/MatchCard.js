@@ -19,12 +19,9 @@ import MatchReport from './MatchReport.js';
 import Scoresheet from './Scoresheet.js';
 
 import Icon from '../../controls/Icon.js';
-import Telephone from '../../controls/Telephone.js';
+import PlayersImageGallery from '../../players/PlayersImageGallery.js';
 
 import CardText from 'material-ui/lib/card/card-text';
-import GridList from 'material-ui/lib/grid-list/grid-list';
-import GridTile from 'material-ui/lib/grid-list/grid-tile';
-
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
 import PanelGroup from 'react-bootstrap/lib/PanelGroup';
@@ -145,9 +142,9 @@ export default class MatchCard extends Component {
     }
 
     // Accordeon
-    var header = <div>{this.context.t(`match.tabs.${transKey}`)} {headerChildren}</div>;
+    var header = <div>{this.context.t(`match.tabs.${transKey}Title`)} {headerChildren}</div>;
     return (
-      <Panel header={header} eventKey={eventKey} title={this.context.t(`match.tabs.${transKey}Title`)} className="match-card-panel">
+      <Panel header={header} eventKey={eventKey} className="match-card-panel">
         {this._renderTabContent(eventKey)}
       </Panel>
     );
@@ -214,11 +211,11 @@ export default class MatchCard extends Component {
 
     if (match.players.size === 0 || !this.props.user.playerId) {
       let standardPlayers = team.getPlayers('standard').map(ply => ply.player);
-      return <PlayersGallery players={standardPlayers} user={this.props.user} competition={team.competition} viewport={this.props.viewport} />;
+      return <PlayersImageGallery players={standardPlayers} user={this.props.user} competition={team.competition} viewport={this.props.viewport} />;
     }
 
     return (
-      <PlayersGallery
+      <PlayersImageGallery
         players={match.getOwnPlayerModels()}
         user={this.props.user}
         competition={team.competition}
@@ -226,50 +223,3 @@ export default class MatchCard extends Component {
     );
   }
 }
-
-
-
-const gridStyles = {
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-  },
-  gridList: {
-    width: '100%',
-    height: '100%',
-    overflowY: 'auto',
-    marginBottom: -8
-  },
-};
-
-const PlayersImageWidth = 200;
-const PlayersGallery = ({players, user, competition, viewport}) => (
-  <div style={gridStyles.root}>
-    <GridList
-      cellHeight={200}
-      cols={Math.floor(viewport.width / PlayersImageWidth)}
-      style={gridStyles.gridList}>
-      {players.map(ply => {
-        var comp = ply.getCompetition(competition);
-        return (
-          <GridTile
-            key={ply.id}
-            title={<span><span>{ply.name}</span> <small>{comp ? comp.ranking : '??'}</small></span>}
-            subtitle={user.playerId ? <Telephone number={ply.contact.mobile} /> : <PlayerPlayingStyle ply={ply} />}>
-            <PlayerImage playerId={ply.id} />
-          </GridTile>
-        );
-      })}
-    </GridList>
-  </div>
-);
-
-const PlayerPlayingStyle = ({ply}) => (
-  <span>{ply.style.name}<br />{ply.style.bestStroke}</span>
-);
-
-
-const PlayerImage = ({playerId}) => (
-  <img src={'/img/players/' + playerId + '.jpg'} />
-);
