@@ -43,7 +43,11 @@ export default class MatchScore extends Component {
 
     var classColor = this.props.match.isDerby ? getClassName(matchOutcome.Won) : getClassName(match.scoreType);
     return (
-      <span className={cn('match-score label label-as-badge', classColor)} title={title}>
+      <span
+        className={cn('match-score label label-as-badge', classColor)}
+        title={title}
+        style={{position: 'absolute', top: 14, right: 0, marginRight: 7}}>
+
         {text}
         {match.score.home + ' - ' + match.score.out}
       </span>
