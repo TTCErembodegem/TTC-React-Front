@@ -2,6 +2,7 @@ import * as ActionTypes from './ActionTypes.js';
 import http from '../utils/httpClient.js';
 import { util as storeUtil } from '../store.js';
 import initialLoad from './initialLoad.js';
+import { showSnackbar } from './configActions.js';
 
 import trans from '../locales.js';
 
@@ -96,8 +97,10 @@ export function changePassword(creds) {
       .then(function(data) {
         if (!data) {
           dispatch(passwordChangedFailed(playerName));
+          dispatch(showSnackbar(trans('changePassword.fail')));
         } else {
           dispatch(passwordChanged(playerName));
+          dispatch(showSnackbar(trans('changePassword.success')));
         }
       }, function(err) {
         dispatch(passwordChangedFailed(playerName));
@@ -111,9 +114,11 @@ export function newPassword(creds) {
     return http.post('/users/NewPassword', creds)
       .then(function(data) {
         if (!data) {
-          dispatch(passwordNewNeededSuccess);
-        } else {
           dispatch(passwordNewNeededFailed);
+          dispatch(showSnackbar(trans('changePassword.newPasswordFail')));
+        } else {
+          dispatch(passwordNewNeededSuccess);
+          dispatch(showSnackbar(trans('changePassword.newPasswordSuccess')));
         }
       }, function(err) {
         dispatch(passwordNewNeededFailed);

@@ -51,8 +51,8 @@ export default {
       changePasswordButton: 'Wijzig Paswoord',
       NewPasswordButton: 'Paswoord vergeten?',
       logoutButton: 'Uitloggen',
-      success: 'Paswoord succesvol gewijzigd voor ${}',
-      fail: 'Paswoord wijzigen is mislukt voor ${}',
+      success: 'Paswoord succesvol gewijzigd',
+      fail: 'Paswoord wijzigen is mislukt',
       newPasswordSuccess: 'Nieuw paswoord succesvol verstuurd',
       newPasswordFail: 'Nieuw paswoord versturen is mislukt'
     },

@@ -78,7 +78,7 @@ export default class ChangePassword extends Component {
 
         <RaisedButton
           label={this.context.t('changePassword.NewPasswordButton')}
-          primary={true}
+          primary={false}
           style={{marginTop: 15}}
           onClick={::this._onNewPasswordNeeded}
           disabled={!this.state.playerId} />
