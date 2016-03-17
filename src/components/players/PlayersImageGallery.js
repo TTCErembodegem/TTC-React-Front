@@ -125,6 +125,7 @@ export default class PlayersImageGallery extends Component {
             onRequestClose={::this._closeStyle}>
 
             <AutoComplete
+              style={{marginTop: -25}}
               filter={AutoComplete.fuzzyFilter}
               onNewRequest={::this._changeStyle}
               onUpdateInput={::this._changeStyle}
@@ -136,8 +137,8 @@ export default class PlayersImageGallery extends Component {
             <br />
 
             <TextField
+              style={{marginBottom: -25}}
               floatingLabelText={t('players.editStyle.bestStroke')}
-
               type="text"
               value={newStyle.bestStroke}
               onChange={::this._changeBestStroke} />
