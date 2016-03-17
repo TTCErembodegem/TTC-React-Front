@@ -13,3 +13,5 @@ export default function matches(state = Immutable.List([]), action = null) {
     return state;
   }
 }
+
+// readonlyMatches reducer is in ./reducers.js
