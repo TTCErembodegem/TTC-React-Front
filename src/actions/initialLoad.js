@@ -44,7 +44,6 @@ export default function() {
         if (!team.ranking || team.ranking.length === 0) {
           http.get('/teams/Ranking', {teamId: team.id})
             .then(function(newTeam) {
-              console.log('newTeam', newTeam);
               dispatch(teamsLoaded(newTeam));
             }, function(err) {
               console.error(err); // eslint-disable-line

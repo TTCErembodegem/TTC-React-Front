@@ -7,6 +7,7 @@ import MatchModel from '../../../models/MatchModel.js';
 
 import Table from 'react-bootstrap/lib/Table';
 import OpponentPlayer from './OpponentPlayer.js';
+import Spinner from '../../controls/Spinner.js';
 
 const AmountOfOpponentMatchesToShow = 5;
 
@@ -31,6 +32,10 @@ export default class OpponentsLastMatches extends Component {
       .sort((a, b) => a.date.isBefore(b.date) ? 1 : -1)
       .filter(match => match.score)
       .take(AmountOfOpponentMatchesToShow);
+
+    if (matches.size === 0) {
+      return <div className="match-card-tab-content"><h3><Spinner /></h3></div>;
+    }
 
     return (
       <Table condensed className="match-card-tab-table">

@@ -17,6 +17,7 @@ import OpponentsLastMatches from './OpponentsLastMatches.js';
 import OpponentsFormation from './OpponentsFormation.js';
 import MatchReport from './MatchReport.js';
 import Scoresheet from './Scoresheet.js';
+import Spinner from '../../controls/Spinner.js';
 
 import Icon from '../../controls/Icon.js';
 import PlayersImageGallery from '../../players/PlayersImageGallery.js';
@@ -46,7 +47,7 @@ const tabEventKeys = {
     user: state.user,
     // players: state.players,
     // clubs: state.clubs,
-    // matches: state.matches,
+    readonlyMatches: state.readonlyMatches,
     // teams: state.teams,
   };
 }, matchActions)
@@ -57,6 +58,7 @@ export default class MatchCard extends Component {
     user: PropTypes.instanceOf(UserModel).isRequired,
     getLastOpponentMatches: PropTypes.func.isRequired,
     viewport: PropTypes.object.isRequired,
+    readonlyMatches: PropTypes.object.isRequired,
   }
 
   constructor(props) {
@@ -187,6 +189,11 @@ export default class MatchCard extends Component {
     var formations = storeUtils.matches
       .getFormation(this.props.match)
       .sort((a, b) => a.count < b.count ? 1 : -1);
+
+    if (formations.length === 0) {
+      return <div className="match-card-tab-content"><h3><Spinner /></h3></div>;
+    }
+
     return <OpponentsFormation formations={formations} />;
   }
   _renderScoreSheet() {
