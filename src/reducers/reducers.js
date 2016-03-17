@@ -47,9 +47,7 @@ export function clubs(state = Immutable.List([]), action = null) {
   const {type, payload} = action;
   switch (type) {
   case ActionTypes.CLUBS_LOADED:
-    var result = payload.map(x => new ClubModel(x));
-    console.log('CLUBS_LOADED', result[0]); // eslint-disable-line
-    return Immutable.List(result);
+    return immutableHelpers.merge(state, payload, x => new ClubModel(x));
   default:
     return state;
   }
@@ -59,9 +57,7 @@ export function teams(state = Immutable.List([]), action = null) {
   const {type, payload} = action;
   switch (type) {
   case ActionTypes.TEAMS_LOADED:
-    var result = payload.map(x => new TeamModel(x));
-    console.log('TEAMS_LOADED', result[0]); // eslint-disable-line
-    return Immutable.List(result);
+    return immutableHelpers.merge(state, payload, x => new TeamModel(x));
   default:
     return state;
   }
