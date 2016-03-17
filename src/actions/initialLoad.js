@@ -21,22 +21,6 @@ function teamsLoaded(data) {
     payload: data
   };
 }
-function loadFrenoyTeamRanking(dispatch, teamId) {
-  return http.get('/teams/Ranking', {teamId})
-    .then(function(data) {
-      dispatch(teamsLoaded(data));
-
-    }, function(err) {
-      console.error(err); // eslint-disable-line
-    });
-}
-function afterInitialTeamLoad(dispatch, data) {
-  data.forEach(team => {
-    if (!team.ranking || team.ranking.length === 0) {
-      dispatch(loadFrenoyTeamRanking(dispatch, team.id));
-    }
-  });
-}
 
 
 export default function() {
@@ -48,18 +32,32 @@ export default function() {
         .then(function(data) {
           dispatch(loadedAction(data));
           if (callback) {
-            callback(dispatch, data);
+            callback(data);
           }
         }, function(err) {
           console.error(err); // eslint-disable-line
         });
     }
 
+    function afterInitialTeamLoadCallback(data) {
+      data.forEach(team => {
+        if (!team.ranking || team.ranking.length === 0) {
+          http.get('/teams/Ranking', {teamId: team.id})
+            .then(function(newTeam) {
+              console.log('newTeam', newTeam);
+              dispatch(teamsLoaded(newTeam));
+            }, function(err) {
+              console.error(err); // eslint-disable-line
+            });
+        }
+      });
+    }
+
     return Promise.all([
       initialRequest('/players', playersLoaded),
       initialRequest('/clubs', clubsLoaded),
       initialRequest('/matches/GetRelevantMatches', matchesLoaded),
-      initialRequest('/teams', teamsLoaded, afterInitialTeamLoad),
+      initialRequest('/teams', teamsLoaded, afterInitialTeamLoadCallback),
     ]).then(() => dispatch(initialLoadCompleted()));
   };
 }
