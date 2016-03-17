@@ -5,15 +5,25 @@ import thunk from 'redux-thunk';
 
 import rootReducer from './reducers';
 
-const finalCreateStore = compose(
-  applyMiddleware(createLogger({collapsed: true})),
-  applyMiddleware(thunk),
-  devTools(),
-)(createStore);
+var finalCreateStore;
+if (DEBUG) {
+  console.log('finalCreateStore DEBUG');
+  finalCreateStore = compose(
+    applyMiddleware(createLogger({collapsed: true})),
+    applyMiddleware(thunk),
+    devTools(),
+  )(createStore);
+} else {
+  console.log('finalCreateStore NODEBUG');
+  finalCreateStore = compose(
+    applyMiddleware(thunk),
+  )(createStore);
+}
 
 const store = finalCreateStore(rootReducer);
 
 if (module.hot) {
+  console.log('finalCreateStore is HOT');
   // Enable Webpack hot module replacement for reducers
   module.hot.accept('./reducers', () => {
     const nextRootReducer = require('./reducers');

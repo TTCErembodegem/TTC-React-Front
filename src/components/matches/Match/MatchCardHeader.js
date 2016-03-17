@@ -93,9 +93,10 @@ export default class MatchCardHeader extends Component {
     return (<span>{team.competition} {team.teamCode}</span>);
   }
   _renderOwnTeamPosition(team) {
+    var ranking = team.getDivisionRanking();
     return (
       <span className="label label-as-badge label-info" style={{marginLeft: 5, marginRight: 5, paddingTop: 25}}>
-        {team.getDivisionRanking().position}
+        {ranking ? ranking.position : '?'}
       </span>
     );
   }
@@ -109,6 +110,8 @@ export default class MatchCardHeader extends Component {
     var ranking = match.getTeam().getDivisionRanking(club.id, match.opponent.teamCode);
     if (!ranking) {
       // TODO: check what is going on here? Galmaarden E heeft algemeen forfait gegeven ofzo?
+      // --> Dit gaat nu sowieso het geval zijn omdat deze in een aparte request komen...
+      // --> of die mss 10u cachen?
       // console.log('_renderOpponentPosition', club.id, match.opponent.teamCode);
       // console.log('_renderOpponentPosition', match.getTeam());
       // console.log('_renderOpponentPosition', match);
