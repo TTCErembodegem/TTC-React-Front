@@ -1,13 +1,8 @@
 import * as ActionTypes from './ActionTypes.js';
 import http from '../utils/httpClient.js';
 import { loaded as matchesLoaded } from './matchActions.js';
+import { loaded as playersLoaded } from './playerActions.js';
 
-function playersLoaded(data) {
-  return {
-    type: ActionTypes.PLAYERS_LOADED,
-    payload: data
-  };
-}
 function clubsLoaded(data) {
   return {
     type: ActionTypes.CLUBS_LOADED,

@@ -37,9 +37,7 @@ export function players(state = Immutable.List([]), action = null) {
   const {type, payload} = action;
   switch (type) {
   case ActionTypes.PLAYERS_LOADED:
-    var result = payload.map(x => new PlayerModel(x));
-    console.log('PLAYERS_LOADED', result[0]); // eslint-disable-line
-    return Immutable.List(result);
+    return immutableHelpers.merge(state, payload, x => new PlayerModel(x));
   default:
     return state;
   }

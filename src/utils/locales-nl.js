@@ -12,6 +12,10 @@ export default {
     facts: '/weetjes'
   },
   trans: {
+    modal: {
+      cancel: 'Annuleren',
+      submit: 'Bewaren',
+    },
     fullClubName: 'TTC Erembodegem',
     clubName: 'Erembodegem',
     nav: {
@@ -65,9 +69,20 @@ export default {
       vttl: 'VTTL',
       sporta: 'Sporta',
       style: 'Stijl',
+      styles: {
+        attacker: 'Aanvaller',
+        defender: 'Verdediger',
+        allRounder: 'All-rounder',
+      },
       bestStroke: 'Beste slag',
       ranking: 'Klassement',
-      value: 'Waarde'
+      value: 'Waarde',
+      editStyle: {
+        title: 'Editeer speelstijl ${}',
+        bestStroke: 'Beste, meest verassende slag',
+        style: 'Speelstijl',
+        saved: '${} bewaard',
+      },
     },
     match: {
       todayMatches: 'vandaag',
