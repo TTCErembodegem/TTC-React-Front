@@ -82,6 +82,7 @@ export default {
         bestStroke: 'Beste, meest verassende slag',
         style: 'Speelstijl',
         saved: 'Speelstijl ${ply} aangepast',
+        saveFailed: 'Oepsie! Mislukt...',
       },
     },
     match: {

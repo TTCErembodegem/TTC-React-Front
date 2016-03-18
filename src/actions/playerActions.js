@@ -21,7 +21,7 @@ export function updateStyle(player, newStyle) {
           dispatch(loaded(data));
         }
       }, function(err) {
-        dispatch(showSnackbar('Oepsie! Mislukt...'));
+        dispatch(showSnackbar('players.editStyle.saveFailed'));
         console.log('UpdateStyle!', err); // eslint-disable-line
       });
   };
