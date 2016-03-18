@@ -37,6 +37,9 @@ export const util = {
   getUser() {
     return store.getState().user;
   },
+  getUserPlayer() {
+    return util.getPlayer(util.getUser().playerId);
+  },
 
   getTeam(teamId) {
     const teams = store.getState().teams;

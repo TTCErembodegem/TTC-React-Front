@@ -78,10 +78,10 @@ export default {
       ranking: 'Klassement',
       value: 'Waarde',
       editStyle: {
-        title: 'Editeer speelstijl ${}',
+        title: 'Speelstijl ${}',
         bestStroke: 'Beste, meest verassende slag',
         style: 'Speelstijl',
-        saved: '${} bewaard',
+        saved: 'Speelstijl ${ply} aangepast',
       },
     },
     match: {

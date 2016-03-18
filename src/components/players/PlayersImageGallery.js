@@ -120,6 +120,7 @@ export default class PlayersImageGallery extends Component {
           <Dialog
             title={t('players.editStyle.title', selectedPlayer.alias)}
             actions={changeStyleModalActions}
+            bodyStyle={{minHeight: 119}}
             modal={false}
             open={!!this.state.editingStyle}
             onRequestClose={::this._closeStyle}>

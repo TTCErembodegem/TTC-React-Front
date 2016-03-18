@@ -157,7 +157,7 @@ const Loading = ({t, bigScreen}) => (
 
     <div style={{position: 'absolute', top: 5, width: 310, margin: 'auto'}}>
       <div style={{width: 310, textAlign: 'center', color: 'white'}}>
-        <Typist cursor={{show: false}} startDelay={1500}>{t('intro.loading')}</Typist>
+        <Typist cursor={{show: false}} startDelay={0}>{t('intro.loading')}</Typist>
       </div>
     </div>
   </div>
