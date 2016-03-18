@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { connect } from 'react-redux';
+import { Link, browserHistory } from 'react-router';
 import { contextTypes } from '../../utils/decorators/withContext.js';
 
 import * as loginActions from '../../actions/userActions.js';
@@ -35,7 +36,8 @@ export default class Login extends Component {
   }
 
   render() {
-    var paperStyle = {
+    const t = this.context.t;
+    const paperStyle = {
       height: 310,
       width: 320,
       margin: 20,
@@ -46,6 +48,11 @@ export default class Login extends Component {
     return (
       <Paper zDepth={1} style={paperStyle}>
         <h3>Profiel</h3>
+
+        <RaisedButton label={t('nav.changePassword')}
+          style={{marginTop: 15}} onClick={() => browserHistory.push(t.route('changePassword'))} />
+
+        <br />
 
         <RaisedButton
           label={this.context.t('login.logoutButton')}

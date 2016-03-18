@@ -18,9 +18,6 @@ import Paper from 'material-ui/lib/paper';
     config: state.config,
     user: state.user,
     players: state.players,
-    // clubs: state.clubs,
-    // matches: state.matches,
-    // teams: state.teams,
   };
 }, loginActions)
 export default class Login extends Component {
@@ -40,9 +37,9 @@ export default class Login extends Component {
   }
 
   render() {
-    var t = this.context.t;
-    var paperStyle = {
-      height: 380,
+    const t = this.context.t;
+    const paperStyle = {
+      height: 290,
       width: 290,
       margin: 20,
       textAlign: 'center',
@@ -50,28 +47,25 @@ export default class Login extends Component {
     };
     return (
       <Paper zDepth={1} style={paperStyle}>
-        <h3>{this.context.t('login.title')}</h3>
-        <span>{this.context.t('login.introText')}</span>
+        <h3>{t('login.title')}</h3>
+        <span>{t('login.introText')}</span>
         <PlayerAutoComplete
           players={this.props.players}
           selectPlayer={::this._onSelectPlayer}
-          floatingLabelText={this.context.t('login.loginName')} />
+          floatingLabelText={t('login.loginName')} />
 
         <TextField
-          floatingLabelText={this.context.t('login.password')}
-          hintText={this.context.t('login.passwordHint')}
+          floatingLabelText={t('login.password')}
+          hintText={t('login.passwordHint')}
           type="password"
           onChange={::this._onPasswordChange} />
 
         <RaisedButton
-          label={this.context.t('login.loginButton')}
+          label={t('login.loginButton')}
           primary={true}
           style={{marginTop: 15}}
           onClick={::this._onLogin}
           disabled={!this.state.playerId} />
-        <br />
-        <RaisedButton label={t('nav.changePassword')} primary={true}
-          style={{marginTop: 15}} onClick={() => browserHistory.push(t.route('changePassword'))} />
       </Paper>
     );
   }

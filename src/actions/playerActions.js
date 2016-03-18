@@ -21,7 +21,7 @@ export function updateStyle(player, newStyle) {
           dispatch(loaded(data));
         }
       }, function(err) {
-        dispatch(showSnackbar('players.editStyle.saveFailed'));
+        dispatch(showSnackbar('common.apiFail'));
         console.log('UpdateStyle!', err); // eslint-disable-line
       });
   };
