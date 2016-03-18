@@ -18,6 +18,8 @@ export function config(state = Immutable.Map({initialLoadCompleted: false}), act
     return state.set('snackbar', payload);
   case ActionTypes.CLEAR_SNACKBAR:
     return state.remove('snackbar');
+  case ActionTypes.SET_SETTING:
+    return state.set(payload.key, payload.value);
   default:
     return state;
   }

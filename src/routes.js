@@ -8,6 +8,7 @@ import ChangePassword from './components/users/ChangePassword.js';
 import Profile from './components/users/Profile.js';
 import Links from './components/other/Links.js';
 import Matches from './components/matches/Matches.js';
+import MatchesToday from './components/matches/MatchesToday.js';
 import RoutedMatchCard from './components/matches/Match/RoutedMatchCard.js';
 import Facts from './components/other/Facts.js';
 
@@ -22,6 +23,7 @@ const Routes = () => (
       <Route path={t.route('profile')} component={Profile} />
       <Route path={t.route('links')} component={Links} />
       <Route path={t.route('matches')} component={Matches} />
+      <Route path={t.route('matchesToday')} component={MatchesToday} />
       <Route path={t.route('facts')} component={Facts} />
       <Route path={t.route('match')} component={RoutedMatchCard}/>
       <Route path="*" component={Matches}/>

@@ -59,6 +59,10 @@ export default class MatchCard extends Component {
     getLastOpponentMatches: PropTypes.func.isRequired,
     viewport: PropTypes.object.isRequired,
     readonlyMatches: PropTypes.object.isRequired,
+    viewportWidthContainerCount: PropTypes.number.isRequired,
+  }
+  static defaultProps = {
+    viewportWidthContainerCount: 1 // The amount of containers next to eachother that display a PlayersImageGallery
   }
 
   constructor(props) {
@@ -218,7 +222,14 @@ export default class MatchCard extends Component {
 
     if (match.players.size === 0 || !this.props.user.playerId) {
       let standardPlayers = team.getPlayers('standard').map(ply => ply.player);
-      return <PlayersImageGallery players={standardPlayers} user={this.props.user} competition={team.competition} viewport={this.props.viewport} />;
+      return (
+        <PlayersImageGallery
+          players={standardPlayers}
+          user={this.props.user}
+          competition={team.competition}
+          viewport={this.props.viewport}
+          viewportWidthContainerCount={this.props.viewportWidthContainerCount} />
+      );
     }
 
     return (
@@ -226,7 +237,8 @@ export default class MatchCard extends Component {
         players={match.getOwnPlayerModels()}
         user={this.props.user}
         competition={team.competition}
-        viewport={this.props.viewport} />
+        viewport={this.props.viewport}
+        viewportWidthContainerCount={this.props.viewportWidthContainerCount} />
     );
   }
 }

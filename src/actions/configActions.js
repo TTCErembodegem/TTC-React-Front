@@ -15,3 +15,10 @@ export function showSnackbar(msg) {
     payload: msg
   };
 }
+
+export function setSetting(key, value) {
+  return {
+    type: ActionTypes.SET_SETTING,
+    payload: {key, value}
+  };
+}

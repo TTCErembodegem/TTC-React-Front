@@ -2,19 +2,20 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { devTools } from 'redux-devtools';
 import createLogger from 'redux-logger';
 import thunk from 'redux-thunk';
+import moment from 'moment';
 
 import rootReducer from './reducers';
 
 var finalCreateStore;
 if (DEBUG) {
-  console.log('finalCreateStore DEBUG');
+  //console.log('finalCreateStore DEBUG');
   finalCreateStore = compose(
     applyMiddleware(createLogger({collapsed: true})),
     applyMiddleware(thunk),
     devTools(),
   )(createStore);
 } else {
-  console.log('finalCreateStore NODEBUG');
+  //console.log('finalCreateStore NODEBUG');
   finalCreateStore = compose(
     applyMiddleware(thunk),
   )(createStore);
@@ -23,7 +24,7 @@ if (DEBUG) {
 const store = finalCreateStore(rootReducer);
 
 if (module.hot) {
-  console.log('finalCreateStore is HOT');
+  //console.log('finalCreateStore is HOT');
   // Enable Webpack hot module replacement for reducers
   module.hot.accept('./reducers', () => {
     const nextRootReducer = require('./reducers');
@@ -62,6 +63,11 @@ export const util = {
   },
 
   matches: {
+    getTodayMatches() {
+      const matches = store.getState().matches;
+      var today = moment();
+      return matches.filter(cal => cal.date.isSame(today, 'day')); // TODO: put this back in action afterwards :)
+    },
     getFromOpponent(opponent) {
       const matches = store.getState().readonlyMatches;
       var result = matches.filter(m => (m.home.clubId === opponent.clubId && m.home.teamCode === opponent.teamCode) ||
