@@ -7,7 +7,7 @@ export default class PlayerModel {
     this.name = json.name;
     this.sporta = json.sporta;
     this.vttl = json.vttl;
-    this.style = json.style;
+    this.style = json.style || {};
   }
 
   getCompetition(competition) {

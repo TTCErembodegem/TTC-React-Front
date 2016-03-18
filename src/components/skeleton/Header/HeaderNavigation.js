@@ -27,7 +27,7 @@ class Navigation extends Component {
   }
 
   render() {
-    var t = this.context.t;
+    const t = this.context.t;
     return (
       <LeftNav open={this.props.navOpen} width={200}>
         <MenuItem onTouchTap={this._goto.bind(this, t.route('matches'))}>{t('nav.matches')}</MenuItem>

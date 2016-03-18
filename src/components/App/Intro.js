@@ -175,10 +175,10 @@ class TodaysEvents extends Component {
   };
 
   render() {
-    var t = this.context.t;
+    const t = this.context.t;
 
-    var today = moment();
-    var matchesToday = this.props.matches.filter(cal => cal.date.isSame(today, 'day'));
+    const today = moment();
+    const matchesToday = this.props.matches.filter(cal => cal.date.isSame(today, 'day'));
     if (matchesToday.size) {
       return (
         <div>
@@ -196,7 +196,7 @@ class TodaysEvents extends Component {
       trainingEvent = <Strike text={t('intro.trainingToday')} />;
     }
 
-    var lastPlayedMatches = this.props.matches
+    const lastPlayedMatches = this.props.matches
       .filter(cal => cal.date.isBefore(today, 'day'))
       .sort((a, b) => b.date - a.date)
       .take(2);
