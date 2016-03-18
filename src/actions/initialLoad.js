@@ -30,9 +30,11 @@ export default function() {
     function initialRequest(url, loadedAction, callback) {
       return http.get(url)
         .then(function(data) {
-          dispatch(loadedAction(data));
+          if (loadedAction) {
+            dispatch(loadedAction(data));
+          }
           if (callback) {
-            callback(data);
+            callback(data, dispatch);
           }
         }, function(err) {
           console.error(err); // eslint-disable-line
@@ -55,7 +57,7 @@ export default function() {
     return Promise.all([
       initialRequest('/players', playersLoaded),
       initialRequest('/clubs', clubsLoaded),
-      initialRequest('/matches/GetRelevantMatches', matchesLoaded),
+      initialRequest('/matches/GetRelevantMatches', null, matchesLoaded),
       initialRequest('/teams', teamsLoaded, afterInitialTeamLoadCallback),
     ]).then(() => dispatch(initialLoadCompleted()));
   };
