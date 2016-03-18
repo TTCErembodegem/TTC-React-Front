@@ -3,7 +3,6 @@ import http from '../utils/httpClient.js';
 import { util as storeUtil } from '../store.js';
 import initialLoad from './initialLoad.js';
 import { showSnackbar } from './configActions.js';
-import { Link, browserHistory } from 'react-router';
 
 import trans from '../locales.js';
 
