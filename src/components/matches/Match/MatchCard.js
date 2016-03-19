@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import { contextTypes } from '../../../utils/decorators/withContext.js';
 import withViewport from '../../../utils/decorators/withViewport.js';
+import moment from 'moment';
 
 import UserModel from '../../../models/UserModel.js';
 import MatchModel from '../../../models/MatchModel.js';
@@ -16,6 +17,7 @@ import SelectPlayersForm from './SelectPlayersForm.js';
 import OpponentsLastMatches from './OpponentsLastMatches.js';
 import OpponentsFormation from './OpponentsFormation.js';
 import MatchReport from './MatchReport.js';
+import MatchForm from './MatchForm.js';
 import Scoresheet from './Scoresheet.js';
 import Spinner from '../../controls/Spinner.js';
 
@@ -204,7 +206,17 @@ export default class MatchCard extends Component {
     return (<Scoresheet match={this.props.match} t={this.context.t} />);
   }
   _renderReport() {
-    return <MatchReport match={this.props.match} t={this.context.t} user={this.props.user} />;
+    var matchForm;
+    if (this.props.match.date.isSame(moment(), 'd') && this.props.user.canChangeMatchScore(this.props.match.id)) {
+      matchForm = <MatchForm match={this.props.match} t={this.context.t} />;
+    }
+
+    return (
+      <div style={{marginLeft: 20, marginTop: 20, marginRight: 20}}>
+        {matchForm}
+        <MatchReport match={this.props.match} t={this.context.t} user={this.props.user} />
+      </div>
+    );
   }
 
 

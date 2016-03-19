@@ -9,15 +9,15 @@ import _ from 'lodash';
 //import MatchModel from '../models/MatchModel.js';
 
 export function loaded(data, dispatch) {
+  if (!data) {
+    return;
+  }
+
   var dispatchLoad = loadedOnes => dispatch({
     type: ActionTypes.MATCHES_LOADED,
     payload: loadedOnes
   });
   dispatchLoad(data);
-
-  if (!data) {
-    return;
-  }
 
   if (!_.isArray(data)) {
     data = [data];
@@ -34,6 +34,7 @@ export function loaded(data, dispatch) {
     }
 
     if (match.isHomeMatch !== null && moment(match.date).month() < 9) {
+      // TODO: do not call if already in store
       http.get('/matches/GetFirstRoundMatch', {matchId: match.id})
         .then(function(newmatch) {
           dispatchLoad(newmatch);
@@ -90,6 +91,19 @@ export function selectPlayer(matchId, playerId) {
 
       }, function(err) {
         console.log('TogglePlayer!', err); // eslint-disable-line
+      }
+    );
+  };
+}
+
+export function updateScore(matchScore) {
+  return dispatch => {
+    return http.post('/matches/UpdateScore', matchScore)
+      .then(function(data) {
+        loaded(data, dispatch);
+
+      }, function(err) {
+        console.log('UpdateScore!', err); // eslint-disable-line
       }
     );
   };

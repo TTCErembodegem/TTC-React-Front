@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import moment from 'moment';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import { util as storeUtil } from '../../store.js';
 
@@ -39,11 +39,10 @@ export default class MatchesToday extends Component {
 
   render() {
     var matchesToday = storeUtil.matches.getTodayMatches();
-
     return (
       <div>
-        {this._renderMatches(matchesToday.take(2))}
-        {matchesToday.size > 2 ? this._renderMatches(matchesToday.skip(2)) : null}
+        {this._renderMatches(_.take(matchesToday.toArray(), 2))}
+        {matchesToday.size > 2 ? this._renderMatches(matchesToday.shift().shift()) : null}
       </div>
     );
   }

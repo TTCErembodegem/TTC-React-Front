@@ -57,7 +57,7 @@ export default class MatchCardHeader extends Component {
           showExpandableButton={false}
           actAsExpander={!this.props.isOpen}
           avatar={iPlay && !this.props.isOpen ? <FavoriteMatch /> : null}>
-          <MatchScore match={match} />
+          <MatchScore match={match} style={{position: 'absolute', top: 14, right: 0, marginRight: 7, fontSize: 16, marginLeft: 12, float: 'right'}} />
         </CardHeader>
         {this.props.children}
       </Card>
