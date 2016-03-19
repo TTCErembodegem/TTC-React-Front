@@ -70,7 +70,7 @@ export default class App extends Component {
       display: 'inline-block'
     };
 
-    const showTopSponsors = this.props.viewport.width > 500;
+    const showTopSponsors = this.props.viewport.width > 800;
     var topSponsors;
     if (showTopSponsors) {
       const topSponsorPaperStyle = {
@@ -112,7 +112,7 @@ export default class App extends Component {
             {!this.props.config.get('initialLoadCompleted') ? <Loading t={this.context.t} bigScreen={this.props.viewport.width > 768} /> : <TodaysEvents {...this.props} />}
           </Col>
         </Row>
-        {this.props.viewport.width > 1000 ? (
+        {this.props.viewport.width > 800 ? (
           <Row style={{marginTop: 25, marginBottom: 15}}>
             <div style={{width: 850, margin: 'auto'}}>
               <Paper style={bottomSponsorsStyle}>
@@ -138,6 +138,27 @@ export default class App extends Component {
             <Col style={{marginTop: 20}}>
               <Paper style={topSponsorsOnBottomPaperStyle}>
                 <Location loc={slagerijGuy} t={this.context.t} />
+              </Paper>
+            </Col>
+            <Col style={{marginTop: 20}}>
+              <Paper style={topSponsorsOnBottomPaperStyle}>
+                <a href="http://www.tkleinoffer.be/" target="_blank">
+                  <img style= {{height: 100, width: 200}} src="/img/sponsors/tkleinoffer.png" />
+                </a>
+              </Paper>
+            </Col>
+            <Col style={{marginTop: 20}}>
+              <Paper style={topSponsorsOnBottomPaperStyle}>
+                <a href="http://vdhkeukens.be/" target="_blank">
+                  <img style= {{height: 100, width: 200}}  src="/img/sponsors/vdhkeukens.png" />
+                </a>
+              </Paper>
+            </Col>
+            <Col style={{marginTop: 20}}>
+              <Paper style={topSponsorsOnBottomPaperStyle}>
+                <a href="http://www.doopsuikersymphony.be/" target="_blank">
+                  <img style= {{height: 100, width: 200}} src="/img/sponsors/symphony.jpg" />
+                </a>
               </Paper>
             </Col>
           </Row>
