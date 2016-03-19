@@ -75,14 +75,14 @@ export default class App extends Component {
     if (showTopSponsors) {
       const topSponsorPaperStyle = {
         height: 100,
-        width: 220,
+        width: 230,
         padding: 15,
         display: 'inline-block',
       };
 
       topSponsors = (
         <Row style={{marginTop: 10}}>
-          <div style={{width: 450, margin: 'auto'}}>
+          <div style={{width: 460, margin: 'auto'}}>
             <Paper style={topSponsorPaperStyle}>
               <Location loc={bakkerijVanLierde} t={this.context.t} />
             </Paper>
