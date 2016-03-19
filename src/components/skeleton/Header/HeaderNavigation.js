@@ -1,15 +1,30 @@
 import React, { Component, PropTypes } from 'react';
 import { browserHistory } from 'react-router';
-import enhanceWithClickOutside from 'react-click-outside';
 import { contextTypes } from '../../../utils/decorators/withContext.js';
+import { connect } from 'react-redux';
+import { util as storeUtil } from '../../../store.js';
+import moment from 'moment';
 
+import enhanceWithClickOutside from 'react-click-outside';
 import LeftNav from 'material-ui/lib/left-nav';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import Divider from 'material-ui/lib/divider';
+import Badge from 'material-ui/lib/badge';
 
+@connect(state => {
+  return {
+    //config: state.config,
+    //user: state.user,
+    // players: state.players,
+    // clubs: state.clubs,
+    matches: state.matches,
+    // teams: state.teams
+  };
+})
 class Navigation extends Component {
   static contextTypes = contextTypes;
   static propTypes = {
+    matches: PropTypes.object.isRequired,
     toggleNav: PropTypes.func.isRequired,
     navOpen: PropTypes.bool.isRequired,
     isNavOpening: PropTypes.bool.isRequired,
@@ -27,10 +42,18 @@ class Navigation extends Component {
   }
 
   render() {
-    var t = this.context.t;
+    const t = this.context.t;
+    const matchesToday = storeUtil.matches.getTodayMatches();
+
     return (
       <LeftNav open={this.props.navOpen} width={200}>
         <MenuItem onTouchTap={this._goto.bind(this, t.route('matches'))}>{t('nav.matches')}</MenuItem>
+        {matchesToday.size ? (
+          <MenuItem onTouchTap={this._goto.bind(this, t.route('matchesToday'))} style={{}}>
+            {t('nav.matchesToday')}
+            <Badge badgeContent={matchesToday.size} secondary={true} badgeStyle={{padding: 0, top: 5, left: 5}} />
+          </MenuItem>
+        ) : null}
         <MenuItem onTouchTap={this._goto.bind(this, t.route('players'))}>{t('nav.players')}</MenuItem>
         <Divider />
         <MenuItem onTouchTap={this._goto.bind(this, t.route('links'))}>{t('nav.links')}</MenuItem>

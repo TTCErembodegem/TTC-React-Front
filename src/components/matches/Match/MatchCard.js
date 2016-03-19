@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import { contextTypes } from '../../../utils/decorators/withContext.js';
 import withViewport from '../../../utils/decorators/withViewport.js';
+import moment from 'moment';
 
 import UserModel from '../../../models/UserModel.js';
 import MatchModel from '../../../models/MatchModel.js';
@@ -16,7 +17,9 @@ import SelectPlayersForm from './SelectPlayersForm.js';
 import OpponentsLastMatches from './OpponentsLastMatches.js';
 import OpponentsFormation from './OpponentsFormation.js';
 import MatchReport from './MatchReport.js';
+import MatchForm from './MatchForm.js';
 import Scoresheet from './Scoresheet.js';
+import Spinner from '../../controls/Spinner.js';
 
 import Icon from '../../controls/Icon.js';
 import PlayersImageGallery from '../../players/PlayersImageGallery.js';
@@ -46,7 +49,7 @@ const tabEventKeys = {
     user: state.user,
     // players: state.players,
     // clubs: state.clubs,
-    // matches: state.matches,
+    readonlyMatches: state.readonlyMatches,
     // teams: state.teams,
   };
 }, matchActions)
@@ -57,6 +60,11 @@ export default class MatchCard extends Component {
     user: PropTypes.instanceOf(UserModel).isRequired,
     getLastOpponentMatches: PropTypes.func.isRequired,
     viewport: PropTypes.object.isRequired,
+    readonlyMatches: PropTypes.object.isRequired,
+    viewportWidthContainerCount: PropTypes.number.isRequired,
+  }
+  static defaultProps = {
+    viewportWidthContainerCount: 1 // The amount of containers next to eachother that display a PlayersImageGallery
   }
 
   constructor(props) {
@@ -187,13 +195,28 @@ export default class MatchCard extends Component {
     var formations = storeUtils.matches
       .getFormation(this.props.match)
       .sort((a, b) => a.count < b.count ? 1 : -1);
+
+    if (formations.length === 0) {
+      return <div className="match-card-tab-content"><h3><Spinner /></h3></div>;
+    }
+
     return <OpponentsFormation formations={formations} />;
   }
   _renderScoreSheet() {
     return (<Scoresheet match={this.props.match} t={this.context.t} />);
   }
   _renderReport() {
-    return <MatchReport match={this.props.match} t={this.context.t} user={this.props.user} />;
+    var matchForm;
+    if (this.props.match.date.isSame(moment(), 'd') && this.props.user.canChangeMatchScore(this.props.match.id)) {
+      matchForm = <MatchForm match={this.props.match} t={this.context.t} />;
+    }
+
+    return (
+      <div style={{marginLeft: 20, marginTop: 20, marginRight: 20}}>
+        {matchForm}
+        <MatchReport match={this.props.match} t={this.context.t} user={this.props.user} />
+      </div>
+    );
   }
 
 
@@ -211,7 +234,14 @@ export default class MatchCard extends Component {
 
     if (match.players.size === 0 || !this.props.user.playerId) {
       let standardPlayers = team.getPlayers('standard').map(ply => ply.player);
-      return <PlayersImageGallery players={standardPlayers} user={this.props.user} competition={team.competition} viewport={this.props.viewport} />;
+      return (
+        <PlayersImageGallery
+          players={standardPlayers}
+          user={this.props.user}
+          competition={team.competition}
+          viewport={this.props.viewport}
+          viewportWidthContainerCount={this.props.viewportWidthContainerCount} />
+      );
     }
 
     return (
@@ -219,7 +249,8 @@ export default class MatchCard extends Component {
         players={match.getOwnPlayerModels()}
         user={this.props.user}
         competition={team.competition}
-        viewport={this.props.viewport} />
+        viewport={this.props.viewport}
+        viewportWidthContainerCount={this.props.viewportWidthContainerCount} />
     );
   }
 }

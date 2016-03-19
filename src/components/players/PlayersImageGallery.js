@@ -54,10 +54,14 @@ export default class PlayersImageGallery extends Component {
     competition: PropTypes.string.isRequired,
     viewport: PropTypes.object.isRequired,
     updateStyle: PropTypes.func.isRequired,
+    viewportWidthContainerCount: PropTypes.number.isRequired,
+  }
+  static defaultProps = {
+    viewportWidthContainerCount: 1 // The amount of containers next to eachother that display a PlayersImageGallery
   }
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       editingStyle: null,
       newStyle: {
@@ -89,15 +93,13 @@ export default class PlayersImageGallery extends Component {
         onTouchTap={::this._saveStyle} />,
     ];
     const selectedPlayer = this.state.editingStyle;
-    //console.log('selectedPlayer', selectedPlayer);
     const newStyle = this.state.newStyle;
-    //console.log('newStyle', newStyle);
 
     return (
       <div style={gridStyles.root}>
         <GridList
           cellHeight={200}
-          cols={Math.min(5, Math.floor(viewport.width / PlayersImageWidth))}
+          cols={Math.min(5, Math.floor((viewport.width / this.props.viewportWidthContainerCount) / PlayersImageWidth))}
           style={gridStyles.gridList}>
           {players.map(ply => {
             var comp = ply.getCompetition(competition);
@@ -120,11 +122,13 @@ export default class PlayersImageGallery extends Component {
           <Dialog
             title={t('players.editStyle.title', selectedPlayer.alias)}
             actions={changeStyleModalActions}
+            bodyStyle={{minHeight: 119}}
             modal={false}
             open={!!this.state.editingStyle}
             onRequestClose={::this._closeStyle}>
 
             <AutoComplete
+              style={{marginTop: -25}}
               filter={AutoComplete.fuzzyFilter}
               onNewRequest={::this._changeStyle}
               onUpdateInput={::this._changeStyle}
@@ -136,8 +140,8 @@ export default class PlayersImageGallery extends Component {
             <br />
 
             <TextField
+              style={{marginBottom: -25}}
               floatingLabelText={t('players.editStyle.bestStroke')}
-
               type="text"
               value={newStyle.bestStroke}
               onChange={::this._changeBestStroke} />

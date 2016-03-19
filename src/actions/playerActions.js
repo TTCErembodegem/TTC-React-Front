@@ -17,11 +17,11 @@ export function updateStyle(player, newStyle) {
     return http.post('/players/UpdateStyle', {playerId: player.id, ...newStyle})
       .then(function(data) {
         if (data) {
-          dispatch(showSnackbar(trans('players.editStyle.saved', player.alias)));
+          dispatch(showSnackbar(trans('players.editStyle.saved', {ply: player.alias})));
           dispatch(loaded(data));
         }
       }, function(err) {
-        dispatch(showSnackbar('Oepsie! Mislukt...'));
+        dispatch(showSnackbar('common.apiFail'));
         console.log('UpdateStyle!', err); // eslint-disable-line
       });
   };

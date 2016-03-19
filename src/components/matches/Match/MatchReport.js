@@ -110,7 +110,7 @@ export default class MatchReport extends Component {
     }
 
     return (
-      <div style={{marginLeft: 20, marginTop: 20, marginRight: 20}}>
+      <div>
         <h3>{this.context.t('match.report.title')}</h3>
         {reportText}
         {comments}

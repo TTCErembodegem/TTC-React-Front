@@ -39,11 +39,19 @@ export default class App extends Component {
   };
 
   render() {
+    var containerStyle = {
+      paddingLeft: this.props.viewport.width < 600 ? 5 : undefined,
+      paddingRight: this.props.viewport.width < 600 ? 5 : undefined,
+    };
+    if (this.props.config.get('container100PerWidth')) {
+      containerStyle.width = '100%';
+    }
+
     return (
       <div id="react">
         <div className="wrapper">
           <Header user={this.props.user} />
-          <Grid style={this.props.viewport.width < 600 ? {paddingLeft: 5, paddingRight: 5} : undefined}>
+          <Grid style={containerStyle}>
             {this.props.children ?
               (!this.props.config.get('initialLoadCompleted') ? <WaitForIt /> : this.props.children) :
               <Intro />

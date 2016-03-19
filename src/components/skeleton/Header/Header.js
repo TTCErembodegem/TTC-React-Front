@@ -25,8 +25,8 @@ export default class Header extends Component {
   }
 
   render() {
-    var t = this.context.t;
-    var loginOrProfile = !this.props.user.playerId ?
+    const t = this.context.t;
+    const loginOrProfile = !this.props.user.playerId ?
       <FlatButton label={t('nav.login')} onClick={() => browserHistory.push(t.route('login'))} /> :
       <Link className="Header-link Header-icon-right" to={t.route('profile')}><Icon fa="fa fa-2x fa-user" /></Link>;
 
@@ -52,6 +52,9 @@ export default class Header extends Component {
     // Scenario: Use clicks on the bars to open the Nav
     // First onTouchStart which opened the Navigation
     // Immediately followed by onOutsideClick which closed the Nav
+
+    // TODO: creates bug on mobile that has visual 'selection' of first item in the navigation...
+    // (solution: put some sort of icon at the top of the navigation so its non-clickabel?:)
     setTimeout(() => this.setState({isNavOpening: false}), 1000);
   }
 }

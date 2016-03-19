@@ -21,12 +21,14 @@ function bearer(req) {
 
 const HttpClient = {
   get: (path, qs) => new Promise((resolve, reject) => {
+    console.time(path);
     request
       .get(getUrl(path))
       .query(qs)
       .use(bearer)
       .accept('application/json')
       .end((err, res) => {
+        console.timeEnd(path);
         if (err) {
           if (err.status === 404) {
             resolve(null);

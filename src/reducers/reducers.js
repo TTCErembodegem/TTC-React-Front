@@ -18,6 +18,8 @@ export function config(state = Immutable.Map({initialLoadCompleted: false}), act
     return state.set('snackbar', payload);
   case ActionTypes.CLEAR_SNACKBAR:
     return state.remove('snackbar');
+  case ActionTypes.SET_SETTING:
+    return state.set(payload.key, payload.value);
   default:
     return state;
   }
@@ -47,9 +49,7 @@ export function clubs(state = Immutable.List([]), action = null) {
   const {type, payload} = action;
   switch (type) {
   case ActionTypes.CLUBS_LOADED:
-    var result = payload.map(x => new ClubModel(x));
-    console.log('CLUBS_LOADED', result[0]); // eslint-disable-line
-    return Immutable.List(result);
+    return immutableHelpers.merge(state, payload, x => new ClubModel(x));
   default:
     return state;
   }
@@ -59,9 +59,7 @@ export function teams(state = Immutable.List([]), action = null) {
   const {type, payload} = action;
   switch (type) {
   case ActionTypes.TEAMS_LOADED:
-    var result = payload.map(x => new TeamModel(x));
-    console.log('TEAMS_LOADED', result[0]); // eslint-disable-line
-    return Immutable.List(result);
+    return immutableHelpers.merge(state, payload, x => new TeamModel(x));
   default:
     return state;
   }

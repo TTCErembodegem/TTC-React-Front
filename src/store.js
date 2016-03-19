@@ -2,18 +2,29 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { devTools } from 'redux-devtools';
 import createLogger from 'redux-logger';
 import thunk from 'redux-thunk';
+import moment from 'moment';
 
 import rootReducer from './reducers';
 
-const finalCreateStore = compose(
-  applyMiddleware(createLogger({collapsed: true})),
-  applyMiddleware(thunk),
-  devTools(),
-)(createStore);
+var finalCreateStore;
+if (DEBUG) {
+  //console.log('finalCreateStore DEBUG');
+  finalCreateStore = compose(
+    applyMiddleware(createLogger({collapsed: true})),
+    applyMiddleware(thunk),
+    devTools(),
+  )(createStore);
+} else {
+  //console.log('finalCreateStore NODEBUG');
+  finalCreateStore = compose(
+    applyMiddleware(thunk),
+  )(createStore);
+}
 
 const store = finalCreateStore(rootReducer);
 
 if (module.hot) {
+  //console.log('finalCreateStore is HOT');
   // Enable Webpack hot module replacement for reducers
   module.hot.accept('./reducers', () => {
     const nextRootReducer = require('./reducers');
@@ -26,6 +37,9 @@ export default store;
 export const util = {
   getUser() {
     return store.getState().user;
+  },
+  getUserPlayer() {
+    return util.getPlayer(util.getUser().playerId);
   },
 
   getTeam(teamId) {
@@ -49,6 +63,12 @@ export const util = {
   },
 
   matches: {
+    getTodayMatches() {
+      const matches = store.getState().matches;
+      var today = moment();
+      return matches.filter(cal => cal.date.isSame(today, 'day'));
+      // TODO: do remember that a match can continue till after 12h
+    },
     getFromOpponent(opponent) {
       const matches = store.getState().readonlyMatches;
       var result = matches.filter(m => (m.home.clubId === opponent.clubId && m.home.teamCode === opponent.teamCode) ||
