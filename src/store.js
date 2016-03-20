@@ -65,9 +65,9 @@ export const util = {
   matches: {
     getTodayMatches() {
       const matches = store.getState().matches;
-      var today = moment();
-      return matches.filter(cal => cal.date.isSame(today, 'day'));
-      // TODO: do remember that a match can continue till after 12h
+      const today = moment();
+      const yesterday = moment().subtract(1, 'day');
+      return matches.filter(cal => cal.date.isSame(today, 'day') || (cal.date.isSame(yesterday, 'day') && today.hour() < 7));
     },
     getFromOpponent(opponent) {
       const matches = store.getState().readonlyMatches;

@@ -10,6 +10,9 @@ function replaceMatch(state, match, classify) {
 }
 
 export function merge(state, payload, classify) {
+  if (!payload) {
+    return state;
+  }
   if (state.size === 0) {
     let result = payload.map(classify);
     return Immutable.List(result);

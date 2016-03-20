@@ -112,7 +112,13 @@ export default class PlayersImageGallery extends Component {
                   </span>
                 )}
                 subtitle={<PlayerPlayingStyle ply={ply} />}>
-                {user.playerId && user.playerId !== ply.id ? <Icon fa="fa fa-pencil-square-o" style={editStyleIcon} onClick={this._openStyle.bind(this, ply)} /> : null}
+                {user.playerId && user.playerId !== ply.id ? (
+                  <Icon
+                    title={t('players.editStyle.tooltip', ply.alias)}
+                    fa="fa fa-pencil-square-o"
+                    style={editStyleIcon}
+                    onClick={this._openStyle.bind(this, ply)} />
+                ) : null}
                 <PlayerImage playerId={ply.id} />
               </GridTile>
             );

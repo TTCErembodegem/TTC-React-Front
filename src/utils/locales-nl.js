@@ -78,6 +78,7 @@ export default {
       value: 'Waarde',
       editStyle: {
         title: 'Speelstijl ${}',
+        tooltip: 'Speelstijl ${} wijzigen',
         bestStroke: 'Beste, meest verassende slag',
         style: 'Speelstijl',
         saved: 'Speelstijl ${ply} aangepast door ${by}: ${newStyle}',

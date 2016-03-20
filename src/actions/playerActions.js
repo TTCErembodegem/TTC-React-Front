@@ -2,7 +2,7 @@ import * as ActionTypes from './ActionTypes.js';
 import http from '../utils/httpClient.js';
 import { util as storeUtil } from '../store.js';
 import { showSnackbar } from './configActions.js';
-import { broadcastSnackbar } from '../hub.js';
+import { broadcastSnackbar, broadcastReload } from '../hub.js';
 
 import trans from '../locales.js';
 
@@ -24,6 +24,7 @@ export function updateStyle(player, newStyle) {
             by: user.alias,
             newStyle: newStyle.name + ': ' + newStyle.bestStroke
           }));
+          broadcastReload('player', data);
           dispatch(loaded(data));
         }
       }, function(err) {

@@ -11,13 +11,15 @@ export default class Icon extends Component {
   };
 
   render() {
+    const {fa, color, style, onClick, className, ...props} = this.props;
     return (
       <i
-        className={cn(this.props.fa, this.props.className, {
-          clickable: !!this.props.onClick,
+        {...props}
+        className={cn(fa, className, {
+          clickable: !!onClick,
         })}
-        onClick={this.props.onClick}
-        style={{color: this.props.color, ...this.props.style}}></i>
+        onClick={onClick}
+        style={{color: color, ...style}}></i>
     );
   }
 }

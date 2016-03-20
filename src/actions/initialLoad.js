@@ -3,25 +3,25 @@ import http from '../utils/httpClient.js';
 import { loaded as matchesLoaded } from './matchActions.js';
 import { loaded as playersLoaded } from './playerActions.js';
 
-function clubsLoaded(data) {
+export function clubsLoaded(data) {
   return {
     type: ActionTypes.CLUBS_LOADED,
     payload: data
   };
 }
-function initialLoadCompleted() {
-  return {
-    type: ActionTypes.INITIAL_LOADED
-  };
-}
 
-function teamsLoaded(data) {
+export function teamsLoaded(data) {
   return {
     type: ActionTypes.TEAMS_LOADED,
     payload: data
   };
 }
 
+function initialLoadCompleted() {
+  return {
+    type: ActionTypes.INITIAL_LOADED
+  };
+}
 
 export default function() {
   return dispatch => {

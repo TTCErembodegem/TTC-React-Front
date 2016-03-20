@@ -2,22 +2,26 @@ import * as ActionTypes from './ActionTypes.js';
 import http from '../utils/httpClient.js';
 import { util as storeUtil } from '../store.js';
 import { showSnackbar } from './configActions.js';
+import { broadcastReload } from '../hub.js';
 import trans from '../locales.js';
 import moment from 'moment';
 import _ from 'lodash';
 
 //import MatchModel from '../models/MatchModel.js';
 
+export function simpleLoaded(data) {
+  return {
+    type: ActionTypes.MATCHES_LOADED,
+    payload: data
+  };
+}
+
 export function loaded(data, dispatch) {
   if (!data) {
     return;
   }
 
-  var dispatchLoad = loadedOnes => dispatch({
-    type: ActionTypes.MATCHES_LOADED,
-    payload: loadedOnes
-  });
-  dispatchLoad(data);
+  dispatch(simpleLoaded(data));
 
   if (!_.isArray(data)) {
     data = [data];
@@ -26,7 +30,7 @@ export function loaded(data, dispatch) {
     if (!match.isSyncedWithFrenoy && moment().isAfter(moment(match.date))) {
       http.post('/matches/FrenoyMatchSync', {id: match.id})
         .then(function(newmatch) {
-          dispatchLoad(newmatch);
+          dispatch(simpleLoaded(newmatch));
         }, function(err) {
           console.error(err); // eslint-disable-line
         }
@@ -37,7 +41,7 @@ export function loaded(data, dispatch) {
       // TODO: do not call if already in store
       http.get('/matches/GetFirstRoundMatch', {matchId: match.id})
         .then(function(newmatch) {
-          dispatchLoad(newmatch);
+          dispatch(simpleLoaded(newmatch));
         }, function(err) {
           console.error(err); // eslint-disable-line
         }
@@ -87,7 +91,8 @@ export function selectPlayer(matchId, playerId) {
 
     return http.post('/matches/TogglePlayer', matchPlayer)
       .then(function(data) {
-        loaded(data, dispatch);
+        //loaded(data, dispatch);
+        broadcastReload('match', data);
 
       }, function(err) {
         console.log('TogglePlayer!', err); // eslint-disable-line
@@ -100,7 +105,8 @@ export function updateScore(matchScore) {
   return dispatch => {
     return http.post('/matches/UpdateScore', matchScore)
       .then(function(data) {
-        loaded(data, dispatch);
+        //loaded(data, dispatch);
+        broadcastReload('match', data);
 
       }, function(err) {
         console.log('UpdateScore!', err); // eslint-disable-line
@@ -114,7 +120,8 @@ export function postReport(matchId, reportText) {
     var user = storeUtil.getUser();
     return http.post('/matches/Report', {matchId, text: reportText, playerId: user.playerId})
       .then(function(data) {
-        loaded(data, dispatch);
+        //loaded(data, dispatch);
+        broadcastReload('match', data);
         dispatch(showSnackbar(trans('match.report.reportPosted')));
 
       }, function(err) {
@@ -129,7 +136,8 @@ export function postComment(matchId, commentText) {
     var user = storeUtil.getUser();
     return http.post('/matches/Comment', {matchId, text: commentText, playerId: user.playerId})
       .then(function(data) {
-        loaded(data, dispatch);
+        //loaded(data, dispatch);
+        broadcastReload('match', data);
         dispatch(showSnackbar(trans('match.report.commentPosted')));
 
       }, function(err) {
