@@ -168,6 +168,7 @@ export default class Intro extends Component {
   }
 }
 
+// TODO: React warning: setState on unmounted component = Typist (loading schlager is gone too fast now...)
 
 const Loading = ({t, bigScreen}) => (
   <div style={bigScreen ? undefined : {width: 310, margin: 'auto', marginBottom: 15, marginTop: 15}}>

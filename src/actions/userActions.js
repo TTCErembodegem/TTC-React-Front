@@ -3,6 +3,7 @@ import http from '../utils/httpClient.js';
 import { util as storeUtil } from '../store.js';
 import initialLoad from './initialLoad.js';
 import { showSnackbar } from './configActions.js';
+import { broadcastSnackbar } from '../hub.js';
 
 import trans from '../locales.js';
 
@@ -32,6 +33,7 @@ export function validateToken(token) {
       .then(function(data) {
         if (data) {
           dispatch(loggedIn(data, false));
+          broadcastSnackbar(trans('login.loggedIn', data.alias));
         }
       }, function(err) {
         dispatch(logFailed('John Doe'));
@@ -51,6 +53,7 @@ export function login(creds) {
           dispatch(logFailed(playerName));
         } else {
           dispatch(loggedIn(data));
+          broadcastSnackbar(trans('login.loggedIn', data.alias));
           dispatch(initialLoad());
         }
       }, function(err) {

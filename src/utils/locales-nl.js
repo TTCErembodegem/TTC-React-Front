@@ -4,7 +4,7 @@ export default {
   routes: {
     players: '/spelers',
     login: '/login',
-    changePassword: '/changePassword',
+    changePassword: '/wijzig-paswoord',
     profile: '/profiel',
     links: '/links',
     matches: '/kalender',
@@ -28,7 +28,7 @@ export default {
       matchesToday: 'Vandaag',
       players: 'Spelers',
       login: 'Log in',
-      changePassword: 'Verander Paswoord',
+      changePassword: 'Wijzig Paswoord',
       links: 'Links',
       facts: 'TT Weetjes',
       closeMenu: 'Menu sluiten'
@@ -51,7 +51,8 @@ export default {
       passwordHint: 'Het paswoord is "pwd"',
       loginButton: 'Login',
       logoutButton: 'Uitloggen',
-      fail: 'Incorrect paswoord voor ${}'
+      fail: 'Incorrect paswoord voor ${}',
+      loggedIn: '${} aangelogd',
     },
     changePassword: {
       title: 'Paswoord wijzigen',
