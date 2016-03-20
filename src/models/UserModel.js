@@ -1,3 +1,5 @@
+import { util as storeUtil } from '../store.js';
+
 const security = {
   CAN_MANAGETEAM: 'CAN_MANAGETEAM',
   CAN_EDITALLREPORTS: 'CAN_EDITALLREPORTS',
@@ -14,6 +16,10 @@ export default class UserModel {
 
   playsIn(teamId) {
     return this.teams.indexOf(teamId) !== -1;
+  }
+
+  getPlayer() {
+    return storeUtil.getPlayer(this.playerId);
   }
 
   can(what) {

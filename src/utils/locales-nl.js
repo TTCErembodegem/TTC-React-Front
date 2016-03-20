@@ -80,7 +80,7 @@ export default {
         title: 'Speelstijl ${}',
         bestStroke: 'Beste, meest verassende slag',
         style: 'Speelstijl',
-        saved: 'Speelstijl ${ply} aangepast',
+        saved: 'Speelstijl ${ply} aangepast door ${by}: ${newStyle}',
       },
     },
     match: {

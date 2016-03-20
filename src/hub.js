@@ -23,7 +23,6 @@ $.connection.hub.start().done(function() {
 });
 
 export function broadcastSnackbar(message) {
-  console.log('broadcastSnackbar', message);
   if (hubReady) {
     ttcHub.server.broadcastSnackbar(message);
   }

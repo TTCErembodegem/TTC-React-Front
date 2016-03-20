@@ -2,6 +2,7 @@ import * as ActionTypes from './ActionTypes.js';
 import http from '../utils/httpClient.js';
 import { util as storeUtil } from '../store.js';
 import { showSnackbar } from './configActions.js';
+import { broadcastSnackbar } from '../hub.js';
 
 import trans from '../locales.js';
 
@@ -17,7 +18,12 @@ export function updateStyle(player, newStyle) {
     return http.post('/players/UpdateStyle', {playerId: player.id, ...newStyle})
       .then(function(data) {
         if (data) {
-          dispatch(showSnackbar(trans('players.editStyle.saved', {ply: player.alias})));
+          let user = storeUtil.getUser().getPlayer();
+          broadcastSnackbar(trans('players.editStyle.saved', {
+            ply: player.alias,
+            by: user.alias,
+            newStyle: newStyle.name + ': ' + newStyle.bestStroke
+          }));
           dispatch(loaded(data));
         }
       }, function(err) {
