@@ -27,7 +27,7 @@ if (token) {
 import initialLoad from './actions/initialLoad.js';
 store.dispatch(initialLoad());
 
-//require('./hub.js');
+require('./hub.js');
 
 const enableDevTools = false;
 if (enableDevTools) {
