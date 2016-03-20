@@ -102,6 +102,8 @@ export default class Intro extends Component {
 
     return (
       <div>
+        <Strike text="vr. 13/03: Dubbeltoernooi" textStyle={{color: 'black'}} />
+        <Strike text="vr. 20/03: Algemene vergadering & Kampioenenviering" textStyle={{color: 'black'}} />
         {topSponsors}
         <Row style={{marginTop: showTopSponsors ? 25 : undefined}}>
           <Col sm={6} style={{verticalAlign: 'top'}}>
@@ -209,8 +211,6 @@ class TodaysEvents extends Component {
         </div>
       );
     }
-
-    // TODO: add events to intro: dubbeltoernooi en algemene vergadering/kampioenenviering
 
     // TODO: training weekdays & hour hardcoded (+ duplicated in footer)
     var trainingEvent;
