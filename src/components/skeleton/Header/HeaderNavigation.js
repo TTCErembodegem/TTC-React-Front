@@ -1,9 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { browserHistory } from 'react-router';
 import { contextTypes } from '../../../utils/decorators/withContext.js';
-import { connect } from 'react-redux';
 import { util as storeUtil } from '../../../store.js';
-import moment from 'moment';
 
 import enhanceWithClickOutside from 'react-click-outside';
 import LeftNav from 'material-ui/lib/left-nav';
@@ -15,7 +13,6 @@ import Badge from 'material-ui/lib/badge';
 class Navigation extends Component {
   static contextTypes = contextTypes;
   static propTypes = {
-    matches: PropTypes.object.isRequired,
     toggleNav: PropTypes.func.isRequired,
     navOpen: PropTypes.bool.isRequired,
     isNavOpening: PropTypes.bool.isRequired,
