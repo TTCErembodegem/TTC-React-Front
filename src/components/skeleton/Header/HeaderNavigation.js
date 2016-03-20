@@ -11,16 +11,7 @@ import MenuItem from 'material-ui/lib/menus/menu-item';
 import Divider from 'material-ui/lib/divider';
 import Badge from 'material-ui/lib/badge';
 
-@connect(state => {
-  return {
-    //config: state.config,
-    //user: state.user,
-    // players: state.players,
-    // clubs: state.clubs,
-    matches: state.matches,
-    // teams: state.teams
-  };
-})
+//using @connect decorator breaks enhanceWithClickOutside
 class Navigation extends Component {
   static contextTypes = contextTypes;
   static propTypes = {
