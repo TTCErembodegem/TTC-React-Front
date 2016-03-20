@@ -24,6 +24,8 @@ export default class MatchCardHeader extends Component {
   }
 
   // TODO: op heenronde score klikken: naar match gaan
+  // TODO: implement fancy tooltip https://github.com/callemall/material-ui/blob/master/src/tooltip.jsx?
+  // TODO: TOPPER/THRILLER (fa-heartbeat?) wanneer eerste/laatste 3 in ranking tegen elkaar spelen
 
   render() {
     var match = this.props.match;
@@ -49,6 +51,9 @@ export default class MatchCardHeader extends Component {
         </span>
       );
     }
+
+    // TODO: matchscore: do some fancy animation thing on update score
+
     return (
       <Card style={{backgroundColor: '#fafafa'}} onExpandChange={::this._onExpandChange} initiallyExpanded={this.props.isOpen}>
         <CardHeader

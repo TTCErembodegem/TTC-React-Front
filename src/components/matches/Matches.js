@@ -53,6 +53,7 @@ export default class Matches extends Component {
 
     // TODO: implement buttonbar
     // TODO: debug inputfield: get and display a (frenoy)matchId -> also implement auto fetch if not present...
+    // TODO: load more buttons
     return (
       <div>
         {matchesToday.size ? <Strike text={this.context.t('match.todayMatches')} /> : null}

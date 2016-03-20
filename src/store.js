@@ -75,7 +75,7 @@ export const util = {
           (m.away.clubId === opponent.clubId && m.away.teamCode === opponent.teamCode));
 
       // TODO: this would become much easier if the backend returned a DivisionId with a match?
-      // Probably a good idea to store DivisionId in match table?
+      // Probably a good idea to store DivisionId in match table? Also add 'competition' to match
 
       return result;
     },
