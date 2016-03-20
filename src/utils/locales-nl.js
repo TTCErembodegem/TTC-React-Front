@@ -30,7 +30,8 @@ export default {
       login: 'Log in',
       changePassword: 'Verander Paswoord',
       links: 'Links',
-      facts: 'TT Weetjes'
+      facts: 'TT Weetjes',
+      closeMenu: 'Menu sluiten'
     },
     intro: {
       title: 'Tafeltennisclub TTC Erembodegem',

@@ -36,6 +36,8 @@ class Navigation extends Component {
     }
   }
 
+  handleClickCloseMenuButton = () => this.props.toggleNav(false);
+
   _goto(url) {
     this.props.toggleNav(false);
     browserHistory.push(url);
@@ -58,6 +60,7 @@ class Navigation extends Component {
         <Divider />
         <MenuItem onTouchTap={this._goto.bind(this, t.route('links'))}>{t('nav.links')}</MenuItem>
         <MenuItem onTouchTap={this._goto.bind(this, t.route('facts'))}>{t('nav.facts')}</MenuItem>
+        <MenuItem onTouchTap={this.handleClickCloseMenuButton}>{t('nav.closeMenu')}</MenuItem>
       </LeftNav>
     );
   }
