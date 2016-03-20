@@ -27,6 +27,8 @@ if (token) {
 import initialLoad from './actions/initialLoad.js';
 store.dispatch(initialLoad());
 
+//require('./hub.js');
+
 const enableDevTools = false;
 if (enableDevTools) {
   const {DebugPanel, DevTools, LogMonitor} = require('redux-devtools/lib/react');

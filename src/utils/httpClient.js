@@ -2,10 +2,12 @@ import request from 'superagent';
 import assert from 'assert';
 import { util as storeUtil } from '../store.js';
 
-function getUrl(path) {
+export function getUrl(path, appendApi = true) {
   assert(path[0] === '/', 'HttpClient: path passed should start with a /');
   assert(path.substring(0, 5) !== '/api/', 'HttpClient: path passed should not be prefixed with /api');
-  path = '/api' + path;
+  if (appendApi) {
+    path = '/api' + path;
+  }
   return !DEBUG ?
     `http://ttc-erembodegem.azurewebsites.net${path}` :
     `http://localhost:49731${path}`;
@@ -24,6 +26,7 @@ const HttpClient = {
     console.time(path);
     request
       .get(getUrl(path))
+      //.withCredentials()
       .query(qs)
       .use(bearer)
       .accept('application/json')
@@ -44,6 +47,7 @@ const HttpClient = {
     //console.log(getUrl(url), data);
     request
       .post(getUrl(url))
+      //.withCredentials()
       .send(data)
       .use(bearer)
       .set('Accept', 'application/json')
