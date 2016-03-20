@@ -100,6 +100,9 @@ export default {
         index: 'Index',
         ranking: 'Klassement',
       },
+      form: {
+        title: 'Matchverloop',
+      },
       tabs: {
         players: 'Spelers',
         playersTitle: 'Onze opstelling',

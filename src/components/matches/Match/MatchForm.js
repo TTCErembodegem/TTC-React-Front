@@ -25,7 +25,7 @@ export default class MatchForm extends Component {
     var score = match.score || {home: 0, out: 0};
     return (
       <div>
-        <h3>Matchverloop</h3>
+        <h3>{t('match.form.title')}</h3>
         <div style={{width: 180}}>
           <MatchManipulation
             style={{float: 'left', marginRight: 10}}
