@@ -40,8 +40,9 @@ export default class App extends Component {
 
   render() {
     var containerStyle = {
-      paddingLeft: this.props.viewport.width < 600 ? 5 : undefined,
-      paddingRight: this.props.viewport.width < 600 ? 5 : undefined,
+      // TODO: idea was to show more of the match cards when <600 but the padding:5 creates a horizontal scrollbar?
+      //paddingLeft: this.props.viewport.width < 600 ? 5 : undefined,
+      //paddingRight: this.props.viewport.width < 600 ? 5 : undefined,
     };
     if (this.props.config.get('container100PerWidth')) {
       containerStyle.width = '100%';

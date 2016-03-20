@@ -114,7 +114,7 @@ export default {
         club: 'Lokaal',
         clubTitle: 'Hun clublokaal',
         scoresheet: 'Wedstrijdblad',
-        scoresheetTitle: '',
+        scoresheetTitle: 'Wedstrijdblad',
         opponentsRanking: 'Tegenstanders',
         opponentsRankingTitle: 'Hun laatste uitslagen',
         opponentsFormation: 'Opstelling',

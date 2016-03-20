@@ -82,7 +82,7 @@ export default class MatchCard extends Component {
 
   _showAccordion() {
     // Otherwise show tabs
-    return this.props.viewport.width < 600;
+    return this.props.viewport.width < 700;
   }
 
   render() {

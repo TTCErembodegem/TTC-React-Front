@@ -30,7 +30,7 @@ import Typist from 'react-typist';
 @withContext
 @withViewport
 @withStyles(styles)
-export default class App extends Component {
+export default class Intro extends Component {
   static contextTypes = contextTypes;
   static propTypes = {
     config: ImmutablePropTypes.map.isRequired,
@@ -150,7 +150,7 @@ export default class App extends Component {
             <Col style={{marginTop: 20}}>
               <Paper style={topSponsorsOnBottomPaperStyle}>
                 <a href="http://vdhkeukens.be/" target="_blank">
-                  <img style= {{height: 100, width: 200}}  src="/img/sponsors/vdhkeukens.png" />
+                  <img style= {{height: 100, width: 200}} src="/img/sponsors/vdhkeukens.png" />
                 </a>
               </Paper>
             </Col>
