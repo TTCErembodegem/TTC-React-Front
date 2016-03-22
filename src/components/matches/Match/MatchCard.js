@@ -7,6 +7,7 @@ import moment from 'moment';
 import UserModel from '../../../models/UserModel.js';
 import MatchModel from '../../../models/MatchModel.js';
 import * as matchActions from '../../../actions/matchActions.js';
+import { setSetting } from '../../../actions/configActions.js';
 import { util as storeUtils } from '../../../store.js';
 
 import MatchCardHeader, { BigMatchCardHeader } from './MatchCardHeader.js';
@@ -45,24 +46,26 @@ const tabEventKeys = {
 @withViewport
 @connect(state => {
   return {
-    //config: state.config,
+    config: state.config,
     user: state.user,
     // players: state.players,
     // clubs: state.clubs,
     readonlyMatches: state.readonlyMatches,
     // teams: state.teams,
   };
-}, matchActions)
+}, Object.assign({}, matchActions, {setSetting}))
 export default class MatchCard extends Component {
   static contextTypes = contextTypes;
   static propTypes = {
     match: PropTypes.instanceOf(MatchModel).isRequired,
+    config: PropTypes.object.isRequired,
     user: PropTypes.instanceOf(UserModel).isRequired,
     getLastOpponentMatches: PropTypes.func.isRequired,
     viewport: PropTypes.object.isRequired,
     readonlyMatches: PropTypes.object.isRequired,
     viewportWidthContainerCount: PropTypes.number.isRequired,
     big: PropTypes.bool,
+    setSetting: PropTypes.func.isRequired,
   }
   static defaultProps = {
     viewportWidthContainerCount: 1 // The amount of containers next to eachother that display a PlayersImageGallery
@@ -134,7 +137,14 @@ export default class MatchCard extends Component {
     );
   }
   _getCommentsIcon() {
-
+    var hasNewComment = this.props.config.get('newMatchComment' + this.props.match.id);
+    if (!hasNewComment) {
+      return;
+    }
+    return <Icon fa="fa fa-comment-o" onClick={::this._onHideNewComment} className="match-card-tab-icon" />;
+  }
+  _onHideNewComment() {
+    this.props.setSetting('newMatchComment' + this.props.match.id, false);
   }
   _getPlayersEditIcon() {
     var match = this.props.match;
@@ -217,7 +227,7 @@ export default class MatchCard extends Component {
       matchForm = (
         <div>
           <h3>{this.context.t('match.form.title')}</h3>
-          <MatchForm match={this.props.match} t={this.context.t} />;
+          <MatchForm match={this.props.match} t={this.context.t} user={this.props.user} />;
         </div>
       );
     }

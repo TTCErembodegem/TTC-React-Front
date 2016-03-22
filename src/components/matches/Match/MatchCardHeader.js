@@ -46,11 +46,9 @@ export class BigMatchCardHeader extends Component {
           style={{height: 95}}
           showExpandableButton={false}
           actAsExpander={false}>
-          {match.scoreType === 'BeingPlayed' && this.props.user.canChangeMatchScore(match.id) ? (
-            <div style={{position: 'absolute', top: 23, right: 15}}>
-              <MatchForm match={match} t={this.context.t} />
-            </div>
-          ) : null}
+          <div style={{position: 'absolute', top: 23, right: 15}}>
+            <MatchForm match={match} t={this.context.t} user={this.props.user} />
+          </div>
         </CardHeader>
         {this.props.children}
       </Card>
@@ -95,8 +93,6 @@ export default class MatchCardHeader extends Component {
         </span>
       );
     }
-
-    // TODO: matchscore: do some fancy animation thing on update score
 
     return (
       <Card style={{backgroundColor: '#fafafa'}} onExpandChange={::this._onExpandChange} initiallyExpanded={this.props.isOpen}>

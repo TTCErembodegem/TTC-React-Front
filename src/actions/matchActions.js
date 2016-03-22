@@ -101,12 +101,26 @@ export function selectPlayer(matchId, playerId) {
   };
 }
 
+export function matchUpdated(data, updateType) {
+  if (updateType === 'score') {
+    return {
+      type: ActionTypes.SET_SETTING,
+      payload: {key: 'newMatchScore' + data.id, value: true}
+    };
+  } else if (updateType === 'report') {
+    return {
+      type: ActionTypes.SET_SETTING,
+      payload: {key: 'newMatchComment' + data.id, value: true}
+    };
+  }
+}
+
 export function updateScore(matchScore) {
   return dispatch => {
     return http.post('/matches/UpdateScore', matchScore)
       .then(function(data) {
         //loaded(data, dispatch);
-        broadcastReload('match', data);
+        broadcastReload('match', data, 'score');
 
       }, function(err) {
         console.log('UpdateScore!', err); // eslint-disable-line
@@ -121,7 +135,7 @@ export function postReport(matchId, reportText) {
     return http.post('/matches/Report', {matchId, text: reportText, playerId: user.playerId})
       .then(function(data) {
         //loaded(data, dispatch);
-        broadcastReload('match', data);
+        broadcastReload('match', data, 'report');
         dispatch(showSnackbar(trans('match.report.reportPosted')));
 
       }, function(err) {
@@ -137,7 +151,7 @@ export function postComment(matchId, commentText) {
     return http.post('/matches/Comment', {matchId, text: commentText, playerId: user.playerId})
       .then(function(data) {
         //loaded(data, dispatch);
-        broadcastReload('match', data);
+        broadcastReload('match', data, 'report');
         dispatch(showSnackbar(trans('match.report.commentPosted')));
 
       }, function(err) {

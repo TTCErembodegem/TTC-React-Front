@@ -4,7 +4,7 @@ import store from './store.js';
 import { showSnackbar } from './actions/configActions.js';
 import { loaded as loadedPlayer } from './actions/playerActions.js';
 import { clubsLoaded, teamsLoaded } from './actions/initialLoad.js';
-import { simpleLoaded as loadedMatch } from './actions/matchActions.js';
+import { simpleLoaded as loadedMatch, matchUpdated } from './actions/matchActions.js';
 
 var hubReady = false;
 
@@ -31,13 +31,16 @@ export function broadcastSnackbar(message) {
   }
 }
 
-ttcHub.client.broadcastReload = function(type, data) {
-  switch (type) {
+ttcHub.client.broadcastReload = function(dataType, data, updateType) {
+  switch (dataType) {
   case 'player':
     store.dispatch(loadedPlayer(data));
     break;
   case 'match':
     store.dispatch(loadedMatch(data));
+    if (updateType) {
+      store.dispatch(matchUpdated(data, updateType));
+    }
     break;
   case 'team':
     store.dispatch(clubsLoaded(data));
@@ -47,8 +50,8 @@ ttcHub.client.broadcastReload = function(type, data) {
     break;
   }
 };
-export function broadcastReload(type, data) {
+export function broadcastReload(dataType, data, updateType) {
   if (hubReady) {
-    ttcHub.server.broadcastReload(type, data);
+    ttcHub.server.broadcastReload(dataType, data, updateType);
   }
 }
