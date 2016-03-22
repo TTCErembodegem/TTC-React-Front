@@ -9,7 +9,7 @@ import MatchModel from '../../../models/MatchModel.js';
 import * as matchActions from '../../../actions/matchActions.js';
 import { util as storeUtils } from '../../../store.js';
 
-import MatchCardHeader from './MatchCardHeader.js';
+import MatchCardHeader, { BigMatchCardHeader } from './MatchCardHeader.js';
 import MatchPlayerResults from './MatchPlayerResults.js';
 import IndividualMatches from './IndividualMatches.js';
 import OpponentClubLocations from './OpponentClubLocations.js';
@@ -62,6 +62,7 @@ export default class MatchCard extends Component {
     viewport: PropTypes.object.isRequired,
     readonlyMatches: PropTypes.object.isRequired,
     viewportWidthContainerCount: PropTypes.number.isRequired,
+    big: PropTypes.bool,
   }
   static defaultProps = {
     viewportWidthContainerCount: 1 // The amount of containers next to eachother that display a PlayersImageGallery
@@ -91,9 +92,11 @@ export default class MatchCard extends Component {
     const showOpponentClubLocation = !match.isHomeMatch && !match.isPlayed;
     const showScoresheet = match.scoreType === 'BeingPlayed';
 
+    const HeaderComponent = this.props.big ? BigMatchCardHeader : MatchCardHeader;
+
     if (this._showAccordion()) {
       return (
-        <MatchCardHeader {...this.props} backgroundColor="#fafafa" isOpen={true} style={{margin: 50}}>
+        <HeaderComponent {...this.props} backgroundColor="#fafafa" isOpen={true} style={{margin: 50}}>
           <CardText expandable={true} style={{paddingTop: 0, paddingLeft: 5, paddingRight: 5}}>
             <PanelGroup activeKey={this.state.openTabKey} onSelect={::this._onTabSelect} accordion>
               {this._renderNavItem(tabEventKeys.players, 'players', this._getPlayersEditIcon())}
@@ -106,12 +109,12 @@ export default class MatchCard extends Component {
               {this.props.user.isDev() ? this._renderNavItem('admin', 'admin') : null}
             </PanelGroup>
           </CardText>
-        </MatchCardHeader>
+        </HeaderComponent>
       );
     }
 
     return (
-      <MatchCardHeader {...this.props} backgroundColor="#fafafa" isOpen={true}>
+      <HeaderComponent {...this.props} backgroundColor="#fafafa" isOpen={true}>
         <CardText expandable={true} style={{paddingTop: 0}}>
           <Nav bsStyle="tabs" activeKey={this.state.openTabKey} onSelect={::this._onTabSelect}>
             {this._renderNavItem(tabEventKeys.players, 'players', this._getPlayersEditIcon())}
@@ -120,15 +123,18 @@ export default class MatchCard extends Component {
             {showScoresheet ? this._renderNavItem(tabEventKeys.scoresheet, 'scoresheet') : null}
             {this._renderNavItem(tabEventKeys.opponentsRanking, 'opponentsRanking')}
             {this._renderNavItem(tabEventKeys.opponentsFormation, 'opponentsFormation')}
-            {this._renderNavItem(tabEventKeys.report, 'report')}
+            {this._renderNavItem(tabEventKeys.report, 'report', this._getCommentsIcon())}
             {this.props.user.isDev() ? this._renderNavItem('admin', 'admin') : null}
           </Nav>
           <div className="match-card-tab">
             {this._renderTabContent()}
           </div>
         </CardText>
-      </MatchCardHeader>
+      </HeaderComponent>
     );
+  }
+  _getCommentsIcon() {
+
   }
   _getPlayersEditIcon() {
     var match = this.props.match;
@@ -207,8 +213,13 @@ export default class MatchCard extends Component {
   }
   _renderReport() {
     var matchForm;
-    if (this.props.match.date.isSame(moment(), 'd') && this.props.user.canChangeMatchScore(this.props.match.id)) {
-      matchForm = <MatchForm match={this.props.match} t={this.context.t} />;
+    if (!this.props.big && this.props.match.scoreType === 'BeingPlayed' && this.props.user.canChangeMatchScore(this.props.match.id)) {
+      matchForm = (
+        <div>
+          <h3>{this.context.t('match.form.title')}</h3>
+          <MatchForm match={this.props.match} t={this.context.t} />;
+        </div>
+      );
     }
 
     return (

@@ -6,6 +6,7 @@ import moment from 'moment';
 import MatchModel from '../../../models/MatchModel.js';
 
 import FavoriteMatch from '../FavoriteMatch.js';
+import MatchForm from '../Match/MatchForm.js';
 import MatchScore from '../MatchScore.js';
 import Icon from '../../controls/Icon.js';
 
@@ -13,6 +14,49 @@ import Card from 'material-ui/lib/card/card';
 import CardHeader from 'material-ui/lib/card/card-header';
 
 const daysAgoBackFullDate = 7;
+
+function renderOwnTeamTitle(team) {
+  return team.competition + ' ' + team.teamCode;
+}
+function renderOpponentTitle(match) {
+  const club = match.getOpponentClub();
+  return club.name + ' ' + match.opponent.teamCode;
+}
+
+export class BigMatchCardHeader extends Component {
+  static contextTypes = contextTypes;
+  static propTypes = {
+    match: PropTypes.instanceOf(MatchModel).isRequired,
+    children: PropTypes.node,
+    user: PropTypes.object.isRequired,
+    isOpen: PropTypes.bool.isRequired,
+  }
+
+  render() {
+    const match = this.props.match;
+    const team = match.getTeam();
+    const us = renderOwnTeamTitle(team);
+    const them = renderOpponentTitle(match);
+
+    return (
+      <Card style={{backgroundColor: '#fafafa'}} initiallyExpanded={true}>
+        <CardHeader
+          title={<span style={{fontSize: 34}}>{match.isHomeMatch ? `${us} vs ${them}` : `${them} vs ${us}`}</span>}
+          subtitle={undefined}
+          style={{height: 95}}
+          showExpandableButton={false}
+          actAsExpander={false}>
+          {match.scoreType === 'BeingPlayed' && this.props.user.canChangeMatchScore(match.id) ? (
+            <div style={{position: 'absolute', top: 23, right: 15}}>
+              <MatchForm match={match} t={this.context.t} />
+            </div>
+          ) : null}
+        </CardHeader>
+        {this.props.children}
+      </Card>
+    );
+  }
+}
 
 export default class MatchCardHeader extends Component {
   static contextTypes = contextTypes;
@@ -28,8 +72,8 @@ export default class MatchCardHeader extends Component {
   // TODO: TOPPER/THRILLER (fa-heartbeat?) wanneer eerste/laatste 3 in ranking tegen elkaar spelen
 
   render() {
-    var match = this.props.match;
-    var iPlay = this.props.user.playsIn(match.teamId);
+    const match = this.props.match;
+    const iPlay = this.props.user.playsIn(match.teamId);
 
     var subtitle = [];
     if (match.date.isSame(moment(), 'day') && match.isHomeMatch) {
@@ -70,7 +114,7 @@ export default class MatchCardHeader extends Component {
   }
 
   _renderTitle(match) {
-    var team = match.getTeam();
+    const team = match.getTeam();
     if (match.isHomeMatch) {
       return (
         <div>
@@ -95,23 +139,22 @@ export default class MatchCardHeader extends Component {
   }
 
   _renderOwnTeamTitle(team) {
-    return (<span>{team.competition} {team.teamCode}</span>);
+    return (<span>{renderOwnTeamTitle(team)}</span>);
   }
+  _renderOpponentTitle(match) {
+    return (<span className="match-opponent-team">{renderOpponentTitle(match)}</span>);
+  }
+
   _renderOwnTeamPosition(team) {
-    var ranking = team.getDivisionRanking();
+    const ranking = team.getDivisionRanking();
     return (
       <span className="label label-as-badge label-info" style={{marginLeft: 5, marginRight: 5, paddingTop: 25}}>
         {ranking ? ranking.position : '?'}
       </span>
     );
   }
-
-  _renderOpponentTitle(match) {
-    var club = match.getOpponentClub();
-    return (<span className="match-opponent-team">{club.name} {match.opponent.teamCode}</span>);
-  }
   _renderOpponentPosition(match) {
-    var club = match.getOpponentClub();
+    const club = match.getOpponentClub();
     var ranking = match.getTeam().getDivisionRanking(club.id, match.opponent.teamCode);
     if (!ranking) {
       // TODO: check what is going on here? Galmaarden E heeft algemeen forfait gegeven ofzo?
@@ -131,7 +174,7 @@ export default class MatchCardHeader extends Component {
   }
 
   _onExpandChange(/*isOpen*/) {
-    var matchRoute = this.context.t.route('match', {matchId: this.props.match.id});
+    const matchRoute = this.context.t.route('match', {matchId: this.props.match.id});
     browserHistory.push(matchRoute);
   }
 }

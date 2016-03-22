@@ -78,6 +78,12 @@ export default class MatchModel {
     console.error('MatchModel.getClub passed ' + which, 'expected home or away.'); // eslint-disable-line
   }
 
+  // winning() {
+  //   if (this.score.home === this.score.out) {
+  //     return null;
+  //   }
+  //   return this.won();
+  // }
   won(opponent) {
     if (this.score.home === this.score.out) {
       return false;

@@ -56,7 +56,7 @@ export default class MatchesToday extends Component {
       <div className="row">
         {matches.map(match => (
           <div className="col-md-6" style={{paddingBottom: 5, paddingTop: 5}} key={match.id}>
-            <MatchCard match={match} user={this.props.user} isOpen={true} viewportWidthContainerCount={2} />
+            <MatchCard match={match} user={this.props.user} isOpen={true} viewportWidthContainerCount={2} big />
           </div>
         ))}
       </div>

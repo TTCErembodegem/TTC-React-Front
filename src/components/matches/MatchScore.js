@@ -6,14 +6,15 @@ import cn from 'classnames';
 
 import Icon from '../controls/Icon.js';
 
-function getClassName(scoreType) {
-  switch (scoreType) {
-  case matchOutcome.Won:
-    return 'match-won';
-  case matchOutcome.Draw:
+function getClassName(isHomeMatch, home, out) {
+  if (home === out) {
     return 'match-draw';
   }
-  return 'match-lost';
+  var won = home > out;
+  if (!isHomeMatch) {
+    won = !won;
+  }
+  return won ? 'match-won' : 'match-lost';
 }
 
 export default class MatchScore extends Component {
@@ -47,7 +48,7 @@ export default class MatchScore extends Component {
       }
     }
 
-    const classColor = this.props.match.isDerby ? getClassName(matchOutcome.Won) : getClassName(match.scoreType);
+    const classColor = this.props.match.isDerby ? 'match-won' : getClassName(match.isHomeMatch, match.score.home, match.score.out);
     return (
       <span
         className={cn('label label-as-badge', classColor)}
