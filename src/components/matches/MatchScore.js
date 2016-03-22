@@ -59,7 +59,7 @@ export default class MatchScore extends Component {
         style={this.props.style}>
 
         {text}
-        {score.home + ' - ' + match.score.out}
+        {score.home + ' - ' + score.out}
       </span>
     );
   }

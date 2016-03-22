@@ -38,7 +38,7 @@ ttcHub.client.broadcastReload = function(dataType, data, updateType) {
     break;
   case 'match':
     store.dispatch(loadedMatch(data));
-    if (updateType) {
+    if (data && updateType) {
       store.dispatch(matchUpdated(data, updateType));
     }
     break;
