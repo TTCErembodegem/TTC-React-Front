@@ -163,7 +163,7 @@ export default {
     footer: {
       location: 'Groeneweg 28, 9300 Erembodegem',
       trainingDays: 'Training: di. en do. vanaf 20u',
-      competitionDays: 'Competitie: ma., wo. en vr. om 20u',
+      competitionDays: 'Competitie: ma., wo. en vr. 20u', //  'en za. om 14u' --> niet meer goed op mobile :(
       telephoneNumber: '0495/24 94 20',
       adultMembership: '€90 voor volwassenen',
       youthMembership: '€50 voor -18 jarigen',
