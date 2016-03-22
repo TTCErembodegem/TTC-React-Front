@@ -34,6 +34,7 @@ export default class MatchScore extends Component {
     var match = this.props.match;
     if (!this.props.forceDisplay) {
       if (!match.score || (match.score.home === 0 && match.score.out === 0)) {
+        // HACK: remove the getPreviousMatch out of this component
         match = match.getPreviousMatch();
         if (!match) {
           return null;
@@ -48,7 +49,9 @@ export default class MatchScore extends Component {
       }
     }
 
-    const classColor = this.props.match.isDerby ? 'match-won' : getClassName(match.isHomeMatch, match.score.home, match.score.out);
+    var score = match.score || {home: 0, out: 0};
+
+    const classColor = this.props.match.isDerby ? 'match-won' : getClassName(match.isHomeMatch, score.home, score.out);
     return (
       <span
         className={cn('label label-as-badge', classColor)}
@@ -56,7 +59,7 @@ export default class MatchScore extends Component {
         style={this.props.style}>
 
         {text}
-        {match.score ? (match.score.home + ' - ' + match.score.out) : '0 - 0'}
+        {score.home + ' - ' + match.score.out}
       </span>
     );
   }
