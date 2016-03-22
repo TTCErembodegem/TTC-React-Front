@@ -102,8 +102,8 @@ export default class Intro extends Component {
 
     return (
       <div>
-        <Strike text="vr. 13/05: Dubbeltoernooi" textStyle={{color: 'black'}} />
-        <Strike text="vr. 20/05: Algemene vergadering & Kampioenenviering" textStyle={{color: 'black'}} />
+        <Strike text="vr. 13/05: Dubbeltoernooi" />
+        <Strike text="vr. 20/05: Algemene vergadering & Kampioenenviering" />
         {topSponsors}
         <Row style={{marginTop: showTopSponsors ? 25 : undefined}}>
           <Col sm={6} style={{verticalAlign: 'top'}}>
