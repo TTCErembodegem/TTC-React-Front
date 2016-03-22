@@ -1,4 +1,4 @@
-import { trans, routes } from './utils/locales-nl.js';
+import { trans, routes, timeAgo } from './utils/locales-nl.js';
 
 var translate = function(key, params) {
   if (key.indexOf('.') === -1) {
@@ -32,6 +32,10 @@ translate.route = function(routeName, params) {
     route = route.replace(':' + paramKey, params[paramKey]);
   });
   return route;
+};
+
+translate.timeAgo = function() {
+  return timeAgo;
 };
 
 export default translate;

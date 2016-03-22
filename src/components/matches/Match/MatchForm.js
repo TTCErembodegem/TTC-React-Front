@@ -25,7 +25,6 @@ export default class MatchForm extends Component {
   render() {
     const match = this.props.match;
     const score = match.score || {home: 0, out: 0};
-
     const isEditable = match.scoreType === 'BeingPlayed' && this.props.user.canChangeMatchScore(match.id);
 
     return (

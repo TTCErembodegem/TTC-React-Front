@@ -37,6 +37,9 @@ export default class TeamModel {
   getTeamPlayerCount() {
     return this.competition === 'Vttl' ? 4 : 3;
   }
+  getScoreCount() {
+    return this.competition === 'Vttl' ? 16 : 10;
+  }
 
   getDivisionRanking(clubId, teamCode) {
     if (!clubId && !teamCode) {

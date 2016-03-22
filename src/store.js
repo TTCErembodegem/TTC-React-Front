@@ -65,9 +65,7 @@ export const util = {
   matches: {
     getTodayMatches() {
       const matches = store.getState().matches;
-      const today = moment();
-      const yesterday = moment().subtract(1, 'day');
-      return matches.filter(cal => cal.date.isSame(today, 'day') || (cal.date.isSame(yesterday, 'day') && today.hour() < 7));
+      return matches.filter(cal => cal.scoreType === 'BeingPlayed');
     },
     getFromOpponent(opponent) {
       const matches = store.getState().readonlyMatches;

@@ -24,7 +24,7 @@ export default class MatchModel {
     this.week = json.week;
     this.date = moment(json.date);
 
-    this.score = json.score;
+    this.score = json.score || {home: 0, out: 0};
     this.scoreType = json.scoreType; // NotYetPlayed, Won, Lost, Draw, WalkOver, BeingPlayed
     this.isPlayed = json.isPlayed;
     this.players = Immutable.List(json.players);
@@ -37,7 +37,12 @@ export default class MatchModel {
       this.teamId = json.teamId;
       this.description = json.description;
       this.reportPlayerId = json.reportPlayerId;
-      this.comments = Immutable.List(json.comments);
+
+      const comments = json.comments.map(c => ({
+        ...c,
+        postedOn: moment(c.postedOn)
+      }));
+      this.comments = Immutable.List(comments);
 
       this.opponent = json.opponent;
       this.isDerby = json.opponent.clubId === OwnClubId;
@@ -94,6 +99,10 @@ export default class MatchModel {
       won = !won;
     }
     return won;
+  }
+  isScoreComplete() {
+    const scoreTotal = this.getTeam().getScoreCount();
+    return this.score.home + this.score.out === scoreTotal;
   }
 
   getTeam() {

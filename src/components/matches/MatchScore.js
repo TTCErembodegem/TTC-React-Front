@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import MatchModel, { matchOutcome } from '../../models/MatchModel.js';
+import { connect } from 'react-redux';
 
 import { contextTypes } from '../../utils/decorators/withContext.js';
 import cn from 'classnames';
@@ -17,9 +18,13 @@ function getClassName(isHomeMatch, home, out) {
   return won ? 'match-won' : 'match-lost';
 }
 
+@connect(state => ({
+  config: state.config
+}))
 export default class MatchScore extends Component {
   static contextTypes = contextTypes;
   static propTypes = {
+    config: PropTypes.object.isRequired,
     match: PropTypes.instanceOf(MatchModel).isRequired,
     style: PropTypes.object,
     forceDisplay: PropTypes.bool.isRequired,
