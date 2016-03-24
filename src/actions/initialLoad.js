@@ -1,6 +1,6 @@
 import * as ActionTypes from './ActionTypes.js';
 import http from '../utils/httpClient.js';
-import { loaded as matchesLoaded } from './matchActions.js';
+import { simpleLoaded, loaded as matchesLoaded } from './matchActions.js';
 import { loaded as playersLoaded } from './playerActions.js';
 
 export function clubsLoaded(data) {
@@ -36,16 +36,16 @@ function fetchData(url, loadedAction) {
   };
 }
 export function fetchPlayer(playerId) {
-  return fetchData('/player/' + playerId, playersLoaded);
+  return fetchData('/players/' + playerId, playersLoaded);
 }
 export function fetchMatch(matchId) {
-  return fetchData('/matches/' + matchId, matchesLoaded);
+  return fetchData('/matches/' + matchId, simpleLoaded);
 }
 export function fetchTeam(teamId) {
-  return fetchData('/matches/' + teamId, teamsLoaded);
+  return fetchData('/teams/' + teamId, teamsLoaded);
 }
 export function fetchClub(clubId) {
-  return fetchData('/matches/' + clubId, clubsLoaded);
+  return fetchData('/clubs/' + clubId, clubsLoaded); // TODO: not implemented on backend
 }
 
 export default function() {
