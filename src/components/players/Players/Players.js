@@ -111,42 +111,11 @@ export default class Players extends Component {
         </Tab>
         <Tab label={this.context.t('players.alle')}>
           <Accordion style={{marginTop: 10}}>
-            <Panel header={this.context.t('players.vttlTeamA')} eventKey="1">
-              {this._getPlayersOfTeam('Vttl','A')}
-            </Panel>
-            <Panel header={this.context.t('players.vttlTeamB')} eventKey="2">
-              {this._getPlayersOfTeam('Vttl','B')}
-            </Panel>
-            <Panel header={this.context.t('players.vttlTeamC')} eventKey="3">
-              {this._getPlayersOfTeam('Vttl','C')}
-            </Panel>
-            <Panel header={this.context.t('players.vttlTeamD')} eventKey="4">
-              {this._getPlayersOfTeam('Vttl','D')}
-            </Panel>
-            <Panel header={this.context.t('players.vttlTeamE')} eventKey="5">
-              {this._getPlayersOfTeam('Vttl','E')}
-            </Panel>
-            <Panel header={this.context.t('players.vttlTeamF')} eventKey="6">
-              {this._getPlayersOfTeam('Vttl','F')}
-            </Panel>
-            <Panel header={this.context.t('players.sportaTeamA')} eventKey="7">
-              {this._getPlayersOfTeam('Sporta','A')}
-            </Panel>
-            <Panel header={this.context.t('players.sportaTeamB')} eventKey="8">
-              {this._getPlayersOfTeam('Sporta','B')}
-            </Panel>
-            <Panel header={this.context.t('players.sportaTeamC')} eventKey="9">
-              {this._getPlayersOfTeam('Sporta','C')}
-            </Panel>
-            <Panel header={this.context.t('players.sportaTeamD')} eventKey="10">
-              {this._getPlayersOfTeam('Sporta','D')}
-            </Panel>
-            <Panel header={this.context.t('players.sportaTeamE')} eventKey="11">
-              {this._getPlayersOfTeam('Sporta','E')}
-            </Panel>
-            <Panel header={this.context.t('players.sportaTeamF')} eventKey="12">
-              {this._getPlayersOfTeam('Sporta','F')}
-            </Panel>
+            {this.props.teams.sort((a, b) => (a.competition + a.teamCode).localeCompare(b.competition + b.teamCode))
+                .map((team, index) => <Panel header={team.competition + ' ' + team.teamCode + '-' +  this.context.t('players.team')}
+                  eventKey={index}>
+              {this._getPlayersOfTeam(team.competition,team.teamCode)}
+            </Panel>)}
           </Accordion>
         </Tab>
       </Tabs>
@@ -154,25 +123,25 @@ export default class Players extends Component {
   }
 
   _getPlayersOfTeam(competition,team){
-    var team = this.props.teams.filter(x => x.competition === competition && x.teamCode === team).toArray();
-    var spelers = team[0].players;
-    var spelersAsPlayerObject = [];
-    for (var i = 0; i < spelers.length; i++){
-       spelersAsPlayerObject.push(storeUtil.getPlayer(spelers[i].playerId));
+    var teamTT = this.props.teams.filter(x => x.competition === competition && x.teamCode === team).toArray();
+    var players = teamTT[0].players;
+    var playerAsPlayerObject = [];
+    for (var i = 0; i < players.length; i++){
+       playerAsPlayerObject.push(storeUtil.getPlayer(players[i].playerId));
     }
     if (competition === 'Vttl')
     {
-      spelersAsPlayerObject = spelersAsPlayerObject.filter(x => x.vttl).sort((a, b) => a.vttl.position - b.vttl.position);
+      playerAsPlayerObject = playerAsPlayerObject.filter(x => x.vttl).sort((a, b) => a.vttl.position - b.vttl.position);
       return (
         <div>
-          {spelersAsPlayerObject.map(speler => (<Card key={speler.id}>
-          <CardHeader title={this.context.t('players.vttl') + ' ' + team[0].teamCode + ' - ' + speler.name} />} />
+          {playerAsPlayerObject.map(player => (<Card key={player.id}>
+          <CardHeader title={this.context.t('players.vttl') + ' ' + teamTT[0].teamCode + ' - ' + player.name} />} />
              <CardText>
-                 <p>{this.context.t('players.indexVTTL')} {speler.vttl.rankingIndex}</p>
-                 <p>{this.context.t('players.memberNumberVTTL')} {speler.vttl.uniqueIndex}</p>
-                 <p>{this.context.t('players.rankingVTTL')} {speler.vttl.ranking}</p>
-                 <p>{this.context.t('players.styleAll')} {speler.style.name}</p>
-                 <p>{this.context.t('players.bestStrokeAll')} {speler.style.bestStroke}</p>
+                 <p>{this.context.t('players.indexVTTL')} {player.vttl.rankingIndex}</p>
+                 <p>{this.context.t('players.memberNumberVTTL')} {player.vttl.uniqueIndex}</p>
+                 <p>{this.context.t('players.rankingVTTL')} {player.vttl.ranking}</p>
+                 <p>{this.context.t('players.styleAll')} {player.style.name}</p>
+                 <p>{this.context.t('players.bestStrokeAll')} {player.style.bestStroke}</p>
              </CardText>
           </Card>))}
         </div>
@@ -180,17 +149,17 @@ export default class Players extends Component {
     }
     else
     {
-      spelersAsPlayerObject = spelersAsPlayerObject.filter(x => x.sporta).sort((a, b) => a.sporta.position - b.sporta.position);
+      playerAsPlayerObject = playerAsPlayerObject.filter(x => x.sporta).sort((a, b) => a.sporta.position - b.sporta.position);
       return (
         <div>
-          {spelersAsPlayerObject.map(speler => (<Card key={speler.id}>
-          <CardHeader title={this.context.t('players.sporta') + ' ' + team[0].teamCode + ' - ' + speler.name} />} />
+          {playerAsPlayerObject.map(player => (<Card key={player.id}>
+          <CardHeader title={this.context.t('players.sporta') + ' ' + teamTT[0].teamCode + ' - ' + player.name} />} />
              <CardText>
-                 <p>{this.context.t('players.indexSporta')} {speler.sporta.rankingIndex}</p>
-                 <p>{this.context.t('players.memberNumberSporta')} {speler.sporta.uniqueIndex}</p>
-                 <p>{this.context.t('players.rankingSporta')} {speler.sporta.ranking}</p>
-                 <p>{this.context.t('players.styleAll')} {speler.style.name}</p>
-                 <p>{this.context.t('players.bestStrokeAll')} {speler.style.bestStroke}</p>
+                 <p>{this.context.t('players.indexSporta')} {player.sporta.rankingIndex}</p>
+                 <p>{this.context.t('players.memberNumberSporta')} {player.sporta.uniqueIndex}</p>
+                 <p>{this.context.t('players.rankingSporta')} {player.sporta.ranking}</p>
+                 <p>{this.context.t('players.styleAll')} {player.style.name}</p>
+                 <p>{this.context.t('players.bestStrokeAll')} {player.style.bestStroke}</p>
              </CardText>
           </Card>))}
         </div>
