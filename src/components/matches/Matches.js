@@ -56,11 +56,11 @@ export default class Matches extends Component {
     // TODO: load more buttons
     return (
       <div>
-        {matchesToday.size ? <Strike text={this.context.t('match.todayMatches')} /> : null}
+        {matchesToday.size ? <Strike text={this.context.t('match.todayMatches')} style={{marginTop: 25}} /> : null}
         {this._renderMatches(matchesToday)}
-        {matchesNext.size || matchesPlayed.size ? <Strike text={this.context.t('match.nextMatches')} /> : null}
+        {matchesNext.size || matchesPlayed.size ? <Strike text={this.context.t('match.nextMatches')} style={{marginTop: 25}} /> : null}
         {this._renderMatches(matchesNext)}
-        {matchesNext.size && matchesPlayed.size ? <Strike text={this.context.t('match.playedMatches')} /> : null}
+        {matchesNext.size && matchesPlayed.size ? <Strike text={this.context.t('match.playedMatches')} style={{marginTop: 25}} /> : null}
         {this._renderMatches(matchesPlayed)}
       </div>
     );
