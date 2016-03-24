@@ -253,7 +253,7 @@ export default class MatchCard extends Component {
       return <SelectPlayersForm match={match} user={this.props.user} />;
     }
 
-    if (match.players.size === 0 || !this.props.user.playerId) {
+    if (match.players.size === 0) {
       let standardPlayers = team.getPlayers('standard').map(ply => ply.player);
       return (
         <PlayersImageGallery

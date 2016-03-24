@@ -1,10 +1,10 @@
 import $, { setHubPrototype } from './utils/hubProxy.js';
 import { getUrl } from './utils/httpClient.js';
-import store from './store.js';
+import store, { util as storeUtil } from './store.js';
 import { showSnackbar } from './actions/configActions.js';
-import { loaded as loadedPlayer } from './actions/playerActions.js';
-import { clubsLoaded, teamsLoaded } from './actions/initialLoad.js';
-import { simpleLoaded as loadedMatch, matchUpdated } from './actions/matchActions.js';
+//import { loaded as loadedPlayer } from './actions/playerActions.js';
+import * as loader from './actions/initialLoad.js';
+import { matchUpdated } from './actions/matchActions.js';
 
 var hubReady = false;
 
@@ -31,27 +31,27 @@ export function broadcastSnackbar(message) {
   }
 }
 
-ttcHub.client.broadcastReload = function(dataType, data, updateType) {
+ttcHub.client.broadcastReload = function(dataType, dataId, updateType) {
   switch (dataType) {
   case 'player':
-    store.dispatch(loadedPlayer(data));
+    store.dispatch(loader.fetchPlayer(dataId));
     break;
   case 'match':
-    store.dispatch(loadedMatch(data));
-    if (data && updateType) {
-      store.dispatch(matchUpdated(data, updateType));
+    store.dispatch(loader.fetchMatch(dataId));
+    if (dataId && updateType) {
+      store.dispatch(matchUpdated(dataId, updateType));
     }
     break;
   case 'team':
-    store.dispatch(clubsLoaded(data));
+    store.dispatch(loader.fetchTeam(dataId));
     break;
   case 'club':
-    store.dispatch(teamsLoaded(data));
+    store.dispatch(loader.fetchClub(dataId));
     break;
   }
 };
-export function broadcastReload(dataType, data, updateType) {
+export function broadcastReload(dataType, dataId, updateType) {
   if (hubReady) {
-    ttcHub.server.broadcastReload(dataType, data, updateType);
+    ttcHub.server.broadcastReload(dataType, dataId, updateType);
   }
 }

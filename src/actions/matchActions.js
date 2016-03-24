@@ -91,8 +91,8 @@ export function selectPlayer(matchId, playerId) {
 
     return http.post('/matches/TogglePlayer', matchPlayer)
       .then(function(data) {
-        //loaded(data, dispatch);
-        broadcastReload('match', data);
+        dispatch(simpleLoaded(data));
+        broadcastReload('match', data.id);
 
       }, function(err) {
         console.log('TogglePlayer!', err); // eslint-disable-line
@@ -101,16 +101,16 @@ export function selectPlayer(matchId, playerId) {
   };
 }
 
-export function matchUpdated(data, updateType) {
+export function matchUpdated(dataId, updateType) {
   if (updateType === 'score') {
     return {
       type: ActionTypes.SET_SETTING,
-      payload: {key: 'newMatchScore' + data.id, value: true}
+      payload: {key: 'newMatchScore' + dataId, value: true}
     };
   } else if (updateType === 'report') {
     return {
       type: ActionTypes.SET_SETTING,
-      payload: {key: 'newMatchComment' + data.id, value: true}
+      payload: {key: 'newMatchComment' + dataId, value: true}
     };
   }
 }
@@ -119,8 +119,8 @@ export function updateScore(matchScore) {
   return dispatch => {
     return http.post('/matches/UpdateScore', matchScore)
       .then(function(data) {
-        //loaded(data, dispatch);
-        broadcastReload('match', data, 'score');
+        dispatch(simpleLoaded(data));
+        broadcastReload('match', data.id, 'score');
 
       }, function(err) {
         console.log('UpdateScore!', err); // eslint-disable-line
@@ -134,8 +134,8 @@ export function postReport(matchId, reportText) {
     var user = storeUtil.getUser();
     return http.post('/matches/Report', {matchId, text: reportText, playerId: user.playerId})
       .then(function(data) {
-        //loaded(data, dispatch);
-        broadcastReload('match', data, 'report');
+        dispatch(simpleLoaded(data));
+        broadcastReload('match', data.id, 'report');
         dispatch(showSnackbar(trans('match.report.reportPosted')));
 
       }, function(err) {
@@ -150,8 +150,8 @@ export function postComment(matchId, commentText) {
     var user = storeUtil.getUser();
     return http.post('/matches/Comment', {matchId, text: commentText, playerId: user.playerId})
       .then(function(data) {
-        //loaded(data, dispatch);
-        broadcastReload('match', data, 'report');
+        dispatch(simpleLoaded(data));
+        broadcastReload('match', data.id, 'report');
         dispatch(showSnackbar(trans('match.report.commentPosted')));
 
       }, function(err) {

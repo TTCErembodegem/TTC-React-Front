@@ -24,8 +24,8 @@ export function updateStyle(player, newStyle) {
             by: user.alias,
             newStyle: newStyle.name + ': ' + newStyle.bestStroke
           }));
-          broadcastReload('player', data);
           dispatch(loaded(data));
+          broadcastReload('player', data.id);
         }
       }, function(err) {
         dispatch(showSnackbar('common.apiFail'));

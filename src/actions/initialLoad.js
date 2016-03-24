@@ -23,6 +23,31 @@ function initialLoadCompleted() {
   };
 }
 
+function fetchData(url, loadedAction) {
+  return dispatch => {
+    http.get(url)
+      .then(function(data) {
+        if (loadedAction) {
+          dispatch(loadedAction(data));
+        }
+      }, function(err) {
+        console.error(err); // eslint-disable-line
+      });
+  };
+}
+export function fetchPlayer(playerId) {
+  return fetchData('/player/' + playerId, playersLoaded);
+}
+export function fetchMatch(matchId) {
+  return fetchData('/matches/' + matchId, matchesLoaded);
+}
+export function fetchTeam(teamId) {
+  return fetchData('/matches/' + teamId, teamsLoaded);
+}
+export function fetchClub(clubId) {
+  return fetchData('/matches/' + clubId, clubsLoaded);
+}
+
 export default function() {
   return dispatch => {
     //dispatch(initialLoadStarted());

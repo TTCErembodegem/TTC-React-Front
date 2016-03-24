@@ -36,6 +36,8 @@ export default class MatchReport extends Component {
     };
   }
 
+  // TODO IMPORTANT: SYSTEM user can post comment in anyones name
+
   render() {
     const editorHeight = 200;
     const editorOptions = {
@@ -125,6 +127,7 @@ export default class MatchReport extends Component {
       );
     }
 
+    // TODO IMPORTANT: replace #D3D3D3 with #999? (iPhone visibility)
     return (
       <div>
         <h3>
@@ -148,7 +151,7 @@ export default class MatchReport extends Component {
     return (
       <div key={comment.id}>
         <strong style={{marginRight: 6}}>{poster.alias}</strong>
-        <TimeAgo date={comment.postedOn} />
+        <TimeAgo date={comment.postedOn} style={{color: '#999'}} />
 
         <div dangerouslySetInnerHTML={{__html: comment.text}} />
       </div>
