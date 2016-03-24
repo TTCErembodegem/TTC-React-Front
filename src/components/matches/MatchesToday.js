@@ -11,12 +11,11 @@ import { contextTypes } from '../../utils/decorators/withContext.js';
 import * as configActions from '../../actions/configActions.js';
 
 import MatchCard from './Match/MatchCard.js';
-import MatchCardHeader from './Match/MatchCardHeader.js';
 
 @withViewport
 @connect(state => {
   return {
-    //config: state.config,
+    config: state.config,
     user: state.user,
     players: state.players,
     matches: state.matches,
@@ -25,6 +24,7 @@ import MatchCardHeader from './Match/MatchCardHeader.js';
 export default class MatchesToday extends Component {
   static contextTypes = contextTypes;
   static propTypes = {
+    config: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired,
     players: ImmutablePropTypes.listOf(PropTypes.instanceOf(PlayerModel).isRequired).isRequired,
     matches: ImmutablePropTypes.listOf(PropTypes.instanceOf(MatchModel).isRequired).isRequired,
@@ -59,7 +59,7 @@ export default class MatchesToday extends Component {
       <div className="row">
         {matchesToday.map(match => (
           <div className="col-lg-12" style={{paddingBottom: 5, paddingTop: 5}} key={match.id}>
-            <MatchCard match={match} user={this.props.user} isOpen={false} small onOpen={null} />
+            <MatchCard match={match} user={this.props.user} isOpen={false} small onOpen={null} config={this.props.config} />
           </div>
         ))}
       </div>
@@ -71,7 +71,7 @@ export default class MatchesToday extends Component {
       <div className="row">
         {matches.map(match => (
           <div className="col-md-6" style={{paddingBottom: 5, paddingTop: 5}} key={match.id}>
-            <MatchCard match={match} user={this.props.user} isOpen={true} viewportWidthContainerCount={2} big />
+            <MatchCard match={match} user={this.props.user} isOpen={true} viewportWidthContainerCount={2} big config={this.props.config} />
           </div>
         ))}
       </div>

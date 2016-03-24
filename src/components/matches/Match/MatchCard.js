@@ -103,7 +103,7 @@ export default class MatchCard extends Component {
 
     if (this._showAccordion()) {
       return (
-        <HeaderComponent {...this.props} backgroundColor="#fafafa" isOpen={this.props.isOpen} style={{margin: 50}}>
+        <HeaderComponent {...this.props} backgroundColor="#fafafa" isOpen={this.props.isOpen} style={{margin: 50}} config={this.props.config}>
           <CardText expandable={true} style={{paddingTop: 0, paddingLeft: 5, paddingRight: 5}}>
             <PanelGroup activeKey={this.state.openTabKey} onSelect={::this._onTabSelect} accordion>
               {this._renderNavItem(tabEventKeys.players, 'players', this._getPlayersEditIcon())}
@@ -121,7 +121,7 @@ export default class MatchCard extends Component {
     }
 
     return (
-      <HeaderComponent {...this.props} backgroundColor="#fafafa" isOpen={this.props.isOpen}>
+      <HeaderComponent {...this.props} backgroundColor="#fafafa" isOpen={this.props.isOpen} config={this.props.config}>
         <CardText expandable={true} style={{paddingTop: 0}}>
           <Nav bsStyle="tabs" activeKey={this.state.openTabKey} onSelect={::this._onTabSelect}>
             {this._renderNavItem(tabEventKeys.players, 'players', this._getPlayersEditIcon())}
@@ -145,10 +145,7 @@ export default class MatchCard extends Component {
     if (!hasNewComment) {
       return;
     }
-    return <Icon fa="fa fa-comment-o" onClick={::this._onHideNewComment} className="match-card-tab-icon" />;
-  }
-  _onHideNewComment() {
-    this.props.setSetting('newMatchComment' + this.props.match.id, false);
+    return <Icon fa="fa fa-comment-o" className="match-card-tab-icon" />;
   }
   _getPlayersEditIcon() {
     var match = this.props.match;
@@ -178,6 +175,9 @@ export default class MatchCard extends Component {
     );
   }
   _onTabSelect(eventKey) {
+    if (eventKey === tabEventKeys.report) {
+      this.props.setSetting('newMatchComment' + this.props.match.id, false);
+    }
     this.setState({openTabKey: eventKey});
   }
   _renderTabContent(eventKey) {

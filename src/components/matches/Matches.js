@@ -71,15 +71,15 @@ export default class Matches extends Component {
       return null;
     }
 
-    return <BootstrapMatchCard matches={matches} user={this.props.user} />;
+    return <BootstrapMatchCard matches={matches} user={this.props.user} config={this.props.config} />;
   }
 }
 
-const BootstrapMatchCard = ({matches, user}) => (
+const BootstrapMatchCard = ({matches, user, config}) => (
   <div className="row">
     {matches.map(match => (
       <div className="col-lg-4 col-md-6" style={{paddingBottom: 5, paddingTop: 5}} key={match.id}>
-        <MatchCardHeader match={match} user={user} isOpen={false} />
+        <MatchCardHeader match={match} user={user} isOpen={false} config={this.props.config} />
       </div>
     ))}
   </div>

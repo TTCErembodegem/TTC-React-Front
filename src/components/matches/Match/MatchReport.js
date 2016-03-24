@@ -155,7 +155,7 @@ export default class MatchReport extends Component {
   }
 
   _renderComment(comment) {
-    const poster = storeUtils.getPlayer(comment.playerId);
+    const poster = storeUtils.getPlayer(comment.playerId) || {alias: 'SYSTEM'};
     return (
       <div key={comment.id}>
         <strong style={{marginRight: 6}}>{poster.alias}</strong>

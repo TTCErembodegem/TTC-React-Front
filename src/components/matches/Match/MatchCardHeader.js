@@ -86,6 +86,7 @@ export default class SmallMatchCardHeader extends Component {
 class MatchCardHeader extends Component {
   static contextTypes = contextTypes;
   static propTypes = {
+    config: PropTypes.object.isRequired,
     match: PropTypes.instanceOf(MatchModel).isRequired,
     children: PropTypes.node,
     user: PropTypes.object.isRequired,
@@ -113,10 +114,11 @@ class MatchCardHeader extends Component {
         </span>
       );
     }
-    // TODO IMPORTANT: show bigger if has new comment?
+
     if (match.comments.size || match.description) {
+      var hasNewComment = this.props.config.get('newMatchComment' + match.id);
       subtitle.push(
-        <span key="3" style={{marginLeft: 9, color: '#d3d3d3'}}>
+        <span key="3" style={{marginLeft: 9, color: hasNewComment ? '#E3170D' : '#d3d3d3'}}>
           {match.comments.size ? <small>{match.comments.size}</small> : null}
           <Icon fa="fa fa-comment-o" />
         </span>
