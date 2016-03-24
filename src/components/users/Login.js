@@ -7,8 +7,6 @@ import { contextTypes } from '../../utils/decorators/withContext.js';
 import * as loginActions from '../../actions/userActions.js';
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 
-import PlayerModel from '../../models/PlayerModel.js';
-
 import TextField from 'material-ui/lib/text-field';
 import RaisedButton from 'material-ui/lib/raised-button';
 import Paper from 'material-ui/lib/paper';
@@ -17,13 +15,11 @@ import Paper from 'material-ui/lib/paper';
   return {
     config: state.config,
     user: state.user,
-    players: state.players,
   };
 }, loginActions)
 export default class Login extends Component {
   static contextTypes = contextTypes;
   static propTypes = {
-    players: ImmutablePropTypes.listOf(PropTypes.instanceOf(PlayerModel).isRequired).isRequired,
     user: PropTypes.object.isRequired,
     login: PropTypes.func.isRequired,
   }
@@ -50,7 +46,6 @@ export default class Login extends Component {
         <h3>{t('login.title')}</h3>
         <span>{t('login.introText')}</span>
         <PlayerAutoComplete
-          players={this.props.players}
           selectPlayer={::this._onSelectPlayer}
           floatingLabelText={t('login.loginName')} />
 

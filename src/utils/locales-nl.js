@@ -15,6 +15,7 @@ export default {
   trans: {
     fullClubName: 'TTC Erembodegem',
     clubName: 'Erembodegem',
+    systemUserAlias: 'Clublokaal',
     modal: {
       cancel: 'Annuleren',
       submit: 'Bewaren',
@@ -121,6 +122,8 @@ export default {
         opponentsRankingTitle: 'Hun laatste uitslagen',
         opponentsFormation: 'Opstelling',
         opponentsFormationTitle: 'Hun opstelling',
+        admin: 'Dev',
+        adminTitle: 'Dev',
       },
       report: {
         title: 'Wedstrijdverslag',
@@ -133,6 +136,7 @@ export default {
         commentsTitle: 'Opvolging',
         commentsOpenForm: 'Reageren',
         commentPosted: 'Verklarende aantekening toegevoegd',
+        commentsPlayerSelect: 'Wie ben je?',
       },
       playersVictoryTitle: 'Overwinningen',
       playersOpponentsTitle: 'Tegenstanders',

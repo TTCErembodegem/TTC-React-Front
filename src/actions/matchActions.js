@@ -67,6 +67,7 @@ export function getLastOpponentMatches(teamId, opponent) {
   return dispatch => {
     return http.get('/matches/GetLastOpponentMatches', {teamId, ...opponent})
       .then(function(data) {
+        //console.log('getLastOpponentMatches', data);
         dispatch(readOnlyLoaded(data));
       }, function(err) {
         console.log('GetLastOpponentMatches!', err); // eslint-disable-line
@@ -151,10 +152,9 @@ export function postReport(matchId, reportText) {
   };
 }
 
-export function postComment(matchId, commentText) {
+export function postComment(matchId, commentText, posterPlayerId) {
   return (dispatch, getState) => {
-    var user = storeUtil.getUser();
-    return http.post('/matches/Comment', {matchId, text: commentText, playerId: user.playerId})
+    return http.post('/matches/Comment', {matchId, text: commentText, playerId: posterPlayerId})
       .then(function(data) {
         dispatch(simpleLoaded(data));
         broadcastReload('match', data.id, 'report');

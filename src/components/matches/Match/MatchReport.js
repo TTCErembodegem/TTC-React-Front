@@ -12,6 +12,7 @@ import Icon from '../../controls/Icon.js';
 import Editor from '../../controls/Editor.js';
 import RaisedButton from 'material-ui/lib/raised-button';
 import FlatButton from 'material-ui/lib/flat-button';
+import PlayerAutoComplete from '../../players/PlayerAutoComplete.js';
 
 @connect(state => {
   return {};
@@ -31,12 +32,11 @@ export default class MatchReport extends Component {
     this.state = {
       text: props.match.description,
       comment: '',
+      commentPlayerId: props.user.playerId,
       commentFormOpen: false,
       reportFormOpen: false,
     };
   }
-
-  // TODO IMPORTANT: SYSTEM user can post comment in anyones name
 
   render() {
     const editorHeight = 200;
@@ -108,13 +108,21 @@ export default class MatchReport extends Component {
           {this.state.text || this.state.reportFormOpen ? <h3 style={{marginTop: this.state.reportFormOpen ? 55 : 0}}>{this.context.t('match.report.commentsTitle')}</h3> : null}
           {this.props.match.comments.map(::this._renderComment)}
           {this.state.commentFormOpen ? (
-            <Editor
-              tag="pre"
-              text={this.state.comment}
-              style={{height: 55, width: '100%'}}
-              onChange={::this._reportCommentChange}
-              options={{...editorOptions, disableEditing: !canComment}}
-              contentEditable={canComment} />
+            <div>
+              {this.props.user.isSystem() ? (
+                <PlayerAutoComplete
+                  selectPlayer={::this._reportCommentPlayerChange}
+                  style={{}}
+                  hintText={this.context.t('match.report.commentsPlayerSelect')} />
+              ) : null}
+              <Editor
+                tag="pre"
+                text={this.state.comment}
+                style={{height: 55, width: '100%'}}
+                onChange={::this._reportCommentChange}
+                options={{...editorOptions, disableEditing: !canComment}}
+                contentEditable={canComment} />
+            </div>
           ) : null}
 
           {this.props.user.playerId ? (
@@ -127,7 +135,7 @@ export default class MatchReport extends Component {
       );
     }
 
-    // TODO IMPORTANT: replace #D3D3D3 with #999? (iPhone visibility)
+    // TODO: replace #D3D3D3 with #999? (iPhone visibility)
     return (
       <div>
         <h3>
@@ -171,7 +179,7 @@ export default class MatchReport extends Component {
   _onCommentForm() {
     if (this.state.commentFormOpen) {
       if (this.state.comment) {
-        this.props.postComment(this.props.match.id, this.state.comment);
+        this.props.postComment(this.props.match.id, this.state.comment, this.state.commentPlayerId);
         this.setState({commentFormOpen: false, comment: ''});
       }
     } else {
@@ -180,5 +188,8 @@ export default class MatchReport extends Component {
   }
   _reportCommentChange(text, medium) {
     this.setState({comment: text});
+  }
+  _reportCommentPlayerChange(id) {
+    this.setState({commentPlayerId: id});
   }
 }

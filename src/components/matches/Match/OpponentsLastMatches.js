@@ -8,6 +8,7 @@ import MatchModel from '../../../models/MatchModel.js';
 import Table from 'react-bootstrap/lib/Table';
 import OpponentPlayer from './OpponentPlayer.js';
 import Spinner from '../../controls/Spinner.js';
+import IconButton from 'material-ui/lib/icon-button';
 
 const AmountOfOpponentMatchesToShow = 5;
 
@@ -16,23 +17,24 @@ export default class OpponentsLastMatches extends Component {
   static contextTypes = contextTypes;
   static propTypes = {
     match: PropTypes.instanceOf(MatchModel).isRequired,
+    readonlyMatches: PropTypes.object.isRequired,
     viewport: PropTypes.object.isRequired,
   }
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      showAll: false,
+    };
   }
 
   render() {
     const widthRemoveColumn = 450; // combine Home&Away columns to just one Opponent column on small devices
 
-    var matches = storeUtils.matches
-      .getFromOpponent(this.props.match.opponent)
-      .sort((a, b) => a.date.isBefore(b.date) ? 1 : -1)
-      .filter(match => match.score)
-      .take(AmountOfOpponentMatchesToShow);
-
+    var matches = this.props.readonlyMatches;
+    if (!this.state.showAll) {
+      matches = matches.take(AmountOfOpponentMatchesToShow);
+    }
     if (matches.size === 0) {
       return <div className="match-card-tab-content"><h3><Spinner /></h3></div>;
     }
@@ -83,9 +85,19 @@ export default class OpponentsLastMatches extends Component {
               this._getMatchDetails(match)
             ];
           })}
+          {!this.state.showAll ? (
+            <tr key="showAll">
+              <td colSpan={5} style={{textAlign: 'center'}}>
+                <IconButton iconClassName="fa fa-chevron-circle-down" onClick={::this._onLoadAll} />
+              </td>
+            </tr>
+          ) : null}
         </tbody>
       </Table>
     );
+  }
+  _onLoadAll() {
+    this.setState({showAll: true});
   }
   _onOpenOpponentMatch(matchId) {
     this.setState({[matchId]: !this.state[matchId]});

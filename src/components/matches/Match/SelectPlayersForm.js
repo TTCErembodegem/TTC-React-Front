@@ -53,7 +53,6 @@ export default class SelectPlayersForm extends Component {
         {reservePlayers.length ? <PlayerAvatarList players={reservePlayers} match={this.props.match} selectPlayer={this.props.selectPlayer} /> : null}
         <Divider />
         <PlayerAutoComplete
-          players={this.props.players}
           selectPlayer={this.props.selectPlayer.bind(this, this.props.match.id)}
           style={{marginLeft: 10}}
           hintText={this.context.t('match.chooseOtherPlayer')} />

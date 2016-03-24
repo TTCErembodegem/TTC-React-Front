@@ -80,7 +80,7 @@ export default class MatchCard extends Component {
   }
 
   componentDidMount() {
-    // TODO IMPORTANT: here check for matches using storeUtils - http request only if matches not yet present in state...
+    // TODO: here check for matches using storeUtils - http request only if matches not yet present in state...
     this.props.getLastOpponentMatches(this.props.match.teamId, this.props.match.opponent);
   }
 
@@ -205,7 +205,12 @@ export default class MatchCard extends Component {
     return <IndividualMatches match={this.props.match} ownPlayerId={this.props.user.playerId} t={this.context.t} />;
   }
   _renderOpponentsRanking() {
-    return <OpponentsLastMatches match={this.props.match} />;
+    var matches = storeUtils.matches
+      .getFromOpponent(this.props.match.opponent)
+      .sort((a, b) => a.date.isBefore(b.date) ? 1 : -1)
+      .filter(match => match.score);
+
+    return <OpponentsLastMatches match={this.props.match} readonlyMatches={matches} />;
   }
   _renderOpponentFormation() {
     var formations = storeUtils.matches

@@ -33,7 +33,7 @@ export default class Matches extends Component {
 
   render() {
     // TODO: put in some global config (or perhaps server config?)
-    const matchesToShow = 5;
+    const matchesToShow = 7;
     //const showFutureMatchesDays = 7;
     //const showPlayedMatchesDays = 20;
 

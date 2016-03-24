@@ -42,9 +42,17 @@ export function validateToken(token) {
   };
 }
 
-export function login(creds) {
-  var player = storeUtil.getPlayer(creds.playerId);
-  var playerName = player ? player.alias : 'John Doe';
+export function login(credentials) {
+  var creds = Object.assign({}, credentials);
+  var playerName;
+  if (typeof creds.playerId === 'number') {
+    const player = storeUtil.getPlayer(creds.playerId);
+    playerName = player ? player.alias : 'John Doe';
+
+  } else {
+    creds.playerId = -1;
+    playerName = trans('systemUserAlias');
+  }
 
   return dispatch => {
     return http.post('/users/Login', creds)

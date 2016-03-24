@@ -1,11 +1,13 @@
 import { util as storeUtil } from '../store.js';
+import keyMirror from 'fbjs/lib/keyMirror';
 
-const security = {
-  CAN_MANAGETEAM: 'CAN_MANAGETEAM',
-  CAN_EDITALLREPORTS: 'CAN_EDITALLREPORTS',
-  IS_ADMIN: 'IS_ADMIN',
-  IS_DEV: 'IS_DEV',
-};
+const security = keyMirror({
+  CAN_MANAGETEAM: '',
+  CAN_EDITALLREPORTS: '',
+  IS_ADMIN: '',
+  IS_DEV: '',
+  IS_SYSTEM: '',
+});
 
 export default class UserModel {
   constructor(json) {
@@ -41,5 +43,8 @@ export default class UserModel {
   }
   isDev() {
     return this.can(security.IS_DEV);
+  }
+  isSystem() {
+    return this.can(security.IS_SYSTEM);
   }
 }
