@@ -107,12 +107,12 @@ export default class MatchCard extends Component {
           <CardText expandable={true} style={{paddingTop: 0, paddingLeft: 5, paddingRight: 5}}>
             <PanelGroup activeKey={this.state.openTabKey} onSelect={::this._onTabSelect} accordion>
               {this._renderNavItem(tabEventKeys.players, 'players', this._getPlayersEditIcon())}
+              {this._renderNavItem(tabEventKeys.report, 'report')}
               {showIndividualMatches ? this._renderNavItem(tabEventKeys.individualMatches, 'matches') : null}
-              {showOpponentClubLocation ? this._renderNavItem(tabEventKeys.opponentClub, 'club') : null}
               {showScoresheet ? this._renderNavItem(tabEventKeys.scoresheet, 'scoresheet') : null}
+              {showOpponentClubLocation ? this._renderNavItem(tabEventKeys.opponentClub, 'club') : null}
               {this._renderNavItem(tabEventKeys.opponentsRanking, 'opponentsRanking')}
               {this._renderNavItem(tabEventKeys.opponentsFormation, 'opponentsFormation')}
-              {this._renderNavItem(tabEventKeys.report, 'report')}
               {this.props.user.isDev() ? this._renderNavItem('admin', 'admin') : null}
             </PanelGroup>
           </CardText>
@@ -125,12 +125,12 @@ export default class MatchCard extends Component {
         <CardText expandable={true} style={{paddingTop: 0}}>
           <Nav bsStyle="tabs" activeKey={this.state.openTabKey} onSelect={::this._onTabSelect}>
             {this._renderNavItem(tabEventKeys.players, 'players', this._getPlayersEditIcon())}
+            {this._renderNavItem(tabEventKeys.report, 'report', this._getCommentsIcon())}
             {showIndividualMatches ? this._renderNavItem(tabEventKeys.individualMatches, 'matches') : null}
-            {showOpponentClubLocation ? this._renderNavItem(tabEventKeys.opponentClub, 'club') : null}
             {showScoresheet ? this._renderNavItem(tabEventKeys.scoresheet, 'scoresheet') : null}
+            {showOpponentClubLocation ? this._renderNavItem(tabEventKeys.opponentClub, 'club') : null}
             {this._renderNavItem(tabEventKeys.opponentsRanking, 'opponentsRanking')}
             {this._renderNavItem(tabEventKeys.opponentsFormation, 'opponentsFormation')}
-            {this._renderNavItem(tabEventKeys.report, 'report', this._getCommentsIcon())}
             {this.props.user.isDev() ? this._renderNavItem('admin', 'admin') : null}
           </Nav>
           <div className="match-card-tab">
@@ -228,7 +228,7 @@ export default class MatchCard extends Component {
     return <OpponentsFormation formations={formations} />;
   }
   _renderScoreSheet() {
-    return (<Scoresheet match={this.props.match} t={this.context.t} />);
+    return (<Scoresheet match={this.props.match} t={this.context.t} viewport={this.props.viewport} />);
   }
   _renderReport() {
     var matchForm;
@@ -242,7 +242,7 @@ export default class MatchCard extends Component {
     }
 
     return (
-      <div style={{marginLeft: 20, marginTop: 20, marginRight: 20}}>
+      <div style={{marginLeft: 20, marginTop: 20, marginRight: 20, cursor: 'default'}}>
         {matchForm}
         <MatchReport match={this.props.match} t={this.context.t} user={this.props.user} />
       </div>

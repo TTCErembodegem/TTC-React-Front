@@ -11,10 +11,12 @@ export default class Scoresheet extends Component {
   static propTypes = {
     match: PropTypes.instanceOf(MatchModel),
     t: PropTypes.func.isRequired,
+    viewport: PropTypes.object.isRequired,
   }
 
   render() {
-    var competition = this.props.match.getTeam().competition;
+    const isSmall = this.props.viewport.width < 550;
+    const competition = this.props.match.getTeam().competition;
 
     if (competition === 'Sporta') {
       return (
@@ -29,7 +31,7 @@ export default class Scoresheet extends Component {
           </thead>
           <tbody>
             {this.props.match.getOwnPlayerModels().map((player, i) => {
-              var comp = player.getCompetition(competition);
+              const comp = player.getCompetition(competition);
               return (
                 <tr key={player.name}>
                   <td>{i + 1}</td>
@@ -61,14 +63,14 @@ export default class Scoresheet extends Component {
             <tr>
               <th colSpan={2}>{this.props.match.frenoyMatchId}</th>
               <th>{this.props.t('match.scoresheetVttl.uniqueIndex')}</th>
-              <th>{this.props.t('match.scoresheetVttl.rankingIndex')}</th>
-              <th>{this.props.t('match.scoresheetVttl.index')}</th>
-              <th>{this.props.t('match.scoresheetVttl.ranking')}</th>
+              <th>{isSmall ? '' : this.props.t('match.scoresheetVttl.rankingIndex')}</th>
+              <th>{isSmall ? '' : this.props.t('match.scoresheetVttl.index')}</th>
+              <th>{isSmall ? '' : this.props.t('match.scoresheetVttl.ranking')}</th>
             </tr>
           </thead>
           <tbody>
             {this.props.match.getOwnPlayerModels().map((player, i) => {
-              var comp = player.getCompetition(competition);
+              const comp = player.getCompetition(competition);
               return (
                 <tr key={player.name}>
                   <td>{i + 1}</td>

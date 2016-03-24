@@ -92,12 +92,6 @@ class MatchCardHeader extends Component {
     isOpen: PropTypes.bool.isRequired,
     onOpen: PropTypes.func.isRequired,
   }
-  // static defaultProps = {
-  //   onOpen: isOpen => {
-  //     const matchRoute = this.context.t.route('match', {matchId: this.props.match.id});
-  //     browserHistory.push(matchRoute);
-  //   }
-  // }
 
   // TODO: op heenronde score klikken: naar match gaan
   // TODO: implement fancy tooltip https://github.com/callemall/material-ui/blob/master/src/tooltip.jsx?
@@ -119,6 +113,9 @@ class MatchCardHeader extends Component {
         </span>
       );
     }
+    // TODO IMPORTANT: spelerstijl aanpassen ook autocomplete...
+    // TODO IMPORTANT: place the MatchForm also in the top right
+    // TODO IMPORTANT: show bigger if has new comment?
     if (match.comments.size || match.description) {
       subtitle.push(
         <span key="3" style={{marginLeft: 9, color: '#d3d3d3'}}>

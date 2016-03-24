@@ -71,10 +71,12 @@
   margin-top: -7px;
   margin-left: -7px;
   padding-left: 24px;
+  cursor: default;
 }
 
 .match-card-tab-table {
   margin-bottom: -8px;
+  cursor: default;
 }
 
 .match-card-tab-icon {

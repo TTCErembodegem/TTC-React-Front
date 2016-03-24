@@ -80,7 +80,7 @@ class PlayerAvatarList extends Component {
           if (this.props.match.plays(player)) {
             color = '#FFB00F';
           }
-          return <PlayerAvatar player={player} select={this._onPlayerSelect.bind(this, player.id)} backgroundColor={color} key={player.id} />;
+          return <SelectablePlayerAvatar player={player} select={this._onPlayerSelect.bind(this, player.id)} backgroundColor={color} key={player.id} />;
         })}
       </List>
     );
@@ -90,9 +90,7 @@ class PlayerAvatarList extends Component {
   }
 }
 
-
-
-class PlayerAvatar extends Component {
+class SelectablePlayerAvatar extends Component {
   static propTypes = {
     player: PropTypes.instanceOf(PlayerModel).isRequired,
     select: PropTypes.func.isRequired,

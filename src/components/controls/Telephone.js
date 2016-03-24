@@ -3,7 +3,7 @@ import Icon from './Icon.js';
 
 export default class Telephone extends Component {
   static propTypes = {
-    number: PropTypes.string
+    number: PropTypes.string,
   }
 
   render() {
@@ -11,10 +11,11 @@ export default class Telephone extends Component {
       return null;
     }
 
+    var {number, ...props} = this.props;
     return (
-      <div className="iconize">
+      <div className="iconize" {...props}>
         <Icon fa="fa fa-phone" />
-        <span style={{marginLeft: 7}}>{this.props.number}</span>
+        <span style={{marginLeft: 7}}>{number}</span>
       </div>
     );
   }

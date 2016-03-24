@@ -5,17 +5,20 @@ import withContext, { contextTypes } from '../../utils/decorators/withContext.js
 
 import * as playerActions from '../../actions/playerActions.js';
 
+import List from 'material-ui/lib/lists/list';
 import GridList from 'material-ui/lib/grid-list/grid-list';
 import GridTile from 'material-ui/lib/grid-list/grid-tile';
 import Dialog from 'material-ui/lib/dialog';
 import AutoComplete from 'material-ui/lib/auto-complete';
 import TextField from 'material-ui/lib/text-field';
 import FlatButton from 'material-ui/lib/flat-button';
+import Paper from 'material-ui/lib/paper';
 
 import Icon from '../controls/Icon.js';
 import Telephone from '../controls/Telephone.js';
 import PlayerPlayingStyle from './PlayerPlayingStyle.js';
 import PlayerImage from './PlayerImage.js';
+import PlayerAvatar from './PlayerAvatar.js';
 
 const PlayersImageWidth = 230;
 const gridStyles = {
@@ -95,35 +98,70 @@ export default class PlayersImageGallery extends Component {
     const selectedPlayer = this.state.editingStyle;
     const newStyle = this.state.newStyle;
 
-    return (
-      <div style={gridStyles.root}>
-        <GridList
-          cellHeight={200}
-          cols={Math.min(5, Math.floor((viewport.width / this.props.viewportWidthContainerCount) / PlayersImageWidth))}
-          style={gridStyles.gridList}>
-          {players.map(ply => {
+    const playerPaperStyle = {
+      height: 80,
+      width: 130,
+      margin: 5,
+      display: 'inline-block',
+      padding: 5,
+    };
+
+    var gallery;
+    if (viewport.width > 600) {
+      gallery = (
+        <div style={gridStyles.root}>
+          <GridList
+            cellHeight={200}
+            cols={Math.min(5, Math.floor((viewport.width / this.props.viewportWidthContainerCount) / PlayersImageWidth))}
+            style={gridStyles.gridList}>
+            {players.map(ply => {
+              var comp = ply.getCompetition(competition);
+              return (
+                <GridTile
+                  key={ply.id}
+                  title={(
+                    <span>
+                      <span>{ply.name}</span> <small>{comp ? comp.ranking : '??'}</small>
+                    </span>
+                  )}
+                  subtitle={<PlayerPlayingStyle ply={ply} />}>
+                  {user.playerId && user.playerId !== ply.id ? (
+                    <Icon
+                      title={t('players.editStyle.tooltip', ply.alias)}
+                      fa="fa fa-pencil-square-o"
+                      style={editStyleIcon}
+                      onClick={this._openStyle.bind(this, ply)} />
+                  ) : null}
+                  <PlayerImage playerId={ply.id} />
+                </GridTile>
+              );
+            })}
+          </GridList>
+        </div>
+      );
+    } else {
+      gallery = (
+        <div style={{cursor: 'default'}}>
+          {this.props.players.map(ply => {
             var comp = ply.getCompetition(competition);
             return (
-              <GridTile
-                key={ply.id}
-                title={(
-                  <span>
-                    <span>{ply.name}</span> <small>{comp ? comp.ranking : '??'}</small>
-                  </span>
-                )}
-                subtitle={<PlayerPlayingStyle ply={ply} />}>
-                {user.playerId && user.playerId !== ply.id ? (
-                  <Icon
-                    title={t('players.editStyle.tooltip', ply.alias)}
-                    fa="fa fa-pencil-square-o"
-                    style={editStyleIcon}
-                    onClick={this._openStyle.bind(this, ply)} />
-                ) : null}
-                <PlayerImage playerId={ply.id} />
-              </GridTile>
+              <Paper key={ply.id} zDepth={1} style={playerPaperStyle}>
+                <div className="clickable" onClick={this._openStyle.bind(this, ply)} style={{display: 'inline-block'}} title={t('players.editStyle.tooltip', ply.alias)}>
+                  <PlayerAvatar player={ply} style={{backgroundColor: 'gold', margin: 0}} />
+                </div>
+                <strong style={{marginLeft: 5}}>{ply.alias}</strong> <small>{comp ? comp.ranking : '??'}</small>
+
+                {user.playerId ? <Telephone number={ply.contact.mobile} style={{marginTop: 7}} /> : null}
+              </Paper>
             );
           })}
-        </GridList>
+        </div>
+      );
+    }
+
+    return (
+      <div>
+        {gallery}
         {selectedPlayer ? (
           <Dialog
             title={t('players.editStyle.title', selectedPlayer.alias)}
