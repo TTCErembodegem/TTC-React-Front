@@ -126,6 +126,9 @@ export function updateScore(matchScore) {
   return dispatch => {
     return http.post('/matches/UpdateScore', matchScore)
       .then(function(data) {
+        if (!data) {
+          return;
+        }
         dispatch(simpleLoaded(data));
         broadcastReload('match', data.id, 'score');
 
@@ -141,6 +144,9 @@ export function postReport(matchId, reportText) {
     var user = storeUtil.getUser();
     return http.post('/matches/Report', {matchId, text: reportText, playerId: user.playerId})
       .then(function(data) {
+        if (!data) {
+          return;
+        }
         dispatch(simpleLoaded(data));
         broadcastReload('match', data.id, 'report');
         dispatch(showSnackbar(trans('match.report.reportPosted')));
@@ -156,6 +162,9 @@ export function postComment(matchId, commentText, posterPlayerId) {
   return (dispatch, getState) => {
     return http.post('/matches/Comment', {matchId, text: commentText, playerId: posterPlayerId})
       .then(function(data) {
+        if (!data) {
+          return;
+        }
         dispatch(simpleLoaded(data));
         broadcastReload('match', data.id, 'report');
         dispatch(showSnackbar(trans('match.report.commentPosted')));

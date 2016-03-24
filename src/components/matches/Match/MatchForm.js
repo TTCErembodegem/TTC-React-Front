@@ -29,11 +29,11 @@ export default class MatchForm extends Component {
     const isEditable = match.scoreType === 'BeingPlayed' && this.props.user.canChangeMatchScore(match.id);
 
     return (
-      <div style={{width: this.props.big ? 220 : 125}}>
+      <div style={{width: this.props.big ? 220 : 140}}>
         {isEditable ? <MatchManipulation
           style={{float: 'left', marginRight: 10}}
-          plusClick={this.props.updateScore.bind(this, {matchId: match.id, home: score.home + 1, out: score.out})}
-          minClick={this.props.updateScore.bind(this, {matchId: match.id, home: score.home - 1, out: score.out})} />
+          plusClick={this._onUpdateScore.bind(this, {matchId: match.id, home: score.home + 1, out: score.out})}
+          minClick={this._onUpdateScore.bind(this, {matchId: match.id, home: score.home - 1, out: score.out})} />
         : null}
 
         <div style={{display: 'inline'}}>
@@ -42,12 +42,20 @@ export default class MatchForm extends Component {
 
         {isEditable ? <MatchManipulation
           style={{float: 'right'}}
-          plusClick={this.props.updateScore.bind(this, {matchId: match.id, home: score.home, out: score.out + 1})}
-          minClick={this.props.updateScore.bind(this, {matchId: match.id, home: score.home, out: score.out - 1})} />
+          plusClick={this._onUpdateScore.bind(this, {matchId: match.id, home: score.home, out: score.out + 1})}
+          minClick={this._onUpdateScore.bind(this, {matchId: match.id, home: score.home, out: score.out - 1})} />
         : null}
 
       </div>
     );
+  }
+
+  _onUpdateScore(matchScore, e) {
+    this.props.updateScore(matchScore);
+
+    // TODO: bug updating the score opens/closes the tab...
+    e.stopPropagation();
+    e.preventDefault();
   }
 }
 
