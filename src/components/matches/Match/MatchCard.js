@@ -60,11 +60,15 @@ export default class MatchCard extends Component {
     match: PropTypes.instanceOf(MatchModel).isRequired,
     config: PropTypes.object.isRequired,
     user: PropTypes.instanceOf(UserModel).isRequired,
-    getLastOpponentMatches: PropTypes.func.isRequired,
     viewport: PropTypes.object.isRequired,
     readonlyMatches: PropTypes.object.isRequired,
+
     viewportWidthContainerCount: PropTypes.number.isRequired,
     big: PropTypes.bool,
+    small: PropTypes.bool,
+    isOpen: PropTypes.bool,
+
+    getLastOpponentMatches: PropTypes.func.isRequired,
     setSetting: PropTypes.func.isRequired,
   }
   static defaultProps = {
@@ -86,7 +90,7 @@ export default class MatchCard extends Component {
 
   _showAccordion() {
     // Otherwise show tabs
-    return this.props.viewport.width < 700;
+    return this.props.viewport.width < 700 || this.props.small;
   }
 
   render() {
@@ -99,7 +103,7 @@ export default class MatchCard extends Component {
 
     if (this._showAccordion()) {
       return (
-        <HeaderComponent {...this.props} backgroundColor="#fafafa" isOpen={true} style={{margin: 50}}>
+        <HeaderComponent {...this.props} backgroundColor="#fafafa" isOpen={this.props.isOpen} style={{margin: 50}}>
           <CardText expandable={true} style={{paddingTop: 0, paddingLeft: 5, paddingRight: 5}}>
             <PanelGroup activeKey={this.state.openTabKey} onSelect={::this._onTabSelect} accordion>
               {this._renderNavItem(tabEventKeys.players, 'players', this._getPlayersEditIcon())}
@@ -117,7 +121,7 @@ export default class MatchCard extends Component {
     }
 
     return (
-      <HeaderComponent {...this.props} backgroundColor="#fafafa" isOpen={true}>
+      <HeaderComponent {...this.props} backgroundColor="#fafafa" isOpen={this.props.isOpen}>
         <CardText expandable={true} style={{paddingTop: 0}}>
           <Nav bsStyle="tabs" activeKey={this.state.openTabKey} onSelect={::this._onTabSelect}>
             {this._renderNavItem(tabEventKeys.players, 'players', this._getPlayersEditIcon())}

@@ -3,6 +3,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import { util as storeUtil } from '../../store.js';
+import withViewport from '../../utils/decorators/withViewport.js';
 
 import MatchModel from '../../models/MatchModel.js';
 import PlayerModel from '../../models/PlayerModel.js';
@@ -10,15 +11,15 @@ import { contextTypes } from '../../utils/decorators/withContext.js';
 import * as configActions from '../../actions/configActions.js';
 
 import MatchCard from './Match/MatchCard.js';
+import MatchCardHeader from './Match/MatchCardHeader.js';
 
+@withViewport
 @connect(state => {
   return {
     //config: state.config,
     user: state.user,
     players: state.players,
-    //clubs: state.clubs,
     matches: state.matches,
-    //teams: state.teams,
   };
 }, configActions)
 export default class MatchesToday extends Component {
@@ -28,6 +29,7 @@ export default class MatchesToday extends Component {
     players: ImmutablePropTypes.listOf(PropTypes.instanceOf(PlayerModel).isRequired).isRequired,
     matches: ImmutablePropTypes.listOf(PropTypes.instanceOf(MatchModel).isRequired).isRequired,
     setSetting: PropTypes.func.isRequired,
+    viewport: PropTypes.object.isRequired,
   }
 
   componentDidMount() {
@@ -38,22 +40,33 @@ export default class MatchesToday extends Component {
   }
 
   render() {
-    // TODO IMPORTANT: vandaag op mobile moet anders... Dit is enkel goed voor op de TV...
-
     var matchesToday = storeUtil.matches.getTodayMatches();
+    if (matchesToday.size === 0) {
+      return <div />;
+    }
+
+    if (this.props.viewport.width > 1200) {
+      return (
+        <div>
+          {this._renderMatches(_.take(matchesToday.toArray(), 2))}
+          {matchesToday.size > 2 ? this._renderMatches(matchesToday.shift().shift()) : null}
+        </div>
+      );
+    }
+
+    // on small devices
     return (
-      <div>
-        {this._renderMatches(_.take(matchesToday.toArray(), 2))}
-        {matchesToday.size > 2 ? this._renderMatches(matchesToday.shift().shift()) : null}
+      <div className="row">
+        {matchesToday.map(match => (
+          <div className="col-lg-12" style={{paddingBottom: 5, paddingTop: 5}} key={match.id}>
+            <MatchCard match={match} user={this.props.user} isOpen={false} small onOpen={null} />
+          </div>
+        ))}
       </div>
     );
   }
 
   _renderMatches(matches) {
-    if (matches.size === 0) {
-      return null;
-    }
-
     return (
       <div className="row">
         {matches.map(match => (

@@ -56,14 +56,48 @@ export class BigMatchCardHeader extends Component {
   }
 }
 
-export default class MatchCardHeader extends Component {
+
+
+export default class SmallMatchCardHeader extends Component {
   static contextTypes = contextTypes;
   static propTypes = {
     match: PropTypes.instanceOf(MatchModel).isRequired,
     children: PropTypes.node,
     user: PropTypes.object.isRequired,
     isOpen: PropTypes.bool.isRequired,
+    onOpen: PropTypes.func,
   }
+
+  render() {
+    const props = Object.assign({
+      onOpen: ::this._onOpen
+    }, this.props);
+    return <MatchCardHeader {...props} />;
+  }
+
+  _onOpen(isOpen) {
+    const matchRoute = this.context.t.route('match', {matchId: this.props.match.id});
+    browserHistory.push(matchRoute);
+  }
+}
+
+
+
+class MatchCardHeader extends Component {
+  static contextTypes = contextTypes;
+  static propTypes = {
+    match: PropTypes.instanceOf(MatchModel).isRequired,
+    children: PropTypes.node,
+    user: PropTypes.object.isRequired,
+    isOpen: PropTypes.bool.isRequired,
+    onOpen: PropTypes.func.isRequired,
+  }
+  // static defaultProps = {
+  //   onOpen: isOpen => {
+  //     const matchRoute = this.context.t.route('match', {matchId: this.props.match.id});
+  //     browserHistory.push(matchRoute);
+  //   }
+  // }
 
   // TODO: op heenronde score klikken: naar match gaan
   // TODO: implement fancy tooltip https://github.com/callemall/material-ui/blob/master/src/tooltip.jsx?
@@ -169,8 +203,9 @@ export default class MatchCardHeader extends Component {
     );
   }
 
-  _onExpandChange(/*isOpen*/) {
-    const matchRoute = this.context.t.route('match', {matchId: this.props.match.id});
-    browserHistory.push(matchRoute);
+  _onExpandChange(isOpen) {
+    if (this.props.onOpen) {
+      this.props.onOpen(isOpen);
+    }
   }
 }

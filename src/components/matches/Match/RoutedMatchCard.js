@@ -33,6 +33,10 @@ export default class RoutedMatchCard extends Component {
   }
 
   render() {
-    return <div style={{marginBottom: 20, marginTop: 20, marginLeft: 5, marginRight: 5}}><MatchCard match={this.state.match} /></div>;
+    return (
+      <div style={{marginBottom: 20, marginTop: 20, marginLeft: 5, marginRight: 5}}>
+        <MatchCard match={this.state.match} isOpen={true} />
+      </div>
+    );
   }
 }
