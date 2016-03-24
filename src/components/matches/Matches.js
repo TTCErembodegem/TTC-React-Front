@@ -23,8 +23,9 @@ export default class Matches extends Component {
   static contextTypes = contextTypes;
 
   static propTypes = {
-    matches: ImmutablePropTypes.listOf(PropTypes.instanceOf(MatchModel).isRequired).isRequired,
+    config: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired,
+    matches: ImmutablePropTypes.listOf(PropTypes.instanceOf(MatchModel).isRequired).isRequired,
   }
 
   componentDidMount() {
@@ -71,16 +72,14 @@ export default class Matches extends Component {
       return null;
     }
 
-    return <BootstrapMatchCard matches={matches} user={this.props.user} config={this.props.config} />;
+    return (
+      <div className="row">
+        {matches.map(match => (
+          <div className="col-lg-4 col-md-6" style={{paddingBottom: 5, paddingTop: 5}} key={match.id}>
+            <MatchCardHeader match={match} user={this.props.user} isOpen={false} config={this.props.config} noScoreEdit />
+          </div>
+        ))}
+      </div>
+    );
   }
 }
-
-const BootstrapMatchCard = ({matches, user, config}) => (
-  <div className="row">
-    {matches.map(match => (
-      <div className="col-lg-4 col-md-6" style={{paddingBottom: 5, paddingTop: 5}} key={match.id}>
-        <MatchCardHeader match={match} user={user} isOpen={false} config={this.props.config} />
-      </div>
-    ))}
-  </div>
-);

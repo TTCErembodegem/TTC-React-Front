@@ -66,6 +66,7 @@ export default class SmallMatchCardHeader extends Component {
     user: PropTypes.object.isRequired,
     isOpen: PropTypes.bool.isRequired,
     onOpen: PropTypes.func,
+    noScoreEdit: PropTypes.bool,
   }
 
   render() {
@@ -92,6 +93,7 @@ class MatchCardHeader extends Component {
     user: PropTypes.object.isRequired,
     isOpen: PropTypes.bool.isRequired,
     onOpen: PropTypes.func.isRequired,
+    noScoreEdit: PropTypes.bool,
   }
 
   // TODO: op heenronde score klikken: naar match gaan
@@ -134,7 +136,7 @@ class MatchCardHeader extends Component {
           actAsExpander={!this.props.isOpen}
           avatar={iPlay && !this.props.isOpen ? <FavoriteMatch /> : null}>
 
-          {this.props.match.scoreType === 'BeingPlayed' && this.props.user.canChangeMatchScore(this.props.match.id) ? (
+          {!this.props.noScoreEdit && this.props.match.scoreType === 'BeingPlayed' && this.props.user.canChangeMatchScore(this.props.match.id) ? (
             <div style={{position: 'absolute', top: 23, right: 15}}>
               <MatchForm match={match} t={this.context.t} user={this.props.user} />
             </div>
