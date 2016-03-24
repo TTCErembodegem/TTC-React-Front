@@ -2,11 +2,21 @@ import React, { PropTypes, Component } from 'react';
 import Tabs from 'material-ui/lib/tabs/tabs';
 import Tab from 'material-ui/lib/tabs/tab';
 import Icon from '../../controls/Icon.js';
+import Card from 'material-ui/lib/card/card';
+import CardActions from 'material-ui/lib/card/card-actions';
+import CardHeader from 'material-ui/lib/card/card-header';
+import CardMedia from 'material-ui/lib/card/card-media';
+import CardTitle from 'material-ui/lib/card/card-title';
+import CardText from 'material-ui/lib/card/card-text';
+import Accordion from 'react-bootstrap/lib/Accordion';
+import Panel from 'react-bootstrap/lib/Panel';
 
 import { connect } from 'react-redux';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
 import PlayerModel from '../../../models/PlayerModel.js';
+import TeamModel from '../../../models/TeamModel.js';
+import { util as storeUtil } from '../../../store.js';
 import { contextTypes } from '../../../utils/decorators/withContext.js';
 import withStyles from '../../../utils/decorators/withStyles.js';
 import styles from './Players.css';
@@ -17,7 +27,7 @@ import styles from './Players.css';
     players: state.players,
     //clubs: state.clubs,
     //matches: state.matches,
-    //teams: state.teams,
+    teams: state.teams,
   };
 })
 @withStyles(styles)
@@ -26,6 +36,7 @@ export default class Players extends Component {
   static propTypes = {
     config: PropTypes.object,
     players: ImmutablePropTypes.listOf(PropTypes.instanceOf(PlayerModel).isRequired).isRequired,
+    teams: ImmutablePropTypes.listOf(PropTypes.instanceOf(TeamModel).isRequired).isRequired,
   };
 
   render() {
@@ -98,7 +109,61 @@ export default class Players extends Component {
             </table>
           </div>
         </Tab>
+        <Tab label={this.context.t('players.alle')}>
+          <Accordion style={{marginTop: 10}}>
+            {this.props.teams.sort((a, b) => (a.competition + a.teamCode).localeCompare(b.competition + b.teamCode))
+                .map((team, index) => <Panel header={team.competition + ' ' + team.teamCode + '-' +  this.context.t('players.team')}
+                  eventKey={index}>
+              {this._getPlayersOfTeam(team.competition,team.teamCode)}
+            </Panel>)}
+          </Accordion>
+        </Tab>
       </Tabs>
     );
+  }
+
+  _getPlayersOfTeam(competition,team){
+    var teamTT = this.props.teams.filter(x => x.competition === competition && x.teamCode === team).toArray();
+    var players = teamTT[0].players;
+    var playerAsPlayerObject = [];
+    for (var i = 0; i < players.length; i++){
+       playerAsPlayerObject.push(storeUtil.getPlayer(players[i].playerId));
+    }
+    if (competition === 'Vttl')
+    {
+      playerAsPlayerObject = playerAsPlayerObject.filter(x => x.vttl).sort((a, b) => a.vttl.position - b.vttl.position);
+      return (
+        <div>
+          {playerAsPlayerObject.map(player => (<Card key={player.id}>
+          <CardHeader title={this.context.t('players.vttl') + ' ' + teamTT[0].teamCode + ' - ' + player.name} />} />
+             <CardText>
+                 <p>{this.context.t('players.indexVTTL')} {player.vttl.rankingIndex}</p>
+                 <p>{this.context.t('players.memberNumberVTTL')} {player.vttl.uniqueIndex}</p>
+                 <p>{this.context.t('players.rankingVTTL')} {player.vttl.ranking}</p>
+                 <p>{this.context.t('players.styleAll')} {player.style.name}</p>
+                 <p>{this.context.t('players.bestStrokeAll')} {player.style.bestStroke}</p>
+             </CardText>
+          </Card>))}
+        </div>
+      );
+    }
+    else
+    {
+      playerAsPlayerObject = playerAsPlayerObject.filter(x => x.sporta).sort((a, b) => a.sporta.position - b.sporta.position);
+      return (
+        <div>
+          {playerAsPlayerObject.map(player => (<Card key={player.id}>
+          <CardHeader title={this.context.t('players.sporta') + ' ' + teamTT[0].teamCode + ' - ' + player.name} />} />
+             <CardText>
+                 <p>{this.context.t('players.indexSporta')} {player.sporta.rankingIndex}</p>
+                 <p>{this.context.t('players.memberNumberSporta')} {player.sporta.uniqueIndex}</p>
+                 <p>{this.context.t('players.rankingSporta')} {player.sporta.ranking}</p>
+                 <p>{this.context.t('players.styleAll')} {player.style.name}</p>
+                 <p>{this.context.t('players.bestStrokeAll')} {player.style.bestStroke}</p>
+             </CardText>
+          </Card>))}
+        </div>
+      );
+    }
   }
 }
