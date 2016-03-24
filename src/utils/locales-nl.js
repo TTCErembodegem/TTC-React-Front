@@ -77,18 +77,6 @@ export default {
       indexSporta: 'Index Sporta:',
       memberNumberVTTL: 'Lidnummer VTTL:',
       memberNumberSporta: 'Lidnummer Sporta:',
-      vttlTeamA: 'VTTL A-ploeg',
-      vttlTeamB: 'VTTL B-ploeg',
-      vttlTeamC: 'VTTL C-ploeg',
-      vttlTeamD: 'VTTL D-ploeg',
-      vttlTeamE: 'VTTL E-ploeg',
-      vttlTeamF: 'VTTL F-ploeg',
-      sportaTeamA: 'Sporta A-ploeg',
-      sportaTeamB: 'Sporta B-ploeg',
-      sportaTeamC: 'Sporta C-ploeg',
-      sportaTeamD: 'Sporta D-ploeg',
-      sportaTeamE: 'Sporta E-ploeg',
-      sportaTeamF: 'Sporta F-ploeg',
       styleAll: 'Stijl:',
       styles: {
         attacker: 'Aanvaller',
@@ -125,9 +113,6 @@ export default {
         rankingIndex: 'Volgnummer',
         index: 'Index',
         ranking: 'Klassement',
-      },
-      form: {
-        title: 'Matchverloop',
       },
       tabs: {
         players: 'Spelers',

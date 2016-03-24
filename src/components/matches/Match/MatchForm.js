@@ -19,7 +19,8 @@ export default class MatchForm extends Component {
     user: PropTypes.instanceOf(UserModel).isRequired,
     match: PropTypes.instanceOf(MatchModel).isRequired,
     t: PropTypes.func.isRequired,
-    updateScore: PropTypes.func.isRequired
+    updateScore: PropTypes.func.isRequired,
+    big: PropTypes.bool,
   }
 
   render() {
@@ -28,7 +29,7 @@ export default class MatchForm extends Component {
     const isEditable = match.scoreType === 'BeingPlayed' && this.props.user.canChangeMatchScore(match.id);
 
     return (
-      <div style={{width: 220}}>
+      <div style={{width: this.props.big ? 220 : 125}}>
         {isEditable ? <MatchManipulation
           style={{float: 'left', marginRight: 10}}
           plusClick={this.props.updateScore.bind(this, {matchId: match.id, home: score.home + 1, out: score.out})}
@@ -36,7 +37,7 @@ export default class MatchForm extends Component {
         : null}
 
         <div style={{display: 'inline'}}>
-          <MatchScore match={match} forceDisplay={true} style={{fontSize: 46}} />
+          <MatchScore match={match} forceDisplay={true} style={{fontSize: this.props.big ? 46 : 24}} />
         </div>
 
         {isEditable ? <MatchManipulation

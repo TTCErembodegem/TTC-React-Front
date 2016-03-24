@@ -137,7 +137,7 @@ export default class MatchReport extends Component {
 
     // TODO: replace #D3D3D3 with #999? (iPhone visibility)
     return (
-      <div>
+      <div className="match-card-tab-content">
         <h3>
           {this.context.t('match.report.title')}
           {canPostReport ? (

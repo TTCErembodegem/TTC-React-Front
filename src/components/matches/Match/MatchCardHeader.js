@@ -47,7 +47,7 @@ export class BigMatchCardHeader extends Component {
           showExpandableButton={false}
           actAsExpander={false}>
           <div style={{position: 'absolute', top: 23, right: 15}}>
-            <MatchForm match={match} t={this.context.t} user={this.props.user} />
+            <MatchForm match={match} t={this.context.t} user={this.props.user} big />
           </div>
         </CardHeader>
         {this.props.children}
@@ -114,7 +114,6 @@ class MatchCardHeader extends Component {
       );
     }
     // TODO IMPORTANT: spelerstijl aanpassen ook autocomplete...
-    // TODO IMPORTANT: place the MatchForm also in the top right
     // TODO IMPORTANT: show bigger if has new comment?
     if (match.comments.size || match.description) {
       subtitle.push(
@@ -133,7 +132,14 @@ class MatchCardHeader extends Component {
           showExpandableButton={false}
           actAsExpander={!this.props.isOpen}
           avatar={iPlay && !this.props.isOpen ? <FavoriteMatch /> : null}>
-          <MatchScore match={match} style={{position: 'absolute', top: 14, right: 0, marginRight: 7, fontSize: 16, marginLeft: 12, float: 'right'}} />
+
+          {this.props.match.scoreType === 'BeingPlayed' && this.props.user.canChangeMatchScore(this.props.match.id) ? (
+            <div style={{position: 'absolute', top: 23, right: 15}}>
+              <MatchForm match={match} t={this.context.t} user={this.props.user} />
+            </div>
+          ) : (
+            <MatchScore match={match} style={{position: 'absolute', top: 14, right: 0, marginRight: 7, fontSize: 16, marginLeft: 12, float: 'right'}} />
+          )}
         </CardHeader>
         {this.props.children}
       </Card>

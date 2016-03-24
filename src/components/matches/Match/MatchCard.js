@@ -231,22 +231,7 @@ export default class MatchCard extends Component {
     return (<Scoresheet match={this.props.match} t={this.context.t} viewport={this.props.viewport} />);
   }
   _renderReport() {
-    var matchForm;
-    if (!this.props.big && this.props.match.scoreType === 'BeingPlayed' && this.props.user.canChangeMatchScore(this.props.match.id)) {
-      matchForm = (
-        <div>
-          <h3>{this.context.t('match.form.title')}</h3>
-          <MatchForm match={this.props.match} t={this.context.t} user={this.props.user} />;
-        </div>
-      );
-    }
-
-    return (
-      <div style={{marginLeft: 20, marginTop: 20, marginRight: 20, cursor: 'default'}}>
-        {matchForm}
-        <MatchReport match={this.props.match} t={this.context.t} user={this.props.user} />
-      </div>
-    );
+    return <MatchReport match={this.props.match} t={this.context.t} user={this.props.user} />;
   }
 
 
