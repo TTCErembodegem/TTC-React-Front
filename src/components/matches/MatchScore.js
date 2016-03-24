@@ -49,7 +49,7 @@ export default class MatchScore extends Component {
         }
       }
 
-      if (!match || !match.score) {
+      if (!match || !match.score || (match.score.home === 0 && match.score.out === 0)) {
         return null;
       }
     }

@@ -27,21 +27,27 @@ export function loaded(data, dispatch) {
     data = [data];
   }
   data.forEach(match => {
-    if (!match.isSyncedWithFrenoy && moment().isAfter(moment(match.date))) {
-      http.post('/matches/FrenoyMatchSync', {id: match.id})
-        .then(function(newmatch) {
-          dispatch(simpleLoaded(newmatch));
-        }, function(err) {
-          console.error(err); // eslint-disable-line
-        }
-      );
+    function frenoySync(m) {
+      if (!m.isSyncedWithFrenoy && moment().isAfter(moment(m.date))) {
+        http.post('/matches/FrenoyMatchSync', {id: m.id})
+          .then(function(newmatch) {
+            dispatch(simpleLoaded(newmatch));
+          }, function(err) {
+            console.error(err); // eslint-disable-line
+          }
+        );
+      }
     }
+
+    frenoySync(match);
 
     if (match.isHomeMatch !== null && moment(match.date).month() < 9) {
       // TODO: do not call if already in store
       http.get('/matches/GetFirstRoundMatch', {matchId: match.id})
         .then(function(newmatch) {
           dispatch(simpleLoaded(newmatch));
+          frenoySync(newmatch);
+
         }, function(err) {
           console.error(err); // eslint-disable-line
         }

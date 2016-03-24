@@ -82,6 +82,8 @@ export const util = {
     getFormation(match) {
       var opponent = match.opponent;
       const matches = store.getState().readonlyMatches;
+
+      // TODO: does not filter on "season" nor on competition
       var resultHome = matches.filter(m => m.home.clubId === opponent.clubId && m.home.teamCode === opponent.teamCode);
       var resultAway = matches.filter(m => m.away.clubId === opponent.clubId && m.away.teamCode === opponent.teamCode);
 
