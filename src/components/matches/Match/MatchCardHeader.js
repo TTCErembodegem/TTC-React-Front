@@ -113,7 +113,6 @@ class MatchCardHeader extends Component {
         </span>
       );
     }
-    // TODO IMPORTANT: spelerstijl aanpassen ook autocomplete...
     // TODO IMPORTANT: show bigger if has new comment?
     if (match.comments.size || match.description) {
       subtitle.push(

@@ -24,6 +24,9 @@ export default {
       apiSuccess: 'Greato success',
       apiFail: 'Oepsie! Mislukt...',
     },
+    system: {
+      playerSelect: 'Wie ben je?',
+    },
     nav: {
       matches: 'Kalender',
       matchesToday: 'Vandaag',
@@ -143,7 +146,6 @@ export default {
         commentsTitle: 'Opvolging',
         commentsOpenForm: 'Reageren',
         commentPosted: 'Verklarende aantekening toegevoegd',
-        commentsPlayerSelect: 'Wie ben je?',
       },
       playersVictoryTitle: 'Overwinningen',
       playersOpponentsTitle: 'Tegenstanders',

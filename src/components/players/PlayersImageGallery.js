@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { connect } from 'react-redux';
 import withContext, { contextTypes } from '../../utils/decorators/withContext.js';
+import { util as storeUtil } from '../../store.js';
 
 import * as playerActions from '../../actions/playerActions.js';
 
@@ -19,6 +20,7 @@ import Telephone from '../controls/Telephone.js';
 import PlayerPlayingStyle from './PlayerPlayingStyle.js';
 import PlayerImage from './PlayerImage.js';
 import PlayerAvatar from './PlayerAvatar.js';
+import PlayerAutoComplete from './PlayerAutoComplete.js';
 
 const PlayersImageWidth = 230;
 const gridStyles = {
@@ -66,7 +68,8 @@ export default class PlayersImageGallery extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      editingStyle: null,
+      editingPlayer: null,
+      editingBy: null,
       newStyle: {
         name: '',
         bestStroke: ''
@@ -95,7 +98,7 @@ export default class PlayersImageGallery extends Component {
         keyboardFocused={true}
         onTouchTap={::this._saveStyle} />,
     ];
-    const selectedPlayer = this.state.editingStyle;
+    const selectedPlayer = this.state.editingPlayer;
     const newStyle = this.state.newStyle;
 
     const playerPaperStyle = {
@@ -168,7 +171,7 @@ export default class PlayersImageGallery extends Component {
             actions={changeStyleModalActions}
             bodyStyle={{minHeight: 119}}
             modal={false}
-            open={!!this.state.editingStyle}
+            open={!!this.state.editingPlayer}
             onRequestClose={::this._closeStyle}>
 
             <AutoComplete
@@ -189,6 +192,12 @@ export default class PlayersImageGallery extends Component {
               type="text"
               value={newStyle.bestStroke}
               onChange={::this._changeBestStroke} />
+
+            {user.isSystem() ? (
+              <PlayerAutoComplete
+                selectPlayer={::this._changePlayer}
+                floatingLabelText={this.context.t('system.playerSelect')} />
+            ) : null}
           </Dialog>
         ) : null}
       </div>
@@ -196,13 +205,13 @@ export default class PlayersImageGallery extends Component {
   }
 
   _openStyle(ply) {
-    this.setState({editingStyle: ply, newStyle: Object.assign({}, ply.style)});
+    this.setState({editingPlayer: ply, newStyle: Object.assign({}, ply.style), editingBy: storeUtil.getUser().playerId});
   }
   _closeStyle() {
-    this.setState({editingStyle: null, newStyle: {name: '', bestStroke: ''}});
+    this.setState({editingPlayer: null, newStyle: {name: '', bestStroke: ''}});
   }
   _saveStyle() {
-    this.props.updateStyle(this.state.editingStyle, this.state.newStyle);
+    this.props.updateStyle(this.state.editingPlayer, this.state.newStyle, this.state.editingBy);
     this._closeStyle();
   }
 
@@ -211,6 +220,9 @@ export default class PlayersImageGallery extends Component {
   }
   _changeBestStroke(e) {
     this.setState({newStyle: Object.assign({}, this.state.newStyle, {bestStroke: e.target.value})});
+  }
+  _changePlayer(playerId) {
+    this.setState({editingBy: playerId});
   }
 }
 

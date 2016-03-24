@@ -113,7 +113,7 @@ export default class MatchReport extends Component {
                 <PlayerAutoComplete
                   selectPlayer={::this._reportCommentPlayerChange}
                   style={{}}
-                  hintText={this.context.t('match.report.commentsPlayerSelect')} />
+                  hintText={this.context.t('system.playerSelect')} />
               ) : null}
               <Editor
                 tag="pre"

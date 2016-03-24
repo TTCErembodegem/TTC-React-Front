@@ -13,12 +13,12 @@ export function loaded(data) {
   };
 }
 
-export function updateStyle(player, newStyle) {
+export function updateStyle(player, newStyle, updatedBy) {
   return dispatch => {
     return http.post('/players/UpdateStyle', {playerId: player.id, ...newStyle})
       .then(function(data) {
         if (data) {
-          let user = storeUtil.getUser().getPlayer();
+          let user = storeUtil.getPlayer(updatedBy) || {alias: ''};
           broadcastSnackbar(trans('players.editStyle.saved', {
             ply: player.alias,
             by: user.alias,
