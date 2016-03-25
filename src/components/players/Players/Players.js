@@ -133,7 +133,8 @@ export default class Players extends Component {
       return (
         <div>
             {playerAsPlayerObject.map(player => (<Card key={player.id}>
-            <CardHeader title={this.context.t('players.vttl') + ' ' + teamTT[0].teamCode + ' - ' + player.name} />} />
+            <CardHeader title={this.context.t('players.vttl') + ' ' + teamTT[0].teamCode + ' - ' + player.name}
+            avatar={this._getPlayerRoleInTeam(players,player.id)} />
                <CardText>
                    <div className="row">
                       <div className="col-sm-8">
@@ -158,7 +159,8 @@ export default class Players extends Component {
       return (
         <div>
           {playerAsPlayerObject.map(player => (<Card key={player.id}>
-          <CardHeader title={this.context.t('players.sporta') + ' ' + teamTT[0].teamCode + ' - ' + player.name} />} />
+          <CardHeader title={this.context.t('players.sporta') + ' ' + teamTT[0].teamCode + ' - ' + player.name}
+          avatar={this._getPlayerRoleInTeam(players,player.id)} />
              <CardText>
                  <div className="row">
                       <div className="col-sm-8">
@@ -176,6 +178,40 @@ export default class Players extends Component {
           </Card>))}
         </div>
       );
+    }
+  }
+
+
+
+  _getPlayerRoleInTeam(players,playerId){
+    var iconWidth = {
+      width: 26
+    };
+
+    for (var i = 0; i < players.length; i++){
+      if (players[i].playerId === playerId) {
+         if (players[i].type === 'Captain') {
+            return (
+              <span style={iconWidth}>
+                <Icon fa="fa fa-star fa-2x" />
+              </span>
+            );
+         }
+         else if (players[i].type === 'Reserve') {
+            return (
+              <span style={iconWidth}>
+                <Icon fa="fa fa-user-times fa-2x" />
+              </span>
+            );
+         }
+         else {
+            return (
+              <span style={iconWidth}>
+                <Icon fa="fa fa-user-plus fa-2x" />
+              </span>
+            );
+         }
+      }
     }
   }
 }
