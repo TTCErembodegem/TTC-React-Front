@@ -76,7 +76,10 @@ module.exports = React.createClass(
       }
     }
   , render: function(){
-      const distanceMillis = new Date().valueOf() - this.props.date.valueOf();
+      var distanceMillis = new Date().valueOf() - this.props.date.valueOf();
+      if (distanceMillis < 0) {
+        distanceMillis = 0;
+      }
 
       var props = assign({}, this.props)
       props.title = props.title || typeof props.date === 'string'

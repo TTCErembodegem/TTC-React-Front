@@ -112,8 +112,6 @@ export function selectPlayer(matchId, playerId) {
       };
     }
 
-    //TODO: we zaten hier: 1 hour wrong matchComment.postedOn on azure...
-
     return http.post('/matches/TogglePlayer', matchPlayer)
       .then(function(data) {
         dispatch(simpleLoaded(data));
