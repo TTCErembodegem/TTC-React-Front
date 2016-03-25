@@ -10,6 +10,7 @@ import CardTitle from 'material-ui/lib/card/card-title';
 import CardText from 'material-ui/lib/card/card-text';
 import Accordion from 'react-bootstrap/lib/Accordion';
 import Panel from 'react-bootstrap/lib/Panel';
+import PlayerImage from '../PlayerImage.js';
 
 import { connect } from 'react-redux';
 import ImmutablePropTypes from 'react-immutable-proptypes';
@@ -134,16 +135,23 @@ export default class Players extends Component {
       playerAsPlayerObject = playerAsPlayerObject.filter(x => x.vttl).sort((a, b) => a.vttl.position - b.vttl.position);
       return (
         <div>
-          {playerAsPlayerObject.map(player => (<Card key={player.id}>
-          <CardHeader title={this.context.t('players.vttl') + ' ' + teamTT[0].teamCode + ' - ' + player.name} />} />
-             <CardText>
-                 <p>{this.context.t('players.indexVTTL')} {player.vttl.rankingIndex}</p>
-                 <p>{this.context.t('players.memberNumberVTTL')} {player.vttl.uniqueIndex}</p>
-                 <p>{this.context.t('players.rankingVTTL')} {player.vttl.ranking}</p>
-                 <p>{this.context.t('players.styleAll')} {player.style.name}</p>
-                 <p>{this.context.t('players.bestStrokeAll')} {player.style.bestStroke}</p>
-             </CardText>
-          </Card>))}
+            {playerAsPlayerObject.map(player => (<Card key={player.id}>
+            <CardHeader title={this.context.t('players.vttl') + ' ' + teamTT[0].teamCode + ' - ' + player.name} />} />
+               <CardText>
+                   <div className="row">
+                      <div className="col-sm-8">
+                         <p>{this.context.t('players.indexVTTL')} {player.vttl.rankingIndex}</p>
+                         <p>{this.context.t('players.memberNumberVTTL')} {player.vttl.uniqueIndex}</p>
+                         <p>{this.context.t('players.rankingVTTL')} {player.vttl.ranking}</p>
+                         <p>{this.context.t('players.styleAll')} {player.style.name}</p>
+                         <p>{this.context.t('players.bestStrokeAll')} {player.style.bestStroke}</p>
+                      </div>
+                      <div className="col-sm-4">
+                        <PlayerImage playerId={player.id} />
+                      </div>
+                    </div>
+               </CardText>
+            </Card>))}
         </div>
       );
     }
@@ -155,11 +163,18 @@ export default class Players extends Component {
           {playerAsPlayerObject.map(player => (<Card key={player.id}>
           <CardHeader title={this.context.t('players.sporta') + ' ' + teamTT[0].teamCode + ' - ' + player.name} />} />
              <CardText>
-                 <p>{this.context.t('players.indexSporta')} {player.sporta.rankingIndex}</p>
-                 <p>{this.context.t('players.memberNumberSporta')} {player.sporta.uniqueIndex}</p>
-                 <p>{this.context.t('players.rankingSporta')} {player.sporta.ranking}</p>
-                 <p>{this.context.t('players.styleAll')} {player.style.name}</p>
-                 <p>{this.context.t('players.bestStrokeAll')} {player.style.bestStroke}</p>
+                 <div className="row">
+                      <div className="col-sm-8">
+                         <p>{this.context.t('players.indexSporta')} {player.sporta.rankingIndex}</p>
+                         <p>{this.context.t('players.memberNumberSporta')} {player.sporta.uniqueIndex}</p>
+                         <p>{this.context.t('players.rankingSporta')} {player.sporta.ranking}</p>
+                         <p>{this.context.t('players.styleAll')} {player.style.name}</p>
+                         <p>{this.context.t('players.bestStrokeAll')} {player.style.bestStroke}</p>
+                      </div>
+                      <div className="col-sm-4">
+                         <PlayerImage playerId={player.id} />
+                      </div>
+                 </div>
              </CardText>
           </Card>))}
         </div>
