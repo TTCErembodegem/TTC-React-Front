@@ -122,7 +122,6 @@ export default class Players extends Component {
 
   _getPlayersOfTeam(competition,team){
     var teamTT = this.props.teams.filter(x => x.competition === competition && x.teamCode === team).toArray();
-    console.log(teamTT);
     var players = teamTT[0].players;
     var playerAsPlayerObject = [];
     for (var i = 0; i < players.length; i++){
