@@ -212,7 +212,7 @@ export default class MatchCard extends Component {
     var matches = storeUtils.matches
       .getFromOpponent(this.props.match.opponent)
       .sort((a, b) => a.date.isBefore(b.date) ? 1 : -1)
-      .filter(match => match.isSyncedWithFrenoy);
+      .filter(match => match.score && (match.score.home || match.score.out) && match.id !== this.props.match.id);
 
     return <OpponentsLastMatches match={this.props.match} readonlyMatches={matches} />;
   }
