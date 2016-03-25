@@ -54,6 +54,9 @@ export default class MatchModel {
   }
 
   getDisplayDate(format) {
+    if (format === 's') {
+      return this.date.format('D/M');
+    }
     if (format === 'd') {
       return this.date.format('ddd D/M');
     }

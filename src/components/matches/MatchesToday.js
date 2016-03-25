@@ -59,7 +59,7 @@ export default class MatchesToday extends Component {
       <div className="row">
         {matchesToday.map(match => (
           <div className="col-lg-12" style={{paddingBottom: 5, paddingTop: 5}} key={match.id}>
-            <MatchCard match={match} user={this.props.user} isOpen={false} small onOpen={null} config={this.props.config} />
+            <MatchCard match={match} user={this.props.user} isOpen={false} small config={this.props.config} />
           </div>
         ))}
       </div>

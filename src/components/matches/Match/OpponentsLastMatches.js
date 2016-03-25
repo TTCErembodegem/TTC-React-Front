@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { util as storeUtils } from '../../../store.js';
 import withViewport from '../../../utils/decorators/withViewport.js';
 import { contextTypes } from '../../../utils/decorators/withContext.js';
+import _ from 'lodash';
 
 import MatchModel from '../../../models/MatchModel.js';
 
@@ -29,7 +30,7 @@ export default class OpponentsLastMatches extends Component {
   }
 
   render() {
-    const widthRemoveColumn = 450; // combine Home&Away columns to just one Opponent column on small devices
+    const widthRemoveColumn = 500; // combine Home&Away columns to just one Opponent column on small devices
 
     var matches = this.props.readonlyMatches;
     if (!this.state.showAll) {
@@ -69,7 +70,7 @@ export default class OpponentsLastMatches extends Component {
               <tr key={match.id} className={'clickable ' + (match.won(opponent) ? 'accentuate success' : '')}
                 onClick={this._onOpenOpponentMatch.bind(this, match.id)}>
 
-                <td key="1">{match.getDisplayDate('d')}</td>
+                <td key="1">{match.getDisplayDate(this.props.viewport.width > widthRemoveColumn ? 'd' : 's')}</td>
                 {this.props.viewport.width > widthRemoveColumn ? [
                   <td key="2">{match.getClub('home').name} {match.home.teamCode}</td>,
                   <td key="3">{match.getClub('away').name} {match.away.teamCode}</td>
@@ -79,7 +80,8 @@ export default class OpponentsLastMatches extends Component {
                   </td>
                 )}
 
-                <td key="5">{opponentFormation.map(ply => ply.ranking).join(', ')}</td>
+                <td key="5">{this._getFormationRankingString(opponentFormation.map(ply => ply.ranking))}</td>
+
                 <td key="6">{match.score.home} - {match.score.out}</td>
               </tr>,
               this._getMatchDetails(match)
@@ -96,6 +98,24 @@ export default class OpponentsLastMatches extends Component {
       </Table>
     );
   }
+  _getFormationRankingString(rankings) {
+    const diffs = _.unique(rankings.toArray());
+    return (
+      <span>
+        {diffs.map((ranking, index) => {
+          const cnt = rankings.reduce((prev, cur) => prev + (cur === ranking ? 1 : 0), 0);
+          return (
+            <span key={ranking}>
+              {cnt > 1 ? <small>{cnt}x</small> : null}
+              {ranking}
+              {index < diffs.length - 1 ? ', ' : null}
+            </span>
+          );
+        })}
+      </span>
+    );
+  }
+
   _onLoadAll() {
     this.setState({showAll: true});
   }
