@@ -97,7 +97,7 @@ export default class MatchCard extends Component {
     var match = this.props.match;
     const showIndividualMatches = match.games.size !== 0;
     const showOpponentClubLocation = !match.isHomeMatch && !match.isPlayed;
-    const showScoresheet = match.scoreType === 'BeingPlayed';
+    const showScoresheet = match.scoreType === 'BeingPlayed' && match.players.size;
 
     const HeaderComponent = this.props.big ? BigMatchCardHeader : MatchCardHeader;
 
