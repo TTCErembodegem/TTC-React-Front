@@ -9,8 +9,6 @@ import { util as storeUtil } from '../../../store.js';
 import AppBar from 'material-ui/lib/app-bar';
 import Icon from '../../controls/Icon.js';
 import FlatButton from 'material-ui/lib/flat-button';
-import LeftNav from 'material-ui/lib/left-nav';
-import MenuItem from 'material-ui/lib/menus/menu-item';
 import Navigation from './HeaderNavigation.js';
 
 @withStyles(styles)
@@ -30,7 +28,7 @@ export default class Header extends Component {
     const loginOrProfile = !this.props.user.playerId ?
       <FlatButton label={t('nav.login')} onClick={() => browserHistory.push(t.route('login'))} /> :
       <Link className="Header-link Header-icon-right" to={t.route('profile')}>
-          <Icon fa="fa fa-2x fa-user" />&nbsp;&nbsp;<b>{this._reverseName(storeUtil.getPlayer(this.props.user.playerId).name)}</b>
+          <Icon fa="fa fa-2x fa-user" title={this._reverseName(storeUtil.getPlayer(this.props.user.playerId).name)} />
       </Link>;
 
     return (
@@ -63,7 +61,8 @@ export default class Header extends Component {
 
   _reverseName(name) {
     var nameInParts = name.split(' ');
-    if(nameInParts.length === 2) {
+    if(nameInParts.length === 2)
+    {
        return nameInParts[1] + ' ' + nameInParts[0];
     }
     if (nameInParts.length === 3)

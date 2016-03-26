@@ -60,6 +60,10 @@ export default {
       fail: 'Incorrect paswoord voor ${}',
       loggedIn: '${} aangelogd',
     },
+    profile: {
+      headerText: 'Profiel',
+      loggedInText: 'Ingelogd als:'
+    },
     changePassword: {
       title: 'Paswoord wijzigen',
       oldPassword: 'Huidig paswoord',

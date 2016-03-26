@@ -116,7 +116,7 @@ export default class Intro extends Component {
         </Row>
         {this.props.viewport.width > 800 ? (
           <Row style={{marginTop: 25, marginBottom: 15}}>
-            <div style={{width: 850, margin: 'auto'}}>
+            <div style={{width: 770, margin: 'auto'}}>
               <Paper style={bottomSponsorsStyle}>
                 <a href="http://www.tkleinoffer.be/" target="_blank"><img src="/img/sponsors/tkleinoffer.png" /></a>
               </Paper>
