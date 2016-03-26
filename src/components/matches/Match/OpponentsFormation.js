@@ -4,6 +4,8 @@ import withViewport from '../../../utils/decorators/withViewport.js';
 
 import Icon from '../../controls/Icon.js';
 import Table from 'react-bootstrap/lib/Table';
+//import { createFrenoyLink } from '../../../models/PlayerModel.js';
+//createFrenoyLink(ply.vttl)
 
 @withViewport
 export default class OpponentsFormation extends Component {

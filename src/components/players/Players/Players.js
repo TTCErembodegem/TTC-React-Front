@@ -12,7 +12,7 @@ import PlayerImage from '../PlayerImage.js';
 import { connect } from 'react-redux';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
-import PlayerModel from '../../../models/PlayerModel.js';
+import PlayerModel, { createFrenoyLink } from '../../../models/PlayerModel.js';
 import TeamModel from '../../../models/TeamModel.js';
 import { util as storeUtil } from '../../../store.js';
 import { contextTypes } from '../../../utils/decorators/withContext.js';
@@ -38,11 +38,6 @@ export default class Players extends Component {
   };
 
   render() {
-    // TODO: abstract this away in PlayerModel
-    var baseUrlVTTLPartOne = 'http://competitie.vttl.be/index.php?menu=6&sel=';
-    var baseUrlVTTLPartTwo = '&result=1';
-    var baseUrlSportaPartOne = 'http://tafeltennis.sporcrea.be/competitie/index.php?menu=6&sel=';
-    var baseUrlSportaPartTwo = '&result=1';
     var playersVTTL = this.props.players.filter(x => x.vttl).sort((a, b) => a.vttl.position - b.vttl.position);
     var playersSporta = this.props.players.filter(x => x.sporta).sort((a, b) => a.sporta.position - b.sporta.position);
     return (
@@ -67,7 +62,7 @@ export default class Players extends Component {
                 <td>{ply.name}</td>
                 <td>
                   {ply.vttl.ranking}&nbsp;
-                  <a href={baseUrlVTTLPartOne + ply.vttl.frenoyLink + baseUrlVTTLPartTwo} target="_blank">
+                  <a href={createFrenoyLink(ply.vttl)} target="_blank">
                   <Icon fa="fa fa-search" /></a>
                 </td>
                 <td>{ply.style.name}</td>
@@ -97,7 +92,7 @@ export default class Players extends Component {
                   <td>{ply.name}</td>
                   <td>
                   {ply.sporta.ranking}&nbsp;
-                  <a href={baseUrlSportaPartOne + ply.sporta.frenoyLink + baseUrlSportaPartTwo} target="_blank">
+                  <a href={createFrenoyLink(ply.sporta)} target="_blank">
                   <Icon fa="fa fa-search" /></a>
                   </td>
                   <td>{ply.sporta.rankingValue}</td>
