@@ -129,7 +129,6 @@ class MatchCardHeader extends Component {
 
     var subtitle = [];
     if (match.date.isSame(moment(), 'day') && match.isHomeMatch) {
-      subtitle.push(<span style={{marginRight: 9}} key="1">{match.frenoyMatchId}</span>);
       subtitle.push(<span key="2">{this.context.t('match.date', match.getDisplayDate())}</span>);
     } else {
       subtitle.push(
@@ -150,17 +149,14 @@ class MatchCardHeader extends Component {
       );
     }
 
-    const scoreFormVisible =
-      !this.props.noScoreEdit &&
-      this.props.match.scoreType === 'BeingPlayed' &&
-      this.props.user.canChangeMatchScore(this.props.match);
+    const scoreFormVisible = !this.props.noScoreEdit && this.props.user.canChangeMatchScore(this.props.match);
 
     var matchFormStyle;
     const small = scoreFormVisible && this.props.width < 480;
     if (small) {
-      matchFormStyle = {position: 'absolute', top: 50, right: 15};
+      matchFormStyle = {position: 'absolute', top: 50, right: 25};
     } else {
-      matchFormStyle = {position: 'absolute', top: 23, right: 15};
+      matchFormStyle = {position: 'absolute', top: 23, right: 25};
     }
 
     const matchScoreStyle = {position: 'absolute', top: 14, right: 0, marginRight: 7, fontSize: 16, marginLeft: 12, float: 'right'};
@@ -173,22 +169,22 @@ class MatchCardHeader extends Component {
           style={{height: small ? 100 : undefined}}
           showExpandableButton={false}
           actAsExpander={!this.props.isOpen}
-          avatar={iPlay && !this.props.isOpen ? <FavoriteMatch /> : null}>
+          avatar={iPlay && !this.props.isOpen && !scoreFormVisible ? <FavoriteMatch /> : null}>
 
-          {scoreFormVisible ? (
-            <div style={matchFormStyle}>
-              <MatchForm match={match} t={this.context.t} user={this.props.user} />
-            </div>
-          ) : (
-            <MatchScore match={match} style={matchScoreStyle} />
-          )}
+          {!scoreFormVisible ? <MatchScore match={match} style={matchScoreStyle} /> : null}
         </CardHeader>
+        {scoreFormVisible ? (
+          <div style={matchFormStyle}>
+            <MatchForm match={match} t={this.context.t} user={this.props.user} />
+          </div>
+        ) : null}
         {this.props.children}
       </Card>
     );
   }
 
   _renderTitle(match) {
+    // TODO: if long club names and is FavoriteMatch then title wraps on small devices (ellipsis would be great here)
     const team = match.getTeam();
     if (match.isHomeMatch) {
       return (
