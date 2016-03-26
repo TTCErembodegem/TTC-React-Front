@@ -15,7 +15,7 @@ export default task('bundle', async () => new Promise((resolve, reject) => {
       return reject(err);
     }
 
-    console.log(stats.toString(config[0].stats));
+    console.log(stats.toString(config[0].stats)); // eslint-disable-line
 
     if (++bundlerRunCount === (global.WATCH ? config.length : 1)) {
       return resolve();

@@ -2,7 +2,9 @@ import path from 'path';
 import webpack from 'webpack';
 import merge from 'lodash.merge';
 
-const DEBUG = !process.argv.includes('release');
+if (global.DEBUG === undefined) {
+  global.DEBUG = !process.argv.includes('release');
+}
 const VERBOSE = process.argv.includes('verbose');
 const WATCH = global.WATCH === undefined ? false : global.WATCH;
 const AUTOPREFIXER_BROWSERS = [
@@ -102,7 +104,7 @@ const appConfig = merge({}, config, {
     './src/app.js',
   ],
   output: {
-    path: path.join(__dirname, '../build/public'),
+    path: path.join(__dirname, DEBUG ? '../build/public' : '../build/release'),
     filename: 'app.js',
   },
 
@@ -181,8 +183,8 @@ const serverConfig = merge({}, config, {
     },
   ],
   node: {
-    console: false,
-    global: false,
+    // console: false,
+    // global: false,
     process: false,
     Buffer: false,
     __filename: false,

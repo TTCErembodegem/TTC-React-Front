@@ -10,7 +10,7 @@ import watch from './lib/watch';
  */
 export default task('copy', async () => {
   await Promise.all([
-    copy('src/public', 'build/public'),
+    copy('src/public', DEBUG ? 'build/public' : 'build/release'),
     copy('package.json', 'build/package.json'),
   ]);
 
@@ -24,7 +24,7 @@ export default task('copy', async () => {
 
   if (global.WATCH) {
     const watcher = await watch('src/public/**/*.*');
-    watcher.on('changed', async (file) => {
+    watcher.on('changed', async file => {
       const relPath = file.substr(path.join(__dirname, '../src/public/').length);
       await copy(`src/public/${relPath}`, `build/public/${relPath}`);
     });
