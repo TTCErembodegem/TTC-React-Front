@@ -20,6 +20,13 @@ $.connection.hub.start().done(function() {
   hubReady = true;
 });
 
+$.connection.hub.disconnected(function() {
+  hubReady = false;
+});
+$.connection.hub.reconnected(function() {
+  hubReady = true;
+});
+
 var ttcHub = $.connection.ttcHub;
 
 ttcHub.client.broadcastSnackbar = function(message) {
