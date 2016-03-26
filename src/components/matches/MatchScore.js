@@ -1,9 +1,9 @@
 import React, { PropTypes, Component } from 'react';
 import MatchModel, { matchOutcome } from '../../models/MatchModel.js';
 import { connect } from 'react-redux';
-
 import { contextTypes } from '../../utils/decorators/withContext.js';
 import cn from 'classnames';
+import { setSetting } from '../../actions/configActions.js';
 
 import Icon from '../controls/Icon.js';
 
@@ -20,7 +20,7 @@ function getClassName(isHomeMatch, home, out) {
 
 @connect(state => ({
   config: state.config
-}))
+}), {setSetting})
 export default class MatchScore extends Component {
   static contextTypes = contextTypes;
   static propTypes = {
@@ -28,9 +28,28 @@ export default class MatchScore extends Component {
     match: PropTypes.instanceOf(MatchModel).isRequired,
     style: PropTypes.object,
     forceDisplay: PropTypes.bool.isRequired,
+    setSetting: PropTypes.func.isRequired,
   }
   static defaultProps = {
     forceDisplay: false
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      isUpdated: props.config.get('newMatchScore' + props.match.id)
+    };
+  }
+
+  componentWillReceiveProps(newProps) {
+    const hasScoreUpdate = newProps.config.get('newMatchScore' + newProps.match.id);
+    if (hasScoreUpdate) {
+      this.setState({isUpdated: true});
+      setTimeout(() => {
+        this.setState({isUpdated: false});
+        this.props.setSetting('newMatchScore' + newProps.match.id, false);
+      }, 10000);
+    }
   }
 
   render() {
@@ -54,18 +73,11 @@ export default class MatchScore extends Component {
       }
     }
 
-    // const hasScoreUpdate = this.props.config.get('newMatchScore' + match.id);
-    // if (hasScoreUpdate) {
-
-    //   // TODO: has score update == shake? (tremors?)
-    // }
-
     var score = match.score || {home: 0, out: 0};
-
     const classColor = this.props.match.isDerby ? 'match-won' : getClassName(match.isHomeMatch, score.home, score.out);
     return (
       <span
-        className={cn('label label-as-badge', classColor)}
+        className={cn('label label-as-badge', classColor, this.state.isUpdated ? 'faa-tada animated' : '')}
         title={title}
         style={this.props.style}>
 

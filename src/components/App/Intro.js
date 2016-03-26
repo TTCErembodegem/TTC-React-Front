@@ -47,7 +47,7 @@ export default class Intro extends Component {
       address: 'Erembodegem Dorp 72',
       postalCode: 9320,
       city: 'Erembodegem',
-      mobile: '053 / 21 13 59',
+      mobile: '053211359',
     };
 
     const bakkerijVanLierde = {
@@ -55,7 +55,7 @@ export default class Intro extends Component {
       address: 'Hogeweg 113',
       postalCode: 9320,
       city: 'Erembodegem',
-      mobile: '053 / 21 27 20',
+      mobile: '053212720',
     };
 
     var inClub = {

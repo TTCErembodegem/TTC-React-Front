@@ -70,7 +70,7 @@ export class BigMatchCardHeader extends Component {
       };
       return (
         <span className="label label-as-badge label-danger" style={thrillerStyle}>
-          <Icon fa="fa fa-heartbeat faa-pulse animated faa-slow" style={{marginLeft: 3, marginRight: 7, marginTop: 3}} />
+          <Icon fa="fa fa-heartbeat faa-pulse animated" style={{marginLeft: 3, marginRight: 7, marginTop: 3}} />
           {this.context.t('match.' + thrillerType)}
         </span>
       );
@@ -153,7 +153,7 @@ class MatchCardHeader extends Component {
     const scoreFormVisible =
       !this.props.noScoreEdit &&
       this.props.match.scoreType === 'BeingPlayed' &&
-      this.props.user.canChangeMatchScore(this.props.match.id);
+      this.props.user.canChangeMatchScore(this.props.match);
 
     var matchFormStyle;
     const small = scoreFormVisible && this.props.width < 480;

@@ -34,8 +34,8 @@ export default class UserModel {
   canPostReport(teamId) {
     return this.playsIn(teamId) || this.can(security.CAN_EDITALLREPORTS);
   }
-  canChangeMatchScore(matchId) {
-    return !!this.playerId;
+  canChangeMatchScore(match) {
+    return this.playsIn(match.teamId) || this.isAdmin();
   }
 
   isAdmin() {
