@@ -9,9 +9,9 @@ import styles from './App.css';
 
 import Header from '../skeleton/Header';
 import Footer from '../skeleton/Footer';
-import CircularProgress from 'material-ui/lib/circular-progress';
 import Intro from './Intro.js';
 import Grid from 'react-bootstrap/lib/Grid';
+import { FullScreenSpinner } from '../controls/Spinner.js';
 
 import Snackbar from 'material-ui/lib/snackbar';
 import * as configActions from '../../actions/configActions.js';
@@ -54,7 +54,7 @@ export default class App extends Component {
           <Header user={this.props.user} />
           <Grid style={containerStyle}>
             {this.props.children ?
-              (!this.props.config.get('initialLoadCompleted') ? <WaitForIt /> : this.props.children) :
+              (!this.props.config.get('initialLoadCompleted') ? <FullScreenSpinner /> : this.props.children) :
               <Intro />
             }
           </Grid>
@@ -73,7 +73,3 @@ export default class App extends Component {
     this.props.clearSnackbar();
   }
 }
-
-const WaitForIt = () => (
-  <div style={{width: 210, margin: 'auto', paddingTop: 75}}><CircularProgress size={3} /></div>
-);

@@ -16,7 +16,7 @@ export default class Scoresheet extends Component {
 
   render() {
     const isSmall = this.props.viewport.width < 550;
-    const competition = this.props.match.getTeam().competition;
+    const competition = this.props.match.competition;
 
     if (competition === 'Sporta') {
       return (

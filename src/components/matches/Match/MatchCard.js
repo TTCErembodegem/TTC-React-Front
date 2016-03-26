@@ -41,8 +41,6 @@ const tabEventKeys = {
   opponentsFormation: 7,
 };
 
-// TODO: request match if not yet present in store
-
 @withViewport
 @connect(state => {
   return {

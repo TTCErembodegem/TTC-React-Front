@@ -96,7 +96,7 @@ export function selectPlayer(matchId, playerId) {
   return dispatch => {
     var match = storeUtil.getMatch(matchId);
     var player = storeUtil.getPlayer(playerId);
-    var comp = player.getCompetition(match.getTeam().competition);
+    var comp = player.getCompetition(match.competition);
 
     var matchPlayer = match.plays(player);
     if (!matchPlayer) {

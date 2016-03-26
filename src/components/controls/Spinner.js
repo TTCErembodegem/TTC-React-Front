@@ -1,9 +1,8 @@
 import React, { PropTypes, Component } from 'react';
-
+import CircularProgress from 'material-ui/lib/circular-progress';
 import Icon from './Icon.js';
 
 export default class Spinner extends Component {
-
   static defaultProps = {
     size: 1,
   };
@@ -20,3 +19,7 @@ export default class Spinner extends Component {
     );
   }
 }
+
+export const FullScreenSpinner = () => (
+  <div style={{width: 210, margin: 'auto', paddingTop: 75}}><CircularProgress size={3} /></div>
+);
