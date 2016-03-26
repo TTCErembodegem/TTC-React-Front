@@ -54,6 +54,7 @@ export default class MatchForm extends Component {
     this.props.updateScore(matchScore);
 
     // TODO: bug updating the score opens/closes the tab...
+    // TODO IMPORTANT: on mobile the score is not updated, just the card opens/closes... TEST: put the MAtchForm in the body?
     e.stopPropagation();
     e.preventDefault();
   }

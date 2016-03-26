@@ -4,8 +4,7 @@ import withViewport from '../../../utils/decorators/withViewport.js';
 
 import Icon from '../../controls/Icon.js';
 import Table from 'react-bootstrap/lib/Table';
-//import { createFrenoyLink } from '../../../models/PlayerModel.js';
-//createFrenoyLink(ply.vttl)
+import { createFrenoyLinkByUniqueId } from '../../../models/PlayerModel.js';
 
 @withViewport
 export default class OpponentsFormation extends Component {
@@ -13,6 +12,7 @@ export default class OpponentsFormation extends Component {
   static propTypes = {
     formations: PropTypes.array.isRequired,
     viewport: PropTypes.object.isRequired,
+    competition: PropTypes.string.isRequired,
   }
 
   render() {
@@ -27,9 +27,13 @@ export default class OpponentsFormation extends Component {
           </tr>
         </thead>
         <tbody>
-          {this.props.formations.map(f => (
-            <tr key={f.player.uniqueIndex}>
-              <td>{f.player.name}</td>
+          {this.props.formations.map(f => {
+            const frenoyLink = createFrenoyLinkByUniqueId(this.props.competition, f.player.uniqueIndex);
+            return (<tr key={f.player.uniqueIndex}>
+              <td>
+                {f.player.name}
+                {frenoyLink ? <a href={frenoyLink} target="_blank" style={{marginLeft: 7}}><Icon fa="fa fa-search" /></a> : null}
+              </td>
               <td>{f.player.ranking}</td>
               <td>{f.count}</td>
               <td>
@@ -39,8 +43,8 @@ export default class OpponentsFormation extends Component {
                 {f.lost}
               </td>
               <td>{(f.won / (f.lost + f.won) * 100).toFixed(0) + '%'}</td>
-            </tr>
-          ))}
+            </tr>);
+          })}
         </tbody>
       </Table>
     );

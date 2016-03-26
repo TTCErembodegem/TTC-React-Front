@@ -16,9 +16,21 @@ export default class PlayerModel {
 }
 
 export function createFrenoyLink(comp) {
+  // old and reliable but with frenoyLink that needs to be fetched manually
   if (comp.competition === 'Vttl') {
     return 'http://competitie.vttl.be/index.php?menu=6&result=1&sel=' + comp.frenoyLink;
   } else {
     return 'http://tafeltennis.sporcrea.be/competitie/index.php?menu=6&result=1&sel=' + comp.frenoyLink;
+  }
+}
+
+export function createFrenoyLinkByUniqueId(comp, uniqueId) {
+  // new and restfull but may contains glitches
+  if (comp === 'Vttl') {
+    return 'http://competitie.vttl.be/' + uniqueId;
+  } else {
+    // TODO: does not work for Sporta
+    //return 'http://tafeltennis.sporcrea.be/competitie/' + uniqueId;
+    return null;
   }
 }

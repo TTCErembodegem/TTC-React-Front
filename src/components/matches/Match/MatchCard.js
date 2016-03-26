@@ -225,7 +225,7 @@ export default class MatchCard extends Component {
       return <div className="match-card-tab-content"><h3><Spinner /></h3></div>;
     }
 
-    return <OpponentsFormation formations={formations} />;
+    return <OpponentsFormation formations={formations} competition={this.props.match.competition} />;
   }
   _renderScoreSheet() {
     return (<Scoresheet match={this.props.match} t={this.context.t} viewport={this.props.viewport} />);
