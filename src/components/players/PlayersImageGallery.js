@@ -110,7 +110,7 @@ export default class PlayersImageGallery extends Component {
     };
 
     var gallery;
-    if (viewport.width > 600) {
+    if (viewport.width > 650) {
       // big image gallery
       gallery = (
         <div style={gridStyles.root}>

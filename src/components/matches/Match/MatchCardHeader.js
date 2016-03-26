@@ -65,8 +65,9 @@ export default class SmallMatchCardHeader extends Component {
     children: PropTypes.node,
     user: PropTypes.object.isRequired,
     isOpen: PropTypes.bool.isRequired,
-    onOpen: PropTypes.func,
+    onOpen: PropTypes.func, // TODO: hier
     noScoreEdit: PropTypes.bool,
+    width: PropTypes.number,
   }
 
   render() {
@@ -94,6 +95,7 @@ class MatchCardHeader extends Component {
     isOpen: PropTypes.bool.isRequired,
     onOpen: PropTypes.func.isRequired,
     noScoreEdit: PropTypes.bool,
+    width: PropTypes.number,
   }
 
   // TODO: op heenronde score klikken: naar match gaan
@@ -127,17 +129,27 @@ class MatchCardHeader extends Component {
       );
     }
 
+    const scoreFormVisible = !this.props.noScoreEdit && this.props.match.scoreType === 'BeingPlayed' && this.props.user.canChangeMatchScore(this.props.match.id);
+    var matchFormStyle;
+    const small = scoreFormVisible && this.props.width < 470;
+    if (small) {
+      matchFormStyle = {position: 'absolute', top: 50, right: 15};
+    } else {
+      matchFormStyle = {position: 'absolute', top: 23, right: 15};
+    }
+
     return (
       <Card style={{backgroundColor: '#fafafa'}} onExpandChange={::this._onExpandChange} initiallyExpanded={this.props.isOpen}>
         <CardHeader
           title={this._renderTitle(match)}
           subtitle={subtitle}
+          style={{height: small ? 100 : undefined}}
           showExpandableButton={false}
           actAsExpander={!this.props.isOpen}
           avatar={iPlay && !this.props.isOpen ? <FavoriteMatch /> : null}>
 
-          {!this.props.noScoreEdit && this.props.match.scoreType === 'BeingPlayed' && this.props.user.canChangeMatchScore(this.props.match.id) ? (
-            <div style={{position: 'absolute', top: 23, right: 15}}>
+          {scoreFormVisible ? (
+            <div style={matchFormStyle}>
               <MatchForm match={match} t={this.context.t} user={this.props.user} />
             </div>
           ) : (

@@ -48,25 +48,26 @@ export default class MatchesToday extends Component {
     if (this.props.viewport.width > 1200) {
       return (
         <div>
-          {this._renderMatches(_.take(matchesToday.toArray(), 2))}
-          {matchesToday.size > 2 ? this._renderMatches(matchesToday.shift().shift()) : null}
+          {this._renderBigMatches(_.take(matchesToday.toArray(), 2))}
+          {matchesToday.size > 2 ? this._renderBigMatches(matchesToday.shift().shift()) : null}
         </div>
       );
     }
 
     // on small devices
+    // onOpen={null} == default behavior == open match card
     return (
       <div className="row">
         {matchesToday.map(match => (
           <div className="col-lg-12" style={{paddingBottom: 5, paddingTop: 5}} key={match.id}>
-            <MatchCard match={match} user={this.props.user} isOpen={false} small config={this.props.config} />
+            <MatchCard match={match} user={this.props.user} isOpen={false} width={this.props.viewport.width} config={this.props.config} onOpen={null} />
           </div>
         ))}
       </div>
     );
   }
 
-  _renderMatches(matches) {
+  _renderBigMatches(matches) {
     return (
       <div className="row">
         {matches.map(match => (
