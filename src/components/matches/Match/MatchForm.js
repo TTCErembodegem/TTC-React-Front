@@ -29,9 +29,9 @@ export default class MatchForm extends Component {
     const isEditable = match.scoreType === 'BeingPlayed' && this.props.user.canChangeMatchScore(match.id);
 
     return (
-      <div style={{width: this.props.big ? 220 : 140}}>
-        {isEditable ? <MatchManipulation
-          style={{float: 'left', marginRight: 10}}
+      <div style={{width: this.props.big ? 230 : 150}}>
+        {isEditable ? <MatchManipulation big={this.props.big}
+          style={{float: 'left', marginRight: 5}}
           plusClick={this._onUpdateScore.bind(this, {matchId: match.id, home: score.home + 1, out: score.out})}
           minClick={this._onUpdateScore.bind(this, {matchId: match.id, home: score.home - 1, out: score.out})} />
         : null}
@@ -40,7 +40,7 @@ export default class MatchForm extends Component {
           <MatchScore match={match} forceDisplay={true} style={{fontSize: this.props.big ? 46 : 24}} />
         </div>
 
-        {isEditable ? <MatchManipulation
+        {isEditable ? <MatchManipulation big={this.props.big}
           style={{float: 'right'}}
           plusClick={this._onUpdateScore.bind(this, {matchId: match.id, home: score.home, out: score.out + 1})}
           minClick={this._onUpdateScore.bind(this, {matchId: match.id, home: score.home, out: score.out - 1})} />
@@ -59,9 +59,9 @@ export default class MatchForm extends Component {
   }
 }
 
-const MatchManipulation = ({style, plusClick, minClick}) => (
-  <div style={{color: '#d3d3d3', ...style}}>
-    <div style={{verticalAlign: 'top'}}><Icon fa="fa fa-plus-circle fa-lg" onClick={plusClick} /></div>
-    <div style={{verticalAlign: 'bottom'}}><Icon fa="fa fa-minus-circle fa-lg" onClick={minClick} /></div>
+const MatchManipulation = ({style, plusClick, minClick, big}) => (
+  <div style={{color: '#d3d3d3', marginTop: big ? 0 : -10, ...style}}>
+    <div style={{verticalAlign: 'top'}}><Icon fa="fa fa-plus-circle fa-2x" onClick={plusClick} /></div>
+    <div style={{verticalAlign: 'bottom'}}><Icon fa="fa fa-minus-circle fa-2x" onClick={minClick} /></div>
   </div>
 );

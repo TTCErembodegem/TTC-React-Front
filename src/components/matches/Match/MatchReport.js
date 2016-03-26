@@ -118,7 +118,7 @@ export default class MatchReport extends Component {
               <Editor
                 tag="pre"
                 text={this.state.comment}
-                style={{height: 55, width: '100%'}}
+                style={{height: 55, width: '99%'}}
                 onChange={::this._reportCommentChange}
                 options={{...editorOptions, disableEditing: !canComment}}
                 contentEditable={canComment} />

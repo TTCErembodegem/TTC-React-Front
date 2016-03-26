@@ -45,7 +45,7 @@ export default class MatchesToday extends Component {
       return <div />;
     }
 
-    if (this.props.viewport.width > 1200) {
+    if (this.props.viewport.width > 1500) {
       return (
         <div>
           {this._renderBigMatches(_.take(matchesToday.toArray(), 2))}
@@ -59,8 +59,15 @@ export default class MatchesToday extends Component {
     return (
       <div className="row">
         {matchesToday.map(match => (
-          <div className="col-lg-12" style={{paddingBottom: 5, paddingTop: 5}} key={match.id}>
-            <MatchCard match={match} user={this.props.user} isOpen={false} width={this.props.viewport.width} config={this.props.config} onOpen={null} />
+          <div className="col-lg-6" style={{paddingBottom: 5, paddingTop: 5}} key={match.id}>
+            <MatchCard
+              match={match}
+              user={this.props.user}
+              isOpen={false}
+              width={this.props.viewport.width}
+              viewportWidthContainerCount={this.props.viewport.width > 1200 ? 2 : 1}
+              config={this.props.config}
+              onOpen={null} />
           </div>
         ))}
       </div>

@@ -131,7 +131,7 @@ class MatchCardHeader extends Component {
 
     const scoreFormVisible = !this.props.noScoreEdit && this.props.match.scoreType === 'BeingPlayed' && this.props.user.canChangeMatchScore(this.props.match.id);
     var matchFormStyle;
-    const small = scoreFormVisible && this.props.width < 470;
+    const small = scoreFormVisible && this.props.width < 480;
     if (small) {
       matchFormStyle = {position: 'absolute', top: 50, right: 15};
     } else {
