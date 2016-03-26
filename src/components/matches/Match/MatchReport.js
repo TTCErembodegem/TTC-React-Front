@@ -12,6 +12,7 @@ import Icon from '../../controls/Icon.js';
 import Editor from '../../controls/Editor.js';
 import RaisedButton from 'material-ui/lib/raised-button';
 import FlatButton from 'material-ui/lib/flat-button';
+import Checkbox from 'material-ui/lib/checkbox';
 import PlayerAutoComplete from '../../players/PlayerAutoComplete.js';
 
 @connect(state => {
@@ -23,6 +24,7 @@ export default class MatchReport extends Component {
     user: PropTypes.instanceOf(UserModel).isRequired,
     match: PropTypes.instanceOf(MatchModel).isRequired,
     t: PropTypes.func.isRequired,
+    viewport: PropTypes.object.isRequired,
     postReport: PropTypes.func.isRequired,
     postComment: PropTypes.func.isRequired,
   }
@@ -34,6 +36,7 @@ export default class MatchReport extends Component {
       comment: '',
       commentPlayerId: props.user.playerId,
       commentFormOpen: false,
+      commentHidden: false,
       reportFormOpen: false,
     };
   }
@@ -101,6 +104,8 @@ export default class MatchReport extends Component {
       reportText = this.context.t('match.report.noReport');
     }
 
+    const width = this.props.viewport.width;
+
     var comments;
     if (showComments) {
       comments = (
@@ -112,7 +117,6 @@ export default class MatchReport extends Component {
               {this.props.user.isSystem() ? (
                 <PlayerAutoComplete
                   selectPlayer={::this._reportCommentPlayerChange}
-                  style={{}}
                   hintText={this.context.t('system.playerSelect')} />
               ) : null}
               <Editor
@@ -126,10 +130,19 @@ export default class MatchReport extends Component {
           ) : null}
 
           {this.props.user.playerId ? (
-            <FlatButton
-              label={this.context.t('match.report.commentsOpenForm')}
-              onClick={::this._onCommentForm}
-              style={{paddingLeft: 0}} />
+            <div style={{width: '100%'}}>
+              {this.state.commentFormOpen ? (<Checkbox
+                defaultChecked={!this.state.commentHidden}
+                onCheck={::this._reportHiddenChange}
+                style={width > 450 ? {float: 'right', width: 220, textAlign: 'right'} : {}}
+                label={this.context.t('match.report.commentVisible')} />
+              ) : null}
+
+              <FlatButton
+                label={this.context.t('match.report.commentsOpenForm')}
+                onClick={::this._onCommentForm}
+                style={{paddingLeft: 0}} />
+            </div>
           ) : null}
         </div>
       );
@@ -158,6 +171,7 @@ export default class MatchReport extends Component {
     const poster = storeUtils.getPlayer(comment.playerId) || {alias: 'SYSTEM'};
     return (
       <div key={comment.id}>
+        {comment.hidden ? <Icon fa="fa fa-user-secret" /> : null}
         <strong style={{marginRight: 6}}>{poster.alias}</strong>
         <TimeAgo date={comment.postedOn} style={{color: '#999'}} />
 
@@ -166,7 +180,7 @@ export default class MatchReport extends Component {
     );
   }
 
-  _reportTextChange(text, medium) {
+  _reportTextChange(text) {
     this.setState({text});
   }
   _onPostReport() {
@@ -179,8 +193,8 @@ export default class MatchReport extends Component {
   _onCommentForm() {
     if (this.state.commentFormOpen) {
       if (this.state.comment) {
-        this.props.postComment(this.props.match.id, this.state.comment, this.state.commentPlayerId);
-        this.setState({commentFormOpen: false, comment: ''});
+        this.props.postComment(this.props.match.id, this.state.comment, this.state.commentPlayerId, this.state.commentHidden);
+        this.setState({commentFormOpen: false, comment: '', commentHidden: false});
       }
     } else {
       this.setState({commentFormOpen: true});
@@ -188,6 +202,9 @@ export default class MatchReport extends Component {
   }
   _reportCommentChange(text, medium) {
     this.setState({comment: text});
+  }
+  _reportHiddenChange() {
+    this.setState({commentHidden: !this.state.commentHidden});
   }
   _reportCommentPlayerChange(id) {
     this.setState({commentPlayerId: id});

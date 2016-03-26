@@ -231,7 +231,7 @@ export default class MatchCard extends Component {
     return (<Scoresheet match={this.props.match} t={this.context.t} viewport={this.props.viewport} />);
   }
   _renderReport() {
-    return <MatchReport match={this.props.match} t={this.context.t} user={this.props.user} />;
+    return <MatchReport match={this.props.match} t={this.context.t} user={this.props.user} viewport={this.props.viewport} />;
   }
 
 

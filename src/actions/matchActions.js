@@ -174,9 +174,9 @@ export function postReport(matchId, reportText) {
   };
 }
 
-export function postComment(matchId, commentText, posterPlayerId) {
+export function postComment(matchId, commentText, posterPlayerId, hidden) {
   return (dispatch, getState) => {
-    return http.post('/matches/Comment', {matchId, text: commentText, playerId: posterPlayerId})
+    return http.post('/matches/Comment', {matchId, text: commentText, playerId: posterPlayerId, hidden})
       .then(function(data) {
         if (!data) {
           return;

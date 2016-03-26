@@ -146,6 +146,7 @@ export default {
         commentsTitle: 'Opvolging',
         commentsOpenForm: 'Reageren',
         commentPosted: 'Verklarende aantekening toegevoegd',
+        commentVisible: 'Voor iedereen zichtbaar',
       },
       playersVictoryTitle: 'Overwinningen',
       playersOpponentsTitle: 'Tegenstanders',
