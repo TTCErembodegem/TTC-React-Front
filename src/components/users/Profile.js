@@ -12,6 +12,8 @@ import PlayerModel from '../../models/PlayerModel.js';
 import TextField from 'material-ui/lib/text-field';
 import RaisedButton from 'material-ui/lib/raised-button';
 import Paper from 'material-ui/lib/paper';
+import { util as storeUtil } from '../../store.js';
+
 
 @connect(state => {
   return {
@@ -27,7 +29,7 @@ export default class Login extends Component {
   static contextTypes = contextTypes;
   static propTypes = {
     // players: ImmutablePropTypes.listOf(PropTypes.instanceOf(PlayerModel).isRequired).isRequired,
-    // user: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired,
     logout: PropTypes.func.isRequired,
   }
 
@@ -47,7 +49,9 @@ export default class Login extends Component {
 
     return (
       <Paper zDepth={1} style={paperStyle}>
-        <h3>Profiel</h3>
+        <h3>{this.context.t('profile.headerText')}</h3>
+
+        <p>{this.context.t('profile.loggedInText')}&nbsp;{this._reverseName(storeUtil.getPlayer(this.props.user.playerId).name)}</p>
 
         <RaisedButton label={t('nav.changePassword')}
           style={{marginTop: 15}} onClick={() => browserHistory.push(t.route('changePassword'))} />
@@ -62,7 +66,26 @@ export default class Login extends Component {
       </Paper>
     );
   }
+
   _onLogout() {
     this.props.logout();
+  }
+
+  _reverseName(name) {
+    var nameInParts = name.split(' ');
+    if(nameInParts.length === 2)
+    {
+       return nameInParts[1] + ' ' + nameInParts[0];
+    }
+    if (nameInParts.length === 3)
+    {
+       return nameInParts[nameInParts.length - 1] + ' ' + nameInParts[nameInParts.length - 3]
+       + ' ' + nameInParts[nameInParts.length - 2] ;
+    }
+    if (nameInParts.length === 4)
+    {
+       return nameInParts[nameInParts.length - 1] + ' ' + nameInParts[nameInParts.length - 4]
+       + ' ' + nameInParts[nameInParts.length - 3] + ' ' + nameInParts[nameInParts.length - 2];
+    }
   }
 }
