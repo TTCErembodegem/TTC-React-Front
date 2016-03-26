@@ -39,7 +39,9 @@ export default {
     },
     intro: {
       title: 'Tafeltennisclub TTC Erembodegem',
-      text: 'Een kleine, toffe club met ${players} leden. Ondanks onze beperkte kern, slagen we er toch in om met ${teamsVttl} ploegen VTTL en ${teamsSporta} Sporta in competitie te treden. Fairplay en gezelligheid staan centraal bij al onze tafeltennis-activiteiten!',
+      text: 'Een kleine, toffe club met ${players} leden. Ondanks onze beperkte kern, ' +
+        'slagen we er toch in om met ${teamsVttl} ploegen VTTL en ${teamsSporta} Sporta in competitie te treden. ' +
+        'Fairplay en gezelligheid staan centraal bij al onze tafeltennis-activiteiten!',
       matchesToday: 'matchen vandaag',
       trainingToday: 'vandaag training vanaf 20u',
       playedMatches: 'laatst gespeelde matchen',
@@ -104,6 +106,8 @@ export default {
       playedMatches: 'gespeelde matchen',
       date: '${}u',
       vs: 'vs',
+      topMatch: 'TOPPER',
+      degradationMatch: 'THRILLER',
       previousEncounterScore: 'Uitslag heenronde',
       scoresheetSporta: {
         uniqueIndex: 'LIDK. nr.',

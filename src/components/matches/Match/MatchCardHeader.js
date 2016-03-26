@@ -49,10 +49,31 @@ export class BigMatchCardHeader extends Component {
           <div style={{position: 'absolute', top: 23, right: 15}}>
             <MatchForm match={match} t={this.context.t} user={this.props.user} big />
           </div>
+          {this._getThriller()}
         </CardHeader>
         {this.props.children}
       </Card>
     );
+  }
+
+  _getThriller() {
+    const match = this.props.match;
+    const team = match.getTeam();
+    const thrillerType = team.getThriller(match);
+    if (thrillerType) {
+      const thrillerStyle = {
+        position: 'absolute',
+        top: 60,
+        left: 15,
+        fontSize: 16,
+      };
+      return (
+        <span className="label label-as-badge label-danger" style={thrillerStyle}>
+          <Icon fa="fa fa-heartbeat" style={{marginRight: 7, marginTop: 3}} />
+          {this.context.t('match.' + thrillerType)}
+        </span>
+      );
+    }
   }
 }
 
@@ -65,7 +86,7 @@ export default class SmallMatchCardHeader extends Component {
     children: PropTypes.node,
     user: PropTypes.object.isRequired,
     isOpen: PropTypes.bool.isRequired,
-    onOpen: PropTypes.func, // TODO: hier
+    onOpen: PropTypes.func,
     noScoreEdit: PropTypes.bool,
     width: PropTypes.number,
   }
@@ -77,7 +98,7 @@ export default class SmallMatchCardHeader extends Component {
     return <MatchCardHeader {...props} />;
   }
 
-  _onOpen(isOpen) {
+  _onOpen(/*isOpen*/) {
     const matchRoute = this.context.t.route('match', {matchId: this.props.match.id});
     browserHistory.push(matchRoute);
   }
@@ -100,7 +121,6 @@ class MatchCardHeader extends Component {
 
   // TODO: op heenronde score klikken: naar match gaan
   // TODO: implement fancy tooltip https://github.com/callemall/material-ui/blob/master/src/tooltip.jsx?
-  // TODO: TOPPER/THRILLER (fa-heartbeat?) wanneer eerste/laatste 3 in ranking tegen elkaar spelen
 
   render() {
     const match = this.props.match;
@@ -129,7 +149,11 @@ class MatchCardHeader extends Component {
       );
     }
 
-    const scoreFormVisible = !this.props.noScoreEdit && this.props.match.scoreType === 'BeingPlayed' && this.props.user.canChangeMatchScore(this.props.match.id);
+    const scoreFormVisible =
+      !this.props.noScoreEdit &&
+      this.props.match.scoreType === 'BeingPlayed' &&
+      this.props.user.canChangeMatchScore(this.props.match.id);
+
     var matchFormStyle;
     const small = scoreFormVisible && this.props.width < 480;
     if (small) {
@@ -137,6 +161,8 @@ class MatchCardHeader extends Component {
     } else {
       matchFormStyle = {position: 'absolute', top: 23, right: 15};
     }
+
+    const matchScoreStyle = {position: 'absolute', top: 14, right: 0, marginRight: 7, fontSize: 16, marginLeft: 12, float: 'right'};
 
     return (
       <Card style={{backgroundColor: '#fafafa'}} onExpandChange={::this._onExpandChange} initiallyExpanded={this.props.isOpen}>
@@ -153,7 +179,7 @@ class MatchCardHeader extends Component {
               <MatchForm match={match} t={this.context.t} user={this.props.user} />
             </div>
           ) : (
-            <MatchScore match={match} style={{position: 'absolute', top: 14, right: 0, marginRight: 7, fontSize: 16, marginLeft: 12, float: 'right'}} />
+            <MatchScore match={match} style={matchScoreStyle} />
           )}
         </CardHeader>
         {this.props.children}
@@ -202,8 +228,8 @@ class MatchCardHeader extends Component {
     );
   }
   _renderOpponentPosition(match) {
-    const club = match.getOpponentClub();
-    var ranking = match.getTeam().getDivisionRanking(club.id, match.opponent.teamCode);
+    //const club = match.getOpponentClub();
+    var ranking = match.getTeam().getDivisionRanking(match.opponent);
     if (!ranking) {
       // TODO: check what is going on here? Galmaarden E heeft algemeen forfait gegeven ofzo?
       // --> Dit gaat nu sowieso het geval zijn omdat deze in een aparte request komen...
