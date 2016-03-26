@@ -10,6 +10,7 @@
     "eventemitter3": "1.1.1",
     "express": "4.13.3",
     "fbjs": "0.3.2",
+    "font-awesome-animation": "0.0.8",
     "history": "^2.0.0",
     "immutable": "^3.7.5",
     "material-ui": "0.14.3",

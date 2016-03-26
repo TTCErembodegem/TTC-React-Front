@@ -66,10 +66,11 @@ export class BigMatchCardHeader extends Component {
         top: 60,
         left: 15,
         fontSize: 16,
+        paddingRight: 13,
       };
       return (
         <span className="label label-as-badge label-danger" style={thrillerStyle}>
-          <Icon fa="fa fa-heartbeat" style={{marginRight: 7, marginTop: 3}} />
+          <Icon fa="fa fa-heartbeat faa-pulse animated faa-slow" style={{marginLeft: 3, marginRight: 7, marginTop: 3}} />
           {this.context.t('match.' + thrillerType)}
         </span>
       );

@@ -47,16 +47,21 @@ export default class TeamModel {
       return this.getDivisionRanking({clubId: this.clubId, teamCode: this.teamCode});
     }
     var result = this.ranking.find(x => x.clubId === opponent.clubId && x.teamCode === opponent.teamCode);
-    return result;
+    return result || {};
   }
   getThriller(match) {
-    const ourRanking = this.getDivisionRanking().position;
-    const theirRanking = this.getDivisionRanking(match.opponent).position;
+    const ourRanking = this.getDivisionRanking();
+    const theirRankingPosition = this.getDivisionRanking(match.opponent).position;
     const teamsInDivision = this.ranking.length;
 
-    if (ourRanking <= 3 && theirRanking <= 3) {
+    const gamesPlayed = ourRanking.gamesWon + ourRanking.gamesLost + ourRanking.gamesDraw;
+    if (gamesPlayed < 5) {
+      return;
+    }
+
+    if (ourRanking.position <= 3 && theirRankingPosition <= 3) {
       return 'topMatch';
-    } else if (ourRanking >= teamsInDivision - 2 && theirRanking >= teamsInDivision - 2) {
+    } else if (ourRanking.position >= teamsInDivision - 2 && theirRankingPosition >= teamsInDivision - 2) {
       return 'degradationMatch';
     }
     return;

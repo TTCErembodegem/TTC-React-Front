@@ -7,6 +7,8 @@
 @import 'medium-editor/dist/css/medium-editor.css';
 @import 'medium-editor/dist/css/themes/default.css';
 
+@import 'font-awesome-animation/dist/font-awesome-animation.min.css';
+
 pre {
   font-family: Roboto;
 }
