@@ -158,7 +158,9 @@ export default class PlayersImageGallery extends Component {
                 </div>
                 <strong style={{marginLeft: 5}}>{ply.alias}</strong> <small>{comp ? comp.ranking : '??'}</small>
 
-                {user.playerId ? <Telephone number={ply.contact.mobile} style={{marginTop: 7}} /> : <div style={{marginTop: 7, textOverflow: 'ellipsis'}}>{ply.style.name}</div>}
+                {user.playerId ? <Telephone number={ply.contact.mobile} style={{marginTop: 7}} /> : (
+                  <p className="ellipsis" style={{marginTop: 7}}>{ply.style.name}</p>
+                )}
               </Paper>
             );
           })}
