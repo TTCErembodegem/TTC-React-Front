@@ -4,6 +4,7 @@ import { Link, browserHistory } from 'react-router';
 import styles from './Header.css';
 import withStyles from '../../../utils/decorators/withStyles.js';
 import { contextTypes } from '../../../utils/decorators/withContext.js';
+import { util as storeUtil } from '../../../store.js';
 
 import AppBar from 'material-ui/lib/app-bar';
 import Icon from '../../controls/Icon.js';
@@ -28,7 +29,9 @@ export default class Header extends Component {
     const t = this.context.t;
     const loginOrProfile = !this.props.user.playerId ?
       <FlatButton label={t('nav.login')} onClick={() => browserHistory.push(t.route('login'))} /> :
-      <Link className="Header-link Header-icon-right" to={t.route('profile')}><Icon fa="fa fa-2x fa-user" /></Link>;
+      <Link className="Header-link Header-icon-right" to={t.route('profile')}>
+          <Icon fa="fa fa-2x fa-user" />&nbsp;&nbsp;<b>{this._reverseName(storeUtil.getPlayer(this.props.user.playerId).name)}</b>
+      </Link>;
 
     return (
       <div>
@@ -56,5 +59,10 @@ export default class Header extends Component {
     // TODO: creates bug on mobile that has visual 'selection' of first item in the navigation...
     // (solution: put some sort of icon at the top of the navigation so its non-clickabel?:)
     setTimeout(() => this.setState({isNavOpening: false}), 1000);
+  }
+
+  _reverseName(name) {
+    var nameInParts = name.split(' ');
+    return nameInParts[1] + ' ' + nameInParts[0];
   }
 }

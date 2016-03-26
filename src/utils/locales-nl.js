@@ -93,7 +93,7 @@ export default {
       editStyle: {
         title: 'Speelstijl ${}',
         tooltip: 'Speelstijl ${} wijzigen',
-        bestStroke: 'Beste, meest verassende slag',
+        bestStroke: 'Beste, meest verrassende slag',
         style: 'Speelstijl',
         saved: 'Speelstijl ${ply} aangepast door ${by}: ${newStyle}',
       },
