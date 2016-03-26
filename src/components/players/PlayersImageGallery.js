@@ -111,6 +111,7 @@ export default class PlayersImageGallery extends Component {
 
     var gallery;
     if (viewport.width > 600) {
+      // big image gallery
       gallery = (
         <div style={gridStyles.root}>
           <GridList
@@ -118,7 +119,8 @@ export default class PlayersImageGallery extends Component {
             cols={Math.min(5, Math.floor((viewport.width / this.props.viewportWidthContainerCount) / PlayersImageWidth))}
             style={gridStyles.gridList}>
             {players.map(ply => {
-              var comp = ply.getCompetition(competition);
+              const comp = ply.getCompetition(competition);
+              const canChangeStyle = user.playerId && user.playerId !== ply.id;
               return (
                 <GridTile
                   key={ply.id}
@@ -128,7 +130,7 @@ export default class PlayersImageGallery extends Component {
                     </span>
                   )}
                   subtitle={<PlayerPlayingStyle ply={ply} />}>
-                  {user.playerId && user.playerId !== ply.id ? (
+                  {canChangeStyle ? (
                     <Icon
                       title={t('players.editStyle.tooltip', ply.alias)}
                       fa="fa fa-pencil-square-o"
@@ -143,18 +145,20 @@ export default class PlayersImageGallery extends Component {
         </div>
       );
     } else {
+      // small card gallery
       gallery = (
         <div style={{cursor: 'default'}}>
           {this.props.players.map(ply => {
-            var comp = ply.getCompetition(competition);
+            const comp = ply.getCompetition(competition);
+            const canChangeStyle = user.playerId && user.playerId !== ply.id;
             return (
               <Paper key={ply.id} zDepth={1} style={playerPaperStyle}>
-                <div className="clickable" onClick={this._openStyle.bind(this, ply)} style={{display: 'inline-block'}} title={t('players.editStyle.tooltip', ply.alias)}>
+                <div className="clickable" onClick={canChangeStyle ? this._openStyle.bind(this, ply) : undefined} style={{display: 'inline-block'}} title={t('players.editStyle.tooltip', ply.alias)}>
                   <PlayerAvatar player={ply} style={{backgroundColor: 'gold', margin: 0}} />
                 </div>
                 <strong style={{marginLeft: 5}}>{ply.alias}</strong> <small>{comp ? comp.ranking : '??'}</small>
 
-                {user.playerId ? <Telephone number={ply.contact.mobile} style={{marginTop: 7}} /> : <div style={{marginTop: 7}}>{ply.style.name}</div>}
+                {user.playerId ? <Telephone number={ply.contact.mobile} style={{marginTop: 7}} /> : <div style={{marginTop: 7, textOverflow: 'ellipsis'}}>{ply.style.name}</div>}
               </Paper>
             );
           })}
