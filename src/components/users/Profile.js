@@ -51,7 +51,7 @@ export default class Login extends Component {
       <Paper zDepth={1} style={paperStyle}>
         <h3>{this.context.t('profile.headerText')}</h3>
 
-        <p>{this.context.t('profile.loggedInText')}&nbsp;{this._reverseName(storeUtil.getPlayer(this.props.user.playerId).name)}</p>
+        <p>{this.context.t('profile.loggedInText')}&nbsp;{this._reverseName((storeUtil.getPlayer(this.props.user.playerId) || {name: 'Broken Code'}).name)}</p>
 
         <RaisedButton label={t('nav.profilePhotos')}
           style={{marginTop: 15}} onClick={() => browserHistory.push(t.route('profilePhotos'))} />
