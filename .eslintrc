@@ -39,7 +39,8 @@
   ],
 
   "globals": {
-    "DEBUG": true
+    "DEBUG": true,
+    "Promise": true
   },
 
   "rules": {
