@@ -55,8 +55,7 @@ export default {
       introText: '',
       loginName: 'Spelersnaam',
       password: 'Paswoord',
-      //passwordHint: 'Hetzelfde paswoord als de oude site', // TODO IMPORTANT: put this translation back!
-      passwordHint: 'Het paswoord is "pwd"',
+      passwordHint: 'Geen email ontvangen? Email wouter...',
       loginButton: 'Login',
       logoutButton: 'Uitloggen',
       fail: 'Incorrect paswoord voor ${}',

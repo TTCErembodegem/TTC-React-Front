@@ -52,6 +52,7 @@ export default class Login extends Component {
         <TextField
           floatingLabelText={t('login.password')}
           hintText={t('login.passwordHint')}
+          hintStyle={{fontSize: 14}}
           type="password"
           onChange={::this._onPasswordChange} />
 
