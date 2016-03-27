@@ -47,7 +47,7 @@ export default class RoutedMatchCard extends Component {
     }
     return (
       <div style={{marginBottom: 20, marginTop: 20, marginLeft: 5, marginRight: 5}}>
-        <MatchCard match={this.state.match} isOpen={true} width={this.props.viewport.width} />
+        <MatchCard match={this.state.match} isOpen={true} width={this.props.viewport.width} routed={true} />
       </div>
     );
   }

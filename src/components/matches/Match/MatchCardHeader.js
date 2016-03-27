@@ -90,6 +90,7 @@ export default class SmallMatchCardHeader extends Component {
     onOpen: PropTypes.func,
     noScoreEdit: PropTypes.bool,
     width: PropTypes.number,
+    routed: PropTypes.bool,
   }
 
   render() {
@@ -118,6 +119,7 @@ class MatchCardHeader extends Component {
     onOpen: PropTypes.func.isRequired,
     noScoreEdit: PropTypes.bool,
     width: PropTypes.number,
+    routed: PropTypes.bool,
   }
 
   // TODO: op heenronde score klikken: naar match gaan
@@ -150,6 +152,7 @@ class MatchCardHeader extends Component {
     }
 
     const scoreFormVisible = !this.props.noScoreEdit && this.props.user.canChangeMatchScore(this.props.match);
+    const scoreFormInHeader = !!this.props.routed;
 
     var matchFormStyle;
     const small = scoreFormVisible && this.props.width < 480;
@@ -158,6 +161,11 @@ class MatchCardHeader extends Component {
     } else {
       matchFormStyle = {position: 'absolute', top: 23, right: 25};
     }
+    const matchForm = (
+      <div style={matchFormStyle}>
+        <MatchForm match={match} t={this.context.t} user={this.props.user} />
+      </div>
+    );
 
     const matchScoreStyle = {position: 'absolute', top: 14, right: 0, marginRight: 7, fontSize: 16, marginLeft: 12, float: 'right'};
 
@@ -172,12 +180,9 @@ class MatchCardHeader extends Component {
           avatar={iPlay && !this.props.isOpen && !scoreFormVisible ? <FavoriteMatch /> : null}>
 
           {!scoreFormVisible ? <MatchScore match={match} style={matchScoreStyle} /> : null}
+          {scoreFormVisible && scoreFormInHeader ? matchForm : null}
         </CardHeader>
-        {scoreFormVisible ? (
-          <div style={matchFormStyle}>
-            <MatchForm match={match} t={this.context.t} user={this.props.user} />
-          </div>
-        ) : null}
+        {scoreFormVisible && !scoreFormInHeader ? matchForm : null}
         {this.props.children}
       </Card>
     );
