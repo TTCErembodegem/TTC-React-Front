@@ -4,7 +4,8 @@ export default {
   routes: {
     players: '/spelers',
     login: '/login',
-    changePassword: '/wijzig-paswoord',
+    changePassword: '/profiel/wijzig-paswoord',
+    profilePhotos: '/profiel/fotos',
     profile: '/profiel',
     links: '/links',
     matches: '/kalender',
@@ -33,6 +34,7 @@ export default {
       players: 'Spelers',
       login: 'Log in',
       changePassword: 'Wijzig Paswoord',
+      profilePhotos: 'Wijzig Foto',
       links: 'Links',
       facts: 'TT Weetjes',
       closeMenu: 'Menu sluiten'
@@ -59,6 +61,13 @@ export default {
       logoutButton: 'Uitloggen',
       fail: 'Incorrect paswoord voor ${}',
       loggedIn: '${} aangelogd',
+    },
+    photos: {
+      uploadNewTitle: 'Nieuwe foto opladen',
+      uploadNewInstructions: 'Sleep een foto of klik om een foto te kiezen',
+      adjustTitle: 'Foto bijsnijden',
+      preview: 'Preview',
+      save: 'Bijsnijden opslaan',
     },
     profile: {
       headerText: 'Profiel',

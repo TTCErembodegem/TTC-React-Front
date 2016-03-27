@@ -15,6 +15,18 @@ export default class PlayerModel {
   }
 }
 
+export var playerUtils = {
+  getPlayerImageSize() {
+    return {
+      width: 230,
+      height: 200
+    };
+  },
+  getImageUrl(playerId) {
+    return '/img/players/' + playerId + '.png';
+  },
+};
+
 export function createFrenoyLink(comp) {
   // old and reliable but with frenoyLink that needs to be fetched manually
   if (comp.competition === 'Vttl') {

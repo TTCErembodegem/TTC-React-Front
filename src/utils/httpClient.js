@@ -60,6 +60,42 @@ const HttpClient = {
           resolve(res.body);
         }
       });
+  }),
+  upload: (files) => new Promise((resolve, reject) => {
+    var req = request
+      .post(getUrl('/upload/temp'))
+      .accept('application/json')
+      .use(bearer);
+      //.field('uploadType', type);
+
+    files.forEach(file => {
+      req.attach(file.name, file);
+    });
+
+    req.end(function(err, res) {
+      if (err || !res.ok) {
+        console.log('/upload/temp', err || '', res);
+        reject();
+      } else {
+        resolve(res.body);
+      }
+    });
+  }),
+  uploadPlayerImage: (imageBase64, playerId) => new Promise((resolve, reject) => {
+    request
+      .post(getUrl('/upload/player'))
+      .send({image: imageBase64, playerId})
+      .use(bearer)
+      .set('Accept', 'application/json')
+      .set('Content-Type', 'application/json')
+      .end(function(err, res) {
+        if (err || !res.ok) {
+          console.log('/upload/player', err || '', res);
+          reject();
+        } else {
+          resolve(res.body);
+        }
+      });
   })
 };
 

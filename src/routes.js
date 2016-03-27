@@ -5,6 +5,7 @@ import App from './components/App';
 import Players from './components/players/Players';
 import Login from './components/users/Login.js';
 import ChangePassword from './components/users/ChangePassword.js';
+import ProfilePhotos from './components/users/ProfilePhotos.js';
 import Profile from './components/users/Profile.js';
 import Links from './components/other/Links.js';
 import Matches from './components/matches/Matches.js';
@@ -20,6 +21,7 @@ const Routes = () => (
       <Route path={t.route('players')} component={Players} />
       <Route path={t.route('login')} component={Login} />
       <Route path={t.route('changePassword')} component={ChangePassword} />
+      <Route path={t.route('profilePhotos')} component={ProfilePhotos} />
       <Route path={t.route('profile')} component={Profile} />
       <Route path={t.route('links')} component={Links} />
       <Route path={t.route('matches')} component={Matches} />

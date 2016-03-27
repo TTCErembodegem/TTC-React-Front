@@ -5,6 +5,7 @@ import withContext, { contextTypes } from '../../utils/decorators/withContext.js
 import { util as storeUtil } from '../../store.js';
 
 import * as playerActions from '../../actions/playerActions.js';
+import { playerUtils } from '../../models/PlayerModel.js';
 
 import List from 'material-ui/lib/lists/list';
 import GridList from 'material-ui/lib/grid-list/grid-list';
@@ -22,7 +23,8 @@ import PlayerImage from './PlayerImage.js';
 import PlayerAvatar from './PlayerAvatar.js';
 import PlayerAutoComplete from './PlayerAutoComplete.js';
 
-const PlayersImageWidth = 230;
+const PlayersImageWidth = playerUtils.getPlayerImageSize().width;
+const PlayersImageHeight = playerUtils.getPlayerImageSize().height;
 const gridStyles = {
   root: {
     display: 'flex',
@@ -115,7 +117,7 @@ export default class PlayersImageGallery extends Component {
       gallery = (
         <div style={gridStyles.root}>
           <GridList
-            cellHeight={200}
+            cellHeight={PlayersImageHeight}
             cols={Math.min(5, Math.floor((viewport.width / this.props.viewportWidthContainerCount) / PlayersImageWidth))}
             style={gridStyles.gridList}>
             {players.map(ply => {

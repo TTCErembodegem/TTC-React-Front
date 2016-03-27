@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react';
+import { playerUtils } from '../../models/PlayerModel.js';
 
 export default class PlayerImage extends Component {
   static propTypes = {
@@ -10,7 +11,7 @@ export default class PlayerImage extends Component {
 
     var img = new Image();
     img.onload = () => this.setState({isLoaded: true});
-    img.src = '/img/players/' + this.props.playerId + '.jpg';
+    img.src = playerUtils.getImageUrl(this.props.playerId);
 
     this.state = {
       isLoaded: false,
