@@ -9,7 +9,9 @@ export function getUrl(path, appendApi = true) {
     path = '/api' + path;
   }
   return !DEBUG ?
-    `http://ttc-erembodegem.azurewebsites.net${path}` :
+    // `http://ttc-erembodegem.azurewebsites.net${path}` :
+    //`http://ttc-prd.azurewebsites.net${path}` :
+    `http://${location.hostname}${path}` :
     `http://localhost:49731${path}`;
   // `http://127.0.0.1:${global.server.get('port')}${path}`;
 }
