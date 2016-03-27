@@ -61,12 +61,12 @@ const HttpClient = {
         }
       });
   }),
-  upload: (files) => new Promise((resolve, reject) => {
+  upload: files => new Promise((resolve, reject) => {
     var req = request
       .post(getUrl('/upload/temp'))
       .accept('application/json')
       .use(bearer);
-      //.field('uploadType', type);
+    //.field('uploadType', type);
 
     files.forEach(file => {
       req.attach(file.name, file);
