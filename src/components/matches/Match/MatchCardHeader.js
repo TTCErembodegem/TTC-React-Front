@@ -122,7 +122,6 @@ class MatchCardHeader extends Component {
     routed: PropTypes.bool,
   }
 
-  // TODO: op heenronde score klikken: naar match gaan
   // TODO: implement fancy tooltip https://github.com/callemall/material-ui/blob/master/src/tooltip.jsx?
 
   render() {
