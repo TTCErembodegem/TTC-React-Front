@@ -3,6 +3,7 @@
 'use strict'
 
 import timeAgoInWords from '../../utils/timeAgoInWords.js';
+import moment from 'moment';
 
 var React = require('react')
 var assign = require('object-assign')
@@ -82,9 +83,7 @@ module.exports = React.createClass(
       }
 
       var props = assign({}, this.props)
-      props.title = props.title || typeof props.date === 'string'
-        ? props.date
-        : (new Date(props.date)).toISOString().substr(0, 16).replace('T', ' ')
+      props.title = props.date.format('ddd D/M H:mm');
 
       delete props.date
       delete props.formatter
