@@ -56,6 +56,9 @@ export default class Login extends Component {
         <RaisedButton label={t('nav.profilePhotos')}
           style={{marginTop: 15}} onClick={() => browserHistory.push(t.route('profilePhotos'))} />
 
+        <RaisedButton label={t('nav.profilePhotosAvatar')}
+          style={{marginTop: 15, marginLeft: 15}} onClick={() => browserHistory.push(t.route('profilePhotosAvatar'))} />
+
         <br />
 
         <RaisedButton label={t('nav.changePassword')}

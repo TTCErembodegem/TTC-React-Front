@@ -83,16 +83,16 @@ const HttpClient = {
       }
     });
   }),
-  uploadPlayerImage: (imageBase64, playerId) => new Promise((resolve, reject) => {
+  uploadImage: (imageBase64, dataId, type) => new Promise((resolve, reject) => {
     request
-      .post(getUrl('/upload/player'))
-      .send({image: imageBase64, playerId})
+      .post(getUrl('/upload/image'))
+      .send({image: imageBase64, dataId, type})
       .use(bearer)
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .end(function(err, res) {
         if (err || !res.ok) {
-          console.log('/upload/player', err || '', res);
+          console.log('/upload/image', err || '', res);
           reject();
         } else {
           resolve(res.body);

@@ -6,6 +6,7 @@ export default {
     login: '/login',
     changePassword: '/profiel/wijzig-paswoord',
     profilePhotos: '/profiel/fotos',
+    profilePhotosAvatar: '/profiel/fotos/avatar',
     profile: '/profiel',
     links: '/links',
     matches: '/kalender',
@@ -35,6 +36,7 @@ export default {
       login: 'Log in',
       changePassword: 'Wijzig Paswoord',
       profilePhotos: 'Wijzig Foto',
+      profilePhotosAvatar: 'Wijzig Avatar',
       links: 'Links',
       facts: 'TT Weetjes',
       closeMenu: 'Menu sluiten'

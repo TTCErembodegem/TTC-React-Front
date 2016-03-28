@@ -7,7 +7,6 @@ import { util as storeUtil } from '../../store.js';
 import * as playerActions from '../../actions/playerActions.js';
 import { playerUtils } from '../../models/PlayerModel.js';
 
-import List from 'material-ui/lib/lists/list';
 import GridList from 'material-ui/lib/grid-list/grid-list';
 import GridTile from 'material-ui/lib/grid-list/grid-tile';
 import Dialog from 'material-ui/lib/dialog';
@@ -105,7 +104,7 @@ export default class PlayersImageGallery extends Component {
 
     const playerPaperStyle = {
       height: 80,
-      width: 130,
+      width: 150,
       margin: 5,
       display: 'inline-block',
       padding: 5,

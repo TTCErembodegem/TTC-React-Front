@@ -22,8 +22,17 @@ export var playerUtils = {
       height: 200
     };
   },
+  getPlayerAvatarImageSize() {
+    return {
+      width: 40,
+      height: 40
+    };
+  },
   getImageUrl(playerId) {
     return '/img/players/' + playerId + '.png';
+  },
+  getAvatarImageUrl(playerId) {
+    return '/img/players/' + playerId + '_avatar.png';
   },
 };
 

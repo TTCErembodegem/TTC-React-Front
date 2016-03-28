@@ -42,6 +42,18 @@ export function validateToken(token) {
   };
 }
 
+export function uploadPlayer(imageBase64, playerId, type) {
+  return dispatch => {
+    return http.uploadImage(imageBase64, playerId, type)
+      .then(function() {
+        dispatch(showSnackbar(trans('common.apiSuccess')));
+      }, function(err) {
+        dispatch(showSnackbar(trans('common.apiFail')));
+        console.log('player-image Upload!', err); // eslint-disable-line
+      });
+  };
+}
+
 export function login(credentials) {
   var creds = Object.assign({}, credentials);
   var playerName;
