@@ -27,6 +27,7 @@ export default class MatchReport extends Component {
     viewport: PropTypes.object.isRequired,
     postReport: PropTypes.func.isRequired,
     postComment: PropTypes.func.isRequired,
+    deleteComment: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -105,13 +106,14 @@ export default class MatchReport extends Component {
     }
 
     const width = this.props.viewport.width;
+    const canDeleteComment = this.props.user.isAdmin();
 
     var comments;
     if (showComments) {
       comments = (
         <div>
           {this.state.text || this.state.reportFormOpen ? <h3 style={{marginTop: this.state.reportFormOpen ? 55 : 0}}>{this.context.t('match.report.commentsTitle')}</h3> : null}
-          {this.props.match.comments.map(::this._renderComment)}
+          {this.props.match.comments.map(comment => <Comment comment={comment} deleteComment={canDeleteComment || comment.playerId === this.props.user.playerId ? this.props.deleteComment : null} />)}
           {this.state.commentFormOpen ? (
             <div>
               {this.props.user.isSystem() ? (
@@ -167,19 +169,6 @@ export default class MatchReport extends Component {
     );
   }
 
-  _renderComment(comment) {
-    const poster = storeUtils.getPlayer(comment.playerId) || {alias: 'SYSTEM'};
-    return (
-      <div key={comment.id}>
-        {comment.hidden ? <Icon fa="fa fa-user-secret" /> : null}
-        <strong style={{marginRight: 6}}>{poster.alias}</strong>
-        <TimeAgo date={comment.postedOn} style={{color: '#999'}} />
-
-        <div dangerouslySetInnerHTML={{__html: comment.text}} />
-      </div>
-    );
-  }
-
   _reportTextChange(text) {
     this.setState({text});
   }
@@ -208,5 +197,47 @@ export default class MatchReport extends Component {
   }
   _reportCommentPlayerChange(id) {
     this.setState({commentPlayerId: id});
+  }
+}
+
+
+class Comment extends Component {
+  static propTypes = {
+    comment: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      playerId: PropTypes.number.isRequired,
+      hidden: PropTypes.bool.isRequired,
+      postedOn: PropTypes.object.isRequired,
+      text: PropTypes.string.isRequired,
+    }).isRequired,
+    deleteComment: PropTypes.func,
+  }
+
+  constructor() {
+    super();
+    this.state = {
+      hover: false,
+    };
+  }
+  render() {
+    const comment = this.props.comment;
+    const poster = storeUtils.getPlayer(comment.playerId) || {alias: 'SYSTEM'};
+    const canDeleteComment = !!this.props.deleteComment;
+    return (
+      <div key={comment.id}
+        onMouseEnter={() => this.setState({hover: true})}
+        onMouseLeave={() => this.setState({hover: false})}
+        style={Object.assign({padding: 6}, this.state.hover ? {backgroundColor: '#EEE9E9'} : {})}>
+
+        {this.state.hover && canDeleteComment ? (
+          <Icon fa="fa fa-trash-o fa-lg" style={{float: 'right', marginTop: 6}} onClick={this.props.deleteComment.bind(this, comment.id)} />
+        ) : null}
+        {comment.hidden ? <Icon fa="fa fa-user-secret" /> : null}
+        <strong style={{marginRight: 6}}>{poster.alias}</strong>
+        <TimeAgo date={comment.postedOn} style={{color: '#999'}} />
+
+        <div dangerouslySetInnerHTML={{__html: comment.text}} />
+      </div>
+    );
   }
 }

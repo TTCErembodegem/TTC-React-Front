@@ -191,3 +191,21 @@ export function postComment(matchId, commentText, posterPlayerId, hidden) {
     );
   };
 }
+
+export function deleteComment(commentId) {
+  return dispatch => {
+    return http.post('/matches/DeleteComment', {id: commentId})
+      .then(function(data) {
+        if (!data) {
+          return;
+        }
+        dispatch(simpleLoaded(data));
+        broadcastReload('match', data.id);
+        dispatch(showSnackbar(trans('common.apiSuccess')));
+
+      }, function(err) {
+        console.log('Delete Comment!', err); // eslint-disable-line
+      }
+    );
+  };
+}
