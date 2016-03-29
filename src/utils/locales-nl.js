@@ -63,6 +63,10 @@ export default {
       fail: 'Incorrect paswoord voor ${}',
       loggedIn: '${} aangelogd',
     },
+    password: {
+      passwordChangedSuccess: 'Paswoord succesvol gewijzigd',
+      passwordChangedFail: 'Paswoord wijzigen is mislukt'
+    },
     photos: {
       uploadNewTitle: 'Nieuwe foto opladen',
       uploadNewInstructions: 'Sleep een foto of klik om een foto te kiezen',
