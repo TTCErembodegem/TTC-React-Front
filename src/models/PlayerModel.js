@@ -50,8 +50,6 @@ export function createFrenoyLinkByUniqueId(comp, uniqueId) {
   if (comp === 'Vttl') {
     return 'http://competitie.vttl.be/' + uniqueId;
   } else {
-    // TODO: does not work for Sporta
-    //return 'http://tafeltennis.sporcrea.be/competitie/' + uniqueId;
-    return null;
+    return 'http://tafeltennis.sporcrea.be/competitie/' + ('000000' + uniqueId).slice(-6);
   }
 }
