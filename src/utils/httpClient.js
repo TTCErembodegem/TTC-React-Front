@@ -63,12 +63,12 @@ const HttpClient = {
         }
       });
   }),
-  upload: files => new Promise((resolve, reject) => {
+  upload: (files, type = 'temp') => new Promise((resolve, reject) => {
     var req = request
-      .post(getUrl('/upload/temp'))
+      .post(getUrl('/upload'))
       .accept('application/json')
-      .use(bearer);
-    //.field('uploadType', type);
+      .use(bearer)
+      .field('uploadType', type);
 
     files.forEach(file => {
       req.attach(file.name, file);
@@ -76,7 +76,7 @@ const HttpClient = {
 
     req.end(function(err, res) {
       if (err || !res.ok) {
-        console.log('/upload/temp', err || '', res);
+        console.log('/upload', err || '', res);
         reject();
       } else {
         resolve(res.body);

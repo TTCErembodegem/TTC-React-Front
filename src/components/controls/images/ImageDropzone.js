@@ -6,11 +6,12 @@ export default class ImageDropzone extends Component {
   static propTypes = {
     t: PropTypes.func.isRequired,
     fileUploaded: PropTypes.func.isRequired,
+    type: PropTypes.string,
   }
 
   _onDrop(files) {
     var self = this;
-    http.upload(files)
+    http.upload(files, this.props.type)
       .then(function(data) {
         if (data && data.fileName) {
           self.props.fileUploaded(data.fileName);

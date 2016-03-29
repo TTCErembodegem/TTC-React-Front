@@ -163,6 +163,7 @@ export default {
         reportWrittenBy: 'door ${}',
         commentsTitle: 'Opvolging',
         commentsOpenForm: 'Reageren',
+        commentsPhoto: 'Foto plaatsen',
         commentPosted: 'Verklarende aantekening toegevoegd',
         commentVisible: 'Voor iedereen zichtbaar',
       },

@@ -14,6 +14,16 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import FlatButton from 'material-ui/lib/flat-button';
 import Checkbox from 'material-ui/lib/checkbox';
 import PlayerAutoComplete from '../../players/PlayerAutoComplete.js';
+import ImageDropzone from '../../controls/images/ImageDropzone.js';
+
+function getEmptyComment(matchId, playerId) {
+  return {
+    matchId: matchId,
+    playerId: playerId,
+    text: '',
+    hidden: false,
+  };
+}
 
 @connect(state => {
   return {};
@@ -34,10 +44,9 @@ export default class MatchReport extends Component {
     super(props);
     this.state = {
       text: props.match.description,
-      comment: '',
-      commentPlayerId: props.user.playerId,
+      commentImageFormOpen: false,
       commentFormOpen: false,
-      commentHidden: false,
+      comment: getEmptyComment(this.props.match.id, props.user.playerId),
       reportFormOpen: false,
     };
   }
@@ -123,18 +132,20 @@ export default class MatchReport extends Component {
               ) : null}
               <Editor
                 tag="pre"
-                text={this.state.comment}
+                text={this.state.comment.text}
                 style={{height: 55, width: '99%'}}
                 onChange={::this._reportCommentChange}
                 options={{...editorOptions, disableEditing: !canComment}}
                 contentEditable={canComment} />
             </div>
+          ) : this.state.commentImageFormOpen ? (
+            <ImageDropzone t={this.context.t} fileUploaded={::this._onCommentImageUploaded} type="match" />
           ) : null}
 
           {this.props.user.playerId ? (
             <div style={{width: '100%'}}>
               {this.state.commentFormOpen ? (<Checkbox
-                defaultChecked={!this.state.commentHidden}
+                defaultChecked={!this.state.comment.hidden}
                 onCheck={::this._reportHiddenChange}
                 style={width > 450 ? {float: 'right', width: 220, textAlign: 'right'} : {}}
                 label={this.context.t('match.report.commentVisible')} />
@@ -144,6 +155,14 @@ export default class MatchReport extends Component {
                 label={this.context.t('match.report.commentsOpenForm')}
                 onClick={::this._onCommentForm}
                 style={{paddingLeft: 0}} />
+
+              <FlatButton
+                onClick={() => this.setState({commentImageFormOpen: !this.state.commentImageFormOpen, commentFormOpen: false})}
+                style={{marginLeft: 15}}>
+
+                <Icon fa="fa fa-picture-o" />
+              </FlatButton>
+
             </div>
           ) : null}
         </div>
@@ -169,6 +188,11 @@ export default class MatchReport extends Component {
     );
   }
 
+  _onCommentImageUploaded(fileName) {
+    this.setState({commentImageFormOpen: false});
+    this.props.postComment(Object.assign({}, getEmptyComment(this.props.match.id, this.props.user.playerId), {imageUrl: fileName}));
+  }
+
   _reportTextChange(text) {
     this.setState({text});
   }
@@ -181,22 +205,23 @@ export default class MatchReport extends Component {
 
   _onCommentForm() {
     if (this.state.commentFormOpen) {
-      if (this.state.comment) {
-        this.props.postComment(this.props.match.id, this.state.comment, this.state.commentPlayerId, this.state.commentHidden);
-        this.setState({commentFormOpen: false, comment: '', commentHidden: false});
+      if (this.state.comment.text) {
+        this.props.postComment(this.state.comment);
+        this.setState({comment: getEmptyComment(this.props.match.id, this.props.user.playerId), commentFormOpen: false});
+        console.log('posted:', this.state);
       }
     } else {
       this.setState({commentFormOpen: true});
     }
   }
   _reportCommentChange(text, medium) {
-    this.setState({comment: text});
+    this.setState({comment: Object.assign({}, this.state.comment, {text})});
   }
   _reportHiddenChange() {
-    this.setState({commentHidden: !this.state.commentHidden});
+    this.setState({comment: Object.assign({}, this.state.comment, {hidden: !this.state.comment.hidden})});
   }
-  _reportCommentPlayerChange(id) {
-    this.setState({commentPlayerId: id});
+  _reportCommentPlayerChange(playerId) {
+    this.setState({comment: Object.assign({}, this.state.comment, {playerId})});
   }
 }
 
@@ -223,11 +248,12 @@ class Comment extends Component {
     const comment = this.props.comment;
     const poster = storeUtils.getPlayer(comment.playerId) || {alias: 'SYSTEM'};
     const canDeleteComment = !!this.props.deleteComment;
+
     return (
       <div key={comment.id}
         onMouseEnter={() => this.setState({hover: true})}
         onMouseLeave={() => this.setState({hover: false})}
-        style={Object.assign({padding: 6}, this.state.hover ? {backgroundColor: '#EEE9E9'} : {})}>
+        style={Object.assign({padding: 6, marginRight: 10}, this.state.hover ? {backgroundColor: '#EEE9E9'} : {})}>
 
         {this.state.hover && canDeleteComment ? (
           <Icon fa="fa fa-trash-o fa-lg" style={{float: 'right', marginTop: 6}} onClick={this.props.deleteComment.bind(this, comment.id)} />
@@ -236,7 +262,8 @@ class Comment extends Component {
         <strong style={{marginRight: 6}}>{poster.alias}</strong>
         <TimeAgo date={comment.postedOn} style={{color: '#999'}} />
 
-        <div dangerouslySetInnerHTML={{__html: comment.text}} />
+        {comment.imageUrl ? <div><img src={comment.imageUrl} style={{maxWidth: '95%'}} /></div>
+        : <div dangerouslySetInnerHTML={{__html: comment.text}} />}
       </div>
     );
   }
