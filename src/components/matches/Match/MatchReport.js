@@ -122,7 +122,7 @@ export default class MatchReport extends Component {
       comments = (
         <div>
           {this.state.text || this.state.reportFormOpen ? <h3 style={{marginTop: this.state.reportFormOpen ? 55 : 0}}>{this.context.t('match.report.commentsTitle')}</h3> : null}
-          {this.props.match.comments.map(comment => <Comment comment={comment} deleteComment={canDeleteComment || comment.playerId === this.props.user.playerId ? this.props.deleteComment : null} />)}
+          {this.props.match.comments.map(comment => <Comment key={comment.id} comment={comment} deleteComment={canDeleteComment || comment.playerId === this.props.user.playerId ? this.props.deleteComment : null} />)}
           {this.state.commentFormOpen ? (
             <div>
               {this.props.user.isSystem() ? (
@@ -250,7 +250,7 @@ class Comment extends Component {
     const canDeleteComment = !!this.props.deleteComment;
 
     return (
-      <div key={comment.id}
+      <div
         onMouseEnter={() => this.setState({hover: true})}
         onMouseLeave={() => this.setState({hover: false})}
         style={Object.assign({padding: 6, marginRight: 10}, this.state.hover ? {backgroundColor: '#EEE9E9'} : {})}>
