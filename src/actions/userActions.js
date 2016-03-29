@@ -88,9 +88,9 @@ export function changePassword(playerId, creds) {
     return http.post('/users/ChangePassword', {...creds, playerId})
       .then(function(data) {
         if (!data) {
-          dispatch(showSnackbar(trans('common.apiFail')));
+          dispatch(showSnackbar(trans('password.passwordChangedFail')));
         } else {
-          dispatch(showSnackbar(trans('common.apiSuccess')));
+          dispatch(showSnackbar(trans('password.passwordChangedSuccess')));
           dispatch(loggedIn(data));
         }
       }, function(err) {

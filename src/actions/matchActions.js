@@ -201,7 +201,7 @@ export function deleteComment(commentId) {
         }
         dispatch(simpleLoaded(data));
         broadcastReload('match', data.id);
-        dispatch(showSnackbar(trans('common.apiSuccess')));
+        dispatch(showSnackbar(trans('match.report.commentDeleted')));
 
       }, function(err) {
         console.log('Delete Comment!', err); // eslint-disable-line
