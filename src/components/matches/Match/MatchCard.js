@@ -6,6 +6,7 @@ import moment from 'moment';
 
 import UserModel from '../../../models/UserModel.js';
 import MatchModel from '../../../models/MatchModel.js';
+import { OwnClubId } from '../../../models/ClubModel.js';
 import * as matchActions from '../../../actions/matchActions.js';
 import { setSetting } from '../../../actions/configActions.js';
 import { util as storeUtils } from '../../../store.js';
@@ -139,15 +140,15 @@ export default class MatchCard extends Component {
     );
   }
   _getCommentsIcon() {
-    var hasNewComment = this.props.config.get('newMatchComment' + this.props.match.id);
+    const hasNewComment = this.props.config.get('newMatchComment' + this.props.match.id);
     if (!hasNewComment) {
       return;
     }
     return <Icon fa="fa fa-comment-o" className="match-card-tab-icon" />;
   }
   _getPlayersEditIcon() {
-    var match = this.props.match;
-    var isAllowedToEdit = this.props.user.canManageTeam(match.teamId);
+    const match = this.props.match;
+    const isAllowedToEdit = this.props.user.canManageTeam(match.teamId);
     return isAllowedToEdit && !match.isSyncedWithFrenoy ? (
       <Icon fa="fa fa-pencil-square-o" onClick={::this._onStartEditPlayers} className="match-card-tab-icon" />) : null;
   }
@@ -165,7 +166,7 @@ export default class MatchCard extends Component {
     }
 
     // Accordion
-    var header = <div>{this.context.t(`match.tabs.${transKey}Title`)} {headerChildren}</div>;
+    const header = <div>{this.context.t(`match.tabs.${transKey}Title`)} {headerChildren}</div>;
     return (
       <Panel header={header} eventKey={eventKey} className="match-card-panel clickable" onClick={this._onTabSelect.bind(this, eventKey)}>
         {this._renderTabContent(eventKey)}
@@ -207,15 +208,26 @@ export default class MatchCard extends Component {
     return <IndividualMatches match={this.props.match} ownPlayerId={this.props.user.playerId} t={this.context.t} />;
   }
   _renderOpponentsRanking() {
-    var matches = storeUtils.matches
+    const matches = storeUtils.matches
       .getFromOpponent(this.props.match.opponent)
-      .sort((a, b) => a.date.isBefore(b.date) ? 1 : -1)
-      .filter(match => match.score && (match.score.home || match.score.out) && match.id !== this.props.match.id);
+      .filter(match => match.id !== this.props.match.id);
 
-    return <OpponentsLastMatches match={this.props.match} readonlyMatches={matches} />;
+    const theirOtherMatches = matches
+      .filter(match => match.score && (match.score.home || match.score.out))
+      .sort((a, b) => a.date.isBefore(b.date) ? 1 : -1);
+
+    // TODO: findFirstRoundMatch: move this to team model or something
+    const firstRoundMatch = matches.find(match => (
+        (match.home.clubId === OwnClubId && match.home.teamCode === this.props.match.getTeam().teamCode) ||
+        (match.away.clubId === OwnClubId && match.away.teamCode === this.props.match.getTeam().teamCode)
+      ));
+
+    const firstRoundRealMatch = firstRoundMatch ? storeUtils.getMatch(firstRoundMatch.id) : null;
+
+    return <OpponentsLastMatches match={this.props.match} readonlyMatches={theirOtherMatches} otherMatch={firstRoundRealMatch} />;
   }
   _renderOpponentFormation() {
-    var formations = storeUtils.matches
+    const formations = storeUtils.matches
       .getFormation(this.props.match)
       .sort((a, b) => a.count < b.count ? 1 : -1);
 
@@ -234,8 +246,8 @@ export default class MatchCard extends Component {
 
 
   _renderPlayers() {
-    var match = this.props.match;
-    var team = match.getTeam();
+    const match = this.props.match;
+    const team = match.getTeam();
 
     if (match.isSyncedWithFrenoy) {
       return <MatchPlayerResults match={match} team={match.getTeam()} t={this.context.t} />;

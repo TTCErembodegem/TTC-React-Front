@@ -128,6 +128,7 @@ export default {
       degradationMatch: 'THRILLER',
       previousEncounterScore: 'Uitslag heenronde',
       gotoPreviousEncounter: 'Bekijk details van de heenronde',
+      gotoNextEncounter: 'Bekijk details van de terugronde',
       scoresheetSporta: {
         uniqueIndex: 'LIDK. nr.',
         ranking: 'Klassement',

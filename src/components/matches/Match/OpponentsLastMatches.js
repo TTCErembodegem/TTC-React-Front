@@ -6,7 +6,6 @@ import { contextTypes } from '../../../utils/decorators/withContext.js';
 import _ from 'lodash';
 
 import MatchModel from '../../../models/MatchModel.js';
-import { OwnClubId } from '../../../models/ClubModel.js';
 
 import Table from 'react-bootstrap/lib/Table';
 import OpponentPlayer from './OpponentPlayer.js';
@@ -22,6 +21,7 @@ export default class OpponentsLastMatches extends Component {
   static contextTypes = contextTypes;
   static propTypes = {
     match: PropTypes.instanceOf(MatchModel).isRequired,
+    otherMatch: PropTypes.instanceOf(MatchModel),
     readonlyMatches: PropTypes.object.isRequired,
     viewport: PropTypes.object.isRequired,
   }
@@ -40,23 +40,18 @@ export default class OpponentsLastMatches extends Component {
 
   render() {
     const widthRemoveColumn = 500; // combine Home&Away columns to just one Opponent column on small devices
-
-    // TODO: findFirstRoundMatch: move this to team model or something
-    const firstRoundMatch = this.props.readonlyMatches.find(match => match.id !== this.props.match.id &&
-      (
-        (match.home.clubId === OwnClubId && match.home.teamCode === this.props.match.getTeam().teamCode) ||
-        (match.away.clubId === OwnClubId && match.away.teamCode === this.props.match.getTeam().teamCode)
-      ));
     var firstBattle;
-    if (firstRoundMatch) {
+    const otherMatch = this.props.otherMatch;
+    if (otherMatch) {
+      const wasPrev = this.props.match.date > otherMatch.date;
       firstBattle = (
-        <Link to={this.context.t.route('match', {matchId: firstRoundMatch.id})}>
+        <Link to={this.context.t.route('match', {matchId: otherMatch.id})}>
           <button type="button" className="btn btn-default"
-            onClick={this._gotoMatchCard.bind(this, firstRoundMatch)}
+            onClick={this._gotoMatchCard.bind(this, otherMatch)}
             style={{margin: 7}}>
             <div>
-              <span style={{marginRight: 6}}>{this.context.t('match.gotoPreviousEncounter')}</span>
-              <MatchScore match={firstRoundMatch} forceDisplay={true} />
+              <span style={{marginRight: 6}}>{this.context.t('match.' + (wasPrev ? 'gotoPreviousEncounter' : 'gotoNextEncounter'))}</span>
+              <MatchScore match={otherMatch} forceDisplay={true} />
             </div>
           </button>
         </Link>
