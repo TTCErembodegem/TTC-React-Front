@@ -1,15 +1,19 @@
 import React, { Component, PropTypes } from 'react';
+import { Link, browserHistory } from 'react-router';
 import { util as storeUtils } from '../../../store.js';
 import withViewport from '../../../utils/decorators/withViewport.js';
 import { contextTypes } from '../../../utils/decorators/withContext.js';
 import _ from 'lodash';
 
 import MatchModel from '../../../models/MatchModel.js';
+import { OwnClubId } from '../../../models/ClubModel.js';
 
 import Table from 'react-bootstrap/lib/Table';
 import OpponentPlayer from './OpponentPlayer.js';
 import Spinner from '../../controls/Spinner.js';
 import IconButton from 'material-ui/lib/icon-button';
+import FlatButton from 'material-ui/lib/flat-button';
+import MatchScore from '../MatchScore.js';
 
 const AmountOfOpponentMatchesToShow = 5;
 
@@ -29,8 +33,35 @@ export default class OpponentsLastMatches extends Component {
     };
   }
 
+  _gotoMatchCard(match) {
+    const matchRoute = this.context.t.route('match', {matchId: match.id});
+    browserHistory.push(matchRoute);
+  }
+
   render() {
     const widthRemoveColumn = 500; // combine Home&Away columns to just one Opponent column on small devices
+
+    // TODO: findFirstRoundMatch: move this to team model or something
+    const firstRoundMatch = this.props.readonlyMatches.find(match => match.id !== this.props.match.id &&
+      (
+        (match.home.clubId === OwnClubId && match.home.teamCode === this.props.match.getTeam().teamCode) ||
+        (match.away.clubId === OwnClubId && match.away.teamCode === this.props.match.getTeam().teamCode)
+      ));
+    var firstBattle;
+    if (firstRoundMatch) {
+      firstBattle = (
+        <Link to={this.context.t.route('match', {matchId: firstRoundMatch.id})}>
+          <button type="button" className="btn btn-default"
+            onClick={this._gotoMatchCard.bind(this, firstRoundMatch)}
+            style={{margin: 7}}>
+            <div>
+              <span style={{marginRight: 6}}>{this.context.t('match.gotoPreviousEncounter')}</span>
+              <MatchScore match={firstRoundMatch} forceDisplay={true} />
+            </div>
+          </button>
+        </Link>
+      );
+    }
 
     var matches = this.props.readonlyMatches;
     if (!this.state.showAll) {
@@ -41,6 +72,8 @@ export default class OpponentsLastMatches extends Component {
     }
 
     return (
+      <div>
+      {firstBattle}
       <Table condensed className="match-card-tab-table">
         <thead>
           <tr>
@@ -57,9 +90,9 @@ export default class OpponentsLastMatches extends Component {
         </thead>
         <tbody>
           {matches.map(match => {
-            var opponent = this.props.match.opponent;
+            const opponent = this.props.match.opponent;
+            const isHomeMatch = match.home.clubId === opponent.clubId && match.home.teamCode === opponent.teamCode;
             var opponentFormation;
-            var isHomeMatch = match.home.clubId === opponent.clubId && match.home.teamCode === opponent.teamCode;
             if (isHomeMatch) {
               opponentFormation = match.players.filter(m => m.home);
             } else {
@@ -96,6 +129,7 @@ export default class OpponentsLastMatches extends Component {
           ) : null}
         </tbody>
       </Table>
+      </div>
     );
   }
   _getFormationRankingString(rankings) {
