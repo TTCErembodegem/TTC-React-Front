@@ -76,7 +76,9 @@ export default {
     },
     profile: {
       headerText: 'Profiel',
-      loggedInText: 'Ingelogd als:'
+      loggedInText: 'Ingelogd als:',
+      email: 'E-mail:',
+      gsm: 'GSM-nummer:'
     },
     changePassword: {
       title: 'Paswoord wijzigen',
