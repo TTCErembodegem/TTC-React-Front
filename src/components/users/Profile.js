@@ -49,14 +49,15 @@ export default class Login extends Component {
     };
 
     var player = storeUtil.getPlayer(this.props.user.playerId);
+    console.log(player);
 
     return (
       <Paper zDepth={1} style={paperStyle}>
         <h3>{this.context.t('profile.headerText')}</h3>
 
         <p>{this.context.t('profile.loggedInText')}&nbsp;{this._reverseName((player || {name: 'Broken Code'}).name)}</p>
-        <p>{this.context.t('profile.email')}&nbsp;{player.email}</p>
-        <p>{this.context.t('profile.gsm')}&nbsp;{dispayFormat(player.gsm)}</p>
+        <p>{this.context.t('profile.email')}&nbsp;{player.contact.email}</p>
+        <p>{this.context.t('profile.gsm')}&nbsp;{dispayFormat(player.contact.mobile)}</p>
 
         <RaisedButton label={t('nav.profilePhotos')}
           style={{marginTop: 15}} onClick={() => browserHistory.push(t.route('profilePhotos'))} />
