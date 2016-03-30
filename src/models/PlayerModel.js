@@ -5,8 +5,6 @@ export default class PlayerModel {
     this.id = json.id;
     this.active = json.active;
     this.name = json.name;
-    this.email = json.email;
-    this.gsm = json.gsm;
     this.sporta = json.sporta;
     this.vttl = json.vttl;
     this.style = json.style || {};
