@@ -49,7 +49,6 @@ export default class Login extends Component {
     };
 
     var player = storeUtil.getPlayer(this.props.user.playerId);
-    console.log(player);
 
     return (
       <Paper zDepth={1} style={paperStyle}>
