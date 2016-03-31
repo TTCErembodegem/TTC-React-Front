@@ -5,6 +5,7 @@ export default {
     players: '/spelers',
     login: '/login',
     changePassword: '/profiel/wijzig-paswoord',
+    changeDetails: 'profiel/wijzig-gegevens',
     profilePhotos: '/profiel/fotos',
     profilePhotosAvatar: '/profiel/fotos/avatar',
     profile: '/profiel',
@@ -35,6 +36,7 @@ export default {
       players: 'Spelers',
       login: 'Log in',
       changePassword: 'Wijzig Paswoord',
+      changeDetails: 'Wijzig Gegevens',
       profilePhotos: 'Wijzig Foto',
       profilePhotosAvatar: 'Wijzig Avatar',
       links: 'Links',
@@ -85,6 +87,14 @@ export default {
       oldPassword: 'Huidig paswoord',
       newPassword: 'Nieuw paswoord',
       changePasswordButton: 'Wijzig Paswoord',
+    },
+    updatePlayer: {
+      title: 'Wijzig uw gegevens',
+      email: 'Nieuw E-mailadres',
+      phoneNumber: 'Nieuw GSM-nummer',
+      changeDetailsButton: 'Wijzig gegevens',
+      updatePlayerSuccess: 'Speler gegevens succesvol gewijzigd',
+      updatePlayerFail: 'Speler gegevens wijzigen is mislukt'
     },
     players: {
       title: 'Spelers overzicht ${a}',

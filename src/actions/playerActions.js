@@ -33,3 +33,19 @@ export function updateStyle(player, newStyle, updatedBy) {
       });
   };
 }
+
+export function updatePlayer(playerId, newPlayerDetails) {
+  return dispatch => {
+    return http.post('/players/UpdatePlayer', {playerId, ...newPlayerDetails})
+      .then(function(data) {
+        if (!data) {
+          dispatch(showSnackbar(trans('updatePlayer.updatePlayerFail')));
+        } else {
+          dispatch(showSnackbar(trans('updatePlayer.updatePlayerSuccess')));
+        }
+      }, function(err) {
+        dispatch(showSnackbar(trans('common.apiFail')));
+        console.log('UpdatePlayer!', err); // eslint-disable-line
+      });
+  };
+}

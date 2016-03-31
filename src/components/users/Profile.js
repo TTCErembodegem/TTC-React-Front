@@ -41,7 +41,7 @@ export default class Login extends Component {
   render() {
     const t = this.context.t;
     const paperStyle = {
-      height: 310,
+      height: 410,
       width: 320,
       margin: 20,
       textAlign: 'center',
@@ -68,6 +68,10 @@ export default class Login extends Component {
 
         <RaisedButton label={t('nav.changePassword')}
           style={{marginTop: 15}} onClick={() => browserHistory.push(t.route('changePassword'))} />
+        <br />
+
+        <RaisedButton label={t('nav.changeDetails')}
+          style={{marginTop: 15}} onClick={() => browserHistory.push(t.route('changeDetails'))} />
 
         <br />
 
