@@ -17,7 +17,7 @@ import MenuItem from 'material-ui/lib/menus/menu-item';
 import PlayerAutoComplete from '../../players/PlayerAutoComplete.js';
 
 import * as matchActions from '../../../actions/matchActions.js';
-import { dispayFormat } from '../../controls/Telephone.js';
+import { displayFormat } from '../../controls/Telephone.js';
 
 @connect(state => {
   return {
@@ -105,7 +105,7 @@ class SelectablePlayerAvatar extends Component {
         leftAvatar={this._renderAvatar(player)}
         onTouchTap={this.props.select}
         primaryText={player.alias}
-        secondaryText={dispayFormat(player.contact.mobile)} />
+        secondaryText={displayFormat(player.contact.mobile)} />
     );
   }
   _renderAvatar(player) {

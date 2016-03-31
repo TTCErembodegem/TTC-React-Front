@@ -13,7 +13,7 @@ import TextField from 'material-ui/lib/text-field';
 import RaisedButton from 'material-ui/lib/raised-button';
 import Paper from 'material-ui/lib/paper';
 import { util as storeUtil } from '../../store.js';
-import { dispayFormat } from '../controls/Telephone.js';
+import { displayFormat } from '../controls/Telephone.js';
 
 
 @connect(state => {
@@ -48,15 +48,15 @@ export default class Login extends Component {
       display: 'inline-block',
     };
 
-    var player = storeUtil.getPlayer(this.props.user.playerId);
+    var player = storeUtil.getPlayer(this.props.user.playerId) || {contact: {}, name: 'Broken Code'};
 
     return (
       <Paper zDepth={1} style={paperStyle}>
         <h3>{this.context.t('profile.headerText')}</h3>
 
-        <p>{this.context.t('profile.loggedInText')}&nbsp;{this._reverseName((player || {name: 'Broken Code'}).name)}</p>
+        <p>{this.context.t('profile.loggedInText')}&nbsp;{this._reverseName(player.name)}</p>
         <p>{this.context.t('profile.email')}&nbsp;{player.contact.email}</p>
-        <p>{this.context.t('profile.gsm')}&nbsp;{dispayFormat(player.contact.mobile)}</p>
+        <p>{this.context.t('profile.gsm')}&nbsp;{displayFormat(player.contact.mobile)}</p>
 
         <RaisedButton label={t('nav.profilePhotos')}
           style={{marginTop: 15}} onClick={() => browserHistory.push(t.route('profilePhotos'))} />

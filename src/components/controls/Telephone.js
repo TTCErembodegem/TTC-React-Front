@@ -1,7 +1,10 @@
 import React, { PropTypes, Component } from 'react';
 import Icon from './Icon.js';
 
-export function dispayFormat(n) {
+export function displayFormat(n) {
+  if (!n) {
+    return '';
+  }
   return n.replace(/^(\d{3,4})(\d{2})(\d{2})(\d{2})$/, '$1/$2 $3 $4');
 }
 
@@ -24,7 +27,7 @@ export default class Telephone extends Component {
     return (
       <div className="iconize" {...props}>
         <Icon fa="fa fa-phone" />
-        <a style={{marginLeft: 7}} href={'tel:' + callFormat(number)}>{dispayFormat(number)}</a>
+        <a style={{marginLeft: 7}} href={'tel:' + callFormat(number)}>{displayFormat(number)}</a>
       </div>
     );
   }
