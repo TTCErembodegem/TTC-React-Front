@@ -45,7 +45,7 @@ export function updatePlayer(playerId, newPlayerDetails) {
         }
       }, function(err) {
         dispatch(showSnackbar(trans('common.apiFail')));
-        console.log('ChangePassword!', err); // eslint-disable-line
+        console.log('UpdatePlayer!', err); // eslint-disable-line
       });
   };
 }

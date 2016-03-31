@@ -89,8 +89,6 @@ export default {
       changePasswordButton: 'Wijzig Paswoord',
     },
     updatePlayer: {
-      email: 'E-mail:',
-      gsm: 'GSM-nummer:',
       title: 'Wijzig uw gegevens',
       email: 'Nieuw E-mailadres',
       phoneNumber: 'Nieuw GSM-nummer',
