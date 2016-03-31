@@ -201,9 +201,11 @@ export default class PlayersImageGallery extends Component {
               onChange={::this._changeBestStroke} />
 
             {user.isSystem() ? (
-              <PlayerAutoComplete
-                selectPlayer={::this._changePlayer}
-                floatingLabelText={this.context.t('system.playerSelect')} />
+              <div>
+                <PlayerAutoComplete
+                  selectPlayer={::this._changePlayer}
+                  floatingLabelText={this.context.t('system.playerSelect')} />
+              </div>
             ) : null}
           </Dialog>
         ) : null}
