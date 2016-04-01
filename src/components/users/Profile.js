@@ -26,7 +26,7 @@ import { displayFormat } from '../controls/Telephone.js';
     // teams: state.teams,
   };
 }, loginActions)
-export default class Login extends Component {
+export default class Profile extends Component {
   static contextTypes = contextTypes;
   static propTypes = {
     // players: ImmutablePropTypes.listOf(PropTypes.instanceOf(PlayerModel).isRequired).isRequired,
