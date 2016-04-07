@@ -16,7 +16,7 @@ injectTapEventPlugin();
 
 import { showSnackbar } from './actions/configActions.js';
 import http from './utils/httpClient.js';
-window.onerror = function(message, source, lineno, colno, error) {
+window.onerror = function(message, source, lineno, colno, error) { // eslint-disable-line
   console.log('oh noes!', arguments); // eslint-disable-line
   http.post('/config/Log', {args: arguments});
   store.dispatch(showSnackbar('Something went wrong: ' + message));
