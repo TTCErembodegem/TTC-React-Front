@@ -17,7 +17,7 @@ import Facts from './components/other/Facts.js';
 import t from './locales.js';
 
 const Routes = () => (
-  <Router history={browserHistory }>
+  <Router history={browserHistory}>
     <Route path="/" component={App}>
       <Route path={t.route('players')} component={Players} />
       <Route path={t.route('login')} component={Login} />

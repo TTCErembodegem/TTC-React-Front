@@ -4,6 +4,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import Routes from './routes.js';
+import store from './store.js';
 
 // TODO: change webpack config to add sourcemaps
 
@@ -13,10 +14,16 @@ import Routes from './routes.js';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
+import { showSnackbar } from './actions/configActions.js';
+import http from './utils/httpClient.js';
+window.onerror = function(message, source, lineno, colno, error) {
+  console.log('oh noes!', arguments); // eslint-disable-line
+  http.post('/config/Log', {args: arguments});
+  store.dispatch(showSnackbar('Something went wrong: ' + message));
+};
+
 import moment from 'moment';
 moment.locale('nl');
-
-import store from './store.js';
 
 import { validateToken } from './actions/userActions.js';
 var token = localStorage.getItem('token');
