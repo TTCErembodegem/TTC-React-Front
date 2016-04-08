@@ -91,6 +91,8 @@ export default class MatchReport extends Component {
           ) : readonlyReport}
         </div>
       );
+    } else if (this.state.text) {
+      reportText = readonlyReport;
     }
 
     if (!canPostReport && !this.state.text && !showComments) {

@@ -2,7 +2,6 @@ import GitRepo from 'git-repository';
 import task from './lib/task';
 import fetch from './lib/fetch';
 
-// TODO: Update deployment URL
 // For more information visit http://gitolite.com/deploy.html
 const getRemote = (slot) => ({
   name: slot ? slot : 'production',

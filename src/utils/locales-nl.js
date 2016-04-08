@@ -47,7 +47,7 @@ export default {
       introText: '',
       loginName: 'Spelersnaam',
       password: 'Paswoord',
-      //passwordHint: 'Hetzelfde paswoord als de oude site', // TODO: put this translation back!
+      //passwordHint: 'Hetzelfde paswoord als de oude site', // TODO IMPORTANT: put this translation back!
       passwordHint: 'Het paswoord is "pwd"',
       loginButton: 'Login',
       logoutButton: 'Uitloggen',

@@ -54,6 +54,12 @@ export default class MatchScore extends Component {
       }
     }
 
+    // const hasScoreUpdate = this.props.config.get('newMatchScore' + match.id);
+    // if (hasScoreUpdate) {
+
+    //   // TODO: has score update == shake? (tremors?)
+    // }
+
     var score = match.score || {home: 0, out: 0};
 
     const classColor = this.props.match.isDerby ? 'match-won' : getClassName(match.isHomeMatch, score.home, score.out);
@@ -64,7 +70,7 @@ export default class MatchScore extends Component {
         style={this.props.style}>
 
         {text}
-        {score.home + ' - ' + score.out}
+        <span>{score.home + ' - ' + score.out}</span>
       </span>
     );
   }

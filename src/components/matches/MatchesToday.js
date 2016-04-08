@@ -38,6 +38,8 @@ export default class MatchesToday extends Component {
   }
 
   render() {
+    // TODO IMPORTANT: vandaag op mobile moet anders... Dit is enkel goed voor op de TV...
+
     var matchesToday = storeUtil.matches.getTodayMatches();
     return (
       <div>
