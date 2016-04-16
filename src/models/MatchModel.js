@@ -150,7 +150,7 @@ export default class MatchModel {
 
   getGameMatches() {
     if (!this.games.size) {
-      return null;
+      return [];
     }
 
     return this.games.map(game => {
