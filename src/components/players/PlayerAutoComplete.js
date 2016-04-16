@@ -25,7 +25,7 @@ export default class PlayerAutoComplete extends Component {
       var matchedPlayers = this.props.players.filter(ply => ply.alias.toUpperCase() === text.toUpperCase());
       if (matchedPlayers.size === 1) {
         this.props.selectPlayer(matchedPlayers.first().id);
-      } else if (text === 'system') {
+      } else if (text.toLowerCase() === 'system' || text.toLowerCase() === 'systeem') {
         this.props.selectPlayer('system');
       }
     }
