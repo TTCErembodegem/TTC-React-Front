@@ -12,6 +12,10 @@ Diagram van Ttc.Model
 IEnumerables van Club, Team, Match en Player zijn de state aan de frontend.  
 Links tussen deze zijn altijd via int clubId, playerId, etc
 
+Polyfills
+---------
+`autopolyfiller app.js -b "safari 4, explorer 8" > polyfills.js`
+
 Lucid Chart
 -----------
 https://www.lucidchart.com/invitations/accept/75107705-57fa-4359-831a-e4ba0289a0d4
