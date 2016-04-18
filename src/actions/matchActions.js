@@ -45,6 +45,9 @@ export function loaded(data, dispatch) {
       // TODO: do not call if already in store
       http.get('/matches/GetFirstRoundMatch', {matchId: match.id})
         .then(function(newmatch) {
+          if (!newmatch) {
+            return;
+          }
           dispatch(simpleLoaded(newmatch));
           frenoySync(newmatch);
 
@@ -114,8 +117,10 @@ export function selectPlayer(matchId, playerId) {
 
     return http.post('/matches/TogglePlayer', matchPlayer)
       .then(function(data) {
-        dispatch(simpleLoaded(data));
-        broadcastReload('match', data.id);
+        if (data) {
+          dispatch(simpleLoaded(data));
+          broadcastReload('match', data.id);
+        }
 
       }, function(err) {
         console.log('TogglePlayer!', err); // eslint-disable-line

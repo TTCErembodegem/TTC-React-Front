@@ -27,7 +27,7 @@ function fetchData(url, loadedAction) {
   return dispatch => {
     http.get(url)
       .then(function(data) {
-        if (loadedAction) {
+        if (loadedAction && data) {
           dispatch(loadedAction(data));
         }
       }, function(err) {
@@ -55,10 +55,10 @@ export default function() {
     function initialRequest(url, loadedAction, callback) {
       return http.get(url)
         .then(function(data) {
-          if (loadedAction) {
+          if (loadedAction && data) {
             dispatch(loadedAction(data));
           }
-          if (callback) {
+          if (callback && data) {
             callback(data, dispatch);
           }
         }, function(err) {
