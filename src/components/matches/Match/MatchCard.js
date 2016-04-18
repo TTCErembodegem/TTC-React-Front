@@ -196,7 +196,14 @@ export default class MatchCard extends Component {
     case tabEventKeys.opponentsFormation:
       return this._renderOpponentFormation();
     case 'admin':
-      return <div>ID={this.props.match.id}<br />FrenoyId={this.props.match.frenoyMatchId}</div>;
+      return (
+        <div>
+          ID={this.props.match.id}<br />FrenoyId={this.props.match.frenoyMatchId}
+          <pre>
+            {JSON.stringify(this.props.match, null, 4)}
+          </pre>
+        </div>
+      );
     }
     return 'Unknown';
   }
