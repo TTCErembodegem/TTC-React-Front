@@ -228,8 +228,12 @@ class TodaysEvents extends Component {
     return (
       <div>
         {trainingEvent}
-        <Strike text={t('intro.playedMatches')} />
-        {this._renderMatches(lastPlayedMatches)}
+        {lastPlayedMatches.size ? (
+          <div>
+            <Strike text={t('intro.playedMatches')} />
+            {this._renderMatches(lastPlayedMatches)}
+          </div>
+        ) : null}
       </div>
     );
   }
