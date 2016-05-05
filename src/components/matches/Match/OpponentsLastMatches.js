@@ -110,7 +110,7 @@ export default class OpponentsLastMatches extends Component {
 
                 <td key="5">{this._getFormationRankingString(opponentFormation.map(ply => ply.ranking))}</td>
 
-                <td key="6">{match.score.home} - {match.score.out}</td>
+                <td key="6">{match.score.home}&nbsp;-&nbsp;{match.score.out}</td>
               </tr>,
               this._getMatchDetails(match)
             ];
