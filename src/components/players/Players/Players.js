@@ -103,7 +103,7 @@ export default class Players extends Component {
           </div>
         </Tab>
         <Tab label={this.context.t('players.alle')}>
-          <Accordion style={{marginTop: 10}}>
+          <Accordion style={{marginTop: 10, marginBottom: 10}}>
             {this.props.teams.sort((a, b) => (a.competition + a.teamCode).localeCompare(b.competition + b.teamCode))
                 .map((team, index) => <Panel header={team.competition + ' ' + team.teamCode + '-' +  this.context.t('players.team')}
                   eventKey={index}>
