@@ -41,6 +41,7 @@ export default {
       profilePhotosAvatar: 'Wijzig Avatar',
       links: 'Links',
       facts: 'TT Weetjes',
+      help: 'Help',
       closeMenu: 'Menu sluiten'
     },
     intro: {
