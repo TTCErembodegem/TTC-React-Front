@@ -75,10 +75,23 @@ export default class Teams extends Component {
   _getTeamsPanel() {
     var teams = this.props.teams.filter(team => team.competition === this.props.competition);
     return teams.map(team =>
-      <Panel header={<div>{team.competition + ' ' + team.teamCode}</div>} eventKey={team.id} onClick={this._onTabSelect.bind(this, team.id)}>
+      <Panel header={this._renderRanking(team)} eventKey={team.id} onClick={this._onTabSelect.bind(this, team.id)}>
           {this._getTeamMatches(team)}
       </Panel>
     );
+  }
+
+  _renderRanking(team){
+    const ranking = team.getDivisionRanking();
+    return (<div>{team.competition + ' ' + team.teamCode}&nbsp;&nbsp;
+      <span className="label label-as-badge label-default">{this._renderOwnTeamPosition(team)}
+      </span></div>
+    );
+  }
+
+  _renderOwnTeamPosition(team) {
+    const ranking = team.getDivisionRanking();
+    return ranking ? ranking.position : '?';
   }
 
   _openMatch(matchId) {
@@ -136,7 +149,8 @@ export default class Teams extends Component {
     var teams = this.props.teams.filter(team => team.competition === this.props.competition);
     return teams.map(team =>
       <NavItem eventKey={team.id}>
-          <div>{team.competition + ' ' + team.teamCode}</div>
+          <div>{team.competition + ' ' + team.teamCode}&nbsp;&nbsp;
+          <span className="label label-as-badge label-default">{this._renderOwnTeamPosition(team)}</span></div>
       </NavItem>
       );
   }
