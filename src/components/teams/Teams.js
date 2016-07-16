@@ -20,6 +20,7 @@ import MatchCardHeader from '../matches/Match/MatchCardHeader.js';
 
 import Table from 'react-bootstrap/lib/Table';
 
+import { util as storeUtil } from '../../store.js';
 import * as matchActions from '../../actions/matchActions.js';
 
 export const TeamsVttl = () => <Teams competition="Vttl" />;
@@ -77,6 +78,7 @@ export default class Teams extends Component {
     return teams.map(team =>
       <Panel header={this._renderRanking(team)} eventKey={team.id} onClick={this._onTabSelect.bind(this, team.id)}>
           {this._getTeamMatches(team)}
+          {this._getRankingOfDivision(team)}
       </Panel>
     );
   }
@@ -128,6 +130,62 @@ export default class Teams extends Component {
       );
   }
 
+  _getRankingOfDivision(team) {
+    var teamsForRanking = team.ranking;
+    if (this._showAccordion()) {
+      return (
+        <table className="table table-striped table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th>{this.context.t('teamCalendar.position')}</th>
+                  <th>{this.context.t('teamCalendar.name')}</th>
+                  <th>{this.context.t('teamCalendar.points')}</th>
+                </tr>
+              </thead>
+              <tbody>
+               {teamsForRanking.map(teamRanking => {
+                 return (
+                  <tr key={teamRanking.clubId + teamRanking.teamCode}>
+                    <td>{teamRanking.position}</td>
+                    <td>{storeUtil.getClub(teamRanking.clubId).name + ' ' + teamRanking.teamCode}</td>
+                    <td>{teamRanking.points}</td>
+                  </tr>
+                  );
+               })}
+              </tbody>
+          </table>
+      );
+    }
+    return (
+      <table className="table table-striped table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>{this.context.t('teamCalendar.position')}</th>
+                <th>{this.context.t('teamCalendar.name')}</th>
+                <th>{this.context.t('teamCalendar.matchesWon')}</th>
+                <th>{this.context.t('teamCalendar.matchesLost')}</th>
+                <th>{this.context.t('teamCalendar.matchesDraw')}</th>
+                <th>{this.context.t('teamCalendar.points')}</th>
+              </tr>
+            </thead>
+            <tbody>
+             {teamsForRanking.map(teamRanking => {
+               return (
+                <tr key={teamRanking.clubId + teamRanking.teamCode}>
+                  <td>{teamRanking.position}</td>
+                  <td>{storeUtil.getClub(teamRanking.clubId).name + ' ' + teamRanking.teamCode}</td>
+                  <td>{teamRanking.gamesWon}</td>
+                  <td>{teamRanking.gamesLost}</td>
+                  <td>{teamRanking.gamesDraw}</td>
+                  <td>{teamRanking.points}</td>
+                </tr>
+                );
+             })}
+            </tbody>
+        </table>
+    );
+  }
+
   _renderScores(match){
     if (match.score.home === 0 && match.score.out === 0) {
       return '';
@@ -160,6 +218,7 @@ export default class Teams extends Component {
     return (
       <div>
         {this._getTeamMatches(team)}
+        {this._getRankingOfDivision(team)}
       </div>
     );
   }
