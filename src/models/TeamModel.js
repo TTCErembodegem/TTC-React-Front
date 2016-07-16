@@ -82,6 +82,11 @@ export default class TeamModel {
 
     return players.sort(sortMappedPlayers(this.competition));
   }
+
+  getMatches() {
+    return storeUtils.matches.getAllMatches()
+      .filter(match => match.teamId === this.id);
+  }
 }
 
 export function sortPlayers(competition) {

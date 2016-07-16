@@ -14,6 +14,8 @@ export default {
     match: '/match/:matchId',
     matchesToday: '/vandaag',
     facts: '/weetjes',
+    teamsVttl: '/ploegen/vttl',
+    teamsSporta: '/ploegen/sporta',
   },
   trans: {
     fullClubName: 'TTC Erembodegem',
@@ -33,6 +35,8 @@ export default {
     nav: {
       matches: 'Kalender',
       matchesToday: 'Vandaag',
+      teamsVttl: 'Ploegkalender Vttl',
+      teamsSporta: 'Ploegkalender Sporta',
       players: 'Spelers',
       login: 'Log in',
       changePassword: 'Wijzig Paswoord',
@@ -236,6 +240,12 @@ export default {
       sportaCalculation: 'Klassementsberekening Sporta',
       francis: 'Francis tafeltennisshop',
       ttactua: 'Tafeltennisactua',
+    },
+    teamCalendar: {
+      date: 'Datum',
+      hour: 'Uur',
+      match: 'Wedstrijd',
+      score: 'Score'
     },
     facts: require('./locales-nl-facts.js')
   },

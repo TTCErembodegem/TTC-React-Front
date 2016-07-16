@@ -36,6 +36,10 @@ pre {
   cursor: pointer;
 }
 
+.non-clickable {
+  cursor: default;
+}
+
 .iconize div {
   display: inline-block;
   margin-left: 12px;
