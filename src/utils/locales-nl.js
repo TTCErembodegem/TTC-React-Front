@@ -245,7 +245,13 @@ export default {
       date: 'Datum',
       hour: 'Uur',
       match: 'Wedstrijd',
-      score: 'Score'
+      score: 'Score',
+      position: 'Plaats',
+      name: 'Clubnaam',
+      matchesWon: 'Gewonnen',
+      matchesLost: 'Verloren',
+      matchesDraw: 'Gelijk',
+      points: 'Punten'
     },
     facts: require('./locales-nl-facts.js')
   },
