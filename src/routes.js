@@ -13,6 +13,7 @@ import Matches from './components/matches/Matches.js';
 import MatchesToday from './components/matches/MatchesToday.js';
 import RoutedMatchCard from './components/matches/Match/RoutedMatchCard.js';
 import Facts from './components/other/Facts.js';
+import { TeamsSporta, TeamsVttl } from './components/teams/Teams.js';
 
 import t from './locales.js';
 
@@ -31,6 +32,8 @@ const Routes = () => (
       <Route path={t.route('matchesToday')} component={MatchesToday} />
       <Route path={t.route('facts')} component={Facts} />
       <Route path={t.route('match')} component={RoutedMatchCard}/>
+      <Route path={t.route('teamsVttl')} component={TeamsVttl}/>
+      <Route path={t.route('teamsSporta')} component={TeamsSporta}/>
       <Route path="*" component={Matches}/>
     </Route>
   </Router>

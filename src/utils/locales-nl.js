@@ -14,6 +14,8 @@ export default {
     match: '/match/:matchId',
     matchesToday: '/vandaag',
     facts: '/weetjes',
+    teamsVttl: '/ploegen/vttl',
+    teamsSporta: '/ploegen/sporta',
   },
   trans: {
     fullClubName: 'TTC Erembodegem',
@@ -33,6 +35,8 @@ export default {
     nav: {
       matches: 'Kalender',
       matchesToday: 'Vandaag',
+      teamsVttl: 'Ploegkalender Vttl',
+      teamsSporta: 'Ploegkalender Sporta',
       players: 'Spelers',
       login: 'Log in',
       changePassword: 'Wijzig Paswoord',
