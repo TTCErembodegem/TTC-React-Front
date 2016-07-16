@@ -241,6 +241,12 @@ export default {
       francis: 'Francis tafeltennisshop',
       ttactua: 'Tafeltennisactua',
     },
+    teamCalendar: {
+      date: 'Datum',
+      hour: 'Uur',
+      match: 'Wedstrijd',
+      score: 'Score'
+    },
     facts: require('./locales-nl-facts.js')
   },
   timeAgo: {

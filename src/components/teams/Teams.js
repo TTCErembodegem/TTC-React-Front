@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import moment from 'moment';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 
 import MatchModel from '../../models/MatchModel.js';
 import TeamModel from '../../models/TeamModel.js';
@@ -17,6 +18,10 @@ import Panel from 'react-bootstrap/lib/Panel';
 import Strike from '../controls/Strike.js';
 import MatchCardHeader from '../matches/Match/MatchCardHeader.js';
 
+import Table from 'react-bootstrap/lib/Table';
+
+import * as matchActions from '../../actions/matchActions.js';
+
 export const TeamsVttl = () => <Teams competition="Vttl" />;
 export const TeamsSporta = () => <Teams competition="Sporta" />;
 
@@ -30,12 +35,12 @@ export const TeamsSporta = () => <Teams competition="Sporta" />;
     matches: state.matches,
     teams: state.teams,
   };
-})
+}, matchActions)
 export default class Teams extends Component {
   static contextTypes = contextTypes;
-  constructor() {
-    super();
-    this.state = {openTabKey: 0};
+  constructor(props) {
+    super(props);
+    this.state = {openTabKey: this._getTeamIdOfATeam(props.teams)};
   }
 
   static propTypes = {
@@ -45,27 +50,114 @@ export default class Teams extends Component {
     matches: ImmutablePropTypes.listOf(PropTypes.instanceOf(MatchModel).isRequired).isRequired,
     teams: ImmutablePropTypes.listOf(PropTypes.instanceOf(TeamModel).isRequired).isRequired,
     viewport: PropTypes.object.isRequired,
+    getMatchesForTeam: PropTypes.func.isRequired
+  }
+
+  componentDidMount(){
+    this.props.getMatchesForTeam(this._getTeamIdOfATeam(this.props.teams));
+  }
+
+  _getTeamIdOfATeam(teams) {
+    return teams.find(x => x.competition === this.props.competition && x.teamCode === 'A').id;
   }
 
   _showAccordion() {
     // Otherwise show tabs
     return this.props.viewport.width < 700;
   }
-  _onTabSelect(eventKey) {
-    this.setState({openTabKey: eventKey});
+  _onTabSelect(teamId) {
+    if (this.props.config.get('matchesForTeamLoaded').indexOf(teamId) === -1) {
+      this.props.getMatchesForTeam(teamId);
+    }
+    this.setState({openTabKey: teamId});
+  }
+
+  _getTeamsPanel() {
+    var teams = this.props.teams.filter(team => team.competition === this.props.competition);
+    return teams.map(team =>
+      <Panel header={<div>{team.competition + ' ' + team.teamCode}</div>} eventKey={team.id} onClick={this._onTabSelect.bind(this, team.id)}>
+          {this._getTeamMatches(team)}
+      </Panel>
+    );
+  }
+
+  _openMatch(matchId) {
+    const matchRoute = this.context.t.route('match', {matchId: matchId});
+    browserHistory.push(matchRoute);
+  }
+
+  _getTeamMatches(team){
+    var matchesForTeam = team.getMatches().sort((a,b) => a.date - b.date);
+    return (
+       <table className="table table-striped table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>{this.context.t('teamCalendar.date')}</th>
+                <th>{this.context.t('teamCalendar.hour')}</th>
+                <th>{this.context.t('teamCalendar.match')}</th>
+                <th>{this.context.t('teamCalendar.score')}</th>
+              </tr>
+            </thead>
+            <tbody>
+             {matchesForTeam.map(match => {
+               return (
+                <tr key={match.id} onClick={this._openMatch.bind(this, match.id)} className="clickable">
+                  <td>{match.date.format('DD/MM')}</td>
+                  <td>{match.date.format('HH:mm')}</td>
+                  <td>{match.isHomeMatch ? this._renderOwnTeamTitle(team) : this._renderOpponentTitle(match)} -
+                  {match.isHomeMatch ? ' ' + this._renderOpponentTitle(match) : ' ' + this._renderOwnTeamTitle(team)}</td>
+                  <td>{this._renderScores(match)}</td>
+                </tr>
+              );
+             })}
+            </tbody>
+        </table>
+      );
+  }
+
+  _renderScores(match){
+    if (match.score.home === 0 && match.score.out === 0) {
+      return '';
+    } else {
+      return match.score.home + ' - ' + match.score.out;
+    }
+  }
+
+  _renderOwnTeamTitle(team) {
+    return team.competition + ' ' + team.teamCode;
+  }
+
+  _renderOpponentTitle(match) {
+    const club = match.getOpponentClub();
+    return club.name + ' ' + match.opponent.teamCode;
+  }
+
+  _getTeamsNavigation() {
+    var teams = this.props.teams.filter(team => team.competition === this.props.competition);
+    return teams.map(team =>
+      <NavItem eventKey={team.id}>
+          <div>{team.competition + ' ' + team.teamCode}</div>
+      </NavItem>
+      );
+  }
+
+  _getDivsForTeamsNavigation() {
+    var team = this.props.teams.find(t => t.id === this.state.openTabKey);
+    return (
+      <div>
+        {this._getTeamMatches(team)}
+      </div>
+    );
   }
 
   render() {
-    var teams = this.props.teams.filter(team => team.competition === this.props.competition);
 
     if (this._showAccordion()) {
       return (
         <div style={{marginTop: 10}}>
           <CardText expandable={true} style={{paddingTop: 0, paddingLeft: 5, paddingRight: 5}}>
             <PanelGroup activeKey={this.state.openTabKey} onSelect={::this._onTabSelect} accordion>
-              <Panel header={<div>yaye</div>} eventKey={0} className="clickable" onClick={this._onTabSelect.bind(this, 0)}>
-                blabla
-              </Panel>
+              {this._getTeamsPanel()}
             </PanelGroup>
           </CardText>
         </div>
@@ -76,21 +168,10 @@ export default class Teams extends Component {
       <div style={{marginTop: 10}}>
         <CardText expandable={true} style={{paddingTop: 0}}>
           <Nav bsStyle="tabs" activeKey={this.state.openTabKey} onSelect={::this._onTabSelect}>
-            <NavItem eventKey={0} title={"whee"/*this.context.t(`match.tabs.${transKey}Title`)*/}>
-              bleble
-            </NavItem>
+            {this._getTeamsNavigation()}
           </Nav>
-          <div>
-            wheeeee
-          </div>
+          {this._getDivsForTeamsNavigation()}
         </CardText>
-      </div>
-    );
-
-
-    return (
-      <div>
-        {teams.map(team => "goe bezig " + team.teamCode)}
       </div>
     );
   }

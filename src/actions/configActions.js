@@ -22,3 +22,10 @@ export function setSetting(key, value) {
     payload: {key, value}
   };
 }
+
+export function matchesForTeamLoaded(teamId) {
+  return {
+    type: ActionTypes.MATCHES_FOR_TEAM_LOADED,
+    payload: teamId
+  };
+}

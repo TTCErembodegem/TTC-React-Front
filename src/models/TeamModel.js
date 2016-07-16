@@ -84,7 +84,7 @@ export default class TeamModel {
   }
 
   getMatches() {
-    return storeUtils.getMatches()
+    return storeUtils.matches.getAllMatches()
       .filter(match => match.teamId === this.id);
   }
 }

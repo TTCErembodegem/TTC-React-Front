@@ -79,6 +79,10 @@ export const util = {
       return result;
     },
 
+    getAllMatches() {
+      return store.getState().matches;
+    },
+
     getFormation(match) {
       var opponent = match.opponent;
       const matches = store.getState().readonlyMatches;
