@@ -19,6 +19,9 @@ class Navigation extends Component {
   }
 
   handleClickOutside() {
+    // TODO: this doesn't seem to be working on iPhone
+    //       Probably need to listen to onTouchStart etc?
+    //       But is this really necessary? it seems to work out of the box in the material-ui components docs
     if (this.props.navOpen && !this.props.isNavOpening) {
       this.props.toggleNav(false);
     }

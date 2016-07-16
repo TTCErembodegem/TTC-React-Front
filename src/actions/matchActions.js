@@ -8,6 +8,10 @@ import moment from 'moment';
 import _ from 'lodash';
 
 //import MatchModel from '../models/MatchModel.js';
+//
+//TODO: menu sluit niet meer op een iPad... Das weer met onClick vs onTouchEnd etc zeker?
+//TODO: max_user_connections: do not log. send specific error code to frontend. change superagent to re-request...
+//TODO: Admin pages: see todays log
 
 export function simpleLoaded(data) {
   return {
