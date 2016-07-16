@@ -84,7 +84,7 @@ export default class Teams extends Component {
   _renderRanking(team){
     const ranking = team.getDivisionRanking();
     return (<div>{team.competition + ' ' + team.teamCode}&nbsp;&nbsp;
-      <span className="label label-as-badge label-danger">{this._renderOwnTeamPosition(team)}
+      <span className="label label-as-badge label-default">{this._renderOwnTeamPosition(team)}
       </span></div>
     );
   }
@@ -150,7 +150,7 @@ export default class Teams extends Component {
     return teams.map(team =>
       <NavItem eventKey={team.id}>
           <div>{team.competition + ' ' + team.teamCode}&nbsp;&nbsp;
-          <span className="label label-as-badge label-danger">{this._renderOwnTeamPosition(team)}</span></div>
+          <span className="label label-as-badge label-default">{this._renderOwnTeamPosition(team)}</span></div>
       </NavItem>
       );
   }
