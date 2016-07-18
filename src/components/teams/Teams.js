@@ -144,13 +144,7 @@ export default class Teams extends Component {
               </thead>
               <tbody>
                {teamsForRanking.map(teamRanking => {
-                 return (
-                  <tr key={teamRanking.clubId + teamRanking.teamCode}>
-                    <td>{teamRanking.position}</td>
-                    <td>{storeUtil.getClub(teamRanking.clubId).name + ' ' + teamRanking.teamCode}</td>
-                    <td>{teamRanking.points}</td>
-                  </tr>
-                  );
+                 return this._getRankingAccordeon(teamRanking);
                })}
               </tbody>
           </table>
@@ -170,20 +164,63 @@ export default class Teams extends Component {
             </thead>
             <tbody>
              {teamsForRanking.map(teamRanking => {
-               return (
-                <tr key={teamRanking.clubId + teamRanking.teamCode}>
-                  <td>{teamRanking.position}</td>
-                  <td>{storeUtil.getClub(teamRanking.clubId).name + ' ' + teamRanking.teamCode}</td>
-                  <td>{teamRanking.gamesWon}</td>
-                  <td>{teamRanking.gamesLost}</td>
-                  <td>{teamRanking.gamesDraw}</td>
-                  <td>{teamRanking.points}</td>
-                </tr>
-                );
+               return this._getRanking(teamRanking);
              })}
             </tbody>
         </table>
     );
+  }
+
+  _getTeamName(clubId) {
+    return storeUtil.getClub(clubId).name;
+  }
+
+  _getRankingAccordeon(teamRanking) {
+    var styling = {backgroundColor:'yellow',fontWeight:'bold'};
+    if (this._getTeamName(teamRanking.clubId) === 'Erembodegem') {
+      return (
+        <tr style={styling} key={teamRanking.clubId + teamRanking.teamCode}>
+          <td>{teamRanking.position}</td>
+          <td>{storeUtil.getClub(teamRanking.clubId).name + ' ' + teamRanking.teamCode}</td>
+          <td>{teamRanking.points}</td>
+        </tr>
+      );
+    } else {
+      return (
+       <tr key={teamRanking.clubId + teamRanking.teamCode}>
+          <td>{teamRanking.position}</td>
+          <td>{storeUtil.getClub(teamRanking.clubId).name + ' ' + teamRanking.teamCode}</td>
+          <td>{teamRanking.points}</td>
+       </tr>
+      );
+    }
+  }
+
+  _getRanking(teamRanking) {
+    var styling = {backgroundColor:'yellow',fontWeight:'bold'};
+    if (this._getTeamName(teamRanking.clubId) === 'Erembodegem') {
+      return (
+        <tr style={styling} key={teamRanking.clubId + teamRanking.teamCode}>
+          <td>{teamRanking.position}</td>
+          <td>{storeUtil.getClub(teamRanking.clubId).name + ' ' + teamRanking.teamCode}</td>
+          <td>{teamRanking.gamesWon}</td>
+          <td>{teamRanking.gamesLost}</td>
+          <td>{teamRanking.gamesDraw}</td>
+          <td>{teamRanking.points}</td>
+        </tr>
+      );
+    } else {
+      return (
+        <tr key={teamRanking.clubId + teamRanking.teamCode}>
+          <td>{teamRanking.position}</td>
+          <td>{storeUtil.getClub(teamRanking.clubId).name + ' ' + teamRanking.teamCode}</td>
+          <td>{teamRanking.gamesWon}</td>
+          <td>{teamRanking.gamesLost}</td>
+          <td>{teamRanking.gamesDraw}</td>
+          <td>{teamRanking.points}</td>
+        </tr>
+      );
+    }
   }
 
   _renderScores(match){
