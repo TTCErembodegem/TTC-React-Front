@@ -18,12 +18,10 @@ export function merge(state, payload, classify) {
     return Immutable.List(result);
 
   } else if (payload instanceof Array) {
-    //console.log('MATCHES_LOADED BEGIN', state.toArray());
     let newState = state;
     for (let i = 0; i < payload.length; i++) {
       newState = replaceMatch(newState, payload[i], classify);
     }
-    console.log('MATCHES_LOADED END', newState.toArray()[0]);
     return newState;
 
   } else {

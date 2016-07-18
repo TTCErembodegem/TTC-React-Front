@@ -76,7 +76,7 @@ export default class MatchModel {
   }
   getClub(which) {
     if (this.opponent) {
-      console.log('MatchModel.getClub: use getOpponentClub for TTC Erembodegem matches'); // eslint-disable-line
+      console.warn('MatchModel.getClub: use getOpponentClub for TTC Erembodegem matches'); // eslint-disable-line
     }
     if (which === 'home') {
       return storeUtils.getClub(this.home.clubId);

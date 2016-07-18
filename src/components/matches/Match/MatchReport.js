@@ -208,7 +208,6 @@ export default class MatchReport extends Component {
       if (this.state.comment.text) {
         this.props.postComment(this.state.comment);
         this.setState({comment: getEmptyComment(this.props.match.id, this.props.user.playerId), commentFormOpen: false});
-        console.log('posted:', this.state);
       }
     } else {
       this.setState({commentFormOpen: true});

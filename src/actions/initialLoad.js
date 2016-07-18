@@ -88,7 +88,7 @@ export default function() {
       initialRequest(dispatch, '/clubs', clubsLoaded),
     ])
     .then(initialLoad => {
-      console.log('initialLoadCompleted');
+      console.info('initialLoadCompleted');
       dispatch(initialLoadCompleted());
       return initialLoad;
     })
@@ -103,7 +103,7 @@ export default function() {
 
       return p;
     })
-    .then(() => console.log('secundary load completed'))
-    .catch(err => console.log('initial load failed', err));
+    .then(() => console.info('secundary load completed'))
+    .catch(err => console.info('initial load failed', err));
   };
 }

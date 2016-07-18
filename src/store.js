@@ -8,14 +8,14 @@ import rootReducer from './reducers';
 
 var finalCreateStore;
 if (DEBUG) {
-  //console.log('finalCreateStore DEBUG');
+  //console.error('finalCreateStore DEBUG');
   finalCreateStore = compose(
     //applyMiddleware(createLogger({collapsed: true})),
     applyMiddleware(thunk),
     devTools(),
   )(createStore);
 } else {
-  //console.log('finalCreateStore NODEBUG');
+  //console.error('finalCreateStore NODEBUG');
   finalCreateStore = compose(
     applyMiddleware(thunk),
   )(createStore);
@@ -24,7 +24,7 @@ if (DEBUG) {
 const store = finalCreateStore(rootReducer);
 
 if (module.hot) {
-  //console.log('finalCreateStore is HOT');
+  //console.error('finalCreateStore is HOT');
   // Enable Webpack hot module replacement for reducers
   module.hot.accept('./reducers', () => {
     const nextRootReducer = require('./reducers');
@@ -93,7 +93,6 @@ export const util = {
 
       var opponentPlayers = resultHome.map(m => m.players).flatten().filter(m => m.home);
       opponentPlayers = opponentPlayers.concat(resultAway.map(m => m.players).flatten().filter(m => !m.home));
-      //console.log('opponentPlayers', opponentPlayers.toArray());
 
       var result = {};
       opponentPlayers.forEach(ply => {
@@ -111,8 +110,6 @@ export const util = {
       });
 
       var matchesPerPlayer = match.getTeam().getTeamPlayerCount();
-      //console.log('result', result);
-
       return Object.values(result).map(ply => Object.assign(ply, {lost: (matchesPerPlayer * ply.count) - ply.won}));
     }
   },
