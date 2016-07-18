@@ -52,16 +52,13 @@ export default class Matches extends Component {
       .sort((a, b) => b.date - a.date)
       .take(matchesToShow);
 
-    // TODO: implement buttonbar
-    // TODO: debug inputfield: get and display a (frenoy)matchId -> also implement auto fetch if not present...
-    // TODO: load more buttons
     return (
       <div>
         {matchesToday.size ? <Strike text={this.context.t('match.todayMatches')} style={{marginTop: 25}} /> : null}
         {this._renderMatches(matchesToday)}
-        {matchesNext.size || matchesPlayed.size ? <Strike text={this.context.t('match.nextMatches')} style={{marginTop: 25}} /> : null}
+        {matchesNext.size ? <Strike text={this.context.t('match.nextMatches')} style={{marginTop: 25}} /> : null}
         {this._renderMatches(matchesNext)}
-        {matchesNext.size && matchesPlayed.size ? <Strike text={this.context.t('match.playedMatches')} style={{marginTop: 25}} /> : null}
+        {matchesPlayed.size ? <Strike text={this.context.t('match.playedMatches')} style={{marginTop: 25}} /> : null}
         {this._renderMatches(matchesPlayed)}
       </div>
     );
