@@ -5,6 +5,14 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import Routes from './routes.js';
 import store from './store.js';
+import Promise from 'bluebird';
+
+Promise.config({
+  warnings: true,
+  longStackTraces: true,
+  cancellation: true,
+  //monitoring: true
+});
 
 // TODO: change webpack config to add sourcemaps
 

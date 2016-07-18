@@ -29,7 +29,7 @@ function bearer(req) {
 
 const HttpClient = {
   get: (path, qs) => {
-    const fullUrl = 'GET' + (qs ? path + '?' + querystring.encode(qs) : path);
+    const fullUrl = 'GET ' + (qs ? path + '?' + querystring.encode(qs) : path);
     return Promise.try(() => {
       if (LogRequestTimes) {
         console.time(fullUrl);
@@ -57,24 +57,36 @@ const HttpClient = {
       }
     });
   },
-  post: (url, data) => new Promise((resolve, reject) => {
-    //console.log(getUrl(url), data);
-    request
+  post: (url, data) => {
+    const fullUrl = 'POST ' + url;
+    return Promise.try(() => {
+      if (LogRequestTimes) {
+        console.time(fullUrl);
+      }
+      return null;
+    })
+    .then(() => request
       .post(getUrl(url))
-      //.withCredentials()
       .send(data)
       .use(bearer)
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
-      .end(function(err, res) {
-        if (err || !res.ok) {
-          console.log(url, err || '', res);
-          reject();
-        } else {
-          resolve(res.body);
-        }
-      });
-  }),
+    )
+    .tap(() => {
+      if (LogRequestTimes) {
+        console.timeEnd(fullUrl)
+      }
+    })
+    .then(res => res.body)
+    .catch(err => {
+      if (err.status === 408) {
+        // 408 Request Timeout: Usually mysql_max_connections = retry
+        return Promise.delay(100).then(() => HttpClient.post(url, data));
+      } else {
+        return Promise.reject(err);
+      }
+    });
+  },
   upload: (files, type = 'temp') => new Promise((resolve, reject) => {
     var req = request
       .post(getUrl('/upload'))

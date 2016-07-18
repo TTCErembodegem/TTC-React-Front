@@ -45,18 +45,18 @@ export function loaded(data, dispatch) {
 
     if (match.isHomeMatch !== null && moment(match.date).month() < 8) {
       // TODO: do not call if already in store
-      // http.get('/matches/GetFirstRoundMatch', {matchId: match.id})
-      //   .then(function(newmatch) {
-      //     if (!newmatch) {
-      //       return;
-      //     }
-      //     dispatch(simpleLoaded(newmatch));
-      //     frenoySync(dispatch, newmatch);
+      http.get('/matches/GetFirstRoundMatch', {matchId: match.id})
+        .then(function(newmatch) {
+          if (!newmatch) {
+            return null;
+          }
+          dispatch(simpleLoaded(newmatch));
+          frenoySync(dispatch, newmatch);
 
-      //   }, function(err) {
-      //     console.error(err); // eslint-disable-line
-      //   }
-      // );
+        }, function(err) {
+          console.error(err); // eslint-disable-line
+        }
+      );
     }
   });
   return p;

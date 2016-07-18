@@ -46,52 +46,64 @@ export function fetchTeam(teamId) {
   return fetchData('/teams/' + teamId, teamsLoaded);
 }
 export function fetchClub(clubId) {
-  return fetchData('/clubs/' + clubId, clubsLoaded); // TODO: not implemented on backend
+  return fetchData('/clubs/' + clubId, clubsLoaded); // TODO: not implemented on backend (required by SignalR once we update a club)
 }
 
 export default function() {
-  return dispatch => {
-    //dispatch(initialLoadStarted());
-
-    function initialRequest(url, loadedAction, callback) {
-      return http.get(url)
-        .then(function(data) {
-          if (loadedAction && data) {
-            dispatch(loadedAction(data));
-          }
-          if (callback && data) {
-            return callback(data, dispatch);
-          }
-          return null;
-        }, function(err) {
-          console.error(err); // eslint-disable-line
-        });
-    }
-
-    function afterInitialTeamLoadCallback(data) {
-      var p = Promise.resolve();
-      data.forEach(team => {
-        if (!team.ranking || team.ranking.length === 0) {
-          p = p.then(function() {
-            return http.get('/teams/Ranking', {teamId: team.id})
-              .then(function(newTeam) {
-                dispatch(teamsLoaded(newTeam));
-                return null;
-              }, function(err) {
-                console.error(err); // eslint-disable-line
-              });
-            });
+  function initialRequest(dispatch, url, loadedAction) {
+    return http.get(url)
+      .then(function(data) {
+        if (loadedAction && data) {
+          dispatch(loadedAction(data));
         }
+        return data;
+      }, function(err) {
+        console.error(err); // eslint-disable-line
       });
-      return p;
-    }
+  }
 
+  function loadTeamRankings(data, dispatch) {
+    var p = Promise.resolve();
+    data.forEach(team => {
+      if (!team.ranking || team.ranking.length === 0) {
+        p = p.then(function() {
+          return http.get('/teams/Ranking', {teamId: team.id})
+            .then(function(newTeam) {
+              dispatch(teamsLoaded(newTeam));
+              return null;
+            }, function(err) {
+              console.error(err); // eslint-disable-line
+            });
+          });
+      }
+    });
+    return p;
+  }
+
+  return dispatch => {
     return Promise.all([
-      initialRequest('/players', playersLoaded),
-      initialRequest('/clubs', clubsLoaded),
-      initialRequest('/matches/GetRelevantMatches', null, matchesLoaded),
-      initialRequest('/teams', teamsLoaded/*, afterInitialTeamLoadCallback*/),
-    ]).then(() => dispatch(initialLoadCompleted()));
-    // TODO: na de eerste 4 is initial load complete... dan pas de rest van de syncs, getReturnMatch etc beginnen aan te roepen!!!
+      initialRequest(dispatch, '/matches/GetRelevantMatches', null),
+      initialRequest(dispatch, '/teams', teamsLoaded),
+      initialRequest(dispatch, '/players', playersLoaded),
+      initialRequest(dispatch, '/clubs', clubsLoaded),
+    ])
+    .then(initialLoad => {
+      console.log('initialLoadCompleted');
+      dispatch(initialLoadCompleted());
+      return initialLoad;
+    })
+    .then(initialLoad => {
+      var p = Promise.resolve();
+
+      const matches = initialLoad[0];
+      p = p.then(() => matchesLoaded(matches, dispatch));
+
+      const teams = initialLoad[1];
+      p = p.then(() => loadTeamRankings(teams, dispatch));
+
+      return p;
+    })
+    .then(() => console.log('secundary load completed'))
+    .catch(err => console.log('initial load failed', err));
   };
 }
