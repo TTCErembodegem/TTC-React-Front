@@ -21,7 +21,7 @@ export default function user(state = startState, action = null) {
   const {type, payload} = action;
   switch (type) {
   case ActionTypes.LOGIN_SUCCESS:
-    console.log('LOGIN_SUCCESS', payload);
+    //console.log('LOGIN_SUCCESS', payload);
     if (payload.redirect) {
       window.history.back();
     }

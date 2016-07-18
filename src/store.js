@@ -10,7 +10,7 @@ var finalCreateStore;
 if (DEBUG) {
   //console.log('finalCreateStore DEBUG');
   finalCreateStore = compose(
-    applyMiddleware(createLogger({collapsed: true})),
+    //applyMiddleware(createLogger({collapsed: true})),
     applyMiddleware(thunk),
     devTools(),
   )(createStore);
