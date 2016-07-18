@@ -84,9 +84,22 @@ export default class Teams extends Component {
   }
 
   _renderRanking(team){
-    const ranking = team.getDivisionRanking();
+    var dangerZone = team.ranking.length - 2;
+    var ranking = this._renderOwnTeamPosition(team);
+    if (ranking <= 3) {
+      return (<div>{team.competition + ' ' + team.teamCode}&nbsp;&nbsp;
+      <span className="label label-as-badge label-success">{ranking}
+      </span></div>
+      );
+    }
+    if (ranking >= dangerZone) {
+      return (<div>{team.competition + ' ' + team.teamCode}&nbsp;&nbsp;
+      <span className="label label-as-badge label-danger">{ranking}
+      </span></div>
+      );
+    }
     return (<div>{team.competition + ' ' + team.teamCode}&nbsp;&nbsp;
-      <span className="label label-as-badge label-default">{this._renderOwnTeamPosition(team)}
+      <span className="label label-as-badge label-default">{ranking}
       </span></div>
     );
   }
@@ -243,11 +256,32 @@ export default class Teams extends Component {
   _getTeamsNavigation() {
     var teams = this.props.teams.filter(team => team.competition === this.props.competition);
     return teams.map(team =>
-      <NavItem eventKey={team.id}>
+       this._getTeamsNavigationTab(team)
+    );
+  }
+
+  _getTeamsNavigationTab(team) {
+    var dangerZone = team.ranking.length - 2;
+    var ranking = this._renderOwnTeamPosition(team);
+    if (ranking <= 3) {
+      return ( <NavItem eventKey={team.id}>
           <div>{team.competition + ' ' + team.teamCode}&nbsp;&nbsp;
-          <span className="label label-as-badge label-default">{this._renderOwnTeamPosition(team)}</span></div>
+          <span className="label label-as-badge label-success">{ranking}</span></div>
       </NavItem>
       );
+    }
+    if (ranking >= dangerZone) {
+      return ( <NavItem eventKey={team.id}>
+          <div>{team.competition + ' ' + team.teamCode}&nbsp;&nbsp;
+          <span className="label label-as-badge label-danger">{ranking}</span></div>
+      </NavItem>
+      );
+    }
+    return ( <NavItem eventKey={team.id}>
+          <div>{team.competition + ' ' + team.teamCode}&nbsp;&nbsp;
+          <span className="label label-as-badge label-default">{ranking}</span></div>
+      </NavItem>
+    );
   }
 
   _getDivsForTeamsNavigation() {
