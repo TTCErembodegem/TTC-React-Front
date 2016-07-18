@@ -72,7 +72,7 @@ export default class MatchModel {
     if (this.home) {
       console.error('called getOpponentClub on OtherMatch'); // eslint-disable-line
     }
-    return storeUtils.getClub(this.opponent.clubId);
+    return storeUtils.getClub(this.opponent.clubId) || {};
   }
   getClub(which) {
     if (this.opponent) {
