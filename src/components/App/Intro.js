@@ -171,6 +171,19 @@ export default class Intro extends Component {
 }
 
 // TODO: React warning: setState on unmounted component = Typist (loading schlager is gone too fast now...)
+class RestartingTypist extends Component {
+  state = {typing: true}
+  done = () => {
+    this.setState({ typing: false }, () => {
+      setTimeout(() => this.setState({ typing: true }), this.props.timeout || 1200);
+    });
+  }
+  render() {
+    const {children, timeout, ...props} = this.props;
+    return this.state.typing ? <Typist {...props} onTypingDone={this.done}>{children}</Typist> : <span>{children}</span>;
+  }
+}
+
 
 const Loading = ({t, bigScreen}) => (
   <div style={bigScreen ? undefined : {width: 310, margin: 'auto', marginBottom: 15, marginTop: 15}}>
@@ -181,7 +194,7 @@ const Loading = ({t, bigScreen}) => (
 
     <div style={{position: 'absolute', top: 5, width: 310, margin: 'auto'}}>
       <div style={{width: 310, textAlign: 'center', color: 'white'}}>
-        <Typist cursor={{show: false}} startDelay={0}>{t('intro.loading')}</Typist>
+        <RestartingTypist cursor={{show: false}} startDelay={500}>{t('intro.loading')}</RestartingTypist>
       </div>
     </div>
   </div>
