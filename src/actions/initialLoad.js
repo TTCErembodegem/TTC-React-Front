@@ -1,3 +1,4 @@
+import Promise from 'bluebird';
 import * as ActionTypes from './ActionTypes.js';
 import http from '../utils/httpClient.js';
 import { simpleLoaded, loaded as matchesLoaded } from './matchActions.js';
@@ -59,31 +60,38 @@ export default function() {
             dispatch(loadedAction(data));
           }
           if (callback && data) {
-            callback(data, dispatch);
+            return callback(data, dispatch);
           }
+          return null;
         }, function(err) {
           console.error(err); // eslint-disable-line
         });
     }
 
     function afterInitialTeamLoadCallback(data) {
+      var p = Promise.resolve();
       data.forEach(team => {
         if (!team.ranking || team.ranking.length === 0) {
-          http.get('/teams/Ranking', {teamId: team.id})
-            .then(function(newTeam) {
-              dispatch(teamsLoaded(newTeam));
-            }, function(err) {
-              console.error(err); // eslint-disable-line
+          p = p.then(function() {
+            return http.get('/teams/Ranking', {teamId: team.id})
+              .then(function(newTeam) {
+                dispatch(teamsLoaded(newTeam));
+                return null;
+              }, function(err) {
+                console.error(err); // eslint-disable-line
+              });
             });
         }
       });
+      return p;
     }
 
     return Promise.all([
       initialRequest('/players', playersLoaded),
       initialRequest('/clubs', clubsLoaded),
       initialRequest('/matches/GetRelevantMatches', null, matchesLoaded),
-      initialRequest('/teams', teamsLoaded, afterInitialTeamLoadCallback),
+      initialRequest('/teams', teamsLoaded/*, afterInitialTeamLoadCallback*/),
     ]).then(() => dispatch(initialLoadCompleted()));
+    // TODO: na de eerste 4 is initial load complete... dan pas de rest van de syncs, getReturnMatch etc beginnen aan te roepen!!!
   };
 }

@@ -1,3 +1,4 @@
+import Promise from 'bluebird';
 import * as ActionTypes from './ActionTypes.js';
 import http from '../utils/httpClient.js';
 import { util as storeUtil } from '../store.js';
@@ -16,7 +17,7 @@ export function simpleLoaded(data) {
 
 function frenoySync(dispatch, m) {
   if (!m.isSyncedWithFrenoy && moment().isAfter(moment(m.date))) {
-    http.post('/matches/FrenoyMatchSync', {id: m.id})
+    return http.post('/matches/FrenoyMatchSync', {id: m.id})
       .then(function(newmatch) {
         dispatch(simpleLoaded(newmatch));
       }, function(err) {
@@ -24,11 +25,12 @@ function frenoySync(dispatch, m) {
       }
     );
   }
+  return null;
 }
 
 export function loaded(data, dispatch) {
   if (!data) {
-    return;
+    return null;
   }
 
   dispatch(simpleLoaded(data));
@@ -36,25 +38,28 @@ export function loaded(data, dispatch) {
   if (!_.isArray(data)) {
     data = [data];
   }
+
+  var p = Promise.resolve();
   data.forEach(match => {
-    frenoySync(dispatch, match);
+    p = p.then(() => frenoySync(dispatch, match));
 
-    if (match.isHomeMatch !== null && moment(match.date).month() < 9) {
+    if (match.isHomeMatch !== null && moment(match.date).month() < 8) {
       // TODO: do not call if already in store
-      http.get('/matches/GetFirstRoundMatch', {matchId: match.id})
-        .then(function(newmatch) {
-          if (!newmatch) {
-            return;
-          }
-          dispatch(simpleLoaded(newmatch));
-          frenoySync(dispatch, newmatch);
+      // http.get('/matches/GetFirstRoundMatch', {matchId: match.id})
+      //   .then(function(newmatch) {
+      //     if (!newmatch) {
+      //       return;
+      //     }
+      //     dispatch(simpleLoaded(newmatch));
+      //     frenoySync(dispatch, newmatch);
 
-        }, function(err) {
-          console.error(err); // eslint-disable-line
-        }
-      );
+      //   }, function(err) {
+      //     console.error(err); // eslint-disable-line
+      //   }
+      // );
     }
   });
+  return p;
 }
 
 export function readOnlyLoaded(data) {

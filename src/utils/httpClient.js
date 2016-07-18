@@ -1,6 +1,10 @@
-import request from 'superagent';
+import Promise from 'bluebird';
+import request from 'superagent-bluebird-promise';
+import querystring from 'querystring';
 import assert from 'assert';
 import { util as storeUtil } from '../store.js';
+
+const LogRequestTimes = false;
 
 export function getUrl(path, appendApi = true) {
   assert(path[0] === '/', 'HttpClient: path passed should start with a /');
@@ -24,27 +28,35 @@ function bearer(req) {
 }
 
 const HttpClient = {
-  get: (path, qs) => new Promise((resolve, reject) => {
-    console.time(path);
-    request
+  get: (path, qs) => {
+    const fullUrl = 'GET' + (qs ? path + '?' + querystring.encode(qs) : path);
+    return Promise.try(() => {
+      if (LogRequestTimes) {
+        console.time(fullUrl);
+      }
+      return null;
+    })
+    .then(() => request
       .get(getUrl(path))
-      //.withCredentials()
       .query(qs)
       .use(bearer)
       .accept('application/json')
-      .end((err, res) => {
-        console.timeEnd(path);
-        if (err) {
-          if (err.status === 404) {
-            resolve(null);
-          } else {
-            reject(err);
-          }
-        } else {
-          resolve(res.body);
-        }
-      });
-  }),
+    )
+    .tap(() => {
+      if (LogRequestTimes) {
+        console.timeEnd(fullUrl)
+      }
+    })
+    .then(res => res.body)
+    .catch(err => {
+      if (err.status === 408) {
+        // 408 Request Timeout: Usually mysql_max_connections = retry
+        return Promise.delay(100).then(() => HttpClient.get(path, qs));
+      } else {
+        return Promise.reject(err);
+      }
+    });
+  },
   post: (url, data) => new Promise((resolve, reject) => {
     //console.log(getUrl(url), data);
     request
