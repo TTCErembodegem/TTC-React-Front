@@ -87,6 +87,14 @@ export default class TeamModel {
     return storeUtils.matches.getAllMatches()
       .filter(match => match.teamId === this.id);
   }
+
+  isTopper(ranking,topThreshold) {
+    return ranking <= topThreshold;
+  }
+
+  isInDegradationZone(ranking,bottomThreshold) {
+    return ranking >= (this.ranking.length - bottomThreshold);
+  }
 }
 
 export function sortPlayers(competition) {
