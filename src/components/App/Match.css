@@ -38,11 +38,11 @@
 }
 
 .match-won {
-  background-color: #f0ad4e;
+  background-color: #A2C93A !important;
 }
 
 .match-draw {
-  background-color: #A2C93A;
+  background-color: #f0ad4e;
 }
 
 .match-opponent-team {

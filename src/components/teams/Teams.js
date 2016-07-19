@@ -15,18 +15,20 @@ import NavItem from 'react-bootstrap/lib/NavItem';
 import PanelGroup from 'react-bootstrap/lib/PanelGroup';
 import Panel from 'react-bootstrap/lib/Panel';
 
-import Strike from '../controls/Strike.js';
-import MatchCardHeader from '../matches/Match/MatchCardHeader.js';
-
-import Table from 'react-bootstrap/lib/Table';
+import { OwnClubId } from '../../models/ClubModel.js';
 
 import { util as storeUtil } from '../../store.js';
 import * as matchActions from '../../actions/matchActions.js';
+
+import cn from 'classnames';
+import styles from './Teams.css';
+import withStyles from '../../utils/decorators/withStyles.js';
 
 export const TeamsVttl = () => <Teams competition="Vttl" />;
 export const TeamsSporta = () => <Teams competition="Sporta" />;
 
 @withViewport
+@withStyles(styles)
 @connect(state => {
   return {
     config: state.config,
@@ -86,20 +88,9 @@ export default class Teams extends Component {
   _renderRanking(team){
     var dangerZone = team.ranking.length - 2;
     var ranking = this._renderOwnTeamPosition(team);
-    if (ranking <= 3) {
-      return (<div>{team.competition + ' ' + team.teamCode}&nbsp;&nbsp;
-      <span className="label label-as-badge label-success">{ranking}
-      </span></div>
-      );
-    }
-    if (ranking >= dangerZone) {
-      return (<div>{team.competition + ' ' + team.teamCode}&nbsp;&nbsp;
-      <span className="label label-as-badge label-danger">{ranking}
-      </span></div>
-      );
-    }
+    var style = this._getLabelClassName(ranking,dangerZone);
     return (<div>{team.competition + ' ' + team.teamCode}&nbsp;&nbsp;
-      <span className="label label-as-badge label-default">{ranking}
+      <span className={style}>{ranking}
       </span></div>
     );
   }
@@ -136,30 +127,17 @@ export default class Teams extends Component {
   }
 
   _getMatch(match,team) {
-    if (this._won(match)) {
-      var styling = {backgroundColor:'PaleGreen'};
-      return (
-       <tr key={match.id} style={styling} onClick={this._openMatch.bind(this, match.id)} className="clickable">
+    return (
+       <tr key={match.id} className={cn('clickable',{'match-won': this._won(match)})} onClick={this._openMatch.bind(this, match.id)}>
           <td>{match.date.format('DD/MM')}</td>
           <td>{match.date.format('HH:mm')}</td>
           <td>{match.isHomeMatch ? this._renderOwnTeamTitle(team) : this._renderOpponentTitle(match)} -
              {match.isHomeMatch ? ' ' + this._renderOpponentTitle(match) : ' ' + this._renderOwnTeamTitle(team)}</td>
           <td>{this._renderScores(match)}</td>
        </tr>
-      );
-    }
-    else {
-      return (
-       <tr key={match.id} onClick={this._openMatch.bind(this, match.id)} className="clickable">
-          <td>{match.date.format('DD/MM')}</td>
-          <td>{match.date.format('HH:mm')}</td>
-          <td>{match.isHomeMatch ? this._renderOwnTeamTitle(team) : this._renderOpponentTitle(match)} -
-             {match.isHomeMatch ? ' ' + this._renderOpponentTitle(match) : ' ' + this._renderOwnTeamTitle(team)}</td>
-          <td>{this._renderScores(match)}</td>
-       </tr>
-      );
-    }
+    );
   }
+
 
   _won(match) {
     if (match.score.home === match.score.out) {
@@ -220,31 +198,18 @@ export default class Teams extends Component {
   }
 
   _getRankingAccordeon(teamRanking) {
-    var styling = {backgroundColor:'yellow',fontWeight:'bold'};
-    if (this._getTeamName(teamRanking.clubId) === 'Erembodegem') {
-      return (
-        <tr style={styling} key={teamRanking.clubId + teamRanking.teamCode}>
+    return (
+        <tr className={cn({'yellowBackground' : teamRanking.clubId === OwnClubId, 'accentuateRanking': teamRanking.clubId === OwnClubId})} key={teamRanking.clubId + teamRanking.teamCode}>
           <td>{teamRanking.position}</td>
           <td>{storeUtil.getClub(teamRanking.clubId).name + ' ' + teamRanking.teamCode}</td>
           <td>{teamRanking.points}</td>
         </tr>
-      );
-    } else {
-      return (
-       <tr key={teamRanking.clubId + teamRanking.teamCode}>
-          <td>{teamRanking.position}</td>
-          <td>{storeUtil.getClub(teamRanking.clubId).name + ' ' + teamRanking.teamCode}</td>
-          <td>{teamRanking.points}</td>
-       </tr>
-      );
-    }
+    );
   }
 
   _getRanking(teamRanking) {
-    var styling = {backgroundColor:'yellow',fontWeight:'bold'};
-    if (this._getTeamName(teamRanking.clubId) === 'Erembodegem') {
-      return (
-        <tr style={styling} key={teamRanking.clubId + teamRanking.teamCode}>
+    return (
+        <tr className={cn({'yellowBackground' : teamRanking.clubId === OwnClubId, 'accentuateRanking': teamRanking.clubId === OwnClubId})} key={teamRanking.clubId + teamRanking.teamCode}>
           <td>{teamRanking.position}</td>
           <td>{storeUtil.getClub(teamRanking.clubId).name + ' ' + teamRanking.teamCode}</td>
           <td>{teamRanking.gamesWon}</td>
@@ -252,19 +217,7 @@ export default class Teams extends Component {
           <td>{teamRanking.gamesDraw}</td>
           <td>{teamRanking.points}</td>
         </tr>
-      );
-    } else {
-      return (
-        <tr key={teamRanking.clubId + teamRanking.teamCode}>
-          <td>{teamRanking.position}</td>
-          <td>{storeUtil.getClub(teamRanking.clubId).name + ' ' + teamRanking.teamCode}</td>
-          <td>{teamRanking.gamesWon}</td>
-          <td>{teamRanking.gamesLost}</td>
-          <td>{teamRanking.gamesDraw}</td>
-          <td>{teamRanking.points}</td>
-        </tr>
-      );
-    }
+     );
   }
 
   _renderScores(match){
@@ -294,25 +247,26 @@ export default class Teams extends Component {
   _getTeamsNavigationTab(team) {
     var dangerZone = team.ranking.length - 2;
     var ranking = this._renderOwnTeamPosition(team);
-    if (ranking <= 3) {
-      return ( <NavItem eventKey={team.id}>
-          <div>{team.competition + ' ' + team.teamCode}&nbsp;&nbsp;
-          <span className="label label-as-badge label-success">{ranking}</span></div>
-      </NavItem>
-      );
-    }
-    if (ranking >= dangerZone) {
-      return ( <NavItem eventKey={team.id}>
-          <div>{team.competition + ' ' + team.teamCode}&nbsp;&nbsp;
-          <span className="label label-as-badge label-danger">{ranking}</span></div>
-      </NavItem>
-      );
-    }
+    var style = this._getLabelClassName(ranking,dangerZone);
     return ( <NavItem eventKey={team.id}>
           <div>{team.competition + ' ' + team.teamCode}&nbsp;&nbsp;
-          <span className="label label-as-badge label-default">{ranking}</span></div>
+          <span className={style}>{ranking}</span></div>
       </NavItem>
     );
+  }
+
+  _getLabelClassName(ranking,dangerZone) {
+    if (this._isTopper(ranking)) {return 'label label-as-badge label-success';}
+    if (this._isInDegradationZone(ranking,dangerZone)) {return 'label label-as-badge label-danger';}
+    return 'label label-as-badge label-default';
+  }
+
+  _isTopper(ranking) {
+    return ranking <= 3;
+  }
+
+  _isInDegradationZone(ranking,dangerZone) {
+    return ranking >= dangerZone;
   }
 
   _getDivsForTeamsNavigation() {
