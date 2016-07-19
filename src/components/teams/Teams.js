@@ -86,11 +86,9 @@ export default class Teams extends Component {
   }
 
   _renderRanking(team){
-    var dangerZone = team.ranking.length - 2;
-    var ranking = this._renderOwnTeamPosition(team);
-    var style = this._getLabelClassName(ranking,dangerZone);
+    var style = this._getLabelClassName(team);
     return (<div>{team.competition + ' ' + team.teamCode}&nbsp;&nbsp;
-      <span className={style}>{ranking}
+      <span className={style}>{this._renderOwnTeamPosition(team)}
       </span></div>
     );
   }
@@ -245,28 +243,18 @@ export default class Teams extends Component {
   }
 
   _getTeamsNavigationTab(team) {
-    var dangerZone = team.ranking.length - 2;
-    var ranking = this._renderOwnTeamPosition(team);
-    var style = this._getLabelClassName(ranking,dangerZone);
+    var style = this._getLabelClassName(team);
     return ( <NavItem eventKey={team.id}>
           <div>{team.competition + ' ' + team.teamCode}&nbsp;&nbsp;
-          <span className={style}>{ranking}</span></div>
+          <span className={style}>{this._renderOwnTeamPosition(team)}</span></div>
       </NavItem>
     );
   }
 
-  _getLabelClassName(ranking,dangerZone) {
-    if (this._isTopper(ranking)) {return 'label label-as-badge label-success';}
-    if (this._isInDegradationZone(ranking,dangerZone)) {return 'label label-as-badge label-danger';}
+  _getLabelClassName(team) {
+    if (team.isTopper(this._renderOwnTeamPosition(team),3)) {return 'label label-as-badge label-success';}
+    if (team.isInDegradationZone(this._renderOwnTeamPosition(team),2)) {return 'label label-as-badge label-danger';}
     return 'label label-as-badge label-default';
-  }
-
-  _isTopper(ranking) {
-    return ranking <= 3;
-  }
-
-  _isInDegradationZone(ranking,dangerZone) {
-    return ranking >= dangerZone;
   }
 
   _getDivsForTeamsNavigation() {
