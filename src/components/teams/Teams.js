@@ -128,19 +128,50 @@ export default class Teams extends Component {
             </thead>
             <tbody>
              {matchesForTeam.map(match => {
-               return (
-                <tr key={match.id} onClick={this._openMatch.bind(this, match.id)} className="clickable">
-                  <td>{match.date.format('DD/MM')}</td>
-                  <td>{match.date.format('HH:mm')}</td>
-                  <td>{match.isHomeMatch ? this._renderOwnTeamTitle(team) : this._renderOpponentTitle(match)} -
-                  {match.isHomeMatch ? ' ' + this._renderOpponentTitle(match) : ' ' + this._renderOwnTeamTitle(team)}</td>
-                  <td>{this._renderScores(match)}</td>
-                </tr>
-              );
+               return this._getMatch(match,team);
              })}
             </tbody>
         </table>
       );
+  }
+
+  _getMatch(match,team) {
+    if (this._won(match)) {
+      var styling = {backgroundColor:'PaleGreen'};
+      return (
+       <tr key={match.id} style={styling} onClick={this._openMatch.bind(this, match.id)} className="clickable">
+          <td>{match.date.format('DD/MM')}</td>
+          <td>{match.date.format('HH:mm')}</td>
+          <td>{match.isHomeMatch ? this._renderOwnTeamTitle(team) : this._renderOpponentTitle(match)} -
+             {match.isHomeMatch ? ' ' + this._renderOpponentTitle(match) : ' ' + this._renderOwnTeamTitle(team)}</td>
+          <td>{this._renderScores(match)}</td>
+       </tr>
+      );
+    }
+    else {
+      return (
+       <tr key={match.id} onClick={this._openMatch.bind(this, match.id)} className="clickable">
+          <td>{match.date.format('DD/MM')}</td>
+          <td>{match.date.format('HH:mm')}</td>
+          <td>{match.isHomeMatch ? this._renderOwnTeamTitle(team) : this._renderOpponentTitle(match)} -
+             {match.isHomeMatch ? ' ' + this._renderOpponentTitle(match) : ' ' + this._renderOwnTeamTitle(team)}</td>
+          <td>{this._renderScores(match)}</td>
+       </tr>
+      );
+    }
+  }
+
+  _won(match) {
+    if (match.score.home === match.score.out) {
+      return false;
+    }
+
+    if (match.isHomeMatch) {
+      return match.score.home > match.score.out;
+    }
+    else {
+      return match.score.out > match.score.home;
+    }
   }
 
   _getRankingOfDivision(team) {
