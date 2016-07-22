@@ -88,12 +88,12 @@ export default class TeamModel {
       .filter(match => match.teamId === this.id);
   }
 
-  isTopper(ranking,topThreshold) {
-    return ranking <= topThreshold;
+  isTopper(ranking) {
+    return ranking <= 3;
   }
 
-  isInDegradationZone(ranking,bottomThreshold) {
-    return ranking >= (this.ranking.length - bottomThreshold);
+  isInDegradationZone(ranking) {
+    return ranking >= (this.ranking.length - 2);
   }
 }
 

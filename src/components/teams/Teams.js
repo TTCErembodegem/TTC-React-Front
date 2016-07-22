@@ -252,8 +252,8 @@ export default class Teams extends Component {
   }
 
   _getLabelClassName(team) {
-    if (team.isTopper(this._renderOwnTeamPosition(team),3)) {return 'label label-as-badge label-success';}
-    if (team.isInDegradationZone(this._renderOwnTeamPosition(team),2)) {return 'label label-as-badge label-danger';}
+    if (team.isTopper(this._renderOwnTeamPosition(team))) {return 'label label-as-badge label-success';}
+    if (team.isInDegradationZone(this._renderOwnTeamPosition(team))) {return 'label label-as-badge label-danger';}
     return 'label label-as-badge label-default';
   }
 
