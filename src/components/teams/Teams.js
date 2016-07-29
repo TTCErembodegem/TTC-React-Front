@@ -23,8 +23,6 @@ import * as matchActions from '../../actions/matchActions.js';
 import cn from 'classnames';
 import styles from './Teams.css';
 import withStyles from '../../utils/decorators/withStyles.js';
-import Icon from '../controls/Icon.js';
-
 
 export const TeamsVttl = () => <Teams competition="Vttl" />;
 export const TeamsSporta = () => <Teams competition="Sporta" />;
@@ -129,7 +127,7 @@ export default class Teams extends Component {
   _getMatch(match,team) {
     return (
        <tr key={match.id} className={cn('clickable',{'match-won': this._won(match)})} onClick={this._openMatch.bind(this, match.id)}>
-          <td>{this._renderThrillerIcon(team,match)}{match.date.format('DD/MM')}</td>
+          <td>{match.date.format('DD/MM')}</td>
           <td>{match.date.format('HH:mm')}</td>
           <td>{match.isHomeMatch ? this._renderOwnTeamTitle(team) : this._renderOpponentTitle(match)} -
              {match.isHomeMatch ? ' ' + this._renderOpponentTitle(match) : ' ' + this._renderOwnTeamTitle(team)}</td>
@@ -137,13 +135,6 @@ export default class Teams extends Component {
        </tr>
     );
   }
-
-  _renderThrillerIcon(team,match){
-    if(team.getThriller(match)){
-      return (<Icon fa="fa fa-heartbeat faa-pulse animated" style={{marginLeft: 3, marginRight: 7, marginTop: 3}} />);
-    }
-  }
-
 
 
   _won(match) {
