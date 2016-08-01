@@ -85,7 +85,9 @@ export default {
       headerText: 'Profiel',
       loggedInText: 'Ingelogd als:',
       email: 'E-mail:',
-      gsm: 'GSM-nummer:'
+      gsm: 'GSM-nummer:',
+      address: 'Adres:',
+      city: 'Gemeente:'
     },
     changePassword: {
       title: 'Paswoord wijzigen',
@@ -97,6 +99,8 @@ export default {
       title: 'Wijzig uw gegevens',
       email: 'Nieuw E-mailadres',
       phoneNumber: 'Nieuw GSM-nummer',
+      address: 'Nieuw Adres',
+      city: 'Nieuwe Gemeente',
       changeDetailsButton: 'Wijzig gegevens',
       updatePlayerSuccess: 'Speler gegevens succesvol gewijzigd',
       updatePlayerFail: 'Speler gegevens wijzigen is mislukt'

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { contextTypes } from '../../utils/decorators/withContext.js';
 
 import * as playerActions from '../../actions/playerActions.js';
+import { util as storeUtil } from '../../store.js';
 
 import TextField from 'material-ui/lib/text-field';
 import RaisedButton from 'material-ui/lib/raised-button';
@@ -25,12 +26,27 @@ export default class ChangePlayerDetails extends Component {
     this.state = {
       email: null,
       gsm: null,
+      address: null,
+      city: null,
+    };
+  }
+
+  componentWillMount() {
+    var player = storeUtil.getPlayer(this.props.user.playerId);
+    this.state = {
+      email: player.contact.email,
+      gsm: player.contact.mobile,
+      address: player.contact.address,
+      city: player.contact.city,
     };
   }
 
   render() {
+
+    var player = storeUtil.getPlayer(this.props.user.playerId);
+
     const paperStyle = {
-      height: 280,
+      height: 480,
       width: 290,
       margin: 20,
       textAlign: 'center',
@@ -43,19 +59,32 @@ export default class ChangePlayerDetails extends Component {
         <TextField
           floatingLabelText={this.context.t('updatePlayer.email')}
           type="text"
+          defaultValue={player.contact.email}
           onChange={::this._onEmailChange} />
 
         <TextField
           floatingLabelText={this.context.t('updatePlayer.phoneNumber')}
           type="text"
+          defaultValue={player.contact.mobile}
           onChange={::this._onPhoneNumberChange} />
+
+        <TextField
+          floatingLabelText={this.context.t('updatePlayer.address')}
+          type="text"
+          defaultValue={player.contact.address}
+          onChange={::this._onAddressChange} />
+
+        <TextField
+          floatingLabelText={this.context.t('updatePlayer.city')}
+          type="text"
+          defaultValue={player.contact.city}
+          onChange={::this._onCityChange} />
 
         <RaisedButton
           label={this.context.t('updatePlayer.changeDetailsButton')}
           primary={true}
           style={{marginTop: 15}}
-          onClick={::this._onUpdatePlayer}
-          disabled={!this.state.email || !this.state.gsm} />
+          onClick={::this._onUpdatePlayer} />
 
       </Paper>
     );
@@ -65,6 +94,12 @@ export default class ChangePlayerDetails extends Component {
   }
   _onPhoneNumberChange(e) {
     this.setState({gsm: e.target.value});
+  }
+  _onAddressChange(e) {
+    this.setState({address: e.target.value});
+  }
+  _onCityChange(e) {
+    this.setState({city: e.target.value});
   }
   _onUpdatePlayer() {
     this.props.updatePlayer(this.props.user.playerId, this.state);
