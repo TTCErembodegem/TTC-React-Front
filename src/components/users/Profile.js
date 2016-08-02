@@ -41,7 +41,7 @@ export default class Profile extends Component {
   render() {
     const t = this.context.t;
     const paperStyle = {
-      height: 410,
+      height: 450,
       width: 320,
       margin: 20,
       textAlign: 'center',
@@ -57,6 +57,8 @@ export default class Profile extends Component {
         <p>{this.context.t('profile.loggedInText')}&nbsp;{this._reverseName(player.name)}</p>
         <p>{this.context.t('profile.email')}&nbsp;{player.contact.email}</p>
         <p>{this.context.t('profile.gsm')}&nbsp;{displayFormat(player.contact.mobile)}</p>
+        <p>{this.context.t('profile.address')}&nbsp;{player.contact.address}</p>
+        <p>{this.context.t('profile.city')}&nbsp;{player.contact.city}</p>
 
         <RaisedButton label={t('nav.profilePhotos')}
           style={{marginTop: 15}} onClick={() => browserHistory.push(t.route('profilePhotos'))} />
