@@ -2,7 +2,6 @@ import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import { contextTypes } from '../../../utils/decorators/withContext.js';
 import withViewport from '../../../utils/decorators/withViewport.js';
-import moment from 'moment';
 
 import UserModel from '../../../models/UserModel.js';
 import MatchModel from '../../../models/MatchModel.js';
@@ -32,6 +31,8 @@ import NavItem from 'react-bootstrap/lib/NavItem';
 import PanelGroup from 'react-bootstrap/lib/PanelGroup';
 import Panel from 'react-bootstrap/lib/Panel';
 
+import TabbedContainer from '../../controls/TabbedContainer.js';
+
 const tabEventKeys = {
   players: 1,
   individualMatches: 2,
@@ -40,6 +41,7 @@ const tabEventKeys = {
   scoresheet: 5,
   opponentsRanking: 6,
   opponentsFormation: 7,
+  admin: 8,
 };
 
 @withViewport
@@ -75,9 +77,11 @@ export default class MatchCard extends Component {
   }
 
   constructor(props) {
+    if (props.small) { // TODO: remove this if small prop is never passed (doesn't seem to be the case...)
+      console.error('passed props.small to MatchCard');
+    }
     super(props);
     this.state = {
-      openTabKey: tabEventKeys.players,
       forceEditPlayers: false
     };
   }
@@ -87,54 +91,54 @@ export default class MatchCard extends Component {
     this.props.getLastOpponentMatches(this.props.match.teamId, this.props.match.opponent);
   }
 
-  _showAccordion() {
-    // Otherwise show tabs
-    return this.props.viewport.width < 700 || this.props.small;
-  }
-
   render() {
     var match = this.props.match;
-    const showIndividualMatches = match.games.size !== 0;
-    const showOpponentClubLocation = !match.isHomeMatch && !match.isPlayed;
-    const showScoresheet = match.scoreType === 'BeingPlayed' && match.players.size;
-
     const HeaderComponent = this.props.big ? BigMatchCardHeader : MatchCardHeader;
 
-    if (this._showAccordion()) {
-      return (
-        <HeaderComponent {...this.props} backgroundColor="#fafafa" isOpen={this.props.isOpen} style={{margin: 50}} config={this.props.config}>
-          <CardText expandable={true} style={{paddingTop: 0, paddingLeft: 5, paddingRight: 5}}>
-            <PanelGroup activeKey={this.state.openTabKey} onSelect={::this._onTabSelect} accordion>
-              {this._renderNavItem(tabEventKeys.players, 'players', this._getPlayersEditIcon())}
-              {this._renderNavItem(tabEventKeys.report, 'report')}
-              {showIndividualMatches ? this._renderNavItem(tabEventKeys.individualMatches, 'matches') : null}
-              {showScoresheet ? this._renderNavItem(tabEventKeys.scoresheet, 'scoresheet') : null}
-              {showOpponentClubLocation ? this._renderNavItem(tabEventKeys.opponentClub, 'club') : null}
-              {this._renderNavItem(tabEventKeys.opponentsRanking, 'opponentsRanking')}
-              {this._renderNavItem(tabEventKeys.opponentsFormation, 'opponentsFormation')}
-              {this.props.user.isDev() ? this._renderNavItem('admin', 'admin') : null}
-            </PanelGroup>
-          </CardText>
-        </HeaderComponent>
-      );
-    }
+    const tabConfig = [{
+        key: tabEventKeys.players,
+        title: this.context.t('match.tabs.playersTitle'),
+        label: this.context.t('match.tabs.players'),
+        headerChildren: this._getPlayersEditIcon(),
+      }, {
+        key: tabEventKeys.report,
+        title: this.context.t('match.tabs.reportTitle'),
+        label: this.context.t('match.tabs.report'),
+        headerChildren: this._getCommentsIcon(),
+      }, {
+        key: tabEventKeys.individualMatches,
+        title: this.context.t('match.tabs.matchesTitle'),
+        label: this.context.t('match.tabs.matches'),
+        show: match.games.size !== 0,
+      }, {
+        key: tabEventKeys.scoresheet,
+        title: this.context.t('match.tabs.scoresheetTitle'),
+        label: this.context.t('match.tabs.scoresheet'),
+        show: match.scoreType === 'BeingPlayed' && match.players.size,
+      }, {
+        key: tabEventKeys.opponentClub,
+        title: this.context.t('match.tabs.clubTitle'),
+        label: this.context.t('match.tabs.club'),
+        show: !match.isHomeMatch && !match.isPlayed,
+      }, {
+        key: tabEventKeys.opponentsRanking,
+        title: this.context.t('match.tabs.opponentsRankingTitle'),
+        label: this.context.t('match.tabs.opponentsRanking'),
+      }, {
+        key: tabEventKeys.opponentsFormation,
+        title: this.context.t('match.tabs.opponentsFormationTitle'),
+        label: this.context.t('match.tabs.opponentsFormation'),
+      }, {
+        key: tabEventKeys.opponentsFormation,
+        title: 'admin',
+        label: 'admin',
+        show: this.props.user.isDev(),
+      }];
 
     return (
-      <HeaderComponent {...this.props} backgroundColor="#fafafa" isOpen={this.props.isOpen} config={this.props.config}>
-        <CardText expandable={true} style={{paddingTop: 0}}>
-          <Nav bsStyle="tabs" activeKey={this.state.openTabKey} onSelect={::this._onTabSelect}>
-            {this._renderNavItem(tabEventKeys.players, 'players', this._getPlayersEditIcon())}
-            {this._renderNavItem(tabEventKeys.report, 'report', this._getCommentsIcon())}
-            {showIndividualMatches ? this._renderNavItem(tabEventKeys.individualMatches, 'matches') : null}
-            {showScoresheet ? this._renderNavItem(tabEventKeys.scoresheet, 'scoresheet') : null}
-            {showOpponentClubLocation ? this._renderNavItem(tabEventKeys.opponentClub, 'club') : null}
-            {this._renderNavItem(tabEventKeys.opponentsRanking, 'opponentsRanking')}
-            {this._renderNavItem(tabEventKeys.opponentsFormation, 'opponentsFormation')}
-            {this.props.user.isDev() ? this._renderNavItem('admin', 'admin') : null}
-          </Nav>
-          <div className="match-card-tab">
-            {this._renderTabContent()}
-          </div>
+      <HeaderComponent {...this.props} backgroundColor="#fafafa" isOpen={this.props.isOpen} style={{margin: 50}} config={this.props.config}>
+        <CardText expandable={true} style={{paddingTop: 0, paddingLeft: 5, paddingRight: 5}}>
+          <TabbedContainer openTabKey={tabEventKeys.players} tabKeys={tabConfig} tabRenderer={::this._renderTabContent} onTabSelect={::this._onTabSelect} />
         </CardText>
       </HeaderComponent>
     );
@@ -155,32 +159,13 @@ export default class MatchCard extends Component {
   _onStartEditPlayers() {
     this.setState({forceEditPlayers: !this.state.forceEditPlayers});
   }
-  _renderNavItem(eventKey, transKey, headerChildren = null) {
-    if (!this._showAccordion()) {
-      // Tabs
-      return (
-        <NavItem eventKey={eventKey} title={this.context.t(`match.tabs.${transKey}Title`)}>
-          {this.context.t(`match.tabs.${transKey}`)} {headerChildren}
-        </NavItem>
-      );
-    }
-
-    // Accordion
-    const header = <div>{this.context.t(`match.tabs.${transKey}Title`)} {headerChildren}</div>;
-    return (
-      <Panel header={header} eventKey={eventKey} className="match-card-panel clickable" onClick={this._onTabSelect.bind(this, eventKey)}>
-        {this._renderTabContent(eventKey)}
-      </Panel>
-    );
-  }
   _onTabSelect(eventKey) {
     if (eventKey === tabEventKeys.report) {
       this.props.setSetting('newMatchComment' + this.props.match.id, false);
     }
-    this.setState({openTabKey: eventKey});
   }
   _renderTabContent(eventKey) {
-    switch (eventKey || this.state.openTabKey) {
+    switch (eventKey) {
     case tabEventKeys.players:
       return this._renderPlayers();
     case tabEventKeys.individualMatches:
@@ -195,7 +180,7 @@ export default class MatchCard extends Component {
       return this._renderOpponentsRanking();
     case tabEventKeys.opponentsFormation:
       return this._renderOpponentFormation();
-    case 'admin':
+    case tabEventKeys.admin:
       return (
         <div>
           ID={this.props.match.id}<br />FrenoyId={this.props.match.frenoyMatchId}
