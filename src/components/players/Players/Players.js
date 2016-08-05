@@ -1,4 +1,6 @@
 import React, { PropTypes, Component } from 'react';
+import Nav from 'react-bootstrap/lib/Nav';
+import NavItem from 'react-bootstrap/lib/NavItem';
 import Tabs from 'material-ui/lib/tabs/tabs';
 import Tab from 'material-ui/lib/tabs/tab';
 import Icon from '../../controls/Icon.js';
@@ -15,6 +17,8 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import PlayerModel, { createFrenoyLink } from '../../../models/PlayerModel.js';
 import TeamModel from '../../../models/TeamModel.js';
 import { util as storeUtil } from '../../../store.js';
+import http from '../../../utils/httpClient.js';
+import moment from 'moment';
 import { contextTypes } from '../../../utils/decorators/withContext.js';
 import withStyles from '../../../utils/decorators/withStyles.js';
 import styles from './Players.css';
@@ -37,13 +41,28 @@ export default class Players extends Component {
     teams: ImmutablePropTypes.listOf(PropTypes.instanceOf(TeamModel).isRequired).isRequired,
   };
 
+  _downloadExcel() {
+    http.download('/players/ExcelExport').then(res => {
+      var link = document.createElement('a');
+      link.download = this.context.t('players.downloadExcelFileName', moment().format('YYYY-MM-DD')) + '.xlsx';
+      link.href = 'data:application/octet-stream;base64,' + res.body;
+      link.click();
+    })
+    .catch(err => {
+      console.log('err', err);
+    });
+  }
+
   render() {
     var playersVTTL = this.props.players.filter(x => x.vttl).sort((a, b) => a.vttl.position - b.vttl.position);
     var playersSporta = this.props.players.filter(x => x.sporta).sort((a, b) => a.sporta.position - b.sporta.position);
     return (
       <Tabs style={{marginTop: 10}}>
-        <Tab label={this.context.t('players.vttl')} >
-         <div>
+        <Tab label={this.context.t('players.vttl')}>
+          <div>
+          <a onClick={::this._downloadExcel} title={this.context.t('players.downloadExcel')} className="clickable pull-right">
+            <Icon fa="fa fa-file-excel-o fa-2x" />
+          </a>
           <table className="table table-striped table-bordered table-hover">
             <thead>
               <tr>
@@ -61,9 +80,11 @@ export default class Players extends Component {
                 <td>{ply.vttl.uniqueIndex}</td>
                 <td>{ply.name}</td>
                 <td>
-                  {ply.vttl.ranking}&nbsp;
+                  {ply.vttl.ranking}
+                  &nbsp;
                   <a href={createFrenoyLink(ply.vttl)} target="_blank">
-                  <Icon fa="fa fa-search" /></a>
+                    <Icon fa="fa fa-search" />
+                  </a>
                 </td>
                 <td>{ply.style.name}</td>
                 <td>{ply.style.bestStroke}</td></tr>))}
@@ -71,7 +92,7 @@ export default class Players extends Component {
           </table>
           </div>
         </Tab>
-        <Tab label={this.context.t('players.sporta')} >
+        <Tab label={this.context.t('players.sporta')}>
           <div>
             <table className="table table-striped table-bordered table-hover">
               <thead>
@@ -91,45 +112,47 @@ export default class Players extends Component {
                   <td>{ply.sporta.uniqueIndex}</td>
                   <td>{ply.name}</td>
                   <td>
-                  {ply.sporta.ranking}&nbsp;
-                  <a href={createFrenoyLink(ply.sporta)} target="_blank">
-                  <Icon fa="fa fa-search" /></a>
+                    {ply.sporta.ranking}
+                    &nbsp;
+                    <a href={createFrenoyLink(ply.sporta)} target="_blank">
+                      <Icon fa="fa fa-search" />
+                    </a>
                   </td>
                   <td>{ply.sporta.rankingValue}</td>
                   <td>{ply.style.name}</td>
-                  <td>{ply.style.bestStroke}</td></tr>))}
+                  <td>{ply.style.bestStroke}</td></tr>
+                ))}
               </tbody>
             </table>
           </div>
         </Tab>
         <Tab label={this.context.t('players.alle')}>
           <Accordion style={{marginTop: 10, marginBottom: 10}}>
-            {this.props.teams.sort((a, b) => (a.competition + a.teamCode).localeCompare(b.competition + b.teamCode))
-                .map((team, index) => <Panel header={team.competition + ' ' + team.teamCode + '-' +  this.context.t('players.team')}
-                  eventKey={index}>
-              {this._getPlayersOfTeam(team.competition,team.teamCode)}
-            </Panel>)}
+            {this.props.teams.sort((a, b) => (a.competition + a.teamCode).localeCompare(b.competition + b.teamCode)).map((team, index) => (
+              <Panel key={team.id} header={team.competition + ' ' + team.teamCode + '-' + this.context.t('players.team')} eventKey={index}>
+                {this._getPlayersOfTeam(team.competition,team.teamCode)}
+              </Panel>
+            ))}
           </Accordion>
         </Tab>
       </Tabs>
     );
   }
 
-  _getPlayersOfTeam(competition,team){
-    var teamTT = this.props.teams.filter(x => x.competition === competition && x.teamCode === team).toArray();
-    var players = teamTT[0].players;
-    var playerAsPlayerObject = [];
-    for (var i = 0; i < players.length; i++){
+  _getPlayersOfTeam(competition, team) {
+    const teamTT = this.props.teams.filter(x => x.competition === competition && x.teamCode === team).toArray();
+    const players = teamTT[0].players;
+    var playerAsPlayerObject= [];
+    for (let i = 0; i < players.length; i++){
        playerAsPlayerObject.push(storeUtil.getPlayer(players[i].playerId));
     }
-    if (competition === 'Vttl')
-    {
+    if (competition === 'Vttl') {
       playerAsPlayerObject = playerAsPlayerObject.filter(x => x.vttl).sort((a, b) => a.vttl.position - b.vttl.position);
       return (
         <div>
             {playerAsPlayerObject.map(player => (<Card key={player.id}>
             <CardHeader title={this.context.t('players.vttl') + ' ' + teamTT[0].teamCode + ' - ' + player.name}
-            avatar={this._getPlayerRoleInTeam(players,player.id)} />
+              avatar={this._getPlayerRoleInTeam(players,player.id)} />
                <CardText>
                    <div className="row">
                       <div className="col-sm-8">
@@ -147,29 +170,27 @@ export default class Players extends Component {
             </Card>))}
         </div>
       );
-    }
-    else
-    {
+    } else {
       playerAsPlayerObject = playerAsPlayerObject.filter(x => x.sporta).sort((a, b) => a.sporta.position - b.sporta.position);
       return (
         <div>
           {playerAsPlayerObject.map(player => (<Card key={player.id}>
           <CardHeader title={this.context.t('players.sporta') + ' ' + teamTT[0].teamCode + ' - ' + player.name}
-          avatar={this._getPlayerRoleInTeam(players,player.id)} />
-             <CardText>
-                 <div className="row">
-                      <div className="col-sm-8">
-                         <p>{this.context.t('players.indexSporta')} {player.sporta.rankingIndex}</p>
-                         <p>{this.context.t('players.memberNumberSporta')} {player.sporta.uniqueIndex}</p>
-                         <p>{this.context.t('players.rankingSporta')} {player.sporta.ranking}</p>
-                         <p>{this.context.t('players.styleAll')} {player.style.name}</p>
-                         <p>{this.context.t('players.bestStrokeAll')} {player.style.bestStroke}</p>
-                      </div>
-                      <div className="col-sm-4">
-                         <PlayerImage playerId={player.id} />
-                      </div>
-                 </div>
-             </CardText>
+            avatar={this._getPlayerRoleInTeam(players,player.id)} />
+            <CardText>
+              <div className="row">
+                <div className="col-sm-8">
+                   <p>{this.context.t('players.indexSporta')} {player.sporta.rankingIndex}</p>
+                   <p>{this.context.t('players.memberNumberSporta')} {player.sporta.uniqueIndex}</p>
+                   <p>{this.context.t('players.rankingSporta')} {player.sporta.ranking}</p>
+                   <p>{this.context.t('players.styleAll')} {player.style.name}</p>
+                   <p>{this.context.t('players.bestStrokeAll')} {player.style.bestStroke}</p>
+                </div>
+                <div className="col-sm-4">
+                   <PlayerImage playerId={player.id} />
+                </div>
+              </div>
+            </CardText>
           </Card>))}
         </div>
       );
@@ -178,12 +199,12 @@ export default class Players extends Component {
 
 
 
-  _getPlayerRoleInTeam(players,playerId){
-    var iconWidth = {
+  _getPlayerRoleInTeam(players, playerId) {
+    const iconWidth = {
       width: 26
     };
 
-    for (var i = 0; i < players.length; i++){
+    for (let i = 0; i < players.length; i++){
       if (players[i].playerId === playerId) {
          if (players[i].type === 'Captain') {
             return (

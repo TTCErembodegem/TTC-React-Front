@@ -250,7 +250,7 @@ export default class Teams extends Component {
 
   _getTeamsNavigationTab(team) {
     var style = this._getLabelClassName(team);
-    return ( <NavItem eventKey={team.id}>
+    return ( <NavItem eventKey={team.id} key={team.id}>
           <div>{team.competition + ' ' + team.teamCode}&nbsp;&nbsp;
           <span className={style}>{this._renderOwnTeamPosition(team)}</span></div>
       </NavItem>
@@ -278,23 +278,19 @@ export default class Teams extends Component {
     if (this._showAccordion()) {
       return (
         <div style={{marginTop: 10}}>
-          <CardText expandable={true} style={{paddingTop: 0, paddingLeft: 5, paddingRight: 5}}>
-            <PanelGroup activeKey={this.state.openTabKey} onSelect={::this._onTabSelect} accordion>
-              {this._getTeamsPanel()}
-            </PanelGroup>
-          </CardText>
+          <PanelGroup activeKey={this.state.openTabKey} onSelect={::this._onTabSelect} accordion>
+            {this._getTeamsPanel()}
+          </PanelGroup>
         </div>
       );
     }
 
     return (
       <div style={{marginTop: 10}}>
-        <CardText expandable={true} style={{paddingTop: 0}}>
-          <Nav bsStyle="tabs" activeKey={this.state.openTabKey} onSelect={::this._onTabSelect}>
-            {this._getTeamsNavigation()}
-          </Nav>
-          {this._getDivsForTeamsNavigation()}
-        </CardText>
+        <Nav bsStyle="tabs" activeKey={this.state.openTabKey} onSelect={::this._onTabSelect}>
+          {this._getTeamsNavigation()}
+        </Nav>
+        {this._getDivsForTeamsNavigation()}
       </div>
     );
   }

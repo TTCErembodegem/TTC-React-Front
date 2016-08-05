@@ -28,6 +28,9 @@ function bearer(req) {
 }
 
 const HttpClient = {
+  download: path => {
+    return request.get(getUrl(path)).use(bearer);
+  },
   get: (path, qs) => {
     const fullUrl = 'GET ' + (qs ? path + '?' + querystring.encode(qs) : path);
     return Promise.try(() => {

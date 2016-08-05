@@ -138,6 +138,8 @@ export default {
         style: 'Speelstijl',
         saved: 'Speelstijl ${ply} aangepast door ${by}: ${newStyle}',
       },
+      downloadExcel: 'Excel export',
+      downloadExcelFileName: 'Spelerslijst_${}',
     },
     match: {
       todayMatches: 'vandaag',
