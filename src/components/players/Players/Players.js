@@ -10,10 +10,15 @@ import CardText from 'material-ui/lib/card/card-text';
 import Accordion from 'react-bootstrap/lib/Accordion';
 import Panel from 'react-bootstrap/lib/Panel';
 import PlayerImage from '../PlayerImage.js';
+import TabbedContainer from '../../controls/TabbedContainer.js';
+import Table from 'react-bootstrap/lib/Table';
+import cn from 'classnames';
+import TextField from 'material-ui/lib/text-field';
 
 import { connect } from 'react-redux';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
+import UserModel from '../../../models/UserModel.js';
 import PlayerModel, { createFrenoyLink } from '../../../models/PlayerModel.js';
 import TeamModel from '../../../models/TeamModel.js';
 import { util as storeUtil } from '../../../store.js';
@@ -23,6 +28,12 @@ import { contextTypes } from '../../../utils/decorators/withContext.js';
 import withStyles from '../../../utils/decorators/withStyles.js';
 import styles from './Players.css';
 
+const tabEventKeys = {
+  all: 1,
+  vttl: 2,
+  sporta: 3,
+};
+
 @connect(state => {
   return {
     config: state.config,
@@ -30,6 +41,7 @@ import styles from './Players.css';
     //clubs: state.clubs,
     //matches: state.matches,
     teams: state.teams,
+    user: state.user,
   };
 })
 @withStyles(styles)
@@ -39,7 +51,13 @@ export default class Players extends Component {
     config: PropTypes.object,
     players: ImmutablePropTypes.listOf(PropTypes.instanceOf(PlayerModel).isRequired).isRequired,
     teams: ImmutablePropTypes.listOf(PropTypes.instanceOf(TeamModel).isRequired).isRequired,
+    teams: ImmutablePropTypes.listOf(PropTypes.instanceOf(TeamModel).isRequired).isRequired,
   };
+
+  constructor() {
+    super();
+    this.state = {filter: ''};
+  }
 
   _downloadExcel() {
     http.download('/players/ExcelExport').then(res => {
@@ -53,89 +71,157 @@ export default class Players extends Component {
     });
   }
 
-  render() {
-    var playersVTTL = this.props.players.filter(x => x.vttl).sort((a, b) => a.vttl.position - b.vttl.position);
-    var playersSporta = this.props.players.filter(x => x.sporta).sort((a, b) => a.sporta.position - b.sporta.position);
+  _onPlayerSearchChange(e) {
+    this.setState({filter: e.target.value.toLowerCase()});
+  }
+  _renderToolbar(tabKey) {
     return (
-      <Tabs style={{marginTop: 10}}>
-        <Tab label={this.context.t('players.vttl')}>
-          <div>
-          <a onClick={::this._downloadExcel} title={this.context.t('players.downloadExcel')} className="clickable pull-right">
+      <div style={{marginRight: 5, marginLeft: 5}}>
+        {tabKey !== tabEventKeys.all ? (
+          <TextField hintText={this.context.t('players.search')} onChange={::this._onPlayerSearchChange} style={{width: 150}} />
+        ) : null}
+
+        {this.props.user.playerId ? (
+          <a onClick={::this._downloadExcel} title={this.context.t('players.downloadExcel')} className="clickable pull-right" style={{marginTop: 5}}>
             <Icon fa="fa fa-file-excel-o fa-2x" />
           </a>
-          <table className="table table-striped table-bordered table-hover">
-            <thead>
-              <tr>
-                <th>{this.context.t('players.index')}</th>
-                <th>{this.context.t('players.vttlMemberNumber')}</th>
-                <th>{this.context.t('players.name')}</th>
-                <th>{this.context.t('players.ranking')}</th>
-                <th>{this.context.t('players.style')}</th>
-                <th>{this.context.t('players.bestStroke')}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {playersVTTL.map(ply => (<tr key={ply.id}>
-                <td>{ply.vttl.rankingIndex}</td>
-                <td>{ply.vttl.uniqueIndex}</td>
-                <td>{ply.name}</td>
-                <td>
-                  {ply.vttl.ranking}
-                  &nbsp;
-                  <a href={createFrenoyLink(ply.vttl)} target="_blank">
-                    <Icon fa="fa fa-search" />
-                  </a>
-                </td>
-                <td>{ply.style.name}</td>
-                <td>{ply.style.bestStroke}</td></tr>))}
-            </tbody>
-          </table>
-          </div>
-        </Tab>
-        <Tab label={this.context.t('players.sporta')}>
-          <div>
-            <table className="table table-striped table-bordered table-hover">
-              <thead>
-                <tr>
-                  <th>{this.context.t('players.index')}</th>
-                  <th>{this.context.t('players.vttlMemberNumber')}</th>
-                  <th>{this.context.t('players.name')}</th>
-                  <th>{this.context.t('players.ranking')}</th>
-                  <th>{this.context.t('players.value')}</th>
-                  <th>{this.context.t('players.style')}</th>
-                  <th>{this.context.t('players.bestStroke')}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {playersSporta.map(ply => (<tr key={ply.id}>
-                  <td>{ply.sporta.rankingIndex}</td>
-                  <td>{ply.sporta.uniqueIndex}</td>
-                  <td>{ply.name}</td>
-                  <td>
-                    {ply.sporta.ranking}
-                    &nbsp;
-                    <a href={createFrenoyLink(ply.sporta)} target="_blank">
-                      <Icon fa="fa fa-search" />
-                    </a>
-                  </td>
-                  <td>{ply.sporta.rankingValue}</td>
-                  <td>{ply.style.name}</td>
-                  <td>{ply.style.bestStroke}</td></tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </Tab>
-        <Tab label={this.context.t('players.alle')}>
-          <Accordion style={{marginTop: 10, marginBottom: 10}}>
-            {this.props.teams.sort((a, b) => (a.competition + a.teamCode).localeCompare(b.competition + b.teamCode)).map((team, index) => (
-              <Panel key={team.id} header={team.competition + ' ' + team.teamCode + '-' + this.context.t('players.team')} eventKey={index}>
-                {this._getPlayersOfTeam(team.competition,team.teamCode)}
-              </Panel>
-            ))}
-          </Accordion>
-        </Tab>
-      </Tabs>
+        ) : null}
+      </div>
+    );
+  }
+  _renderTabContent(tabKey) {
+    var tabContent;
+    switch (tabKey) {
+    case tabEventKeys.all:
+      tabContent = this._renderTabAll();
+      break;
+    case tabEventKeys.vttl:
+      tabContent = this._renderTabVttl();
+      break;
+    case tabEventKeys.sporta:
+      tabContent = this._renderTabSporta();
+      break;
+    }
+    return (
+      <div>
+        <div>{this._renderToolbar(tabKey)}</div>
+        {tabContent}
+      </div>
+    );
+  }
+
+  _renderTabAll() {
+    return (
+      <div style={{marginBottom: -20, marginLeft: 10, marginRight: 10}}>
+        <Accordion>
+          {this.props.teams.sort((a, b) => (a.competition + a.teamCode).localeCompare(b.competition + b.teamCode)).map((team, index) => (
+            <Panel key={team.id} header={team.competition + ' ' + team.teamCode + '-' + this.context.t('players.team')} eventKey={index}>
+              {this._getPlayersOfTeam(team.competition,team.teamCode)}
+            </Panel>
+          ))}
+        </Accordion>
+      </div>
+    );
+  }
+  _renderTabVttl() {
+    var playersVTTL = this.props.players.filter(x => x.vttl);
+    if (this.state.filter) {
+      playersVTTL = playersVTTL.filter(x => x.name.toLowerCase().includes(this.state.filter));
+    }
+    playersVTTL = playersVTTL.sort((a, b) => a.vttl.position - b.vttl.position);
+    return (
+      <Table condensed hover>
+        <thead>
+          <tr>
+            <th>{this.context.t('players.index')}</th>
+            <th>{this.context.t('players.memberNumber')}</th>
+            <th>{this.context.t('players.name')}</th>
+            <th><span className="hidden-xs">{this.context.t('players.ranking')}</span></th>
+            <th className="hidden-xs">{this.context.t('players.style')}</th>
+            <th className="hidden-xs">{this.context.t('players.bestStroke')}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {playersVTTL.map(ply => (
+            <tr key={ply.id} className={cn({'match-won': ply.isMe()})}>
+              <td>{ply.vttl.rankingIndex}</td>
+              <td>{ply.vttl.uniqueIndex}</td>
+              <td>{ply.name}</td>
+              <td>{this._renderCompetitionRanking(ply.vttl)}</td>
+              <td className="hidden-xs">{ply.style.name}</td>
+              <td className="hidden-xs">{ply.style.bestStroke}</td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    );
+  }
+  _renderTabSporta() {
+    var playersSporta = this.props.players.filter(x => x.sporta);
+    if (this.state.filter) {
+      playersSporta = playersSporta.filter(x => x.name.toLowerCase().includes(this.state.filter));
+    }
+    playersSporta = playersSporta.sort((a, b) => a.sporta.position - b.sporta.position);
+    return (
+      <Table condensed hover>
+        <thead>
+          <tr>
+            <th>{this.context.t('players.index')}</th>
+            <th>{this.context.t('players.memberNumber')}</th>
+            <th>{this.context.t('players.name')}</th>
+            <th><span className="hidden-xs">{this.context.t('players.ranking')}</span></th>
+            <th>{this.context.t('players.value')}</th>
+            <th className="hidden-xs">{this.context.t('players.style')}</th>
+            <th className="hidden-xs">{this.context.t('players.bestStroke')}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {playersSporta.map(ply => (
+            <tr key={ply.id} className={cn({'match-won': ply.isMe()})}>
+              <td>{ply.sporta.rankingIndex}</td>
+              <td>{ply.sporta.uniqueIndex}</td>
+              <td>{ply.name}</td>
+              <td>{this._renderCompetitionRanking(ply.sporta)}</td>
+              <td>{ply.sporta.rankingValue}</td>
+              <td className="hidden-xs">{ply.style.name}</td>
+              <td className="hidden-xs">{ply.style.bestStroke}</td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    );
+  }
+  _renderCompetitionRanking(comp) {
+    return (
+      <span>
+        {comp.ranking}
+        &nbsp;
+        <a href={createFrenoyLink(comp)} target="_blank">
+          <Icon fa="fa fa-search" />
+        </a>
+      </span>
+    );
+  }
+
+  render() {
+    const tabConfig = [{
+        key: tabEventKeys.all,
+        title: this.context.t('players.all'),
+        label: this.context.t('players.all'),
+      }, {
+        key: tabEventKeys.vttl,
+        title: this.context.t('players.vttl'),
+        label: this.context.t('players.vttl'),
+      }, {
+        key: tabEventKeys.sporta,
+        title: this.context.t('players.sporta'),
+        label: this.context.t('players.sporta'),
+      }];
+
+    return (
+      <div style={{marginTop: 20, marginBottom: 10}}>
+        <TabbedContainer openTabKey={tabEventKeys.all} tabKeys={tabConfig} tabRenderer={::this._renderTabContent} forceTabs />
+      </div>
     );
   }
 

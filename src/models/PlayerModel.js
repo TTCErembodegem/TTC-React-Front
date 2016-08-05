@@ -1,3 +1,5 @@
+import { util as storeUtil } from '../store.js';
+
 export default class PlayerModel {
   constructor(json) {
     this.alias = json.alias;
@@ -13,6 +15,10 @@ export default class PlayerModel {
   getCompetition(competition) {
     var comp = competition === 'Vttl' ? this.vttl : this.sporta;
     return comp || {};
+  }
+
+  isMe() {
+    return this.id === storeUtil.getUser().playerId;
   }
 }
 

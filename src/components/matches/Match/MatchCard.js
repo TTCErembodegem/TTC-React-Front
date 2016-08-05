@@ -168,18 +168,25 @@ export default class MatchCard extends Component {
     switch (eventKey) {
     case tabEventKeys.players:
       return this._renderPlayers();
+
     case tabEventKeys.individualMatches:
-      return this._renderIndividualMatches();
+      return <IndividualMatches match={this.props.match} ownPlayerId={this.props.user.playerId} t={this.context.t} />;
+
     case tabEventKeys.report:
-      return this._renderReport();
+      return <MatchReport match={this.props.match} t={this.context.t} user={this.props.user} viewport={this.props.viewport} />;
+
     case tabEventKeys.opponentClub:
-      return this._renderOpponentClub();
+      return <OpponentClubLocations club={this.props.match.getOpponentClub()} t={this.context.t} />;
+
     case tabEventKeys.scoresheet:
-      return this._renderScoreSheet();
+      return <Scoresheet match={this.props.match} t={this.context.t} viewport={this.props.viewport} />;
+
     case tabEventKeys.opponentsRanking:
       return this._renderOpponentsRanking();
+
     case tabEventKeys.opponentsFormation:
       return this._renderOpponentFormation();
+
     case tabEventKeys.admin:
       return (
         <div>
@@ -193,12 +200,6 @@ export default class MatchCard extends Component {
     return 'Unknown';
   }
 
-  _renderOpponentClub() {
-    return <OpponentClubLocations club={this.props.match.getOpponentClub()} t={this.context.t} />;
-  }
-  _renderIndividualMatches() {
-    return <IndividualMatches match={this.props.match} ownPlayerId={this.props.user.playerId} t={this.context.t} />;
-  }
   _renderOpponentsRanking() {
     const matches = storeUtils.matches
       .getFromOpponent(this.props.match.opponent)
@@ -229,13 +230,6 @@ export default class MatchCard extends Component {
 
     return <OpponentsFormation formations={formations} competition={this.props.match.competition} />;
   }
-  _renderScoreSheet() {
-    return (<Scoresheet match={this.props.match} t={this.context.t} viewport={this.props.viewport} />);
-  }
-  _renderReport() {
-    return <MatchReport match={this.props.match} t={this.context.t} user={this.props.user} viewport={this.props.viewport} />;
-  }
-
 
   _renderPlayers() {
     const match = this.props.match;
