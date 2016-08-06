@@ -22,6 +22,13 @@ export default class PlayerModel {
   isMe() {
     return this.id === storeUtil.getUser().playerId;
   }
+
+  formattedMobile() {
+    if (!this.contact.mobile) {
+      return '';
+    }
+    return this.contact.mobile.replace(/(\d{4})(\d{2})(\d{2})(\d{2})/, '$1 / $2 $3 $4');
+  }
 }
 
 export var playerUtils = {

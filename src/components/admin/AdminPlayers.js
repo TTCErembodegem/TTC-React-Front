@@ -29,6 +29,7 @@ export default class AdminPlayers extends React.Component {
 
   render() {
     let players;
+    console.log(this.props.players.first());
     switch (this.state.filter) {
     case 'new-player':
       return null; // TODO: implement this
@@ -84,7 +85,6 @@ const ActivesTable = ({players, onEditPlayer, updatePlayer}) => (
     <thead>
       <tr>
         <th>Speler</th>
-        <th>Alias</th>
         <th>Competities</th>
         <th>Toegang</th>
         <th>Acties</th>
@@ -93,8 +93,15 @@ const ActivesTable = ({players, onEditPlayer, updatePlayer}) => (
     <tbody>
       {players.sort((a, b) => a.name.localeCompare(b.name)).map(ply => (
         <tr key={ply.id}>
-          <td>{ply.name}</td>
-          <td>{ply.alias}</td>
+          <td>
+            {ply.name}
+            <br />
+            <small>
+              <a href={'mailto:' + ply.contact.email}>{ply.contact.email}</a>
+              <span style={{marginLeft: 20}}>{ply.contact.address + ', ' + ply.contact.city}</span>
+              <span style={{marginLeft: 20}}>{ply.formattedMobile()}</span>
+            </small>
+          </td>
           <td>{concatCompetitions(ply.vttl, ply.sporta)}</td>
           <td>{ply.security === 'Player' ? '' : ply.security}</td>
           <td>
