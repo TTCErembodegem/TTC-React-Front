@@ -67,6 +67,17 @@ export function requestNewPassword({playerId, email}) {
       });
   };
 }
+export function setNewPassword({playerId, newPassword}) {
+  return dispatch => {
+    return http.post('/users/SetNewPassword', {playerId, newPassword})
+      .then(function(data) {
+        dispatch(showSnackbar(trans('common.apiSuccess')));
+      }, function(err) {
+        dispatch(showSnackbar(trans('common.apiFail')));
+       console.log('setNewPassword!', err); // eslint-disable-line
+      });
+  };
+}
 
 export function login(credentials) {
   var creds = Object.assign({}, credentials);

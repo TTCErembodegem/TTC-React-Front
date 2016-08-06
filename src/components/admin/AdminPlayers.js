@@ -11,6 +11,7 @@ import ToolbarTitle from 'material-ui/lib/toolbar/toolbar-title';
 
 import Icon from '../controls/Icon.js';
 import ChangePlayerDetails from '../users/ChangePlayerDetails.js';
+import { ChangeAnyPassword } from '../users/ChangePassword.js';
 
 @connect(state => {
   return {};
@@ -35,10 +36,14 @@ export default class AdminPlayers extends React.Component {
     case 'edit-player':
       return <ChangePlayerDetails player={this.state.selectedPlayer} />;
 
+    case 'set-password':
+      return <ChangeAnyPassword onEnd={() => this.setState({filter: 'active'})} />;
+
     case 'inactive':
       players = <InactivesTable players={this.props.recreantAndQuitters} updatePlayer={this.props.updatePlayer} />;
       break;
-    default:
+
+    case 'active':
       players = (
         <ActivesTable
           players={this.props.players}
@@ -62,6 +67,7 @@ const AdminPlayersToolbar = ({onFilterChange}) => (
       <RaisedButton label="Recreant activeren" onTouchTap={() => onFilterChange('inactive')} />
       <RaisedButton label="Spelers beheren" onTouchTap={() => onFilterChange('active')} />
       <RaisedButton label="Nieuw lid" onTouchTap={() => onFilterChange('new-player')} />
+      <RaisedButton label="Paswoord reset" onTouchTap={() => onFilterChange('set-password')} />
     </ToolbarGroup>
   </Toolbar>
 );
