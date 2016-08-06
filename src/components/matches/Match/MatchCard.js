@@ -87,7 +87,6 @@ export default class MatchCard extends Component {
   }
 
   componentDidMount() {
-    // TODO: here check for matches using storeUtils - http request only if matches not yet present in state...
     this.props.getLastOpponentMatches(this.props.match.teamId, this.props.match.opponent);
   }
 
@@ -216,7 +215,6 @@ export default class MatchCard extends Component {
       ));
 
     const firstRoundRealMatch = firstRoundMatch ? storeUtils.getMatch(firstRoundMatch.id) : null;
-
     return <OpponentsLastMatches match={this.props.match} readonlyMatches={theirOtherMatches} otherMatch={firstRoundRealMatch} />;
   }
   _renderOpponentFormation() {

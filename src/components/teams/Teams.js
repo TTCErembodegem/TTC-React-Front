@@ -40,21 +40,10 @@ export default class Teams extends Component {
     user: PropTypes.object.isRequired,
     matches: ImmutablePropTypes.listOf(PropTypes.instanceOf(MatchModel).isRequired).isRequired,
     teams: ImmutablePropTypes.listOf(PropTypes.instanceOf(TeamModel).isRequired).isRequired,
-    getMatchesForTeam: PropTypes.func.isRequired
-  }
-
-  componentDidMount(){
-    this.props.getMatchesForTeam(this.getDefaultTeam());
   }
 
   getDefaultTeam() {
     return this.props.teams.find(x => x.competition === this.props.competition && x.teamCode === 'A').id;
-  }
-
-  _onTabSelect(teamId) {
-    if (this.props.config.get('matchesForTeamLoaded').indexOf(teamId) === -1) {
-      this.props.getMatchesForTeam(teamId);
-    }
   }
 
   _renderOwnTeamPosition(team) {
@@ -96,7 +85,6 @@ export default class Teams extends Component {
           openTabKey={this.getDefaultTeam()}
           tabKeys={tabConfig}
           tabRenderer={::this._renderTabContent}
-          onTabSelect={::this._onTabSelect}
           widthTreshold={750} />
       </div>
     );

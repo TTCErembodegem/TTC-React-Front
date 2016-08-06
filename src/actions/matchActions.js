@@ -2,7 +2,7 @@ import Promise from 'bluebird';
 import * as ActionTypes from './ActionTypes.js';
 import http from '../utils/httpClient.js';
 import { util as storeUtil } from '../store.js';
-import { showSnackbar, matchesForTeamLoaded } from './configActions.js';
+import { showSnackbar, setSetting } from './configActions.js';
 import { broadcastReload } from '../hub.js';
 import trans from '../locales.js';
 import moment from 'moment';
@@ -42,22 +42,6 @@ export function loaded(data, dispatch) {
   var p = Promise.resolve();
   data.forEach(match => {
     p = p.then(() => frenoySync(dispatch, match));
-
-    if (match.isHomeMatch !== null && moment(match.date).month() < 8) {
-      // TODO: do not call if already in store
-      http.get('/matches/GetFirstRoundMatch', {matchId: match.id})
-        .then(function(newmatch) {
-          if (!newmatch) {
-            return null;
-          }
-          dispatch(simpleLoaded(newmatch));
-          frenoySync(dispatch, newmatch);
-
-        }, function(err) {
-          console.error(err); // eslint-disable-line
-        }
-      );
-    }
   });
   return p;
 }
@@ -70,6 +54,10 @@ export function readOnlyLoaded(data) {
 }
 
 export function getLastOpponentMatches(teamId, opponent) {
+  if (storeUtil.getConfig().get('GetLastOpponentMatches' + teamId + opponent.teamCode + opponent.clubId)) {
+    return {type: 'empty', payload: ''};
+  }
+
   return dispatch => {
     return http.get('/matches/GetLastOpponentMatches', {teamId, ...opponent})
       .then(function(matches) {
@@ -77,6 +65,7 @@ export function getLastOpponentMatches(teamId, opponent) {
           return;
         }
 
+        dispatch(setSetting('GetLastOpponentMatches' + teamId + opponent.teamCode + opponent.clubId, true));
         dispatch(readOnlyLoaded(matches));
 
         matches.forEach(match => {
@@ -93,27 +82,6 @@ export function getLastOpponentMatches(teamId, opponent) {
 
       }, function(err) {
         console.log('GetLastOpponentMatches!', err); // eslint-disable-line
-      }
-    );
-  };
-}
-
-export function getMatchesForTeam(teamId) {
-  return dispatch => {
-    return http.get('/matches/getMatchesForTeam', {teamId})
-      .then(function(matches) {
-        if (!matches) {
-          return;
-        }
-        matches.forEach(match => {
-          frenoySync(dispatch, match);
-        });
-
-        dispatch(simpleLoaded(matches));
-        dispatch(matchesForTeamLoaded(teamId));
-
-      }, function(err) {
-        console.log('GetMatchesForTeam!', err); // eslint-disable-line
       }
     );
   };

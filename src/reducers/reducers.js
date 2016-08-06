@@ -10,7 +10,6 @@ import MatchModel from '../models/MatchModel.js';
 
 var defaultConfigState = {
   initialLoadCompleted: false,
-  matchesForTeamLoaded: Immutable.List([])
 };
 
 export function config(state = Immutable.Map(defaultConfigState), action = null) {
@@ -25,9 +24,6 @@ export function config(state = Immutable.Map(defaultConfigState), action = null)
     return state.remove('snackbar');
   case ActionTypes.SET_SETTING:
     return state.set(payload.key, payload.value);
-  case ActionTypes.MATCHES_FOR_TEAM_LOADED:
-    var teamLoaded = state.get('matchesForTeamLoaded').push(payload);
-    return state.set('matchesForTeamLoaded', teamLoaded);
   default:
     return state;
   }

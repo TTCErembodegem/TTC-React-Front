@@ -35,6 +35,9 @@ if (module.hot) {
 export default store;
 
 export const util = {
+  getConfig() {
+    return store.getState().config;
+  },
   getUser() {
     return store.getState().user;
   },
