@@ -1,31 +1,37 @@
 import Immutable from 'immutable';
 
-function replaceMatch(state, match, classify) {
-  var toReplaceIndex = state.findIndex(m => m.id === match.id);
+function replaceModel(state, model, classify) {
+  var toReplaceIndex = state.findIndex(m => m.id === model.id);
   if (toReplaceIndex === -1) {
-    return state.push(classify(match));
+    return state.push(classify(model));
   } else {
-    return state.update(toReplaceIndex, () => classify(match));
+    return state.update(toReplaceIndex, () => classify(model));
   }
 }
 
-export function merge(state, payload, classify) {
+export function merge(state, payload, classify, filter) {
   if (!payload) {
     return state;
   }
   if (state.size === 0) {
-    let result = payload.map(classify);
-    return Immutable.List(result);
+    let result = payload;
+    if (filter) {
+      result = result.filter(filter);
+    }
+    return Immutable.List(result.map(classify));
 
   } else if (payload instanceof Array) {
     let newState = state;
     for (let i = 0; i < payload.length; i++) {
-      newState = replaceMatch(newState, payload[i], classify);
+      if (!filter || filter(payload[i])) {
+        newState = replaceModel(newState, payload[i], classify);
+      }
     }
     return newState;
 
-  } else {
-    let match = payload;
-    return replaceMatch(state, match, classify);
+  } else if (!filter || filter(payload)) {
+    let model = payload;
+    return replaceModel(state, model, classify);
   }
+  return state;
 }

@@ -43,7 +43,28 @@ export function players(state = Immutable.List([]), action = null) {
   const {type, payload} = action;
   switch (type) {
   case ActionTypes.PLAYERS_LOADED:
-    return immutableHelpers.merge(state, payload, x => new PlayerModel(x));
+    return immutableHelpers.merge(state, payload, x => new PlayerModel(x), x => x.active);
+
+  case ActionTypes.PLAYER_ACTIVE_CHANGED:
+    if (!payload.isActive) {
+      return state.filter(x => x.id !== payload.playerId);
+    }
+  default:
+    return state;
+  }
+}
+
+export function admin(state = {players: Immutable.List([])}, action = null) {
+  const {type, payload} = action;
+  switch (type) {
+  case ActionTypes.PLAYERS_LOADED:
+    let recreantAndQuitters = immutableHelpers.merge(state.players, payload, x => new PlayerModel(x), x => !x.active && x.alias !== 'SYSTEM')
+    return {players: recreantAndQuitters};
+
+  case ActionTypes.PLAYER_ACTIVE_CHANGED:
+    if (payload.isActive) {
+      return {players: state.players.filter(x => x.id !== payload.playerId)};
+    }
   default:
     return state;
   }

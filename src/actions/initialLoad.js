@@ -82,7 +82,7 @@ export default function() {
 
   return dispatch => {
     return Promise.all([
-      initialRequest(dispatch, '/matches/GetRelevantMatches', null),
+      initialRequest(dispatch, '/matches', null),
       initialRequest(dispatch, '/teams', teamsLoaded),
       initialRequest(dispatch, '/players', playersLoaded),
       initialRequest(dispatch, '/clubs', clubsLoaded),

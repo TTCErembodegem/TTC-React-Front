@@ -93,7 +93,7 @@ export default class Teams extends Component {
 
 
 const TeamMatches = ({team, t}) => {
-  const matchesForTeam = team.getMatches().sort((a,b) => a.date - b.date);
+  const matchesForTeam = team.getMatches().sort((a, b) => a.date - b.date);
   return (
     <Table condensed hover>
       <thead>

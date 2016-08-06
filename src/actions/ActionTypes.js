@@ -16,4 +16,6 @@ export default keyMirror({
 
   MATCHES_LOADED: '', // TTC Erembodegem match
   READONLY_MATCHES_LOADED: '', // ReadOnly other match
+
+  PLAYER_ACTIVE_CHANGED: '',
 });

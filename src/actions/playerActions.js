@@ -29,22 +29,30 @@ export function updateStyle(player, newStyle, updatedBy) {
         }
       }, function(err) {
         dispatch(showSnackbar('common.apiFail'));
-        console.log('UpdateStyle!', err); // eslint-disable-line
+        console.log('UpdatePlayerStyle!', err); // eslint-disable-line
       });
   };
 }
 
-export function updatePlayer(playerId, newPlayerDetails) {
+export function updatePlayer(player, opts = {}) {
   return dispatch => {
-    return http.post('/players/UpdatePlayer', {playerId, ...newPlayerDetails})
+    return http.post('/players/UpdatePlayer', player)
       .then(function(data) {
-        if (!data) {
-          dispatch(showSnackbar(trans('updatePlayer.updatePlayerFail')));
-        } else {
+        if (data) {
           dispatch(showSnackbar(trans('updatePlayer.updatePlayerSuccess')));
+          dispatch(loaded(data));
+          broadcastReload('player', data.id);
+
+          if (opts.activeChanged) {
+            dispatch({
+              type: ActionTypes.PLAYER_ACTIVE_CHANGED,
+              payload: {playerId: data.id, isActive: data.active}
+            });
+          }
         }
+
       }, function(err) {
-        dispatch(showSnackbar(trans('common.apiFail')));
+        dispatch(showSnackbar(trans('updatePlayer.updatePlayerFail')));
         console.log('UpdatePlayer!', err); // eslint-disable-line
       });
   };

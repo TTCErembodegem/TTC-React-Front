@@ -10,6 +10,8 @@ export default class PlayerModel {
     this.sporta = json.sporta;
     this.vttl = json.vttl;
     this.style = json.style || {};
+    this.quitYear = json.quitYear;
+    this.security = json.security;
   }
 
   getCompetition(competition) {

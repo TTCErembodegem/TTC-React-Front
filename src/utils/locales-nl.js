@@ -16,6 +16,7 @@ export default {
     facts: '/weetjes',
     teamsVttl: '/ploegen/vttl',
     teamsSporta: '/ploegen/sporta',
+    admin: '/admin',
   },
   trans: {
     fullClubName: 'TTC Erembodegem',
@@ -46,7 +47,8 @@ export default {
       links: 'Links',
       facts: 'TT Weetjes',
       help: 'Help',
-      closeMenu: 'Menu sluiten'
+      closeMenu: 'Menu sluiten',
+      admin: 'Admin',
     },
     intro: {
       title: 'Tafeltennisclub TTC Erembodegem',

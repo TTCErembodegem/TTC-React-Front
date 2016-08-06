@@ -10,41 +10,42 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import Paper from 'material-ui/lib/paper';
 
 @connect(state => {
+  return {user: state.user};
+})
+export class ChangeYourDetails extends Component {
+  static propTypes = {
+    user: PropTypes.object.isRequired,
+  }
+  render() {
+    return <ChangePlayerDetails player={storeUtil.getPlayer(this.props.user.playerId)} />
+  }
+}
+
+
+@connect(state => {
   return {
-    user: state.user,
+    //user: state.user,
   };
 }, playerActions)
 export default class ChangePlayerDetails extends Component {
   static contextTypes = contextTypes;
   static propTypes = {
-    user: PropTypes.object.isRequired,
+    player: PropTypes.object.isRequired,
     updatePlayer: PropTypes.func.isRequired,
   }
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      email: null,
-      gsm: null,
-      address: null,
-      city: null,
-    };
-  }
-
-  componentWillMount() {
-    var player = storeUtil.getPlayer(this.props.user.playerId);
-    this.state = {
-      email: player.contact.email,
-      gsm: player.contact.mobile,
-      address: player.contact.address,
-      city: player.contact.city,
+      email: props.player.contact.email,
+      mobile: props.player.contact.mobile,
+      address: props.player.contact.address,
+      city: props.player.contact.city,
     };
   }
 
   render() {
-
-    var player = storeUtil.getPlayer(this.props.user.playerId);
-
+    const player = this.props.player;
     const paperStyle = {
       height: 480,
       width: 290,
@@ -93,7 +94,7 @@ export default class ChangePlayerDetails extends Component {
     this.setState({email: e.target.value});
   }
   _onPhoneNumberChange(e) {
-    this.setState({gsm: e.target.value});
+    this.setState({mobile: e.target.value});
   }
   _onAddressChange(e) {
     this.setState({address: e.target.value});
@@ -102,6 +103,6 @@ export default class ChangePlayerDetails extends Component {
     this.setState({city: e.target.value});
   }
   _onUpdatePlayer() {
-    this.props.updatePlayer(this.props.user.playerId, this.state);
+    this.props.updatePlayer(Object.assign(this.props.player, {contact: this.state}));
   }
 }

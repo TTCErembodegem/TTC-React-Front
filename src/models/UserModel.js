@@ -1,6 +1,8 @@
 import { util as storeUtil } from '../store.js';
 import keyMirror from 'fbjs/lib/keyMirror';
 
+export const userRoles = ['Player', 'Board', 'Dev', 'System'];
+
 const security = keyMirror({
   CAN_MANAGETEAM: '',
   CAN_EDITALLREPORTS: '',

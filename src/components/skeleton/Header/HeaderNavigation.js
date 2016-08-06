@@ -54,11 +54,13 @@ class Navigation extends Component {
         <MenuItem onTouchTap={this._goto.bind(this, t.route('teamsVttl'))}>{t('nav.teamsVttl')}</MenuItem>
         <MenuItem onTouchTap={this._goto.bind(this, t.route('teamsSporta'))}>{t('nav.teamsSporta')}</MenuItem>
         <MenuItem onTouchTap={this._goto.bind(this, t.route('players'))}>{t('nav.players')}</MenuItem>
+        {storeUtil.getUser().isAdmin() ? <MenuItem onTouchTap={this._goto.bind(this, t.route('admin'))}>{t('nav.admin')}</MenuItem> : null}
         <Divider />
         <MenuItem onTouchTap={this._goto.bind(this, t.route('links'))}>{t('nav.links')}</MenuItem>
         <MenuItem onTouchTap={this._goto.bind(this, t.route('facts'))}>{t('nav.facts')}</MenuItem>
         <MenuItem onTouchTap={this.handleClickHelpButton}>{t('nav.help')}</MenuItem>
         <MenuItem onTouchTap={this.handleClickCloseMenuButton}>{t('nav.closeMenu')}</MenuItem>
+        {<Divider />}
       </LeftNav>
     );
   }
