@@ -12,15 +12,63 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import Paper from 'material-ui/lib/paper';
 
 @connect(state => {
-  return {
-    config: state.config,
-    user: state.user,
-  };
+  return {};
+}, loginActions)
+export class ForgotPassword extends Component {
+  static contextTypes = contextTypes;
+  static propTypes = {
+    requestNewPassword: PropTypes.func.isRequired,
+  }
+
+  constructor() {
+    super();
+    this.state = {
+      playerId: null,
+      email: null,
+    };
+  }
+
+  render() {
+    const t = this.context.t;
+    const paperStyle = {
+      height: 270,
+      width: 290,
+      margin: 20,
+      textAlign: 'center',
+      display: 'inline-block',
+    };
+    return (
+      <Paper zDepth={1} style={paperStyle}>
+        <h3>{t('password.forgotTitle')}</h3>
+        <PlayerAutoComplete
+          selectPlayer={id => this.setState({playerId: id})}
+          floatingLabelText={t('login.loginName')} />
+
+        <TextField
+          floatingLabelText={this.context.t('player.email')}
+          onChange={e => this.setState({email: e.target.value})} />
+
+        <RaisedButton
+          label={t('password.sendNewButton')}
+          primary={true}
+          style={{marginTop: 15}}
+          onClick={() => this.props.requestNewPassword(this.state)}
+          disabled={!this.state.playerId && !this.state.email} />
+
+      </Paper>
+    );
+  }
+}
+
+
+
+
+@connect(state => {
+  return {};
 }, loginActions)
 export default class Login extends Component {
   static contextTypes = contextTypes;
   static propTypes = {
-    user: PropTypes.object.isRequired,
     login: PropTypes.func.isRequired,
   }
 
@@ -35,7 +83,7 @@ export default class Login extends Component {
   render() {
     const t = this.context.t;
     const paperStyle = {
-      height: 290,
+      height: 320,
       width: 290,
       margin: 20,
       textAlign: 'center',
@@ -46,7 +94,7 @@ export default class Login extends Component {
         <h3>{t('login.title')}</h3>
         <span>{t('login.introText')}</span>
         <PlayerAutoComplete
-          selectPlayer={::this._onSelectPlayer}
+          selectPlayer={id => this.setState({playerId: id})}
           floatingLabelText={t('login.loginName')} />
 
         <TextField
@@ -54,24 +102,21 @@ export default class Login extends Component {
           hintText={t('login.passwordHint')}
           hintStyle={{fontSize: 14}}
           type="password"
-          onChange={::this._onPasswordChange} />
+          onChange={e => this.setState({password: e.target.value})} />
 
         <RaisedButton
           label={t('login.loginButton')}
           primary={true}
           style={{marginTop: 15}}
-          onClick={::this._onLogin}
+          onClick={() => this.props.login(this.state)}
           disabled={!this.state.playerId} />
+
+        <br />
+        <br />
+        <Link to={t.route('forgotPassword')} className="pull-right" style={{margin: 20, fontSize: 18}}>
+          {t('password.forgotLink')}
+        </Link>
       </Paper>
     );
-  }
-  _onSelectPlayer(id) {
-    this.setState({playerId: id});
-  }
-  _onPasswordChange(e) {
-    this.setState({password: e.target.value});
-  }
-  _onLogin() {
-    this.props.login(this.state);
   }
 }

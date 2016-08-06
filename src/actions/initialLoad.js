@@ -104,6 +104,6 @@ export default function() {
       return p;
     })
     .then(() => console.info('secundary load completed'))
-    .catch(err => console.info('initial load failed', err));
+    .catch(err => console.error('initial load failed', err));
   };
 }

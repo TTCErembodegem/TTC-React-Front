@@ -4,6 +4,7 @@ export default {
   routes: {
     players: '/spelers',
     login: '/login',
+    forgotPassword: '/login/nieuw-paswoord',
     changePassword: '/profiel/wijzig-paswoord',
     changeDetails: 'profiel/wijzig-gegevens',
     profilePhotos: '/profiel/fotos',
@@ -73,6 +74,10 @@ export default {
       loggedIn: '${} aangelogd',
     },
     password: {
+      forgotTitle: 'Nieuw paswoord',
+      forgotLink: 'Paswoord vergeten?',
+      fogotMailSent: 'Een email met je nieuw paswoord is verzonden',
+      sendNewButton: 'Nieuw paswoord sturen',
       passwordChangedSuccess: 'Paswoord succesvol gewijzigd',
       passwordChangedFail: 'Paswoord wijzigen is mislukt'
     },
@@ -83,13 +88,11 @@ export default {
       preview: 'Preview',
       save: 'Bijsnijden opslaan',
     },
-    profile: {
-      headerText: 'Profiel',
-      loggedInText: 'Ingelogd als:',
-      email: 'E-mail:',
-      gsm: 'GSM-nummer:',
-      address: 'Adres:',
-      city: 'Gemeente:'
+    player: {
+      email: 'Email',
+      gsm: 'Gsm',
+      address: 'Adres',
+      city: 'Gemeente'
     },
     changePassword: {
       title: 'Paswoord wijzigen',
@@ -99,10 +102,6 @@ export default {
     },
     updatePlayer: {
       title: 'Wijzig uw gegevens',
-      email: 'Nieuw E-mailadres',
-      phoneNumber: 'Nieuw GSM-nummer',
-      address: 'Nieuw Adres',
-      city: 'Nieuwe Gemeente',
       changeDetailsButton: 'Wijzig gegevens',
       updatePlayerSuccess: 'Speler gegevens succesvol gewijzigd',
       updatePlayerFail: 'Speler gegevens wijzigen is mislukt'

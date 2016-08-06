@@ -20,16 +20,11 @@ import { displayFormat } from '../controls/Telephone.js';
   return {
     //config: state.config,
     user: state.user,
-    //players: state.players,
-    // clubs: state.clubs,
-    // matches: state.matches,
-    // teams: state.teams,
   };
 }, loginActions)
 export default class Profile extends Component {
   static contextTypes = contextTypes;
   static propTypes = {
-    // players: ImmutablePropTypes.listOf(PropTypes.instanceOf(PlayerModel).isRequired).isRequired,
     user: PropTypes.object.isRequired,
     logout: PropTypes.func.isRequired,
   }
@@ -52,13 +47,11 @@ export default class Profile extends Component {
 
     return (
       <Paper zDepth={1} style={paperStyle}>
-        <h3>{this.context.t('profile.headerText')}</h3>
-
-        <p>{this.context.t('profile.loggedInText')}&nbsp;{this._reverseName(player.name)}</p>
-        <p>{this.context.t('profile.email')}&nbsp;{player.contact.email}</p>
-        <p>{this.context.t('profile.gsm')}&nbsp;{displayFormat(player.contact.mobile)}</p>
-        <p>{this.context.t('profile.address')}&nbsp;{player.contact.address}</p>
-        <p>{this.context.t('profile.city')}&nbsp;{player.contact.city}</p>
+        <h3>{player.name}</h3>
+        <p>{this.context.t('player.email')}&nbsp;{player.contact.email}</p>
+        <p>{this.context.t('player.gsm')}&nbsp;{displayFormat(player.contact.mobile)}</p>
+        <p>{this.context.t('player.address')}&nbsp;{player.contact.address}</p>
+        <p>{this.context.t('player.city')}&nbsp;{player.contact.city}</p>
 
         <RaisedButton label={t('nav.profilePhotos')}
           style={{marginTop: 15}} onClick={() => browserHistory.push(t.route('profilePhotos'))} />
@@ -81,30 +74,8 @@ export default class Profile extends Component {
           label={this.context.t('login.logoutButton')}
           secondary={true}
           style={{marginTop: 15}}
-          onClick={::this._onLogout} />
+          onClick={() => this.props.logout()} />
       </Paper>
     );
-  }
-
-  _onLogout() {
-    this.props.logout();
-  }
-
-  _reverseName(name) {
-    var nameInParts = name.split(' ');
-    if(nameInParts.length === 2)
-    {
-       return nameInParts[1] + ' ' + nameInParts[0];
-    }
-    if (nameInParts.length === 3)
-    {
-       return nameInParts[nameInParts.length - 1] + ' ' + nameInParts[nameInParts.length - 3]
-       + ' ' + nameInParts[nameInParts.length - 2] ;
-    }
-    if (nameInParts.length === 4)
-    {
-       return nameInParts[nameInParts.length - 1] + ' ' + nameInParts[nameInParts.length - 4]
-       + ' ' + nameInParts[nameInParts.length - 3] + ' ' + nameInParts[nameInParts.length - 2];
-    }
   }
 }

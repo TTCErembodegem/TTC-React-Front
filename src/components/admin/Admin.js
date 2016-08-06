@@ -44,10 +44,10 @@ export default class Admin extends Component {
 
   _renderSection() {
     switch (this.state.section) {
+    case 'teams':
+      return <span>TODO ;)</span>;
     case 'players':
-      return <AdminPlayers
-        players={this.props.players}
-        recreantAndQuitters={this.props.admin.players} />;
+      return <AdminPlayers players={this.props.players} recreantAndQuitters={this.props.admin.players} />;
     }
   }
 
@@ -77,7 +77,7 @@ class AdminMenu extends React.Component {
       <div style={{width: 150, border: '1px solid black', position: 'absolute', top: 75, left: 15}}>
         <List>
           <ListItem primaryText="Spelers" onTouchTap={() => this.props.onSectionChange('players')} />
-          <ListItem primaryText="Ploegen" />
+          <ListItem primaryText="Ploegen" onTouchTap={() => this.props.onSectionChange('teams')} />
         </List>
       </div>
     );

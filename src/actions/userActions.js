@@ -1,3 +1,4 @@
+import { browserHistory } from 'react-router';
 import * as ActionTypes from './ActionTypes.js';
 import http from '../utils/httpClient.js';
 import { util as storeUtil } from '../store.js';
@@ -50,6 +51,19 @@ export function uploadPlayer(imageBase64, playerId, type) {
       }, function(err) {
         dispatch(showSnackbar(trans('common.apiFail')));
         console.log('player-image Upload!', err); // eslint-disable-line
+      });
+  };
+}
+
+export function requestNewPassword({playerId, email}) {
+  return dispatch => {
+    return http.post('/users/RequestNewPassword', {playerId, email})
+      .then(function(data) {
+        dispatch(showSnackbar(trans('password.fogotMailSent')));
+        window.history.back();
+      }, function(err) {
+        dispatch(showSnackbar(trans('common.apiFail')));
+       console.log('requestNewPassword!', err); // eslint-disable-line
       });
   };
 }

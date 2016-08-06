@@ -58,51 +58,36 @@ export default class ChangePlayerDetails extends Component {
         <h3>{this.context.t('updatePlayer.title')}</h3>
 
         <TextField
-          floatingLabelText={this.context.t('updatePlayer.email')}
+          floatingLabelText={this.context.t('player.email')}
           type="text"
           defaultValue={player.contact.email}
-          onChange={::this._onEmailChange} />
+          onChange={e => this.setState({email: e.target.value})} />
 
         <TextField
-          floatingLabelText={this.context.t('updatePlayer.phoneNumber')}
+          floatingLabelText={this.context.t('player.gsm')}
           type="text"
           defaultValue={player.contact.mobile}
-          onChange={::this._onPhoneNumberChange} />
+          onChange={e => this.setState({mobile: e.target.value})} />
 
         <TextField
-          floatingLabelText={this.context.t('updatePlayer.address')}
+          floatingLabelText={this.context.t('player.address')}
           type="text"
           defaultValue={player.contact.address}
-          onChange={::this._onAddressChange} />
+          onChange={e => this.setState({address: e.target.value})} />
 
         <TextField
-          floatingLabelText={this.context.t('updatePlayer.city')}
+          floatingLabelText={this.context.t('player.city')}
           type="text"
           defaultValue={player.contact.city}
-          onChange={::this._onCityChange} />
+          onChange={e => this.setState({city: e.target.value})} />
 
         <RaisedButton
           label={this.context.t('updatePlayer.changeDetailsButton')}
           primary={true}
           style={{marginTop: 15}}
-          onClick={::this._onUpdatePlayer} />
+          onClick={() => this.props.updatePlayer(Object.assign(this.props.player, {contact: this.state}))} />
 
       </Paper>
     );
-  }
-  _onEmailChange(e) {
-    this.setState({email: e.target.value});
-  }
-  _onPhoneNumberChange(e) {
-    this.setState({mobile: e.target.value});
-  }
-  _onAddressChange(e) {
-    this.setState({address: e.target.value});
-  }
-  _onCityChange(e) {
-    this.setState({city: e.target.value});
-  }
-  _onUpdatePlayer() {
-    this.props.updatePlayer(Object.assign(this.props.player, {contact: this.state}));
   }
 }

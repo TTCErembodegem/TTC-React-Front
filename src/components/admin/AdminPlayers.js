@@ -10,6 +10,7 @@ import ToolbarGroup from 'material-ui/lib/toolbar/toolbar-group';
 import ToolbarTitle from 'material-ui/lib/toolbar/toolbar-title';
 
 import Icon from '../controls/Icon.js';
+import ChangePlayerDetails from '../users/ChangePlayerDetails.js';
 
 @connect(state => {
   return {};
@@ -29,17 +30,25 @@ export default class AdminPlayers extends React.Component {
     let players;
     switch (this.state.filter) {
     case 'new-player':
-      break;
+      return null; // TODO: implement this
+
+    case 'edit-player':
+      return <ChangePlayerDetails player={this.state.selectedPlayer} />;
+
     case 'inactive':
       players = <InactivesTable players={this.props.recreantAndQuitters} updatePlayer={this.props.updatePlayer} />;
       break;
-
     default:
-      players = <ActivesTable players={this.props.players} onEditPlayer={() => true} updatePlayer={this.props.updatePlayer} />;
+      players = (
+        <ActivesTable
+          players={this.props.players}
+          onEditPlayer={ply => this.setState({filter: 'edit-player', selectedPlayer: ply})}
+          updatePlayer={this.props.updatePlayer} />
+      );
       break;
     }
     return (
-      <div style={{}}>
+      <div>
         <AdminPlayersToolbar onFilterChange={newFilter => this.setState({filter: newFilter})} />
         {players}
       </div>
