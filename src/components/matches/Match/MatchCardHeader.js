@@ -15,14 +15,6 @@ import CardHeader from 'material-ui/lib/card/card-header';
 
 const daysAgoBackFullDate = 7;
 
-function renderOwnTeamTitle(team) {
-  return team.competition + ' ' + team.teamCode;
-}
-function renderOpponentTitle(match) {
-  const club = match.getOpponentClub();
-  return club.name + ' ' + match.opponent.teamCode;
-}
-
 export class BigMatchCardHeader extends Component {
   static contextTypes = contextTypes;
   static propTypes = {
@@ -35,8 +27,8 @@ export class BigMatchCardHeader extends Component {
   render() {
     const match = this.props.match;
     const team = match.getTeam();
-    const us = renderOwnTeamTitle(team);
-    const them = renderOpponentTitle(match);
+    const us = team.renderOwnTeamTitle();
+    const them = match.renderOpponentTitle();
 
     return (
       <Card style={{backgroundColor: '#fafafa'}} initiallyExpanded={true}>
@@ -193,31 +185,24 @@ class MatchCardHeader extends Component {
     if (match.isHomeMatch) {
       return (
         <div>
-          {this._renderOwnTeamTitle(team)}
+          <span>{team.renderOwnTeamTitle()}</span>
           {!match.isPlayed ? this._renderOwnTeamPosition(team) : ' '}
           <span className="match-opponent-team">{this.context.t('match.vs')}</span>
           {!match.isPlayed ? this._renderOpponentPosition(match) : ' '}
-          {this._renderOpponentTitle(match)}
+          <span className="match-opponent-team">{match.renderOpponentTitle()}</span>
         </div>
       );
     } else {
       return (
         <div>
-          {this._renderOpponentTitle(match)}
+          <span className="match-opponent-team">{match.renderOpponentTitle()}</span>
           {!match.isPlayed ? this._renderOpponentPosition(match) : ' '}
           <span className="match-opponent-team">{this.context.t('match.vs')}</span>
           {!match.isPlayed ? this._renderOwnTeamPosition(team) : ' '}
-          {this._renderOwnTeamTitle(team)}
+          <span>{team.renderOwnTeamTitle()}</span>
         </div>
       );
     }
-  }
-
-  _renderOwnTeamTitle(team) {
-    return (<span>{renderOwnTeamTitle(team)}</span>);
-  }
-  _renderOpponentTitle(match) {
-    return (<span className="match-opponent-team">{renderOpponentTitle(match)}</span>);
   }
 
   _renderOwnTeamPosition(team) {

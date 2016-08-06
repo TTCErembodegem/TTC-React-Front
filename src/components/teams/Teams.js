@@ -7,13 +7,9 @@ import { browserHistory } from 'react-router';
 import MatchModel from '../../models/MatchModel.js';
 import TeamModel from '../../models/TeamModel.js';
 import { contextTypes } from '../../utils/decorators/withContext.js';
-import withViewport from '../../utils/decorators/withViewport.js';
 
-import CardText from 'material-ui/lib/card/card-text';
-import Nav from 'react-bootstrap/lib/Nav';
-import NavItem from 'react-bootstrap/lib/NavItem';
-import PanelGroup from 'react-bootstrap/lib/PanelGroup';
-import Panel from 'react-bootstrap/lib/Panel';
+import TabbedContainer from '../controls/TabbedContainer.js';
+import Table from 'react-bootstrap/lib/Table';
 
 import { OwnClubId } from '../../models/ClubModel.js';
 
@@ -21,15 +17,11 @@ import { util as storeUtil } from '../../store.js';
 import * as matchActions from '../../actions/matchActions.js';
 
 import cn from 'classnames';
-import styles from './Teams.css';
-import withStyles from '../../utils/decorators/withStyles.js';
 import Icon from '../controls/Icon.js';
 
 export const TeamsVttl = () => <Teams competition="Vttl" />;
 export const TeamsSporta = () => <Teams competition="Sporta" />;
 
-@withViewport
-@withStyles(styles)
 @connect(state => {
   return {
     config: state.config,
@@ -42,256 +34,140 @@ export const TeamsSporta = () => <Teams competition="Sporta" />;
 }, matchActions)
 export default class Teams extends Component {
   static contextTypes = contextTypes;
-  constructor(props) {
-    super(props);
-    this.state = {openTabKey: this._getTeamIdOfATeam(props.teams)};
-  }
-
   static propTypes = {
     competition: PropTypes.string.isRequired,
     config: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired,
     matches: ImmutablePropTypes.listOf(PropTypes.instanceOf(MatchModel).isRequired).isRequired,
     teams: ImmutablePropTypes.listOf(PropTypes.instanceOf(TeamModel).isRequired).isRequired,
-    viewport: PropTypes.object.isRequired,
     getMatchesForTeam: PropTypes.func.isRequired
   }
 
   componentDidMount(){
-    this.props.getMatchesForTeam(this._getTeamIdOfATeam(this.props.teams));
+    this.props.getMatchesForTeam(this.getDefaultTeam());
   }
 
-  _getTeamIdOfATeam(teams) {
-    return teams.find(x => x.competition === this.props.competition && x.teamCode === 'A').id;
+  getDefaultTeam() {
+    return this.props.teams.find(x => x.competition === this.props.competition && x.teamCode === 'A').id;
   }
 
-  _showAccordion() {
-    // Otherwise show tabs
-    return this.props.viewport.width < 700;
-  }
   _onTabSelect(teamId) {
     if (this.props.config.get('matchesForTeamLoaded').indexOf(teamId) === -1) {
       this.props.getMatchesForTeam(teamId);
     }
-    this.setState({openTabKey: teamId});
-  }
-
-  _getTeamsPanel() {
-    var teams = this.props.teams.filter(team => team.competition === this.props.competition);
-    return teams.map(team =>
-      <Panel header={this._renderRanking(team)} eventKey={team.id} onClick={this._onTabSelect.bind(this, team.id)}>
-          {this._getTeamMatches(team)}
-          {this._getRankingOfDivision(team)}
-      </Panel>
-    );
-  }
-
-  _renderRanking(team){
-    var style = this._getLabelClassName(team);
-    return (<div>{team.competition + ' ' + team.teamCode}&nbsp;&nbsp;
-      <span className={style}>{this._renderOwnTeamPosition(team)}
-      </span></div>
-    );
   }
 
   _renderOwnTeamPosition(team) {
-    const ranking = team.getDivisionRanking();
-    return ranking ? ranking.position : '?';
-  }
-
-  _openMatch(matchId) {
-    const matchRoute = this.context.t.route('match', {matchId: matchId});
-    browserHistory.push(matchRoute);
-  }
-
-  _getTeamMatches(team){
-    var matchesForTeam = team.getMatches().sort((a,b) => a.date - b.date);
-    return (
-       <table className="table table-striped table-bordered table-hover">
-            <thead>
-              <tr>
-                <th>{this.context.t('teamCalendar.date')}</th>
-                <th>{this.context.t('teamCalendar.hour')}</th>
-                <th>{this.context.t('teamCalendar.match')}</th>
-                <th>{this.context.t('teamCalendar.score')}</th>
-              </tr>
-            </thead>
-            <tbody>
-             {matchesForTeam.map(match => {
-               return this._getMatch(match,team);
-             })}
-            </tbody>
-        </table>
-      );
-  }
-
-  _getMatch(match,team) {
-    return (
-       <tr key={match.id} className={cn('clickable',{'match-won': this._won(match)})} onClick={this._openMatch.bind(this, match.id)}>
-          <td>{this._renderThrillerIcon(team,match)}{match.date.format('DD/MM')}</td>
-          <td>{match.date.format('HH:mm')}</td>
-          <td>{match.isHomeMatch ? this._renderOwnTeamTitle(team) : this._renderOpponentTitle(match)} -
-             {match.isHomeMatch ? ' ' + this._renderOpponentTitle(match) : ' ' + this._renderOwnTeamTitle(team)}</td>
-          <td>{this._renderScores(match)}</td>
-       </tr>
-    );
-  }
-
-  _renderThrillerIcon(team,match) {
-    if(team.getThriller(match)) {
-      return (<Icon fa="fa fa-heartbeat faa-pulse animated" style={{marginLeft: 3, marginRight: 7, marginTop: 3}} />);
-    }
-  }
-
-  _won(match) {
-    if (match.score.home === match.score.out) {
-      return false;
-    }
-
-    if (match.isHomeMatch) {
-      return match.score.home > match.score.out;
-    }
-    else {
-      return match.score.out > match.score.home;
-    }
-  }
-
-  _getRankingOfDivision(team) {
-    var teamsForRanking = team.ranking;
-    if (this._showAccordion()) {
-      return (
-        <table className="table table-striped table-bordered table-hover">
-              <thead>
-                <tr>
-                  <th>{this.context.t('teamCalendar.position')}</th>
-                  <th>{this.context.t('teamCalendar.name')}</th>
-                  <th>{this.context.t('teamCalendar.points')}</th>
-                </tr>
-              </thead>
-              <tbody>
-               {teamsForRanking.map(teamRanking => {
-                 return this._getRankingAccordeon(teamRanking);
-               })}
-              </tbody>
-          </table>
-      );
-    }
-    return (
-      <table className="table table-striped table-bordered table-hover">
-            <thead>
-              <tr>
-                <th>{this.context.t('teamCalendar.position')}</th>
-                <th>{this.context.t('teamCalendar.name')}</th>
-                <th>{this.context.t('teamCalendar.matchesWon')}</th>
-                <th>{this.context.t('teamCalendar.matchesLost')}</th>
-                <th>{this.context.t('teamCalendar.matchesDraw')}</th>
-                <th>{this.context.t('teamCalendar.points')}</th>
-              </tr>
-            </thead>
-            <tbody>
-             {teamsForRanking.map(teamRanking => {
-               return this._getRanking(teamRanking);
-             })}
-            </tbody>
-        </table>
-    );
-  }
-
-  _getTeamName(clubId) {
-    return storeUtil.getClub(clubId).name;
-  }
-
-  _getRankingAccordeon(teamRanking) {
-    return (
-        <tr className={cn({'yellowBackground' : teamRanking.clubId === OwnClubId, 'accentuateRanking': teamRanking.clubId === OwnClubId})} key={teamRanking.clubId + teamRanking.teamCode}>
-          <td>{teamRanking.position}</td>
-          <td>{storeUtil.getClub(teamRanking.clubId).name + ' ' + teamRanking.teamCode}</td>
-          <td>{teamRanking.points}</td>
-        </tr>
-    );
-  }
-
-  _getRanking(teamRanking) {
-    return (
-        <tr className={cn({'yellowBackground' : teamRanking.clubId === OwnClubId, 'accentuateRanking': teamRanking.clubId === OwnClubId})} key={teamRanking.clubId + teamRanking.teamCode}>
-          <td>{teamRanking.position}</td>
-          <td>{storeUtil.getClub(teamRanking.clubId).name + ' ' + teamRanking.teamCode}</td>
-          <td>{teamRanking.gamesWon}</td>
-          <td>{teamRanking.gamesLost}</td>
-          <td>{teamRanking.gamesDraw}</td>
-          <td>{teamRanking.points}</td>
-        </tr>
-     );
-  }
-
-  _renderScores(match){
-    if (match.score.home === 0 && match.score.out === 0) {
-      return '';
+    var positionClassName;
+    if (team.isTopper()) {
+      positionClassName = 'match-won';
+    } else if (team.isInDegradationZone()) {
+      positionClassName = 'match-lost';
     } else {
-      return match.score.home + ' - ' + match.score.out;
+      positionClassName = 'label-default';
     }
+
+    const ranking = team.getDivisionRanking();
+    return <span className={cn('label label-as-badge ' + positionClassName)}>{ranking.position}</span>;
   }
 
-  _renderOwnTeamTitle(team) {
-    return team.competition + ' ' + team.teamCode;
-  }
-
-  _renderOpponentTitle(match) {
-    const club = match.getOpponentClub();
-    return club.name + ' ' + match.opponent.teamCode;
-  }
-
-  _getTeamsNavigation() {
-    var teams = this.props.teams.filter(team => team.competition === this.props.competition);
-    return teams.map(team =>
-       this._getTeamsNavigationTab(team)
-    );
-  }
-
-  _getTeamsNavigationTab(team) {
-    var style = this._getLabelClassName(team);
-    return ( <NavItem eventKey={team.id} key={team.id}>
-          <div>{team.competition + ' ' + team.teamCode}&nbsp;&nbsp;
-          <span className={style}>{this._renderOwnTeamPosition(team)}</span></div>
-      </NavItem>
-    );
-  }
-
-  _getLabelClassName(team) {
-    if (team.isTopper(this._renderOwnTeamPosition(team))) {return 'label label-as-badge label-success';}
-    if (team.isInDegradationZone(this._renderOwnTeamPosition(team))) {return 'label label-as-badge label-danger';}
-    return 'label label-as-badge label-default';
-  }
-
-  _getDivsForTeamsNavigation() {
-    var team = this.props.teams.find(t => t.id === this.state.openTabKey);
+  _renderTabContent(teamId) {
+    const team = this.props.teams.find(t => t.id === teamId);
     return (
       <div>
-        {this._getTeamMatches(team)}
-        {this._getRankingOfDivision(team)}
+        <DivisionRanking team={team} t={this.context.t} />
+        <TeamMatches team={team} t={this.context.t} />
       </div>
     );
   }
 
   render() {
-
-    if (this._showAccordion()) {
-      return (
-        <div style={{marginTop: 10}}>
-          <PanelGroup activeKey={this.state.openTabKey} onSelect={::this._onTabSelect} accordion>
-            {this._getTeamsPanel()}
-          </PanelGroup>
-        </div>
-      );
-    }
+    const tabConfig = this.props.teams.filter(team => team.competition === this.props.competition).toArray().map(team => {
+      return {
+        key: team.id,
+        title: team.renderOwnTeamTitle(),
+        headerChildren: this._renderOwnTeamPosition(team),
+      };
+    });
 
     return (
-      <div style={{marginTop: 10}}>
-        <Nav bsStyle="tabs" activeKey={this.state.openTabKey} onSelect={::this._onTabSelect}>
-          {this._getTeamsNavigation()}
-        </Nav>
-        {this._getDivsForTeamsNavigation()}
+      <div style={{marginTop: 20, marginBottom: 20}}>
+        <TabbedContainer openTabKey={this.getDefaultTeam()} tabKeys={tabConfig} tabRenderer={::this._renderTabContent} onTabSelect={::this._onTabSelect} />
       </div>
     );
   }
 }
+
+
+const TeamMatches = ({team, t}) => {
+  const matchesForTeam = team.getMatches().sort((a,b) => a.date - b.date);
+  return (
+    <Table condensed hover>
+      <thead>
+        <tr>
+          <th>{t('teamCalendar.date')}</th>
+          <th>{t('teamCalendar.hour')}</th>
+          <th>{t('teamCalendar.match')}</th>
+          <th>{t('teamCalendar.score')}</th>
+        </tr>
+      </thead>
+      <tbody>
+      {matchesForTeam.map(match => {
+        var thrillerIcon;
+        if (team.getThriller(match)) {
+          thrillerIcon = (<Icon fa="fa fa-heartbeat faa-pulse animated" style={{marginLeft: 3, marginRight: 7, marginTop: 3}} />);
+        }
+        return (
+          <tr
+            key={match.id}
+            className={cn('clickable',{'match-won': match.scoreType === 'Won'})}
+            onClick={() => browserHistory.push(t.route('match', {matchId: match.id}))}
+          >
+            <td>
+              {thrillerIcon}
+              {match.date.format('DD/MM')}
+            </td>
+            <td>{match.date.format('HH:mm')}</td>
+            <td>
+              {match.isHomeMatch ? team.renderOwnTeamTitle() : match.renderOpponentTitle()} -
+              {match.isHomeMatch ? ' ' + match.renderOpponentTitle() : ' ' + team.renderOwnTeamTitle()}
+            </td>
+            <td>{match.renderScore()}</td>
+           </tr>
+          );
+       })}
+      </tbody>
+    </Table>
+  );
+};
+
+
+const DivisionRanking = ({team, t}) => (
+  <Table condensed hover>
+    <thead>
+      <tr>
+        <th>{t('teamCalendar.position')}</th>
+        <th>{t('teamCalendar.name')}</th>
+        <th className="hidden-xs">{t('teamCalendar.matchesWon')}</th>
+        <th className="hidden-xs">{t('teamCalendar.matchesLost')}</th>
+        <th className="hidden-xs">{t('teamCalendar.matchesDraw')}</th>
+        <th>{t('teamCalendar.points')}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {team.ranking.map(teamRanking => (
+        <tr
+          className={cn({'match-won': teamRanking.clubId === OwnClubId, 'accentuate': teamRanking.clubId === OwnClubId})}
+          key={teamRanking.clubId + teamRanking.teamCode}
+        >
+          <td>{teamRanking.position}</td>
+          <td>{storeUtil.getClub(teamRanking.clubId).name + ' ' + teamRanking.teamCode}</td>
+          <td className="hidden-xs">{teamRanking.gamesWon}</td>
+          <td className="hidden-xs">{teamRanking.gamesLost}</td>
+          <td className="hidden-xs">{teamRanking.gamesDraw}</td>
+          <td>{teamRanking.points}</td>
+        </tr>
+      ))}
+    </tbody>
+  </Table>
+);

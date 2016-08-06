@@ -1,5 +1,6 @@
 import { util as storeUtils} from '../store.js';
 import { OwnClubId } from './ClubModel.js';
+import moment from 'moment';
 
 const teamPlayerType = {
   standard: 'Standard',
@@ -42,6 +43,10 @@ export default class TeamModel {
     return this.competition === 'Vttl' ? 16 : 10;
   }
 
+  renderOwnTeamTitle() {
+    return this.competition + ' ' + this.teamCode;
+  }
+
   getDivisionRanking(opponent = 'our-ranking') {
     if (opponent === 'our-ranking') {
       return this.getDivisionRanking({clubId: this.clubId, teamCode: this.teamCode});
@@ -50,6 +55,9 @@ export default class TeamModel {
     return result || {};
   }
   getThriller(match) {
+    if (match.date.isBefore(moment())) {
+      return;
+    }
     const ourRanking = this.getDivisionRanking();
     const theirRankingPosition = this.getDivisionRanking(match.opponent).position;
     const teamsInDivision = this.ranking.length;
@@ -88,12 +96,11 @@ export default class TeamModel {
       .filter(match => match.teamId === this.id);
   }
 
-  isTopper(ranking) {
-    return ranking <= 3;
+  isTopper() {
+    return this.getDivisionRanking().position < 3;
   }
-
-  isInDegradationZone(ranking) {
-    return ranking >= (this.ranking.length - 2);
+  isInDegradationZone() {
+    return this.getDivisionRanking().position >= (this.ranking.length - 2);
   }
 }
 

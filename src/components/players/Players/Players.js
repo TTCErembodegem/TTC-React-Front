@@ -146,7 +146,8 @@ export default class Players extends Component {
             <tr key={ply.id} className={cn({'match-won': ply.isMe()})}>
               <td>{ply.vttl.rankingIndex}</td>
               <td>{ply.vttl.uniqueIndex}</td>
-              <td>{ply.name}</td>
+              <td className="hidden-xs">{ply.name}</td>
+              <td className="visible-xs">{ply.alias}</td>
               <td>{this._renderCompetitionRanking(ply.vttl)}</td>
               <td className="hidden-xs">{ply.style.name}</td>
               <td className="hidden-xs">{ply.style.bestStroke}</td>
@@ -180,7 +181,8 @@ export default class Players extends Component {
             <tr key={ply.id} className={cn({'match-won': ply.isMe()})}>
               <td>{ply.sporta.rankingIndex}</td>
               <td>{ply.sporta.uniqueIndex}</td>
-              <td>{ply.name}</td>
+              <td className="hidden-xs">{ply.name}</td>
+              <td className="visible-xs">{ply.alias}</td>
               <td>{this._renderCompetitionRanking(ply.sporta)}</td>
               <td>{ply.sporta.rankingValue}</td>
               <td className="hidden-xs">{ply.style.name}</td>
@@ -207,15 +209,12 @@ export default class Players extends Component {
     const tabConfig = [{
         key: tabEventKeys.all,
         title: this.context.t('players.all'),
-        label: this.context.t('players.all'),
       }, {
         key: tabEventKeys.vttl,
         title: this.context.t('players.vttl'),
-        label: this.context.t('players.vttl'),
       }, {
         key: tabEventKeys.sporta,
         title: this.context.t('players.sporta'),
-        label: this.context.t('players.sporta'),
       }];
 
     return (

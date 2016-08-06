@@ -17,6 +17,7 @@ export default class TabbedContainer extends Component {
       title: PropTypes.string.isRequired,
       label: PropTypes.string,
       show: PropTypes.bool,
+      headerChildren: PropTypes.node,
     }).isRequired),
     tabRenderer: PropTypes.func.isRequired,
     onTabSelect: PropTypes.func,
@@ -65,8 +66,8 @@ export default class TabbedContainer extends Component {
     if (!this._showAccordion()) {
       // Tabs
       return (
-        <NavItem eventKey={tab.key} title={tab.title}>
-          {tab.label} {tab.headerChildren}
+        <NavItem eventKey={tab.key} title={tab.label ? tab.title : undefined} key={tab.key}>
+          {tab.label || tab.title} {tab.headerChildren}
         </NavItem>
       );
     }
@@ -74,7 +75,7 @@ export default class TabbedContainer extends Component {
     // Accordion
     const header = <div>{tab.title} {tab.headerChildren}</div>;
     return (
-      <Panel header={header} eventKey={tab.key} className="match-card-panel clickable" onClick={this._onTabSelect.bind(this, tab.key)}>
+      <Panel header={header} eventKey={tab.key} className="match-card-panel clickable" onClick={this._onTabSelect.bind(this, tab.key)} key={tab.key}>
         {this.props.tabRenderer(tab.key)}
       </Panel>
     );

@@ -95,7 +95,7 @@ export default class OpponentsLastMatches extends Component {
             }
 
             return [
-              <tr key={match.id} className={'clickable ' + (match.won(opponent) ? 'accentuate success' : '')}
+              <tr key={match.id} className={'clickable ' + (match.won(this.props.match.opponent) ? 'accentuate success' : '')}
                 onClick={this._onOpenOpponentMatch.bind(this, match.id)}>
 
                 <td key="1">{match.getDisplayDate(this.props.viewport.width > widthRemoveColumn ? 'd' : 's')}</td>

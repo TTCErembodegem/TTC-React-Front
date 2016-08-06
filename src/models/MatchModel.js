@@ -67,6 +67,10 @@ export default class MatchModel {
     }
     return this.date.format('ddd D/M HH');
   }
+  renderOpponentTitle() {
+    const club = this.getOpponentClub();
+    return club.name + ' ' + this.opponent.teamCode;
+  }
 
   getOpponentClub() {
     if (this.home) {
@@ -87,12 +91,6 @@ export default class MatchModel {
     console.error('MatchModel.getClub passed ' + which, 'expected home or away.'); // eslint-disable-line
   }
 
-  // winning() {
-  //   if (this.score.home === this.score.out) {
-  //     return null;
-  //   }
-  //   return this.won();
-  // }
   won(opponent) {
     if (this.score.home === this.score.out) {
       return false;
@@ -107,6 +105,13 @@ export default class MatchModel {
   isScoreComplete() {
     const scoreTotal = this.getTeam().getScoreCount();
     return this.score.home + this.score.out === scoreTotal;
+  }
+  renderScore() {
+    if (this.score.home === 0 && this.score.out === 0) {
+      return '';
+    } else {
+      return this.score.home + ' - ' + this.score.out;
+    }
   }
 
   getTeam() {

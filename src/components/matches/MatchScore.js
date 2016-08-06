@@ -71,7 +71,7 @@ export default class MatchScore extends Component {
                 style={this.props.style}>
 
                 <Icon fa="fa fa-long-arrow-left" style={{marginRight: 7}} />
-                <span>{match.score.home + ' - ' + match.score.out}</span>
+                <span>{match.renderScore()}</span>
               </span>
             </Link>
           );
