@@ -22,11 +22,13 @@ export default class TabbedContainer extends Component {
     tabRenderer: PropTypes.func.isRequired,
     onTabSelect: PropTypes.func,
     forceTabs: PropTypes.bool,
+    widthTreshold: PropTypes.number,
 
     viewport: PropTypes.object.isRequired,
   }
   static defaultProps = {
-    forceTabs: false
+    forceTabs: false,
+    widthTreshold: 700
   }
 
   constructor(props) {
@@ -38,7 +40,7 @@ export default class TabbedContainer extends Component {
 
   _showAccordion() {
     // Otherwise show tabs
-    return this.props.viewport.width < 700 && !this.props.forceTabs;
+    return this.props.viewport.width < this.props.widthTreshold && !this.props.forceTabs;
   }
 
   render() {

@@ -92,7 +92,12 @@ export default class Teams extends Component {
 
     return (
       <div style={{marginTop: 20, marginBottom: 20}}>
-        <TabbedContainer openTabKey={this.getDefaultTeam()} tabKeys={tabConfig} tabRenderer={::this._renderTabContent} onTabSelect={::this._onTabSelect} />
+        <TabbedContainer
+          openTabKey={this.getDefaultTeam()}
+          tabKeys={tabConfig}
+          tabRenderer={::this._renderTabContent}
+          onTabSelect={::this._onTabSelect}
+          widthTreshold={750} />
       </div>
     );
   }
