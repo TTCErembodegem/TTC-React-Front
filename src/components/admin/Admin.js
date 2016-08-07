@@ -14,6 +14,7 @@ import ListItem from 'material-ui/lib/lists/list-item';
 import Table from 'react-bootstrap/lib/Table';
 import TabbedContainer from '../controls/TabbedContainer.js';
 import AdminPlayers from './AdminPlayers.js';
+import AdminTeams from './AdminTeams.js';
 
 import cn from 'classnames';
 import Icon from '../controls/Icon.js';
@@ -45,7 +46,7 @@ export default class Admin extends Component {
   _renderSection() {
     switch (this.state.section) {
     case 'teams':
-      return <span>TODO ;)</span>;
+      return <AdminTeams teams={this.props.teams} />;
     case 'players':
       return <AdminPlayers players={this.props.players} recreantAndQuitters={this.props.admin.players} />;
     }

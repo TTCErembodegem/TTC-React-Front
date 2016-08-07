@@ -3,6 +3,7 @@ import http from '../utils/httpClient.js';
 import { util as storeUtil } from '../store.js';
 import { showSnackbar } from './configActions.js';
 import { broadcastSnackbar, broadcastReload } from '../hub.js';
+import { teamsLoaded } from './initialLoad.js';
 
 import trans from '../locales.js';
 
@@ -10,6 +11,21 @@ export function loaded(data) {
   return {
     type: ActionTypes.PLAYERS_LOADED,
     payload: data
+  };
+}
+
+export function toggleTeamPlayer(teamId, playerId) {
+  return dispatch => {
+    return http.post('/teams/ToggleTeamPlayer', {playerId, teamId})
+      .then(function(data) {
+        if (data) {
+          dispatch(teamsLoaded(data));
+          broadcastReload('team', data.id);
+        }
+      }, function(err) {
+        dispatch(showSnackbar('common.apiFail'));
+        console.log('toggleTeamPlayer!', err); // eslint-disable-line
+      });
   };
 }
 

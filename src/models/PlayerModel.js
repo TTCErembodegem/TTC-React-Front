@@ -2,7 +2,7 @@ import { util as storeUtil } from '../store.js';
 
 export default class PlayerModel {
   constructor(json = {security: 'Player'}) {
-    this.alias = json.alias;
+    this.alias = json.alias || json.name || '';
     this.contact = json.contact || {};
     this.id = json.id;
     this.active = json.active;
