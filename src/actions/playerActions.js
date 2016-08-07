@@ -14,9 +14,9 @@ export function loaded(data) {
   };
 }
 
-export function toggleTeamPlayer(teamId, playerId) {
+export function toggleTeamPlayer(teamId, playerId, role) {
   return dispatch => {
-    return http.post('/teams/ToggleTeamPlayer', {playerId, teamId})
+    return http.post('/teams/ToggleTeamPlayer', {playerId, teamId, role})
       .then(function(data) {
         if (data) {
           dispatch(teamsLoaded(data));

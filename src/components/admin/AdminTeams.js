@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import { toggleTeamPlayer } from '../../actions/playerActions.js';
 import moment from 'moment';
+import _ from 'lodash';
 import withViewport from '../../utils/decorators/withViewport.js';
 
 import Table from 'react-bootstrap/lib/Table';
@@ -11,10 +12,14 @@ import ToolbarGroup from 'material-ui/lib/toolbar/toolbar-group';
 import ToolbarTitle from 'material-ui/lib/toolbar/toolbar-title';
 import Panel from 'react-bootstrap/lib/Panel';
 import Paper from 'material-ui/lib/paper';
+import SelectField from 'material-ui/lib/select-field';
+import MenuItem from 'material-ui/lib/menus/menu-item';
 
 import Icon from '../controls/Icon.js';
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 import PlayersImageGallery from '../players/PlayersImageGallery.js';
+
+import { teamPlayerType } from '../../models/TeamModel.js';
 
 @connect(state => {
   return {user: state.user};
@@ -36,8 +41,8 @@ export default class AdminTeams extends React.Component {
     this.setState({filter: 'Vttl'});
   }
 
-  _toggleTeamPlayer(teamId, playerId) {
-    this.props.toggleTeamPlayer(teamId, playerId);
+  _toggleTeamPlayer(teamId, playerId, role) {
+    this.props.toggleTeamPlayer(teamId, playerId, role);
   }
 
   render() {
@@ -70,25 +75,39 @@ class AdminTeamPlayers extends Component {
     viewport: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired,
   }
+  constructor() {
+    super();
+    this.state = {role: 'Standard'};
+  }
 
+  _onRoleChange(event, index, value) {
+    this.setState({role: value});
+  }
+  _onToggleTeamPlayer(playerId) {
+    this.props.toggleTeamPlayer(playerId, this.state.role);
+  }
 
   render() {
-    console.log(this.props.team.getPlayers());
+    const team = this.props.team;
     return (
       <div>
         <Paper style={{padding: 20, marginBottom: 20}}>
-          <h4>{this.props.team.renderOwnTeamTitle()}</h4>
+          <h4>{team.renderOwnTeamTitle()}</h4>
 
           <PlayersImageGallery
-            players={this.props.team.getPlayers().map(ply => ply.player)}
+            players={team.getPlayers().map(ply => ply.player)}
             user={this.props.user}
-            competition={this.props.team.competition}
+            competition={team.competition}
             viewport={this.props.viewport} />
 
           <br />
 
+          <SelectField value={this.state.role} onChange={::this._onRoleChange}>
+            {_.toArray(teamPlayerType).map(role => <MenuItem key={role} value={role} primaryText={role} />)}
+          </SelectField>
+
           <PlayerAutoComplete
-            selectPlayer={this.props.toggleTeamPlayer}
+            selectPlayer={::this._onToggleTeamPlayer}
             style={{marginLeft: 10}}
             hintText="Selecteer speler" />
         </Paper>

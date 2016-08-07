@@ -2,7 +2,7 @@ import { util as storeUtils} from '../store.js';
 import { OwnClubId } from './ClubModel.js';
 import moment from 'moment';
 
-const teamPlayerType = {
+export const teamPlayerType = {
   standard: 'Standard',
   captain: 'Captain',
   reserve: 'Reserve',
