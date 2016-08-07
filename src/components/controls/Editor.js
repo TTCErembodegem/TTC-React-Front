@@ -5,13 +5,19 @@ var blacklist = require('blacklist');
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-if(typeof document !== 'undefined') {
+if (typeof document !== 'undefined') {
   var MediumEditor = require('medium-editor');
 }
 
 module.exports = React.createClass({
   displayName: 'MediumEditor',
-
+  propTypes: {
+    text: React.PropTypes.string,
+    options: React.PropTypes.object,
+    tag: React.PropTypes.string,
+    onChange: React.PropTypes.func,
+    contentEditable: React.PropTypes.bool,
+  },
   getInitialState() {
     return {
       text: this.props.text
@@ -26,9 +32,8 @@ module.exports = React.createClass({
 
   componentDidMount() {
     var dom = ReactDOM.findDOMNode(this);
-
     this.medium = new MediumEditor(dom, this.props.options);
-    this.medium.subscribe('editableInput', (e) => {
+    this.medium.subscribe('editableInput', () => {
       this._updated = true;
       this.change(dom.innerHTML);
     });
@@ -39,11 +44,13 @@ module.exports = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.text !== this.state.text && !this._updated) {
+    if (nextProps.text !== this.state.text && !this._updated) {
       this.setState({text: nextProps.text});
     }
 
-    if(this._updated) this._updated = false;
+    if (this._updated) {
+      this._updated = false;
+    }
   },
 
   render() {
@@ -60,6 +67,8 @@ module.exports = React.createClass({
   },
 
   change(text) {
-    if(this.props.onChange) this.props.onChange(text, this.medium);
+    if (this.props.onChange) {
+      this.props.onChange(text, this.medium);
+    }
   }
 });

@@ -1,4 +1,4 @@
-import React, { PropTypes, Component } from 'react';
+import React, { PropTypes } from 'react';
 import Slider from 'material-ui/lib/slider';
 import AvatarEditor from 'react-avatar-editor';
 import FlatButton from 'material-ui/lib/flat-button';
@@ -49,7 +49,7 @@ const ImageEditor = React.createClass({
     );
   },
 
-  handleSave: function(data) {
+  handleSave: function(/*data*/) {
     var img = this.refs.avatar.getImage();
     var rect = this.refs.avatar.getCroppingRect();
     this.props.updateImage(img, rect);
