@@ -172,7 +172,7 @@ export function postReport(matchId, reportText) {
 }
 
 export function postComment(comment) {
-  return (dispatch, getState) => {
+  return dispatch => {
     return http.post('/matches/Comment', comment)
       .then(function(data) {
         if (!data) {

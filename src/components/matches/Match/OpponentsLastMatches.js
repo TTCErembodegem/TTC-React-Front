@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { Link, browserHistory } from 'react-router';
-import { util as storeUtils } from '../../../store.js';
 import withViewport from '../../../utils/decorators/withViewport.js';
 import { contextTypes } from '../../../utils/decorators/withContext.js';
 import _ from 'lodash';
@@ -11,7 +10,6 @@ import Table from 'react-bootstrap/lib/Table';
 import OpponentPlayer from './OpponentPlayer.js';
 import Spinner from '../../controls/Spinner.js';
 import IconButton from 'material-ui/lib/icon-button';
-import FlatButton from 'material-ui/lib/flat-button';
 import MatchScore from '../MatchScore.js';
 
 const AmountOfOpponentMatchesToShow = 5;
@@ -104,7 +102,8 @@ export default class OpponentsLastMatches extends Component {
                   <td key="3">{match.getClub('away').name} {match.away.teamCode}</td>
                 ] : (
                   <td key="4">
-                    {isHomeMatch ? (match.getClub('away').name + ' ' + match.away.teamCode) : (match.getClub('home').name + ' ' + match.home.teamCode)}
+                    {isHomeMatch ? (match.getClub('away').name + ' ' + match.away.teamCode)
+                    : (match.getClub('home').name + ' ' + match.home.teamCode)}
                   </td>
                 )}
 

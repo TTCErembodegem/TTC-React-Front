@@ -66,18 +66,15 @@ export default class Header extends Component {
   _reverseName(name) {
     // TODO: this code is duplicated in Profile.js
     var nameInParts = name.split(' ');
-    if(nameInParts.length === 2)
-    {
-       return nameInParts[1] + ' ' + nameInParts[0];
+    if(nameInParts.length === 2) {
+      return nameInParts[1] + ' ' + nameInParts[0];
     }
-    if (nameInParts.length === 3)
-    {
-       return nameInParts[nameInParts.length - 1] + ' ' + nameInParts[nameInParts.length - 3]
+    if (nameInParts.length === 3) {
+      return nameInParts[nameInParts.length - 1] + ' ' + nameInParts[nameInParts.length - 3]
        + ' ' + nameInParts[nameInParts.length - 2] ;
     }
-    if (nameInParts.length === 4)
-    {
-       return nameInParts[nameInParts.length - 1] + ' ' + nameInParts[nameInParts.length - 4]
+    if (nameInParts.length === 4) {
+      return nameInParts[nameInParts.length - 1] + ' ' + nameInParts[nameInParts.length - 4]
        + ' ' + nameInParts[nameInParts.length - 3] + ' ' + nameInParts[nameInParts.length - 2];
     }
   }

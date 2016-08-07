@@ -1,21 +1,16 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import { toggleTeamPlayer } from '../../actions/playerActions.js';
-import moment from 'moment';
 import _ from 'lodash';
 import withViewport from '../../utils/decorators/withViewport.js';
 
-import Table from 'react-bootstrap/lib/Table';
 import RaisedButton from 'material-ui/lib/raised-button';
 import Toolbar from 'material-ui/lib/toolbar/toolbar';
 import ToolbarGroup from 'material-ui/lib/toolbar/toolbar-group';
-import ToolbarTitle from 'material-ui/lib/toolbar/toolbar-title';
-import Panel from 'react-bootstrap/lib/Panel';
 import Paper from 'material-ui/lib/paper';
 import SelectField from 'material-ui/lib/select-field';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 
-import Icon from '../controls/Icon.js';
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 import PlayersImageGallery from '../players/PlayersImageGallery.js';
 

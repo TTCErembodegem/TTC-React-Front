@@ -17,16 +17,12 @@ export class ChangeYourDetails extends Component {
     user: PropTypes.object.isRequired,
   }
   render() {
-    return <ChangePlayerDetails player={storeUtil.getPlayer(this.props.user.playerId)} />
+    return <ChangePlayerDetails player={storeUtil.getPlayer(this.props.user.playerId)} />;
   }
 }
 
 
-@connect(state => {
-  return {
-    //user: state.user,
-  };
-}, playerActions)
+@connect(() => ({}), playerActions)
 export default class ChangePlayerDetails extends Component {
   static contextTypes = contextTypes;
   static propTypes = {

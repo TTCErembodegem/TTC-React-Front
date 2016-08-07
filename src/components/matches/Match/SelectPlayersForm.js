@@ -11,8 +11,6 @@ import Avatar from 'material-ui/lib/avatar';
 import List from 'material-ui/lib/lists/list';
 import ListItem from 'material-ui/lib/lists/list-item';
 import Divider from 'material-ui/lib/divider';
-import AutoComplete from 'material-ui/lib/auto-complete';
-import MenuItem from 'material-ui/lib/menus/menu-item';
 
 import PlayerAutoComplete from '../../players/PlayerAutoComplete.js';
 
@@ -76,12 +74,18 @@ class PlayerAvatarList extends Component {
   render() {
     return (
       <List>
-        {this.props.players.map(({player, type}) => {
+        {this.props.players.map(({player/*, type*/}) => {
           var color;
           if (this.props.match.plays(player)) {
             color = '#FFB00F';
           }
-          return <SelectablePlayerAvatar player={player} select={this._onPlayerSelect.bind(this, player.id)} backgroundColor={color} key={player.id} />;
+          return (
+            <SelectablePlayerAvatar
+              player={player}
+              select={this._onPlayerSelect.bind(this, player.id)}
+              backgroundColor={color}
+              key={player.id} />
+          );
         })}
       </List>
     );

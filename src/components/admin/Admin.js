@@ -1,23 +1,15 @@
 import React, { PropTypes, Component } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import moment from 'moment';
 import { connect } from 'react-redux';
-import { browserHistory } from 'react-router';
 
 import MatchModel from '../../models/MatchModel.js';
 import TeamModel from '../../models/TeamModel.js';
 import { contextTypes } from '../../utils/decorators/withContext.js';
-//import * as adminActions from '../../actions/adminActions.js';
 
 import List from 'material-ui/lib/lists/list';
 import ListItem from 'material-ui/lib/lists/list-item';
-import Table from 'react-bootstrap/lib/Table';
-import TabbedContainer from '../controls/TabbedContainer.js';
 import AdminPlayers from './AdminPlayers.js';
 import AdminTeams from './AdminTeams.js';
-
-import cn from 'classnames';
-import Icon from '../controls/Icon.js';
 
 @connect(state => {
   return {
@@ -37,6 +29,10 @@ export default class Admin extends Component {
     user: PropTypes.object.isRequired,
     matches: ImmutablePropTypes.listOf(PropTypes.instanceOf(MatchModel).isRequired).isRequired,
     teams: ImmutablePropTypes.listOf(PropTypes.instanceOf(TeamModel).isRequired).isRequired,
+    players: PropTypes.object.isRequired,
+    admin: PropTypes.shape({
+      players: PropTypes.object.isRequired,
+    }).isRequired,
   }
   constructor() {
     super();

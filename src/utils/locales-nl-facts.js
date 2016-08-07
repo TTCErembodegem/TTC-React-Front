@@ -1,3 +1,4 @@
+/* eslint-disable */
 export default {
   service: 'De Service',
   longpimples: 'Lange noppen versus Anti-top',

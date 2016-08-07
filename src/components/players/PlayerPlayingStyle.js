@@ -1,4 +1,4 @@
-import React, { PropTypes, Component } from 'react';
+import React from 'react';
 
 const PlayerPlayingStyle = ({ply}) => (
   <span>{ply.style.name}<br />{ply.style.bestStroke}</span>

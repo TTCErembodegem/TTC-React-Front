@@ -1,20 +1,14 @@
 import React, { PropTypes, Component } from 'react';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import { connect } from 'react-redux';
-import { Link, browserHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 import { contextTypes } from '../../utils/decorators/withContext.js';
 
 import * as loginActions from '../../actions/userActions.js';
-import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 
-import PlayerModel from '../../models/PlayerModel.js';
-
-import TextField from 'material-ui/lib/text-field';
 import RaisedButton from 'material-ui/lib/raised-button';
 import Paper from 'material-ui/lib/paper';
 import { util as storeUtil } from '../../store.js';
 import { displayFormat } from '../controls/Telephone.js';
-
 
 @connect(state => {
   return {

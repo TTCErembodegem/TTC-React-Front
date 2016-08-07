@@ -9,9 +9,7 @@ import TextField from 'material-ui/lib/text-field';
 import RaisedButton from 'material-ui/lib/raised-button';
 import Paper from 'material-ui/lib/paper';
 
-@connect(state => {
-  return {};
-}, userActions)
+@connect(() => ({}), userActions)
 export class ChangeAnyPassword extends Component {
   static contextTypes = contextTypes;
   static propTypes = {

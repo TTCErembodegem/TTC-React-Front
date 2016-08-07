@@ -7,16 +7,13 @@ import Table from 'react-bootstrap/lib/Table';
 import RaisedButton from 'material-ui/lib/raised-button';
 import Toolbar from 'material-ui/lib/toolbar/toolbar';
 import ToolbarGroup from 'material-ui/lib/toolbar/toolbar-group';
-import ToolbarTitle from 'material-ui/lib/toolbar/toolbar-title';
 
 import Icon from '../controls/Icon.js';
 import AdminPlayerForm from './AdminPlayerForm.js';
 import { ChangeAnyPassword } from '../users/ChangePassword.js';
 
-@connect(state => {
-  return {};
-}, {updatePlayer})
-export default class AdminPlayers extends React.Component {
+@connect(() => ({}), {updatePlayer})
+export default class AdminPlayers extends Component {
   static propTypes = {
     players: PropTypes.object,
     recreantAndQuitters: PropTypes.object,
@@ -79,8 +76,12 @@ const AdminPlayersToolbar = ({onFilterChange}) => (
 
 function concatCompetitions(vttl, sporta) {
   var comps = [];
-  if (vttl) { comps.push('Vttl'); }
-  if (sporta) { comps.push('Sporta'); }
+  if (vttl) {
+    comps.push('Vttl');
+  }
+  if (sporta) {
+    comps.push('Sporta');
+  }
   return comps.join(', ');
 }
 

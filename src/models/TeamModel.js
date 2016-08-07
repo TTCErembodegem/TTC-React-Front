@@ -1,5 +1,4 @@
 import { util as storeUtils} from '../store.js';
-import { OwnClubId } from './ClubModel.js';
 import moment from 'moment';
 
 export const teamPlayerType = {

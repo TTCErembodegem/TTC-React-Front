@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { util as storeUtils } from '../../../store.js';
 import { contextTypes } from '../../../utils/decorators/withContext.js';
 
 import UserModel from '../../../models/UserModel.js';
@@ -10,9 +9,7 @@ import * as matchActions from '../../../actions/matchActions.js';
 import MatchScore from '../MatchScore.js';
 import Icon from '../../controls/Icon.js';
 
-@connect(state => {
-  return {};
-}, matchActions)
+@connect(() => ({}), matchActions)
 export default class MatchForm extends Component {
   static contextTypes = contextTypes;
   static propTypes = {

@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { contextTypes } from '../../utils/decorators/withContext.js';
 
 import * as playerActions from '../../actions/playerActions.js';
-import { util as storeUtil } from '../../store.js';
 import { userRoles } from '../../models/UserModel.js';
 import PlayerModel from '../../models/PlayerModel.js';
 
@@ -15,9 +14,7 @@ import Paper from 'material-ui/lib/paper';
 import Panel from 'react-bootstrap/lib/Panel';
 import PlayerStyleAutocomplete from '../players/PlayerStyleAutocomplete.js';
 
-@connect(state => {
-  return {};
-}, playerActions)
+@connect(() => ({}), playerActions)
 export default class AdminPlayerForm extends Component {
   static contextTypes = contextTypes;
   static propTypes = {

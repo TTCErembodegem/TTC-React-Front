@@ -1,6 +1,5 @@
 import React, { PropTypes, Component } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import moment from 'moment';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 
@@ -126,9 +125,9 @@ const TeamMatches = ({team, t}) => {
               {match.isHomeMatch ? ' ' + match.renderOpponentTitle() : ' ' + team.renderOwnTeamTitle()}
             </td>
             <td>{match.renderScore()}</td>
-           </tr>
-          );
-       })}
+          </tr>
+        );
+      })}
       </tbody>
     </Table>
   );

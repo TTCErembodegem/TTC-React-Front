@@ -1,4 +1,3 @@
-import { browserHistory } from 'react-router';
 import * as ActionTypes from './ActionTypes.js';
 import http from '../utils/httpClient.js';
 import { util as storeUtil } from '../store.js';
@@ -58,7 +57,7 @@ export function uploadPlayer(imageBase64, playerId, type) {
 export function requestNewPassword({playerId, email}) {
   return dispatch => {
     return http.post('/users/RequestNewPassword', {playerId, email})
-      .then(function(data) {
+      .then(function() {
         dispatch(showSnackbar(trans('password.fogotMailSent')));
         window.history.back();
       }, function(err) {
@@ -70,7 +69,7 @@ export function requestNewPassword({playerId, email}) {
 export function setNewPassword({playerId, newPassword}) {
   return dispatch => {
     return http.post('/users/SetNewPassword', {playerId, newPassword})
-      .then(function(data) {
+      .then(function() {
         dispatch(showSnackbar(trans('common.apiSuccess')));
       }, function(err) {
         dispatch(showSnackbar(trans('common.apiFail')));

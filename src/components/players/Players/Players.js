@@ -1,8 +1,4 @@
 import React, { PropTypes, Component } from 'react';
-import Nav from 'react-bootstrap/lib/Nav';
-import NavItem from 'react-bootstrap/lib/NavItem';
-import Tabs from 'material-ui/lib/tabs/tabs';
-import Tab from 'material-ui/lib/tabs/tab';
 import Icon from '../../controls/Icon.js';
 import Card from 'material-ui/lib/card/card';
 import CardHeader from 'material-ui/lib/card/card-header';
@@ -18,7 +14,6 @@ import TextField from 'material-ui/lib/text-field';
 import { connect } from 'react-redux';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
-import UserModel from '../../../models/UserModel.js';
 import PlayerModel, { createFrenoyLink } from '../../../models/PlayerModel.js';
 import TeamModel from '../../../models/TeamModel.js';
 import { util as storeUtil } from '../../../store.js';
@@ -51,7 +46,7 @@ export default class Players extends Component {
     config: PropTypes.object,
     players: ImmutablePropTypes.listOf(PropTypes.instanceOf(PlayerModel).isRequired).isRequired,
     teams: ImmutablePropTypes.listOf(PropTypes.instanceOf(TeamModel).isRequired).isRequired,
-    teams: ImmutablePropTypes.listOf(PropTypes.instanceOf(TeamModel).isRequired).isRequired,
+    user: PropTypes.object,
   };
 
   constructor() {
@@ -67,7 +62,7 @@ export default class Players extends Component {
       link.click();
     })
     .catch(err => {
-      console.log('err', err);
+      console.error('err', err);
     });
   }
 
@@ -207,19 +202,23 @@ export default class Players extends Component {
 
   render() {
     const tabConfig = [{
-        key: tabEventKeys.all,
-        title: this.context.t('players.all'),
-      }, {
-        key: tabEventKeys.vttl,
-        title: this.context.t('players.vttl'),
-      }, {
-        key: tabEventKeys.sporta,
-        title: this.context.t('players.sporta'),
-      }];
+      key: tabEventKeys.all,
+      title: this.context.t('players.all'),
+    }, {
+      key: tabEventKeys.vttl,
+      title: this.context.t('players.vttl'),
+    }, {
+      key: tabEventKeys.sporta,
+      title: this.context.t('players.sporta'),
+    }];
 
     return (
       <div style={{marginTop: 20, marginBottom: 10}}>
-        <TabbedContainer openTabKey={tabEventKeys.all} tabKeys={tabConfig} tabRenderer={::this._renderTabContent} forceTabs />
+        <TabbedContainer
+          openTabKey={tabEventKeys.all}
+          tabKeys={tabConfig}
+          tabRenderer={::this._renderTabContent}
+          forceTabs />
       </div>
     );
   }
@@ -229,7 +228,7 @@ export default class Players extends Component {
     const players = teamTT[0].players;
     var playerAsPlayerObject= [];
     for (let i = 0; i < players.length; i++){
-       playerAsPlayerObject.push(storeUtil.getPlayer(players[i].playerId));
+      playerAsPlayerObject.push(storeUtil.getPlayer(players[i].playerId));
     }
     if (competition === 'Vttl') {
       playerAsPlayerObject = playerAsPlayerObject.filter(x => x.vttl).sort((a, b) => a.vttl.position - b.vttl.position);
@@ -291,27 +290,25 @@ export default class Players extends Component {
 
     for (let i = 0; i < players.length; i++){
       if (players[i].playerId === playerId) {
-         if (players[i].type === 'Captain') {
-            return (
-              <span style={iconWidth}>
-                <Icon fa="fa fa-star fa-2x" />
-              </span>
-            );
-         }
-         else if (players[i].type === 'Reserve') {
-            return (
-              <span style={iconWidth}>
-                <Icon fa="fa fa-user-times fa-2x" />
-              </span>
-            );
-         }
-         else {
-            return (
-              <span style={iconWidth}>
-                <Icon fa="fa fa-user-plus fa-2x" />
-              </span>
-            );
-         }
+        if (players[i].type === 'Captain') {
+          return (
+            <span style={iconWidth}>
+              <Icon fa="fa fa-star fa-2x" />
+            </span>
+          );
+        } else if (players[i].type === 'Reserve') {
+          return (
+            <span style={iconWidth}>
+              <Icon fa="fa fa-user-times fa-2x" />
+            </span>
+          );
+        } else {
+          return (
+            <span style={iconWidth}>
+              <Icon fa="fa fa-user-plus fa-2x" />
+            </span>
+          );
+        }
       }
     }
   }

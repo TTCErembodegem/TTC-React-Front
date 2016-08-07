@@ -45,12 +45,7 @@ const editStyleIcon = {
   color: '#d3d3d3',
 };
 
-@connect(state => {
-  return {
-    // config: state.config,
-    // user: state.user,
-  };
-}, playerActions)
+@connect(() => ({}), playerActions)
 @withContext
 export default class PlayersImageGallery extends Component {
   static contextTypes = contextTypes;
@@ -147,7 +142,10 @@ export default class PlayersImageGallery extends Component {
             const canChangeStyle = user.playerId && user.playerId !== ply.id;
             return (
               <Paper key={ply.id} zDepth={1} style={playerPaperStyle}>
-                <div className="clickable" onClick={canChangeStyle ? this._openStyle.bind(this, ply) : undefined} style={{display: 'inline-block'}} title={t('players.editStyle.tooltip', ply.alias)}>
+                <div
+                  className="clickable"
+                  onClick={canChangeStyle ? this._openStyle.bind(this, ply) : undefined}
+                  style={{display: 'inline-block'}} title={t('players.editStyle.tooltip', ply.alias)}>
                   <PlayerAvatar player={ply} style={{backgroundColor: 'gold', margin: 0}} />
                 </div>
                 <strong style={{marginLeft: 5}}>{ply.alias}</strong> <small>{comp ? comp.ranking : '??'}</small>

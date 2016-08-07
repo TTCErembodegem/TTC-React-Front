@@ -36,6 +36,8 @@ export default function(distanceMillis) {
     substitute($l.years, Math.round(years));
 
   var separator = $l.wordSeparator || '';
-  if ($l.wordSeparator === undefined) { separator = ' '; }
+  if ($l.wordSeparator === undefined) {
+    separator = ' ';
+  }
   return ([prefix, words, suffix].join(separator)).trim();
 }

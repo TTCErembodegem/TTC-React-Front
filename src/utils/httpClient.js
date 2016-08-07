@@ -2,7 +2,7 @@ import Promise from 'bluebird';
 import request from 'superagent-bluebird-promise';
 import querystring from 'querystring';
 import assert from 'assert';
-import { util as storeUtil } from '../store.js';
+// import { util as storeUtil } from '../store.js';
 
 const LogRequestTimes = false;
 
@@ -47,7 +47,7 @@ const HttpClient = {
     )
     .tap(() => {
       if (LogRequestTimes) {
-        console.timeEnd(fullUrl)
+        console.timeEnd(fullUrl);
       }
     })
     .then(res => res.body)
@@ -77,7 +77,7 @@ const HttpClient = {
     )
     .tap(() => {
       if (LogRequestTimes) {
-        console.timeEnd(fullUrl)
+        console.timeEnd(fullUrl);
       }
     })
     .then(res => res.body)

@@ -74,7 +74,7 @@ export default function() {
             }, function(err) {
               console.error(err); // eslint-disable-line
             });
-          });
+        });
       }
     });
     return p;

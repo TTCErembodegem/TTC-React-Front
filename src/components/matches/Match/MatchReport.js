@@ -25,9 +25,7 @@ function getEmptyComment(matchId, playerId) {
   };
 }
 
-@connect(state => {
-  return {};
-}, matchActions)
+@connect(() => ({}), matchActions)
 export default class MatchReport extends Component {
   static contextTypes = contextTypes;
   static propTypes = {
@@ -121,8 +119,17 @@ export default class MatchReport extends Component {
     if (showComments) {
       comments = (
         <div>
-          {this.state.text || this.state.reportFormOpen ? <h3 style={{marginTop: this.state.reportFormOpen ? 55 : 0}}>{this.context.t('match.report.commentsTitle')}</h3> : null}
-          {this.props.match.comments.map(comment => <Comment key={comment.id} comment={comment} deleteComment={canDeleteComment || comment.playerId === this.props.user.playerId ? this.props.deleteComment : null} />)}
+          {this.state.text || this.state.reportFormOpen ? (
+            <h3 style={{marginTop: this.state.reportFormOpen ? 55 : 0}}>
+              {this.context.t('match.report.commentsTitle')}
+            </h3>
+          ) : null}
+          {this.props.match.comments.map(comment => (
+            <Comment
+              key={comment.id}
+              comment={comment}
+              deleteComment={canDeleteComment || comment.playerId === this.props.user.playerId ? this.props.deleteComment : null} />)
+          )}
           {this.state.commentFormOpen ? (
             <div>
               {this.props.user.isSystem() ? (
@@ -213,7 +220,7 @@ export default class MatchReport extends Component {
       this.setState({commentFormOpen: true});
     }
   }
-  _reportCommentChange(text, medium) {
+  _reportCommentChange(text/*, medium*/) {
     this.setState({comment: Object.assign({}, this.state.comment, {text})});
   }
   _reportHiddenChange() {

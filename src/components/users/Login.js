@@ -1,6 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import ImmutablePropTypes from 'react-immutable-proptypes';
-import { Link, browserHistory } from 'react-router';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { contextTypes } from '../../utils/decorators/withContext.js';
 
@@ -11,9 +10,7 @@ import TextField from 'material-ui/lib/text-field';
 import RaisedButton from 'material-ui/lib/raised-button';
 import Paper from 'material-ui/lib/paper';
 
-@connect(state => {
-  return {};
-}, loginActions)
+@connect(() => ({}), loginActions)
 export class ForgotPassword extends Component {
   static contextTypes = contextTypes;
   static propTypes = {
@@ -63,9 +60,7 @@ export class ForgotPassword extends Component {
 
 
 
-@connect(state => {
-  return {};
-}, loginActions)
+@connect(() => ({}), loginActions)
 export default class Login extends Component {
   static contextTypes = contextTypes;
   static propTypes = {

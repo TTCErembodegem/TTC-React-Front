@@ -12,7 +12,6 @@ import Strike from '../controls/Strike.js';
 import MatchCardHeader from '../matches/Match/MatchCardHeader.js';
 import Location from '../controls/Location.js';
 
-import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import Paper from 'material-ui/lib/paper';
@@ -111,7 +110,9 @@ export default class Intro extends Component {
             {this.context.t('intro.text', inClub)}
           </Col>
           <Col sm={6}>
-            {!this.props.config.get('initialLoadCompleted') ? <Loading t={this.context.t} bigScreen={this.props.viewport.width > 768} /> : <TodaysEvents {...this.props} />}
+            {!this.props.config.get('initialLoadCompleted') ? (
+              <Loading t={this.context.t} bigScreen={this.props.viewport.width > 768} />
+            ) : <TodaysEvents {...this.props} />}
           </Col>
         </Row>
         {this.props.viewport.width > 800 ? (
@@ -172,6 +173,10 @@ export default class Intro extends Component {
 
 // TODO: React warning: setState on unmounted component = Typist (loading schlager is gone too fast now...)
 class RestartingTypist extends Component {
+  static propTypes = {
+    timeout: PropTypes.number,
+    children: PropTypes.node,
+  }
   state = {typing: true}
   done = () => {
     this.setState({ typing: false }, () => {

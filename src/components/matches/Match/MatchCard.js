@@ -18,7 +18,6 @@ import SelectPlayersForm from './SelectPlayersForm.js';
 import OpponentsLastMatches from './OpponentsLastMatches.js';
 import OpponentsFormation from './OpponentsFormation.js';
 import MatchReport from './MatchReport.js';
-import MatchForm from './MatchForm.js';
 import Scoresheet from './Scoresheet.js';
 import Spinner from '../../controls/Spinner.js';
 
@@ -26,10 +25,6 @@ import Icon from '../../controls/Icon.js';
 import PlayersImageGallery from '../../players/PlayersImageGallery.js';
 
 import CardText from 'material-ui/lib/card/card-text';
-import Nav from 'react-bootstrap/lib/Nav';
-import NavItem from 'react-bootstrap/lib/NavItem';
-import PanelGroup from 'react-bootstrap/lib/PanelGroup';
-import Panel from 'react-bootstrap/lib/Panel';
 
 import TabbedContainer from '../../controls/TabbedContainer.js';
 
@@ -95,49 +90,53 @@ export default class MatchCard extends Component {
     const HeaderComponent = this.props.big ? BigMatchCardHeader : MatchCardHeader;
 
     const tabConfig = [{
-        key: tabEventKeys.players,
-        title: this.context.t('match.tabs.playersTitle'),
-        label: this.context.t('match.tabs.players'),
-        headerChildren: this._getPlayersEditIcon(),
-      }, {
-        key: tabEventKeys.report,
-        title: this.context.t('match.tabs.reportTitle'),
-        label: this.context.t('match.tabs.report'),
-        headerChildren: this._getCommentsIcon(),
-      }, {
-        key: tabEventKeys.individualMatches,
-        title: this.context.t('match.tabs.matchesTitle'),
-        label: this.context.t('match.tabs.matches'),
-        show: match.games.size !== 0,
-      }, {
-        key: tabEventKeys.scoresheet,
-        title: this.context.t('match.tabs.scoresheetTitle'),
-        label: this.context.t('match.tabs.scoresheet'),
-        show: match.scoreType === 'BeingPlayed' && match.players.size,
-      }, {
-        key: tabEventKeys.opponentClub,
-        title: this.context.t('match.tabs.clubTitle'),
-        label: this.context.t('match.tabs.club'),
-        show: !match.isHomeMatch && !match.isPlayed,
-      }, {
-        key: tabEventKeys.opponentsRanking,
-        title: this.context.t('match.tabs.opponentsRankingTitle'),
-        label: this.context.t('match.tabs.opponentsRanking'),
-      }, {
-        key: tabEventKeys.opponentsFormation,
-        title: this.context.t('match.tabs.opponentsFormationTitle'),
-        label: this.context.t('match.tabs.opponentsFormation'),
-      }, {
-        key: tabEventKeys.opponentsFormation,
-        title: 'admin',
-        label: 'admin',
-        show: this.props.user.isDev(),
-      }];
+      key: tabEventKeys.players,
+      title: this.context.t('match.tabs.playersTitle'),
+      label: this.context.t('match.tabs.players'),
+      headerChildren: this._getPlayersEditIcon(),
+    }, {
+      key: tabEventKeys.report,
+      title: this.context.t('match.tabs.reportTitle'),
+      label: this.context.t('match.tabs.report'),
+      headerChildren: this._getCommentsIcon(),
+    }, {
+      key: tabEventKeys.individualMatches,
+      title: this.context.t('match.tabs.matchesTitle'),
+      label: this.context.t('match.tabs.matches'),
+      show: match.games.size !== 0,
+    }, {
+      key: tabEventKeys.scoresheet,
+      title: this.context.t('match.tabs.scoresheetTitle'),
+      label: this.context.t('match.tabs.scoresheet'),
+      show: match.scoreType === 'BeingPlayed' && match.players.size,
+    }, {
+      key: tabEventKeys.opponentClub,
+      title: this.context.t('match.tabs.clubTitle'),
+      label: this.context.t('match.tabs.club'),
+      show: !match.isHomeMatch && !match.isPlayed,
+    }, {
+      key: tabEventKeys.opponentsRanking,
+      title: this.context.t('match.tabs.opponentsRankingTitle'),
+      label: this.context.t('match.tabs.opponentsRanking'),
+    }, {
+      key: tabEventKeys.opponentsFormation,
+      title: this.context.t('match.tabs.opponentsFormationTitle'),
+      label: this.context.t('match.tabs.opponentsFormation'),
+    }, {
+      key: tabEventKeys.opponentsFormation,
+      title: 'admin',
+      label: 'admin',
+      show: this.props.user.isDev(),
+    }];
 
     return (
       <HeaderComponent {...this.props} backgroundColor="#fafafa" isOpen={this.props.isOpen} style={{margin: 50}} config={this.props.config}>
         <CardText expandable={true} style={{paddingTop: 0, paddingLeft: 5, paddingRight: 5}}>
-          <TabbedContainer openTabKey={tabEventKeys.players} tabKeys={tabConfig} tabRenderer={::this._renderTabContent} onTabSelect={::this._onTabSelect} />
+          <TabbedContainer
+            openTabKey={tabEventKeys.players}
+            tabKeys={tabConfig}
+            tabRenderer={::this._renderTabContent}
+            onTabSelect={::this._onTabSelect} />
         </CardText>
       </HeaderComponent>
     );

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { Component } from 'react';
 import { contextTypes } from '../../utils/decorators/withContext.js';
 
