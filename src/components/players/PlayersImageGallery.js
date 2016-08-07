@@ -10,7 +10,6 @@ import { playerUtils } from '../../models/PlayerModel.js';
 import GridList from 'material-ui/lib/grid-list/grid-list';
 import GridTile from 'material-ui/lib/grid-list/grid-tile';
 import Dialog from 'material-ui/lib/dialog';
-import AutoComplete from 'material-ui/lib/auto-complete';
 import TextField from 'material-ui/lib/text-field';
 import FlatButton from 'material-ui/lib/flat-button';
 import Paper from 'material-ui/lib/paper';
@@ -21,6 +20,7 @@ import PlayerPlayingStyle from './PlayerPlayingStyle.js';
 import PlayerImage from './PlayerImage.js';
 import PlayerAvatar from './PlayerAvatar.js';
 import PlayerAutoComplete from './PlayerAutoComplete.js';
+import PlayerStyleAutocomplete from './PlayerStyleAutocomplete.js';
 
 const PlayersImageWidth = playerUtils.getPlayerImageSize().width;
 const PlayersImageHeight = playerUtils.getPlayerImageSize().height;
@@ -82,12 +82,6 @@ export default class PlayersImageGallery extends Component {
     const {players, user, competition, viewport} = this.props;
     const t = this.context.t;
 
-    const playingStyles = [
-      t('players.styles.attacker'),
-      t('players.styles.defender'),
-      t('players.styles.allRounder'),
-    ];
-
     const changeStyleModalActions = [
       <FlatButton
         label={t('modal.cancel')}
@@ -100,7 +94,6 @@ export default class PlayersImageGallery extends Component {
         onTouchTap={::this._saveStyle} />,
     ];
     const selectedPlayer = this.state.editingPlayer;
-    const newStyle = this.state.newStyle;
 
     const playerPaperStyle = {
       height: 80,
@@ -181,15 +174,10 @@ export default class PlayersImageGallery extends Component {
             open={!!this.state.editingPlayer}
             onRequestClose={::this._closeStyle}>
 
-            <AutoComplete
-              style={{marginTop: -25}}
-              filter={AutoComplete.fuzzyFilter}
-              onNewRequest={::this._changeStyle}
-              onUpdateInput={::this._changeStyle}
-              searchText={newStyle.name || ''}
-              floatingLabelText={t('players.editStyle.style')}
-              hintText={playingStyles.join(', ')}
-              dataSource={playingStyles} />
+            <PlayerStyleAutocomplete t={t}
+              value={this.state.newStyle.name || ''}
+              onChange={::this._changeStyle}
+              style={{marginTop: -25}} />
 
             <br />
 
@@ -197,14 +185,14 @@ export default class PlayersImageGallery extends Component {
               style={{marginBottom: -25}}
               floatingLabelText={t('players.editStyle.bestStroke')}
               type="text"
-              value={newStyle.bestStroke}
+              value={this.state.newStyle.bestStroke}
               onChange={::this._changeBestStroke} />
 
             {user.isSystem() ? (
               <div>
                 <PlayerAutoComplete
                   selectPlayer={::this._changePlayer}
-                  floatingLabelText={this.context.t('system.playerSelect')} />
+                  floatingLabelText={t('system.playerSelect')} />
               </div>
             ) : null}
           </Dialog>

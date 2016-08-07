@@ -1,7 +1,7 @@
 import { util as storeUtil } from '../store.js';
 
 export default class PlayerModel {
-  constructor(json) {
+  constructor(json = {security: 'Player'}) {
     this.alias = json.alias;
     this.contact = json.contact || {};
     this.id = json.id;

@@ -30,6 +30,7 @@ export default {
     common: {
       apiSuccess: 'Greato success',
       apiFail: 'Oepsie! Mislukt...',
+      save: 'Bewaren',
     },
     system: {
       playerSelect: 'Wie ben je?',
@@ -92,7 +93,8 @@ export default {
       email: 'Email',
       gsm: 'Gsm',
       address: 'Adres',
-      city: 'Gemeente'
+      city: 'Gemeente',
+      alias: 'Alias',
     },
     changePassword: {
       title: 'Paswoord wijzigen',

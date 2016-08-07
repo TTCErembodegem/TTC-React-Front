@@ -10,7 +10,7 @@ import ToolbarGroup from 'material-ui/lib/toolbar/toolbar-group';
 import ToolbarTitle from 'material-ui/lib/toolbar/toolbar-title';
 
 import Icon from '../controls/Icon.js';
-import ChangePlayerDetails from '../users/ChangePlayerDetails.js';
+import AdminPlayerForm from './AdminPlayerForm.js';
 import { ChangeAnyPassword } from '../users/ChangePassword.js';
 
 @connect(state => {
@@ -27,24 +27,28 @@ export default class AdminPlayers extends React.Component {
     this.state = {filter: 'active'};
   }
 
+  _setDefaultForm() {
+    this.setState({filter: null});
+  }
+
   render() {
     let players;
-    console.log(this.props.players.first());
     switch (this.state.filter) {
     case 'new-player':
-      return null; // TODO: implement this
+      return <AdminPlayerForm onEnd={::this._setDefaultForm} />;
 
     case 'edit-player':
-      return <ChangePlayerDetails player={this.state.selectedPlayer} />;
+      return <AdminPlayerForm player={this.state.selectedPlayer} onEnd={::this._setDefaultForm} />;
 
     case 'set-password':
-      return <ChangeAnyPassword onEnd={() => this.setState({filter: 'active'})} />;
+      return <ChangeAnyPassword onEnd={::this._setDefaultForm} />;
 
     case 'inactive':
       players = <InactivesTable players={this.props.recreantAndQuitters} updatePlayer={this.props.updatePlayer} />;
       break;
 
     case 'active':
+    default:
       players = (
         <ActivesTable
           players={this.props.players}
@@ -94,7 +98,7 @@ const ActivesTable = ({players, onEditPlayer, updatePlayer}) => (
       {players.sort((a, b) => a.name.localeCompare(b.name)).map(ply => (
         <tr key={ply.id}>
           <td>
-            {ply.name}
+            {ply.name} <small>({ply.alias})</small>
             <br />
             <small>
               <a href={'mailto:' + ply.contact.email}>{ply.contact.email}</a>
