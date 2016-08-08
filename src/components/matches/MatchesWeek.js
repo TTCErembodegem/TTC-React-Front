@@ -23,16 +23,22 @@ export default class MatchesWeek extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      currentWeek: 1,
+      lastWeek: 22,
+    };
+  }
 
+  componentWillReceiveProps(props) {
     const today = moment();
     const sortedMatches = props.matches.sort((a, b) => a.date - b.date);
     const currentWeekMatch = sortedMatches.find(x => x.date > today);
     const lastWeekMatch = sortedMatches.last();
     const lastWeek = lastWeekMatch ? lastWeekMatch.week : 22;
-    this.state = {
+    this.setState({
       currentWeek: currentWeekMatch ? currentWeekMatch.week : lastWeek,
       lastWeek: lastWeek,
-    };
+    });
   }
 
   _onChangePlaying(match, status) {
@@ -57,6 +63,9 @@ export default class MatchesWeek extends Component {
   }
 
   render() {
+    if (!this.props.matches.size) {
+      return null;
+    }
     const t = this.context.t;
 
     const matches = this.props.matches.filter(match => match.week === this.state.currentWeek);
