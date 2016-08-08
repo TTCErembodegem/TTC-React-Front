@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import { toggleTeamPlayer } from '../../actions/playerActions.js';
+import { frenoyTeamSync } from '../../actions/matchActions.js';
 import _ from 'lodash';
 import withViewport from '../../utils/decorators/withViewport.js';
 
@@ -10,6 +11,7 @@ import ToolbarGroup from 'material-ui/lib/toolbar/toolbar-group';
 import Paper from 'material-ui/lib/paper';
 import SelectField from 'material-ui/lib/select-field';
 import MenuItem from 'material-ui/lib/menus/menu-item';
+import Button from 'react-bootstrap/lib/Button';
 
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 import PlayersImageGallery from '../players/PlayersImageGallery.js';
@@ -18,12 +20,13 @@ import { teamPlayerType } from '../../models/TeamModel.js';
 
 @connect(state => {
   return {user: state.user};
-}, {toggleTeamPlayer})
+}, {toggleTeamPlayer, frenoyTeamSync})
 @withViewport
 export default class AdminTeams extends React.Component {
   static propTypes = {
     teams: PropTypes.object,
     toggleTeamPlayer: PropTypes.func.isRequired,
+    frenoyTeamSync: PropTypes.func.isRequired,
     viewport: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired,
   }
@@ -54,7 +57,8 @@ export default class AdminTeams extends React.Component {
               team={team}
               toggleTeamPlayer={this._toggleTeamPlayer.bind(this, team.id)}
               viewport={this.props.viewport}
-              user={this.props.user} />
+              user={this.props.user}
+              onFrenoySync={this.props.frenoyTeamSync} />
           ))}
         </div>
       );
@@ -68,6 +72,7 @@ class AdminTeamPlayers extends Component {
     toggleTeamPlayer: PropTypes.func.isRequired,
     viewport: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired,
+    onFrenoySync: PropTypes.func.isRequired,
   }
   constructor() {
     super();
@@ -86,7 +91,10 @@ class AdminTeamPlayers extends Component {
     return (
       <div>
         <Paper style={{padding: 20, marginBottom: 20}}>
-          <h4>{team.renderOwnTeamTitle()}</h4>
+          <h4>
+            {team.renderOwnTeamTitle()}
+            <Button style={{marginLeft: 20}} onClick={() => this.props.onFrenoySync(team.id)}>Frenoy Sync</Button>
+          </h4>
 
           <PlayersImageGallery
             players={team.getPlayers().map(ply => ply.player)}
