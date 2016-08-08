@@ -236,12 +236,13 @@ export default class MatchCard extends Component {
       return <MatchPlayerResults match={match} team={match.getTeam()} t={this.context.t} />;
     }
 
-    if (this.state.forceEditPlayers || (this.props.user.canManageTeam(match.teamId) && match.players.size < team.getTeamPlayerCount())) {
+    const playingPlayers = match.players.filter(ply => ply.status === 'Play');
+    if (this.state.forceEditPlayers || (this.props.user.canManageTeam(match.teamId) && playingPlayers.size < team.getTeamPlayerCount())) {
       return <SelectPlayersForm match={match} user={this.props.user} />;
     }
 
     if (match.players.size === 0) {
-      let standardPlayers = team.getPlayers('standard').map(ply => ply.player);
+      const standardPlayers = team.getPlayers('standard').map(ply => ply.player);
       return (
         <PlayersImageGallery
           players={standardPlayers}

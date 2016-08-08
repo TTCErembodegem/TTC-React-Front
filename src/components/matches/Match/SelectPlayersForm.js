@@ -71,14 +71,28 @@ class PlayerAvatarList extends Component {
     selectPlayer: PropTypes.func.isRequired
   }
 
+  _getPlayingStatusColor(playing) {
+    if (!playing) {
+      return undefined;
+    }
+    switch (playing.status) {
+    case 'Play':
+      return '#FFB00F';
+    case 'NotPlay':
+      return '#c9302c';
+    case 'Maybe':
+      return '#31b0d5';
+    default:
+      return undefined;
+    }
+  }
+
   render() {
     return (
       <List>
         {this.props.players.map(({player/*, type*/}) => {
-          var color;
-          if (this.props.match.plays(player)) {
-            color = '#FFB00F';
-          }
+          const matchPlayer = this.props.match.plays(player);
+          const color = this._getPlayingStatusColor(matchPlayer);
           return (
             <SelectablePlayerAvatar
               player={player}

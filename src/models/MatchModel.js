@@ -139,6 +139,7 @@ export default class MatchModel {
   getOwnPlayerModels() {
     var team = this.getTeam();
     return this.getOwnPlayers()
+      .filter(ply => ply.status === 'Play')
       .filter(ply => ply.playerId) // ply.playerId===0 when someone played for Erembodegem that has incorrect competition details in speler table
       .map(ply => storeUtils.getPlayer(ply.playerId))
       .sort(sortPlayers(team.competition));

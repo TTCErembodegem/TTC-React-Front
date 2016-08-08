@@ -87,7 +87,7 @@ export function getLastOpponentMatches(teamId, opponent) {
   };
 }
 
-export function selectPlayer(matchId, playerId, status = 'Play') {
+export function selectPlayer(matchId, playerId, status = null) {
   return dispatch => {
     const match = storeUtil.getMatch(matchId);
     const player = storeUtil.getPlayer(playerId);
@@ -104,10 +104,11 @@ export function selectPlayer(matchId, playerId, status = 'Play') {
         name: player.alias,
         alias: player.alias,
         uniqueIndex: comp.uniqueIndex,
+        status: 'Play',
       };
     }
 
-    return http.post('/matches/TogglePlayer', {...matchPlayer, status})
+    return http.post('/matches/TogglePlayer', {...matchPlayer, status: status || matchPlayer.status})
       .then(function(data) {
         if (data) {
           dispatch(simpleLoaded(data));
