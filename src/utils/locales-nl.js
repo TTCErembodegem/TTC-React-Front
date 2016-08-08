@@ -10,6 +10,7 @@ export default {
     matches: '/kalender',
     match: '/match/:matchId',
     matchesToday: '/vandaag',
+    matchesWeek: '/speelweek',
     facts: '/weetjes',
     teamsVttl: '/ploegen/vttl',
     teamsSporta: '/ploegen/sporta',
@@ -28,6 +29,7 @@ export default {
       apiFail: 'Oepsie! Mislukt...',
       save: 'Bewaren',
       frenoy: 'Frenoy',
+      teamFormation: 'Opstelling',
     },
     system: {
       playerSelect: 'Wie ben je?',
@@ -35,6 +37,7 @@ export default {
     nav: {
       matches: 'Kalender',
       matchesToday: 'Vandaag',
+      matchesWeek: 'Speelweek',
       teamsVttl: 'Ploegkalender Vttl',
       teamsSporta: 'Ploegkalender Sporta',
       players: 'Spelers',
@@ -154,6 +157,7 @@ export default {
       downloadExcelFileName: 'Spelerslijst_${}',
     },
     match: {
+      week: 'Week',
       todayMatches: 'vandaag',
       nextMatches: 'volgende matchen',
       playedMatches: 'gespeelde matchen',
@@ -189,7 +193,6 @@ export default {
         scoresheetTitle: 'Wedstrijdblad',
         opponentsRanking: 'Tegenstanders',
         opponentsRankingTitle: 'Hun laatste uitslagen',
-        opponentsFormation: 'Opstelling',
         opponentsFormationTitle: 'Hun opstelling',
         admin: 'Dev',
         adminTitle: 'Dev',

@@ -121,7 +121,7 @@ export default class MatchCard extends Component {
     }, {
       key: tabEventKeys.opponentsFormation,
       title: this.context.t('match.tabs.opponentsFormationTitle'),
-      label: this.context.t('match.tabs.opponentsFormation'),
+      label: this.context.t('common.teamFormation'),
     }, {
       key: tabEventKeys.admin,
       title: 'admin',

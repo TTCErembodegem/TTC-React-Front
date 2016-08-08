@@ -51,6 +51,7 @@ class Navigation extends Component {
             <Badge badgeContent={matchesToday.size} secondary={true} badgeStyle={{padding: 0, top: 5, left: 5}} />
           </MenuItem>
         ) : null}
+        {storeUtil.getUser().playerId ? <MenuItem onTouchTap={this._goto.bind(this, t.route('matchesWeek'))}>{t('nav.matchesWeek')}</MenuItem> : null}
         <MenuItem onTouchTap={this._goto.bind(this, t.route('teamsVttl'))}>{t('nav.teamsVttl')}</MenuItem>
         <MenuItem onTouchTap={this._goto.bind(this, t.route('teamsSporta'))}>{t('nav.teamsSporta')}</MenuItem>
         <MenuItem onTouchTap={this._goto.bind(this, t.route('players'))}>{t('nav.players')}</MenuItem>

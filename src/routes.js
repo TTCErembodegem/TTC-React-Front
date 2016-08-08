@@ -8,6 +8,7 @@ import Profile from './components/users/Profile.js';
 import Links from './components/other/Links.js';
 import Matches from './components/matches/Matches.js';
 import MatchesToday from './components/matches/MatchesToday.js';
+import MatchesWeek from './components/matches/MatchesWeek.js';
 import RoutedMatchCard from './components/matches/Match/RoutedMatchCard.js';
 import Facts from './components/other/Facts.js';
 import { TeamsSporta, TeamsVttl } from './components/teams/Teams.js';
@@ -26,6 +27,7 @@ const Routes = () => (
 
       <Route path={t.route('matches')} component={Matches} />
       <Route path={t.route('matchesToday')} component={MatchesToday} />
+      <Route path={t.route('matchesWeek')} component={MatchesWeek} />
       <Route path={t.route('match')} component={RoutedMatchCard}/>
 
       <Route path={t.route('teamsVttl')} component={TeamsVttl}/>
