@@ -41,7 +41,6 @@ export default class AdminTeams extends React.Component {
   }
 
   render() {
-    //console.log(this.props.teams.first());
     switch (this.state.filter) {
     case 'Vttl':
     case 'Sporta':

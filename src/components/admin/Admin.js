@@ -71,7 +71,7 @@ class AdminMenu extends React.Component {
 
   render() {
     return (
-      <div style={{width: 150, border: '1px solid black', position: 'absolute', top: 75, left: 15}}>
+      <div style={{width: 150, border: 'solid 1px #d9d9d9', position: 'absolute', top: 75, left: 15}}>
         <List>
           <ListItem primaryText="Spelers" onTouchTap={() => this.props.onSectionChange('players')} />
           <ListItem primaryText="Ploegen" onTouchTap={() => this.props.onSectionChange('teams')} />

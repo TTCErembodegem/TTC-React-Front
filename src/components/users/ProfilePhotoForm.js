@@ -54,7 +54,7 @@ export default class ProfilePhotoForm extends Component {
     const t = this.context.t;
     const tmpFileName = this.state.fileName;
     return (
-      <div style={{marginTop: 10, marginBottom: 10}} className="row">
+      <div style={{marginBottom: 10, paddingLeft: 10}} className="row">
         <div className="col-sm-6">
           <h3>{t('photos.uploadNewTitle')}</h3>
           <ImageDropzone t={t} fileUploaded={fileName => this.setState({fileName})} />

@@ -22,7 +22,7 @@ export default class PlayerAutoComplete extends Component {
 
   _onPlayerSelected(text) {
     if (text) {
-      var matchedPlayers = this.props.players.filter(ply => ply.alias.toUpperCase() === text.toUpperCase());
+      const matchedPlayers = this.props.players.filter(ply => ply.alias.toUpperCase() === text.toUpperCase());
       if (matchedPlayers.size === 1) {
         this.props.selectPlayer(matchedPlayers.first().id);
       } else if (text.toLowerCase() === 'system' || text.toLowerCase() === 'systeem') {
@@ -32,7 +32,7 @@ export default class PlayerAutoComplete extends Component {
   }
 
   render() {
-    var players = this.props.players.map(ply => ({
+    const players = this.props.players.map(ply => ({
       text: ply.alias,
       value: <MenuItem primaryText={ply.alias} />,
     }));

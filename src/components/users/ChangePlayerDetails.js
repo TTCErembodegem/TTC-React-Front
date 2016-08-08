@@ -7,20 +7,6 @@ import { util as storeUtil } from '../../store.js';
 
 import TextField from 'material-ui/lib/text-field';
 import RaisedButton from 'material-ui/lib/raised-button';
-import Paper from 'material-ui/lib/paper';
-
-@connect(state => {
-  return {user: state.user};
-})
-export class ChangeYourDetails extends Component {
-  static propTypes = {
-    user: PropTypes.object.isRequired,
-  }
-  render() {
-    return <ChangePlayerDetails player={storeUtil.getPlayer(this.props.user.playerId)} />;
-  }
-}
-
 
 @connect(() => ({}), playerActions)
 export default class ChangePlayerDetails extends Component {
@@ -43,14 +29,13 @@ export default class ChangePlayerDetails extends Component {
   render() {
     const player = this.props.player;
     const paperStyle = {
-      height: 480,
       width: 290,
       margin: 20,
       textAlign: 'center',
       display: 'inline-block',
     };
     return (
-      <Paper zDepth={1} style={paperStyle}>
+      <div style={paperStyle}>
         <h3>{this.context.t('updatePlayer.title')}</h3>
 
         <TextField
@@ -83,7 +68,7 @@ export default class ChangePlayerDetails extends Component {
           style={{marginTop: 15}}
           onClick={() => this.props.updatePlayer(Object.assign(this.props.player, {contact: this.state}))} />
 
-      </Paper>
+      </div>
     );
   }
 }

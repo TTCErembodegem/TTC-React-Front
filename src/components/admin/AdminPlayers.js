@@ -99,7 +99,7 @@ const ActivesTable = ({players, onEditPlayer, updatePlayer}) => (
       {players.sort((a, b) => a.name.localeCompare(b.name)).map(ply => (
         <tr key={ply.id}>
           <td>
-            {ply.name} <small>({ply.alias})</small>
+            <strong>{ply.name}</strong> <small>({ply.alias})</small>
             <br />
             <small>
               <a href={'mailto:' + ply.contact.email}>{ply.contact.email}</a>

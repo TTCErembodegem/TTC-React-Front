@@ -84,14 +84,13 @@ export default class ChangePassword extends Component {
 
   render() {
     const paperStyle = {
-      height: 280,
       width: 290,
       margin: 20,
       textAlign: 'center',
       display: 'inline-block',
     };
     return (
-      <Paper zDepth={1} style={paperStyle}>
+      <div style={paperStyle}>
         <h3>{this.context.t('changePassword.title')}</h3>
 
         <TextField
@@ -111,7 +110,7 @@ export default class ChangePassword extends Component {
           onClick={() => this.props.changePassword(this.props.user.playerId, this.state)}
           disabled={!this.state.oldpassword && !this.state.newpassword} />
 
-      </Paper>
+      </div>
     );
   }
 }
