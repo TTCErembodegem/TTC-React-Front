@@ -25,6 +25,9 @@ export default class UserModel {
   getPlayer() {
     return storeUtil.getPlayer(this.playerId);
   }
+  getTeams() {
+    return this.teams.map(storeUtil.getTeam);
+  }
 
   can(what) {
     return this._security.indexOf(what) !== -1;

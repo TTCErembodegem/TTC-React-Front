@@ -55,6 +55,7 @@ export default class MatchModel {
   }
 
   getDisplayDate(format) {
+    // Usage: this.context.t('match.date', match.getDisplayDate())
     if (format === 's') {
       return this.date.format('D/M');
     }

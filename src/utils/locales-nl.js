@@ -27,6 +27,7 @@ export default {
       apiSuccess: 'Greato success',
       apiFail: 'Oepsie! Mislukt...',
       save: 'Bewaren',
+      frenoy: 'Frenoy',
     },
     system: {
       playerSelect: 'Wie ben je?',
@@ -51,6 +52,13 @@ export default {
       editPicture: 'Wijzig Foto',
       editAvatar: 'Wijzig Avatar',
       editHolidays: 'Ploegopstelling',
+      play: {
+        tableTitle: 'Kan je spelen?',
+        canPlay: 'SPELEN',
+        canNotPlay: 'Kan niet',
+        canMaybe: 'Misschien',
+        canDontKnow: 'Weet niet',
+      },
     },
     intro: {
       title: 'Tafeltennisclub TTC Erembodegem',

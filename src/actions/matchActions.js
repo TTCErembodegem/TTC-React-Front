@@ -87,11 +87,11 @@ export function getLastOpponentMatches(teamId, opponent) {
   };
 }
 
-export function selectPlayer(matchId, playerId) {
+export function selectPlayer(matchId, playerId, status = 'Play') {
   return dispatch => {
-    var match = storeUtil.getMatch(matchId);
-    var player = storeUtil.getPlayer(playerId);
-    var comp = player.getCompetition(match.competition);
+    const match = storeUtil.getMatch(matchId);
+    const player = storeUtil.getPlayer(playerId);
+    const comp = player.getCompetition(match.competition);
 
     var matchPlayer = match.plays(player);
     if (!matchPlayer) {
@@ -103,11 +103,11 @@ export function selectPlayer(matchId, playerId) {
         ranking: comp.ranking,
         name: player.alias,
         alias: player.alias,
-        uniqueIndex: comp.uniqueIndex
+        uniqueIndex: comp.uniqueIndex,
       };
     }
 
-    return http.post('/matches/TogglePlayer', matchPlayer)
+    return http.post('/matches/TogglePlayer', {...matchPlayer, status})
       .then(function(data) {
         if (data) {
           dispatch(simpleLoaded(data));
