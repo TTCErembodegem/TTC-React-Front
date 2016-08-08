@@ -156,12 +156,8 @@ export function updateScore(matchScore) {
 export function frenoyTeamSync(teamId) {
   return dispatch => {
     return http.post('/matches/FrenoyTeamSync', {id: teamId})
-      .then(function(data) {
-        if (!data) {
-          return;
-        }
-        dispatch(simpleLoaded(data));
-        dispatch(showSnackbar(trans('common.apiSuccess')));
+      .then(function() {
+        dispatch(showSnackbar(trans('common.apiSuccess') + ': Duw F5 om de wijzigingen te zien'));
 
       }, function(err) {
         console.log('frenoyTeamSync!', err); // eslint-disable-line
