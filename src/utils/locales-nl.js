@@ -30,6 +30,7 @@ export default {
       save: 'Bewaren',
       frenoy: 'Frenoy',
       teamFormation: 'Opstelling',
+      competitie: 'Competitie',
     },
     system: {
       playerSelect: 'Wie ben je?',
@@ -130,12 +131,6 @@ export default {
       style: 'Stijl',
       all: 'Alle',
       team: 'ploeg',
-      rankingVTTL: 'Klassement VTTL:',
-      rankingSporta: 'Klassement Sporta:',
-      indexVTTL: 'Index VTTL:',
-      indexSporta: 'Index Sporta:',
-      memberNumberVTTL: 'Lidnummer VTTL:',
-      memberNumberSporta: 'Lidnummer Sporta:',
       styleAll: 'Stijl:',
       styles: {
         attacker: 'Aanvaller',

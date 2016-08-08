@@ -16,6 +16,10 @@ function callFormat(n) {
 export default class Telephone extends Component {
   static propTypes = {
     number: PropTypes.string.isRequired,
+    hideIcon: PropTypes.bool,
+  }
+  static defaultProps = {
+    hideIcon: false
   }
 
   render() {
@@ -24,6 +28,10 @@ export default class Telephone extends Component {
     }
 
     var {number, ...props} = this.props;
+    if (this.props.hideIcon) {
+      return <a href={'tel:' + callFormat(number)} {...props}>{displayFormat(number)}</a>
+    }
+
     return (
       <div className="iconize" {...props}>
         <Icon fa="fa fa-phone" />

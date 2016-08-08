@@ -8,8 +8,10 @@ import Panel from 'react-bootstrap/lib/Panel';
 import PlayerImage from '../PlayerImage.js';
 import TabbedContainer from '../../controls/TabbedContainer.js';
 import Table from 'react-bootstrap/lib/Table';
+import Image from 'react-bootstrap/lib/Image';
 import cn from 'classnames';
 import TextField from 'material-ui/lib/text-field';
+import Telephone from '../../controls/Telephone.js';
 
 import { connect } from 'react-redux';
 import ImmutablePropTypes from 'react-immutable-proptypes';
@@ -69,18 +71,14 @@ export default class Players extends Component {
   _onPlayerSearchChange(e) {
     this.setState({filter: e.target.value.toLowerCase()});
   }
+
   _renderToolbar(tabKey) {
     return (
       <div style={{marginRight: 5, marginLeft: 5}}>
-        {tabKey !== tabEventKeys.all ? (
-          <TextField hintText={this.context.t('players.search')} onChange={::this._onPlayerSearchChange} style={{width: 150}} />
-        ) : null}
-
-        {this.props.user.playerId ? (
-          <a onClick={::this._downloadExcel} title={this.context.t('players.downloadExcel')} className="clickable pull-right" style={{marginTop: 5}}>
-            <Icon fa="fa fa-file-excel-o fa-2x" />
-          </a>
-        ) : null}
+        <TextField
+          hintText={this.context.t('players.search')}
+          onChange={::this._onPlayerSearchChange}
+          style={{width: 150}} />
       </div>
     );
   }
@@ -105,19 +103,6 @@ export default class Players extends Component {
     );
   }
 
-  _renderTabAll() {
-    return (
-      <div style={{marginBottom: -20, marginLeft: 10, marginRight: 10}}>
-        <Accordion>
-          {this.props.teams.sort((a, b) => (a.competition + a.teamCode).localeCompare(b.competition + b.teamCode)).map((team, index) => (
-            <Panel key={team.id} header={team.competition + ' ' + team.teamCode + '-' + this.context.t('players.team')} eventKey={index}>
-              {this._getPlayersOfTeam(team.competition,team.teamCode)}
-            </Panel>
-          ))}
-        </Accordion>
-      </div>
-    );
-  }
   _renderTabVttl() {
     var playersVTTL = this.props.players.filter(x => x.vttl);
     if (this.state.filter) {
@@ -214,6 +199,16 @@ export default class Players extends Component {
 
     return (
       <div style={{marginTop: 20, marginBottom: 10}}>
+        {this.props.user.playerId ? (
+          <a
+            onClick={::this._downloadExcel}
+            title={this.context.t('players.downloadExcel')}
+            className="clickable pull-right"
+            style={{marginTop: 5}}>
+            <Icon fa="fa fa-file-excel-o fa-2x" />
+          </a>
+        ) : null}
+
         <TabbedContainer
           openTabKey={tabEventKeys.all}
           tabKeys={tabConfig}
@@ -223,93 +218,68 @@ export default class Players extends Component {
     );
   }
 
-  _getPlayersOfTeam(competition, team) {
-    const teamTT = this.props.teams.filter(x => x.competition === competition && x.teamCode === team).toArray();
-    const players = teamTT[0].players;
-    var playerAsPlayerObject= [];
-    for (let i = 0; i < players.length; i++){
-      playerAsPlayerObject.push(storeUtil.getPlayer(players[i].playerId));
+  _renderTabAll() {
+    var players = this.props.players;
+    if (this.state.filter) {
+      players = players.filter(x => x.name.toLowerCase().includes(this.state.filter));
     }
-    if (competition === 'Vttl') {
-      playerAsPlayerObject = playerAsPlayerObject.filter(x => x.vttl).sort((a, b) => a.vttl.position - b.vttl.position);
-      return (
-        <div>
-            {playerAsPlayerObject.map(player => (<Card key={player.id}>
-            <CardHeader title={this.context.t('players.vttl') + ' ' + teamTT[0].teamCode + ' - ' + player.name}
-              avatar={this._getPlayerRoleInTeam(players,player.id)} />
-               <CardText>
-                   <div className="row">
-                      <div className="col-sm-8">
-                         <p>{this.context.t('players.indexVTTL')} {player.vttl.rankingIndex}</p>
-                         <p>{this.context.t('players.memberNumberVTTL')} {player.vttl.uniqueIndex}</p>
-                         <p>{this.context.t('players.rankingVTTL')} {player.vttl.ranking}</p>
-                         <p>{this.context.t('players.styleAll')} {player.style.name}</p>
-                         <p>{this.context.t('players.bestStrokeAll')} {player.style.bestStroke}</p>
-                      </div>
-                      <div className="col-sm-4">
-                        <PlayerImage playerId={player.id} />
-                      </div>
-                    </div>
-               </CardText>
-            </Card>))}
-        </div>
-      );
-    } else {
-      playerAsPlayerObject = playerAsPlayerObject.filter(x => x.sporta).sort((a, b) => a.sporta.position - b.sporta.position);
-      return (
-        <div>
-          {playerAsPlayerObject.map(player => (<Card key={player.id}>
-          <CardHeader title={this.context.t('players.sporta') + ' ' + teamTT[0].teamCode + ' - ' + player.name}
-            avatar={this._getPlayerRoleInTeam(players,player.id)} />
-            <CardText>
-              <div className="row">
-                <div className="col-sm-8">
-                   <p>{this.context.t('players.indexSporta')} {player.sporta.rankingIndex}</p>
-                   <p>{this.context.t('players.memberNumberSporta')} {player.sporta.uniqueIndex}</p>
-                   <p>{this.context.t('players.rankingSporta')} {player.sporta.ranking}</p>
-                   <p>{this.context.t('players.styleAll')} {player.style.name}</p>
-                   <p>{this.context.t('players.bestStrokeAll')} {player.style.bestStroke}</p>
-                </div>
-                <div className="col-sm-4">
-                   <PlayerImage playerId={player.id} />
-                </div>
-              </div>
-            </CardText>
-          </Card>))}
-        </div>
-      );
-    }
-  }
+    players = players.sort((a, b) => a.name.localeCompare(b.name));
+    return (
+      <Table condensed hover>
+        <thead>
+          <tr>
+            <th>{this.context.t('players.name')}</th>
+            {this.props.user.playerId ? <th>{this.context.t('player.address')}</th> : null}
+            <th className="hidden-xs">{this.context.t('common.competitie')}</th>
+            <th className="hidden-xs">{this.context.t('players.style')}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {players.map(ply => {
+            const teamVttl = ply.getTeam('Vttl');
+            const teamSporta = ply.getTeam('Sporta');
 
-
-
-  _getPlayerRoleInTeam(players, playerId) {
-    const iconWidth = {
-      width: 26
-    };
-
-    for (let i = 0; i < players.length; i++){
-      if (players[i].playerId === playerId) {
-        if (players[i].type === 'Captain') {
-          return (
-            <span style={iconWidth}>
-              <Icon fa="fa fa-star fa-2x" />
-            </span>
-          );
-        } else if (players[i].type === 'Reserve') {
-          return (
-            <span style={iconWidth}>
-              <Icon fa="fa fa-user-times fa-2x" />
-            </span>
-          );
-        } else {
-          return (
-            <span style={iconWidth}>
-              <Icon fa="fa fa-user-plus fa-2x" />
-            </span>
-          );
-        }
-      }
-    }
+            return (
+              <tr key={ply.id} className={cn({'match-won': ply.isMe()})}>
+                <td className="hidden-xs">
+                  <strong>{ply.name}</strong>
+                  {this.props.user.playerId ? <div>{ply.formattedMobile()}</div> : null}
+                </td>
+                <td className="visible-xs">
+                  <strong>{ply.alias}</strong>
+                  <br />
+                  <Telephone number={ply.contact.mobile} hideIcon style={{fontSize: 10}} />
+                </td>
+                {this.props.user.playerId ? (
+                  <td>
+                    {ply.contact.address}
+                    <br />
+                    {ply.contact.city}
+                  </td>
+                ) : null}
+                <td className="hidden-xs">
+                  {ply.vttl ? (
+                    <span>
+                      Vttl {teamVttl ? teamVttl.teamCode : null} <small>({ply.vttl.ranking})</small>
+                      {ply.sporta ? <br /> : null}
+                    </span>
+                  ) : null}
+                  {ply.sporta ? (
+                    <span>
+                      Sporta {teamSporta ? teamSporta.teamCode : null} <small>({ply.sporta.ranking})</small>
+                    </span>
+                  ) : null}
+                </td>
+                <td className="hidden-xs">
+                  {ply.style.name}
+                  <br />
+                  <small>{ply.style.bestStroke}</small>
+                </td>
+              </tr>
+            )}
+          )}
+        </tbody>
+      </Table>
+    );
   }
 }

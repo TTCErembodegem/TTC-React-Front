@@ -29,6 +29,15 @@ export default class PlayerModel {
     }
     return this.contact.mobile.replace(/(\d{4})(\d{2})(\d{2})(\d{2})/, '$1 / $2 $3 $4');
   }
+
+  getTeam(competition) {
+    const comp = competition === 'Vttl' ? this.vttl : this.sporta;
+    const teams = storeUtil.getTeams()
+      .filter(team => team.competition === competition)
+      .filter(team => team.players.some(tp => tp.playerId === this.id && (tp.type === 'Captain' || tp.type === 'Standard')));
+
+    return teams.first();
+  }
 }
 
 export var playerUtils = {
