@@ -123,7 +123,7 @@ export default class MatchCard extends Component {
       title: this.context.t('match.tabs.opponentsFormationTitle'),
       label: this.context.t('match.tabs.opponentsFormation'),
     }, {
-      key: tabEventKeys.opponentsFormation,
+      key: tabEventKeys.admin,
       title: 'admin',
       label: 'admin',
       show: this.props.user.isDev(),
