@@ -86,6 +86,11 @@ class AdminTeamPlayers extends Component {
     this.props.toggleTeamPlayer(playerId, this.state.role);
   }
 
+  _renderPlayerSubtitle(team, ply) {
+    const player = team.getPlayers().find(p => p.player.id === ply.id);
+    return <span>{player ? player.type : null}</span>;
+  }
+
   render() {
     const team = this.props.team;
     return (
@@ -100,7 +105,8 @@ class AdminTeamPlayers extends Component {
             players={team.getPlayers().map(ply => ply.player)}
             user={this.props.user}
             competition={team.competition}
-            viewport={this.props.viewport} />
+            viewport={this.props.viewport}
+            subtitle={this._renderPlayerSubtitle.bind(this, team)} />
 
           <br />
 

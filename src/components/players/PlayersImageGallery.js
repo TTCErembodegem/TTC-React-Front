@@ -56,6 +56,7 @@ export default class PlayersImageGallery extends Component {
     viewport: PropTypes.object.isRequired,
     updateStyle: PropTypes.func.isRequired,
     viewportWidthContainerCount: PropTypes.number.isRequired,
+    subtitle: PropTypes.func,
   }
   static defaultProps = {
     viewportWidthContainerCount: 1 // The amount of containers next to eachother that display a PlayersImageGallery
@@ -118,7 +119,7 @@ export default class PlayersImageGallery extends Component {
                       <span>{ply.name}</span> <small>{comp ? comp.ranking : '??'}</small>
                     </span>
                   )}
-                  subtitle={<PlayerPlayingStyle ply={ply} />}>
+                  subtitle={this.props.subtitle ? this.props.subtitle(ply) : <PlayerPlayingStyle ply={ply} />}>
                   {canChangeStyle ? (
                     <Icon
                       title={t('players.editStyle.tooltip', ply.alias)}
