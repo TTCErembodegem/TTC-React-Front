@@ -94,7 +94,7 @@ export default class MatchReport extends Component {
                     contentEditable={canPostReport} />
 
                   <RaisedButton
-                    label={this.context.t('match.report.postReport')}
+                    label={this.context.t('common.save')}
                     primary={true}
                     style={{float: 'right', marginBottom: 65}}
                     onClick={::this._onPostReport} />

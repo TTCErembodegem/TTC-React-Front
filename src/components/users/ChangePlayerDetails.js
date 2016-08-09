@@ -36,7 +36,7 @@ export default class ChangePlayerDetails extends Component {
     };
     return (
       <div style={paperStyle}>
-        <h3>{this.context.t('updatePlayer.title')}</h3>
+        <h3>{this.context.t('profile.editDetails')}</h3>
 
         <TextField
           floatingLabelText={this.context.t('player.email')}
@@ -63,7 +63,7 @@ export default class ChangePlayerDetails extends Component {
           onChange={e => this.setState({city: e.target.value})} />
 
         <RaisedButton
-          label={this.context.t('updatePlayer.changeDetailsButton')}
+          label={this.context.t('profile.editDetails')}
           primary={true}
           style={{marginTop: 15}}
           onClick={() => this.props.updatePlayer(Object.assign(this.props.player, {contact: this.state}))} />

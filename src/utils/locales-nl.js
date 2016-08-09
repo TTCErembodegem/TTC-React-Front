@@ -22,7 +22,6 @@ export default {
     systemUserAlias: 'Clublokaal',
     modal: {
       cancel: 'Annuleren',
-      submit: 'Bewaren',
     },
     common: {
       apiSuccess: 'Greato success',
@@ -87,7 +86,6 @@ export default {
       loggedIn: '${} aangelogd',
     },
     password: {
-      forgotTitle: 'Nieuw paswoord',
       forgotLink: 'Paswoord vergeten?',
       fogotMailSent: 'Een email met je nieuw paswoord is verzonden',
       sendNewButton: 'Nieuw paswoord sturen',
@@ -112,11 +110,8 @@ export default {
       title: 'Paswoord wijzigen',
       oldPassword: 'Huidig paswoord',
       newPassword: 'Nieuw paswoord',
-      changePasswordButton: 'Wijzig Paswoord',
     },
     updatePlayer: {
-      title: 'Wijzig uw gegevens',
-      changeDetailsButton: 'Wijzig gegevens',
       updatePlayerSuccess: 'Speler gegevens succesvol gewijzigd',
       updatePlayerFail: 'Speler gegevens wijzigen is mislukt'
     },
@@ -185,19 +180,16 @@ export default {
         club: 'Lokaal',
         clubTitle: 'Hun clublokaal',
         scoresheet: 'Wedstrijdblad',
-        scoresheetTitle: 'Wedstrijdblad',
         opponentsRanking: 'Tegenstanders',
         opponentsRankingTitle: 'Hun laatste uitslagen',
         opponentsFormationTitle: 'Hun opstelling',
         admin: 'Dev',
-        adminTitle: 'Dev',
       },
       report: {
         title: 'Wedstrijdverslag',
         editTooltip: 'Wedstrijdverslag wijzigen',
         noReport: 'Nog niets te bespeuren...',
         placeHolder: 'Vertel...',
-        postReport: 'Bewaren',
         reportPosted: 'Wedstrijdverslag bewaard',
         reportWrittenBy: 'door ${}',
         commentsTitle: 'Opvolging',
