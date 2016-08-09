@@ -59,7 +59,7 @@ export default class PlayerLinup extends Component {
         <thead>
           <tr>
             <th className="hidden-xs">{t('common.frenoy')}</th>
-            <th>{t('teamCalendar.date')}</th>
+            <th className="hidden-xs">{t('common.date')}</th>
             <th>{t('teamCalendar.match')}</th>
             <th>{t('profile.play.tableTitle')}</th>
           </tr>
@@ -67,6 +67,14 @@ export default class PlayerLinup extends Component {
         <tbody>
         {matches.map(match => {
           const getOnChangePlaying = status => this._onChangePlaying.bind(this, match, status);
+          const buttons = (
+            <ButtonToolbar>
+              <Button style={{marginBottom: 5, width: 90}} bsStyle="success" onClick={getOnChangePlaying('Play')}>{t('profile.play.canPlay')}</Button>
+              <Button style={{marginBottom: 5, width: 90}} bsStyle="danger" onClick={getOnChangePlaying('NotPlay')}>{t('profile.play.canNotPlay')}</Button>
+              <Button style={{marginBottom: 5, width: 90}} bsStyle="info" onClick={getOnChangePlaying('Maybe')}>{t('profile.play.canMaybe')}</Button>
+              <Button style={{width: 90}} onClick={getOnChangePlaying('DontKnow')}>{t('profile.play.canDontKnow')}</Button>
+            </ButtonToolbar>
+          );
           const currentStatus = match.plays(this.props.user.playerId);
 
           const us = match.getTeam().renderOwnTeamTitle();
@@ -75,18 +83,19 @@ export default class PlayerLinup extends Component {
           return (
             <tr key={match.id} className={this._getPlayingStatusRowClass(currentStatus)}>
               <td className="hidden-xs">{match.frenoyMatchId}</td>
-              <td>{t('match.date', match.getDisplayDate())}</td>
-              {match.isHomeMatch ?
-                <td><strong>{us}</strong> {separator} {them}</td>
-              : <td>{them} {separator} <strong>{us}</strong></td>}
+              <td className="hidden-xs">{t('match.date', match.getDisplayDate())}</td>
               <td>
-                <ButtonToolbar>
-                  <Button style={{marginBottom: 5}} bsStyle="success" onClick={getOnChangePlaying('Play')}>{t('profile.play.canPlay')}</Button>
-                  <Button style={{marginBottom: 5}} bsStyle="danger" onClick={getOnChangePlaying('NotPlay')}>{t('profile.play.canNotPlay')}</Button>
-                  <Button style={{marginBottom: 5}} bsStyle="info" onClick={getOnChangePlaying('Maybe')}>{t('profile.play.canMaybe')}</Button>
-                  <Button onClick={getOnChangePlaying('DontKnow')}>{t('profile.play.canDontKnow')}</Button>
-                </ButtonToolbar>
+                <span className="visible-xs">
+                  {t('match.date', match.getDisplayDate())}
+                  <br />
+                </span>
+                {match.isHomeMatch ?
+                  <span><strong>{us}</strong> {separator} {them}</span>
+                : <span>{them} {separator} <strong>{us}</strong></span>
+                }
               </td>
+              <td style={{width: '1%'}} className="visible-xs">{buttons}</td>
+              <td className="hidden-xs">{buttons}</td>
             </tr>
           );
         })}

@@ -103,7 +103,7 @@ export default class MatchesWeek extends Component {
         <thead>
           <tr>
             <th>{t('common.frenoy')}</th>
-            <th>{t('teamCalendar.date')}</th>
+            <th>{t('common.date')}</th>
             <th>{t('teamCalendar.match')}</th>
             <th>{t('common.teamFormation')}</th>
           </tr>

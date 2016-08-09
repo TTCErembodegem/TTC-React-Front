@@ -20,13 +20,11 @@ export default {
     fullClubName: 'TTC Erembodegem',
     clubName: 'Erembodegem',
     systemUserAlias: 'Clublokaal',
-    modal: {
-      cancel: 'Annuleren',
-    },
     common: {
       apiSuccess: 'Greato success',
       apiFail: 'Oepsie! Mislukt...',
       save: 'Bewaren',
+      cancel: 'Annuleren',
       frenoy: 'Frenoy',
       teamFormation: 'Opstelling',
       competition: 'Competitie',

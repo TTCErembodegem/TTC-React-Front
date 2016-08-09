@@ -66,6 +66,12 @@ export default class Profile extends Component {
       key: tabEventKeys.main,
       title: t('profile.main'),
     }, {
+      key: tabEventKeys.editHolidays,
+      title: t('profile.editHolidays'),
+    }, {
+      key: tabEventKeys.editPassword,
+      title: t('profile.editPassword'),
+    }, {
       key: tabEventKeys.editDetails,
       title: t('profile.editDetails'),
     }, {
@@ -74,12 +80,6 @@ export default class Profile extends Component {
     }, {
       key: tabEventKeys.editAvatar,
       title: t('profile.editAvatar'),
-    }, {
-      key: tabEventKeys.editPassword,
-      title: t('profile.editPassword'),
-    }, {
-      key: tabEventKeys.editHolidays,
-      title: t('profile.editHolidays'),
     }];
 
     return (

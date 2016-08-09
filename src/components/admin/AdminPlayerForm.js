@@ -36,31 +36,34 @@ export default class AdminPlayerForm extends Component {
     const player = this.state;
     const fieldMargin = 30;
     return (
-      <div>
+      <div style={{marginLeft: 10, marginRight: 10}}>
         <h3>{player.name || 'Nieuw lid'}</h3>
         <div>
           <Paper style={{padding: 15}}>
             <h4>Persoonlijk</h4>
             <TextField
+              style={{width: 200, marginRight: fieldMargin}}
               floatingLabelText={this.context.t('login.loginName')}
               defaultValue={player.name}
               onChange={e => this.setState({name: e.target.value})} />
 
             <TextField
+              style={{width: 200}}
               floatingLabelText={this.context.t('player.alias')}
-              defaultValue={player.alias} style={{marginLeft: fieldMargin}}
+              defaultValue={player.alias}
               onChange={e => this.setState({alias: e.target.value})} />
 
             <br />
 
             <PlayerStyleAutocomplete t={this.context.t}
+              style={{width: 200, marginRight: fieldMargin}}
               value={player.style.name || ''}
-              onChange={text => this.setState({style: Object.assign({}, player.style, {name: text})})}
-              style={{marginTop: -25}} />
+              onChange={text => this.setState({style: Object.assign({}, player.style, {name: text})})} />
 
             <TextField
+              style={{width: 230}}
               floatingLabelText={this.context.t('players.editStyle.bestStroke')}
-              defaultValue={player.style.bestStroke} style={{marginLeft: fieldMargin}}
+              defaultValue={player.style.bestStroke}
               onChange={e => this.setState({style: Object.assign({}, player.style, {bestStroke: e.target.value})})} />
 
             <br />
@@ -69,28 +72,32 @@ export default class AdminPlayerForm extends Component {
           </Paper>
 
 
-          <Panel style={{marginTop: 20}}>
+          <Panel style={{marginTop: 20, padding: 15}}>
             <h4>Contact</h4>
             <TextField
+              style={{width: 200, marginRight: fieldMargin}}
               floatingLabelText={this.context.t('player.email')}
               defaultValue={player.contact.email}
               onChange={e => this.setState({contact: Object.assign({}, player.contact, {email: e.target.value})})} />
 
             <TextField
+              style={{width: 200}}
               floatingLabelText={this.context.t('player.gsm')}
-              defaultValue={player.contact.mobile} style={{marginLeft: fieldMargin}}
+              defaultValue={player.contact.mobile}
               onChange={e => this.setState({contact: Object.assign({}, player.contact, {mobile: e.target.value})})} />
 
             <br />
 
             <TextField
+              style={{width: 200, marginRight: fieldMargin}}
               floatingLabelText={this.context.t('player.address')}
               defaultValue={player.contact.address}
               onChange={e => this.setState({contact: Object.assign({}, player.contact, {address: e.target.value})})} />
 
             <TextField
+              style={{width: 200}}
               floatingLabelText={this.context.t('player.city')}
-              defaultValue={player.contact.city} style={{marginLeft: fieldMargin}}
+              defaultValue={player.contact.city}
               onChange={e => this.setState({contact: Object.assign({}, player.contact, {city: e.target.value})})} />
 
           </Panel>
@@ -103,6 +110,11 @@ export default class AdminPlayerForm extends Component {
             this.props.updatePlayer(this.state);
             this.props.onEnd();
           }} />
+
+        <RaisedButton
+          label={this.context.t('common.cancel')}
+          style={{marginTop: 5, marginLeft: 10}}
+          onClick={() => this.props.onEnd()} />
       </div>
     );
   }
@@ -118,7 +130,7 @@ class PlayerSecuritySelectField extends React.Component {
 
   render() {
     return (
-      <SelectField value={this.props.value} onChange={this.props.onChange} floatingLabelText="Toegang">
+      <SelectField style={{width: 100}} value={this.props.value} onChange={this.props.onChange} floatingLabelText="Toegang">
         {userRoles.map(role => <MenuItem key={role} value={role} primaryText={role} />)}
       </SelectField>
     );

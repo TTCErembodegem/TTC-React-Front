@@ -8,8 +8,14 @@ import { contextTypes } from '../../utils/decorators/withContext.js';
 
 import List from 'material-ui/lib/lists/list';
 import ListItem from 'material-ui/lib/lists/list-item';
+import TabbedContainer from '../controls/TabbedContainer.js';
 import AdminPlayers from './AdminPlayers.js';
 import AdminTeams from './AdminTeams.js';
+
+const tabEventKeys = {
+  players: 1,
+  teams: 2,
+};
 
 @connect(state => {
   return {
@@ -34,16 +40,12 @@ export default class Admin extends Component {
       players: PropTypes.object.isRequired,
     }).isRequired,
   }
-  constructor() {
-    super();
-    this.state = {section: 'players'};
-  }
 
-  _renderSection() {
-    switch (this.state.section) {
-    case 'teams':
+  _renderSection(eventKey) {
+    switch (eventKey) {
+    case tabEventKeys.teams:
       return <AdminTeams teams={this.props.teams} />;
-    case 'players':
+    case tabEventKeys.players:
       return <AdminPlayers players={this.props.players} recreantAndQuitters={this.props.admin.players} />;
     }
   }
@@ -53,30 +55,20 @@ export default class Admin extends Component {
       return null;
     }
 
-    return (
-      <div style={{marginTop: 20, marginBottom: 20}}>
-        <AdminMenu onSectionChange={section => this.setState({section})} />
-        <div style={{marginLeft: 160, marginTop: -8}}>
-          {this._renderSection()}
-        </div>
-      </div>
-    );
-  }
-}
+    const tabConfig = [{
+      key: tabEventKeys.players,
+      title: 'Spelers',
+    }, {
+      key: tabEventKeys.teams,
+      title: 'Teams',
+    }];
 
-class AdminMenu extends React.Component {
-  static propTypes = {
-    onSectionChange: PropTypes.func.isRequired,
-  }
-
-  render() {
     return (
-      <div style={{width: 150, border: 'solid 1px #d9d9d9', position: 'absolute', top: 75, left: 15}}>
-        <List>
-          <ListItem primaryText="Spelers" onTouchTap={() => this.props.onSectionChange('players')} />
-          <ListItem primaryText="Ploegen" onTouchTap={() => this.props.onSectionChange('teams')} />
-        </List>
-      </div>
+      <TabbedContainer
+        style={{marginTop: 10, marginBottom: 20}}
+        openTabKey={tabEventKeys.players}
+        tabKeys={tabConfig}
+        tabRenderer={::this._renderSection} />
     );
   }
 }

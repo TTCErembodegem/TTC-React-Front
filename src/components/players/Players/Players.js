@@ -68,16 +68,12 @@ export default class Players extends Component {
     });
   }
 
-  _onPlayerSearchChange(e) {
-    this.setState({filter: e.target.value.toLowerCase()});
-  }
-
   _renderToolbar(tabKey) {
     return (
       <div style={{marginRight: 5, marginLeft: 5}}>
         <TextField
           hintText={this.context.t('players.search')}
-          onChange={::this._onPlayerSearchChange}
+          onChange={e => this.setState({filter: e.target.value.toLowerCase()})}
           style={{width: 150}} />
       </div>
     );

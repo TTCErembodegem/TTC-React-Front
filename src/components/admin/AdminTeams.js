@@ -94,7 +94,7 @@ class AdminTeamPlayers extends Component {
   render() {
     const team = this.props.team;
     return (
-      <div>
+      <div style={{paddingLeft: 10, paddingRight: 10}}>
         <Paper style={{padding: 20, marginBottom: 20}}>
           <h4>
             {team.renderOwnTeamTitle()}
@@ -110,13 +110,13 @@ class AdminTeamPlayers extends Component {
 
           <br />
 
-          <SelectField value={this.state.role} onChange={::this._onRoleChange}>
+          <SelectField value={this.state.role} onChange={::this._onRoleChange} style={{width: 100, marginRight: 10}}>
             {_.toArray(teamPlayerType).map(role => <MenuItem key={role} value={role} primaryText={role} />)}
           </SelectField>
 
           <PlayerAutoComplete
             selectPlayer={::this._onToggleTeamPlayer}
-            style={{marginLeft: 10}}
+            style={{width: 150}}
             hintText="Selecteer speler" />
         </Paper>
       </div>
@@ -125,10 +125,8 @@ class AdminTeamPlayers extends Component {
 }
 
 const AdminTeamsToolbar = ({onFilterChange}) => (
-  <Toolbar style={{marginBottom: 10}}>
-    <ToolbarGroup firstChild={true} float="left">
-      <RaisedButton label="Teams Vttl" onTouchTap={() => onFilterChange('Vttl')} />
-      <RaisedButton label="Teams Sporta" onTouchTap={() => onFilterChange('Sporta')} />
-    </ToolbarGroup>
-  </Toolbar>
+  <div style={{padding: 10}}>
+    <Button bsStyle="info" style={{marginRight: 10}} onClick={() => onFilterChange('Vttl')}>Vttl</Button>
+    <Button bsStyle="info" onClick={() => onFilterChange('Sporta')}>Sporta</Button>
+  </div>
 );

@@ -80,7 +80,7 @@ export default class PlayersImageGallery extends Component {
 
     const changeStyleModalActions = [
       <FlatButton
-        label={t('modal.cancel')}
+        label={t('common.cancel')}
         secondary={true}
         onTouchTap={::this._closeStyle} />,
       <FlatButton

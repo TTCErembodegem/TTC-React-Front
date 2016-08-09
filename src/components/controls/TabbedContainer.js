@@ -23,6 +23,7 @@ export default class TabbedContainer extends Component {
     onTabSelect: PropTypes.func,
     forceTabs: PropTypes.bool,
     widthTreshold: PropTypes.number,
+    style: PropTypes.object,
 
     viewport: PropTypes.object.isRequired,
   }
@@ -46,14 +47,14 @@ export default class TabbedContainer extends Component {
   render() {
     if (this._showAccordion()) {
       return (
-        <PanelGroup activeKey={this.state.openTabKey} onSelect={::this._onTabSelect} accordion>
+        <PanelGroup activeKey={this.state.openTabKey} onSelect={::this._onTabSelect} accordion style={this.props.style}>
           {this.props.tabKeys.filter(tab => tab.show !== false).map(tab => this._renderNavItem(tab))}
         </PanelGroup>
       );
     }
 
     return (
-      <div>
+      <div style={this.props.style}>
         <Nav bsStyle="tabs" activeKey={this.state.openTabKey} onSelect={::this._onTabSelect}>
           {this.props.tabKeys.filter(tab => tab.show !== false).map(tab => this._renderNavItem(tab))}
         </Nav>
