@@ -15,7 +15,7 @@ function callFormat(n) {
 
 export default class Telephone extends Component {
   static propTypes = {
-    number: PropTypes.string.isRequired,
+    number: PropTypes.string,
     hideIcon: PropTypes.bool,
   }
   static defaultProps = {
