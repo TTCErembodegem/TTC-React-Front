@@ -58,7 +58,7 @@ export default class PlayerLinup extends Component {
       <Table condensed hover>
         <thead>
           <tr>
-            <th>{t('common.frenoy')}</th>
+            <th className="hidden-xs">{t('common.frenoy')}</th>
             <th>{t('teamCalendar.date')}</th>
             <th>{t('teamCalendar.match')}</th>
             <th>{t('profile.play.tableTitle')}</th>
@@ -74,16 +74,16 @@ export default class PlayerLinup extends Component {
           const separator = <Icon fa="fa fa-arrows-h" />;
           return (
             <tr key={match.id} className={this._getPlayingStatusRowClass(currentStatus)}>
-              <td>{match.frenoyMatchId}</td>
+              <td className="hidden-xs">{match.frenoyMatchId}</td>
               <td>{t('match.date', match.getDisplayDate())}</td>
               {match.isHomeMatch ?
                 <td><strong>{us}</strong> {separator} {them}</td>
               : <td>{them} {separator} <strong>{us}</strong></td>}
               <td>
                 <ButtonToolbar>
-                  <Button bsStyle="success" onClick={getOnChangePlaying('Play')}>{t('profile.play.canPlay')}</Button>
-                  <Button bsStyle="danger" onClick={getOnChangePlaying('NotPlay')}>{t('profile.play.canNotPlay')}</Button>
-                  <Button bsStyle="info" onClick={getOnChangePlaying('Maybe')}>{t('profile.play.canMaybe')}</Button>
+                  <Button style={{marginBottom: 5}} bsStyle="success" onClick={getOnChangePlaying('Play')}>{t('profile.play.canPlay')}</Button>
+                  <Button style={{marginBottom: 5}} bsStyle="danger" onClick={getOnChangePlaying('NotPlay')}>{t('profile.play.canNotPlay')}</Button>
+                  <Button style={{marginBottom: 5}} bsStyle="info" onClick={getOnChangePlaying('Maybe')}>{t('profile.play.canMaybe')}</Button>
                   <Button onClick={getOnChangePlaying('DontKnow')}>{t('profile.play.canDontKnow')}</Button>
                 </ButtonToolbar>
               </td>
