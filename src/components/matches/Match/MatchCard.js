@@ -106,7 +106,7 @@ export default class MatchCard extends Component {
       show: match.games.size !== 0,
     }, {
       key: tabEventKeys.scoresheet,
-      title: this.context.t('match.tabs.scoresheetTitle'),
+      title: this.context.t('match.tabs.scoresheet'),
       label: this.context.t('match.tabs.scoresheet'),
       show: match.scoreType === 'BeingPlayed' && match.players.size,
     }, {

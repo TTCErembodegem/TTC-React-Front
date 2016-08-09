@@ -84,7 +84,7 @@ export default class PlayersImageGallery extends Component {
         secondary={true}
         onTouchTap={::this._closeStyle} />,
       <FlatButton
-        label={t('modal.submit')}
+        label={t('common.save')}
         primary={true}
         keyboardFocused={true}
         onTouchTap={::this._saveStyle} />,

@@ -46,7 +46,7 @@ export class ChangeAnyPassword extends Component {
           onChange={e => this.setState({newPassword: e.target.value})} />
 
         <RaisedButton
-          label={this.context.t('changePassword.changePasswordButton')}
+          label={this.context.t('profile.editPassword')}
           primary={true}
           style={{marginTop: 15}}
           onClick={() => {
@@ -104,7 +104,7 @@ export default class ChangePassword extends Component {
           onChange={e => this.setState({newpassword: e.target.value})} />
 
         <RaisedButton
-          label={this.context.t('changePassword.changePasswordButton')}
+          label={this.context.t('profile.editPassword')}
           primary={true}
           style={{marginTop: 15}}
           onClick={() => this.props.changePassword(this.props.user.playerId, this.state)}

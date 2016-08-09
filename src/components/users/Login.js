@@ -36,7 +36,7 @@ export class ForgotPassword extends Component {
     };
     return (
       <Paper zDepth={1} style={paperStyle}>
-        <h3>{t('password.forgotTitle')}</h3>
+        <h3>{t('changePassword.newPassword')}</h3>
         <PlayerAutoComplete
           selectPlayer={id => this.setState({playerId: id})}
           floatingLabelText={t('login.loginName')} />
