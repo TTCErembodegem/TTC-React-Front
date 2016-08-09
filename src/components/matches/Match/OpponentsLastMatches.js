@@ -70,7 +70,7 @@ export default class OpponentsLastMatches extends Component {
       <Table condensed className="match-card-tab-table">
         <thead>
           <tr>
-            <th key="1">{this.context.t('match.opponents.date')}</th>
+            <th key="1">{this.context.t('common.date')}</th>
             {this.props.viewport.width > widthRemoveColumn ? [
               <th key="2">{this.context.t('match.opponents.homeTeam')}</th>,
               <th key="3">{this.context.t('match.opponents.awayTeam')}</th>

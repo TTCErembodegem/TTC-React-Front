@@ -21,6 +21,35 @@ function sortMappedPlayers(competition) {
   };
 }
 
+class TeamFrenoyModel {
+  constructor(frenoy, team) {
+    this.divisionId = frenoy.divisionId;
+    this.linkId = frenoy.linkId;
+    this.teamId = frenoy.teamId;
+    this.seasonId = team.year - 2000 + 1;
+
+    this.team = team;
+  }
+
+  getUrl(type) {
+    const season = this.seasonId;
+    const linkId = this.linkId;
+    if (this.team.competition === 'Vttl') {
+      if (type === 'ranking') {
+        return `http://competitie.vttl.be/index.php?menu=4&season=${season}&province=5&club_id=282&perteam=1&div_id=${linkId}`;
+      } else if (type === 'results') {
+        return `http://competitie.vttl.be/index.php?menu=5&season=${season}&div_id=${linkId}`;
+      }
+    } else if (this.team.competition === 'Sporta') {
+      if (type === 'ranking') {
+        return `http://tafeltennis.sporcrea.be/competitie/index.php?menu=4&season=${season}&province=4&club_id=37&perteam=1&div_id=${linkId}`;
+      } else if (type === 'results') {
+        return `http://tafeltennis.sporcrea.be/competitie/index.php?menu=5&season=${season}&province=4&club_id=37&perteam=1&div_id=${linkId}`;
+      }
+    }
+  }
+}
+
 export default class TeamModel {
   constructor(json) {
     this.competition = json.competition;
@@ -29,10 +58,10 @@ export default class TeamModel {
     this.teamCode = json.teamCode;
     this.clubId = json.clubId;
     this.year = json.year;
-    this.frenoy = json.frenoy;
     this.opponents = json.opponents;
     this.players = json.players;
     this.ranking = json.ranking;
+    this.frenoy = new TeamFrenoyModel(json.frenoy, this);
   }
 
   getTeamPlayerCount() {

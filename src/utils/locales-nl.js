@@ -29,7 +29,8 @@ export default {
       save: 'Bewaren',
       frenoy: 'Frenoy',
       teamFormation: 'Opstelling',
-      competitie: 'Competitie',
+      competition: 'Competitie',
+      date: 'Datum',
     },
     system: {
       playerSelect: 'Wie ben je?',
@@ -207,7 +208,6 @@ export default {
         resultTitle: 'Uitslag',
       },
       opponents: {
-        date: 'Datum',
         homeTeam: 'Thuis',
         awayTeam: 'Uit',
         vsTeam: 'Tegen',
@@ -250,7 +250,6 @@ export default {
       ttactua: 'Tafeltennisactua',
     },
     teamCalendar: {
-      date: 'Datum',
       hour: 'Uur',
       match: 'Wedstrijd',
       score: 'Score',
@@ -259,7 +258,9 @@ export default {
       matchesWon: 'Gewonnen',
       matchesLost: 'Verloren',
       matchesDraw: 'Gelijk',
-      points: 'Punten'
+      points: 'Punten',
+      frenoyRanking: 'Rangschikking Frenoy',
+      frenoyResults: 'Resultaten Frenoy',
     },
     facts: require('./locales-nl-facts.js')
   },

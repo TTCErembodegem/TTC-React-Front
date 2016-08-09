@@ -230,7 +230,7 @@ export default class Players extends Component {
           <tr>
             <th>{this.context.t('players.name')}</th>
             {this.props.user.playerId ? <th>{this.context.t('player.address')}</th> : null}
-            <th className="hidden-xs">{this.context.t('common.competitie')}</th>
+            <th className="hidden-xs">{this.context.t('common.competition')}</th>
             <th className="hidden-xs">{this.context.t('players.style')}</th>
           </tr>
         </thead>

@@ -71,6 +71,12 @@ export default class Teams extends Component {
     const team = this.props.teams.find(t => t.id === teamId);
     return (
       <div>
+        <a href={team.frenoy.getUrl('ranking')} target="_blank">
+          <button className="btn btn-default">{this.context.t('teamCalendar.frenoyResults')}</button>
+        </a>
+        <a href={team.frenoy.getUrl('results')} target="_blank" style={{marginLeft: 5}}>
+          <button className="btn btn-default">{this.context.t('teamCalendar.frenoyRanking')}</button>
+        </a>
         <DivisionRanking team={team} t={this.context.t} />
         <TeamMatches team={team} t={this.context.t} />
       </div>
@@ -105,7 +111,7 @@ const TeamMatches = ({team, t}) => {
     <Table condensed hover>
       <thead>
         <tr>
-          <th>{t('teamCalendar.date')}</th>
+          <th>{t('common.date')}</th>
           <th>{t('teamCalendar.hour')}</th>
           <th>{t('teamCalendar.match')}</th>
           <th>{t('teamCalendar.score')}</th>
