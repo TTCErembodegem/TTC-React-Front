@@ -42,7 +42,15 @@ export default class Teams extends Component {
   }
 
   getDefaultTeam() {
-    return this.props.teams.find(x => x.competition === this.props.competition && x.teamCode === 'A').id;
+    var teamCode = 'A';
+    const teams = this.props.teams.filter(x => x.competition === this.props.competition);
+    if (this.props.user.playerId) {
+      let yourTeam = this.props.user.getTeams().find(team => team.competition);
+      if (yourTeam) {
+        teamCode = yourTeam.teamCode;
+      }
+    }
+    return teams.find(x => x.teamCode === teamCode).id;
   }
 
   _renderOwnTeamPosition(team) {
