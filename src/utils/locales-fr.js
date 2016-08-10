@@ -23,8 +23,10 @@ export default {
     common: {
       apiSuccess: 'Succès',
       apiFail: 'Une erreur est survenue',
+
       save: 'Sauver',
       cancel: 'Annuler',
+
       frenoy: 'Frenoy',
       teamFormation: 'Formation',
       competition: 'Compétition',
@@ -85,6 +87,9 @@ export default {
       loggedIn: '${} est connecté',
     },
     password: {
+      changeTitle: 'Modifier mot de passe',
+      oldPassword: 'Mot de passe courant',
+      newPassword: 'Nouveau mot de passe',
       forgotLink: 'Oublier mot de passe?',
       fogotMailSent: 'E-mail avec votre nouveau mot de passe est envoyé',
       sendNewButton: 'Envoyer un nouveau mot de passe',
@@ -99,42 +104,22 @@ export default {
       save: 'Sauver récolte',
     },
     player: {
+      name: 'Nom',
+      alias: 'Alias',
+
       email: 'Email',
       gsm: 'Gsm',
       address: 'Adresse',
       city: 'Ville',
-      alias: 'Alias',
-    },
-    changePassword: {
-      title: 'Modifier mot de passe',
-      oldPassword: 'Mot de passe courant',
-      newPassword: 'Nouveau mot de passe',
-    },
-    updatePlayer: {
-      updatePlayerSuccess: 'Joueur est modifié',
-      updatePlayerFail: 'Modifier joueur est raté'
-    },
-    players: {
-      title: 'Aperçu de joueurs ${a}',
-      search: 'Chercher jouer',
-      index: 'Index',
-      memberNumber: 'Nombre de membre',
-      name: 'Nom',
-      vttl: 'VTTL',
-      sporta: 'Sporta',
+
       style: 'Style',
-      all: 'Tous',
-      team: 'équipe',
-      styleAll: 'Style:',
-      styles: {
-        attacker: 'Attaquant',
-        defender: 'Défenseur',
-        allRounder: 'All-round',
+      bestStroke: 'Meilleur coup',
+
+      styles: { // TODO: styles kunnen momenteel niet vertaald worden
+        attacker: 'Aanvaller',
+        defender: 'Verdediger',
+        allRounder: 'All-rounder',
       },
-      bestStroke: 'Meilleur coup:',
-      bestStrokeAll: 'Meilleur coup:',
-      ranking: 'Classement',
-      value: 'Valeur',
       editStyle: {
         title: 'Style de jeux ${}',
         tooltip: 'Modifier Style de jeux de ${}',
@@ -142,6 +127,30 @@ export default {
         style: 'Style de jeux',
         saved: 'Style de jeux ${ply} modifié par ${by}: ${newStyle}',
       },
+
+      updatePlayerSuccess: 'Joueur est modifié',
+      updatePlayerFail: 'Modifier joueur est raté'
+    },
+    comp: {
+      index: 'Index',
+      ranking: 'Classement',
+      rankingIndex: 'Nombre de série',
+      sporta: {
+        rankingValue: 'Valeur',
+        uniqueIndex: 'LIDK nr',
+        teamValue: 'Valeur équipe',
+      },
+      vttl: {
+        uniqueIndex: 'Comp nr'
+      },
+    },
+    players: {
+      title: 'Aperçu de joueurs ${a}',
+      search: 'Chercher jouer',
+
+      all: 'Tous',
+      gallery: 'Galerie',
+
       downloadExcel: 'Excel export',
       downloadExcelFileName: 'Spelerslijst_${}',
     },
@@ -157,18 +166,6 @@ export default {
       previousEncounterScore: 'Score premier tour',
       gotoPreviousEncounter: 'Détails premier tour',
       gotoNextEncounter: 'Details second tour',
-      scoresheetSporta: {
-        uniqueIndex: 'Nombre de membre',
-        ranking: 'Classement',
-        rankingValue: 'Valeur',
-        teamValue: 'Valeur équipe',
-      },
-      scoresheetVttl: {
-        uniqueIndex: 'Nombre drdinateur',
-        rankingIndex: 'Nombre de série',
-        index: 'Index',
-        ranking: 'Classement',
-      },
       tabs: {
         players: 'Joueurs',
         playersTitle: 'Notre formation',
@@ -216,7 +213,7 @@ export default {
         victories: 'Victoires / Défaites',
         formation: 'Formation'
       },
-      enemyVictory: '${}ov.',
+      enemyVictory: '${}vic.',
       club: {
         locationTitle: 'Salle de club',
         locationUnknown: 'Pas connu',
