@@ -77,7 +77,7 @@ export default class OpponentsLastMatches extends Component {
             ] : (
               <th key="4">{this.context.t('match.opponents.vsTeam')}</th>
             )}
-            <th key="5">{this.context.t('match.opponents.formation')}</th>
+            <th key="5">{this.context.t('common.teamFormation')}</th>
             <th key="6">{this.context.t('match.opponents.outcome')}</th>
           </tr>
         </thead>

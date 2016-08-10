@@ -62,7 +62,7 @@ export default class AdminPlayerForm extends Component {
 
             <TextField
               style={{width: 230}}
-              floatingLabelText={this.context.t('players.editStyle.bestStroke')}
+              floatingLabelText={this.context.t('player.editStyle.bestStroke')}
               defaultValue={player.style.bestStroke}
               onChange={e => this.setState({style: Object.assign({}, player.style, {bestStroke: e.target.value})})} />
 

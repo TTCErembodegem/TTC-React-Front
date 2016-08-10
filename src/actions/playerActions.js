@@ -35,7 +35,7 @@ export function updateStyle(player, newStyle, updatedBy) {
       .then(function(data) {
         if (data) {
           let user = storeUtil.getPlayer(updatedBy) || {alias: ''};
-          broadcastSnackbar(trans('players.editStyle.saved', {
+          broadcastSnackbar(trans('player.editStyle.saved', {
             ply: player.alias,
             by: user.alias,
             newStyle: newStyle.name + ': ' + newStyle.bestStroke
@@ -55,7 +55,7 @@ export function updatePlayer(player, opts = {}) {
     return http.post('/players/UpdatePlayer', player)
       .then(function(data) {
         if (data) {
-          dispatch(showSnackbar(trans('updatePlayer.updatePlayerSuccess')));
+          dispatch(showSnackbar(trans('player.updatePlayerSuccess')));
           dispatch(loaded(data));
           broadcastReload('player', data.id);
 
@@ -68,7 +68,7 @@ export function updatePlayer(player, opts = {}) {
         }
 
       }, function(err) {
-        dispatch(showSnackbar(trans('updatePlayer.updatePlayerFail')));
+        dispatch(showSnackbar(trans('player.updatePlayerFail')));
         console.log('UpdatePlayer!', err); // eslint-disable-line
       });
   };

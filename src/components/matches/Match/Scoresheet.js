@@ -24,9 +24,9 @@ export default class Scoresheet extends Component {
           <thead>
             <tr>
               <th colSpan={2}>{this.props.match.frenoyMatchId}</th>
-              <th>{this.props.t('match.scoresheetSporta.uniqueIndex')}</th>
-              <th>{this.props.t('match.scoresheetSporta.ranking')}</th>
-              <th>{this.props.t('match.scoresheetSporta.rankingValue')}</th>
+              <th>{this.props.t('comp.sporta.uniqueIndex')}</th>
+              <th>{this.props.t('comp.ranking')}</th>
+              <th>{this.props.t('comp.sporta.rankingValue')}</th>
             </tr>
           </thead>
           <tbody>
@@ -44,7 +44,7 @@ export default class Scoresheet extends Component {
             })}
             <tr>
               <td colSpan={2}>&nbsp;</td>
-              <td colSpan={2}>{this.props.t('match.scoresheetSporta.teamValue')}</td>
+              <td colSpan={2}>{this.props.t('comp.sporta.teamValue')}</td>
               <td>
                 {this.props.match.getOwnPlayerModels()
                   .map(player => player.getCompetition(competition).rankingValue)
@@ -62,10 +62,10 @@ export default class Scoresheet extends Component {
           <thead>
             <tr>
               <th colSpan={2}>{this.props.match.frenoyMatchId}</th>
-              <th>{this.props.t('match.scoresheetVttl.uniqueIndex')}</th>
-              <th>{isSmall ? '' : this.props.t('match.scoresheetVttl.rankingIndex')}</th>
-              <th>{isSmall ? '' : this.props.t('match.scoresheetVttl.index')}</th>
-              <th>{isSmall ? '' : this.props.t('match.scoresheetVttl.ranking')}</th>
+              <th>{this.props.t('comp.vttl.uniqueIndex')}</th>
+              <th>{isSmall ? '' : this.props.t('comp.rankingIndex')}</th>
+              <th>{isSmall ? '' : this.props.t('comp.vttl.index')}</th>
+              <th>{isSmall ? '' : this.props.t('comp.ranking')}</th>
             </tr>
           </thead>
           <tbody>

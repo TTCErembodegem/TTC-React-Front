@@ -23,8 +23,10 @@ export default {
     common: {
       apiSuccess: 'Greato success',
       apiFail: 'Oepsie! Mislukt...',
+
       save: 'Bewaren',
       cancel: 'Annuleren',
+
       frenoy: 'Frenoy',
       teamFormation: 'Opstelling',
       competition: 'Competitie',
@@ -78,13 +80,16 @@ export default {
       introText: '',
       loginName: 'Spelersnaam',
       password: 'Paswoord',
-      passwordHint: 'Geen email ontvangen? Email wouter...',
+      passwordHint: '',
       loginButton: 'Login',
       logoutButton: 'Uitloggen',
       fail: 'Incorrect paswoord voor ${}',
       loggedIn: '${} aangelogd',
     },
     password: {
+      changeTitle: 'Paswoord wijzigen',
+      oldPassword: 'Huidig paswoord',
+      newPassword: 'Nieuw paswoord',
       forgotLink: 'Paswoord vergeten?',
       fogotMailSent: 'Een email met je nieuw paswoord is verzonden',
       sendNewButton: 'Nieuw paswoord sturen',
@@ -99,42 +104,21 @@ export default {
       save: 'Bijsnijden opslaan',
     },
     player: {
+      name: 'Naam',
+      alias: 'Alias',
+
       email: 'Email',
       gsm: 'Gsm',
       address: 'Adres',
       city: 'Gemeente',
-      alias: 'Alias',
-    },
-    changePassword: {
-      title: 'Paswoord wijzigen',
-      oldPassword: 'Huidig paswoord',
-      newPassword: 'Nieuw paswoord',
-    },
-    updatePlayer: {
-      updatePlayerSuccess: 'Speler gegevens succesvol gewijzigd',
-      updatePlayerFail: 'Speler gegevens wijzigen is mislukt'
-    },
-    players: {
-      title: 'Spelers overzicht ${a}',
-      search: 'Speler zoeken',
-      index: 'Index',
-      memberNumber: 'Lidnr',
-      name: 'Naam',
-      vttl: 'VTTL',
-      sporta: 'Sporta',
+
       style: 'Stijl',
-      all: 'Alle',
-      team: 'ploeg',
-      styleAll: 'Stijl:',
+      bestStroke: 'Beste slag',
       styles: {
         attacker: 'Aanvaller',
         defender: 'Verdediger',
         allRounder: 'All-rounder',
       },
-      bestStroke: 'Beste slag',
-      bestStrokeAll: 'Beste slag:',
-      ranking: 'Klassement',
-      value: 'Waarde',
       editStyle: {
         title: 'Speelstijl ${}',
         tooltip: 'Speelstijl ${} wijzigen',
@@ -142,6 +126,30 @@ export default {
         style: 'Speelstijl',
         saved: 'Speelstijl ${ply} aangepast door ${by}: ${newStyle}',
       },
+
+      updatePlayerSuccess: 'Speler gegevens succesvol gewijzigd',
+      updatePlayerFail: 'Speler gegevens wijzigen is mislukt'
+    },
+    comp: {
+      index: 'Index',
+      ranking: 'Klassement',
+      rankingIndex: 'Volgnummer',
+      sporta: {
+        rankingValue: 'Waarde',
+        uniqueIndex: 'LIDK nr',
+        teamValue: 'Ploegwaarde',
+      },
+      vttl: {
+        uniqueIndex: 'Comp nr',
+      },
+    },
+    players: {
+      title: 'Spelers overzicht ${a}',
+      search: 'Speler zoeken',
+
+      all: 'Alle',
+      gallery: 'Gallerij',
+
       downloadExcel: 'Excel export',
       downloadExcelFileName: 'Spelerslijst_${}',
     },
@@ -157,18 +165,6 @@ export default {
       previousEncounterScore: 'Uitslag heenronde',
       gotoPreviousEncounter: 'Details heenronde',
       gotoNextEncounter: 'Details terugronde',
-      scoresheetSporta: {
-        uniqueIndex: 'LIDK. nr.',
-        ranking: 'Klassement',
-        rankingValue: 'Waarde',
-        teamValue: 'Ploegwaarde',
-      },
-      scoresheetVttl: {
-        uniqueIndex: 'Computer nummer',
-        rankingIndex: 'Volgnummer',
-        index: 'Index',
-        ranking: 'Klassement',
-      },
       tabs: {
         players: 'Spelers',
         playersTitle: 'Onze opstelling',
@@ -214,7 +210,6 @@ export default {
         player: 'Speler',
         playerRanking: '',
         victories: 'Overwinningen / Nederlagen',
-        formation: 'Opstelling'
       },
       enemyVictory: '${}ov.',
       club: {

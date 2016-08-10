@@ -34,14 +34,14 @@ export class ChangeAnyPassword extends Component {
     };
     return (
       <Paper zDepth={1} style={paperStyle}>
-        <h3>{this.context.t('changePassword.title')}</h3>
+        <h3>{this.context.t('password.changeTitle')}</h3>
 
         <PlayerAutoComplete
           selectPlayer={playerId => this.setState({playerId})}
           hintText={this.context.t('login.loginName')} />
 
         <TextField
-          floatingLabelText={this.context.t('changePassword.newPassword')}
+          floatingLabelText={this.context.t('password.newPassword')}
           type="password"
           onChange={e => this.setState({newPassword: e.target.value})} />
 
@@ -91,15 +91,15 @@ export default class ChangePassword extends Component {
     };
     return (
       <div style={paperStyle}>
-        <h3>{this.context.t('changePassword.title')}</h3>
+        <h3>{this.context.t('password.changeTitle')}</h3>
 
         <TextField
-          floatingLabelText={this.context.t('changePassword.oldPassword')}
+          floatingLabelText={this.context.t('password.oldPassword')}
           type="password"
           onChange={e => this.setState({oldpassword: e.target.value})} />
 
         <TextField
-          floatingLabelText={this.context.t('changePassword.newPassword')}
+          floatingLabelText={this.context.t('password.newPassword')}
           type="password"
           onChange={e => this.setState({newpassword: e.target.value})} />
 

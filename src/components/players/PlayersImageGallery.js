@@ -122,7 +122,7 @@ export default class PlayersImageGallery extends Component {
                   subtitle={this.props.subtitle ? this.props.subtitle(ply) : <PlayerPlayingStyle ply={ply} />}>
                   {canChangeStyle ? (
                     <Icon
-                      title={t('players.editStyle.tooltip', ply.alias)}
+                      title={t('player.editStyle.tooltip', ply.alias)}
                       fa="fa fa-pencil-square-o"
                       style={editStyleIcon}
                       onClick={this._openStyle.bind(this, ply)} />
@@ -146,7 +146,7 @@ export default class PlayersImageGallery extends Component {
                 <div
                   className="clickable"
                   onClick={canChangeStyle ? this._openStyle.bind(this, ply) : undefined}
-                  style={{display: 'inline-block'}} title={t('players.editStyle.tooltip', ply.alias)}>
+                  style={{display: 'inline-block'}} title={t('player.editStyle.tooltip', ply.alias)}>
                   <PlayerAvatar player={ply} style={{backgroundColor: 'gold', margin: 0}} />
                 </div>
                 <strong style={{marginLeft: 5}}>{ply.alias}</strong> <small>{comp ? comp.ranking : '??'}</small>
@@ -166,7 +166,7 @@ export default class PlayersImageGallery extends Component {
         {gallery}
         {selectedPlayer ? (
           <Dialog
-            title={t('players.editStyle.title', selectedPlayer.alias)}
+            title={t('player.editStyle.title', selectedPlayer.alias)}
             actions={changeStyleModalActions}
             bodyStyle={{minHeight: 119}}
             modal={false}
@@ -182,7 +182,7 @@ export default class PlayersImageGallery extends Component {
 
             <TextField
               style={{marginBottom: -25}}
-              floatingLabelText={t('players.editStyle.bestStroke')}
+              floatingLabelText={t('player.editStyle.bestStroke')}
               type="text"
               value={this.state.newStyle.bestStroke}
               onChange={::this._changeBestStroke} />

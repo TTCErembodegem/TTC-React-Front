@@ -29,6 +29,7 @@ const tabEventKeys = {
   all: 1,
   vttl: 2,
   sporta: 3,
+  gallery: 4,
 };
 
 @connect(state => {
@@ -90,6 +91,9 @@ export default class Players extends Component {
     case tabEventKeys.sporta:
       tabContent = this._renderTabSporta();
       break;
+    case tabEventKeys.gallery:
+      tabContent = this._renderTabGallery();
+      break;
     }
     return (
       <div>
@@ -100,25 +104,25 @@ export default class Players extends Component {
   }
 
   _renderTabVttl() {
-    var playersVTTL = this.props.players.filter(x => x.vttl);
+    var players = this.props.players.filter(x => x.vttl);
     if (this.state.filter) {
-      playersVTTL = playersVTTL.filter(x => x.name.toLowerCase().includes(this.state.filter));
+      players = players.filter(x => x.name.toLowerCase().includes(this.state.filter));
     }
-    playersVTTL = playersVTTL.sort((a, b) => a.vttl.position - b.vttl.position);
+    players = players.sort((a, b) => a.vttl.position - b.vttl.position);
     return (
       <Table condensed hover>
         <thead>
           <tr>
-            <th>{this.context.t('players.index')}</th>
-            <th>{this.context.t('players.memberNumber')}</th>
-            <th>{this.context.t('players.name')}</th>
-            <th><span className="hidden-xs">{this.context.t('players.ranking')}</span></th>
-            <th className="hidden-xs">{this.context.t('players.style')}</th>
-            <th className="hidden-xs">{this.context.t('players.bestStroke')}</th>
+            <th>{this.context.t('comp.index')}</th>
+            <th>{this.context.t('comp.vttl.uniqueIndex')}</th>
+            <th>{this.context.t('player.name')}</th>
+            <th><span className="hidden-xs">{this.context.t('comp.ranking')}</span></th>
+            <th className="hidden-xs">{this.context.t('player.style')}</th>
+            <th className="hidden-xs">{this.context.t('player.bestStroke')}</th>
           </tr>
         </thead>
         <tbody>
-          {playersVTTL.map(ply => (
+          {players.map(ply => (
             <tr key={ply.id} className={cn({'match-won': ply.isMe()})}>
               <td>{ply.vttl.rankingIndex}</td>
               <td>{ply.vttl.uniqueIndex}</td>
@@ -134,26 +138,26 @@ export default class Players extends Component {
     );
   }
   _renderTabSporta() {
-    var playersSporta = this.props.players.filter(x => x.sporta);
-    if (this.state.filter) {
-      playersSporta = playersSporta.filter(x => x.name.toLowerCase().includes(this.state.filter));
-    }
-    playersSporta = playersSporta.sort((a, b) => a.sporta.position - b.sporta.position);
+     var players = this.props.players.filter(x => x.sporta);
+     if (this.state.filter) {
+       players = players.filter(x => x.name.toLowerCase().includes(this.state.filter));
+     }
+     players = players.sort((a, b) => a.sporta.position - b.sporta.position);
     return (
       <Table condensed hover>
         <thead>
           <tr>
-            <th>{this.context.t('players.index')}</th>
-            <th>{this.context.t('players.memberNumber')}</th>
-            <th>{this.context.t('players.name')}</th>
-            <th><span className="hidden-xs">{this.context.t('players.ranking')}</span></th>
-            <th>{this.context.t('players.value')}</th>
-            <th className="hidden-xs">{this.context.t('players.style')}</th>
-            <th className="hidden-xs">{this.context.t('players.bestStroke')}</th>
+            <th>{this.context.t('comp.index')}</th>
+            <th>{this.context.t('comp.sporta.uniqueIndex')}</th>
+            <th>{this.context.t('player.name')}</th>
+            <th><span className="hidden-xs">{this.context.t('comp.ranking')}</span></th>
+            <th>{this.context.t('comp.sporta.rankingValue')}</th>
+            <th className="hidden-xs">{this.context.t('player.style')}</th>
+            <th className="hidden-xs">{this.context.t('player.bestStroke')}</th>
           </tr>
         </thead>
         <tbody>
-          {playersSporta.map(ply => (
+          {players.map(ply => (
             <tr key={ply.id} className={cn({'match-won': ply.isMe()})}>
               <td>{ply.sporta.rankingIndex}</td>
               <td>{ply.sporta.uniqueIndex}</td>
@@ -187,11 +191,14 @@ export default class Players extends Component {
       title: this.context.t('players.all'),
     }, {
       key: tabEventKeys.vttl,
-      title: this.context.t('players.vttl'),
+      title: 'Vttl',
     }, {
       key: tabEventKeys.sporta,
-      title: this.context.t('players.sporta'),
-    }];
+      title: 'Sporta',
+    }/*, {
+      key: tabEventKeys.gallery,
+      title: this.context.t('players.gallery'),
+    }*/];
 
     return (
       <div style={{marginTop: 20, marginBottom: 10}}>
@@ -214,20 +221,28 @@ export default class Players extends Component {
     );
   }
 
-  _renderTabAll() {
-    var players = this.props.players;
+  _getAllPlayers() {
+    const players = this.props.players;
     if (this.state.filter) {
-      players = players.filter(x => x.name.toLowerCase().includes(this.state.filter));
+      return players.filter(x => x.name.toLowerCase().includes(this.state.filter));
     }
-    players = players.sort((a, b) => a.name.localeCompare(b.name));
+    return players.sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+  _renderTabGallery() {
+    const players = this._getAllPlayers();
+  }
+
+  _renderTabAll() {
+    const players = this._getAllPlayers();
     return (
       <Table condensed hover>
         <thead>
           <tr>
-            <th>{this.context.t('players.name')}</th>
+            <th>{this.context.t('player.name')}</th>
             {this.props.user.playerId ? <th>{this.context.t('player.address')}</th> : null}
             <th className="hidden-xs">{this.context.t('common.competition')}</th>
-            <th className="hidden-xs">{this.context.t('players.style')}</th>
+            <th className="hidden-xs">{this.context.t('player.style')}</th>
           </tr>
         </thead>
         <tbody>

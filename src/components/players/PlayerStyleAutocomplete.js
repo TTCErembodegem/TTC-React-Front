@@ -11,9 +11,9 @@ export default class PlayerStyleAutocomplete extends Component {
 
   render() {
     const playingStyles = [
-      this.props.t('players.styles.attacker'),
-      this.props.t('players.styles.defender'),
-      this.props.t('players.styles.allRounder'),
+      this.props.t('player.styles.attacker'),
+      this.props.t('player.styles.defender'),
+      this.props.t('player.styles.allRounder'),
     ];
 
     return (
@@ -23,7 +23,7 @@ export default class PlayerStyleAutocomplete extends Component {
         onNewRequest={this.props.onChange}
         onUpdateInput={this.props.onChange}
         searchText={this.props.value}
-        floatingLabelText={this.props.t('players.editStyle.style')}
+        floatingLabelText={this.props.t('player.editStyle.style')}
         hintText={playingStyles.join(', ')}
         dataSource={playingStyles} />
     );
