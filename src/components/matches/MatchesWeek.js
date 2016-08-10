@@ -95,8 +95,48 @@ export default class MatchesWeek extends Component {
     );
   }
 
+  _renderMatchPlayers(match) {
+    return (
+      <ButtonToolbar>
+        {match.players.map(player => {
+          return (
+            <Button bsStyle={this._getPlayingStatusButtonClass(player.status)} key={player.playerId} style={{marginBottom: 5}}>
+              {player.name}
+            </Button>
+          );
+        })}
+      </ButtonToolbar>
+    );
+  }
+
   _renderMatchRows(matches) {
     const t = this.context.t;
+    const matchRows = [];
+    matches.sort((a, b) => a.date - b.date).forEach(match => {
+      const us = match.getTeam().renderOwnTeamTitle();
+      const them = match.renderOpponentTitle();
+      const separator = <Icon fa="fa fa-arrows-h" />;
+      matchRows.push(
+        <tr key={match.id}>
+          <td>{match.frenoyMatchId}</td>
+          <td>{t('match.date', match.getDisplayDate())}</td>
+          {match.isHomeMatch ?
+            <td><strong>{us}</strong> {separator} {them}</td>
+          : <td>{them} {separator} <strong>{us}</strong></td>}
+          <td className="hidden-xs">
+            {this._renderMatchPlayers(match)}
+          </td>
+        </tr>
+      );
+
+      matchRows.push(
+        <tr key={match.id + '_b'} className="visible-xs">
+          <td colSpan={3} style={{border: 'none'}}>
+            {this._renderMatchPlayers(match)}
+          </td>
+        </tr>
+      );
+    })
 
     return (
       <Table condensed hover>
@@ -105,35 +145,11 @@ export default class MatchesWeek extends Component {
             <th>{t('common.frenoy')}</th>
             <th>{t('common.date')}</th>
             <th>{t('teamCalendar.match')}</th>
-            <th>{t('common.teamFormation')}</th>
+            <th className="hidden-xs">{t('common.teamFormation')}</th>
           </tr>
         </thead>
         <tbody>
-        {matches.sort((a, b) => a.date - b.date).map(match => {
-          const us = match.getTeam().renderOwnTeamTitle();
-          const them = match.renderOpponentTitle();
-          const separator = <Icon fa="fa fa-arrows-h" />;
-          return (
-            <tr key={match.id}>
-              <td>{match.frenoyMatchId}</td>
-              <td>{t('match.date', match.getDisplayDate())}</td>
-              {match.isHomeMatch ?
-                <td><strong>{us}</strong> {separator} {them}</td>
-              : <td>{them} {separator} <strong>{us}</strong></td>}
-              <td>
-                <ButtonToolbar>
-                  {match.players.map(player => {
-                    return (
-                      <Button bsStyle={this._getPlayingStatusButtonClass(player.status)} key={player.playerId}>
-                        {player.name}
-                      </Button>
-                    );
-                  })}
-                </ButtonToolbar>
-              </td>
-            </tr>
-          );
-        })}
+        {matchRows}
         </tbody>
       </Table>
     );
