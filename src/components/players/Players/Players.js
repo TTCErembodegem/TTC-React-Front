@@ -286,7 +286,7 @@ export default class Players extends Component {
                   {this.props.user.playerId ? <div>{ply.formattedMobile()}</div> : null}
                 </td>
                 <td className="visible-xs">
-                  <strong>{ply.alias}</strong>
+                  <strong>{this.props.user.playerId ? ply.alias : ply.name}</strong>
                   <br />
                   <Telephone number={ply.contact.mobile} hideIcon style={{fontSize: 10}} />
                 </td>
