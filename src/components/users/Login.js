@@ -87,7 +87,7 @@ export default class Login extends Component {
     return (
       <Paper zDepth={1} style={paperStyle}>
         <h3>{t('login.title')}</h3>
-        <span>{t('login.introText')}</span>
+        <div style={{textAlign: 'left', marginLeft: 15}}>{t('login.introText')}</div>
         <PlayerAutoComplete
           selectPlayer={id => this.setState({playerId: id})}
           floatingLabelText={t('login.loginName')} />
@@ -108,7 +108,7 @@ export default class Login extends Component {
 
         <br />
         <br />
-        <Link to={t.route('forgotPassword')} className="pull-right" style={{margin: 20, fontSize: 18}}>
+        <Link to={t.route('forgotPassword')} className="pull-right" style={{marginTop: 20, fontSize: 18}}>
           {t('password.forgotLink')}
         </Link>
       </Paper>
