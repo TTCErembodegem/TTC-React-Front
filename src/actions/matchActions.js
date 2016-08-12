@@ -61,18 +61,19 @@ export function getLastOpponentMatches(teamId, opponent) {
   return dispatch => {
     return http.get('/matches/GetLastOpponentMatches', {teamId, ...opponent})
       .then(function(matches) {
-        if (!matches) {
+        dispatch(setSetting('GetLastOpponentMatches' + teamId + opponent.teamCode + opponent.clubId, true));
+
+        if (!matches || !matches.length) {
           return;
         }
 
-        dispatch(setSetting('GetLastOpponentMatches' + teamId + opponent.teamCode + opponent.clubId, true));
         dispatch(readOnlyLoaded(matches));
 
         matches.forEach(match => {
           if (!match.isSyncedWithFrenoy && moment().isAfter(moment(match.date))) {
             http.post('/matches/FrenoyOtherMatchSync', {id: match.id})
               .then(function(newmatch) {
-                dispatch(readOnlyLoaded(newmatch));
+                dispatch(readOnlyLoaded(Object.assign(newmatch, {frenoyDivisionId: match.frenoyDivisionId})));
               }, function(err) {
                 console.error(err); // eslint-disable-line
               }

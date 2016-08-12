@@ -73,15 +73,9 @@ export const util = {
       //return matches.filter(cal => cal.date.isAfter(moment(), 'd')).take(4);
       return matches.filter(cal => cal.scoreType === 'BeingPlayed');
     },
-    getFromOpponent(opponent) {
-      const matches = store.getState().readonlyMatches;
-      var result = matches.filter(m => (m.home.clubId === opponent.clubId && m.home.teamCode === opponent.teamCode) ||
-          (m.away.clubId === opponent.clubId && m.away.teamCode === opponent.teamCode));
-
-      // TODO: this would become much easier if the backend returned a DivisionId with a match?
-      // Probably a good idea to store DivisionId in match table? Also add 'competition' to match
-
-      return result;
+    getFromOpponent(match) {
+      const result = getOpponentMatches(match);
+      return result.away.concat(result.home);
     },
 
     getAllMatches() {
@@ -89,16 +83,12 @@ export const util = {
     },
 
     getFormation(match) {
-      var opponent = match.opponent;
-      const matches = store.getState().readonlyMatches;
+      const matches = getOpponentMatches(match);
+      var opponentPlayers = matches.home.map(m => m.players).flatten().filter(m => m.home);
+      opponentPlayers = opponentPlayers.concat(matches.away.map(m => m.players).flatten().filter(m => !m.home));
 
-      // TODO: does not filter on "season" nor on competition
-      var resultHome = matches.filter(m => m.home.clubId === opponent.clubId && m.home.teamCode === opponent.teamCode);
-      var resultAway = matches.filter(m => m.away.clubId === opponent.clubId && m.away.teamCode === opponent.teamCode);
-
-      var opponentPlayers = resultHome.map(m => m.players).flatten().filter(m => m.home);
-      opponentPlayers = opponentPlayers.concat(resultAway.map(m => m.players).flatten().filter(m => !m.home));
-
+      // TODO: this assumes that if you forfeited, you lost that match (ply has won but not lost property)
+      // could be calculated more correctly by looking at the individual match results
       var result = {};
       opponentPlayers.forEach(ply => {
         if (result[ply.uniqueIndex]) {
@@ -114,8 +104,19 @@ export const util = {
         }
       });
 
-      var matchesPerPlayer = match.getTeam().getTeamPlayerCount();
+      const matchesPerPlayer = match.getTeam().getTeamPlayerCount();
       return Object.values(result).map(ply => Object.assign(ply, {lost: (matchesPerPlayer * ply.count) - ply.won}));
     }
   },
 };
+
+function getOpponentMatches(match) {
+  const opponent = match.opponent;
+  const matches = store.getState().readonlyMatches
+    .filter(x => x.competition === match.competition && x.frenoyDivisionId === match.frenoyDivisionId);
+
+  return {
+    home: matches.filter(m => m.home.clubId === opponent.clubId && m.home.teamCode === opponent.teamCode),
+    away: matches.filter(m => m.away.clubId === opponent.clubId && m.away.teamCode === opponent.teamCode)
+  };
+}

@@ -127,7 +127,7 @@ export default class OpponentsLastMatches extends Component {
     );
   }
   _getFormationRankingString(rankings) {
-    const diffs = _.unique(rankings.toArray());
+    const diffs = _.uniq(rankings.toArray());
     return (
       <span>
         {diffs.map((ranking, index) => {

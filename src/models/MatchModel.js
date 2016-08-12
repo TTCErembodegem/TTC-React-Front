@@ -23,6 +23,7 @@ export default class MatchModel {
     this.isSyncedWithFrenoy = json.isSyncedWithFrenoy;
     this.week = json.week;
     this.competition = json.competition;
+    this.frenoyDivisionId = json.frenoyDivisionId;
     this.date = moment(json.date);
 
     this.score = json.score || {home: 0, out: 0};

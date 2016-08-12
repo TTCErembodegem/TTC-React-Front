@@ -199,7 +199,7 @@ export default class MatchCard extends Component {
 
   _renderOpponentsRanking() {
     const matches = storeUtils.matches
-      .getFromOpponent(this.props.match.opponent)
+      .getFromOpponent(this.props.match)
       .filter(match => match.id !== this.props.match.id);
 
     const theirOtherMatches = matches
