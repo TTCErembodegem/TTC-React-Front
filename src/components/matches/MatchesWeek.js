@@ -12,6 +12,7 @@ import Table from 'react-bootstrap/lib/Table';
 import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
 import Button from 'react-bootstrap/lib/Button';
 import Icon from '../controls/Icon.js';
+import MatchVs from './Match/MatchVs.js';
 
 @connect(state => ({matches: state.matches})/*, {selectPlayer}*/)
 export default class MatchesWeek extends Component {
@@ -41,9 +42,9 @@ export default class MatchesWeek extends Component {
     });
   }
 
-  _onChangePlaying(match, status) {
-    this.props.selectPlayer(match.id, this.props.user.playerId, status);
-  }
+  // _onChangePlaying(match, status) {
+  //   this.props.selectPlayer(match.id, this.props.user.playerId, status);
+  // }
 
   _getPlayingStatusButtonClass(playingStatus) {
     switch (playingStatus) {
@@ -113,16 +114,11 @@ export default class MatchesWeek extends Component {
     const t = this.context.t;
     const matchRows = [];
     matches.sort((a, b) => a.date - b.date).forEach(match => {
-      const us = match.getTeam().renderOwnTeamTitle();
-      const them = match.renderOpponentTitle();
-      const separator = <Icon fa="fa fa-arrows-h" />;
       matchRows.push(
         <tr key={match.id}>
           <td>{match.frenoyMatchId}</td>
           <td>{t('match.date', match.getDisplayDate())}</td>
-          {match.isHomeMatch ?
-            <td><strong>{us}</strong> {separator} {them}</td>
-          : <td>{them} {separator} <strong>{us}</strong></td>}
+          <td><MatchVs match={match} /></td>
           <td className="hidden-xs">
             {this._renderMatchPlayers(match)}
           </td>

@@ -35,15 +35,15 @@ class TeamFrenoyModel {
     const season = this.seasonId;
     const linkId = this.linkId;
     if (this.team.competition === 'Vttl') {
-      if (type === 'ranking') {
+      if (type === 'results') {
         return `http://competitie.vttl.be/index.php?menu=4&season=${season}&province=5&club_id=282&perteam=1&div_id=${linkId}`;
-      } else if (type === 'results') {
+      } else if (type === 'ranking') {
         return `http://competitie.vttl.be/index.php?menu=5&season=${season}&div_id=${linkId}`;
       }
     } else if (this.team.competition === 'Sporta') {
-      if (type === 'ranking') {
+      if (type === 'results') {
         return `http://tafeltennis.sporcrea.be/competitie/index.php?menu=4&season=${season}&province=4&club_id=37&perteam=1&div_id=${linkId}`;
-      } else if (type === 'results') {
+      } else if (type === 'ranking') {
         return `http://tafeltennis.sporcrea.be/competitie/index.php?menu=5&season=${season}&province=4&club_id=37&perteam=1&div_id=${linkId}`;
       }
     }

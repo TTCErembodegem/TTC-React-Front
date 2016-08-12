@@ -142,6 +142,8 @@ export default {
       vttl: {
         uniqueIndex: 'Comp nr',
       },
+      roundFirst: 'Heenronde',
+      roundBack: 'Terugronde',
     },
     players: {
       title: 'Spelers overzicht ${a}',
@@ -243,7 +245,6 @@ export default {
       ttactua: 'Tafeltennisactua',
     },
     teamCalendar: {
-      hour: 'Uur',
       match: 'Wedstrijd',
       score: 'Score',
       position: 'Plaats',
@@ -252,7 +253,10 @@ export default {
       matchesLost: 'Verloren',
       matchesDraw: 'Gelijk',
       points: 'Punten',
-      frenoyRanking: 'Rangschikking Frenoy',
+
+      viewMain: 'Overzicht',
+      viewMatches: 'Matchen',
+      viewRanking: 'Rangschikking',
       frenoyResults: 'Resultaten Frenoy',
     },
     facts: require('./locales-nl-facts.js')

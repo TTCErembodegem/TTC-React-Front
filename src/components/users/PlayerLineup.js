@@ -11,6 +11,7 @@ import Table from 'react-bootstrap/lib/Table';
 import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
 import Button from 'react-bootstrap/lib/Button';
 import Icon from '../controls/Icon.js';
+import MatchVs from '../matches/Match/MatchVs.js';
 
 @connect(state => ({matches: state.matches}), {selectPlayer})
 export default class PlayerLinup extends Component {
@@ -89,10 +90,7 @@ export default class PlayerLinup extends Component {
                   {t('match.date', match.getDisplayDate())}
                   <br />
                 </span>
-                {match.isHomeMatch ?
-                  <span><strong>{us}</strong> {separator} {them}</span>
-                : <span>{them} {separator} <strong>{us}</strong></span>
-                }
+                <MatchVs match={match} />
               </td>
               <td style={{width: '1%'}} className="visible-xs">{buttons}</td>
               <td className="hidden-xs">{buttons}</td>

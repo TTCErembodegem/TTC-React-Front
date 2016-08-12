@@ -12,7 +12,8 @@ import Image from 'react-bootstrap/lib/Image';
 import cn from 'classnames';
 import TextField from 'material-ui/lib/text-field';
 import Telephone from '../../controls/Telephone.js';
-import PlayerCard, { PlayerCompetition } from '../PlayerCard.js';
+import { PlayerCompetition } from '../PlayerCard.js';
+import PlayersCardGallery from '../PlayersCardGallery.js';
 
 import { connect } from 'react-redux';
 import ImmutablePropTypes from 'react-immutable-proptypes';
@@ -235,34 +236,7 @@ export default class Players extends Component {
 
   _renderTabGallery() {
     const players = this._getAllPlayers();
-    if (this.props.viewport.width > 450) {
-      return (
-        <div style={{marginLeft: 10, marginRight: 10}} className="row">
-          {players.map(player => {
-            return (
-              <div className="col-lg-4 col-md-6" key={player.id} style={{paddingBottom: 10}}>
-                <PlayerCard player={player} />
-              </div>
-            );
-          })}
-        </div>
-      );
-    }
-    return (
-      <div style={{marginLeft: 10, marginRight: 10}}>
-        {players.map(player => {
-          return (
-            <div key={player.id} style={{paddingBottom: 10, textAlign: 'center'}}>
-              <Card>
-                <h4>{player.name}</h4>
-                <PlayerImage playerId={player.id} center={true} />
-                <br />
-              </Card>
-            </div>
-          );
-        })}
-      </div>
-    );
+    return <PlayersCardGallery players={players} />;
   }
 
   _renderTabAll() {
