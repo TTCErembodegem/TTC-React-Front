@@ -12,6 +12,7 @@ import Image from 'react-bootstrap/lib/Image';
 import cn from 'classnames';
 import TextField from 'material-ui/lib/text-field';
 import Telephone from '../../controls/Telephone.js';
+import PlayerCard, { PlayerCompetition } from '../PlayerCard.js';
 
 import { connect } from 'react-redux';
 import ImmutablePropTypes from 'react-immutable-proptypes';
@@ -23,6 +24,7 @@ import http from '../../../utils/httpClient.js';
 import moment from 'moment';
 import { contextTypes } from '../../../utils/decorators/withContext.js';
 import withStyles from '../../../utils/decorators/withStyles.js';
+import withViewport from '../../../utils/decorators/withViewport.js';
 import styles from './Players.css';
 
 const tabEventKeys = {
@@ -43,6 +45,7 @@ const tabEventKeys = {
   };
 })
 @withStyles(styles)
+@withViewport
 export default class Players extends Component {
   static contextTypes = contextTypes;
   static propTypes = {
@@ -50,6 +53,7 @@ export default class Players extends Component {
     players: ImmutablePropTypes.listOf(PropTypes.instanceOf(PlayerModel).isRequired).isRequired,
     teams: ImmutablePropTypes.listOf(PropTypes.instanceOf(TeamModel).isRequired).isRequired,
     user: PropTypes.object,
+    viewport: PropTypes.object.isRequired,
   };
 
   constructor() {
@@ -128,7 +132,7 @@ export default class Players extends Component {
               <td>{ply.vttl.uniqueIndex}</td>
               <td className="hidden-xs">{ply.name}</td>
               <td className="visible-xs">{ply.alias}</td>
-              <td>{this._renderCompetitionRanking(ply.vttl)}</td>
+              <td>{this._renderPlayerCompetitionRanking(ply.vttl)}</td>
               <td className="hidden-xs">{ply.style.name}</td>
               <td className="hidden-xs">{ply.style.bestStroke}</td>
             </tr>
@@ -163,7 +167,7 @@ export default class Players extends Component {
               <td>{ply.sporta.uniqueIndex}</td>
               <td className="hidden-xs">{ply.name}</td>
               <td className="visible-xs">{ply.alias}</td>
-              <td>{this._renderCompetitionRanking(ply.sporta)}</td>
+              <td>{this._renderPlayerCompetitionRanking(ply.sporta)}</td>
               <td>{ply.sporta.rankingValue}</td>
               <td className="hidden-xs">{ply.style.name}</td>
               <td className="hidden-xs">{ply.style.bestStroke}</td>
@@ -173,7 +177,7 @@ export default class Players extends Component {
       </Table>
     );
   }
-  _renderCompetitionRanking(comp) {
+  _renderPlayerCompetitionRanking(comp) {
     return (
       <span>
         {comp.ranking}
@@ -195,10 +199,10 @@ export default class Players extends Component {
     }, {
       key: tabEventKeys.sporta,
       title: 'Sporta',
-    }/*, {
+    }, {
       key: tabEventKeys.gallery,
       title: this.context.t('players.gallery'),
-    }*/];
+    }];
 
     return (
       <div style={{marginTop: 20, marginBottom: 10}}>
@@ -231,6 +235,34 @@ export default class Players extends Component {
 
   _renderTabGallery() {
     const players = this._getAllPlayers();
+    if (this.props.viewport.width > 450) {
+      return (
+        <div style={{marginLeft: 10, marginRight: 10}} className="row">
+          {players.map(player => {
+            return (
+              <div className="col-lg-4 col-md-6" key={player.id} style={{paddingBottom: 10}}>
+                <PlayerCard player={player} />
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
+    return (
+      <div style={{marginLeft: 10, marginRight: 10}}>
+        {players.map(player => {
+          return (
+            <div key={player.id} style={{paddingBottom: 10, textAlign: 'center'}}>
+              <Card>
+                <h4>{player.name}</h4>
+                <PlayerImage playerId={player.id} center={true} />
+                <br />
+              </Card>
+            </div>
+          );
+        })}
+      </div>
+    );
   }
 
   _renderTabAll() {
@@ -247,9 +279,6 @@ export default class Players extends Component {
         </thead>
         <tbody>
           {players.map(ply => {
-            const teamVttl = ply.getTeam('Vttl');
-            const teamSporta = ply.getTeam('Sporta');
-
             return (
               <tr key={ply.id} className={cn({'match-won': ply.isMe()})}>
                 <td className="hidden-xs">
@@ -269,17 +298,9 @@ export default class Players extends Component {
                   </td>
                 ) : null}
                 <td className="hidden-xs">
-                  {ply.vttl ? (
-                    <span>
-                      Vttl {teamVttl ? teamVttl.teamCode : null} <small>({ply.vttl.ranking})</small>
-                      {ply.sporta ? <br /> : null}
-                    </span>
-                  ) : null}
-                  {ply.sporta ? (
-                    <span>
-                      Sporta {teamSporta ? teamSporta.teamCode : null} <small>({ply.sporta.ranking})</small>
-                    </span>
-                  ) : null}
+                  <PlayerCompetition comp="Vttl" player={ply} />
+                  {ply.sporta && ply.vttl ? <br /> : null}
+                  <PlayerCompetition comp="Sporta" player={ply} />
                 </td>
                 <td className="hidden-xs">
                   {ply.style.name}

@@ -4,7 +4,11 @@ import { playerUtils } from '../../models/PlayerModel.js';
 export default class PlayerImage extends Component {
   static propTypes = {
     playerId: PropTypes.number.isRequired,
+    center: PropTypes.bool,
   }
+  static defaultProps = {
+    center: true,
+  };
 
   constructor(props) {
     super(props);
@@ -20,9 +24,10 @@ export default class PlayerImage extends Component {
   }
 
   render() {
+    const align = this.props.center ? 'center' : undefined;
     if (!this.state.isLoaded) {
       return (
-        <div style={{textAlign: 'center', marginTop: 10, opacity: 0.4}}>
+        <div style={{textAlign: align, marginTop: 10, opacity: 0.4}}>
           <span className="fa-stack fa-4x">
             <i className="fa fa-camera fa-stack-1x"></i>
             <i className="fa fa-ban fa-stack-2x text-danger"></i>
@@ -31,6 +36,6 @@ export default class PlayerImage extends Component {
       );
     }
 
-    return <div style={{textAlign: 'center'}}><img src={this.state.img} /></div>;
+    return <div style={{textAlign: align}}><img src={this.state.img} /></div>;
   }
 }
