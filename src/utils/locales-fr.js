@@ -168,6 +168,7 @@ export default {
       previousEncounterScore: 'Score premier tour',
       gotoPreviousEncounter: 'Détails premier tour',
       gotoNextEncounter: 'Details second tour',
+      details: 'Details',
       tabs: {
         players: 'Joueurs',
         playersTitle: 'Notre formation',

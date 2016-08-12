@@ -25,6 +25,7 @@ import cn from 'classnames';
 import Icon from '../controls/Icon.js';
 import PlayersCardGallery from '../players/PlayersCardGallery.js';
 import MatchVs from '../matches/Match/MatchVs.js';
+import { MatchesTable } from '../matches/MatchesWeek.js';
 
 export const TeamsVttl = () => <Teams competition="Vttl" />;
 export const TeamsSporta = () => <Teams competition="Sporta" />;
@@ -126,9 +127,11 @@ export default class Teams extends Component {
       } else {
         matchesForTeam = matchesForTeam.filter(x => x.date.month() < 7);
       }
+
       return (
         <div>
-          <TeamMatches team={team} t={this.context.t} matches={matchesForTeam} />
+          <MatchesTable matches={matchesForTeam} allowOpponentOnly />
+
           <div style={{textAlign: 'center'}}>
             <button
               className="btn btn-default"
@@ -194,43 +197,6 @@ const ButtonStack = ({small, config, activeView, onClick}) => {
     </div>
   );
 }
-
-
-const TeamMatches = ({team, t, matches}) => {
-  return (
-    <Table condensed hover>
-      <thead>
-        <tr>
-          <th>{t('common.date')}</th>
-          <th>{t('teamCalendar.match')}</th>
-          <th>{t('teamCalendar.score')}</th>
-        </tr>
-      </thead>
-      <tbody>
-      {matches.map(match => {
-        var thrillerIcon;
-        if (team.getThriller(match)) {
-          thrillerIcon = (<Icon fa="fa fa-heartbeat faa-pulse animated" style={{marginLeft: 3, marginRight: 7, marginTop: 3}} />);
-        }
-        return (
-          <tr
-            key={match.id}
-            className={cn('clickable',{'match-won': match.scoreType === 'Won'})}
-            onClick={() => browserHistory.push(t.route('match', {matchId: match.id}))}
-          >
-            <td>
-              {thrillerIcon}
-              {t('match.date', match.getDisplayDate())}
-            </td>
-            <td><MatchVs match={match} /></td>
-            <td>{match.renderScore()}</td>
-          </tr>
-        );
-      })}
-      </tbody>
-    </Table>
-  );
-};
 
 
 const DivisionRanking = ({team, t}) => (

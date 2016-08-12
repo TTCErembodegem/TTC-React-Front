@@ -167,6 +167,7 @@ export default {
       previousEncounterScore: 'Uitslag heenronde',
       gotoPreviousEncounter: 'Details heenronde',
       gotoNextEncounter: 'Details terugronde',
+      details: 'Details',
       tabs: {
         players: 'Spelers',
         playersTitle: 'Onze opstelling',

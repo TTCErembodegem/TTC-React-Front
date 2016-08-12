@@ -13,6 +13,7 @@ import ListItem from 'material-ui/lib/lists/list-item';
 import Divider from 'material-ui/lib/divider';
 
 import PlayerAutoComplete from '../../players/PlayerAutoComplete.js';
+import PlayerAvatar from '../../players/PlayerAvatar.js';
 
 import * as matchActions from '../../../actions/matchActions.js';
 import { displayFormat } from '../../controls/Telephone.js';
@@ -71,33 +72,15 @@ class PlayerAvatarList extends Component {
     selectPlayer: PropTypes.func.isRequired
   }
 
-  _getPlayingStatusColor(playing) {
-    if (!playing) {
-      return undefined;
-    }
-    switch (playing.status) {
-    case 'Play':
-      return '#FFB00F';
-    case 'NotPlay':
-      return '#c9302c';
-    case 'Maybe':
-      return '#31b0d5';
-    default:
-      return undefined;
-    }
-  }
-
   render() {
     return (
       <List>
         {this.props.players.map(({player/*, type*/}) => {
-          const matchPlayer = this.props.match.plays(player);
-          const color = this._getPlayingStatusColor(matchPlayer);
           return (
-            <SelectablePlayerAvatar
+            <SelectableMatchPlayerAvatar
               player={player}
               select={this._onPlayerSelect.bind(this, player.id)}
-              backgroundColor={color}
+              match={this.props.match}
               key={player.id} />
           );
         })}
@@ -107,6 +90,40 @@ class PlayerAvatarList extends Component {
   _onPlayerSelect(playerId) {
     this.props.selectPlayer(this.props.match.id, playerId);
   }
+}
+
+function getPlayingStatusColor(playing) {
+  if (!playing) {
+    return undefined;
+  }
+  switch (playing.status) {
+  case 'Play':
+    return '#FFB00F';
+  case 'NotPlay':
+    return '#c9302c';
+  case 'Maybe':
+    return '#31b0d5';
+  default:
+    return undefined;
+  }
+}
+
+const SelectableMatchPlayerAvatar = ({match, player, select}) => {
+  const matchPlayer = match.plays(player);
+  const color = getPlayingStatusColor(matchPlayer);
+  if (select) {
+    return (
+      <SelectablePlayerAvatar
+        player={player}
+        select={select}
+        backgroundColor={color} />
+    );
+  }
+  return (
+    <PlayerAvatar
+      player={player}
+      backgroundColor={color} />
+  );
 }
 
 class SelectablePlayerAvatar extends Component {

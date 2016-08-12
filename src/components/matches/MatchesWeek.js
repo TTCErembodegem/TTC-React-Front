@@ -1,6 +1,8 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 import { contextTypes } from '../../utils/decorators/withContext.js';
+import withViewport from '../../utils/decorators/withViewport.js';
 import { util as storeUtil } from '../../store.js';
 import _ from 'lodash';
 import moment from 'moment';
@@ -46,19 +48,6 @@ export default class MatchesWeek extends Component {
   //   this.props.selectPlayer(match.id, this.props.user.playerId, status);
   // }
 
-  _getPlayingStatusButtonClass(playingStatus) {
-    switch (playingStatus) {
-    case 'Play':
-      return 'success';
-    case 'NotPlay':
-      return 'danger';
-    case 'Maybe':
-      return 'info';
-    default:
-      return null;
-    }
-  }
-
   _onChangeWeek(weekDiff) {
     this.setState({currentWeek: this.state.currentWeek + weekDiff});
   }
@@ -88,21 +77,56 @@ export default class MatchesWeek extends Component {
           ) : null}
         </h2>
         <h3>Vttl</h3>
-        {this._renderMatchRows(matches.filter(x => x.competition === 'Vttl'))}
+        <MatchesTable
+          matches={matches.filter(x => x.competition === 'Vttl').sort((a, b) => a.date - b.date)}
+        />
 
         <h3>Sporta</h3>
-        {this._renderMatchRows(matches.filter(x => x.competition === 'Sporta'))}
+        <MatchesTable
+          matches={matches.filter(x => x.competition === 'Sporta').sort((a, b) => a.date - b.date)}
+        />
       </div>
     );
+  }
+}
+
+function getPlayingStatusButtonClass(playingStatus) {
+  switch (playingStatus) {
+  case 'Play':
+    return 'success';
+  case 'NotPlay':
+    return 'danger';
+  case 'Maybe':
+    return 'info';
+  default:
+    return null;
+  }
+}
+
+@withViewport
+export class MatchesTable extends Component {
+  static contextTypes = contextTypes;
+  static propTypes = {
+    matches: PropTypes.object.isRequired,
+    allowOpponentOnly: PropTypes.bool,
+    viewport: PropTypes.object.isRequired,
+    //selectPlayer: PropTypes.func.isRequired,
+  }
+  static defaultProps = {
+    allowOpponentOnly: false
   }
 
   _renderMatchPlayers(match) {
     return (
       <ButtonToolbar>
-        {match.players.map(player => {
+        {match.getOwnPlayerModels('All').map(player => {
+          const matchPlayer = match.players.find(x => x.playerId === player.id);
           return (
-            <Button bsStyle={this._getPlayingStatusButtonClass(player.status)} key={player.playerId} style={{marginBottom: 5}}>
-              {player.name}
+            <Button
+              bsStyle={getPlayingStatusButtonClass(matchPlayer.status)}
+              key={player.playerId}
+              style={{marginBottom: 5}}>
+              {player.alias}
             </Button>
           );
         })}
@@ -110,42 +134,65 @@ export default class MatchesWeek extends Component {
     );
   }
 
-  _renderMatchRows(matches) {
+  render() {
     const t = this.context.t;
     const matchRows = [];
-    matches.sort((a, b) => a.date - b.date).forEach(match => {
+
+    this.props.matches.forEach((match, i) => {
+      const stripeColor = {backgroundColor: i % 2 == 0 ? '#f9f9f9' : undefined};
+      const displayVictoryIcon = match.scoreType === 'Won';
+      const score = match.renderScore();
+
+      var thrillerIcon;
+      const team = match.getTeam();
+      if (team.getThriller(match)) {
+        thrillerIcon = (
+          <Icon
+            fa="fa fa-heartbeat faa-pulse animated"
+            style={{marginLeft: 3, marginRight: 7, marginTop: 3, color: 'red'}} />
+        );
+      }
+
       matchRows.push(
-        <tr key={match.id}>
-          <td>{match.frenoyMatchId}</td>
-          <td>{t('match.date', match.getDisplayDate())}</td>
-          <td><MatchVs match={match} /></td>
-          <td className="hidden-xs">
-            {this._renderMatchPlayers(match)}
+        <tr key={match.id} style={stripeColor}>
+          <td>
+            {displayVictoryIcon ? <Icon fa="fa fa-trophy" color="#FCB514" style={{marginRight: 5}} /> : null}
+            {thrillerIcon}
+            {t('match.date', match.getDisplayDate())}
+          </td>
+          <td className="hidden-xs">{match.frenoyMatchId}</td>
+          <td><MatchVs match={match} opponentOnly={this.props.allowOpponentOnly && this.props.viewport.width < 450} /></td>
+          <td>
+            <button className="btn btn-default" onClick={() => browserHistory.push(t.route('match', {matchId: match.id}))}>
+              {score || t('match.details')}
+            </button>
           </td>
         </tr>
       );
 
-      matchRows.push(
-        <tr key={match.id + '_b'} className="visible-xs">
-          <td colSpan={3} style={{border: 'none'}}>
-            {this._renderMatchPlayers(match)}
-          </td>
-        </tr>
-      );
+      if (match.players.size) {
+        matchRows.push(
+          <tr key={match.id + '_b'} style={stripeColor}>
+            <td colSpan={4} style={{border: 'none'}}>
+              {this._renderMatchPlayers(match)}
+            </td>
+          </tr>
+        );
+      }
     })
 
     return (
-      <Table condensed hover>
+      <Table condensed>
         <thead>
           <tr>
-            <th>{t('common.frenoy')}</th>
             <th>{t('common.date')}</th>
+            <th className="hidden-xs">{t('common.frenoy')}</th>
             <th>{t('teamCalendar.match')}</th>
-            <th className="hidden-xs">{t('common.teamFormation')}</th>
+            <th>{t('teamCalendar.score')}</th>
           </tr>
         </thead>
         <tbody>
-        {matchRows}
+          {matchRows}
         </tbody>
       </Table>
     );
