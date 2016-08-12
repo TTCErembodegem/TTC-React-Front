@@ -5,6 +5,7 @@ import PlayerModel, { createFrenoyLink } from '../../models/PlayerModel.js';
 import Card from 'material-ui/lib/card/card';
 import Telephone from '../controls/Telephone.js';
 import PlayerImage from './PlayerImage.js';
+import Icon from '../controls/Icon.js';
 
 export default class PlayerCard extends Component {
   static contextTypes = contextTypes;
@@ -52,13 +53,16 @@ export default class PlayerCard extends Component {
 
 
 export const PlayerCompetition = ({comp, player}) => {
-  const team = player.getTeam(comp);
   const compDetails = player.getCompetition(comp);
   if (!compDetails.ranking) {
     return <div />;
   }
+
+  const team = player.getTeam(comp);
+  const isCaptain = team ? team.isCaptain(player) : false;
   return (
     <span>
+      {isCaptain ? <Icon fa="fa fa-star" color="#FFB00F" style={{marginRight: 5}} /> : null}
       {comp} {team ? team.teamCode : null} <small>({compDetails.ranking})</small>
     </span>
   );
