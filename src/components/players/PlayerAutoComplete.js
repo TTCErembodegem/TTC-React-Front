@@ -1,9 +1,5 @@
-import React, { PropTypes, Component } from 'react';
-import ImmutablePropTypes from 'react-immutable-proptypes';
-import { contextTypes } from '../../utils/decorators/withContext.js';
-import { connect } from 'react-redux';
-
-import PlayerModel from '../../models/PlayerModel.js';
+import React, { Component } from 'react';
+import PropTypes, { connect } from '../PropTypes.js';
 
 import AutoComplete from 'material-ui/lib/auto-complete';
 import MenuItem from 'material-ui/lib/menus/menu-item';
@@ -14,9 +10,9 @@ import MenuItem from 'material-ui/lib/menus/menu-item';
   };
 })
 export default class PlayerAutoComplete extends Component {
-  static contextTypes = contextTypes;
+  static contextTypes = PropTypes.contextTypes;
   static propTypes = {
-    players: ImmutablePropTypes.listOf(PropTypes.instanceOf(PlayerModel).isRequired).isRequired,
+    players: PropTypes.PlayerModelList.isRequired,
     selectPlayer: PropTypes.func.isRequired,
   }
 

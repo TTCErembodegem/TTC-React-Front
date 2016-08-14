@@ -1,12 +1,12 @@
-import React, { PropTypes, Component } from 'react';
-import PlayerModel from '../../models/PlayerModel.js';
-import Avatar from 'material-ui/lib/avatar';
+import React, { Component } from 'react';
+import PropTypes from '../PropTypes.js';
 
 import { playerUtils } from '../../models/PlayerModel.js';
+import Avatar from 'material-ui/lib/avatar';
 
 export default class PlayerAvatar extends Component {
   static propTypes = {
-    player: PropTypes.instanceOf(PlayerModel).isRequired
+    player: PropTypes.PlayerModel.isRequired
   }
 
   constructor(props) {

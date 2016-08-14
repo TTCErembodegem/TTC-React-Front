@@ -1,7 +1,6 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes, { connect } from '../PropTypes.js';
 import { Link } from 'react-router';
-import { connect } from 'react-redux';
-import { contextTypes } from '../../utils/decorators/withContext.js';
 
 import * as loginActions from '../../actions/userActions.js';
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
@@ -12,7 +11,7 @@ import Paper from 'material-ui/lib/paper';
 
 @connect(() => ({}), loginActions)
 export class ForgotPassword extends Component {
-  static contextTypes = contextTypes;
+  static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     requestNewPassword: PropTypes.func.isRequired,
   }
@@ -62,7 +61,7 @@ export class ForgotPassword extends Component {
 
 @connect(() => ({}), loginActions)
 export default class Login extends Component {
-  static contextTypes = contextTypes;
+  static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     login: PropTypes.func.isRequired,
   }

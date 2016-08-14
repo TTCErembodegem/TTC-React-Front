@@ -1,10 +1,5 @@
-import React, { PropTypes, Component } from 'react';
-import ImmutablePropTypes from 'react-immutable-proptypes';
-import { connect } from 'react-redux';
-
-import MatchModel from '../../models/MatchModel.js';
-import TeamModel from '../../models/TeamModel.js';
-import { contextTypes } from '../../utils/decorators/withContext.js';
+import React, { Component } from 'react';
+import PropTypes, { connect } from '../PropTypes.js';
 
 import TabbedContainer from '../controls/TabbedContainer.js';
 import AdminPlayers from './AdminPlayers.js';
@@ -29,13 +24,13 @@ const tabEventKeys = {
   };
 })
 export default class Admin extends Component {
-  static contextTypes = contextTypes;
+  static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     config: PropTypes.object.isRequired,
-    user: PropTypes.object.isRequired,
-    matches: ImmutablePropTypes.listOf(PropTypes.instanceOf(MatchModel).isRequired).isRequired,
-    teams: ImmutablePropTypes.listOf(PropTypes.instanceOf(TeamModel).isRequired).isRequired,
-    players: PropTypes.object.isRequired,
+    user: PropTypes.UserModel.isRequired,
+    matches: PropTypes.MatchModelList.isRequired,
+    teams: PropTypes.TeamModelList.isRequired,
+    players: PropTypes.PlayerModelList.isRequired,
     admin: PropTypes.shape({
       players: PropTypes.object.isRequired,
     }).isRequired,

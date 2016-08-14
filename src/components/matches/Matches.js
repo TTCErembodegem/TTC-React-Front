@@ -1,10 +1,6 @@
-import React, { PropTypes, Component } from 'react';
-import ImmutablePropTypes from 'react-immutable-proptypes';
+import React, { Component } from 'react';
+import PropTypes, { connect } from '../PropTypes.js';
 import moment from 'moment';
-import { connect } from 'react-redux';
-
-import MatchModel from '../../models/MatchModel.js';
-import { contextTypes } from '../../utils/decorators/withContext.js';
 
 import Strike from '../controls/Strike.js';
 import MatchCardHeader from './Match/MatchCardHeader.js';
@@ -13,19 +9,15 @@ import MatchCardHeader from './Match/MatchCardHeader.js';
   return {
     config: state.config,
     user: state.user,
-    players: state.players,
-    clubs: state.clubs,
     matches: state.matches,
-    teams: state.teams,
   };
 })
 export default class Matches extends Component {
-  static contextTypes = contextTypes;
-
+  static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     config: PropTypes.object.isRequired,
-    user: PropTypes.object.isRequired,
-    matches: ImmutablePropTypes.listOf(PropTypes.instanceOf(MatchModel).isRequired).isRequired,
+    user: PropTypes.UserModel.isRequired,
+    matches: PropTypes.MatchModelList.isRequired,
   }
 
   componentDidMount() {

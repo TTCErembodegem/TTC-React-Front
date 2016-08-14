@@ -1,6 +1,5 @@
-import React, { Component, PropTypes } from 'react';
-import { contextTypes } from '../../../utils/decorators/withContext.js';
-import withViewport from '../../../utils/decorators/withViewport.js';
+import React, { Component } from 'react';
+import PropTypes, { withViewport} from '../../PropTypes.js';
 
 import Icon from '../../controls/Icon.js';
 import Table from 'react-bootstrap/lib/Table';
@@ -8,11 +7,11 @@ import { createFrenoyLinkByUniqueId } from '../../../models/PlayerModel.js';
 
 @withViewport
 export default class OpponentsFormation extends Component {
-  static contextTypes = contextTypes;
+  static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     formations: PropTypes.array.isRequired,
-    viewport: PropTypes.object.isRequired,
-    competition: PropTypes.string.isRequired,
+    viewport: PropTypes.viewport,
+    competition: PropTypes.competition.isRequired,
   }
 
   render() {

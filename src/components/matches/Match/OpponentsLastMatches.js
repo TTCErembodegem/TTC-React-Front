@@ -1,27 +1,24 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes, { withViewport } from '../../PropTypes.js';
 import { Link, browserHistory } from 'react-router';
-import withViewport from '../../../utils/decorators/withViewport.js';
-import { contextTypes } from '../../../utils/decorators/withContext.js';
 import _ from 'lodash';
 
-import MatchModel from '../../../models/MatchModel.js';
-
 import Table from 'react-bootstrap/lib/Table';
+import IconButton from 'material-ui/lib/icon-button';
 import OpponentPlayer from './OpponentPlayer.js';
 import Spinner from '../../controls/Spinner.js';
-import IconButton from 'material-ui/lib/icon-button';
 import MatchScore from '../MatchScore.js';
 
 const AmountOfOpponentMatchesToShow = 5;
 
 @withViewport
 export default class OpponentsLastMatches extends Component {
-  static contextTypes = contextTypes;
+  static contextTypes = PropTypes.contextTypes;
   static propTypes = {
-    match: PropTypes.instanceOf(MatchModel).isRequired,
-    otherMatch: PropTypes.instanceOf(MatchModel),
+    match: PropTypes.MatchModel.isRequired,
+    otherMatch: PropTypes.MatchModel,
     readonlyMatches: PropTypes.object.isRequired,
-    viewport: PropTypes.object.isRequired,
+    viewport: PropTypes.viewport,
   }
 
   constructor(props) {

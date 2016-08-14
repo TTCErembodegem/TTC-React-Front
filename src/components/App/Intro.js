@@ -1,12 +1,6 @@
-import React, { PropTypes, Component } from 'react';
-import ImmutablePropTypes from 'react-immutable-proptypes';
-import { connect } from 'react-redux';
+import React, { Component } from 'react';
+import PropTypes, { connect, withViewport, withContext, withStyles } from '../PropTypes.js';
 import moment from 'moment';
-
-import withViewport from '../../utils/decorators/withViewport.js';
-import withContext, { contextTypes } from '../../utils/decorators/withContext.js';
-import withStyles from '../../utils/decorators/withStyles.js';
-import styles from './App.css';
 
 import Strike from '../controls/Strike.js';
 import MatchCardHeader from '../matches/Match/MatchCardHeader.js';
@@ -28,16 +22,16 @@ import Typist from 'react-typist';
 })
 @withContext
 @withViewport
-@withStyles(styles)
+@withStyles(require('./App.css'))
 export default class Intro extends Component {
-  static contextTypes = contextTypes;
+  static contextTypes = PropTypes.contextTypes;
   static propTypes = {
-    config: ImmutablePropTypes.map.isRequired,
-    user: PropTypes.object,
-    players: ImmutablePropTypes.list.isRequired,
-    matches: ImmutablePropTypes.list.isRequired,
-    teams: ImmutablePropTypes.list.isRequired,
-    viewport: PropTypes.object.isRequired,
+    config: PropTypes.map.isRequired,
+    user: PropTypes.UserModel,
+    players: PropTypes.PlayerModelList.isRequired,
+    matches: PropTypes.MatchModelList.isRequired,
+    teams: PropTypes.TeamModelList.isRequired,
+    viewport: PropTypes.viewport,
   };
 
   render() {
@@ -207,13 +201,13 @@ const Loading = ({t, bigScreen}) => (
 
 
 class TodaysEvents extends Component {
-  static contextTypes = contextTypes;
+  static contextTypes = PropTypes.contextTypes;
   static propTypes = {
-    config: ImmutablePropTypes.map.isRequired,
-    user: PropTypes.object,
-    players: ImmutablePropTypes.list.isRequired,
-    matches: ImmutablePropTypes.list.isRequired,
-    teams: ImmutablePropTypes.list.isRequired,
+    config: PropTypes.map.isRequired,
+    user: PropTypes.UserModel,
+    players: PropTypes.PlayerModelList.isRequired,
+    matches: PropTypes.MatchModelList.isRequired,
+    teams: PropTypes.TeamModelList.isRequired,
   };
 
   render() {

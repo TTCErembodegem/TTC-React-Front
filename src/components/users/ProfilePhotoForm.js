@@ -1,14 +1,11 @@
-import React, { PropTypes, Component } from 'react';
-import { connect } from 'react-redux';
-import withContext from '../../utils/decorators/withContext.js';
-import { contextTypes } from '../../utils/decorators/withContext.js';
+import React, { Component } from 'react';
+import PropTypes, { connect, withContext } from '../PropTypes.js';
 import { uploadPlayer } from '../../actions/userActions.js';
 
-import ImageEditor from '../controls/images/ImageEditor.js';
 import FlatButton from 'material-ui/lib/flat-button';
+import ImageEditor from '../controls/images/ImageEditor.js';
 import { playerUtils } from '../../models/PlayerModel.js';
 import ImageDropzone from '../controls/images/ImageDropzone.js';
-
 
 export class ProfilePhotoAvatarForm extends Component {
   render() {
@@ -20,14 +17,13 @@ export class ProfilePhotoAvatarForm extends Component {
 @withContext
 @connect(state => {
   return {
-    //config: state.config,
     user: state.user,
   };
 }, {uploadPlayer})
 export default class ProfilePhotoForm extends Component {
-  static contextTypes = contextTypes;
+  static contextTypes = PropTypes.contextTypes;
   static propTypes ={
-    user: PropTypes.object.isRequired,
+    user: PropTypes.UserModel.isRequired,
     size: PropTypes.shape({
       width: PropTypes.number.isRequired,
       height: PropTypes.number.isRequired,

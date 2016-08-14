@@ -1,11 +1,5 @@
-import React, { PropTypes, Component } from 'react';
-import ImmutablePropTypes from 'react-immutable-proptypes';
-import { connect } from 'react-redux';
-import { contextTypes } from '../../../utils/decorators/withContext.js';
-
-import PlayerModel from '../../../models/PlayerModel.js';
-import MatchModel from '../../../models/MatchModel.js';
-import UserModel from '../../../models/UserModel.js';
+import React, { Component } from 'react';
+import PropTypes, { connect } from '../../PropTypes.js';
 
 import Avatar from 'material-ui/lib/avatar';
 import List from 'material-ui/lib/lists/list';
@@ -24,11 +18,11 @@ import { displayFormat } from '../../controls/Telephone.js';
   };
 }, matchActions)
 export default class SelectPlayersForm extends Component {
-  static contextTypes = contextTypes;
+  static contextTypes = PropTypes.contextTypes;
   static propTypes = {
-    players: ImmutablePropTypes.listOf(PropTypes.instanceOf(PlayerModel).isRequired).isRequired,
-    match: PropTypes.instanceOf(MatchModel).isRequired,
-    user: PropTypes.instanceOf(UserModel).isRequired,
+    players: PropTypes.PlayerModelList.isRequired,
+    match: PropTypes.MatchModel.isRequired,
+    user: PropTypes.UserModel.isRequired,
     selectPlayer: PropTypes.func.isRequired,
   }
 
@@ -65,10 +59,10 @@ export default class SelectPlayersForm extends Component {
 class PlayerAvatarList extends Component {
   static propTypes = {
     players: PropTypes.arrayOf(PropTypes.shape({
-      player: PropTypes.instanceOf(PlayerModel).isRequired,
+      player: PropTypes.PlayerModel.isRequired,
       type: PropTypes.oneOf(['Standard', 'Captain', 'Reserve', 'Invaller']).isRequired,
     })),
-    match: PropTypes.instanceOf(MatchModel).isRequired,
+    match: PropTypes.MatchModel.isRequired,
     selectPlayer: PropTypes.func.isRequired
   }
 
@@ -128,7 +122,7 @@ const SelectableMatchPlayerAvatar = ({match, player, select}) => {
 
 class SelectablePlayerAvatar extends Component {
   static propTypes = {
-    player: PropTypes.instanceOf(PlayerModel).isRequired,
+    player: PropTypes.PlayerModel.isRequired,
     select: PropTypes.func.isRequired,
     backgroundColor: PropTypes.string,
   }

@@ -1,9 +1,9 @@
-import React, { PropTypes, Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from 'react';
+import PropTypes, { connect, withViewport } from '../PropTypes.js';
+import Immutable from 'immutable';
 import { toggleTeamPlayer } from '../../actions/playerActions.js';
 import { frenoyTeamSync } from '../../actions/matchActions.js';
 import _ from 'lodash';
-import withViewport from '../../utils/decorators/withViewport.js';
 
 import Paper from 'material-ui/lib/paper';
 import SelectField from 'material-ui/lib/select-field';
@@ -21,10 +21,10 @@ import { teamPlayerType } from '../../models/TeamModel.js';
 @withViewport
 export default class AdminTeams extends React.Component {
   static propTypes = {
-    teams: PropTypes.object,
+    teams: PropTypes.TeamModelList,
     toggleTeamPlayer: PropTypes.func.isRequired,
     frenoyTeamSync: PropTypes.func.isRequired,
-    viewport: PropTypes.object.isRequired,
+    viewport: PropTypes.viewport,
     user: PropTypes.object.isRequired,
   }
   constructor() {
@@ -99,7 +99,7 @@ class AdminTeamPlayers extends Component {
           </h4>
 
           <PlayersImageGallery
-            players={team.getPlayers().map(ply => ply.player)}
+            players={Immutable.List(team.getPlayers().map(ply => ply.player))}
             user={this.props.user}
             competition={team.competition}
             viewport={this.props.viewport}

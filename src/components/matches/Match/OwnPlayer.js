@@ -1,11 +1,9 @@
 import React from 'react';
+import cn from 'classnames';
 
 import { matchOutcome } from '../../../models/MatchModel.js';
-//import { getPlayersPerTeam } from '../../../models/TeamModel.js';
 import rankingSorter from '../../../models/utils/rankingSorter.js';
-
 import Icon from '../../controls/Icon.js';
-import cn from 'classnames';
 
 const OwnPlayer = ({match, ply, team}) => {
   var getAdversaryRanking = game => game.home.uniqueIndex === ply.uniqueIndex ? game.out.ranking : game.home.ranking;

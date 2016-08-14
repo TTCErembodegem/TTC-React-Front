@@ -1,6 +1,5 @@
-import React, { PropTypes, Component } from 'react';
-import { connect } from 'react-redux';
-import { contextTypes } from '../../utils/decorators/withContext.js';
+import React, { Component } from 'react';
+import PropTypes, { connect } from '../PropTypes.js';
 
 import * as playerActions from '../../actions/playerActions.js';
 import { userRoles } from '../../models/UserModel.js';
@@ -16,9 +15,9 @@ import PlayerStyleAutocomplete from '../players/PlayerStyleAutocomplete.js';
 
 @connect(() => ({}), playerActions)
 export default class AdminPlayerForm extends Component {
-  static contextTypes = contextTypes;
+  static contextTypes = PropTypes.contextTypes;
   static propTypes = {
-    player: PropTypes.object,
+    player: PropTypes.PlayerModel,
     updatePlayer: PropTypes.func.isRequired,
     onEnd: PropTypes.func.isRequired,
   }

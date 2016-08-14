@@ -1,11 +1,5 @@
-import React, { PropTypes, Component } from 'react';
-import ImmutablePropTypes from 'react-immutable-proptypes';
-import { connect } from 'react-redux';
-
-import withViewport from '../../utils/decorators/withViewport.js';
-import withContext from '../../utils/decorators/withContext.js';
-import withStyles from '../../utils/decorators/withStyles.js';
-import styles from './App.css';
+import React, { Component } from 'react';
+import PropTypes, { connect, withViewport, withContext, withStyles } from '../PropTypes.js';
 
 import Header from '../skeleton/Header';
 import Footer from '../skeleton/Footer';
@@ -20,22 +14,18 @@ import * as configActions from '../../actions/configActions.js';
   return {
     config: state.config,
     user: state.user,
-    // players: state.players,
-    // clubs: state.clubs,
-    // matches: state.matches,
-    // teams: state.teams
   };
 }, configActions)
 @withContext
 @withViewport
-@withStyles(styles)
+@withStyles(require('./App.css'))
 export default class App extends Component {
   static propTypes = {
-    config: ImmutablePropTypes.map.isRequired,
-    user: PropTypes.object,
+    config: PropTypes.map.isRequired,
+    user: PropTypes.UserModel,
     children: PropTypes.element,
     clearSnackbar: PropTypes.func.isRequired,
-    viewport: PropTypes.object.isRequired,
+    viewport: PropTypes.viewport,
   };
 
   render() {

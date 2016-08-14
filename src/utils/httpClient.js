@@ -12,12 +12,10 @@ export function getUrl(path, appendApi = true) {
   if (appendApi) {
     path = '/api' + path;
   }
-  return !DEBUG ?
-    // `http://ttc-erembodegem.azurewebsites.net${path}` :
-    //`http://ttc-prd.azurewebsites.net${path}` :
+
+  return location.hostname !== 'localhost' ?
     `http://${location.hostname}${path}` :
     `http://localhost:49731${path}`;
-  // `http://127.0.0.1:${global.server.get('port')}${path}`;
 }
 
 function bearer(req) {
@@ -35,7 +33,7 @@ const HttpClient = {
     const fullUrl = 'GET ' + (qs ? path + '?' + querystring.encode(qs) : path);
     return Promise.try(() => {
       if (LogRequestTimes) {
-        console.time(fullUrl);
+        console.time(fullUrl); // eslint-disable-line
       }
       return null;
     })
@@ -47,7 +45,7 @@ const HttpClient = {
     )
     .tap(() => {
       if (LogRequestTimes) {
-        console.timeEnd(fullUrl);
+        console.timeEnd(fullUrl); // eslint-disable-line
       }
     })
     .then(res => res.body)
@@ -64,7 +62,7 @@ const HttpClient = {
     const fullUrl = 'POST ' + url;
     return Promise.try(() => {
       if (LogRequestTimes) {
-        console.time(fullUrl);
+        console.time(fullUrl); // eslint-disable-line
       }
       return null;
     })
@@ -77,7 +75,7 @@ const HttpClient = {
     )
     .tap(() => {
       if (LogRequestTimes) {
-        console.timeEnd(fullUrl);
+        console.timeEnd(fullUrl); // eslint-disable-line
       }
     })
     .then(res => res.body)
@@ -103,7 +101,7 @@ const HttpClient = {
 
     req.end(function(err, res) {
       if (err || !res.ok) {
-        console.log('/upload', err || '', res);
+        console.log('/upload', err || '', res); // eslint-disable-line
         reject();
       } else {
         resolve(res.body);
@@ -119,7 +117,7 @@ const HttpClient = {
       .set('Content-Type', 'application/json')
       .end(function(err, res) {
         if (err || !res.ok) {
-          console.log('/upload/image', err || '', res);
+          console.log('/upload/image', err || '', res); // eslint-disable-line
           reject();
         } else {
           resolve(res.body);

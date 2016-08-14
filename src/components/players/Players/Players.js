@@ -1,24 +1,18 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes, { connect, withStyles, withViewport } from '../../PropTypes.js';
+import cn from 'classnames';
+import moment from 'moment';
+import http from '../../../utils/httpClient.js';
+import { createFrenoyLink } from '../../../models/PlayerModel.js';
+
+import Table from 'react-bootstrap/lib/Table';
+import TextField from 'material-ui/lib/text-field';
+
 import Icon from '../../controls/Icon.js';
 import TabbedContainer from '../../controls/TabbedContainer.js';
-import Table from 'react-bootstrap/lib/Table';
-import cn from 'classnames';
-import TextField from 'material-ui/lib/text-field';
 import Telephone from '../../controls/Telephone.js';
 import { PlayerCompetition } from '../PlayerCard.js';
 import PlayersCardGallery from '../PlayersCardGallery.js';
-
-import { connect } from 'react-redux';
-import ImmutablePropTypes from 'react-immutable-proptypes';
-
-import PlayerModel, { createFrenoyLink } from '../../../models/PlayerModel.js';
-import TeamModel from '../../../models/TeamModel.js';
-import http from '../../../utils/httpClient.js';
-import moment from 'moment';
-import { contextTypes } from '../../../utils/decorators/withContext.js';
-import withStyles from '../../../utils/decorators/withStyles.js';
-import withViewport from '../../../utils/decorators/withViewport.js';
-import styles from './Players.css';
 
 const tabEventKeys = {
   all: 1,
@@ -31,22 +25,20 @@ const tabEventKeys = {
   return {
     config: state.config,
     players: state.players,
-    //clubs: state.clubs,
-    //matches: state.matches,
     teams: state.teams,
     user: state.user,
   };
 })
-@withStyles(styles)
+@withStyles(require('./Players.css'))
 @withViewport
 export default class Players extends Component {
-  static contextTypes = contextTypes;
+  static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     config: PropTypes.object,
-    players: ImmutablePropTypes.listOf(PropTypes.instanceOf(PlayerModel).isRequired).isRequired,
-    teams: ImmutablePropTypes.listOf(PropTypes.instanceOf(TeamModel).isRequired).isRequired,
-    user: PropTypes.object,
-    viewport: PropTypes.object.isRequired,
+    players: PropTypes.PlayerModelList.isRequired,
+    teams: PropTypes.TeamModelList.isRequired,
+    user: PropTypes.UserModel.isRequired,
+    viewport: PropTypes.viewport,
   };
 
   constructor() {

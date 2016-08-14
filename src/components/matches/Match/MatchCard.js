@@ -1,14 +1,15 @@
-import React, { PropTypes, Component } from 'react';
-import { connect } from 'react-redux';
-import { contextTypes } from '../../../utils/decorators/withContext.js';
-import withViewport from '../../../utils/decorators/withViewport.js';
+import React, { Component } from 'react';
+import PropTypes, { connect, withViewport } from '../../PropTypes.js';
 
-import UserModel from '../../../models/UserModel.js';
-import MatchModel from '../../../models/MatchModel.js';
 import { OwnClubId } from '../../../models/ClubModel.js';
 import * as matchActions from '../../../actions/matchActions.js';
 import { setSetting } from '../../../actions/configActions.js';
 import { util as storeUtils } from '../../../store.js';
+
+import TabbedContainer from '../../controls/TabbedContainer.js';
+import Spinner from '../../controls/Spinner.js';
+import Icon from '../../controls/Icon.js';
+import CardText from 'material-ui/lib/card/card-text';
 
 import MatchCardHeader, { BigMatchCardHeader } from './MatchCardHeader.js';
 import MatchPlayerResults from './MatchPlayerResults.js';
@@ -19,14 +20,7 @@ import OpponentsLastMatches from './OpponentsLastMatches.js';
 import OpponentsFormation from './OpponentsFormation.js';
 import MatchReport from './MatchReport.js';
 import Scoresheet from './Scoresheet.js';
-import Spinner from '../../controls/Spinner.js';
-
-import Icon from '../../controls/Icon.js';
 import PlayersImageGallery from '../../players/PlayersImageGallery.js';
-
-import CardText from 'material-ui/lib/card/card-text';
-
-import TabbedContainer from '../../controls/TabbedContainer.js';
 
 const tabEventKeys = {
   players: 1,
@@ -44,20 +38,18 @@ const tabEventKeys = {
   return {
     config: state.config,
     user: state.user,
-    // players: state.players,
-    // clubs: state.clubs,
     readonlyMatches: state.readonlyMatches,
-    // teams: state.teams,
   };
 }, Object.assign({}, matchActions, {setSetting}))
 export default class MatchCard extends Component {
-  static contextTypes = contextTypes;
+  static contextTypes = PropTypes.contextTypes;
   static propTypes = {
-    match: PropTypes.instanceOf(MatchModel).isRequired,
     config: PropTypes.object.isRequired,
-    user: PropTypes.instanceOf(UserModel).isRequired,
-    viewport: PropTypes.object.isRequired,
+    user: PropTypes.UserModel.isRequired,
     readonlyMatches: PropTypes.object.isRequired,
+    viewport: PropTypes.viewport,
+
+    match: PropTypes.MatchModel.isRequired,
 
     viewportWidthContainerCount: PropTypes.number.isRequired,
     big: PropTypes.bool,

@@ -1,21 +1,18 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes, { withStyles } from '../../PropTypes.js';
 import { Link, browserHistory } from 'react-router';
-
-import styles from './Header.css';
-import withStyles from '../../../utils/decorators/withStyles.js';
-import { contextTypes } from '../../../utils/decorators/withContext.js';
 import { util as storeUtil } from '../../../store.js';
 
 import AppBar from 'material-ui/lib/app-bar';
-import Icon from '../../controls/Icon.js';
 import FlatButton from 'material-ui/lib/flat-button';
+import Icon from '../../controls/Icon.js';
 import Navigation from './HeaderNavigation.js';
 
-@withStyles(styles)
+@withStyles(require('./Header.css'))
 export default class Header extends Component {
-  static contextTypes = contextTypes;
+  static contextTypes = PropTypes.contextTypes;
   static propTypes = {
-    user: PropTypes.object
+    user: PropTypes.UserModel.isRequired
   }
 
   constructor(props) {
@@ -64,7 +61,6 @@ export default class Header extends Component {
   }
 
   _reverseName(name) {
-    // TODO: this code is duplicated in Profile.js
     var nameInParts = name.split(' ');
     if(nameInParts.length === 2) {
       return nameInParts[1] + ' ' + nameInParts[0];
