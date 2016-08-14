@@ -3,6 +3,7 @@ import * as ActionTypes from './ActionTypes.js';
 import http from '../utils/httpClient.js';
 import { simpleLoaded, loaded as matchesLoaded } from './matchActions.js';
 import { loaded as playersLoaded } from './playerActions.js';
+import { showSnackbar } from './configActions.js';
 
 export function clubsLoaded(data) {
   return {
@@ -64,6 +65,9 @@ export default function() {
 
   function loadTeamRankings(data, dispatch) {
     var p = Promise.resolve();
+    if (!data) {
+      return p;
+    }
     data.forEach(team => {
       if (!team.ranking || team.ranking.length === 0) {
         p = p.then(function() {
@@ -88,8 +92,13 @@ export default function() {
       initialRequest(dispatch, '/clubs', clubsLoaded),
     ])
     .then(initialLoad => {
-      console.info('initialLoadCompleted');
+      console.info('initialLoadCompleted'); // eslint-disable-line
       dispatch(initialLoadCompleted());
+
+      const players = initialLoad[1];
+      if (!players || !players.length) {
+        dispatch(showSnackbar('TTC data kon niet geladen worden'));
+      }
       return initialLoad;
     })
     .then(initialLoad => {
@@ -103,7 +112,7 @@ export default function() {
 
       return p;
     })
-    .then(() => console.info('secundary load completed'))
-    .catch(err => console.error('initial load failed', err));
+    .then(() => console.info('secundary load completed')) // eslint-disable-line
+    .catch(err => console.error('initial load failed', err)); // eslint-disable-line
   };
 }

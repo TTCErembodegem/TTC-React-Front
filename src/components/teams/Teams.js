@@ -58,7 +58,9 @@ export default class Teams extends Component {
         teamCode = yourTeam.teamCode;
       }
     }
-    return teams.find(x => x.teamCode === teamCode).id;
+
+    const team = teams.find(x => x.teamCode === teamCode);
+    return team ? team.id : undefined;
   }
 
   _renderOwnTeamPosition(team) {
@@ -77,6 +79,10 @@ export default class Teams extends Component {
 
   _renderTabContent(teamId) {
     const team = this.props.teams.find(t => t.id === teamId);
+    if (!team) {
+      return null;
+    }
+
     const viewsConfig = [/*{
       key: 'main',
       text: this.context.t('teamCalendar.viewMain'),
