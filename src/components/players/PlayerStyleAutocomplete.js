@@ -9,6 +9,14 @@ export default class PlayerStyleAutocomplete extends Component {
     value: PropTypes.string,
   }
 
+  _onChange(text) {
+    // Is necessary in <PlayerAutoComplete> but not here?
+    // if (typeof text === 'object') {
+    //   text = text.text;
+    // }
+    this.props.onChange(text);
+  }
+
   render() {
     const playingStyles = [
       this.props.t('player.styles.attacker'),
@@ -20,8 +28,8 @@ export default class PlayerStyleAutocomplete extends Component {
       <AutoComplete
         style={this.props.style}
         filter={AutoComplete.fuzzyFilter}
-        onNewRequest={this.props.onChange}
-        onUpdateInput={this.props.onChange}
+        onNewRequest={::this._onChange}
+        onUpdateInput={::this._onChange}
         searchText={this.props.value}
         floatingLabelText={this.props.t('player.editStyle.style')}
         hintText={playingStyles.join(', ')}

@@ -17,6 +17,9 @@ export default class PlayerAutoComplete extends Component {
   }
 
   _onPlayerSelected(text) {
+    if (typeof text === 'object') {
+      text = text.text;
+    }
     if (text) {
       const matchedPlayers = this.props.players.filter(ply => ply.alias.toUpperCase() === text.toUpperCase());
       if (matchedPlayers.size === 1) {
@@ -28,7 +31,8 @@ export default class PlayerAutoComplete extends Component {
   }
 
   render() {
-    const players = this.props.players.map(ply => ({
+    const { players, selectPlayer, ...props } = this.props;
+    const playerMenuItems = players.map(ply => ({
       text: ply.alias,
       value: <MenuItem primaryText={ply.alias} />,
     }));
@@ -36,11 +40,10 @@ export default class PlayerAutoComplete extends Component {
     return (
       <AutoComplete
         filter={AutoComplete.fuzzyFilter}
-        triggerUpdateOnFocus={false}
         {...this.props}
         onNewRequest={::this._onPlayerSelected}
         onUpdateInput={::this._onPlayerSelected}
-        dataSource={players.toArray()} />
+        dataSource={playerMenuItems.toArray()} />
     );
   }
 }

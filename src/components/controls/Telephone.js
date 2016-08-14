@@ -27,8 +27,8 @@ export default class Telephone extends Component {
       return null;
     }
 
-    var {number, ...props} = this.props;
-    if (this.props.hideIcon) {
+    var {number, hideIcon, ...props} = this.props;
+    if (hideIcon) {
       return <a href={'tel:' + callFormat(number)} {...props}>{displayFormat(number)}</a>;
     }
 
