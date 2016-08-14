@@ -1,14 +1,11 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
-import { browserHistory } from 'react-router';
-import { util as storeUtil } from '../../store.js';
 import { contextTypes } from '../../utils/decorators/withContext.js';
 
 import { displayFormat } from '../controls/Telephone.js';
 import * as loginActions from '../../actions/userActions.js';
 
 import RaisedButton from 'material-ui/lib/raised-button';
-import Paper from 'material-ui/lib/paper';
 import TabbedContainer from '../controls/TabbedContainer.js';
 
 import ChangePassword from '../users/ChangePassword.js';
@@ -46,13 +43,13 @@ export default class Profile extends Component {
     const player = this.props.user.getPlayer();
     switch (eventKey) {
     case tabEventKeys.main:
-      return <ProfilePlayerDetails  t={this.context.t} player={player} logout={this.props.logout} />;
+      return <ProfilePlayerDetails t={this.context.t} player={player} logout={this.props.logout} />;
     case tabEventKeys.editDetails:
       return <ChangePlayerDetails player={player} />;
     case tabEventKeys.editPicture:
-      return <ProfilePhotoForm />
+      return <ProfilePhotoForm />;
     case tabEventKeys.editAvatar:
-      return <ProfilePhotoAvatarForm />
+      return <ProfilePhotoAvatarForm />;
     case tabEventKeys.editPassword:
       return <ChangePassword />;
     case tabEventKeys.editHolidays:
@@ -112,4 +109,4 @@ const ProfilePlayerDetails = ({player, t, logout}) => (
       style={{marginTop: 15}}
       onClick={() => logout()} />
   </div>
-)
+);

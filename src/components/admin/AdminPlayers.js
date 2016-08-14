@@ -5,9 +5,6 @@ import moment from 'moment';
 
 import Table from 'react-bootstrap/lib/Table';
 import Button from 'react-bootstrap/lib/Button';
-import RaisedButton from 'material-ui/lib/raised-button';
-import Toolbar from 'material-ui/lib/toolbar/toolbar';
-import ToolbarGroup from 'material-ui/lib/toolbar/toolbar-group';
 import TextField from 'material-ui/lib/text-field';
 
 import Icon from '../controls/Icon.js';
@@ -47,7 +44,7 @@ export default class AdminPlayers extends Component {
       if (this.state.filter) {
         players = players.filter(x => x.name.toLowerCase().includes(this.state.playerFilter));
       }
-      players = <InactivesTable players={players} updatePlayer={this.props.updatePlayer} />;
+      players = <InactivesTable players={players} onUpdatePlayer={this.props.updatePlayer} />;
       break;
 
     case 'active':
@@ -60,7 +57,7 @@ export default class AdminPlayers extends Component {
         <ActivesTable
           players={players}
           onEditPlayer={ply => this.setState({filter: 'edit-player', selectedPlayer: ply})}
-          updatePlayer={this.props.updatePlayer} />
+          onUpdatePlayer={this.props.updatePlayer} />
       );
       break;
     }
@@ -98,7 +95,7 @@ function concatCompetitions(vttl, sporta) {
   return comps.join(', ');
 }
 
-const ActivesTable = ({players, onEditPlayer, updatePlayer}) => (
+const ActivesTable = ({players, onEditPlayer, onUpdatePlayer}) => (
   <Table condensed hover>
     <thead>
       <tr>
@@ -130,7 +127,7 @@ const ActivesTable = ({players, onEditPlayer, updatePlayer}) => (
                 ply.active = false;
                 ply.quitYear = moment().year();
                 ply.security = 'Player';
-                updatePlayer(ply, {activeChanged: true});
+                onUpdatePlayer(ply, {activeChanged: true});
               }}>
                 <span className="hidden-xs">Recreant deactiveren</span>
                 <span className="visible-xs">X</span>
@@ -144,7 +141,7 @@ const ActivesTable = ({players, onEditPlayer, updatePlayer}) => (
 );
 
 
-const InactivesTable = ({players, updatePlayer}) => (
+const InactivesTable = ({players, onUpdatePlayer}) => (
   <Table condensed hover>
     <thead>
       <tr>
@@ -167,7 +164,7 @@ const InactivesTable = ({players, updatePlayer}) => (
                 ply.active = true;
                 ply.quitYear = null;
                 ply.security = 'Player';
-                updatePlayer(ply, {activeChanged: true});
+                onUpdatePlayer(ply, {activeChanged: true});
               }}
             >
               Recreant activeren

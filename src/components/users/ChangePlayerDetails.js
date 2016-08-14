@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { contextTypes } from '../../utils/decorators/withContext.js';
 
 import * as playerActions from '../../actions/playerActions.js';
-import { util as storeUtil } from '../../store.js';
 
 import TextField from 'material-ui/lib/text-field';
 import RaisedButton from 'material-ui/lib/raised-button';

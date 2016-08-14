@@ -33,6 +33,17 @@ if (module.hot) {
 
 export default store;
 
+function getOpponentMatches(match) {
+  const opponent = match.opponent;
+  const matches = store.getState().readonlyMatches
+    .filter(x => x.competition === match.competition && x.frenoyDivisionId === match.frenoyDivisionId);
+
+  return {
+    home: matches.filter(m => m.home.clubId === opponent.clubId && m.home.teamCode === opponent.teamCode),
+    away: matches.filter(m => m.away.clubId === opponent.clubId && m.away.teamCode === opponent.teamCode)
+  };
+}
+
 export const util = {
   getConfig() {
     return store.getState().config;
@@ -109,14 +120,3 @@ export const util = {
     }
   },
 };
-
-function getOpponentMatches(match) {
-  const opponent = match.opponent;
-  const matches = store.getState().readonlyMatches
-    .filter(x => x.competition === match.competition && x.frenoyDivisionId === match.frenoyDivisionId);
-
-  return {
-    home: matches.filter(m => m.home.clubId === opponent.clubId && m.home.teamCode === opponent.teamCode),
-    away: matches.filter(m => m.away.clubId === opponent.clubId && m.away.teamCode === opponent.teamCode)
-  };
-}

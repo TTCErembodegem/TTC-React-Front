@@ -31,7 +31,6 @@ export default class PlayerModel {
   }
 
   getTeam(competition) {
-    const comp = competition === 'Vttl' ? this.vttl : this.sporta;
     const teams = storeUtil.getTeams()
       .filter(team => team.competition === competition)
       .filter(team => team.players.some(tp => tp.playerId === this.id && (tp.type === 'Captain' || tp.type === 'Standard')));

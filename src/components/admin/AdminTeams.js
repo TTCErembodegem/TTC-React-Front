@@ -5,9 +5,6 @@ import { frenoyTeamSync } from '../../actions/matchActions.js';
 import _ from 'lodash';
 import withViewport from '../../utils/decorators/withViewport.js';
 
-import RaisedButton from 'material-ui/lib/raised-button';
-import Toolbar from 'material-ui/lib/toolbar/toolbar';
-import ToolbarGroup from 'material-ui/lib/toolbar/toolbar-group';
 import Paper from 'material-ui/lib/paper';
 import SelectField from 'material-ui/lib/select-field';
 import MenuItem from 'material-ui/lib/menus/menu-item';
