@@ -3,9 +3,9 @@ import PropTypes, { connect, withContext } from '../PropTypes.js';
 import { uploadPlayer } from '../../actions/userActions.js';
 
 import FlatButton from 'material-ui/FlatButton';
-import ImageEditor from '../controls/images/ImageEditor.js';
+import ImageEditor from '../controls/image/ImageEditor.js';
 import { playerUtils } from '../../models/PlayerModel.js';
-import ImageDropzone from '../controls/images/ImageDropzone.js';
+import ImageDropzone from '../controls/image/ImageDropzone.js';
 
 export class ProfilePhotoAvatarForm extends Component {
   render() {
@@ -30,11 +30,12 @@ export default class ProfilePhotoForm extends Component {
     }).isRequired,
     type: PropTypes.oneOf(['player-photo', 'player-avatar']).isRequired,
     uploadPlayer: PropTypes.func.isRequired,
-    borderRadius: PropTypes.number,
+    borderRadius: PropTypes.number.isRequired,
   }
   static defaultProps = {
     size: playerUtils.getPlayerImageSize(),
     type: 'player-photo',
+    borderRadius: 0
   }
 
   constructor() {
@@ -62,13 +63,13 @@ export default class ProfilePhotoForm extends Component {
                 size={this.props.size}
                 image={tmpFileName}
                 borderRadius={this.props.borderRadius}
-                updateImage={(preview, croppingRect) => this.setState({preview, croppingRect})} />
+                updateImage={(preview, croppingRect) => this.setState({preview: preview.toDataURL(), croppingRect})} />
             </div>
           ) : null}
         </div>
         {this.state.preview ? (
           <div className="col-sm-6">
-            <div className="thumbnail" style={{width: 250}}>
+            <div className="thumbnail" style={{width: 250, marginTop: 10}}>
               <img
                 src={this.state.preview}
                 style={{marginTop: 7, borderRadius: 19}}
@@ -94,6 +95,5 @@ export default class ProfilePhotoForm extends Component {
   }
   _saveImage() {
     this.props.uploadPlayer(this.state.preview, this.props.user.playerId, this.props.type);
-    window.history.back();
   }
 }

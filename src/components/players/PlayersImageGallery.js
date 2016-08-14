@@ -19,7 +19,7 @@ import PlayerAvatar from './PlayerAvatar.js';
 import PlayerAutoComplete from './PlayerAutoComplete.js';
 import PlayerStyleAutocomplete from './PlayerStyleAutocomplete.js';
 
-const PlayersImageWidth = playerUtils.getPlayerImageSize().width;
+const PlayersImageWidth = playerUtils.getPlayerImageSize().width + 30;
 const PlayersImageHeight = playerUtils.getPlayerImageSize().height;
 const gridStyles = {
   root: {
@@ -165,15 +165,14 @@ export default class PlayersImageGallery extends Component {
           <Dialog
             title={t('player.editStyle.title', selectedPlayer.alias)}
             actions={changeStyleModalActions}
-            bodyStyle={{minHeight: 119}}
+            bodyStyle={{minHeight: 145}}
             modal={false}
             open={!!this.state.editingPlayer}
             onRequestClose={::this._closeStyle}>
 
             <PlayerStyleAutocomplete t={t}
               value={this.state.newStyle.name || ''}
-              onChange={::this._changeStyle}
-              style={{marginTop: -25}} />
+              onChange={::this._changeStyle} />
 
             <br />
 

@@ -10,7 +10,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Checkbox from 'material-ui/Checkbox';
 import PlayerAutoComplete from '../../players/PlayerAutoComplete.js';
-import ImageDropzone from '../../controls/images/ImageDropzone.js';
+import ImageDropzone from '../../controls/image/ImageDropzone.js';
 
 function getEmptyComment(matchId, playerId) {
   return {

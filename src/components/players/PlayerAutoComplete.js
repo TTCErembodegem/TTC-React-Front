@@ -31,7 +31,7 @@ export default class PlayerAutoComplete extends Component {
   }
 
   render() {
-    const { players, selectPlayer, ...props } = this.props;
+    const { players, selectPlayer, dispatch, ...props } = this.props;
     const playerMenuItems = players.map(ply => ({
       text: ply.alias,
       value: <MenuItem primaryText={ply.alias} />,
@@ -40,7 +40,7 @@ export default class PlayerAutoComplete extends Component {
     return (
       <AutoComplete
         filter={AutoComplete.fuzzyFilter}
-        {...this.props}
+        {...props}
         onNewRequest={::this._onPlayerSelected}
         onUpdateInput={::this._onPlayerSelected}
         dataSource={playerMenuItems.toArray()} />
