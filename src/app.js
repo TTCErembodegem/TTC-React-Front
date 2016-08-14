@@ -44,19 +44,20 @@ store.dispatch(initialLoad());
 
 const enableDevTools = false;
 if (enableDevTools) {
-  const {DebugPanel, DevTools, LogMonitor} = require('redux-devtools/lib/react');
+  // Reinstate? Check: https://github.com/gaearon/redux-devtools/blob/master/docs/Walkthrough.md
+  // const {DebugPanel, DevTools, LogMonitor} = require('redux-devtools/lib/react');
 
-  render(
-    <div>
-      <Provider store={store}>
-        <Routes />
-      </Provider>
-      <DebugPanel top right bottom>
-        <DevTools store={store} monitor={LogMonitor} />
-      </DebugPanel>
-    </div>,
-    document.getElementById('app')
-  );
+  // render(
+  //   <div>
+  //     <Provider store={store}>
+  //       <Routes />
+  //     </Provider>
+  //     <DebugPanel top right bottom>
+  //       <DevTools store={store} monitor={LogMonitor} />
+  //     </DebugPanel>
+  //   </div>,
+  //   document.getElementById('app')
+  // );
 } else {
   render(
     <Provider store={store}>
