@@ -5,7 +5,6 @@ import _ from 'lodash';
 import moment from 'moment';
 import cn from 'classnames';
 
-import { displayFormat } from '../controls/Telephone.js';
 import { selectPlayer } from '../../actions/matchActions.js';
 
 import Table from 'react-bootstrap/lib/Table';
@@ -94,17 +93,22 @@ export default class PlayerLinup extends Component {
             const getOnChangePlaying = status => this._onChangePlaying.bind(this, match, status);
             const buttons = (
               <ButtonToolbar>
-                <Button style={{marginBottom: 5, width: 90}} bsStyle="success" onClick={getOnChangePlaying('Play')}>{t('profile.play.canPlay')}</Button>
-                <Button style={{marginBottom: 5, width: 90}} bsStyle="danger" onClick={getOnChangePlaying('NotPlay')}>{t('profile.play.canNotPlay')}</Button>
-                <Button style={{marginBottom: 5, width: 90}} bsStyle="info" onClick={getOnChangePlaying('Maybe')}>{t('profile.play.canMaybe')}</Button>
-                <Button style={{width: 90}} onClick={getOnChangePlaying('DontKnow')}>{t('profile.play.canDontKnow')}</Button>
+                <Button style={{marginBottom: 5, width: 90}} bsStyle="success" onClick={getOnChangePlaying('Play')}>
+                  {t('profile.play.canPlay')}
+                </Button>
+                <Button style={{marginBottom: 5, width: 90}} bsStyle="danger" onClick={getOnChangePlaying('NotPlay')}>
+                  {t('profile.play.canNotPlay')}
+                </Button>
+                <Button style={{marginBottom: 5, width: 90}} bsStyle="info" onClick={getOnChangePlaying('Maybe')}>
+                  {t('profile.play.canMaybe')}
+                </Button>
+                <Button style={{width: 90}} onClick={getOnChangePlaying('DontKnow')}>
+                  {t('profile.play.canDontKnow')}
+                </Button>
               </ButtonToolbar>
             );
             const currentStatus = match.plays(this.props.user.playerId);
 
-            const us = match.getTeam().renderOwnTeamTitle();
-            const them = match.renderOpponentTitle();
-            const separator = <Icon fa="fa fa-arrows-h" />;
             return (
               <tr key={match.id} className={this._getPlayingStatusRowClass(currentStatus)}>
                 <td className="hidden-xs">{match.frenoyMatchId}</td>

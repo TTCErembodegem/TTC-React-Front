@@ -1,7 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { connect } from 'react-redux';
-import { browserHistory } from 'react-router';
 
 import MatchModel from '../../models/MatchModel.js';
 import TeamModel from '../../models/TeamModel.js';
@@ -12,8 +11,6 @@ import TabbedContainer from '../controls/TabbedContainer.js';
 import Table from 'react-bootstrap/lib/Table';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
-import IconButton from 'material-ui/lib/icon-button';
-import FlatButton from 'material-ui/lib/flat-button';
 
 import { OwnClubId } from '../../models/ClubModel.js';
 
@@ -24,7 +21,6 @@ import moment from 'moment';
 import cn from 'classnames';
 import Icon from '../controls/Icon.js';
 import PlayersCardGallery from '../players/PlayersCardGallery.js';
-import MatchVs from '../matches/Match/MatchVs.js';
 import { MatchesTable } from '../matches/MatchesWeek.js';
 
 export const TeamsVttl = () => <Teams competition="Vttl" />;
@@ -177,7 +173,7 @@ export default class Teams extends Component {
 const ButtonStack = ({small, config, activeView, onClick}) => {
   if (small) {
     return (
-      <DropdownButton title={config.find(x => x.key == activeView).text} id="team-view">
+      <DropdownButton title={config.find(x => x.key === activeView).text} id="team-view">
         {config.map(button => (
           <MenuItem eventKey={button.key} key={button.key} onSelect={onClick.bind(null, button.key)}>{button.text}</MenuItem>
         ))}
@@ -196,7 +192,7 @@ const ButtonStack = ({small, config, activeView, onClick}) => {
       ))}
     </div>
   );
-}
+};
 
 
 const DivisionRanking = ({team, t}) => (

@@ -104,7 +104,7 @@ export default class TeamModel {
   }
 
   isCaptain(player) {
-    return this.players.find(x => x.type  === teamPlayerType.captain && x.playerId === player.id);
+    return this.players.find(x => x.type === teamPlayerType.captain && x.playerId === player.id);
   }
 
   getPlayers(type) {

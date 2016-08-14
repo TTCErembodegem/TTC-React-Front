@@ -18,6 +18,6 @@ const MatchVs = ({match, opponentOnly}) => {
     return <span><strong>{us}</strong> {separator} {them}</span>;
   }
   return <span>{them} {separator} <strong>{us}</strong></span>;
-}
+};
 
 export default MatchVs;

@@ -1,14 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import Icon from '../../controls/Icon.js';
-import Card from 'material-ui/lib/card/card';
-import CardHeader from 'material-ui/lib/card/card-header';
-import CardText from 'material-ui/lib/card/card-text';
-import Accordion from 'react-bootstrap/lib/Accordion';
-import Panel from 'react-bootstrap/lib/Panel';
-import PlayerImage from '../PlayerImage.js';
 import TabbedContainer from '../../controls/TabbedContainer.js';
 import Table from 'react-bootstrap/lib/Table';
-import Image from 'react-bootstrap/lib/Image';
 import cn from 'classnames';
 import TextField from 'material-ui/lib/text-field';
 import Telephone from '../../controls/Telephone.js';
@@ -20,7 +13,6 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 
 import PlayerModel, { createFrenoyLink } from '../../../models/PlayerModel.js';
 import TeamModel from '../../../models/TeamModel.js';
-import { util as storeUtil } from '../../../store.js';
 import http from '../../../utils/httpClient.js';
 import moment from 'moment';
 import { contextTypes } from '../../../utils/decorators/withContext.js';
@@ -74,7 +66,7 @@ export default class Players extends Component {
     });
   }
 
-  _renderToolbar(tabKey) {
+  _renderToolbar() {
     return (
       <div style={{marginRight: 5, marginLeft: 5}}>
         <TextField
@@ -102,7 +94,7 @@ export default class Players extends Component {
     }
     return (
       <div>
-        <div>{this._renderToolbar(tabKey)}</div>
+        <div>{this._renderToolbar()}</div>
         {tabContent}
       </div>
     );
@@ -143,11 +135,11 @@ export default class Players extends Component {
     );
   }
   _renderTabSporta() {
-     var players = this.props.players.filter(x => x.sporta);
-     if (this.state.filter) {
-       players = players.filter(x => x.name.toLowerCase().includes(this.state.filter));
-     }
-     players = players.sort((a, b) => a.sporta.position - b.sporta.position);
+    var players = this.props.players.filter(x => x.sporta);
+    if (this.state.filter) {
+      players = players.filter(x => x.name.toLowerCase().includes(this.state.filter));
+    }
+    players = players.sort((a, b) => a.sporta.position - b.sporta.position);
     return (
       <Table condensed hover>
         <thead>
@@ -282,7 +274,7 @@ export default class Players extends Component {
                   <small>{ply.style.bestStroke}</small>
                 </td>
               </tr>
-            )}
+            );}
           )}
         </tbody>
       </Table>

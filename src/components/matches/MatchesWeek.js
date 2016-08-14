@@ -3,11 +3,8 @@ import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { contextTypes } from '../../utils/decorators/withContext.js';
 import withViewport from '../../utils/decorators/withViewport.js';
-import { util as storeUtil } from '../../store.js';
-import _ from 'lodash';
 import moment from 'moment';
 
-import { displayFormat } from '../controls/Telephone.js';
 //import { selectPlayer } from '../../actions/matchActions.js';
 
 import Table from 'react-bootstrap/lib/Table';
@@ -139,7 +136,7 @@ export class MatchesTable extends Component {
     const matchRows = [];
 
     this.props.matches.forEach((match, i) => {
-      const stripeColor = {backgroundColor: i % 2 == 0 ? '#f9f9f9' : undefined};
+      const stripeColor = {backgroundColor: i % 2 === 0 ? '#f9f9f9' : undefined};
       const displayVictoryIcon = match.scoreType === 'Won';
       const score = match.renderScore();
 
@@ -179,7 +176,7 @@ export class MatchesTable extends Component {
           </tr>
         );
       }
-    })
+    });
 
     return (
       <Table condensed>

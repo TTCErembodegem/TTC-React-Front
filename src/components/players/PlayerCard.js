@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import { contextTypes } from '../../utils/decorators/withContext.js';
-import PlayerModel, { createFrenoyLink } from '../../models/PlayerModel.js';
+import PlayerModel from '../../models/PlayerModel.js';
 
 import Card from 'material-ui/lib/card/card';
 import Telephone from '../controls/Telephone.js';
@@ -30,7 +30,7 @@ export default class PlayerCard extends Component {
               <strong>{this.context.t('common.competition')}</strong>
               <br />
               <PlayerCompetition comp="Vttl" player={player} />
-              {player.vttl && player.sporta  ? <br /> : null}
+              {player.vttl && player.sporta ? <br /> : null}
               <PlayerCompetition comp="Sporta" player={player} />
             </div>
           ) : null}
@@ -66,4 +66,4 @@ export const PlayerCompetition = ({comp, player}) => {
       {comp} {team ? team.teamCode : null} <small>({compDetails.ranking})</small>
     </span>
   );
-}
+};

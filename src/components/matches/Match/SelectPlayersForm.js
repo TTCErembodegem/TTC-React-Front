@@ -124,7 +124,7 @@ const SelectableMatchPlayerAvatar = ({match, player, select}) => {
       player={player}
       backgroundColor={color} />
   );
-}
+};
 
 class SelectablePlayerAvatar extends Component {
   static propTypes = {

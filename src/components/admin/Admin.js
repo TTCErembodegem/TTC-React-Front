@@ -6,8 +6,6 @@ import MatchModel from '../../models/MatchModel.js';
 import TeamModel from '../../models/TeamModel.js';
 import { contextTypes } from '../../utils/decorators/withContext.js';
 
-import List from 'material-ui/lib/lists/list';
-import ListItem from 'material-ui/lib/lists/list-item';
 import TabbedContainer from '../controls/TabbedContainer.js';
 import AdminPlayers from './AdminPlayers.js';
 import AdminTeams from './AdminTeams.js';
