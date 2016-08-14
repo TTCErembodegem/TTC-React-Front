@@ -1,15 +1,9 @@
-import React, { PropTypes, Component } from 'react';
-import ImmutablePropTypes from 'react-immutable-proptypes';
+import React, { Component } from 'react';
+import PropTypes, { connect, withViewport } from '../PropTypes.js';
 import _ from 'lodash';
-import { connect } from 'react-redux';
 import { util as storeUtil } from '../../store.js';
-import withViewport from '../../utils/decorators/withViewport.js';
 
-import MatchModel from '../../models/MatchModel.js';
-import PlayerModel from '../../models/PlayerModel.js';
-import { contextTypes } from '../../utils/decorators/withContext.js';
 import * as configActions from '../../actions/configActions.js';
-
 import MatchCard from './Match/MatchCard.js';
 
 @withViewport
@@ -22,14 +16,14 @@ import MatchCard from './Match/MatchCard.js';
   };
 }, configActions)
 export default class MatchesToday extends Component {
-  static contextTypes = contextTypes;
+  static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     config: PropTypes.object.isRequired,
-    user: PropTypes.object.isRequired,
-    players: ImmutablePropTypes.listOf(PropTypes.instanceOf(PlayerModel).isRequired).isRequired,
-    matches: ImmutablePropTypes.listOf(PropTypes.instanceOf(MatchModel).isRequired).isRequired,
+    user: PropTypes.UserModel.isRequired,
+    players: PropTypes.PlayerModelList.isRequired,
+    matches: PropTypes.MatchModelList.isRequired,
     setSetting: PropTypes.func.isRequired,
-    viewport: PropTypes.object.isRequired,
+    viewport: PropTypes.viewport,
   }
 
   componentDidMount() {

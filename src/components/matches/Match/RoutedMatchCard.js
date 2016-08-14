@@ -1,8 +1,7 @@
-import React, { PropTypes, Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from 'react';
+import PropTypes, { connect, withViewport } from '../../PropTypes.js';
 import { util as storeUtils } from '../../../store.js';
 import MatchCard from './MatchCard.js';
-import withViewport from '../../../utils/decorators/withViewport.js';
 import { fetchMatch } from '../../../actions/initialLoad.js';
 
 import { FullScreenSpinner } from '../../controls/Spinner.js';
@@ -18,12 +17,12 @@ export default class RoutedMatchCard extends Component {
     params: PropTypes.shape({
       matchId: PropTypes.string.isRequired
     }),
-    viewport: PropTypes.object.isRequired,
+    viewport: PropTypes.viewport,
     fetchMatch: PropTypes.func.isRequired,
   }
 
   _setMatchId(props) {
-    var matchId = parseInt(props.params.matchId, 10);
+    const matchId = parseInt(props.params.matchId, 10);
     this.state = {
       match: storeUtils.getMatch(matchId)
     };

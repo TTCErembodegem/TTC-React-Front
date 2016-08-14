@@ -1,9 +1,7 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from '../../PropTypes.js';
 import { browserHistory } from 'react-router';
-import { contextTypes } from '../../../utils/decorators/withContext.js';
 import moment from 'moment';
-
-import MatchModel from '../../../models/MatchModel.js';
 
 import FavoriteMatch from '../FavoriteMatch.js';
 import MatchForm from '../Match/MatchForm.js';
@@ -16,11 +14,11 @@ import CardHeader from 'material-ui/lib/card/card-header';
 const daysAgoBackFullDate = 7;
 
 export class BigMatchCardHeader extends Component {
-  static contextTypes = contextTypes;
+  static contextTypes = PropTypes.contextTypes;
   static propTypes = {
-    match: PropTypes.instanceOf(MatchModel).isRequired,
+    match: PropTypes.MatchModel.isRequired,
     children: PropTypes.node,
-    user: PropTypes.object.isRequired,
+    user: PropTypes.UserModel.isRequired,
     isOpen: PropTypes.bool.isRequired,
   }
 
@@ -73,11 +71,11 @@ export class BigMatchCardHeader extends Component {
 
 
 export default class SmallMatchCardHeader extends Component {
-  static contextTypes = contextTypes;
+  static contextTypes = PropTypes.contextTypes;
   static propTypes = {
-    match: PropTypes.instanceOf(MatchModel).isRequired,
+    match: PropTypes.MatchModel.isRequired,
     children: PropTypes.node,
-    user: PropTypes.object.isRequired,
+    user: PropTypes.UserModel.isRequired,
     isOpen: PropTypes.bool.isRequired,
     onOpen: PropTypes.func,
     noScoreEdit: PropTypes.bool,
@@ -101,20 +99,18 @@ export default class SmallMatchCardHeader extends Component {
 
 
 class MatchCardHeader extends Component {
-  static contextTypes = contextTypes;
+  static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     config: PropTypes.object.isRequired,
-    match: PropTypes.instanceOf(MatchModel).isRequired,
+    match: PropTypes.MatchModel.isRequired,
     children: PropTypes.node,
-    user: PropTypes.object.isRequired,
+    user: PropTypes.UserModel.isRequired,
     isOpen: PropTypes.bool.isRequired,
     onOpen: PropTypes.func.isRequired,
     noScoreEdit: PropTypes.bool,
     width: PropTypes.number,
     routed: PropTypes.bool,
   }
-
-  // TODO: implement fancy tooltip https://github.com/callemall/material-ui/blob/master/src/tooltip.jsx?
 
   render() {
     const match = this.props.match;
@@ -214,15 +210,8 @@ class MatchCardHeader extends Component {
     );
   }
   _renderOpponentPosition(match) {
-    //const club = match.getOpponentClub();
     var ranking = match.getTeam().getDivisionRanking(match.opponent);
     if (!ranking) {
-      // TODO: check what is going on here? Galmaarden E heeft algemeen forfait gegeven ofzo?
-      // --> Dit gaat nu sowieso het geval zijn omdat deze in een aparte request komen...
-      // --> of die mss 10u cachen?
-      // console.log('_renderOpponentPosition', club.id, match.opponent.teamCode);
-      // console.log('_renderOpponentPosition', match.getTeam());
-      // console.log('_renderOpponentPosition', match);
       ranking = {position: '?'};
     }
 

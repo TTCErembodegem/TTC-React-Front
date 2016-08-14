@@ -1,6 +1,5 @@
-import React, { PropTypes, Component } from 'react';
-import { connect } from 'react-redux';
-import { contextTypes } from '../../utils/decorators/withContext.js';
+import React, { Component } from 'react';
+import PropTypes, { connect } from '../PropTypes.js';
 
 import * as playerActions from '../../actions/playerActions.js';
 
@@ -9,9 +8,9 @@ import RaisedButton from 'material-ui/lib/raised-button';
 
 @connect(() => ({}), playerActions)
 export default class ChangePlayerDetails extends Component {
-  static contextTypes = contextTypes;
+  static contextTypes = PropTypes.contextTypes;
   static propTypes = {
-    player: PropTypes.object.isRequired,
+    player: PropTypes.PlayerModel.isRequired,
     updatePlayer: PropTypes.func.isRequired,
   }
 

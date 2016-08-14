@@ -1,11 +1,9 @@
-import React, { PropTypes, Component } from 'react';
-import MatchModel from '../../models/MatchModel.js';
-import { connect } from 'react-redux';
-import { contextTypes } from '../../utils/decorators/withContext.js';
-import cn from 'classnames';
-import { setSetting } from '../../actions/configActions.js';
+import React, { Component } from 'react';
 import { Link } from 'react-router';
+import PropTypes, { connect } from '../PropTypes.js';
+import cn from 'classnames';
 
+import { setSetting } from '../../actions/configActions.js';
 import Icon from '../controls/Icon.js';
 
 function getClassName(isHomeMatch, home, out) {
@@ -23,10 +21,10 @@ function getClassName(isHomeMatch, home, out) {
   config: state.config
 }), {setSetting})
 export default class MatchScore extends Component {
-  static contextTypes = contextTypes;
+  static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     config: PropTypes.object.isRequired,
-    match: PropTypes.instanceOf(MatchModel).isRequired,
+    match: PropTypes.MatchModel.isRequired,
     style: PropTypes.object,
     forceDisplay: PropTypes.bool.isRequired,
     setSetting: PropTypes.func.isRequired,

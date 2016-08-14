@@ -1,17 +1,12 @@
-import React, { PropTypes, Component } from 'react';
-
-//import { matchOutcome } from '../../../models/MatchModel.js';
-import MatchModel from '../../../models/MatchModel.js';
-
-//import Icon from '../../controls/Icon.js';
+import React, { Component } from 'react';
+import PropTypes from '../../PropTypes.js';
 import Table from 'react-bootstrap/lib/Table';
-//import cn from 'classnames';
 
 export default class Scoresheet extends Component {
   static propTypes = {
-    match: PropTypes.instanceOf(MatchModel),
+    match: PropTypes.MatchModel,
     t: PropTypes.func.isRequired,
-    viewport: PropTypes.object.isRequired,
+    viewport: PropTypes.viewport,
   }
 
   render() {

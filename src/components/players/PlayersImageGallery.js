@@ -1,7 +1,5 @@
-import React, { PropTypes, Component } from 'react';
-import ImmutablePropTypes from 'react-immutable-proptypes';
-import { connect } from 'react-redux';
-import withContext, { contextTypes } from '../../utils/decorators/withContext.js';
+import React, { Component } from 'react';
+import PropTypes, { connect, withContext } from '../PropTypes.js';
 import { util as storeUtil } from '../../store.js';
 
 import * as playerActions from '../../actions/playerActions.js';
@@ -48,12 +46,12 @@ const editStyleIcon = {
 @connect(() => ({}), playerActions)
 @withContext
 export default class PlayersImageGallery extends Component {
-  static contextTypes = contextTypes;
+  static contextTypes = PropTypes.contextTypes;
   static propTypes = {
-    players: ImmutablePropTypes.list.isRequired,
-    user: PropTypes.object.isRequired,
-    competition: PropTypes.string.isRequired,
-    viewport: PropTypes.object.isRequired,
+    players: PropTypes.PlayerModelList.isRequired,
+    user: PropTypes.UserModel.isRequired,
+    competition: PropTypes.competition.isRequired,
+    viewport: PropTypes.viewport,
     updateStyle: PropTypes.func.isRequired,
     viewportWidthContainerCount: PropTypes.number.isRequired,
     subtitle: PropTypes.func,

@@ -1,20 +1,18 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from '../PropTypes.js';
 import PlayerImage from './PlayerImage.js';
 import PlayerCard from './PlayerCard.js';
 import Card from 'material-ui/lib/card/card';
 
-import ImmutablePropTypes from 'react-immutable-proptypes';
-
 import PlayerModel from '../../models/PlayerModel.js';
-import { contextTypes } from '../../utils/decorators/withContext.js';
 import withViewport from '../../utils/decorators/withViewport.js';
 
 @withViewport
 export default class Players extends Component {
-  static contextTypes = contextTypes;
+  static contextTypes = PropTypes.contextTypes;
   static propTypes = {
-    players: ImmutablePropTypes.listOf(PropTypes.instanceOf(PlayerModel).isRequired).isRequired,
-    viewport: PropTypes.object.isRequired,
+    players: PropTypes.PlayerModelList.isRequired,
+    viewport: PropTypes.viewport,
   };
 
   render() {

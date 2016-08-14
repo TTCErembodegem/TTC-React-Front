@@ -1,8 +1,6 @@
-import React, { PropTypes, Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from 'react';
+import PropTypes, { connect, withViewport } from '../PropTypes.js';
 import { browserHistory } from 'react-router';
-import { contextTypes } from '../../utils/decorators/withContext.js';
-import withViewport from '../../utils/decorators/withViewport.js';
 import moment from 'moment';
 
 //import { selectPlayer } from '../../actions/matchActions.js';
@@ -15,9 +13,9 @@ import MatchVs from './Match/MatchVs.js';
 
 @connect(state => ({matches: state.matches})/*, {selectPlayer}*/)
 export default class MatchesWeek extends Component {
-  static contextTypes = contextTypes;
+  static contextTypes = PropTypes.contextTypes;
   static propTypes = {
-    matches: PropTypes.object.isRequired,
+    matches: PropTypes.MatchModelList.isRequired,
     //selectPlayer: PropTypes.func.isRequired,
   }
 
@@ -102,11 +100,11 @@ function getPlayingStatusButtonClass(playingStatus) {
 
 @withViewport
 export class MatchesTable extends Component {
-  static contextTypes = contextTypes;
+  static contextTypes = PropTypes.contextTypes;
   static propTypes = {
-    matches: PropTypes.object.isRequired,
+    matches: PropTypes.MatchModelList.isRequired,
     allowOpponentOnly: PropTypes.bool,
-    viewport: PropTypes.object.isRequired,
+    viewport: PropTypes.viewport,
     //selectPlayer: PropTypes.func.isRequired,
   }
   static defaultProps = {
@@ -121,7 +119,7 @@ export class MatchesTable extends Component {
           return (
             <Button
               bsStyle={getPlayingStatusButtonClass(matchPlayer.status)}
-              key={player.playerId}
+              key={player.id}
               style={{marginBottom: 5}}>
               {player.alias}
             </Button>

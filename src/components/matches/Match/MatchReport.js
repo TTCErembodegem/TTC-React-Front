@@ -1,11 +1,7 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from 'react';
+import PropTypes, { connect } from '../../PropTypes.js';
 import { util as storeUtils } from '../../../store.js';
-import { contextTypes } from '../../../utils/decorators/withContext.js';
-
-import MatchModel from '../../../models/MatchModel.js';
 import * as matchActions from '../../../actions/matchActions.js';
-import UserModel from '../../../models/UserModel.js';
 
 import TimeAgo from '../../controls/TimeAgo.js';
 import Icon from '../../controls/Icon.js';
@@ -27,12 +23,12 @@ function getEmptyComment(matchId, playerId) {
 
 @connect(() => ({}), matchActions)
 export default class MatchReport extends Component {
-  static contextTypes = contextTypes;
+  static contextTypes = PropTypes.contextTypes;
   static propTypes = {
-    user: PropTypes.instanceOf(UserModel).isRequired,
-    match: PropTypes.instanceOf(MatchModel).isRequired,
+    user: PropTypes.UserModel.isRequired,
+    match: PropTypes.MatchModel.isRequired,
     t: PropTypes.func.isRequired,
-    viewport: PropTypes.object.isRequired,
+    viewport: PropTypes.viewport,
     postReport: PropTypes.func.isRequired,
     postComment: PropTypes.func.isRequired,
     deleteComment: PropTypes.func.isRequired,

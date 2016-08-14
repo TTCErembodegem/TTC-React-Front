@@ -1,17 +1,15 @@
-import React, { PropTypes, Component } from 'react';
-import { connect } from 'react-redux';
-import { contextTypes } from '../../utils/decorators/withContext.js';
-
+import React, { Component } from 'react';
+import PropTypes, { connect } from '../PropTypes.js';
 import * as userActions from '../../actions/userActions.js';
-import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 
+import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 import TextField from 'material-ui/lib/text-field';
 import RaisedButton from 'material-ui/lib/raised-button';
 import Paper from 'material-ui/lib/paper';
 
 @connect(() => ({}), userActions)
 export class ChangeAnyPassword extends Component {
-  static contextTypes = contextTypes;
+  static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     setNewPassword: PropTypes.func.isRequired,
     onEnd: PropTypes.func.isRequired,
@@ -68,9 +66,9 @@ export class ChangeAnyPassword extends Component {
   };
 }, userActions)
 export default class ChangePassword extends Component {
-  static contextTypes = contextTypes;
+  static contextTypes = PropTypes.contextTypes;
   static propTypes = {
-    user: PropTypes.object.isRequired,
+    user: PropTypes.UserModel.isRequired,
     changePassword: PropTypes.func.isRequired,
   }
 

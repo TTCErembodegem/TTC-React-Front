@@ -1,9 +1,5 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { contextTypes } from '../../../utils/decorators/withContext.js';
-
-import UserModel from '../../../models/UserModel.js';
-import MatchModel from '../../../models/MatchModel.js';
+import React, { Component } from 'react';
+import PropTypes, { connect } from '../../PropTypes.js';
 import * as matchActions from '../../../actions/matchActions.js';
 
 import MatchScore from '../MatchScore.js';
@@ -11,10 +7,10 @@ import Icon from '../../controls/Icon.js';
 
 @connect(() => ({}), matchActions)
 export default class MatchForm extends Component {
-  static contextTypes = contextTypes;
+  static contextTypes = PropTypes.contextTypes;
   static propTypes = {
-    user: PropTypes.instanceOf(UserModel).isRequired,
-    match: PropTypes.instanceOf(MatchModel).isRequired,
+    user: PropTypes.UserModel.isRequired,
+    match: PropTypes.MatchModel.isRequired,
     t: PropTypes.func.isRequired,
     updateScore: PropTypes.func.isRequired,
     big: PropTypes.bool,

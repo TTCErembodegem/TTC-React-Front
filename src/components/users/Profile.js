@@ -1,6 +1,5 @@
-import React, { PropTypes, Component } from 'react';
-import { connect } from 'react-redux';
-import { contextTypes } from '../../utils/decorators/withContext.js';
+import React, { Component } from 'react';
+import PropTypes, { connect } from '../PropTypes.js';
 
 import { displayFormat } from '../controls/Telephone.js';
 import * as loginActions from '../../actions/userActions.js';
@@ -29,9 +28,9 @@ const tabEventKeys = {
   };
 }, loginActions)
 export default class Profile extends Component {
-  static contextTypes = contextTypes;
+  static contextTypes = PropTypes.contextTypes;
   static propTypes = {
-    user: PropTypes.object.isRequired,
+    user: PropTypes.UserModel.isRequired,
     logout: PropTypes.func.isRequired,
   }
 

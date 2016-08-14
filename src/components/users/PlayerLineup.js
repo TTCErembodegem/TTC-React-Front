@@ -1,6 +1,5 @@
-import React, { PropTypes, Component } from 'react';
-import { connect } from 'react-redux';
-import { contextTypes } from '../../utils/decorators/withContext.js';
+import React, { Component } from 'react';
+import PropTypes, { connect } from '../PropTypes.js';
 import _ from 'lodash';
 import moment from 'moment';
 import cn from 'classnames';
@@ -10,15 +9,14 @@ import { selectPlayer } from '../../actions/matchActions.js';
 import Table from 'react-bootstrap/lib/Table';
 import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
 import Button from 'react-bootstrap/lib/Button';
-import Icon from '../controls/Icon.js';
 import MatchVs from '../matches/Match/MatchVs.js';
 
 @connect(state => ({matches: state.matches}), {selectPlayer})
 export default class PlayerLinup extends Component {
-  static contextTypes = contextTypes;
+  static contextTypes = PropTypes.contextTypes;
   static propTypes = {
-    matches: PropTypes.object.isRequired,
-    user: PropTypes.object.isRequired,
+    matches: PropTypes.MatchModelList.isRequired,
+    user: PropTypes.UserModel.isRequired,
     selectPlayer: PropTypes.func.isRequired,
   }
 

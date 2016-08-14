@@ -1,11 +1,7 @@
-import React, { PropTypes, Component } from 'react';
-import ImmutablePropTypes from 'react-immutable-proptypes';
-import { connect } from 'react-redux';
-
-import MatchModel from '../../models/MatchModel.js';
-import TeamModel from '../../models/TeamModel.js';
-import { contextTypes } from '../../utils/decorators/withContext.js';
-import withViewport from '../../utils/decorators/withViewport.js';
+import React, { Component } from 'react';
+import PropTypes, { connect, withViewport } from '../PropTypes.js';
+import moment from 'moment';
+import cn from 'classnames';
 
 import TabbedContainer from '../controls/TabbedContainer.js';
 import Table from 'react-bootstrap/lib/Table';
@@ -13,12 +9,9 @@ import MenuItem from 'react-bootstrap/lib/MenuItem';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 
 import { OwnClubId } from '../../models/ClubModel.js';
-
 import { util as storeUtil } from '../../store.js';
 import * as matchActions from '../../actions/matchActions.js';
 
-import moment from 'moment';
-import cn from 'classnames';
 import Icon from '../controls/Icon.js';
 import PlayersCardGallery from '../players/PlayersCardGallery.js';
 import { MatchesTable } from '../matches/MatchesWeek.js';
@@ -38,14 +31,14 @@ export const TeamsSporta = () => <Teams competition="Sporta" />;
 }, matchActions)
 @withViewport
 export default class Teams extends Component {
-  static contextTypes = contextTypes;
+  static contextTypes = PropTypes.contextTypes;
   static propTypes = {
-    competition: PropTypes.string.isRequired,
+    competition: PropTypes.competition.isRequired,
     config: PropTypes.object.isRequired,
-    user: PropTypes.object.isRequired,
-    matches: ImmutablePropTypes.listOf(PropTypes.instanceOf(MatchModel).isRequired).isRequired,
-    teams: ImmutablePropTypes.listOf(PropTypes.instanceOf(TeamModel).isRequired).isRequired,
-    viewport: PropTypes.object.isRequired,
+    user: PropTypes.UserModel.isRequired,
+    matches: PropTypes.MatchModelList.isRequired,
+    teams: PropTypes.TeamModelList.isRequired,
+    viewport: PropTypes.viewport,
   }
 
   constructor() {
