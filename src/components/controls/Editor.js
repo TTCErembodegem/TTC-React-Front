@@ -55,9 +55,8 @@ module.exports = React.createClass({
 
   render() {
     var tag = this.props.tag;
-    var props = blacklist(this.props, 'tag', 'dangerouslySetInnerHTML');
+    var props = blacklist(this.props, 'tag', 'dangerouslySetInnerHTML', 'text');
 
-    //Mutation of props... is that the source of 'weird' behavior?
     props = assign({}, props, {
       contentEditable: this.props.contentEditable, // TODO: real fix = !this.props.options.disableEditing?
       dangerouslySetInnerHTML: {__html: this.state.text}

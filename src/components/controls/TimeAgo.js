@@ -3,6 +3,7 @@
 'use strict';
 
 import timeAgoInWords from '../../utils/timeAgoInWords.js';
+import _ from 'lodash';
 
 var React = require('react');
 var assign = require('object-assign');
@@ -82,13 +83,9 @@ module.exports = React.createClass({
       distanceMillis = 0;
     }
 
-    var props = assign({}, this.props);
-    props.title = props.date.format('ddd D/M H:mm');
+    var props = _.omit(this.props, ['live', 'minPeriod', 'maxPeriod', 'component', 'date']);
+    props.title = this.props.date.format('ddd D/M H:mm');
 
-    delete props.date;
-    delete props.formatter;
-    delete props.component;
-
-    return React.createElement( this.props.component, props, timeAgoInWords(distanceMillis));
+    return React.createElement(this.props.component, props, timeAgoInWords(distanceMillis));
   }
 });

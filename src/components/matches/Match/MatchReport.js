@@ -70,7 +70,7 @@ export default class MatchReport extends Component {
     const readonlyReport = this.state.text ? <pre dangerouslySetInnerHTML={{__html: this.state.text}} /> : null;
 
     var reportText;
-    const canComment = this.props.user.playerId;
+    const canComment = !!this.props.user.playerId;
     const showComments = canComment || this.props.match.comments.size;
     const canPostReport = this.props.user.canPostReport(this.props.match.teamId) && this.props.match.isScoreComplete();
     if (this.props.match.isScoreComplete()) {
