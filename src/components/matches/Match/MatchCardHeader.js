@@ -203,7 +203,7 @@ class MatchCardHeader extends Component {
   _renderOwnTeamPosition(team) {
     const ranking = team.getDivisionRanking();
     return (
-      <span className="label label-as-badge label-info" style={{marginLeft: 5, marginRight: 5, paddingTop: 25}}>
+      <span className="label label-as-badge label-info" style={{marginLeft: 5, marginRight: 5, paddingTop: 5}}>
         {ranking ? ranking.position : '?'}
       </span>
     );
@@ -215,7 +215,7 @@ class MatchCardHeader extends Component {
     }
 
     return (
-      <span className="label label-as-badge label-info" style={{marginLeft: 5, marginRight: 5, paddingTop: 25}}>
+      <span className="label label-as-badge label-info" style={{marginLeft: 5, marginRight: 5, paddingTop: 5}}>
         {ranking.position}
       </span>
     );
