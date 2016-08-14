@@ -11,10 +11,12 @@ import ListItem from 'material-ui/lib/lists/list-item';
 import TabbedContainer from '../controls/TabbedContainer.js';
 import AdminPlayers from './AdminPlayers.js';
 import AdminTeams from './AdminTeams.js';
+import AdminMatches from './AdminMatches.js';
 
 const tabEventKeys = {
   players: 1,
   teams: 2,
+  matches: 3
 };
 
 @connect(state => {
@@ -47,6 +49,8 @@ export default class Admin extends Component {
       return <AdminTeams teams={this.props.teams} />;
     case tabEventKeys.players:
       return <AdminPlayers players={this.props.players} recreantAndQuitters={this.props.admin.players} />;
+    case tabEventKeys.matches:
+      return <AdminMatches />;
     }
   }
 
@@ -61,6 +65,9 @@ export default class Admin extends Component {
     }, {
       key: tabEventKeys.teams,
       title: 'Teams',
+    }, {
+      key: tabEventKeys.matches,
+      title: 'Matchen',
     }];
 
     return (
