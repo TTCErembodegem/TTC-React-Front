@@ -6,9 +6,9 @@ import * as matchActions from '../../../actions/matchActions.js';
 import TimeAgo from '../../controls/TimeAgo.js';
 import Icon from '../../controls/Icon.js';
 import Editor from '../../controls/Editor.js';
-import RaisedButton from 'material-ui/lib/raised-button';
-import FlatButton from 'material-ui/lib/flat-button';
-import Checkbox from 'material-ui/lib/checkbox';
+import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
+import Checkbox from 'material-ui/Checkbox';
 import PlayerAutoComplete from '../../players/PlayerAutoComplete.js';
 import ImageDropzone from '../../controls/images/ImageDropzone.js';
 

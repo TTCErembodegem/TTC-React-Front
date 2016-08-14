@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes, { connect } from '../PropTypes.js';
 
-import AutoComplete from 'material-ui/lib/auto-complete';
-import MenuItem from 'material-ui/lib/menus/menu-item';
+import AutoComplete from 'material-ui/AutoComplete';
+import MenuItem from 'material-ui/MenuItem';
 
 @connect(state => {
   return {

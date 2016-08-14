@@ -8,8 +8,7 @@ import MatchForm from '../Match/MatchForm.js';
 import MatchScore from '../MatchScore.js';
 import Icon from '../../controls/Icon.js';
 
-import Card from 'material-ui/lib/card/card';
-import CardHeader from 'material-ui/lib/card/card-header';
+import { Card, CardHeader } from 'material-ui/Card';
 
 const daysAgoBackFullDate = 7;
 

@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
-import Slider from 'material-ui/lib/slider';
+import Slider from 'material-ui/Slider';
 import AvatarEditor from 'react-avatar-editor';
-import FlatButton from 'material-ui/lib/flat-button';
+import FlatButton from 'material-ui/FlatButton';
 
 const ImageEditor = React.createClass({
   propTypes: {

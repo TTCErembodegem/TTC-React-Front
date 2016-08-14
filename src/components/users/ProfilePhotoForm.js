@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes, { connect, withContext } from '../PropTypes.js';
 import { uploadPlayer } from '../../actions/userActions.js';
 
-import FlatButton from 'material-ui/lib/flat-button';
+import FlatButton from 'material-ui/FlatButton';
 import ImageEditor from '../controls/images/ImageEditor.js';
 import { playerUtils } from '../../models/PlayerModel.js';
 import ImageDropzone from '../controls/images/ImageDropzone.js';

@@ -7,7 +7,7 @@ import Intro from './Intro.js';
 import Grid from 'react-bootstrap/lib/Grid';
 import { FullScreenSpinner } from '../controls/Spinner.js';
 
-import Snackbar from 'material-ui/lib/snackbar';
+import Snackbar from 'material-ui/Snackbar';
 import * as configActions from '../../actions/configActions.js';
 
 @connect(state => {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes, { withViewport } from '../PropTypes.js';
 import PlayerImage from './PlayerImage.js';
 import PlayerCard from './PlayerCard.js';
-import Card from 'material-ui/lib/card/card';
+import { Card } from 'material-ui/Card';
 
 @withViewport
 export default class Players extends Component {

@@ -6,7 +6,7 @@ import http from '../../../utils/httpClient.js';
 import { createFrenoyLink } from '../../../models/PlayerModel.js';
 
 import Table from 'react-bootstrap/lib/Table';
-import TextField from 'material-ui/lib/text-field';
+import TextField from 'material-ui/TextField';
 
 import Icon from '../../controls/Icon.js';
 import TabbedContainer from '../../controls/TabbedContainer.js';

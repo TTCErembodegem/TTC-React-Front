@@ -5,7 +5,7 @@ import moment from 'moment';
 
 import Table from 'react-bootstrap/lib/Table';
 import Button from 'react-bootstrap/lib/Button';
-import TextField from 'material-ui/lib/text-field';
+import TextField from 'material-ui/TextField';
 
 import Icon from '../controls/Icon.js';
 import AdminPlayerForm from './AdminPlayerForm.js';

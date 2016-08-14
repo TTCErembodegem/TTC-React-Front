@@ -5,12 +5,11 @@ import { util as storeUtil } from '../../store.js';
 import * as playerActions from '../../actions/playerActions.js';
 import { playerUtils } from '../../models/PlayerModel.js';
 
-import GridList from 'material-ui/lib/grid-list/grid-list';
-import GridTile from 'material-ui/lib/grid-list/grid-tile';
-import Dialog from 'material-ui/lib/dialog';
-import TextField from 'material-ui/lib/text-field';
-import FlatButton from 'material-ui/lib/flat-button';
-import Paper from 'material-ui/lib/paper';
+import { GridList, GridTile } from 'material-ui/GridList';
+import Dialog from 'material-ui/Dialog';
+import TextField from 'material-ui/TextField';
+import FlatButton from 'material-ui/FlatButton';
+import Paper from 'material-ui/Paper';
 
 import Icon from '../controls/Icon.js';
 import Telephone from '../controls/Telephone.js';

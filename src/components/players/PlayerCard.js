@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { contextTypes } from '../../utils/decorators/withContext.js';
 import PlayerModel from '../../models/PlayerModel.js';
 
-import Card from 'material-ui/lib/card/card';
+import { Card } from 'material-ui/Card';
 import Telephone from '../controls/Telephone.js';
 import PlayerImage from './PlayerImage.js';
 import Icon from '../controls/Icon.js';

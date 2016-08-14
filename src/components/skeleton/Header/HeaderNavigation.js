@@ -4,10 +4,10 @@ import { contextTypes } from '../../../utils/decorators/withContext.js';
 import { util as storeUtil } from '../../../store.js';
 
 import enhanceWithClickOutside from 'react-click-outside';
-import LeftNav from 'material-ui/lib/left-nav';
-import MenuItem from 'material-ui/lib/menus/menu-item';
-import Divider from 'material-ui/lib/divider';
-import Badge from 'material-ui/lib/badge';
+import Drawer from 'material-ui/Drawer';
+import MenuItem from 'material-ui/MenuItem';
+import Divider from 'material-ui/Divider';
+import Badge from 'material-ui/Badge';
 
 //using @connect decorator breaks enhanceWithClickOutside
 class Navigation extends Component {
@@ -43,7 +43,7 @@ class Navigation extends Component {
     const matchesToday = storeUtil.matches.getTodayMatches();
 
     return (
-      <LeftNav open={this.props.navOpen} width={200}>
+      <Drawer open={this.props.navOpen} width={200}>
         <MenuItem onTouchTap={this._goto.bind(this, t.route('matches'))}>{t('nav.matches')}</MenuItem>
         {matchesToday.size ? (
           <MenuItem onTouchTap={this._goto.bind(this, t.route('matchesToday'))} style={{}}>
@@ -62,7 +62,7 @@ class Navigation extends Component {
         <MenuItem onTouchTap={this.handleClickHelpButton}>{t('nav.help')}</MenuItem>
         <MenuItem onTouchTap={this.handleClickCloseMenuButton}>{t('nav.closeMenu')}</MenuItem>
         {<Divider />}
-      </LeftNav>
+      </Drawer>
     );
   }
 }

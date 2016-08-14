@@ -3,8 +3,8 @@ import PropTypes, { withStyles } from '../../PropTypes.js';
 import { Link, browserHistory } from 'react-router';
 import { util as storeUtil } from '../../../store.js';
 
-import AppBar from 'material-ui/lib/app-bar';
-import FlatButton from 'material-ui/lib/flat-button';
+import AppBar from 'material-ui/AppBar';
+import FlatButton from 'material-ui/FlatButton';
 import Icon from '../../controls/Icon.js';
 import Navigation from './HeaderNavigation.js';
 
