@@ -5,8 +5,7 @@
 import timeAgoInWords from '../../utils/timeAgoInWords.js';
 import _ from 'lodash';
 
-var React = require('react');
-var assign = require('object-assign');
+const React = require('react');
 
 module.exports = React.createClass({
   displayName: 'Time-Ago',
@@ -27,13 +26,13 @@ module.exports = React.createClass({
     date: React.PropTypes.object.isRequired,
   },
   componentDidMount: function() {
-    if(this.props.live) {
+    if (this.props.live) {
       this.tick(true);
     }
   },
   componentDidUpdate: function(lastProps) {
-    if(this.props.live !== lastProps.live || this.props.date !== lastProps.date) {
-      if(!this.props.live && this.timeoutId) {
+    if (this.props.live !== lastProps.live || this.props.date !== lastProps.date) {
+      if (!this.props.live && this.timeoutId) {
         clearTimeout(this.timeoutId);
         this.timeoutId = undefined;
       }
@@ -47,17 +46,17 @@ module.exports = React.createClass({
     }
   },
   tick: function(refresh) {
-    if(!this.isMounted() || !this.props.live) {
+    if (!this.isMounted() || !this.props.live) {
       return;
     }
 
     var period = 1000;
 
-    var then = this.props.date.valueOf();
-    var now = Date.now();
-    var seconds = Math.round(Math.abs(now-then)/1000);
+    const then = this.props.date.valueOf();
+    const now = Date.now();
+    const seconds = Math.round(Math.abs(now - then) / 1000);
 
-    if(seconds < 60) {
+    if (seconds < 60) {
       period = (60 - seconds) * 1000;
     } else if (seconds < 60*60) {
       period = 1000 * 60;

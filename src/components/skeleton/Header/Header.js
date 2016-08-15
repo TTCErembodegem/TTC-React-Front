@@ -62,7 +62,7 @@ export default class Header extends Component {
 
   _reverseName(name) {
     var nameInParts = name.split(' ');
-    if(nameInParts.length === 2) {
+    if (nameInParts.length === 2) {
       return nameInParts[1] + ' ' + nameInParts[0];
     }
     if (nameInParts.length === 3) {

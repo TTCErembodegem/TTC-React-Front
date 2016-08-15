@@ -6,26 +6,21 @@ import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
-@connect(state => {
-  return {
-    user: state.user,
-  };
-}, userActions)
-export default class ChangePassword extends Component {
+@connect(() => ({}), userActions)
+export default class AdminChangePassword extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
-    user: PropTypes.UserModel.isRequired,
-    changePassword: PropTypes.func.isRequired,
+    setNewPassword: PropTypes.func.isRequired,
+    onEnd: PropTypes.func.isRequired,
   }
 
   constructor() {
     super();
     this.state = {
-      oldpassword: null,
-      newpassword: null,
+      playerId: null,
+      newPassword: null,
     };
   }
-
   render() {
     const paperStyle = {
       marginLeft: 20,
@@ -36,17 +31,16 @@ export default class ChangePassword extends Component {
       <div style={paperStyle}>
         <h3>{this.context.t('password.changeTitle')}</h3>
 
-        <TextField
-          floatingLabelText={this.context.t('password.oldPassword')}
-          type="password"
-          onChange={e => this.setState({oldpassword: e.target.value})} />
+        <PlayerAutoComplete
+          selectPlayer={playerId => this.setState({playerId})}
+          hintText={this.context.t('login.loginName')} />
 
         <br />
 
         <TextField
           floatingLabelText={this.context.t('password.newPassword')}
           type="password"
-          onChange={e => this.setState({newpassword: e.target.value})} />
+          onChange={e => this.setState({newPassword: e.target.value})} />
 
         <br />
 
@@ -54,9 +48,11 @@ export default class ChangePassword extends Component {
           label={this.context.t('profile.editPassword')}
           primary={true}
           style={{marginTop: 15}}
-          onClick={() => this.props.changePassword(this.props.user.playerId, this.state)}
-          disabled={!this.state.oldpassword && !this.state.newpassword} />
-
+          onClick={() => {
+            this.props.setNewPassword(this.state);
+            this.props.onEnd();
+          }}
+          disabled={!this.state.playerId && !this.state.newPassword} />
       </div>
     );
   }

@@ -68,7 +68,7 @@ export default class Intro extends Component {
     if (showTopSponsors) {
       const topSponsorPaperStyle = {
         height: 100,
-        width: 250,
+        width: 260,
         padding: 15,
         display: 'inline-block',
       };
