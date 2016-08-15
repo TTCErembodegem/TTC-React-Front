@@ -46,7 +46,6 @@ export default class AdminDev extends React.Component {
     case tabEventKeys.matches:
       return <AdminStateDisplayer data={this.props.matches.toArray()} />;
     case tabEventKeys.teams:
-      console.log(this.props.teams.toArray());
       return <AdminStateDisplayer data={this.props.teams.toArray()} />;
     case tabEventKeys.clubs:
       return <AdminStateDisplayer data={this.props.clubs.toArray()} />;
