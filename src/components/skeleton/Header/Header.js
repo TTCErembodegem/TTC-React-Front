@@ -35,7 +35,7 @@ export default class Header extends Component {
     return (
       <div>
         <AppBar
-          title={<Link className="Header-link" to="/">{t('clubName')}</Link>}
+          title={<Link className="Header-link" to="/">{this.state.navOpen ? null : t('clubName')}</Link>}
           iconElementRight={loginOrProfile}
           onLeftIconButtonTouchTap={::this._openNav} />
 

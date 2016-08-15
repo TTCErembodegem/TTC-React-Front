@@ -8,6 +8,7 @@ import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import Divider from 'material-ui/Divider';
 import Badge from 'material-ui/Badge';
+import AppBar from 'material-ui/AppBar';
 
 //using @connect decorator breaks enhanceWithClickOutside
 class Navigation extends Component {
@@ -44,6 +45,7 @@ class Navigation extends Component {
 
     return (
       <Drawer open={this.props.navOpen} width={200}>
+        <AppBar iconElementLeft={<div />} title={t('clubName')} />
         <MenuItem onTouchTap={this._goto.bind(this, t.route('matches'))}>{t('nav.matches')}</MenuItem>
         {matchesToday.size ? (
           <MenuItem onTouchTap={this._goto.bind(this, t.route('matchesToday'))} style={{}}>
