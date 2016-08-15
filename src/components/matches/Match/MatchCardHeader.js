@@ -128,7 +128,8 @@ class MatchCardHeader extends Component {
     }
 
     if (match.comments.size || match.description) {
-      var hasNewComment = this.props.config.get('newMatchComment' + match.id);
+      const hasNewComment = this.props.config.get('newMatchComment' + match.id);
+      // TODO: on small devices with big matchform, the new msg indicator is below the + of the matchform
       subtitle.push(
         <span key="3" style={{marginLeft: 9, color: hasNewComment ? '#E3170D' : '#d3d3d3'}}>
           {match.comments.size ? <small>{match.comments.size}</small> : null}

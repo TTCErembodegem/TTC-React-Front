@@ -84,7 +84,7 @@ export default class MatchReport extends Component {
                   <Editor
                     tag="pre"
                     text={this.state.text}
-                    style={{height: canPostReport ? editorHeight : undefined}}
+                    style={{height: canPostReport ? editorHeight : undefined, marginRight: 15}}
                     onChange={::this._reportTextChange}
                     options={{...editorOptions, disableEditing: !canPostReport}}
                     contentEditable={canPostReport} />
@@ -92,7 +92,7 @@ export default class MatchReport extends Component {
                   <RaisedButton
                     label={this.context.t('common.save')}
                     primary={true}
-                    style={{float: 'right', marginBottom: 65}}
+                    style={{float: 'right', marginBottom: 65, marginRight: 15}}
                     onClick={::this._onPostReport} />
                 </div>
               ) : readonlyReport}
@@ -136,7 +136,7 @@ export default class MatchReport extends Component {
               <Editor
                 tag="pre"
                 text={this.state.comment.text}
-                style={{height: 55, width: '99%'}}
+                style={{height: 55, marginRight: 15}}
                 onChange={::this._reportCommentChange}
                 options={{...editorOptions, disableEditing: !canComment}}
                 contentEditable={canComment} />
@@ -257,12 +257,16 @@ class Comment extends Component {
         onMouseLeave={() => this.setState({hover: false})}
         style={Object.assign({padding: 6, marginRight: 10}, this.state.hover ? {backgroundColor: '#EEE9E9'} : {})}>
 
-        {this.state.hover && canDeleteComment ? (
-          <Icon fa="fa fa-trash-o fa-lg" style={{float: 'right', marginTop: 6}} onClick={this.props.deleteComment.bind(this, comment.id)} />
-        ) : null}
-        {comment.hidden ? <Icon fa="fa fa-user-secret" /> : null}
-        <strong style={{marginRight: 6}}>{poster.alias}</strong>
-        <TimeAgo date={comment.postedOn} style={{color: '#999'}} />
+        <div style={{display: 'inline-block', width: '100%'}}>
+          {this.state.hover && canDeleteComment ? (
+            <div className="pull-right" style={{marginTop: 6}}>
+              <Icon fa="fa fa-trash-o fa-lg" onClick={this.props.deleteComment.bind(this, comment.id)} />
+            </div>
+          ) : null}
+          {comment.hidden ? <Icon fa="fa fa-user-secret" /> : null}
+          <strong style={{marginRight: 6}}>{poster.alias}</strong>
+          <TimeAgo date={comment.postedOn} style={{color: '#999'}} />
+        </div>
 
         {comment.imageUrl ? <div><img src={comment.imageUrl} style={{maxWidth: '95%'}} /></div>
         : <div dangerouslySetInnerHTML={{__html: comment.text}} />}

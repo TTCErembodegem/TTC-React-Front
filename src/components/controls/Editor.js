@@ -55,7 +55,7 @@ module.exports = React.createClass({
 
   render() {
     var tag = this.props.tag;
-    var props = blacklist(this.props, 'tag', 'dangerouslySetInnerHTML', 'text');
+    var props = blacklist(this.props, 'tag', 'dangerouslySetInnerHTML', 'text', 'options');
 
     props = assign({}, props, {
       contentEditable: this.props.contentEditable, // TODO: real fix = !this.props.options.disableEditing?
