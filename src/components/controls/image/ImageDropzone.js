@@ -10,7 +10,7 @@ export default class ImageDropzone extends Component {
   }
 
   _onDrop(files) {
-    var self = this;
+    const self = this;
     http.upload(files, this.props.type)
       .then(function(data) {
         if (data && data.fileName) {
@@ -22,7 +22,7 @@ export default class ImageDropzone extends Component {
   }
 
   render() {
-    var style = {
+    const style = {
       width: 250,
       height: 55,
       borderWidth: 2,
