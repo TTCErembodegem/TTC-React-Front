@@ -9,6 +9,14 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
 
+const paperStyle = {
+  width: 290,
+  marginTop: 10,
+  marginBottom: 10,
+  textAlign: 'center',
+  display: 'inline-block',
+};
+
 @connect(() => ({}), loginActions)
 export class ForgotPassword extends Component {
   static contextTypes = PropTypes.contextTypes;
@@ -26,15 +34,8 @@ export class ForgotPassword extends Component {
 
   render() {
     const t = this.context.t;
-    const paperStyle = {
-      height: 270,
-      width: 290,
-      margin: 20,
-      textAlign: 'center',
-      display: 'inline-block',
-    };
     return (
-      <Paper zDepth={1} style={paperStyle}>
+      <Paper zDepth={1} style={{...paperStyle, height: 280}}>
         <h3>{t('password.newPassword')}</h3>
         <PlayerAutoComplete
           selectPlayer={id => this.setState({playerId: id})}
@@ -76,15 +77,8 @@ export default class Login extends Component {
 
   render() {
     const t = this.context.t;
-    const paperStyle = {
-      height: 320,
-      width: 290,
-      margin: 20,
-      textAlign: 'center',
-      display: 'inline-block',
-    };
     return (
-      <Paper zDepth={1} style={paperStyle}>
+      <Paper zDepth={1} style={{...paperStyle, height: 360}}>
         <h3>{t('login.title')}</h3>
         <div style={{textAlign: 'left', marginLeft: 15}}>{t('login.introText')}</div>
         <PlayerAutoComplete
@@ -107,7 +101,7 @@ export default class Login extends Component {
 
         <br />
         <br />
-        <Link to={t.route('forgotPassword')} className="pull-right" style={{marginTop: 20, fontSize: 18}}>
+        <Link to={t.route('forgotPassword')} className="pull-right" style={{marginTop: 20, marginRight: 10, fontSize: 18}}>
           {t('password.forgotLink')}
         </Link>
       </Paper>

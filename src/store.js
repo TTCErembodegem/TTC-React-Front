@@ -81,7 +81,7 @@ export const util = {
   matches: {
     getTodayMatches() {
       const matches = store.getState().matches;
-      //return matches.filter(cal => cal.date.isAfter(moment(), 'd')).take(4);
+      //return matches.filter(cal => cal.date.isAfter(require('moment')(), 'd')).take(4);
       return matches.filter(cal => cal.scoreType === 'BeingPlayed');
     },
     getFromOpponent(match) {

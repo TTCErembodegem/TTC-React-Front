@@ -160,7 +160,8 @@ class MatchCardHeader extends Component {
         <CardHeader
           title={this._renderTitle(match)}
           subtitle={subtitle}
-          style={{height: small ? 100 : undefined}}
+          style={{height: small ? 100 : undefined, padding: 15}}
+          textStyle={{padding: 0}}
           showExpandableButton={false}
           actAsExpander={!this.props.isOpen}
           avatar={iPlay && !this.props.isOpen && !scoreFormVisible ? <FavoriteMatch /> : null}>

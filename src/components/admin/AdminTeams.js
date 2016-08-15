@@ -111,10 +111,12 @@ class AdminTeamPlayers extends Component {
             {_.toArray(teamPlayerType).map(role => <MenuItem key={role} value={role} primaryText={role} />)}
           </SelectField>
 
-          <PlayerAutoComplete
-            selectPlayer={::this._onToggleTeamPlayer}
-            style={{width: 150}}
-            hintText="Selecteer speler" />
+          <div style={{width: 150}}>
+            <PlayerAutoComplete
+              selectPlayer={::this._onToggleTeamPlayer}
+              fullWidth
+              hintText="Selecteer speler" />
+          </div>
         </Paper>
       </div>
     );

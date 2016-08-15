@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes, { withViewport } from '../PropTypes.js';
 import PlayerImage from './PlayerImage.js';
 import PlayerCard from './PlayerCard.js';
-import { Card } from 'material-ui/Card';
+import { Card, CardText } from 'material-ui/Card';
 
 @withViewport
 export default class Players extends Component {
@@ -33,9 +33,11 @@ export default class Players extends Component {
           return (
             <div key={player.id} style={{paddingBottom: 10, textAlign: 'center'}}>
               <Card>
-                <h4>{player.name}</h4>
-                <PlayerImage playerId={player.id} center={true} />
-                <br />
+                <CardText>
+                  <h4>{player.name}</h4>
+                  <PlayerImage playerId={player.id} center />
+                  <br />
+                </CardText>
               </Card>
             </div>
           );

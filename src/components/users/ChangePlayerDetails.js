@@ -28,7 +28,7 @@ export default class ChangePlayerDetails extends Component {
     const player = this.props.player;
     const paperStyle = {
       width: 290,
-      margin: 20,
+      margin: 0,
       textAlign: 'center',
       display: 'inline-block',
     };

@@ -24,14 +24,11 @@ export class ChangeAnyPassword extends Component {
   }
   render() {
     const paperStyle = {
-      height: 280,
-      width: 290,
-      margin: 20,
       textAlign: 'center',
       display: 'inline-block',
     };
     return (
-      <Paper zDepth={1} style={paperStyle}>
+      <div style={paperStyle}>
         <h3>{this.context.t('password.changeTitle')}</h3>
 
         <PlayerAutoComplete
@@ -52,7 +49,7 @@ export class ChangeAnyPassword extends Component {
             this.props.onEnd();
           }}
           disabled={!this.state.playerId && !this.state.newPassword} />
-      </Paper>
+      </div>
     );
   }
 }
@@ -82,8 +79,6 @@ export default class ChangePassword extends Component {
 
   render() {
     const paperStyle = {
-      width: 290,
-      margin: 20,
       textAlign: 'center',
       display: 'inline-block',
     };

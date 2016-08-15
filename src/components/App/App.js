@@ -44,7 +44,7 @@ export default class App extends Component {
 
     return (
       <div id="react">
-        <MuiThemeProvider id="react" muiTheme={getMuiTheme(lightBaseTheme)}>
+        <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
           <div style={{height: '100%'}}>
             <div className="wrapper">
               <Header user={this.props.user} />
