@@ -2,54 +2,63 @@ import React, { Component } from 'react';
 import PropTypes, { connect } from '../PropTypes.js';
 
 import TabbedContainer from '../controls/TabbedContainer.js';
+import Icon from '../controls/Icon.js';
 
 const tabEventKeys = {
   matches: 1,
   teams: 2,
   clubs: 3,
   config: 4,
-  readOnlyMatches: 5
+  user: 8,
+  readOnlyMatches: 5,
+  players: 7,
+  admin: 6,
 };
+
 
 @connect(state => {
   return {
-    config: state.config,
-    user: state.user,
-    players: state.players,
-    clubs: state.clubs,
     matches: state.matches,
     teams: state.teams,
+    clubs: state.clubs,
+    config: state.config,
+    user: state.user,
+    readonlyMatches: state.readonlyMatches,
+    players: state.players,
     admin: state.admin,
   };
 })
 
 export default class AdminDev extends React.Component {
   static propTypes = {
+    matches: PropTypes.MatchModelList.isRequired,
+    teams: PropTypes.TeamModelList.isRequired,
+    clubs: PropTypes.ClubModelList.isRequired,
     config: PropTypes.object.isRequired,
     user: PropTypes.UserModel.isRequired,
-    matches: PropTypes.MatchModelList.isRequired,
-    teams: PropTypes.TeamModelList.isRequired
+    readonlyMatches: PropTypes.MatchModelList.isRequired,
+    players: PropTypes.PlayerModelList.isRequired,
+    admin: PropTypes.object.isRequired,
   }
 
   _renderSection(eventKey) {
     switch (eventKey) {
     case tabEventKeys.matches:
-      return (
-        <div>
-          {console.log(this)}
-          <pre>
-            {JSON.stringify(this, null, 4)}
-          </pre>
-        </div>
-      );
+      return <AdminStateDisplayer data={this.props.matches.toArray()} />;
     case tabEventKeys.teams:
-      return;
+      return <AdminStateDisplayer data={this.props.teams.toArray()} />;
     case tabEventKeys.clubs:
-      return;
+      return <AdminStateDisplayer data={this.props.clubs.toArray()} />;
     case tabEventKeys.config:
-      return;
+      return <AdminStateDisplayer data={[this.props.config]} />;
+    case tabEventKeys.user:
+      return <AdminStateDisplayer data={[this.props.user]} />;
     case tabEventKeys.readOnlyMatches:
-      return;
+      return <AdminStateDisplayer data={this.props.readonlyMatches.toArray()} />;
+    case tabEventKeys.players:
+      return <AdminStateDisplayer data={this.props.players.toArray()} />;
+    case tabEventKeys.admin:
+      return <AdminStateDisplayer data={[this.props.admin]} />;
     }
   }
 
@@ -67,16 +76,58 @@ export default class AdminDev extends React.Component {
       key: tabEventKeys.config,
       title: 'Config'
     }, {
+      key: tabEventKeys.user,
+      title: 'User'
+    }, {
       key: tabEventKeys.readOnlyMatches,
       title: 'ReadOnlyMatches'
+    }, {
+      key: tabEventKeys.players,
+      title: 'Spelers'
+    }, {
+      key: tabEventKeys.admin,
+      title: 'Admin'
     }];
 
     return (
-      <TabbedContainer
-        style={{marginTop: 10, marginBottom: 20}}
-        openTabKey={tabEventKeys.matches}
-        tabKeys={tabConfig}
-        tabRenderer={this._renderSection} />
+      <div style={{padding: 5}}>
+        <TabbedContainer
+          style={{marginTop: 10, marginBottom: 20}}
+          openTabKey={tabEventKeys.matches}
+          tabKeys={tabConfig}
+          tabRenderer={::this._renderSection} />
+      </div>
+    );
+  }
+}
+
+class AdminStateDisplayer extends Component {
+  static propTypes = {
+    data: PropTypes.array.isRequired,
+  }
+  constructor(props) {
+    super(props);
+    this.state = {filter: ''}
+  }
+
+  render() {
+    var data = this.props.data;
+    if (this.state.filter) {
+      data = data.filter(x => {
+        return true;
+      });
+    }
+    return (
+      <div style={{padding: 5}}>
+        <div>
+          <Icon fa="fa fa-search" />
+          &nbsp;
+          <input type="text" width={150} onClick={e => this.setState({filter: e.target.value})} />
+        </div>
+        <pre style={{marginTop: 5}}>
+          {JSON.stringify(data, null, 4)}
+        </pre>
+      </div>
     );
   }
 }

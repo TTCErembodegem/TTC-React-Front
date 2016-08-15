@@ -28,19 +28,19 @@ class TeamFrenoyModel {
     this.teamId = frenoy.teamId;
     this.seasonId = team.year - 2000 + 1;
 
-    this.team = team;
+    this.teamCompetition = team.competition;
   }
 
   getUrl(type) {
     const season = this.seasonId;
     const linkId = this.linkId;
-    if (this.team.competition === 'Vttl') {
+    if (this.teamCompetition === 'Vttl') {
       if (type === 'results') {
         return `http://competitie.vttl.be/index.php?menu=4&season=${season}&province=5&club_id=282&perteam=1&div_id=${linkId}`;
       } else if (type === 'ranking') {
         return `http://competitie.vttl.be/index.php?menu=5&season=${season}&div_id=${linkId}`;
       }
-    } else if (this.team.competition === 'Sporta') {
+    } else if (this.teamCompetition === 'Sporta') {
       if (type === 'results') {
         return `http://tafeltennis.sporcrea.be/competitie/index.php?menu=4&season=${season}&province=4&club_id=37&perteam=1&div_id=${linkId}`;
       } else if (type === 'ranking') {
