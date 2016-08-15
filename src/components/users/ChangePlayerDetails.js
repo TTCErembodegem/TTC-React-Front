@@ -3,8 +3,8 @@ import PropTypes, { connect } from '../PropTypes.js';
 
 import * as playerActions from '../../actions/playerActions.js';
 
-import TextField from 'material-ui/lib/text-field';
-import RaisedButton from 'material-ui/lib/raised-button';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 
 @connect(() => ({}), playerActions)
 export default class ChangePlayerDetails extends Component {
@@ -28,7 +28,7 @@ export default class ChangePlayerDetails extends Component {
     const player = this.props.player;
     const paperStyle = {
       width: 290,
-      margin: 20,
+      margin: 0,
       textAlign: 'center',
       display: 'inline-block',
     };

@@ -46,11 +46,11 @@ export default class Matches extends Component {
 
     return (
       <div>
-        {matchesToday.size ? <Strike text={this.context.t('match.todayMatches')} style={{marginTop: 25}} /> : null}
+        {matchesToday.size ? <Strike text={this.context.t('match.todayMatches')} style={{marginTop: 15}} /> : null}
         {this._renderMatches(matchesToday)}
-        {matchesNext.size ? <Strike text={this.context.t('match.nextMatches')} style={{marginTop: 25}} /> : null}
+        {matchesNext.size ? <Strike text={this.context.t('match.nextMatches')} style={{marginTop: 15}} /> : null}
         {this._renderMatches(matchesNext)}
-        {matchesPlayed.size ? <Strike text={this.context.t('match.playedMatches')} style={{marginTop: 25}} /> : null}
+        {matchesPlayed.size ? <Strike text={this.context.t('match.playedMatches')} style={{marginTop: 15}} /> : null}
         {this._renderMatches(matchesPlayed)}
       </div>
     );

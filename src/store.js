@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware, compose } from 'redux';
-import { devTools } from 'redux-devtools';
+//import { devTools } from 'redux-devtools';
 //import createLogger from 'redux-logger';
 import thunk from 'redux-thunk';
 
@@ -11,7 +11,7 @@ if (DEBUG) {
   finalCreateStore = compose(
     //applyMiddleware(createLogger({collapsed: true})),
     applyMiddleware(thunk),
-    devTools(),
+    //devTools(),
   )(createStore);
 } else {
   //console.error('finalCreateStore NODEBUG');
@@ -81,7 +81,7 @@ export const util = {
   matches: {
     getTodayMatches() {
       const matches = store.getState().matches;
-      //return matches.filter(cal => cal.date.isAfter(moment(), 'd')).take(4);
+      //return matches.filter(cal => cal.date.isAfter(require('moment')(), 'd')).take(4);
       return matches.filter(cal => cal.scoreType === 'BeingPlayed');
     },
     getFromOpponent(match) {

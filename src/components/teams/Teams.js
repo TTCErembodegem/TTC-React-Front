@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes, { connect, withViewport } from '../PropTypes.js';
 import moment from 'moment';
 import cn from 'classnames';
+import Immutable from 'immutable';
 
 import TabbedContainer from '../controls/TabbedContainer.js';
 import Table from 'react-bootstrap/lib/Table';
@@ -141,7 +142,7 @@ export default class Teams extends Component {
     case 'ranking':
       return <DivisionRanking team={team} t={this.context.t} />;
     case 'players':
-      return <PlayersCardGallery players={team.getPlayers().map(x => x.player)} />;
+      return <PlayersCardGallery players={Immutable.List(team.getPlayers().map(x => x.player))} />;
     default:
       return <div>summary</div>;
     }

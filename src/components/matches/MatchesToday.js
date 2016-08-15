@@ -60,8 +60,7 @@ export default class MatchesToday extends Component {
               isOpen={false}
               width={this.props.viewport.width}
               viewportWidthContainerCount={this.props.viewport.width > 1200 ? 2 : 1}
-              config={this.props.config}
-              onOpen={null} />
+              config={this.props.config} />
           </div>
         ))}
       </div>

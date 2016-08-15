@@ -9,7 +9,7 @@ import { util as storeUtils } from '../../../store.js';
 import TabbedContainer from '../../controls/TabbedContainer.js';
 import Spinner from '../../controls/Spinner.js';
 import Icon from '../../controls/Icon.js';
-import CardText from 'material-ui/lib/card/card-text';
+import { CardText } from 'material-ui/Card';
 
 import MatchCardHeader, { BigMatchCardHeader } from './MatchCardHeader.js';
 import MatchPlayerResults from './MatchPlayerResults.js';
@@ -99,7 +99,7 @@ export default class MatchCard extends Component {
     }, {
       key: tabEventKeys.scoresheet,
       title: this.context.t('match.tabs.scoresheet'),
-      show: match.scoreType === 'BeingPlayed' && match.players.size,
+      show: match.scoreType === 'BeingPlayed' && !!match.players.size,
     }, {
       key: tabEventKeys.opponentClub,
       title: this.context.t('match.tabs.clubTitle'),

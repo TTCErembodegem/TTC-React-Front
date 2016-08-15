@@ -3,8 +3,8 @@ import PropTypes, { withStyles } from '../../PropTypes.js';
 import { Link, browserHistory } from 'react-router';
 import { util as storeUtil } from '../../../store.js';
 
-import AppBar from 'material-ui/lib/app-bar';
-import FlatButton from 'material-ui/lib/flat-button';
+import AppBar from 'material-ui/AppBar';
+import FlatButton from 'material-ui/FlatButton';
 import Icon from '../../controls/Icon.js';
 import Navigation from './HeaderNavigation.js';
 
@@ -35,7 +35,7 @@ export default class Header extends Component {
     return (
       <div>
         <AppBar
-          title={<Link className="Header-link" to="/">{t('clubName')}</Link>}
+          title={<Link className="Header-link" to="/">{this.state.navOpen ? null : t('clubName')}</Link>}
           iconElementRight={loginOrProfile}
           onLeftIconButtonTouchTap={::this._openNav} />
 
@@ -62,7 +62,7 @@ export default class Header extends Component {
 
   _reverseName(name) {
     var nameInParts = name.split(' ');
-    if(nameInParts.length === 2) {
+    if (nameInParts.length === 2) {
       return nameInParts[1] + ' ' + nameInParts[0];
     }
     if (nameInParts.length === 3) {

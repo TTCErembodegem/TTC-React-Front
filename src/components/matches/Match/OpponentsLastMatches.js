@@ -4,7 +4,7 @@ import { Link, browserHistory } from 'react-router';
 import _ from 'lodash';
 
 import Table from 'react-bootstrap/lib/Table';
-import IconButton from 'material-ui/lib/icon-button';
+import IconButton from 'material-ui/IconButton';
 import OpponentPlayer from './OpponentPlayer.js';
 import Spinner from '../../controls/Spinner.js';
 import MatchScore from '../MatchScore.js';

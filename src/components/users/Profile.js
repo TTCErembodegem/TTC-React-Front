@@ -4,7 +4,7 @@ import PropTypes, { connect } from '../PropTypes.js';
 import { displayFormat } from '../controls/Telephone.js';
 import * as loginActions from '../../actions/userActions.js';
 
-import RaisedButton from 'material-ui/lib/raised-button';
+import RaisedButton from 'material-ui/RaisedButton';
 import TabbedContainer from '../controls/TabbedContainer.js';
 
 import ChangePassword from '../users/ChangePassword.js';

@@ -57,7 +57,7 @@ export default class MatchesWeek extends Component {
     const selectedWeek = matches.first().date.clone();
     return (
       <div>
-        <h2>
+        <h3 style={{textAlign: 'center'}}>
           {this.state.currentWeek > 1 ? (
             <Icon fa="fa fa-arrow-left" style={{marginRight: 10}} onClick={::this._onChangeWeek.bind(this, -1)} />
           ) : null}
@@ -70,16 +70,15 @@ export default class MatchesWeek extends Component {
           {this.state.currentWeek < this.state.lastWeek ? (
             <Icon fa="fa fa-arrow-right" style={{marginLeft: 10}} onClick={::this._onChangeWeek.bind(this, 1)} />
           ) : null}
-        </h2>
-        <h3>Vttl</h3>
-        <MatchesTable
-          matches={matches.filter(x => x.competition === 'Vttl').sort((a, b) => a.date - b.date)}
-        />
+        </h3>
 
-        <h3>Sporta</h3>
-        <MatchesTable
-          matches={matches.filter(x => x.competition === 'Sporta').sort((a, b) => a.date - b.date)}
-        />
+        <h4><strong>Vttl</strong></h4>
+        <MatchesTable matches={matches.filter(x => x.competition === 'Vttl').sort((a, b) => a.date - b.date)} />
+
+        <hr />
+
+        <h4><strong>Sporta</strong></h4>
+        <MatchesTable matches={matches.filter(x => x.competition === 'Sporta').sort((a, b) => a.date - b.date)} />
       </div>
     );
   }

@@ -8,7 +8,7 @@ import Location from '../controls/Location.js';
 
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
-import Paper from 'material-ui/lib/paper';
+import Paper from 'material-ui/Paper';
 import Typist from 'react-typist';
 
 @connect(state => {

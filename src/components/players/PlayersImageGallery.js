@@ -5,12 +5,11 @@ import { util as storeUtil } from '../../store.js';
 import * as playerActions from '../../actions/playerActions.js';
 import { playerUtils } from '../../models/PlayerModel.js';
 
-import GridList from 'material-ui/lib/grid-list/grid-list';
-import GridTile from 'material-ui/lib/grid-list/grid-tile';
-import Dialog from 'material-ui/lib/dialog';
-import TextField from 'material-ui/lib/text-field';
-import FlatButton from 'material-ui/lib/flat-button';
-import Paper from 'material-ui/lib/paper';
+import { GridList, GridTile } from 'material-ui/GridList';
+import Dialog from 'material-ui/Dialog';
+import TextField from 'material-ui/TextField';
+import FlatButton from 'material-ui/FlatButton';
+import Paper from 'material-ui/Paper';
 
 import Icon from '../controls/Icon.js';
 import Telephone from '../controls/Telephone.js';
@@ -20,7 +19,7 @@ import PlayerAvatar from './PlayerAvatar.js';
 import PlayerAutoComplete from './PlayerAutoComplete.js';
 import PlayerStyleAutocomplete from './PlayerStyleAutocomplete.js';
 
-const PlayersImageWidth = playerUtils.getPlayerImageSize().width;
+const PlayersImageWidth = playerUtils.getPlayerImageSize().width + 30;
 const PlayersImageHeight = playerUtils.getPlayerImageSize().height;
 const gridStyles = {
   root: {
@@ -166,15 +165,14 @@ export default class PlayersImageGallery extends Component {
           <Dialog
             title={t('player.editStyle.title', selectedPlayer.alias)}
             actions={changeStyleModalActions}
-            bodyStyle={{minHeight: 119}}
+            bodyStyle={{minHeight: 145}}
             modal={false}
             open={!!this.state.editingPlayer}
             onRequestClose={::this._closeStyle}>
 
             <PlayerStyleAutocomplete t={t}
               value={this.state.newStyle.name || ''}
-              onChange={::this._changeStyle}
-              style={{marginTop: -25}} />
+              onChange={::this._changeStyle} />
 
             <br />
 

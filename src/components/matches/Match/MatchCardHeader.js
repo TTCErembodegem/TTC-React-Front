@@ -8,8 +8,7 @@ import MatchForm from '../Match/MatchForm.js';
 import MatchScore from '../MatchScore.js';
 import Icon from '../../controls/Icon.js';
 
-import Card from 'material-ui/lib/card/card';
-import CardHeader from 'material-ui/lib/card/card-header';
+import { Card, CardHeader } from 'material-ui/Card';
 
 const daysAgoBackFullDate = 7;
 
@@ -129,7 +128,8 @@ class MatchCardHeader extends Component {
     }
 
     if (match.comments.size || match.description) {
-      var hasNewComment = this.props.config.get('newMatchComment' + match.id);
+      const hasNewComment = this.props.config.get('newMatchComment' + match.id);
+      // TODO: on small devices with big matchform, the new msg indicator is below the + of the matchform
       subtitle.push(
         <span key="3" style={{marginLeft: 9, color: hasNewComment ? '#E3170D' : '#d3d3d3'}}>
           {match.comments.size ? <small>{match.comments.size}</small> : null}
@@ -161,7 +161,8 @@ class MatchCardHeader extends Component {
         <CardHeader
           title={this._renderTitle(match)}
           subtitle={subtitle}
-          style={{height: small ? 100 : undefined}}
+          style={{height: small ? 100 : undefined, padding: 15}}
+          textStyle={{padding: 0}}
           showExpandableButton={false}
           actAsExpander={!this.props.isOpen}
           avatar={iPlay && !this.props.isOpen && !scoreFormVisible ? <FavoriteMatch /> : null}>
@@ -204,7 +205,7 @@ class MatchCardHeader extends Component {
   _renderOwnTeamPosition(team) {
     const ranking = team.getDivisionRanking();
     return (
-      <span className="label label-as-badge label-info" style={{marginLeft: 5, marginRight: 5, paddingTop: 25}}>
+      <span className="label label-as-badge label-info" style={{marginLeft: 5, marginRight: 5, paddingTop: 5}}>
         {ranking ? ranking.position : '?'}
       </span>
     );
@@ -216,7 +217,7 @@ class MatchCardHeader extends Component {
     }
 
     return (
-      <span className="label label-as-badge label-info" style={{marginLeft: 5, marginRight: 5, paddingTop: 25}}>
+      <span className="label label-as-badge label-info" style={{marginLeft: 5, marginRight: 5, paddingTop: 5}}>
         {ranking.position}
       </span>
     );

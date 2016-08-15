@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes, { connect } from '../../PropTypes.js';
 
-import Avatar from 'material-ui/lib/avatar';
-import List from 'material-ui/lib/lists/list';
-import ListItem from 'material-ui/lib/lists/list-item';
-import Divider from 'material-ui/lib/divider';
+import Avatar from 'material-ui/Avatar';
+import { List, ListItem } from 'material-ui/List';
+import Divider from 'material-ui/Divider';
 
 import PlayerAutoComplete from '../../players/PlayerAutoComplete.js';
 import PlayerAvatar from '../../players/PlayerAvatar.js';

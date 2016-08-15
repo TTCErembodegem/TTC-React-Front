@@ -77,7 +77,7 @@ export default {
     },
     login: {
       title: 'Aanmelden',
-      introText: 'Geef de eerste letter van je voornaam in en selecteer jezelf uit de lijst',
+      introText: 'Geef de eerste letter(s) van je voornaam in en selecteer jezelf uit de lijst',
       loginName: 'Spelersnaam',
       password: 'Paswoord',
       passwordHint: '',

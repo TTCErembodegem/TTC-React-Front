@@ -42,7 +42,7 @@ export default class PlayerModel {
 export var playerUtils = {
   getPlayerImageSize() {
     return {
-      width: 230,
+      width: 200,
       height: 200
     };
   },

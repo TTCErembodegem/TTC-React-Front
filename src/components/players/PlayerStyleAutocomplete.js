@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import AutoComplete from 'material-ui/lib/auto-complete';
+import AutoComplete from 'material-ui/AutoComplete';
 
 export default class PlayerStyleAutocomplete extends Component {
   static propTypes = {
@@ -7,6 +7,14 @@ export default class PlayerStyleAutocomplete extends Component {
     style: PropTypes.object,
     onChange: PropTypes.func.isRequired,
     value: PropTypes.string,
+  }
+
+  _onChange(text) {
+    // Is necessary in <PlayerAutoComplete> but not here?
+    // if (typeof text === 'object') {
+    //   text = text.text;
+    // }
+    this.props.onChange(text);
   }
 
   render() {
@@ -20,8 +28,8 @@ export default class PlayerStyleAutocomplete extends Component {
       <AutoComplete
         style={this.props.style}
         filter={AutoComplete.fuzzyFilter}
-        onNewRequest={this.props.onChange}
-        onUpdateInput={this.props.onChange}
+        onNewRequest={::this._onChange}
+        onUpdateInput={::this._onChange}
         searchText={this.props.value}
         floatingLabelText={this.props.t('player.editStyle.style')}
         hintText={playingStyles.join(', ')}

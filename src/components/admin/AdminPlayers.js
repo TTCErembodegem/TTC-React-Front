@@ -5,11 +5,11 @@ import moment from 'moment';
 
 import Table from 'react-bootstrap/lib/Table';
 import Button from 'react-bootstrap/lib/Button';
-import TextField from 'material-ui/lib/text-field';
+import TextField from 'material-ui/TextField';
 
 import Icon from '../controls/Icon.js';
 import AdminPlayerForm from './AdminPlayerForm.js';
-import { ChangeAnyPassword } from '../users/ChangePassword.js';
+import AdminChangePassword from './AdminChangePassword.js';
 
 @connect(() => ({}), {updatePlayer})
 export default class AdminPlayers extends Component {
@@ -37,7 +37,7 @@ export default class AdminPlayers extends Component {
       return <AdminPlayerForm player={this.state.selectedPlayer} onEnd={::this._setDefaultForm} />;
 
     case 'set-password':
-      return <ChangeAnyPassword onEnd={::this._setDefaultForm} />;
+      return <AdminChangePassword onEnd={::this._setDefaultForm} />;
 
     case 'inactive':
       players = this.props.recreantAndQuitters;

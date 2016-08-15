@@ -10,19 +10,19 @@ export default class ImageDropzone extends Component {
   }
 
   _onDrop(files) {
-    var self = this;
+    const self = this;
     http.upload(files, this.props.type)
       .then(function(data) {
         if (data && data.fileName) {
           self.props.fileUploaded(data.fileName);
         }
       }, function(err) {
-        console.log('Upload!', err); // eslint-disable-line
+        console.error('upload fail!', err); // eslint-disable-line
       });
   }
 
   render() {
-    var style = {
+    const style = {
       width: 250,
       height: 55,
       borderWidth: 2,

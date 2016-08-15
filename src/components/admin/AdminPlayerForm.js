@@ -5,11 +5,11 @@ import * as playerActions from '../../actions/playerActions.js';
 import { userRoles } from '../../models/UserModel.js';
 import PlayerModel from '../../models/PlayerModel.js';
 
-import SelectField from 'material-ui/lib/select-field';
-import MenuItem from 'material-ui/lib/menus/menu-item';
-import TextField from 'material-ui/lib/text-field';
-import RaisedButton from 'material-ui/lib/raised-button';
-import Paper from 'material-ui/lib/paper';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+import Paper from 'material-ui/Paper';
 import Panel from 'react-bootstrap/lib/Panel';
 import PlayerStyleAutocomplete from '../players/PlayerStyleAutocomplete.js';
 

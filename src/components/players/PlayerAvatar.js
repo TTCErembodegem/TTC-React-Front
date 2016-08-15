@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from '../PropTypes.js';
 
 import { playerUtils } from '../../models/PlayerModel.js';
-import Avatar from 'material-ui/lib/avatar';
+import Avatar from 'material-ui/Avatar';
 
 export default class PlayerAvatar extends Component {
   static propTypes = {

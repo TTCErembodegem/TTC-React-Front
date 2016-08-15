@@ -5,9 +5,9 @@ import { toggleTeamPlayer } from '../../actions/playerActions.js';
 import { frenoyTeamSync } from '../../actions/matchActions.js';
 import _ from 'lodash';
 
-import Paper from 'material-ui/lib/paper';
-import SelectField from 'material-ui/lib/select-field';
-import MenuItem from 'material-ui/lib/menus/menu-item';
+import Paper from 'material-ui/Paper';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 import Button from 'react-bootstrap/lib/Button';
 
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
@@ -111,10 +111,12 @@ class AdminTeamPlayers extends Component {
             {_.toArray(teamPlayerType).map(role => <MenuItem key={role} value={role} primaryText={role} />)}
           </SelectField>
 
-          <PlayerAutoComplete
-            selectPlayer={::this._onToggleTeamPlayer}
-            style={{width: 150}}
-            hintText="Selecteer speler" />
+          <div style={{width: 150}}>
+            <PlayerAutoComplete
+              selectPlayer={::this._onToggleTeamPlayer}
+              fullWidth
+              hintText="Selecteer speler" />
+          </div>
         </Paper>
       </div>
     );
