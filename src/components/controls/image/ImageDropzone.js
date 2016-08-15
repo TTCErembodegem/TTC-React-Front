@@ -17,7 +17,7 @@ export default class ImageDropzone extends Component {
           self.props.fileUploaded(data.fileName);
         }
       }, function(err) {
-        console.log('Upload!', err); // eslint-disable-line
+        console.error('upload fail!', err); // eslint-disable-line
       });
   }
 

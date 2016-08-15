@@ -101,7 +101,7 @@ const HttpClient = {
 
     req.end(function(err, res) {
       if (err || !res.ok) {
-        console.log('/upload', err || '', res); // eslint-disable-line
+        console.error('/upload FAIL', err || '', res); // eslint-disable-line
         reject();
       } else {
         resolve(res.body);
@@ -117,7 +117,7 @@ const HttpClient = {
       .set('Content-Type', 'application/json')
       .end(function(err, res) {
         if (err || !res.ok) {
-          console.log('/upload/image', err || '', res); // eslint-disable-line
+          console.error('/upload/image', err || '', res); // eslint-disable-line
           reject();
         } else {
           resolve(res.body);
