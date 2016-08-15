@@ -3,7 +3,8 @@ import { Router, Route, browserHistory } from 'react-router';
 
 import App from './components/App';
 import Players from './components/players/Players';
-import Login, {ForgotPassword} from './components/users/Login.js';
+import Login from './components/users/Login.js';
+import ForgotPassword from './components/users/ForgotPassword.js';
 import Profile from './components/users/Profile.js';
 import Links from './components/other/Links.js';
 import Matches from './components/matches/Matches.js';

@@ -12,6 +12,7 @@ import { Card, CardHeader } from 'material-ui/Card';
 
 const daysAgoBackFullDate = 7;
 
+// BigMatchCardHeader == MatchesToday on Club monitor
 export class BigMatchCardHeader extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
