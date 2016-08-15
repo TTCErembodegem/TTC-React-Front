@@ -111,6 +111,7 @@ class AdminStateDisplayer extends Component {
   }
 
   render() {
+    var JSONViewer = require('react-json-viewer');
     var data = this.props.data;
     if (this.state.filter) {
       data = data.filter(x => {
@@ -125,7 +126,7 @@ class AdminStateDisplayer extends Component {
           <input type="text" width={150} onClick={e => this.setState({filter: e.target.value})} />
         </div>
         <pre style={{marginTop: 5}}>
-          {JSON.stringify(data, null, 4)}
+        <JSONViewer json={data}></JSONViewer>
         </pre>
       </div>
     );
