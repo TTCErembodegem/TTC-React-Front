@@ -15,7 +15,7 @@ import * as matchActions from '../../actions/matchActions.js';
 
 import Icon from '../controls/Icon.js';
 import PlayersCardGallery from '../players/PlayersCardGallery.js';
-import { MatchesTable } from '../matches/MatchesWeek.js';
+import MatchesTable from '../matches/MatchesTable.js';
 
 export const TeamsVttl = () => <Teams competition="Vttl" />;
 export const TeamsSporta = () => <Teams competition="Sporta" />;
