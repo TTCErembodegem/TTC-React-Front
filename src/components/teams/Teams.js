@@ -109,6 +109,7 @@ export default class Teams extends Component {
             <button className="btn btn-default">{this.context.t('teamCalendar.frenoyResults')}</button>
           </a>
         </div>
+        <h4 style={{marginLeft: 5}}>{team.getDivisionDescription()}</h4>
         {this._renderTabViewContent(team)}
       </div>
     );

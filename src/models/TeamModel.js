@@ -75,6 +75,13 @@ export default class TeamModel {
     return this.competition + ' ' + this.teamCode;
   }
 
+  getDivisionDescription() {
+    // TODO: put in translations
+    if (!this.divisionName) {
+      return 'Ere Afdeling';
+    }
+    return 'Prov ' + this.divisionName;
+  }
   getDivisionRanking(opponent = 'our-ranking') {
     if (opponent === 'our-ranking') {
       return this.getDivisionRanking({clubId: this.clubId, teamCode: this.teamCode});
