@@ -28,7 +28,6 @@ const tabEventKeys = {
     admin: state.admin,
   };
 })
-
 export default class AdminDev extends React.Component {
   static propTypes = {
     matches: PropTypes.MatchModelList.isRequired,
@@ -50,7 +49,7 @@ export default class AdminDev extends React.Component {
     case tabEventKeys.clubs:
       return <AdminStateDisplayer data={this.props.clubs.toArray()} />;
     case tabEventKeys.config:
-      return <AdminStateDisplayer data={[this.props.config]} />;
+      return <AdminStateDisplayer data={[this.props.config.toJSON()]} />;
     case tabEventKeys.user:
       return <AdminStateDisplayer data={[this.props.user]} />;
     case tabEventKeys.readOnlyMatches:
@@ -58,7 +57,8 @@ export default class AdminDev extends React.Component {
     case tabEventKeys.players:
       return <AdminStateDisplayer data={this.props.players.toArray()} />;
     case tabEventKeys.admin:
-      return <AdminStateDisplayer data={[this.props.admin]} />;
+      // admin.players === inactive players
+      return <AdminStateDisplayer data={this.props.admin.players.toArray()} />;
     }
   }
 
@@ -125,9 +125,7 @@ class AdminStateDisplayer extends Component {
           &nbsp;
           <input type="text" width={150} onClick={e => this.setState({filter: e.target.value})} />
         </div>
-        <pre style={{marginTop: 5}}>
-        <JSONViewer json={data}></JSONViewer>
-        </pre>
+        {true ? <pre style={{marginTop: 5}}>{JSON.stringify(data, null, 4)}</pre> : <JSONViewer json={data}></JSONViewer>}
       </div>
     );
   }
