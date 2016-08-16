@@ -23,8 +23,20 @@ export function toggleTeamPlayer(teamId, playerId, role) {
           broadcastReload('team', data.id);
         }
       }, function(err) {
-        dispatch(showSnackbar('common.apiFail'));
+        dispatch(showSnackbar(trans('common.apiFail')));
         console.log('toggleTeamPlayer!', err); // eslint-disable-line
+      });
+  };
+}
+
+export function frenoySync() {
+  return dispatch => {
+    return http.post('/players/FrenoySync')
+      .then(function() {
+        dispatch(showSnackbar(trans('common.apiSuccess')));
+      }, function(err) {
+        dispatch(showSnackbar(trans('common.apiFail')));
+        console.log('FrenoySync!', err); // eslint-disable-line
       });
   };
 }
@@ -44,7 +56,7 @@ export function updateStyle(player, newStyle, updatedBy) {
           broadcastReload('player', data.id);
         }
       }, function(err) {
-        dispatch(showSnackbar('common.apiFail'));
+        dispatch(showSnackbar(trans('common.apiFail')));
         console.log('UpdatePlayerStyle!', err); // eslint-disable-line
       });
   };

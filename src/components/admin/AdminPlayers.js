@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes, { connect, withViewport } from '../PropTypes.js';
-import { updatePlayer } from '../../actions/playerActions.js';
+import { updatePlayer, frenoySync } from '../../actions/playerActions.js';
 import moment from 'moment';
 
 import Table from 'react-bootstrap/lib/Table';
@@ -13,13 +13,14 @@ import AdminPlayerForm from './AdminPlayerForm.js';
 import AdminChangePassword from './AdminChangePassword.js';
 
 @withViewport
-@connect(() => ({}), {updatePlayer})
+@connect(() => ({}), {updatePlayer, frenoySync})
 export default class AdminPlayers extends Component {
   static propTypes = {
     players: PropTypes.object,
     recreantAndQuitters: PropTypes.object,
     updatePlayer: PropTypes.func.isRequired,
     viewport: PropTypes.viewport,
+    frenoySync: PropTypes.func.isRequired,
   }
   constructor() {
     super();
@@ -100,6 +101,13 @@ export default class AdminPlayers extends Component {
             hintText="Zoek speler"
             onChange={e => this.setState({playerFilter: e.target.value.toLowerCase()})}
             style={{width: 150, marginLeft: 10}} />
+
+            <button
+              className="btn btn-default pull-right"
+              style={{marginRight: 15}}
+              onClick={() => this.props.frenoySync()}>
+              Frenoy Sync
+            </button>
 
             {playersContent}
           </div>
