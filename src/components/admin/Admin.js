@@ -4,10 +4,12 @@ import PropTypes, { connect } from '../PropTypes.js';
 import TabbedContainer from '../controls/TabbedContainer.js';
 import AdminPlayers from './AdminPlayers.js';
 import AdminTeams from './AdminTeams.js';
+import AdminDev from './AdminDev.js';
 
 const tabEventKeys = {
   players: 1,
   teams: 2,
+  dev: 3
 };
 
 @connect(state => {
@@ -40,6 +42,8 @@ export default class Admin extends Component {
       return <AdminTeams teams={this.props.teams} />;
     case tabEventKeys.players:
       return <AdminPlayers players={this.props.players} recreantAndQuitters={this.props.admin.players} />;
+    case tabEventKeys.dev:
+      return <AdminDev />;
     }
   }
 
@@ -54,6 +58,9 @@ export default class Admin extends Component {
     }, {
       key: tabEventKeys.teams,
       title: 'Teams',
+    }, {
+      key: tabEventKeys.dev,
+      title: 'Dev',
     }];
 
     return (
