@@ -27,6 +27,7 @@
     "react-dom": "15.3.0",
     "react-dropzone": "^3.5.3",
     "react-immutable-proptypes": "^2.1.0",
+    "react-json-viewer": "^1.0.9",
     "react-medium-editor": "^1.8.0",
     "react-redux": "^4.4.5",
     "react-router": "^2.6.1",
