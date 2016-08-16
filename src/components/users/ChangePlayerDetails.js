@@ -38,25 +38,22 @@ export default class ChangePlayerDetails extends Component {
 
         <TextField
           floatingLabelText={this.context.t('player.email')}
-          type="text"
           defaultValue={player.contact.email}
           onChange={e => this.setState({email: e.target.value})} />
 
         <TextField
           floatingLabelText={this.context.t('player.gsm')}
-          type="text"
+          type="number"
           defaultValue={player.contact.mobile}
           onChange={e => this.setState({mobile: e.target.value})} />
 
         <TextField
           floatingLabelText={this.context.t('player.address')}
-          type="text"
           defaultValue={player.contact.address}
           onChange={e => this.setState({address: e.target.value})} />
 
         <TextField
           floatingLabelText={this.context.t('player.city')}
-          type="text"
           defaultValue={player.contact.city}
           onChange={e => this.setState({city: e.target.value})} />
 

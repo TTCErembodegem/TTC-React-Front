@@ -81,6 +81,7 @@ export default class AdminPlayerForm extends Component {
 
             <TextField
               style={{width: 200}}
+              type="number"
               floatingLabelText={this.context.t('player.gsm')}
               defaultValue={player.contact.mobile}
               onChange={e => this.setState({contact: Object.assign({}, player.contact, {mobile: e.target.value})})} />
