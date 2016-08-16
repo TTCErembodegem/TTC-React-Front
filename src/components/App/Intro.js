@@ -110,19 +110,33 @@ export default class Intro extends Component {
           </Col>
         </Row>
         {this.props.viewport.width > 800 ? (
-          <Row style={{marginTop: 25, marginBottom: 15}}>
-            <div style={{width: 770, margin: 'auto'}}>
-              <Paper style={bottomSponsorsStyle}>
-                <a href="http://www.tkleinoffer.be/" target="_blank"><img src="/img/sponsors/tkleinoffer.png" /></a>
-              </Paper>
-              <Paper style={{...bottomSponsorsStyle, marginLeft: 10}}>
-                <a href="http://vdhkeukens.be/" target="_blank"><img src="/img/sponsors/vdhkeukens.png" /></a>
-              </Paper>
-              <Paper style={{...bottomSponsorsStyle, marginLeft: 10}}>
-                <a href="http://www.doopsuikersymphony.be/" target="_blank"><img src="/img/sponsors/symphony.jpg" /></a>
-              </Paper>
-            </div>
-          </Row>
+          <div>
+            <Row style={{marginTop: 25, marginBottom: 15}}>
+              <div style={{width: 770, margin: 'auto'}}>
+                <Paper style={bottomSponsorsStyle}>
+                  <a href="http://www.stonedesign.be/" target="_blank"><img src="/img/sponsors/stonedesign.png" /></a>
+                </Paper>
+                <Paper style={{...bottomSponsorsStyle, marginLeft: 10}}>
+                  <a href="http://vdhkeukens.be/" target="_blank"><img src="/img/sponsors/vdhkeukens.png" /></a>
+                </Paper>
+                <Paper style={{...bottomSponsorsStyle, marginLeft: 10}}>
+                  <a href="http://www.doopsuikersymphony.be/" target="_blank"><img src="/img/sponsors/symphony.jpg" /></a>
+                </Paper>
+              </div>
+            </Row>
+            <Row style={{marginBottom: 15}}>
+              <div style={{width: 500, margin: 'auto'}}>
+                <Paper style={{...bottomSponsorsStyle, marginLeft: 10}}>
+                  <a href="http://www.nostech.be/" target="_blank">
+                    <img style={{marginLeft: -5}} src="/img/sponsors/nostech.jpg" />
+                  </a>
+                </Paper>
+                <Paper style={{...bottomSponsorsStyle, marginLeft: 10}}>
+                  <img src="/img/sponsors/pongit.jpg" />
+                </Paper>
+              </div>
+            </Row>
+          </div>
         ) : null}
         {!showTopSponsors ? (
           <Row style={{margin: 10}}>
@@ -139,22 +153,36 @@ export default class Intro extends Component {
             </Col>
             <Col style={{marginTop: 20}}>
               <Paper style={topSponsorsOnBottomPaperStyle}>
-                <a href="http://www.tkleinoffer.be/" target="_blank">
-                  <img style= {{height: 100, width: 200}} src="/img/sponsors/tkleinoffer.png" />
+                <a href="http://www.stonedesign.be/" target="_blank">
+                  <img style={{marginTop: 15, marginLeft: -5}} src="/img/sponsors/stonedesign.png" />
                 </a>
               </Paper>
             </Col>
             <Col style={{marginTop: 20}}>
               <Paper style={topSponsorsOnBottomPaperStyle}>
                 <a href="http://vdhkeukens.be/" target="_blank">
-                  <img style= {{height: 100, width: 200}} src="/img/sponsors/vdhkeukens.png" />
+                  <img style={{height: 100, width: 200, marginLeft: -5}} src="/img/sponsors/vdhkeukens.png" />
                 </a>
               </Paper>
             </Col>
             <Col style={{marginTop: 20}}>
               <Paper style={topSponsorsOnBottomPaperStyle}>
                 <a href="http://www.doopsuikersymphony.be/" target="_blank">
-                  <img style= {{height: 100, width: 200}} src="/img/sponsors/symphony.jpg" />
+                  <img style={{height: 100, width: 200, marginLeft: -5}} src="/img/sponsors/symphony.jpg" />
+                </a>
+              </Paper>
+            </Col>
+            <Col style={{marginTop: 20}}>
+              <Paper style={topSponsorsOnBottomPaperStyle}>
+                <a href="http://www.doopsuikersymphony.be/" target="_blank">
+                  <img style={{height: 100, width: 200, marginLeft: -5}} src="/img/sponsors/pongit.jpg" />
+                </a>
+              </Paper>
+            </Col>
+            <Col style={{marginTop: 20}}>
+              <Paper style={topSponsorsOnBottomPaperStyle}>
+                <a href="http://www.nostech.be/" target="_blank">
+                  <img style={{marginLeft: -5}} src="/img/sponsors/nostech.jpg" />
                 </a>
               </Paper>
             </Col>
