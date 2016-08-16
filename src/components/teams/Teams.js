@@ -6,14 +6,13 @@ import Immutable from 'immutable';
 
 import TabbedContainer from '../controls/TabbedContainer.js';
 import Table from 'react-bootstrap/lib/Table';
-import MenuItem from 'react-bootstrap/lib/MenuItem';
-import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 
 import { OwnClubId } from '../../models/ClubModel.js';
 import { util as storeUtil } from '../../store.js';
 import * as matchActions from '../../actions/matchActions.js';
 
 import Icon from '../controls/Icon.js';
+import ButtonStack from '../controls/ButtonStack.js';
 import PlayersCardGallery from '../players/PlayersCardGallery.js';
 import MatchesTable from '../matches/MatchesTable.js';
 
@@ -168,32 +167,6 @@ export default class Teams extends Component {
     );
   }
 }
-
-
-const ButtonStack = ({small, config, activeView, onClick}) => {
-  if (small) {
-    return (
-      <DropdownButton title={config.find(x => x.key === activeView).text} id="team-view">
-        {config.map(button => (
-          <MenuItem eventKey={button.key} key={button.key} onSelect={onClick.bind(null, button.key)}>{button.text}</MenuItem>
-        ))}
-      </DropdownButton>
-    );
-  }
-  return (
-    <div className="btn-group">
-      {config.map(button => (
-        <button
-          className={cn('btn', button.key === activeView ? 'btn-info' : 'btn-default')}
-          key={button.key}
-          onClick={onClick.bind(null, button.key)}>
-          {button.text}
-        </button>
-      ))}
-    </div>
-  );
-};
-
 
 const DivisionRanking = ({team, t}) => (
   <Table condensed hover>

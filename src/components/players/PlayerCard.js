@@ -1,6 +1,6 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from '../PropTypes.js';
 import { contextTypes } from '../../utils/decorators/withContext.js';
-import PlayerModel from '../../models/PlayerModel.js';
 
 import { Card } from 'material-ui/Card';
 import Telephone from '../controls/Telephone.js';
@@ -10,7 +10,7 @@ import Icon from '../controls/Icon.js';
 export default class PlayerCard extends Component {
   static contextTypes = contextTypes;
   static propTypes = {
-    player: PropTypes.instanceOf(PlayerModel).isRequired,
+    player: PropTypes.PlayerModel.isRequired,
   };
 
   render() {

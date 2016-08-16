@@ -1,5 +1,5 @@
-import React, { PropTypes, Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from 'react';
+import PropTypes, { connect, withViewport } from '../PropTypes.js';
 import { updatePlayer } from '../../actions/playerActions.js';
 import moment from 'moment';
 
@@ -8,15 +8,18 @@ import Button from 'react-bootstrap/lib/Button';
 import TextField from 'material-ui/TextField';
 
 import Icon from '../controls/Icon.js';
+import ButtonStack from '../controls/ButtonStack.js';
 import AdminPlayerForm from './AdminPlayerForm.js';
 import AdminChangePassword from './AdminChangePassword.js';
 
+@withViewport
 @connect(() => ({}), {updatePlayer})
 export default class AdminPlayers extends Component {
   static propTypes = {
     players: PropTypes.object,
     recreantAndQuitters: PropTypes.object,
     updatePlayer: PropTypes.func.isRequired,
+    viewport: PropTypes.viewport,
   }
   constructor() {
     super();
@@ -24,27 +27,32 @@ export default class AdminPlayers extends Component {
   }
 
   _setDefaultForm() {
-    this.setState({filter: null});
+    this.setState({filter: 'active'});
   }
 
   render() {
-    let players;
+    var players;
+    var playersContent;
+    var otherContent = null;
     switch (this.state.filter) {
     case 'new-player':
-      return <AdminPlayerForm onEnd={::this._setDefaultForm} />;
+      otherContent = <AdminPlayerForm onEnd={::this._setDefaultForm} />;
+      break;
 
     case 'edit-player':
-      return <AdminPlayerForm player={this.state.selectedPlayer} onEnd={::this._setDefaultForm} />;
+      otherContent = <AdminPlayerForm player={this.state.selectedPlayer} onEnd={::this._setDefaultForm} />;
+      break;
 
     case 'set-password':
-      return <AdminChangePassword onEnd={::this._setDefaultForm} />;
+      otherContent = <AdminChangePassword onEnd={::this._setDefaultForm} />;
+      break;
 
     case 'inactive':
       players = this.props.recreantAndQuitters;
       if (this.state.filter) {
         players = players.filter(x => x.name.toLowerCase().includes(this.state.playerFilter));
       }
-      players = <InactivesTable players={players} onUpdatePlayer={this.props.updatePlayer} />;
+      playersContent = <InactivesTable players={players} onUpdatePlayer={this.props.updatePlayer} />;
       break;
 
     case 'active':
@@ -53,7 +61,7 @@ export default class AdminPlayers extends Component {
       if (this.state.filter) {
         players = players.filter(x => x.name.toLowerCase().includes(this.state.playerFilter));
       }
-      players = (
+      playersContent = (
         <ActivesTable
           players={players}
           onEditPlayer={ply => this.setState({filter: 'edit-player', selectedPlayer: ply})}
@@ -61,28 +69,45 @@ export default class AdminPlayers extends Component {
       );
       break;
     }
+
+    const viewsConfig = [{
+      key: 'active',
+      text: 'Spelers beheren'
+    }, {
+      key: 'inactive',
+      text: 'Recreant activeren'
+    }, {
+      key: 'new-player',
+      text: 'Nieuw lid'
+    }, {
+      key: 'set-password',
+      text: 'Paswoord reset'
+    }];
     return (
       <div>
-        <AdminPlayersToolbar onFilterChange={newFilter => this.setState({filter: newFilter})} />
+        <div style={{marginTop: 5, marginLeft: 5}}>
+          <ButtonStack
+            config={viewsConfig}
+            small={this.props.viewport.width < 550}
+            activeView={this.state.filter}
+            onClick={newFilter => this.setState({filter: newFilter})} />
+        </div>
         <br />
-        <TextField
-          hintText="Zoek speler"
-          onChange={e => this.setState({playerFilter: e.target.value.toLowerCase()})}
-          style={{width: 150, marginLeft: 10}} />
-        {players}
+
+        {playersContent ? (
+          <div>
+            <TextField
+            hintText="Zoek speler"
+            onChange={e => this.setState({playerFilter: e.target.value.toLowerCase()})}
+            style={{width: 150, marginLeft: 10}} />
+
+            {playersContent}
+          </div>
+        ) : otherContent}
       </div>
     );
   }
 }
-
-const AdminPlayersToolbar = ({onFilterChange}) => (
-  <div style={{display: 'inline'}}>
-    <Button style={{margin: 5}} bsStyle="info" onClick={() => onFilterChange('inactive')}>Recreant activeren</Button>
-    <Button style={{margin: 5}} bsStyle="info" onClick={() => onFilterChange('active')}>Spelers beheren</Button>
-    <Button style={{margin: 5}} bsStyle="info" onClick={() => onFilterChange('new-player')}>Nieuw lid</Button>
-    <Button bsStyle="info" onClick={() => onFilterChange('set-password')}>Paswoord reset</Button>
-  </div>
-);
 
 function concatCompetitions(vttl, sporta) {
   var comps = [];
