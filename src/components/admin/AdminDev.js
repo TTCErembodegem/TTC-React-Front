@@ -111,21 +111,27 @@ class AdminStateDisplayer extends Component {
   }
 
   render() {
-    var JSONViewer = require('react-json-viewer');
     var data = this.props.data;
-    if (this.state.filter) {
+
+    if (this.state.filter)
+    {
       data = data.filter(x => {
-        return true;
+        for (var name in x) {
+          if (x[name] == this.state.filter) {
+              return true;
+          };
+        }
       });
     }
+
     return (
       <div style={{padding: 5}}>
         <div>
           <Icon fa="fa fa-search" />
           &nbsp;
-          <input type="text" width={150} onClick={e => this.setState({filter: e.target.value})} />
+          <input type="text" width={150} onChange={e => this.setState({filter: e.target.value})} />
         </div>
-        {true ? <pre style={{marginTop: 5}}>{JSON.stringify(data, null, 4)}</pre> : <JSONViewer json={data}></JSONViewer>}
+        <pre style={{marginTop: 30}}>{JSON.stringify(data, null, 4)}</pre>
       </div>
     );
   }
