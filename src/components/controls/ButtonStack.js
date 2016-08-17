@@ -6,7 +6,7 @@ import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 const ButtonStack = ({small, config, activeView, onClick}) => {
   if (small) {
     return (
-      <DropdownButton title={config.find(x => x.key === activeView).text} id="team-view">
+      <DropdownButton title={(config.find(x => x.key === activeView) || {text: activeView}).text} id="team-view">
         {config.map(button => (
           <MenuItem eventKey={button.key} key={button.key} onSelect={onClick.bind(null, button.key)}>{button.text}</MenuItem>
         ))}

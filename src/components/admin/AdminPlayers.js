@@ -40,7 +40,7 @@ export default class AdminPlayers extends Component {
       otherContent = <AdminPlayerForm onEnd={::this._setDefaultForm} />;
       break;
 
-    case 'edit-player':
+    case 'Speler editeren':
       otherContent = <AdminPlayerForm player={this.state.selectedPlayer} onEnd={::this._setDefaultForm} />;
       break;
 
@@ -65,7 +65,7 @@ export default class AdminPlayers extends Component {
       playersContent = (
         <ActivesTable
           players={players}
-          onEditPlayer={ply => this.setState({filter: 'edit-player', selectedPlayer: ply})}
+          onEditPlayer={ply => this.setState({filter: 'Speler editeren', selectedPlayer: ply})}
           onUpdatePlayer={this.props.updatePlayer} />
       );
       break;
