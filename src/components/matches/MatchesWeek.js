@@ -5,11 +5,12 @@ import moment from 'moment';
 import Icon from '../controls/Icon.js';
 import MatchesTable from './MatchesTable.js';
 
-@connect(state => ({matches: state.matches}))
+@connect(state => ({matches: state.matches, user: state.user}))
 export default class MatchesWeek extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     matches: PropTypes.MatchModelList.isRequired,
+    user: PropTypes.UserModel.isRequired,
   }
 
   constructor(props) {
@@ -61,6 +62,15 @@ export default class MatchesWeek extends Component {
           ) : null}
         </h3>
 
+        {false && this.props.user.isAdmin() ? (
+          <span className="pull-right">
+            <button className="btn btn-default" style={{marginRight: 5}}>WEEK BLOKKEREN</button>
+            <button className="btn btn-default">
+              <Icon fa="fa fa-envelope-o" onClick={() => console.log('emailing opstelling...')} />
+            </button>
+          </span>
+        ) : null}
+
         <h4><strong>Vttl</strong></h4>
         <MatchesTable matches={matches.filter(x => x.competition === 'Vttl').sort((a, b) => a.date - b.date)} />
 
@@ -70,5 +80,11 @@ export default class MatchesWeek extends Component {
         <MatchesTable matches={matches.filter(x => x.competition === 'Sporta').sort((a, b) => a.date - b.date)} />
       </div>
     );
+
+    // TODO: if isAdmin() || isCaptain() ?
+    // - Excel export for all teams
+    // - Display all players in team (+ andere speler opstellen)
+    // - Captain kan ook per match blokkeren?
+    // - in profile: geblokkeerde matchen/weken niet meer tonen
   }
 }
