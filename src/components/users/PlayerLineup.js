@@ -5,6 +5,7 @@ import moment from 'moment';
 import cn from 'classnames';
 
 import { selectPlayer } from '../../actions/matchActions.js';
+import { getPlayingStatusButtonClass } from '../../models/PlayerModel.js';
 
 import Table from 'react-bootstrap/lib/Table';
 import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
@@ -27,22 +28,6 @@ export default class PlayerLinup extends Component {
 
   _onChangePlaying(match, status) {
     this.props.selectPlayer(match.id, this.props.user.playerId, status);
-  }
-
-  _getPlayingStatusRowClass(playing) {
-    if (!playing) {
-      return '';
-    }
-    switch (playing.status) {
-    case 'Play':
-      return 'success';
-    case 'NotPlay':
-      return 'danger';
-    case 'Maybe':
-      return 'info';
-    default:
-      return '';
-    }
   }
 
   render() {
@@ -105,10 +90,10 @@ export default class PlayerLinup extends Component {
                 </Button>
               </ButtonToolbar>
             );
-            const currentStatus = match.plays(this.props.user.playerId);
 
+            const matchPlayer = match.plays(this.props.user.playerId);
             return (
-              <tr key={match.id} className={this._getPlayingStatusRowClass(currentStatus)}>
+              <tr key={match.id} className={getPlayingStatusRowClass(matchPlayer)}>
                 <td className="hidden-xs">{match.frenoyMatchId}</td>
                 <td className="hidden-xs">{t('match.date', match.getDisplayDate())}</td>
                 <td>

@@ -77,3 +77,41 @@ export function createFrenoyLinkByUniqueId(comp, uniqueId) {
     return 'http://tafeltennis.sporcrea.be/competitie/' + ('000000' + uniqueId).slice(-6);
   }
 }
+
+export function getPlayingStatusButtonClass(playingStatus) {
+  if (!playingStatus) {
+    return null;
+  }
+  if (playingStatus.status) {
+    playingStatus = playingStatus.status;
+  }
+  switch (playingStatus) {
+  case 'Play':
+    return 'success';
+  case 'NotPlay':
+    return 'danger';
+  case 'Maybe':
+    return 'info';
+  default:
+    return null;
+  }
+}
+
+export function getPlayingStatusColor(playingStatus) {
+  if (!playingStatus) {
+    return null;
+  }
+  if (playingStatus.status) {
+    playingStatus = playingStatus.status;
+  }
+  switch (playingStatus) {
+  case 'Play':
+    return '#FFB00F';
+  case 'NotPlay':
+    return '#c9302c';
+  case 'Maybe':
+    return '#31b0d5';
+  default:
+    return undefined;
+  }
+}

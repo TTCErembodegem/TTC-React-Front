@@ -28,6 +28,6 @@ export default class PlayerAvatar extends Component {
     if (!this.state.isLoaded) {
       return <Avatar {...props}>{player.alias[0]}</Avatar>;
     }
-    return <Avatar src={playerUtils.getAvatarImageUrl(player.id)} />;
+    return <Avatar {...props} src={playerUtils.getAvatarImageUrl(player.id)} />;
   }
 }

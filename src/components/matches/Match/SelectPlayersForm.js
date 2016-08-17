@@ -10,6 +10,7 @@ import PlayerAvatar from '../../players/PlayerAvatar.js';
 
 import * as matchActions from '../../../actions/matchActions.js';
 import { displayFormat } from '../../controls/Telephone.js';
+import { getPlayingStatusColor } from '../../../models/PlayerModel.js';
 
 @connect(state => {
   return {
@@ -82,22 +83,6 @@ class PlayerAvatarList extends Component {
   }
   _onPlayerSelect(playerId) {
     this.props.selectPlayer(this.props.match.id, playerId);
-  }
-}
-
-function getPlayingStatusColor(playing) {
-  if (!playing) {
-    return undefined;
-  }
-  switch (playing.status) {
-  case 'Play':
-    return '#FFB00F';
-  case 'NotPlay':
-    return '#c9302c';
-  case 'Maybe':
-    return '#31b0d5';
-  default:
-    return undefined;
   }
 }
 

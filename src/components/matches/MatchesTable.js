@@ -1,27 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes, { connect, withViewport } from '../PropTypes.js';
 import { browserHistory } from 'react-router';
+import { getPlayingStatusButtonClass, getPlayingStatusColor } from '../../models/PlayerModel.js';
 
 //import { selectPlayer } from '../../actions/matchActions.js';
 
 import Table from 'react-bootstrap/lib/Table';
 import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
 import Button from 'react-bootstrap/lib/Button';
+
 import Icon from '../controls/Icon.js';
 import MatchVs from './Match/MatchVs.js';
-
-function getPlayingStatusButtonClass(playingStatus) {
-  switch (playingStatus) {
-  case 'Play':
-    return 'success';
-  case 'NotPlay':
-    return 'danger';
-  case 'Maybe':
-    return 'info';
-  default:
-    return null;
-  }
-}
 
 @withViewport
 export default class MatchesTable extends Component {
