@@ -7,19 +7,6 @@ export const teamPlayerType = {
   reserve: 'Reserve',
 };
 
-function sortMappedPlayers(competition) {
-  return (plyA, plyB) => {
-    var aComp = plyA.player.getCompetition(competition);
-    var bComp = plyB.player.getCompetition(competition);
-    if (!aComp) {
-      return -1;
-    }
-    if (!bComp) {
-      return 1;
-    }
-    return aComp.position - bComp.position;
-  };
-}
 
 class TeamFrenoyModel {
   constructor(frenoy, team) {
@@ -113,6 +100,9 @@ export default class TeamModel {
   isCaptain(player) {
     return this.players.find(x => x.type === teamPlayerType.captain && x.playerId === player.id);
   }
+  getCaptainPlayerIds() {
+    return this.players.filter(x => x.type === teamPlayerType.captain).map(x => x.playerId);
+  }
 
   getPlayers(type) {
     var players = this.players;
@@ -147,6 +137,20 @@ export function sortPlayers(competition) {
   return (plyA, plyB) => {
     var aComp = plyA.getCompetition(competition);
     var bComp = plyB.getCompetition(competition);
+    if (!aComp) {
+      return -1;
+    }
+    if (!bComp) {
+      return 1;
+    }
+    return aComp.position - bComp.position;
+  };
+}
+
+export function sortMappedPlayers(competition) {
+  return (plyA, plyB) => {
+    var aComp = plyA.player.getCompetition(competition);
+    var bComp = plyB.player.getCompetition(competition);
     if (!aComp) {
       return -1;
     }

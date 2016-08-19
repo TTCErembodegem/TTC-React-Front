@@ -78,7 +78,7 @@ export function createFrenoyLinkByUniqueId(comp, uniqueId) {
   }
 }
 
-export function getPlayingStatusButtonClass(playingStatus) {
+export function getPlayingStatusClass(playingStatus) {
   if (!playingStatus) {
     return null;
   }
@@ -87,6 +87,8 @@ export function getPlayingStatusButtonClass(playingStatus) {
   }
   switch (playingStatus) {
   case 'Play':
+  case 'Major':
+  case 'Captain':
     return 'success';
   case 'NotPlay':
     return 'danger';
@@ -106,6 +108,8 @@ export function getPlayingStatusColor(playingStatus) {
   }
   switch (playingStatus) {
   case 'Play':
+  case 'Major':
+  case 'Captain':
     return '#FFB00F';
   case 'NotPlay':
     return '#c9302c';

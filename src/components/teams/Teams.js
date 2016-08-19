@@ -46,6 +46,7 @@ export default class Teams extends Component {
     this.state = {
       view: 'matches',
       matchesFilter: moment().month() >= 7 ? 'first' : 'last',
+      editMode: false,
     };
   }
 
@@ -105,6 +106,12 @@ export default class Teams extends Component {
             activeView={this.state.view}
             onClick={view => this.setState({view})} />
 
+          {this.state.view === 'matches' && this.props.user.canEditMatchesOrIsCaptain() ? (
+            <button onClick={() => this.setState({editMode: !this.state.editMode})} className="btn btn-default pull-right hidden-xs">
+              <Icon fa="fa fa-pencil-square-o" />
+            </button>
+          ) : null}
+
           <a href={team.frenoy.getUrl('results')} target="_blank" className="pull-right">
             <button className="btn btn-default">{this.context.t('teamCalendar.frenoyResults')}</button>
           </a>
@@ -126,7 +133,7 @@ export default class Teams extends Component {
 
       return (
         <div>
-          <MatchesTable matches={matchesForTeam} allowOpponentOnly />
+          <MatchesTable matches={matchesForTeam} allowOpponentOnly user={this.props.user} editMode={this.state.editMode} />
 
           <div style={{textAlign: 'center'}}>
             <button

@@ -72,19 +72,13 @@ export default class MatchesWeek extends Component {
         ) : null}
 
         <h4><strong>Vttl</strong></h4>
-        <MatchesTable matches={matches.filter(x => x.competition === 'Vttl').sort((a, b) => a.date - b.date)} />
+        <MatchesTable matches={matches.filter(x => x.competition === 'Vttl').sort((a, b) => a.date - b.date)} user={this.props.user} />
 
         <hr />
 
         <h4><strong>Sporta</strong></h4>
-        <MatchesTable matches={matches.filter(x => x.competition === 'Sporta').sort((a, b) => a.date - b.date)} />
+        <MatchesTable matches={matches.filter(x => x.competition === 'Sporta').sort((a, b) => a.date - b.date)} user={this.props.user} />
       </div>
     );
-
-    // TODO: if isAdmin() || isCaptain() ?
-    // - Excel export for all teams
-    // - Display all players in team (+ andere speler opstellen)
-    // - Captain kan ook per match blokkeren?
-    // - in profile: geblokkeerde matchen/weken niet meer tonen
   }
 }

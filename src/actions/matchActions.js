@@ -88,7 +88,7 @@ export function getLastOpponentMatches(teamId, opponent) {
   };
 }
 
-export function selectPlayer(matchId, playerId, status = null) {
+export function selectPlayer(matchId, playerId, status = null, statusNote = null) {
   return dispatch => {
     const match = storeUtil.getMatch(matchId);
     const player = storeUtil.getPlayer(playerId);
@@ -106,10 +106,16 @@ export function selectPlayer(matchId, playerId, status = null) {
         alias: player.alias,
         uniqueIndex: comp.uniqueIndex,
         status: 'Play',
+        statusNote: statusNote,
       };
     }
 
-    return http.post('/matches/TogglePlayer', {...matchPlayer, status: status || matchPlayer.status})
+    matchPlayer.status = status || matchPlayer.status;
+    if (statusNote !== null) {
+      matchPlayer.statusNote = statusNote;
+    }
+
+    return http.post('/matches/TogglePlayer', matchPlayer)
       .then(function(data) {
         if (data) {
           dispatch(simpleLoaded(data));
@@ -120,6 +126,24 @@ export function selectPlayer(matchId, playerId, status = null) {
         console.log('TogglePlayer!', err); // eslint-disable-line
       }
     );
+  };
+}
+
+export function editMatchPlayers(matchPlayersInfo) {
+  return dispatch => {
+    return http.post('/matches/EditMatchPlayers', matchPlayersInfo)
+      .then(function(data) {
+        if (data) {
+          dispatch(simpleLoaded(data));
+          broadcastReload('match', data.id);
+
+          const msg = !matchPlayersInfo.blockAlso ? 'snackbarSaved' : 'snackbarBlocked';
+          dispatch(showSnackbar(trans('match.plys.' + msg)));
+        }
+
+      }, function(err) {
+        console.log('editMatchPlayers!', err); // eslint-disable-line
+      });
   };
 }
 

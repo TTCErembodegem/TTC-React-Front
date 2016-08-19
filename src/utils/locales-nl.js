@@ -62,6 +62,8 @@ export default {
         canNotPlay: 'Kan niet',
         canMaybe: 'Misschien',
         canDontKnow: 'Weet niet',
+        extraComment: 'Info voor de kapitein',
+        extraCommentHelp: 'Klik op een van de knoppen om te bewaren',
       },
     },
     intro: {
@@ -156,6 +158,13 @@ export default {
       downloadExcelFileName: 'Spelerslijst_${}',
     },
     match: {
+      plys: {
+        choiceCaptain: 'OPGESTELD',
+        choicePlayers: 'Keuze spelers',
+        blockMatchTitle: 'Opstelling',
+        snackbarSaved: 'Opstelling bewaard',
+        snackbarBlocked: 'Bewaard en blokkering gewijzigd',
+      },
       week: 'Week',
       todayMatches: 'vandaag',
       nextMatches: 'volgende matchen',

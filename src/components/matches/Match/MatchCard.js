@@ -141,7 +141,7 @@ export default class MatchCard extends Component {
   }
   _getPlayersEditIcon() {
     const match = this.props.match;
-    const isAllowedToEdit = this.props.user.canManageTeam(match.teamId);
+    const isAllowedToEdit = this.props.user.canEditPlayersOnMatchDay(match.teamId);
     return isAllowedToEdit && !match.isSyncedWithFrenoy ? (
       <Icon fa="fa fa-pencil-square-o" onClick={::this._onStartEditPlayers} className="match-card-tab-icon" />) : null;
   }
@@ -228,7 +228,7 @@ export default class MatchCard extends Component {
     }
 
     const playingPlayers = match.players.filter(ply => ply.status === 'Play');
-    if (this.state.forceEditPlayers || (this.props.user.canManageTeam(match.teamId) && playingPlayers.size < team.getTeamPlayerCount())) {
+    if (this.state.forceEditPlayers || (this.props.user.canEditPlayersOnMatchDay(match.teamId) && playingPlayers.size < team.getTeamPlayerCount())) {
       return <SelectPlayersForm match={match} user={this.props.user} />;
     }
 

@@ -33,7 +33,35 @@ export default class UserModel {
     return this._security.indexOf(what) !== -1;
   }
 
-  canManageTeam(teamId) {
+  canEditMatchesOrIsCaptain() {
+    if (this.can(security.CAN_MANAGETEAM)) {
+      return true;
+    }
+
+    const captains = [].concat.apply([], this.getTeams().map(team => team.getCaptainPlayerIds()));
+    return captains.indexOf(this.playerId) !== -1;
+  }
+  canEditMatchPlayers(match) {
+    if (match.isSyncedWithFrenoy) {
+      return false;
+    }
+
+    if (this.can(security.CAN_MANAGETEAM)) {
+      return true;
+    }
+
+    const isCaptain = match.getTeam().isCaptain(this.getPlayer());
+    if (!isCaptain) {
+      return false;
+    }
+
+    if (match.block === 'Major') {
+      return false;
+    }
+
+    return true;
+  }
+  canEditPlayersOnMatchDay(teamId) {
     return this.playsIn(teamId) || this.can(security.CAN_MANAGETEAM);
   }
   canPostReport(teamId) {

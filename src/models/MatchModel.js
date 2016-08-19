@@ -5,7 +5,7 @@ import moment from 'moment';
 import store, { util as storeUtils} from '../store.js';
 import PlayerModel from './PlayerModel.js';
 import { OwnClubId } from './ClubModel.js';
-import { sortPlayers } from './TeamModel.js';
+import { sortPlayers, sortMappedPlayers } from './TeamModel.js';
 
 export var matchOutcome = keyMirror({
   NotYetPlayed: '',
@@ -39,6 +39,7 @@ export default class MatchModel {
       this.teamId = json.teamId;
       this.description = json.description;
       this.reportPlayerId = json.reportPlayerId;
+      this.block = json.block;
 
       const comments = json.comments.map(c => ({
         ...c,
@@ -137,7 +138,42 @@ export default class MatchModel {
     return otherMatch;
   }
 
+  getPlayerFormation(statusFilter) {
+    const team = this.getTeam();
+    const plys = this.getOwnPlayers();
+
+    var filter;
+    if (!statusFilter) {
+      filter = ply => {
+        const status = ply.matchPlayer.status;
+        if (this.isSyncedWithFrenoy) {
+          return status === 'Major';
+        }
+
+        if (this.block) {
+          return status === this.block;
+        }
+
+        return status !== 'Major' && status !== 'Captain';
+      };
+    } else if (statusFilter === 'Play') {
+      filter = ply => ply.matchPlayer.status !== 'Captain' && ply.matchPlayer.status !== 'Major';
+    } else {
+      filter = ply => ply.matchPlayer.status === statusFilter;
+    }
+
+    return plys.filter(ply => ply.playerId)
+      .map(ply => ({
+        id: ply.playerId,
+        player: storeUtils.getPlayer(ply.playerId),
+        matchPlayer: ply
+      }))
+      .filter(filter)
+      .sort(sortMappedPlayers(team.competition));
+  }
+
   getOwnPlayerModels(status = 'Play') {
+
     const team = this.getTeam();
     var plys = this.getOwnPlayers();
     if (status !== 'All') {
