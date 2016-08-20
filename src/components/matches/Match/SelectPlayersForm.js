@@ -27,12 +27,12 @@ export default class SelectPlayersForm extends Component {
   }
 
   render() {
-    var team = this.props.match.getTeam();
+    const team = this.props.match.getTeam();
     var reservePlayers = team.getPlayers('reserve');
 
     // Add one time team players
-    var selectedFromTeam = team.getPlayers().map(ply => ply.player.id);
-    var otherSelectedPlayers = this.props.match.getOwnPlayerModels()
+    const selectedFromTeam = team.getPlayers().map(ply => ply.player.id);
+    const otherSelectedPlayers = this.props.match.getOwnPlayerModels('onlyFinal')
       .filter(ply => selectedFromTeam.indexOf(ply.id) === -1)
       .map(ply => ({
         player: ply,
@@ -82,12 +82,12 @@ class PlayerAvatarList extends Component {
     );
   }
   _onPlayerSelect(playerId) {
-    this.props.selectPlayer(this.props.match.id, playerId);
+    this.props.selectPlayer(this.props.match.id, playerId, this.props.match.block || 'Captain');
   }
 }
 
 const SelectableMatchPlayerAvatar = ({match, player, select}) => {
-  const matchPlayer = match.plays(player);
+  const matchPlayer = match.plays(player, 'onlyFinal');
   const color = getPlayingStatusColor(matchPlayer);
   if (select) {
     return (

@@ -60,11 +60,6 @@ export default class MatchesTable extends Component {
 
   _renderEditMatchPlayers() {
     const match = this.state.editMatch;
-
-
-    //console.log('players', this.state.players.toArray());
-    //console.log('playersEdit', this.state.playersEdit.toArray());
-
     return (
       <div style={{marginBottom: 4, marginTop: -30}}>
         <h4>{this.context.t('match.plys.choiceCaptain')}</h4>
@@ -211,51 +206,47 @@ export default class MatchesTable extends Component {
             ) : this.state.editMatch.id !== match.id && this.props.user.canEditMatchPlayers(match) ? (
               <button onClick={this._onOpenEditMatchForm.bind(this, match)} className="btn btn-default pull-right" style={{marginRight: 5}}>
                 <span className="fa-stack fa-sm">
-                  <Icon fa="fa fa-pencil-square-o fa-stack-1x" />
+                  {!match.block ? (
+                    <Icon fa="fa fa-pencil-square-o fa-stack-1x" />
+                  ) : (
+                    <span>
+                      <Icon fa="fa fa-anchor fa-stack-1x" />
+                      <Icon fa="fa fa-ban fa-stack-2x text-danger" />
+                    </span>
+                  )}
                 </span>
               </button>
 
             ) : this.state.editMatch.id !== match.id ? (
               <span className="fa-stack fa-sm pull-right" style={{marginRight: 8, marginTop: 5}}>
-                <i className="fa fa-pencil-square-o fa-stack-1x"></i>
-                <i className="fa fa-ban fa-stack-2x text-danger"></i>
+                <Icon fa="fa fa-pencil-square-o fa-stack-1x" />
+                <Icon fa="fa fa-ban fa-stack-2x text-danger" />
               </span>
 
             ) : (
               <div className="pull-right">
                 <button
                   className={'btn btn-default ' + (!match.block && this.state.playersEdit.size !== team.getTeamPlayerCount() ? 'disabled' : '')}
-                  onClick={this._saveFormation.bind(this, {blockAlso: !match.block, closeForm: !match.block})}
+                  onClick={this._saveFormation.bind(this, {blockAlso: true, closeForm: !match.block})}
                   style={{marginRight: 5}}>
 
-                  {!match.block ? (
-                    <span className="fa-stack fa-sm">
-                      <Icon fa="fa fa-anchor fa-stack-2x" />
-                    </span>
-                  ) : (
-                    <span className="fa-stack fa-sm">
-                      <i className="fa fa-anchor fa-stack-1x"></i>
-                      <i className="fa fa-ban fa-stack-2x text-danger"></i>
-                    </span>
-                  )}
+                  <span className="fa-stack fa-sm">
+                    <Icon fa="fa fa-anchor fa-stack-2x" />
+                  </span>
                 </button>
 
-                {!match.block ? (
-                  <button className="btn btn-default" onClick={this._saveFormation.bind(this, {blockAlso: false, closeForm: true})}>
-                    <span>
-                      <span className="fa-stack fa-sm">
-                        <Icon fa="fa fa-floppy-o fa-stack-2x" />
-                      </span>
-                    </span>
-                  </button>
-                ) : null}
+                <button className="btn btn-default" onClick={this._saveFormation.bind(this, {blockAlso: false, closeForm: true})}>
+                  <span className="fa-stack fa-sm">
+                    <Icon fa="fa fa-floppy-o fa-stack-2x" />
+                  </span>
+                </button>
               </div>
             )}
           </td>
         </tr>
       );
 
-      if (this.props.editMode && this.state.editMatch.id === match.id && this.props.user.canEditMatchPlayers(match) && !match.block) {
+      if (this.props.editMode && this.state.editMatch.id === match.id && this.props.user.canEditMatchPlayers(match)) {
         matchRows.push(
           <tr key={match.id + '_b'} style={stripeColor}>
             <td colSpan={4} style={{border: 'none'}}>

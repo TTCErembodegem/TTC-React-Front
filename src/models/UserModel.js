@@ -1,5 +1,6 @@
 import { util as storeUtil } from '../store.js';
 import keyMirror from 'fbjs/lib/keyMirror';
+import moment from 'moment';
 
 export const userRoles = ['Player', 'Board', 'Dev', 'System'];
 
@@ -61,8 +62,8 @@ export default class UserModel {
 
     return true;
   }
-  canEditPlayersOnMatchDay(teamId) {
-    return this.playsIn(teamId) || this.can(security.CAN_MANAGETEAM);
+  canEditPlayersOnMatchDay(match) {
+    return this.playsIn(match.teamId) && match.date.isSame(moment(), 'day');
   }
   canPostReport(teamId) {
     return this.playsIn(teamId) || this.can(security.CAN_EDITALLREPORTS);

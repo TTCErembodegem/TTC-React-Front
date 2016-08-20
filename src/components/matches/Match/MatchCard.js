@@ -141,7 +141,7 @@ export default class MatchCard extends Component {
   }
   _getPlayersEditIcon() {
     const match = this.props.match;
-    const isAllowedToEdit = this.props.user.canEditPlayersOnMatchDay(match.teamId);
+    const isAllowedToEdit = this.props.user.canEditPlayersOnMatchDay(match);
     return isAllowedToEdit && !match.isSyncedWithFrenoy ? (
       <Icon fa="fa fa-pencil-square-o" onClick={::this._onStartEditPlayers} className="match-card-tab-icon" />) : null;
   }
@@ -227,12 +227,12 @@ export default class MatchCard extends Component {
       return <MatchPlayerResults match={match} team={match.getTeam()} t={this.context.t} />;
     }
 
-    const playingPlayers = match.players.filter(ply => ply.status === 'Play');
-    if (this.state.forceEditPlayers || (this.props.user.canEditPlayersOnMatchDay(match.teamId) && playingPlayers.size < team.getTeamPlayerCount())) {
+    const playingPlayers = match.getPlayerFormation('onlyFinal').map(x => x.player);
+    if (this.state.forceEditPlayers || (this.props.user.canEditPlayersOnMatchDay(match) && playingPlayers.size < team.getTeamPlayerCount())) {
       return <SelectPlayersForm match={match} user={this.props.user} />;
     }
 
-    if (match.players.size === 0) {
+    if (playingPlayers.size === 0) {
       const standardPlayers = team.getPlayers('standard').map(ply => ply.player);
       return (
         <PlayersImageGallery
@@ -246,7 +246,7 @@ export default class MatchCard extends Component {
 
     return (
       <PlayersImageGallery
-        players={match.getOwnPlayerModels()}
+        players={playingPlayers}
         user={this.props.user}
         competition={team.competition}
         viewport={this.props.viewport}

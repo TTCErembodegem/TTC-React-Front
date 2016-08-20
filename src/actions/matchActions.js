@@ -88,7 +88,7 @@ export function getLastOpponentMatches(teamId, opponent) {
   };
 }
 
-export function selectPlayer(matchId, playerId, status = null, statusNote = null) {
+export function selectPlayer(matchId, playerId, status, statusNote = null) {
   return dispatch => {
     const match = storeUtil.getMatch(matchId);
     const player = storeUtil.getPlayer(playerId);
@@ -105,12 +105,13 @@ export function selectPlayer(matchId, playerId, status = null, statusNote = null
         name: player.alias,
         alias: player.alias,
         uniqueIndex: comp.uniqueIndex,
-        status: 'Play',
+        status: status,
         statusNote: statusNote,
       };
+    } else {
+      matchPlayer.status = status;
     }
 
-    matchPlayer.status = status || matchPlayer.status;
     if (statusNote !== null) {
       matchPlayer.statusNote = statusNote;
     }

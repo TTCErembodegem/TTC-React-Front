@@ -121,13 +121,6 @@ export default class MatchModel {
     return storeUtils.getTeam(this.teamId);
   }
 
-  plays(playerId) {
-    if (playerId instanceof PlayerModel) {
-      playerId = playerId.id;
-    }
-    return this.players.find(ply => ply.playerId === playerId);
-  }
-
   getPreviousMatch() {
     var otherMatch = store.getState().matches
       .find(m => m.teamId === this.teamId &&
@@ -138,12 +131,20 @@ export default class MatchModel {
     return otherMatch;
   }
 
+  plays(playerId, statusFilter) {
+    if (playerId instanceof PlayerModel) {
+      playerId = playerId.id;
+    }
+    const playerInfo = this.getPlayerFormation(statusFilter).find(ply => ply.id === playerId);
+    return playerInfo ? playerInfo.matchPlayer : undefined;
+  }
+
   getPlayerFormation(statusFilter) {
     const team = this.getTeam();
     const plys = this.getOwnPlayers();
 
     var filter;
-    if (!statusFilter) {
+    if (!statusFilter || statusFilter === 'onlyFinal') {
       filter = ply => {
         const status = ply.matchPlayer.status;
         if (this.isSyncedWithFrenoy) {
@@ -152,6 +153,10 @@ export default class MatchModel {
 
         if (this.block) {
           return status === this.block;
+        }
+
+        if (statusFilter === 'onlyFinal') {
+          return false;
         }
 
         return status !== 'Major' && status !== 'Captain';
@@ -172,18 +177,8 @@ export default class MatchModel {
       .sort(sortMappedPlayers(team.competition));
   }
 
-  getOwnPlayerModels(status = 'Play') {
-
-    const team = this.getTeam();
-    var plys = this.getOwnPlayers();
-    if (status !== 'All') {
-      plys = plys.filter(ply => ply.status === 'Play');
-    }
-
-    // ply.playerId===0 when someone played for Erembodegem that has incorrect competition details in speler table
-    return plys.filter(ply => ply.playerId)
-      .map(ply => storeUtils.getPlayer(ply.playerId))
-      .sort(sortPlayers(team.competition));
+  getOwnPlayerModels(statusFilter) {
+    return this.getPlayerFormation(statusFilter).map(x => x.player);
   }
 
   getOwnPlayers() {
