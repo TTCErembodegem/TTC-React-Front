@@ -48,7 +48,7 @@ export default class MatchesTable extends Component {
             <span
               className={'label label-as-badge label-' + (getPlayingStatusClass(plyInfo.matchPlayer.status) || 'default')}
               key={plyInfo.player.id + plyInfo.matchPlayer.status}
-              style={{marginBottom: 5, fontSize: 14, marginRight: 6}}>
+              style={{marginBottom: 5, fontSize: 14, marginRight: 6, display: 'inline-block'}}>
               {plyInfo.player.alias}
             </span>
           );
