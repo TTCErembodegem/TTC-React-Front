@@ -78,6 +78,10 @@ export default class Profile extends Component {
       title: t('profile.editAvatar'),
     }];
 
+    if (!this.props.user.playerId) {
+      return <div />;
+    }
+
     return (
       <div style={{marginTop: 15, marginBottom: 20}}>
         <TabbedContainer
