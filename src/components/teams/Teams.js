@@ -107,7 +107,7 @@ export default class Teams extends Component {
             onClick={view => this.setState({view})} />
 
           {this.state.view === 'matches' && this.props.user.canEditMatchesOrIsCaptain() ? (
-            <button onClick={() => this.setState({editMode: !this.state.editMode})} className="btn btn-default pull-right hidden-xs">
+            <button onClick={() => this.setState({editMode: !this.state.editMode})} className="btn btn-default pull-right">
               <Icon fa="fa fa-pencil-square-o" />
             </button>
           ) : null}
