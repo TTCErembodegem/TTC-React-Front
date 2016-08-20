@@ -42,7 +42,7 @@ export default class MatchesTable extends Component {
   _renderMatchPlayers(match) {
     const players = match.getPlayerFormation();
     return (
-      <div style={{marginBottom: 4, marginTop: -20}}>
+      <div style={{marginBottom: 4, marginTop: -5}}>
         {players.map(plyInfo => {
           return (
             <span
@@ -68,7 +68,7 @@ export default class MatchesTable extends Component {
           return (
             <button
               key={plyInfo.player.id + matchPlayer.status}
-              className={'btn btn-success'}
+              className={'btn btn-success btn-sm'}
               title={matchPlayer.statusNote}
               style={{marginRight: 5, marginBottom: 5}}
               onClick={this._togglePlayer.bind(this, plyInfo.player.id)}>
@@ -84,13 +84,13 @@ export default class MatchesTable extends Component {
           return (
             <button
               key={plyInfo.player.id + matchPlayer.status}
-              className={'btn btn-' + (getPlayingStatusClass(matchPlayer) || 'default')}
+              className={'btn btn-xs btn-' + (getPlayingStatusClass(matchPlayer) || 'default')}
               title={matchPlayer.statusNote}
               style={{marginRight: 5, marginBottom: 5}}
               onClick={this._togglePlayer.bind(this, plyInfo.player.id)}>
-              {matchPlayer.statusNote ? <Icon fa="fa fa-comment-o" style={{marginRight: 5, marginLeft: -5}} /> : null}
+              {matchPlayer.statusNote ? <Icon fa="fa fa-comment-o" style={{marginRight: 5, marginLeft: 0}} /> : null}
               {plyInfo.player.alias}
-              {this.state.playersEdit.find(x => x.id === plyInfo.id) ? <Icon fa="fa fa-thumbs-o-up" style={{marginRight: -5, marginLeft: 5}} /> : null}
+              {this.state.playersEdit.find(x => x.id === plyInfo.id) ? <Icon fa="fa fa-thumbs-o-up" style={{marginRight: 0, marginLeft: 5}} /> : null}
             </button>
           );
         })}
@@ -98,7 +98,8 @@ export default class MatchesTable extends Component {
         <br />
         <PlayerAutoComplete
           selectPlayer={playerId => this._togglePlayer(playerId)}
-          hintText={this.context.t('match.chooseOtherPlayer')} />
+          hintText={this.context.t('match.chooseOtherPlayer')}
+        />
       </div>
     );
   }
@@ -183,7 +184,8 @@ export default class MatchesTable extends Component {
         thrillerIcon = (
           <Icon
             fa="fa fa-heartbeat faa-pulse animated"
-            style={{marginLeft: 3, marginRight: 7, marginTop: 3, color: 'red'}} />
+            style={{marginLeft: 3, marginRight: 7, marginTop: 3, color: 'red'}}
+          />
         );
       }
 
@@ -204,7 +206,12 @@ export default class MatchesTable extends Component {
               </button>
 
             ) : this.state.editMatch.id !== match.id && this.props.user.canEditMatchPlayers(match) ? (
-              <button onClick={this._onOpenEditMatchForm.bind(this, match)} className="btn btn-default pull-right" style={{marginRight: 5}}>
+              <button
+                onClick={this._onOpenEditMatchForm.bind(this, match)}
+                className="btn btn-default pull-right"
+                style={{marginRight: 5}}
+                title={t('match.plys.tooltipOpenForm')}
+              >
                 <span className="fa-stack fa-sm">
                   {!match.block ? (
                     <Icon fa="fa fa-pencil-square-o fa-stack-1x" />
@@ -224,21 +231,23 @@ export default class MatchesTable extends Component {
               </span>
 
             ) : (
-              <div className="pull-right">
+              <div className="pull-right" style={{whiteSpace: 'nowrap'}}>
                 <button
                   className={'btn btn-default ' + (this.state.playersEdit.size !== team.getTeamPlayerCount() ? 'disabled' : '')}
                   onClick={this._saveFormation.bind(this, {blockAlso: true, closeForm: true})}
-                  style={{marginRight: 5}}>
+                  style={{marginRight: 5}}
+                  title={t('match.plys.tooltipSaveAndBlock')}
+                >
 
-                  <span className="fa-stack fa-sm">
-                    <Icon fa="fa fa-anchor fa-stack-2x" />
-                  </span>
+                  <Icon fa="fa fa-anchor" />
                 </button>
 
-                <button className="btn btn-default" onClick={this._saveFormation.bind(this, {blockAlso: false, closeForm: true})}>
-                  <span className="fa-stack fa-sm">
-                    <Icon fa="fa fa-floppy-o fa-stack-2x" />
-                  </span>
+                <button
+                  className="btn btn-default"
+                  onClick={this._saveFormation.bind(this, {blockAlso: false, closeForm: true})}
+                  title={t('match.plys.tooltipSave')}
+                >
+                  <Icon fa="fa fa-floppy-o" />
                 </button>
               </div>
             )}
@@ -273,7 +282,7 @@ export default class MatchesTable extends Component {
             <th>{t('common.date')}</th>
             <th className="hidden-xs">{t('common.frenoy')}</th>
             <th>{t('teamCalendar.match')}</th>
-            <th style={{width: 150}}>{this.props.editMode ? t('match.plys.blockMatchTitle') : t('teamCalendar.score')}</th>
+            <th>{this.props.editMode ? t('match.plys.blockMatchTitle') : t('teamCalendar.score')}</th>
           </tr>
         </thead>
         <tbody>

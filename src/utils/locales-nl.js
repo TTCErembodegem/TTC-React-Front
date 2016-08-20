@@ -162,8 +162,13 @@ export default {
         choiceCaptain: 'OPGESTELD',
         choicePlayers: 'Keuze spelers',
         blockMatchTitle: 'Opstelling',
+
         snackbarSaved: 'Opstelling bewaard',
-        snackbarBlocked: 'Bewaard en blokkering gewijzigd',
+        snackbarBlocked: 'Bewaard en geblokkeerd',
+
+        tooltipSaveAndBlock: 'Opstelling bewaren en match blokkeren',
+        tooltipSave: 'Opstelling bewaren ZONDER blokkeren',
+        tooltipOpenForm: 'Opstelling bewerken',
       },
       week: 'Week',
       todayMatches: 'vandaag',
