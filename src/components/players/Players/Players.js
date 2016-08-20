@@ -256,9 +256,9 @@ export default class Players extends Component {
                   </td>
                 ) : null}
                 <td className="hidden-xs">
-                  <PlayerCompetition comp="Vttl" player={ply} />
+                  <PlayerCompetition comp="Vttl" player={ply} t={this.context.t} />
                   {ply.sporta && ply.vttl ? <br /> : null}
-                  <PlayerCompetition comp="Sporta" player={ply} />
+                  <PlayerCompetition comp="Sporta" player={ply} t={this.context.t} />
                 </td>
                 <td className="hidden-xs">
                   {ply.style.name}

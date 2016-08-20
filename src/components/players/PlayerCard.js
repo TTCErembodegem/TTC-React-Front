@@ -29,9 +29,9 @@ export default class PlayerCard extends Component {
             <div style={{marginTop: 5}}>
               <strong>{this.context.t('common.competition')}</strong>
               <br />
-              <PlayerCompetition comp="Vttl" player={player} />
+              <PlayerCompetition comp="Vttl" player={player} t={this.context.t} />
               {player.vttl && player.sporta ? <br /> : null}
-              <PlayerCompetition comp="Sporta" player={player} />
+              <PlayerCompetition comp="Sporta" player={player} t={this.context.t} />
             </div>
           ) : null}
 
@@ -52,7 +52,7 @@ export default class PlayerCard extends Component {
 }
 
 
-export const PlayerCompetition = ({comp, player}) => {
+export const PlayerCompetition = ({comp, player, t}) => {
   const compDetails = player.getCompetition(comp);
   if (!compDetails.ranking) {
     return <div />;
@@ -62,7 +62,7 @@ export const PlayerCompetition = ({comp, player}) => {
   const isCaptain = team ? team.isCaptain(player) : false;
   return (
     <span>
-      {isCaptain ? <Icon fa="fa fa-star" color="#FFB00F" style={{marginRight: 5}} /> : null}
+      {isCaptain ? <Icon fa="fa fa-star" color="#FFB00F" style={{marginRight: 5}} title={t('player.teamCaptain')} /> : null}
       {comp} {team ? team.teamCode : null} <small>({compDetails.ranking})</small>
     </span>
   );

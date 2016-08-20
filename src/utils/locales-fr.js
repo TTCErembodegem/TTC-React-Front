@@ -106,6 +106,8 @@ export default {
       save: 'Sauver récolte',
     },
     player: {
+      teamCaptain: 'Kapitein',
+
       name: 'Nom',
       alias: 'Alias',
 

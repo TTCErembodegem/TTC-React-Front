@@ -106,6 +106,8 @@ export default {
       save: 'Bijsnijden opslaan',
     },
     player: {
+      teamCaptain: 'Kapitein',
+
       name: 'Naam',
       alias: 'Alias',
 
