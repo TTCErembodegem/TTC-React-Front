@@ -126,6 +126,7 @@ class AdminStateDisplayer extends Component {
 
     return (
       <div style={{padding: 5}}>
+        <a href="http://ttc-tst-webapp.azurewebsites.net/">Test site</a>
         <div>
           <Icon fa="fa fa-search" />
           &nbsp;
