@@ -226,8 +226,8 @@ export default class MatchesTable extends Component {
             ) : (
               <div className="pull-right">
                 <button
-                  className={'btn btn-default ' + (!match.block && this.state.playersEdit.size !== team.getTeamPlayerCount() ? 'disabled' : '')}
-                  onClick={this._saveFormation.bind(this, {blockAlso: true, closeForm: !match.block})}
+                  className={'btn btn-default ' + (this.state.playersEdit.size !== team.getTeamPlayerCount() ? 'disabled' : '')}
+                  onClick={this._saveFormation.bind(this, {blockAlso: true, closeForm: true})}
                   style={{marginRight: 5}}>
 
                   <span className="fa-stack fa-sm">

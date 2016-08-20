@@ -112,11 +112,12 @@ export function selectPlayer(matchId, playerId, status, statusNote = null) {
       matchPlayer.status = status;
     }
 
-    if (statusNote !== null) {
+    const isMyFormation = statusNote !== null;
+    if (isMyFormation) {
       matchPlayer.statusNote = statusNote;
     }
 
-    return http.post('/matches/TogglePlayer', matchPlayer)
+    return http.post('/matches/' + (isMyFormation ? 'SetMyFormation' : 'TogglePlayer'), matchPlayer)
       .then(function(data) {
         if (data) {
           dispatch(simpleLoaded(data));
