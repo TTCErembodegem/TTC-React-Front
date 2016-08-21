@@ -88,7 +88,7 @@ export function getLastOpponentMatches(teamId, opponent) {
   };
 }
 
-export function selectPlayer(matchId, playerId, status, statusNote = null) {
+export function selectPlayer(matchId, status, statusNote, playerId) {
   return dispatch => {
     const match = storeUtil.getMatch(matchId);
     const player = storeUtil.getPlayer(playerId);

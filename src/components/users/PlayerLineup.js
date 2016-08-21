@@ -36,7 +36,7 @@ export default class PlayerLinup extends Component {
   }
 
   _onChangePlaying(match, status, comment) {
-    this.props.selectPlayer(match.id, this.props.user.playerId, status, this.state.showCommentId ? this.state.comment : comment);
+    this.props.selectPlayer(match.id, status, this.state.showCommentId ? this.state.comment : comment, this.props.user.playerId);
     this.setState({showCommentId: false, comment: ''});
   }
 

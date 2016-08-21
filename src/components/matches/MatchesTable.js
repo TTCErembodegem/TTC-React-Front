@@ -96,6 +96,7 @@ export default class MatchesTable extends Component {
 
         <br />
         <PlayerAutoComplete
+          clearOnSelect
           selectPlayer={playerId => this._togglePlayer(playerId)}
           hintText={this.context.t('match.chooseOtherPlayer')}
         />

@@ -10,10 +10,6 @@ export default class PlayerStyleAutocomplete extends Component {
   }
 
   _onChange(text) {
-    // Is necessary in <PlayerAutoComplete> but not here?
-    // if (typeof text === 'object') {
-    //   text = text.text;
-    // }
     this.props.onChange(text);
   }
 

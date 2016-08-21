@@ -47,7 +47,8 @@ export default class SelectPlayersForm extends Component {
         {reservePlayers.length ? <PlayerAvatarList players={reservePlayers} match={this.props.match} selectPlayer={this.props.selectPlayer} /> : null}
         <Divider />
         <PlayerAutoComplete
-          selectPlayer={this.props.selectPlayer.bind(this, this.props.match.id)}
+          clearOnSelect
+          selectPlayer={this.props.selectPlayer.bind(this, this.props.match.id, this.props.match.block || 'Captain', null)}
           style={{marginLeft: 10}}
           hintText={this.context.t('match.chooseOtherPlayer')} />
       </div>
@@ -82,7 +83,7 @@ class PlayerAvatarList extends Component {
     );
   }
   _onPlayerSelect(playerId) {
-    this.props.selectPlayer(this.props.match.id, playerId, this.props.match.block || 'Captain');
+    this.props.selectPlayer(this.props.match.id, this.props.match.block || 'Captain', null, playerId);
   }
 }
 

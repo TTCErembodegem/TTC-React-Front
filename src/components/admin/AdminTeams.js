@@ -114,6 +114,7 @@ class AdminTeamPlayers extends Component {
 
           <div style={{width: 200}}>
             <PlayerAutoComplete
+              clearOnSelect
               selectPlayer={::this._onToggleTeamPlayer}
               fullWidth
               hintText="Selecteer speler" />
