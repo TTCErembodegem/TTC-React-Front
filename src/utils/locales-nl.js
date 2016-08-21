@@ -2,19 +2,36 @@
 export default {
   lang: 'nl',
   routes: {
-    players: '/spelers',
     login: '/login',
     forgotPassword: '/login/nieuw-paswoord',
     profile: '/profiel',
-    links: '/links',
+    profileTabs: {
+      main: '',
+      editDetails: 'wijzig-gegevens',
+      editPicture: 'wijzig-foto',
+      editAvatar: 'wijzig-avatar',
+      editPassword: 'wijzig-paswoord',
+      editHolidays: 'ploegopstelling',
+    },
+
+    players: '/spelers',
+    playerTabs: {
+      all: 'alle',
+      vttl: 'vttl',
+      sporta: 'sporta',
+      gallery: 'gallerij',
+    },
+
     matches: '/kalender',
-    match: '/match/:matchId',
     matchesToday: '/vandaag',
     matchesWeek: '/speelweek',
-    facts: '/weetjes',
-    teamsVttl: '/ploegen/vttl',
-    teamsSporta: '/ploegen/sporta',
+    match: '/match/:matchId',
+
+    teams: '/ploegen/:competition',
+
     admin: '/admin',
+    links: '/links',
+    facts: '/weetjes',
   },
   trans: {
     fullClubName: 'TTC Erembodegem',

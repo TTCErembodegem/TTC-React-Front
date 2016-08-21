@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes, { connect, withViewport } from '../../PropTypes.js';
+import PropTypes, { connect, withViewport, keyMirror } from '../../PropTypes.js';
 
 import { OwnClubId } from '../../../models/ClubModel.js';
 import * as matchActions from '../../../actions/matchActions.js';
@@ -22,16 +22,16 @@ import MatchReport from './MatchReport.js';
 import Scoresheet from './Scoresheet.js';
 import PlayersImageGallery from '../../players/PlayersImageGallery.js';
 
-const tabEventKeys = {
-  players: 1,
-  individualMatches: 2,
-  report: 3,
-  opponentClub: 4,
-  scoresheet: 5,
-  opponentsRanking: 6,
-  opponentsFormation: 7,
-  admin: 8,
-};
+const tabEventKeys = keyMirror({
+  players: '',
+  individualMatches: '',
+  report: '',
+  opponentClub: '',
+  scoresheet: '',
+  opponentsRanking: '',
+  opponentsFormation: '',
+  admin: '',
+});
 
 @withViewport
 @connect(state => {
@@ -48,16 +48,18 @@ export default class MatchCard extends Component {
     user: PropTypes.UserModel.isRequired,
     readonlyMatches: PropTypes.object.isRequired,
     viewport: PropTypes.viewport,
+    getLastOpponentMatches: PropTypes.func.isRequired,
+    setSetting: PropTypes.func.isRequired,
 
     match: PropTypes.MatchModel.isRequired,
-
     viewportWidthContainerCount: PropTypes.number.isRequired,
     big: PropTypes.bool,
     small: PropTypes.bool,
     isOpen: PropTypes.bool,
 
-    getLastOpponentMatches: PropTypes.func.isRequired,
-    setSetting: PropTypes.func.isRequired,
+    params: PropTypes.shape({
+      tabKey: PropTypes.string
+    }),
   }
   static defaultProps = {
     viewportWidthContainerCount: 1 // The amount of containers next to eachother that display a PlayersImageGallery
@@ -124,7 +126,7 @@ export default class MatchCard extends Component {
       <HeaderComponent {...this.props} backgroundColor="#fafafa" isOpen={this.props.isOpen} style={{margin: 50}} config={this.props.config}>
         <CardText expandable={true} style={{paddingTop: 0, paddingLeft: 5, paddingRight: 5}}>
           <TabbedContainer
-            openTabKey={tabEventKeys.players}
+            defaultTabKey={tabEventKeys.players}
             tabKeys={tabConfig}
             tabRenderer={::this._renderTabContent}
             onTabSelect={::this._onTabSelect} />

@@ -1,6 +1,5 @@
-import React, { PropTypes, Component } from 'react';
-import { contextTypes } from '../../utils/decorators/withContext.js';
-import withViewport from '../../utils/decorators/withViewport.js';
+import React, { Component } from 'react';
+import PropTypes, { withViewport, browserHistory } from '../PropTypes.js';
 
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
@@ -9,11 +8,14 @@ import Panel from 'react-bootstrap/lib/Panel';
 
 @withViewport
 export default class TabbedContainer extends Component {
-  static contextTypes = contextTypes;
+  static contextTypes = PropTypes.contextTypes;
   static propTypes = {
-    openTabKey: PropTypes.number,
+    defaultTabKey: PropTypes.string.isRequired,
+    params: PropTypes.shape({
+      tabKey: PropTypes.string
+    }),
     tabKeys: PropTypes.arrayOf(PropTypes.shape({
-      key: PropTypes.number.isRequired,
+      key: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
       label: PropTypes.string,
       show: PropTypes.bool,
@@ -24,8 +26,12 @@ export default class TabbedContainer extends Component {
     forceTabs: PropTypes.bool,
     widthTreshold: PropTypes.number,
     style: PropTypes.object,
+    route: PropTypes.shape({
+      base: PropTypes.string.isRequired,
+      subs: PropTypes.string
+    }),
 
-    viewport: PropTypes.object.isRequired,
+    viewport: PropTypes.viewport,
   }
   static defaultProps = {
     forceTabs: false,
@@ -34,9 +40,7 @@ export default class TabbedContainer extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      openTabKey: props.openTabKey
-    };
+    this.state = {openTabKey: props.defaultTabKey, forceClose: false};
   }
 
   _showAccordion() {
@@ -45,9 +49,10 @@ export default class TabbedContainer extends Component {
   }
 
   render() {
+    const openTabKey = this._getTabKey();
     if (this._showAccordion()) {
       return (
-        <PanelGroup activeKey={this.state.openTabKey} onSelect={::this._onTabSelect} accordion style={this.props.style}>
+        <PanelGroup activeKey={openTabKey} onSelect={::this._onTabSelect} accordion style={this.props.style}>
           {this.props.tabKeys.filter(tab => tab.show !== false).map(tab => this._renderNavItem(tab))}
         </PanelGroup>
       );
@@ -55,16 +60,15 @@ export default class TabbedContainer extends Component {
 
     return (
       <div style={this.props.style}>
-        <Nav bsStyle="tabs" activeKey={this.state.openTabKey} onSelect={::this._onTabSelect}>
+        <Nav bsStyle="tabs" activeKey={openTabKey} onSelect={::this._onTabSelect}>
           {this.props.tabKeys.filter(tab => tab.show !== false).map(tab => this._renderNavItem(tab))}
         </Nav>
         <div className="match-card-tab">
-          {this.props.tabRenderer(this.state.openTabKey)}
+          {this.props.tabRenderer(openTabKey)}
         </div>
       </div>
     );
   }
-
   _renderNavItem(tab) {
     if (!this._showAccordion()) {
       // Tabs
@@ -76,17 +80,42 @@ export default class TabbedContainer extends Component {
     }
 
     // Accordion
-    const header = <div>{tab.title} {tab.headerChildren}</div>;
+    const header = <div className="clickable">{tab.title} {tab.headerChildren}</div>;
     return (
-      <Panel header={header} eventKey={tab.key} className="match-card-panel clickable" onClick={this._onTabSelect.bind(this, tab.key)} key={tab.key}>
-        {this.props.tabRenderer(tab.key)}
+      <Panel header={header} eventKey={tab.key} className="match-card-panel" onClick={this._onTabSelect.bind(this, tab.key)} key={tab.key}>
+        {!this.state.forceClose ? this.props.tabRenderer(tab.key) : null}
       </Panel>
     );
   }
+
   _onTabSelect(eventKey) {
-    this.setState({openTabKey: eventKey});
+    if (this.props.route) {
+      if (this.props.route.subs) {
+        browserHistory.push(this.props.route.base + '/' + this.context.t.route(this.props.route.subs + '.' + eventKey));
+      } else {
+        browserHistory.push(this.props.route.base + '/' + eventKey);
+      }
+    }
+    const forceClose = this._showAccordion() && eventKey === this.state.openTabKey && !this.state.forceClose;
+    this.setState({openTabKey: eventKey, forceClose});
+
     if (this.props.onTabSelect) {
       this.props.onTabSelect(eventKey);
     }
+  }
+  _getTabKey() {
+    if (!this.props.route) {
+      return this.state.openTabKey;
+    }
+
+    // Translate from route
+    const tabKey = this.props.params ? this.props.params.tabKey : null;
+    if (!tabKey) {
+      return this.props.defaultTabKey;
+    }
+    if (!this.props.route.subs) {
+      return tabKey;
+    }
+    return this.context.t.reverseRoute(this.props.route.subs, tabKey);
   }
 }

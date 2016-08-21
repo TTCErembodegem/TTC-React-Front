@@ -16,9 +16,6 @@ import ButtonStack from '../controls/ButtonStack.js';
 import PlayersCardGallery from '../players/PlayersCardGallery.js';
 import MatchesTable from '../matches/MatchesTable.js';
 
-export const TeamsVttl = () => <Teams competition="Vttl" />;
-export const TeamsSporta = () => <Teams competition="Sporta" />;
-
 @connect(state => {
   return {
     config: state.config,
@@ -33,12 +30,16 @@ export const TeamsSporta = () => <Teams competition="Sporta" />;
 export default class Teams extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
-    competition: PropTypes.competition.isRequired,
     config: PropTypes.object.isRequired,
     user: PropTypes.UserModel.isRequired,
     matches: PropTypes.MatchModelList.isRequired,
     teams: PropTypes.TeamModelList.isRequired,
     viewport: PropTypes.viewport,
+
+    params: PropTypes.shape({
+      tabKey: PropTypes.string,
+      competition: PropTypes.oneOf(['vttl', 'sporta']).isRequired
+    }).isRequired,
   }
 
   constructor() {
@@ -50,18 +51,18 @@ export default class Teams extends Component {
     };
   }
 
+  _getCompetition() {
+    return this.props.params.competition[0].toUpperCase() + this.props.params.competition.substr(1);
+  }
   getDefaultTeam() {
-    var teamCode = 'A';
-    const teams = this.props.teams.filter(x => x.competition === this.props.competition);
+    const teams = this.props.teams.filter(x => x.competition === this._getCompetition());
     if (this.props.user.playerId) {
       let yourTeam = this.props.user.getTeams().find(team => team.competition);
       if (yourTeam) {
-        teamCode = yourTeam.teamCode;
+        return yourTeam.teamCode;
       }
     }
-
-    const team = teams.find(x => x.teamCode === teamCode);
-    return team ? team.id : undefined;
+    return 'A';
   }
 
   _renderOwnTeamPosition(team) {
@@ -78,8 +79,8 @@ export default class Teams extends Component {
     return <span className={cn('label label-as-badge ' + positionClassName)}>{ranking.position}</span>;
   }
 
-  _renderTabContent(teamId) {
-    const team = this.props.teams.find(t => t.id === teamId);
+  _renderTabContent(teamCode) {
+    const team = this.props.teams.find(t => t.teamCode === teamCode && t.competition === this._getCompetition());
     if (!team) {
       return null;
     }
@@ -156,9 +157,9 @@ export default class Teams extends Component {
   }
 
   render() {
-    const tabConfig = this.props.teams.filter(team => team.competition === this.props.competition).toArray().map(team => {
+    const tabConfig = this.props.teams.filter(team => team.competition === this._getCompetition()).toArray().map(team => {
       return {
-        key: team.id,
+        key: team.teamCode,
         title: team.renderOwnTeamTitle(),
         headerChildren: this._renderOwnTeamPosition(team),
       };
@@ -167,9 +168,11 @@ export default class Teams extends Component {
     return (
       <div style={{marginTop: 20, marginBottom: 20}}>
         <TabbedContainer
-          openTabKey={this.getDefaultTeam()}
+          params={this.props.params}
+          defaultTabKey={this.getDefaultTeam()}
           tabKeys={tabConfig}
           tabRenderer={::this._renderTabContent}
+          route={{base: this.context.t.route('teams', {competition: this.props.params.competition})}}
           widthTreshold={750} />
       </div>
     );

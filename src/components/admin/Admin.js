@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import PropTypes, { connect } from '../PropTypes.js';
+import PropTypes, { connect, keyMirror } from '../PropTypes.js';
 
 import TabbedContainer from '../controls/TabbedContainer.js';
 import AdminPlayers from './AdminPlayers.js';
 import AdminTeams from './AdminTeams.js';
 import AdminDev from './AdminDev.js';
 
-const tabEventKeys = {
-  players: 1,
-  teams: 2,
-  dev: 3
-};
+const tabEventKeys = keyMirror({
+  players: '',
+  teams: '',
+  dev: '',
+});
 
 @connect(state => {
   return {
@@ -32,8 +32,11 @@ export default class Admin extends Component {
     teams: PropTypes.TeamModelList.isRequired,
     players: PropTypes.PlayerModelList.isRequired,
     admin: PropTypes.shape({
-      players: PropTypes.object.isRequired,
+      players: PropTypes.object.isRequired, // = gestopte spelers
     }).isRequired,
+    params: PropTypes.shape({
+      tabKey: PropTypes.string
+    }),
   }
 
   _renderSection(eventKey) {
@@ -65,8 +68,10 @@ export default class Admin extends Component {
 
     return (
       <TabbedContainer
+        params={this.props.params}
         style={{marginTop: 10, marginBottom: 20}}
-        openTabKey={tabEventKeys.players}
+        defaultTabKey={tabEventKeys.players}
+        route={{base: this.context.t.route('admin')}}
         tabKeys={tabConfig}
         tabRenderer={::this._renderSection} />
     );

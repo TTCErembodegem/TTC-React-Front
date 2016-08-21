@@ -1,33 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes, { connect } from '../PropTypes.js';
+import { List, Map } from 'immutable';
+import _ from 'lodash';
 
-import TabbedContainer from '../controls/TabbedContainer.js';
+import ButtonStack from '../controls/ButtonStack.js';
 import Icon from '../controls/Icon.js';
 
-const tabEventKeys = {
-  matches: 1,
-  teams: 2,
-  clubs: 3,
-  config: 4,
-  user: 8,
-  readOnlyMatches: 5,
-  players: 7,
-  admin: 6,
-};
-
-
-@connect(state => {
-  return {
-    matches: state.matches,
-    teams: state.teams,
-    clubs: state.clubs,
-    config: state.config,
-    user: state.user,
-    readonlyMatches: state.readonlyMatches,
-    players: state.players,
-    admin: state.admin,
-  };
-})
+@connect(state => state)
 export default class AdminDev extends React.Component {
   static propTypes = {
     matches: PropTypes.MatchModelList.isRequired,
@@ -40,62 +19,46 @@ export default class AdminDev extends React.Component {
     admin: PropTypes.object.isRequired,
   }
 
+  constructor() {
+    super();
+    this.state = {filter: 'matches'};
+  }
+
   _renderSection(eventKey) {
-    switch (eventKey) {
-    case tabEventKeys.matches:
-      return <AdminStateDisplayer data={this.props.matches.toArray()} />;
-    case tabEventKeys.teams:
-      return <AdminStateDisplayer data={this.props.teams.toArray()} />;
-    case tabEventKeys.clubs:
-      return <AdminStateDisplayer data={this.props.clubs.toArray()} />;
-    case tabEventKeys.config:
-      return <AdminStateDisplayer data={[this.props.config.toJSON()]} />;
-    case tabEventKeys.user:
-      return <AdminStateDisplayer data={[this.props.user]} />;
-    case tabEventKeys.readOnlyMatches:
-      return <AdminStateDisplayer data={this.props.readonlyMatches.toArray()} />;
-    case tabEventKeys.players:
-      return <AdminStateDisplayer data={this.props.players.toArray()} />;
-    case tabEventKeys.admin:
-      // admin.players === inactive players
-      return <AdminStateDisplayer data={this.props.admin.players.toArray()} />;
+    var data = this.props[eventKey];
+    if (eventKey === 'admin') {
+      data = data.players; // admin.players === inactive players
+    }
+    if (List.isList(data)) {
+      return <AdminStateDisplayer data={data.toArray()} />;
+    } else if (Map.isMap(data)) {
+      return <AdminStateDisplayer data={data.toJSON()} />;
+    } else {
+      return <AdminStateDisplayer data={data} />;
     }
   }
 
   render() {
-    const tabConfig = [{
-      key: tabEventKeys.matches,
-      title: 'Matches'
-    }, {
-      key: tabEventKeys.teams,
-      title: 'Teams'
-    }, {
-      key: tabEventKeys.clubs,
-      title: 'Clubs'
-    }, {
-      key: tabEventKeys.config,
-      title: 'Config'
-    }, {
-      key: tabEventKeys.user,
-      title: 'User'
-    }, {
-      key: tabEventKeys.readOnlyMatches,
-      title: 'ReadOnlyMatches'
-    }, {
-      key: tabEventKeys.players,
-      title: 'Spelers'
-    }, {
-      key: tabEventKeys.admin,
-      title: 'Admin'
-    }];
+    var viewsConfig = [];
+    _.forOwn(this.props, (value, key) => {
+      if (key !== 'dispatch') {
+        viewsConfig.push({
+          key: key,
+          text: key
+        });
+      }
+    });
 
     return (
       <div style={{padding: 5}}>
-        <TabbedContainer
-          style={{marginTop: 10, marginBottom: 20}}
-          openTabKey={tabEventKeys.matches}
-          tabKeys={tabConfig}
-          tabRenderer={::this._renderSection} />
+        <div className="pull-right"><a href="http://ttc-tst-webapp.azurewebsites.net/">Goto test site</a></div>
+        <ButtonStack
+          config={viewsConfig}
+          small={false}
+          activeView={this.state.filter}
+          onClick={newFilter => this.setState({filter: newFilter})} />
+
+        {this._renderSection(this.state.filter)}
       </div>
     );
   }
@@ -103,7 +66,7 @@ export default class AdminDev extends React.Component {
 
 class AdminStateDisplayer extends Component {
   static propTypes = {
-    data: PropTypes.array.isRequired,
+    data: PropTypes.any.isRequired,
   }
   constructor(props) {
     super(props);
@@ -112,27 +75,32 @@ class AdminStateDisplayer extends Component {
 
   render() {
     var data = this.props.data;
-
-    if (this.state.filter)
-    {
-      data = data.filter(x => {
-        for (var name in x) {
-          if (x[name] == this.state.filter) {
+    if (this.state.filter) {
+      if (_.isArray(data)) {
+        data = data.filter(entry => {
+          for (let key in entry) {
+            if (typeof entry[key] === 'string') {
+              if (entry[key].toLowerCase().indexOf(this.state.filter) !== -1) {
+                return true;
+              }
+            }
+            if (entry[key] == this.state.filter) {
               return true;
-          };
-        }
-      });
+            }
+          }
+        });
+      }
     }
 
     return (
       <div style={{padding: 5}}>
-        <a href="http://ttc-tst-webapp.azurewebsites.net/">Test site</a>
         <div>
           <Icon fa="fa fa-search" />
           &nbsp;
-          <input type="text" width={150} onChange={e => this.setState({filter: e.target.value})} />
+          <input type="text" width={150} onChange={e => this.setState({filter: e.target.value.toLowerCase()})} />
+          {_.isArray(this.props.data) ? <span style={{marginLeft: 10}}>Records: {data.length}</span> : null}
         </div>
-        <pre style={{marginTop: 30}}>{JSON.stringify(data, null, 4)}</pre>
+        <pre style={{marginTop: 20}}>{JSON.stringify(data, null, 4)}</pre>
       </div>
     );
   }

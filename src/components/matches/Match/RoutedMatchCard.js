@@ -15,29 +15,29 @@ import { FullScreenSpinner } from '../../controls/Spinner.js';
 export default class RoutedMatchCard extends Component {
   static propTypes = {
     params: PropTypes.shape({
-      matchId: PropTypes.string.isRequired
+      matchId: PropTypes.string.isRequired,
+      tabKey: PropTypes.string,
     }),
     viewport: PropTypes.viewport,
     fetchMatch: PropTypes.func.isRequired,
   }
 
-  _setMatchId(props) {
+  _getMatch(props) {
     const matchId = parseInt(props.params.matchId, 10);
-    this.state = {
-      match: storeUtils.getMatch(matchId)
-    };
-    if (!this.state.match) {
+    const match = storeUtils.getMatch(matchId);
+    if (!match) {
       this.props.fetchMatch(this.props.params.matchId);
     }
+    return match;
   }
 
   componentWillReceiveProps(props) {
-    this._setMatchId(props);
+    this.setState({match: this._getMatch(props)});
   }
 
   constructor(props) {
     super(props);
-    this._setMatchId(props);
+    this.state = {match: this._getMatch(props)};
   }
 
   render() {
@@ -46,7 +46,7 @@ export default class RoutedMatchCard extends Component {
     }
     return (
       <div style={{marginBottom: 20, marginTop: 20, marginLeft: 5, marginRight: 5}}>
-        <MatchCard match={this.state.match} isOpen={true} width={this.props.viewport.width} routed={true} />
+        <MatchCard match={this.state.match} isOpen={true} width={this.props.viewport.width} routed={true} params={this.props.params} />
       </div>
     );
   }

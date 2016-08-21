@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes, { connect, withStyles, withViewport } from '../../PropTypes.js';
+import PropTypes, { connect, withStyles, withViewport, keyMirror } from '../../PropTypes.js';
 import cn from 'classnames';
 import moment from 'moment';
 import http from '../../../utils/httpClient.js';
@@ -14,12 +14,12 @@ import Telephone from '../../controls/Telephone.js';
 import { PlayerCompetition } from '../PlayerCard.js';
 import PlayersCardGallery from '../PlayersCardGallery.js';
 
-const tabEventKeys = {
-  all: 1,
-  vttl: 2,
-  sporta: 3,
-  gallery: 4,
-};
+const tabEventKeys = keyMirror({
+  all: '',
+  vttl: '',
+  sporta: '',
+  gallery: '',
+});
 
 @connect(state => {
   return {
@@ -34,15 +34,19 @@ const tabEventKeys = {
 export default class Players extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
-    config: PropTypes.object,
+    config: PropTypes.object.isRequired,
     players: PropTypes.PlayerModelList.isRequired,
     teams: PropTypes.TeamModelList.isRequired,
     user: PropTypes.UserModel.isRequired,
     viewport: PropTypes.viewport,
+
+    params: PropTypes.shape({
+      tabKey: PropTypes.string
+    }),
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {filter: ''};
   }
 
@@ -175,7 +179,7 @@ export default class Players extends Component {
   }
 
   render() {
-    const tabConfig = [{
+    const tabKeysConfig = [{
       key: tabEventKeys.all,
       title: this.context.t('players.all'),
     }, {
@@ -195,16 +199,18 @@ export default class Players extends Component {
           <a
             onClick={::this._downloadExcel}
             title={this.context.t('players.downloadExcel')}
-            className="clickable pull-right"
+            className="pull-right"
             style={{marginTop: 5}}>
             <Icon fa="fa fa-file-excel-o fa-2x" />
           </a>
         ) : null}
 
         <TabbedContainer
-          openTabKey={tabEventKeys.all}
-          tabKeys={tabConfig}
+          params={this.props.params}
+          defaultTabKey={tabEventKeys.all}
+          tabKeys={tabKeysConfig}
           tabRenderer={::this._renderTabContent}
+          route={{base: this.context.t.route('players'), subs: 'playerTabs'}}
           forceTabs />
       </div>
     );

@@ -1,10 +1,12 @@
 import { trans, routes, timeAgo } from './utils/locales-nl.js';
 
 var translate = function(key, params) {
+  var str;
   if (key.indexOf('.') === -1) {
-    return trans[key];
+    str = trans[key];
+  } else {
+    str = key.split('.').reduce((o, i) => o[i], trans);
   }
-  var str = key.split('.').reduce((o, i) => o[i], trans);
 
   if (str === undefined) {
     return key;
@@ -22,8 +24,24 @@ var translate = function(key, params) {
   return str;
 };
 
+translate.reverseRoute = function(baseRoute, translatedRoute) {
+  var result;
+  _.forOwn(routes[baseRoute], (value, key) => {
+    if (value === translatedRoute) {
+      result = key;
+    }
+  });
+  return result;
+};
+
 translate.route = function(routeName, params) {
-  var route = routes[routeName];
+  var route;
+  if (routeName.indexOf('.') === -1) {
+    route = routes[routeName];
+  } else {
+    route = routeName.split('.').reduce((o, i) => o[i], routes);
+  }
+
   if (!params) {
     return route;
   }

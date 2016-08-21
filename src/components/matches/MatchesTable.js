@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes, { connect, withViewport } from '../PropTypes.js';
-import { browserHistory } from 'react-router';
+import PropTypes, { connect, withViewport, browserHistory } from '../PropTypes.js';
 import { getPlayingStatusClass, getPlayingStatusColor } from '../../models/PlayerModel.js';
 import { util as storeUtil } from '../../store.js';
 

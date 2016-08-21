@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes, { connect } from '../PropTypes.js';
-import { browserHistory } from 'react-router';
+import PropTypes, { connect, browserHistory } from '../PropTypes.js';
 import moment from 'moment';
 import Icon from '../controls/Icon.js';
 import MatchesTable from './MatchesTable.js';

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes, { connect } from '../PropTypes.js';
+import PropTypes, { connect, keyMirror } from '../PropTypes.js';
 
 import { displayFormat } from '../controls/Telephone.js';
 import * as loginActions from '../../actions/userActions.js';
@@ -12,18 +12,17 @@ import ChangePlayerDetails from '../users/ChangePlayerDetails.js';
 import ProfilePhotoForm, { ProfilePhotoAvatarForm } from '../users/ProfilePhotoForm.js';
 import PlayerLineup from './PlayerLineup.js';
 
-const tabEventKeys = {
-  main: 1,
-  editDetails: 2,
-  editPicture: 3,
-  editAvatar: 4,
-  editPassword: 5,
-  editHolidays: 6,
-};
+const tabEventKeys = keyMirror({
+  main: '',
+  editDetails: '',
+  editPicture: '',
+  editAvatar: '',
+  editPassword: '',
+  editHolidays: '',
+});
 
 @connect(state => {
   return {
-    //config: state.config,
     user: state.user,
   };
 }, loginActions)
@@ -32,6 +31,9 @@ export default class Profile extends Component {
   static propTypes = {
     user: PropTypes.UserModel.isRequired,
     logout: PropTypes.func.isRequired,
+    params: PropTypes.shape({
+      tabKey: PropTypes.string
+    }),
   }
 
   constructor(props) {
@@ -85,8 +87,10 @@ export default class Profile extends Component {
     return (
       <div style={{marginTop: 15, marginBottom: 20}}>
         <TabbedContainer
-          openTabKey={tabEventKeys.main}
+          params={this.props.params}
+          defaultTabKey={tabEventKeys.main}
           tabKeys={tabConfig}
+          route={{base: this.context.t.route('profile'), subs: 'profileTabs'}}
           tabRenderer={::this._renderTabContent} />
       </div>
     );

@@ -33,6 +33,8 @@ export default Object.assign({}, ReactPropTypes, {
 });
 
 export { connect } from 'react-redux';
+export { browserHistory } from 'react-router';
+export keyMirror from 'fbjs/lib/keyMirror';
 
 export withViewport from '../utils/decorators/withViewport.js';
 export withContext from '../utils/decorators/withContext.js';

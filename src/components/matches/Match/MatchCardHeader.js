@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from '../../PropTypes.js';
-import { browserHistory } from 'react-router';
+import PropTypes, { browserHistory } from '../../PropTypes.js';
 import moment from 'moment';
 
 import FavoriteMatch from '../FavoriteMatch.js';
