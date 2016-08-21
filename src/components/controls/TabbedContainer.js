@@ -3,7 +3,7 @@ import PropTypes, { withViewport, browserHistory } from '../PropTypes.js';
 
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
-import PanelGroup from 'react-bootstrap/lib/PanelGroup';
+import Accordion from 'react-bootstrap/lib/Accordion';
 import Panel from 'react-bootstrap/lib/Panel';
 
 @withViewport
@@ -51,17 +51,19 @@ export default class TabbedContainer extends Component {
   render() {
     const openTabKey = this._getTabKey();
     if (this._showAccordion()) {
+      // Accordion
       return (
-        <PanelGroup activeKey={openTabKey} onSelect={::this._onTabSelect} accordion style={this.props.style}>
-          {this.props.tabKeys.filter(tab => tab.show !== false).map(tab => this._renderNavItem(tab))}
-        </PanelGroup>
+        <Accordion defaultActiveKey={openTabKey} style={this.props.style}>
+          {this.props.tabKeys.filter(tab => tab.show !== false).map(tab => this._renderTabHeader(tab))}
+        </Accordion>
       );
     }
 
+    // Tabs
     return (
       <div style={this.props.style}>
         <Nav bsStyle="tabs" activeKey={openTabKey} onSelect={::this._onTabSelect}>
-          {this.props.tabKeys.filter(tab => tab.show !== false).map(tab => this._renderNavItem(tab))}
+          {this.props.tabKeys.filter(tab => tab.show !== false).map(tab => this._renderTabHeader(tab))}
         </Nav>
         <div className="match-card-tab">
           {this.props.tabRenderer(openTabKey)}
@@ -69,7 +71,7 @@ export default class TabbedContainer extends Component {
       </div>
     );
   }
-  _renderNavItem(tab) {
+  _renderTabHeader(tab) {
     if (!this._showAccordion()) {
       // Tabs
       return (
@@ -80,10 +82,15 @@ export default class TabbedContainer extends Component {
     }
 
     // Accordion
-    const header = <div className="clickable">{tab.title} {tab.headerChildren}</div>;
+    const header = (
+      <div className="clickable" onClick={this._onTabSelect.bind(this, tab.key)}>
+        {tab.title} {tab.headerChildren}
+      </div>
+    );
+
     return (
-      <Panel header={header} eventKey={tab.key} className="match-card-panel" onClick={this._onTabSelect.bind(this, tab.key)} key={tab.key}>
-        {!this.state.forceClose ? this.props.tabRenderer(tab.key) : null}
+      <Panel header={header} eventKey={tab.key} className="match-card-panel" key={tab.key}>
+        {this.props.tabRenderer(tab.key)}
       </Panel>
     );
   }
