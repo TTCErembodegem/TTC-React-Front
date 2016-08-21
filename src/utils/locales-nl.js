@@ -246,6 +246,7 @@ export default {
       vttlovl: 'VTTL Oost-Vlaanderen',
       sporta: 'Sporta',
       ittf: 'ITTF',
+      ettu: 'ETTU',
       vttlResults: 'Resultaten VTTL',
       sportaResults: 'Resultaten Sporta',
       varia: 'Varia',
