@@ -29,9 +29,9 @@ class TeamFrenoyModel {
       }
     } else if (this.teamCompetition === 'Sporta') {
       if (type === 'results') {
-        return `http://tafeltennis.sporcrea.be/competitie/index.php?menu=4&season=${season}&province=4&club_id=37&perteam=1&div_id=${linkId}`;
+        return `http://ttonline.sporta.be/competitie/index.php?menu=4&season=${season}&province=4&club_id=37&perteam=1&div_id=${linkId}`;
       } else if (type === 'ranking') {
-        return `http://tafeltennis.sporcrea.be/competitie/index.php?menu=5&season=${season}&province=4&club_id=37&perteam=1&div_id=${linkId}`;
+        return `http://ttonline.sporta.be/competitie/index.php?menu=5&season=${season}&province=4&club_id=37&perteam=1&div_id=${linkId}`;
       }
     }
   }

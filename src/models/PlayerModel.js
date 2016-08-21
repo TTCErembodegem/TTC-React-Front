@@ -65,7 +65,7 @@ export function createFrenoyLink(comp) {
   if (comp.competition === 'Vttl') {
     return 'http://competitie.vttl.be/index.php?menu=6&result=1&sel=' + comp.frenoyLink;
   } else {
-    return 'http://tafeltennis.sporcrea.be/competitie/index.php?menu=6&result=1&sel=' + comp.frenoyLink;
+    return 'http://ttonline.sporta.be/competitie/index.php?menu=6&result=1&sel=' + comp.frenoyLink;
   }
 }
 
@@ -74,7 +74,7 @@ export function createFrenoyLinkByUniqueId(comp, uniqueId) {
   if (comp === 'Vttl') {
     return 'http://competitie.vttl.be/' + uniqueId;
   } else {
-    return 'http://tafeltennis.sporcrea.be/competitie/' + ('000000' + uniqueId).slice(-6);
+    return 'http://ttonline.sporta.be/competitie/' + ('000000' + uniqueId).slice(-6);
   }
 }
 
