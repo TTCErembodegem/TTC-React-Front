@@ -174,9 +174,7 @@ export default class Intro extends Component {
             </Col>
             <Col style={{marginTop: 20}}>
               <Paper style={topSponsorsOnBottomPaperStyle}>
-                <a href="http://www.doopsuikersymphony.be/" target="_blank">
-                  <img style={{height: 100, width: 200, marginLeft: -5}} src="/img/sponsors/pongit.jpg" />
-                </a>
+                <img style={{height: 100, width: 200, marginLeft: -5}} src="/img/sponsors/pongit.jpg" />
               </Paper>
             </Col>
             <Col style={{marginTop: 20}}>
