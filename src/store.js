@@ -20,6 +20,11 @@ if (DEBUG) {
   )(createStore);
 }
 
+// let store = createStore(reducer, initialState, compose(
+//   applyMiddleware(...middleware),
+//   window.devToolsExtension ? window.devToolsExtension() : f => f
+// ));
+
 const store = finalCreateStore(rootReducer);
 
 if (module.hot) {
