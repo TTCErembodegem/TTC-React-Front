@@ -248,6 +248,7 @@ export default {
       vttlovl: 'VTTL flandre orientale',
       sporta: 'Sporta',
       ittf: 'ITTF',
+      ettu: 'ETTU',
       vttlResults: 'Résultats VTTL',
       sportaResults: 'Résultats Sporta',
       varia: 'Varia',

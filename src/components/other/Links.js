@@ -25,6 +25,9 @@ export default class Links extends Component {
               <td><a href="http://www.ittf.com/" target="_blank">{this.context.t('links.ittf')}</a></td>
             </tr>
             <tr>
+              <td><a href="http://www.ettu.org/" target="_blank">{this.context.t('links.ettu')}</a></td>
+            </tr>
+            <tr>
               <td><a href="http://competitie.vttl.be/index.php?menu=0" target="_blank">{this.context.t('links.vttlResults')}</a></td>
             </tr>
             <tr>
