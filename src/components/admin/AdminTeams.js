@@ -81,6 +81,7 @@ class AdminTeamPlayers extends Component {
   }
   _onToggleTeamPlayer(playerId) {
     this.props.toggleTeamPlayer(playerId, this.state.role);
+    this.setState({role: 'Standard'});
   }
 
   _renderPlayerSubtitle(team, ply) {
@@ -111,7 +112,7 @@ class AdminTeamPlayers extends Component {
             {_.toArray(teamPlayerType).map(role => <MenuItem key={role} value={role} primaryText={role} />)}
           </SelectField>
 
-          <div style={{width: 150}}>
+          <div style={{width: 200}}>
             <PlayerAutoComplete
               selectPlayer={::this._onToggleTeamPlayer}
               fullWidth
