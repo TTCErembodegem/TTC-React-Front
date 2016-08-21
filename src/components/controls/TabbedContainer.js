@@ -3,7 +3,7 @@ import PropTypes, { withViewport, browserHistory } from '../PropTypes.js';
 
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
-import Accordion from 'react-bootstrap/lib/Accordion';
+import PanelGroup from 'react-bootstrap/lib/PanelGroup';
 import Panel from 'react-bootstrap/lib/Panel';
 
 @withViewport
@@ -53,9 +53,9 @@ export default class TabbedContainer extends Component {
     if (this._showAccordion()) {
       // Accordion
       return (
-        <Accordion defaultActiveKey={openTabKey} style={this.props.style}>
+        <PanelGroup activeKey={!this.state.forceClose ? openTabKey : null} style={this.props.style}>
           {this.props.tabKeys.filter(tab => tab.show !== false).map(tab => this._renderTabHeader(tab))}
-        </Accordion>
+        </PanelGroup>
       );
     }
 
@@ -87,9 +87,13 @@ export default class TabbedContainer extends Component {
         {tab.title} {tab.headerChildren}
       </div>
     );
-
     return (
-      <Panel header={header} eventKey={tab.key} className="match-card-panel" key={tab.key}>
+      <Panel collapsible expanded={this.state.openTabKey === tab.key && !this.state.forceClose}
+        header={header}
+        eventKey={tab.key}
+        className="match-card-panel"
+        key={tab.key}
+      >
         {this.props.tabRenderer(tab.key)}
       </Panel>
     );
