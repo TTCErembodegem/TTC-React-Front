@@ -2,7 +2,7 @@ import React from 'react';
 import { Router, Route, browserHistory } from 'react-router';
 
 import App from './components/App';
-import Players from './components/players/Players';
+import Players from './components/players/Players.js';
 import Login from './components/users/Login.js';
 import ForgotPassword from './components/users/ForgotPassword.js';
 import Profile from './components/users/Profile.js';

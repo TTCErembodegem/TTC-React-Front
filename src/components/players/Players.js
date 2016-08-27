@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
-import PropTypes, { connect, withStyles, withViewport, keyMirror } from '../../PropTypes.js';
+import PropTypes, { connect, withViewport, keyMirror } from '../PropTypes.js';
 import cn from 'classnames';
 import moment from 'moment';
-import http from '../../../utils/httpClient.js';
-import { createFrenoyLink } from '../../../models/PlayerModel.js';
+import http from '../../utils/httpClient.js';
+import { createFrenoyLink } from '../../models/PlayerModel.js';
 
 import Table from 'react-bootstrap/lib/Table';
 import TextField from 'material-ui/TextField';
 
-import Icon from '../../controls/Icon.js';
-import TabbedContainer from '../../controls/TabbedContainer.js';
-import Telephone from '../../controls/Telephone.js';
-import { PlayerCompetition } from '../PlayerCard.js';
-import PlayersCardGallery from '../PlayersCardGallery.js';
+import Icon from '../controls/Icon.js';
+import TabbedContainer from '../controls/TabbedContainer.js';
+import Telephone from '../controls/Telephone.js';
+import { PlayerCompetition } from './PlayerCard.js';
+import PlayersCardGallery from './PlayersCardGallery.js';
 
 const tabEventKeys = keyMirror({
   all: '',
@@ -29,7 +29,6 @@ const tabEventKeys = keyMirror({
     user: state.user,
   };
 })
-@withStyles(require('./Players.css'))
 @withViewport
 export default class Players extends Component {
   static contextTypes = PropTypes.contextTypes;
@@ -62,9 +61,13 @@ export default class Players extends Component {
     });
   }
 
-  _renderToolbar() {
+  _renderToolbar(activeTab) {
+    var marginLeft = 5;
+    if (activeTab === tabEventKeys.gallery) {
+      marginLeft = this.props.viewport.width > 450 ? 25 : 10;
+    }
     return (
-      <div style={{marginRight: 5, marginLeft: 5}}>
+      <div style={{marginRight: 5, marginLeft: marginLeft}}>
         <TextField
           hintText={this.context.t('players.search')}
           onChange={e => this.setState({filter: e.target.value.toLowerCase()})}
@@ -90,7 +93,7 @@ export default class Players extends Component {
     }
     return (
       <div>
-        <div>{this._renderToolbar()}</div>
+        <div>{this._renderToolbar(tabKey)}</div>
         {tabContent}
       </div>
     );
