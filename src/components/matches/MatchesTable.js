@@ -80,6 +80,7 @@ export default class MatchesTable extends Component {
         <h4>{this.context.t('match.plys.choicePlayers')}</h4>
         {this.state.players.map(plyInfo => {
           const matchPlayer = plyInfo.matchPlayer;
+          const isPicked = this.state.playersEdit.find(x => x.id === plyInfo.id);
           return (
             <button
               key={plyInfo.player.id + matchPlayer.status}
@@ -89,7 +90,7 @@ export default class MatchesTable extends Component {
               onClick={this._togglePlayer.bind(this, plyInfo.player.id)}>
               {matchPlayer.statusNote ? <Icon fa="fa fa-comment-o" style={{marginRight: 5, marginLeft: 0}} /> : null}
               {plyInfo.player.alias}
-              {this.state.playersEdit.find(x => x.id === plyInfo.id) ? <Icon fa="fa fa-thumbs-o-up" style={{marginRight: 0, marginLeft: 5}} /> : null}
+              <Icon fa="fa fa-thumbs-o-up" style={{marginRight: 0, marginLeft: 5, visibility: isPicked ? '' : 'hidden'}} />
             </button>
           );
         })}
