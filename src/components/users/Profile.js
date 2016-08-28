@@ -54,7 +54,8 @@ export default class Profile extends Component {
     case tabEventKeys.editPassword:
       return <ChangePassword />;
     case tabEventKeys.editHolidays:
-      return <PlayerLineup user={this.props.user} />;
+      let user = this.props.user;
+      return <PlayerLineup teams={user.getTeams()} playerId={user.playerId} />
     }
   }
 

@@ -21,8 +21,10 @@ export default class PlayerLinup extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     matches: PropTypes.MatchModelList.isRequired,
-    user: PropTypes.UserModel.isRequired,
     selectPlayer: PropTypes.func.isRequired,
+
+    playerId: PropTypes.number.isRequired,
+    teams: PropTypes.arrayOf(PropTypes.TeamModel.isRequired).isRequired,
   }
 
   constructor(props) {
@@ -36,15 +38,13 @@ export default class PlayerLinup extends Component {
   }
 
   _onChangePlaying(match, status, comment) {
-    this.props.selectPlayer(match.id, status, this.state.showCommentId ? this.state.comment : comment, this.props.user.playerId);
+    this.props.selectPlayer(match.id, status, this.state.showCommentId ? this.state.comment : (comment || ''), this.props.playerId);
     this.setState({showCommentId: false, comment: ''});
   }
 
   render() {
     const t = this.context.t;
-
-    const userTeams = this.props.user.getTeams();
-    var teams = userTeams;
+    var teams = this.props.teams;
     if (this.state.filter) {
       teams = teams.filter(x => x.competition === this.state.filter);
     }
@@ -64,7 +64,7 @@ export default class PlayerLinup extends Component {
 
     return (
       <div>
-        {userTeams.length > 1 ? (
+        {this.props.teams.length > 1 ? (
           <div className="btn-group" style={{padding: 5}}>
             {[allText, 'Vttl', 'Sporta'].map(button => (
               <button
@@ -88,7 +88,7 @@ export default class PlayerLinup extends Component {
           </thead>
           <tbody>
           {matches.map(match => {
-            const matchPlayer = match.plays(this.props.user.playerId);
+            const matchPlayer = match.plays(this.props.playerId);
             const statusNote = matchPlayer ? matchPlayer.statusNote : '';
 
             const getOnChangePlaying = status => this._onChangePlaying.bind(this, match, status, statusNote);

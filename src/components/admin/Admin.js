@@ -5,10 +5,12 @@ import TabbedContainer from '../controls/TabbedContainer.js';
 import AdminPlayers from './AdminPlayers.js';
 import AdminTeams from './AdminTeams.js';
 import AdminDev from './AdminDev.js';
+import AdminPlayerLineup from './AdminPlayerLineup.js';
 
 const tabEventKeys = keyMirror({
   players: '',
   teams: '',
+  formation: '',
   dev: '',
 });
 
@@ -45,6 +47,8 @@ export default class Admin extends Component {
       return <AdminTeams teams={this.props.teams} />;
     case tabEventKeys.players:
       return <AdminPlayers players={this.props.players} recreantAndQuitters={this.props.admin.players} />;
+    case tabEventKeys.formation:
+      return <AdminPlayerLineup />;
     case tabEventKeys.dev:
       return <AdminDev />;
     }
@@ -61,6 +65,9 @@ export default class Admin extends Component {
     }, {
       key: tabEventKeys.teams,
       title: 'Teams',
+    }, {
+      key: tabEventKeys.formation,
+      title: 'Opstellingen',
     }, {
       key: tabEventKeys.dev,
       title: 'Dev',

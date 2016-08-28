@@ -32,34 +32,25 @@ export default class AdminTeams extends React.Component {
     this.state = {filter: 'Vttl'};
   }
 
-  _setDefaultForm() {
-    this.setState({filter: 'Vttl'});
-  }
-
   _toggleTeamPlayer(teamId, playerId, role) {
     this.props.toggleTeamPlayer(teamId, playerId, role);
   }
 
   render() {
-    switch (this.state.filter) {
-    case 'Vttl':
-    case 'Sporta':
-    default:
-      return (
-        <div>
-          <AdminTeamsToolbar onFilterChange={newFilter => this.setState({filter: newFilter})} />
-          {this.props.teams.filter(team => team.competition === this.state.filter).sort((a, b) => a.teamCode - b.teamCode).map(team => (
-            <AdminTeamPlayers
-              key={team.id}
-              team={team}
-              toggleTeamPlayer={this._toggleTeamPlayer.bind(this, team.id)}
-              viewport={this.props.viewport}
-              user={this.props.user}
-              onFrenoySync={this.props.frenoyTeamSync} />
-          ))}
-        </div>
-      );
-    }
+    return (
+      <div>
+        <AdminTeamsToolbar onFilterChange={newFilter => this.setState({filter: newFilter})} />
+        {this.props.teams.filter(team => team.competition === this.state.filter).sort((a, b) => a.teamCode - b.teamCode).map(team => (
+          <AdminTeamPlayers
+            key={team.id}
+            team={team}
+            toggleTeamPlayer={this._toggleTeamPlayer.bind(this, team.id)}
+            viewport={this.props.viewport}
+            user={this.props.user}
+            onFrenoySync={this.props.frenoyTeamSync} />
+        ))}
+      </div>
+    );
   }
 }
 
