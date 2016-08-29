@@ -2,6 +2,7 @@ import Promise from 'bluebird';
 import request from 'superagent-bluebird-promise';
 import querystring from 'querystring';
 import assert from 'assert';
+import moment from 'moment';
 // import { util as storeUtil } from '../store.js';
 
 const LogRequestTimes = false;
@@ -126,4 +127,24 @@ const HttpClient = {
   })
 };
 
+
 export default HttpClient;
+
+
+HttpClient.download.playersExcel = function(fileName) {
+  return HttpClient.download('/players/ExcelExport').then(res => {
+    var link = document.createElement('a');
+    link.download = fileName + '_' + moment().format('YYYY-MM-DD') + '.xlsx';
+    link.href = 'data:application/octet-stream;base64,' + res.body;
+    link.click();
+  })
+}
+
+HttpClient.download.teamsExcel = function(fileName) {
+  return HttpClient.download('/teams/ExcelExport').then(res => {
+    var link = document.createElement('a');
+    link.download = fileName + '_' + moment().format('YYYY-MM-DD') + '.xlsx';
+    link.href = 'data:application/octet-stream;base64,' + res.body;
+    link.click();
+  })
+}

@@ -174,7 +174,7 @@ export default {
       gallery: 'Gallerij',
 
       downloadExcel: 'Excel export',
-      downloadExcelFileName: 'Spelerslijst_${}',
+      downloadExcelFileName: 'Spelerslijst',
     },
     match: {
       plys: {
@@ -280,6 +280,7 @@ export default {
       ttactua: 'Tafeltennisactua',
     },
     teamCalendar: {
+      downloadExcelFileName: 'Opstellingen',
       match: 'Wedstrijd',
       score: 'Score',
       position: 'Plaats',

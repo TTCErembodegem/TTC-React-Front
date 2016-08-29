@@ -3,6 +3,7 @@ import PropTypes, { connect, withViewport } from '../PropTypes.js';
 import moment from 'moment';
 import cn from 'classnames';
 import Immutable from 'immutable';
+import http from '../../utils/httpClient.js';
 
 import TabbedContainer from '../controls/TabbedContainer.js';
 import Table from 'react-bootstrap/lib/Table';
@@ -65,6 +66,18 @@ export default class Teams extends Component {
     return 'A';
   }
 
+  _downloadExcel() {
+    if (this.state.isDownloading) {
+      return;
+    }
+    this.setState({isDownloading: true});
+    http.download.teamsExcel(this.context.t('teamCalendar.downloadExcelFileName'))
+      .catch(err => {
+        console.error('err', err);
+      })
+      .then(() => this.setState({isDownloading: false}));
+  }
+
   _renderOwnTeamPosition(team) {
     var positionClassName;
     if (team.isTopper()) {
@@ -110,6 +123,12 @@ export default class Teams extends Component {
           {this.state.view === 'matches' && this.props.user.canEditMatchesOrIsCaptain() ? (
             <button onClick={() => this.setState({editMode: !this.state.editMode})} className="btn btn-default pull-right">
               <Icon fa="fa fa-pencil-square-o" />
+            </button>
+          ) : null}
+
+          {this.props.user.playerId ? (
+            <button onClick={::this._downloadExcel} className="btn btn-default pull-right">
+              <Icon fa={this.state.isDownloading ? 'fa fa-spinner fa-pulse' : 'fa fa-file-excel-o'} />
             </button>
           ) : null}
 

@@ -50,15 +50,16 @@ export default class Players extends Component {
   }
 
   _downloadExcel() {
-    http.download('/players/ExcelExport').then(res => {
-      var link = document.createElement('a');
-      link.download = this.context.t('players.downloadExcelFileName', moment().format('YYYY-MM-DD')) + '.xlsx';
-      link.href = 'data:application/octet-stream;base64,' + res.body;
-      link.click();
-    })
-    .catch(err => {
-      console.error('err', err);
-    });
+    if (this.state.isDownloading) {
+      return;
+    }
+    this.setState({isDownloading: true});
+    http.download.playersExcel(this.context.t('players.downloadExcelFileName'))
+      .catch(err => {
+        console.error('err', err);
+      })
+      .delay(2000)
+      .then(() => this.setState({isDownloading: false}));
   }
 
   _renderToolbar(activeTab) {
@@ -202,9 +203,9 @@ export default class Players extends Component {
           <a
             onClick={::this._downloadExcel}
             title={this.context.t('players.downloadExcel')}
-            className="pull-right"
+            className="pull-right clickable"
             style={{marginTop: 5}}>
-            <Icon fa="fa fa-file-excel-o fa-2x" />
+            <Icon fa={this.state.isDownloading ? 'fa fa-spinner fa-pulse fa-2x' : 'fa fa-file-excel-o fa-2x'} />
           </a>
         ) : null}
 
