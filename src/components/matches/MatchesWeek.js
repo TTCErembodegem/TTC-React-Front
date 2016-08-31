@@ -17,6 +17,7 @@ export default class MatchesWeek extends Component {
     this.state = {
       currentWeek: 1,
       lastWeek: 22,
+      editMode: false,
     };
   }
 
@@ -44,6 +45,10 @@ export default class MatchesWeek extends Component {
 
     const matches = this.props.matches.filter(match => match.week === this.state.currentWeek);
     const selectedWeek = matches.first().date.clone();
+
+    //<button className="btn btn-default">
+    //  <Icon fa="fa fa-envelope-o" onClick={() => console.log('emailing opstelling...')} />
+    //</button>
     return (
       <div>
         <h3 style={{textAlign: 'center'}}>
@@ -54,29 +59,28 @@ export default class MatchesWeek extends Component {
           {this.state.currentWeek}
           :&nbsp;
           {selectedWeek.startOf('week').format('D/M')}
-          &nbsp;-&nbsp;
+            &nbsp;-&nbsp;
           {selectedWeek.endOf('week').format('D/M')}
           {this.state.currentWeek < this.state.lastWeek ? (
             <Icon fa="fa fa-arrow-right" style={{marginLeft: 10}} onClick={::this._onChangeWeek.bind(this, 1)} />
           ) : null}
         </h3>
 
-        {false && this.props.user.isAdmin() ? (
+        {this.props.user.canManageTeams() ? (
           <span className="pull-right">
-            <button className="btn btn-default" style={{marginRight: 5}}>WEEK BLOKKEREN</button>
-            <button className="btn btn-default">
-              <Icon fa="fa fa-envelope-o" onClick={() => console.log('emailing opstelling...')} />
+            <button onClick={() => this.setState({editMode: !this.state.editMode})} className="btn btn-default">
+              <Icon fa="fa fa-pencil-square-o" />
             </button>
           </span>
         ) : null}
 
         <h4><strong>Vttl</strong></h4>
-        <MatchesTable matches={matches.filter(x => x.competition === 'Vttl').sort((a, b) => a.date - b.date)} user={this.props.user} />
+        <MatchesTable editMode={this.state.editMode} matches={matches.filter(x => x.competition === 'Vttl').sort((a, b) => a.date - b.date)} user={this.props.user} />
 
         <hr />
 
         <h4><strong>Sporta</strong></h4>
-        <MatchesTable matches={matches.filter(x => x.competition === 'Sporta').sort((a, b) => a.date - b.date)} user={this.props.user} />
+        <MatchesTable editMode={this.state.editMode} matches={matches.filter(x => x.competition === 'Sporta').sort((a, b) => a.date - b.date)} user={this.props.user} />
       </div>
     );
   }
