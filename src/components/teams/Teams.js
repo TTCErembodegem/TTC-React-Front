@@ -10,7 +10,7 @@ import Table from 'react-bootstrap/lib/Table';
 
 import { OwnClubId } from '../../models/ClubModel.js';
 import { util as storeUtil } from '../../store.js';
-import * as matchActions from '../../actions/matchActions.js';
+import { editMatchPlayers } from '../../actions/matchActions.js';
 
 import Icon from '../controls/Icon.js';
 import ButtonStack from '../controls/ButtonStack.js';
@@ -26,7 +26,7 @@ import MatchesTable from '../matches/MatchesTable.js';
     matches: state.matches,
     teams: state.teams,
   };
-}, matchActions)
+}, {editMatchPlayers})
 @withViewport
 export default class Teams extends Component {
   static contextTypes = PropTypes.contextTypes;
@@ -36,6 +36,7 @@ export default class Teams extends Component {
     matches: PropTypes.MatchModelList.isRequired,
     teams: PropTypes.TeamModelList.isRequired,
     viewport: PropTypes.viewport,
+    editMatchPlayers: PropTypes.func.isRequired,
 
     params: PropTypes.shape({
       tabKey: PropTypes.string,
@@ -43,13 +44,31 @@ export default class Teams extends Component {
     }).isRequired,
   }
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       view: 'matches',
       matchesFilter: moment().month() >= 7 ? 'first' : 'last',
       editMode: false,
+      tablePlayers: this._getAlreadyPicked(props),
+      tableMatches: [],
     };
+  }
+  componentWillReceiveProps(nextProps) {
+    this.setState({tablePlayers: this._getAlreadyPicked(nextProps)});
+  }
+  _getAlreadyPicked(props) {
+    if (props.user.canEditMatchesOrIsCaptain()) {
+      var alreadyPicked = [];
+      props.matches.forEach(match => {
+        const team = match.getTeam();
+        const formation = match.getPlayerFormation(this._getPlayerStatus());
+        const matchPicked = formation.map(frm => Object.assign({}, frm, {matchId: match.id})).toArray();
+        Array.prototype.push.apply(alreadyPicked, matchPicked);
+      });
+      return alreadyPicked;
+    }
+    return [];
   }
 
   _getCompetition() {
@@ -98,7 +117,7 @@ export default class Teams extends Component {
       return null;
     }
 
-    const viewsConfig = [/*{
+    var viewsConfig = [/*{
       key: 'main',
       text: this.context.t('teamCalendar.viewMain'),
     }, */{
@@ -111,19 +130,33 @@ export default class Teams extends Component {
       key: 'players',
       text: this.context.t('match.tabs.players')
     }];
+    if (this.props.user.playerId) {
+      viewsConfig.splice(1, 0, {
+        key: 'matchesTable',
+        text: this.context.t('teamCalendar.downloadExcelFileName')
+      });
+    }
+
     return (
       <div>
         <div className="btn-toolbar" style={{padding: 10}}>
           <ButtonStack
             config={viewsConfig}
-            small={this.props.viewport.width < 550}
+            small={this.props.viewport.width < 700}
             activeView={this.state.view}
             onClick={view => this.setState({view})} />
 
-          {this.state.view === 'matches' && this.props.user.canEditMatchesOrIsCaptain() ? (
-            <button onClick={() => this.setState({editMode: !this.state.editMode})} className="btn btn-default pull-right">
-              <Icon fa="fa fa-pencil-square-o" />
-            </button>
+          {this.state.view.startsWith('matches') && this.props.user.canEditMatchesOrIsCaptain() ? (
+            <div className="pull-right" style={{marginLeft: 5}}>
+              {this.state.editMode && this.state.view != 'matches' ? (
+                <button className="btn btn-danger" style={{marginRight: 5}} onClick={::this._saveAndBlockAll}>
+                  {this.context.t('match.plys.saveAndBlockAll')}
+                </button>
+              ) : null}
+              <button onClick={() => this.setState({editMode: !this.state.editMode})} className="btn btn-default">
+                <Icon fa="fa fa-pencil-square-o" />
+              </button>
+            </div>
           ) : null}
 
           {this.props.user.playerId ? (
@@ -141,9 +174,28 @@ export default class Teams extends Component {
       </div>
     );
   }
+
+  _getPlayerStatus() {
+    return this.props.user.canManageTeams() ? 'Major' : 'Captain';
+  }
+  _saveAndBlockAll() {
+    _(this.state.tablePlayers)
+    .filter(tb => this.state.tableMatches.indexOf(tb.matchId) !== -1)
+    .groupBy('matchId')
+    .forOwn((plyInfos, matchId) => {
+      this.props.editMatchPlayers({
+        matchId: matchId,
+        playerIds: plyInfos.map(x => x.id),
+        blockAlso: true,
+        newStatus: this._getPlayerStatus()
+      }, false)
+      .catch(e => console.error('saveAndBlockAll', e));
+    })
+  }
   _renderTabViewContent(team) {
     switch (this.state.view) {
     case 'matches':
+    case 'matchesTable':
       let matchesForTeam = team.getMatches().sort((a, b) => a.date - b.date);
       if (this.state.matchesFilter === 'first') {
         matchesForTeam = matchesForTeam.filter(x => x.date.month() >= 7);
@@ -153,7 +205,17 @@ export default class Teams extends Component {
 
       return (
         <div>
-          <MatchesTable matches={matchesForTeam} allowOpponentOnly user={this.props.user} editMode={this.state.editMode} />
+          <MatchesTable
+            matches={matchesForTeam}
+            allowOpponentOnly
+            user={this.props.user}
+            editMode={this.state.editMode}
+
+            tableForm={this.state.view === 'matchesTable'}
+            team={team}
+            tablePlayers={this.state.tablePlayers}
+            onTablePlayerSelect={(plyInfos, match) => this.setState({tablePlayers: plyInfos, tableMatches: this.state.tableMatches.concat([match.id])})}
+          />
 
           <div style={{textAlign: 'center'}}>
             <button

@@ -131,7 +131,7 @@ export function selectPlayer(matchId, status, statusNote, playerId) {
   };
 }
 
-export function editMatchPlayers(matchPlayersInfo) {
+export function editMatchPlayers(matchPlayersInfo, showSnackbar = true) {
   return dispatch => {
     return http.post('/matches/EditMatchPlayers', matchPlayersInfo)
       .then(function(data) {
@@ -139,8 +139,10 @@ export function editMatchPlayers(matchPlayersInfo) {
           dispatch(simpleLoaded(data));
           broadcastReload('match', data.id);
 
-          const msg = !matchPlayersInfo.blockAlso ? 'snackbarSaved' : 'snackbarBlocked';
-          dispatch(showSnackbar(trans('match.plys.' + msg)));
+          if (showSnackbar) {
+            const msg = !matchPlayersInfo.blockAlso ? 'snackbarSaved' : 'snackbarBlocked';
+            dispatch(showSnackbar(trans('match.plys.' + msg)));
+          }
         }
 
       }, function(err) {

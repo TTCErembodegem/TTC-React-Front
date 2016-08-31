@@ -34,6 +34,9 @@ export default class UserModel {
     return this._security.indexOf(what) !== -1;
   }
 
+  canManageTeams() {
+    return this.can(security.CAN_MANAGETEAM);
+  }
   canEditMatchesOrIsCaptain() {
     if (this.can(security.CAN_MANAGETEAM)) {
       return true;

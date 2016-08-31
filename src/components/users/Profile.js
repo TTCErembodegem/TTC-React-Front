@@ -88,6 +88,7 @@ export default class Profile extends Component {
     return (
       <div style={{marginTop: 15, marginBottom: 20}}>
         <TabbedContainer
+          widthTreshold={760}
           params={this.props.params}
           defaultTabKey={tabEventKeys.main}
           tabKeys={tabConfig}

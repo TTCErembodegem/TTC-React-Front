@@ -51,6 +51,9 @@ export default class PlayerCard extends Component {
   }
 }
 
+export const TeamCaptainIcon = ({t}) => (
+  <Icon fa="fa fa-star" color="#FFB00F" style={{marginRight: 5}} title={t('player.teamCaptain')} />
+);
 
 export const PlayerCompetition = ({comp, player, t}) => {
   const compDetails = player.getCompetition(comp);
@@ -62,7 +65,7 @@ export const PlayerCompetition = ({comp, player, t}) => {
   const isCaptain = team ? team.isCaptain(player) : false;
   return (
     <span>
-      {isCaptain ? <Icon fa="fa fa-star" color="#FFB00F" style={{marginRight: 5}} title={t('player.teamCaptain')} /> : null}
+      {isCaptain ? <TeamCaptainIcon t={t} /> : null}
       {comp} {team ? team.teamCode : null} <small>({compDetails.ranking})</small>
     </span>
   );

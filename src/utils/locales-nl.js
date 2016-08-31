@@ -178,6 +178,7 @@ export default {
     },
     match: {
       plys: {
+        saveAndBlockAll: 'Bewaren en Blokkeren',
         choiceCaptain: 'OPGESTELD',
         choicePlayers: 'Keuze spelers',
         blockMatchTitle: 'Opstelling',
