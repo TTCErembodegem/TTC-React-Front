@@ -3,6 +3,7 @@ import PropTypes, { connect, browserHistory } from '../PropTypes.js';
 import moment from 'moment';
 import Icon from '../controls/Icon.js';
 import MatchesTable from './MatchesTable.js';
+import ButtonStack from '../controls/ButtonStack.js';
 
 @connect(state => ({matches: state.matches, user: state.user}))
 export default class MatchesWeek extends Component {
@@ -18,6 +19,7 @@ export default class MatchesWeek extends Component {
       currentWeek: 1,
       lastWeek: 22,
       editMode: false,
+      filter: 'all',
     };
   }
 
@@ -48,6 +50,17 @@ export default class MatchesWeek extends Component {
     const matches = this.props.matches.filter(match => match.week === this.state.currentWeek);
     const selectedWeek = matches.first().date.clone();
 
+    const viewsConfig = [{
+      key: 'all',
+      text: this.context.t('players.all')
+    }, {
+      key: 'Vttl',
+      text: 'Vttl'
+    }, {
+      key: 'Sporta',
+      text: 'Sporta'
+    }];
+
     //<button className="btn btn-default">
     //  <Icon fa="fa fa-envelope-o" onClick={() => console.log('emailing opstelling...')} />
     //</button>
@@ -66,21 +79,34 @@ export default class MatchesWeek extends Component {
           ) : null}
         </h3>
 
-        {this.props.user.canManageTeams() ? (
-          <span className="pull-right">
-            <button onClick={() => this.setState({editMode: !this.state.editMode})} className="btn btn-default">
+        <span className="pull-right">
+          <ButtonStack
+            config={viewsConfig}
+            small={false}
+            activeView={this.state.filter}
+            onClick={newFilter => this.setState({filter: newFilter})} />
+
+          {this.props.user.canManageTeams() ? (
+            <button onClick={() => this.setState({editMode: !this.state.editMode})} className="btn btn-default" style={{marginLeft: 5}}>
               <Icon fa="fa fa-pencil-square-o" />
             </button>
-          </span>
+          ) : null}
+        </span>
+
+        {this.state.filter !== 'Sporta' ? (
+          <div>
+            <h4><strong>Vttl</strong></h4>
+            <MatchesTable editMode={this.state.editMode} matches={matches.filter(x => x.competition === 'Vttl').sort((a, b) => a.date - b.date)} user={this.props.user} />
+            <hr />
+          </div>
         ) : null}
 
-        <h4><strong>Vttl</strong></h4>
-        <MatchesTable editMode={this.state.editMode} matches={matches.filter(x => x.competition === 'Vttl').sort((a, b) => a.date - b.date)} user={this.props.user} />
-
-        <hr />
-
-        <h4><strong>Sporta</strong></h4>
-        <MatchesTable editMode={this.state.editMode} matches={matches.filter(x => x.competition === 'Sporta').sort((a, b) => a.date - b.date)} user={this.props.user} />
+        {this.state.filter !== 'Vttl' ? (
+          <div>
+            <h4><strong>Sporta</strong></h4>
+            <MatchesTable editMode={this.state.editMode} matches={matches.filter(x => x.competition === 'Sporta').sort((a, b) => a.date - b.date)} user={this.props.user} />
+          </div>
+        ) : null}
       </div>
     );
   }
