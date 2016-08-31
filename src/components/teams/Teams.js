@@ -55,6 +55,7 @@ export default class Teams extends Component {
     };
   }
   componentWillReceiveProps(nextProps) {
+    // TODO: BUG: if you resize the screen (or something else happens like a broadcast), already picked players are lost
     this.setState({tablePlayers: this._getAlreadyPicked(nextProps)});
   }
   _getAlreadyPicked(props) {
@@ -179,6 +180,10 @@ export default class Teams extends Component {
     return this.props.user.canManageTeams() ? 'Major' : 'Captain';
   }
   _saveAndBlockAll() {
+    if (!this.state.tableMatches.length) {
+      return;
+    }
+
     _(this.state.tablePlayers)
     .filter(tb => this.state.tableMatches.indexOf(tb.matchId) !== -1)
     .groupBy('matchId')
@@ -190,7 +195,8 @@ export default class Teams extends Component {
         newStatus: this._getPlayerStatus()
       }, false)
       .catch(e => console.error('saveAndBlockAll', e));
-    })
+    });
+    this.setState({tableMatches: []});
   }
   _renderTabViewContent(team) {
     switch (this.state.view) {
