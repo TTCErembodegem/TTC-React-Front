@@ -22,19 +22,21 @@ export default class MatchesWeek extends Component {
   }
 
   componentWillReceiveProps(props) {
-    const today = moment();
-    const sortedMatches = props.matches.sort((a, b) => a.date - b.date);
-    const currentWeekMatch = sortedMatches.find(x => x.date > today);
-    const lastWeekMatch = sortedMatches.last();
-    const lastWeek = lastWeekMatch ? lastWeekMatch.week : 22;
-    this.setState({
-      currentWeek: currentWeekMatch ? currentWeekMatch.week : lastWeek,
-      lastWeek: lastWeek,
-    });
+    if (!this.state.fixedWeek) {
+      const today = moment();
+      const sortedMatches = props.matches.sort((a, b) => a.date - b.date);
+      const currentWeekMatch = sortedMatches.find(x => x.date > today);
+      const lastWeekMatch = sortedMatches.last();
+      const lastWeek = lastWeekMatch ? lastWeekMatch.week : 22;
+      this.setState({
+        currentWeek: currentWeekMatch ? currentWeekMatch.week : lastWeek,
+        lastWeek: lastWeek,
+      });
+    }
   }
 
   _onChangeWeek(weekDiff) {
-    this.setState({currentWeek: this.state.currentWeek + weekDiff});
+    this.setState({currentWeek: this.state.currentWeek + weekDiff, fixedWeek: true});
   }
 
   render() {
