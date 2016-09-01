@@ -25,20 +25,22 @@ export default class PlayerAutoComplete extends Component {
     this.state = {searchText: ''};
   }
 
-  _onPlayerSelected(stateAction, text) {
-    if (typeof text === 'object') {
+  _onPlayerSelected(text) {
+    const isPickedFromList = typeof text === 'object';
+    if (isPickedFromList) {
       text = text.text;
     }
-    if (stateAction === 'clear' && this.props.clearOnSelect) {
-      this.setState({searchText: ''});
-    } else {
-      this.setState({searchText: text});
-    }
+    this.setState({searchText: text});
 
     if (text) {
-      const matchedPlayers = this.props.players.filter(ply => ply.name.toUpperCase() === text.toUpperCase() || ply.alias.toUpperCase() === text.toUpperCase());
+      // const matchedPlayers = this.props.players.filter(ply => ply.name.toUpperCase().startsWith(text.toUpperCase()) || ply.alias.toUpperCase().startsWith(text.toUpperCase()));
+      const matchedPlayers = this.props.players.filter(ply => this._filter(text, ply.name));
       if (matchedPlayers.size === 1) {
         this.props.selectPlayer(matchedPlayers.first().id);
+        if (this.props.clearOnSelect) {
+          this.setState({searchText: ''});
+        }
+
       } else if (text.toLowerCase() === 'system' || text.toLowerCase() === 'systeem') {
         this.props.selectPlayer('system');
       }
@@ -66,8 +68,8 @@ export default class PlayerAutoComplete extends Component {
         filter={::this._filter}
         searchText={this.state.searchText}
         {...props}
-        onNewRequest={this._onPlayerSelected.bind(this, 'clear')}
-        onUpdateInput={this._onPlayerSelected.bind(this, 'update')}
+        onNewRequest={this._onPlayerSelected.bind(this)}
+        onUpdateInput={this._onPlayerSelected.bind(this)}
         dataSource={playerMenuItems.concat(aliases).sort((a, b) => a.text.localeCompare(b.text)).toArray()} />
     );
   }
@@ -77,7 +79,7 @@ export default class PlayerAutoComplete extends Component {
       return false;
     }
 
-    searchText = searchText.toLowerCase();
+    searchText = searchText.trim().toLowerCase();
     const lastName = personName.toLowerCase().substring(0, personName.lastIndexOf(' '));
     const firstName = personName.toLowerCase().substring(personName.lastIndexOf(' ') + 1);
     return firstName.indexOf(searchText) === 0 || lastName.indexOf(searchText) === 0;
