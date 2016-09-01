@@ -15,6 +15,7 @@ export default class PlayerAutoComplete extends Component {
     players: PropTypes.PlayerModelList.isRequired,
     selectPlayer: PropTypes.func.isRequired,
     clearOnSelect: PropTypes.bool,
+    competition: PropTypes.oneOf(['Vttl', 'Sporta']),
   }
   static defaultProps = {
     clearOnSelect: false
@@ -45,12 +46,16 @@ export default class PlayerAutoComplete extends Component {
   }
 
   render() {
-    const { players, selectPlayer, dispatch, clearOnSelect, ...props } = this.props;
-    const playerMenuItems = players.map(ply => ({
+    const { players, selectPlayer, dispatch, clearOnSelect, competition, ...props } = this.props;
+    var filteredPlayers = players;
+    if (competition) {
+      filteredPlayers = players.filter(x => x[competition.toLowerCase()]);
+    }
+    const playerMenuItems = filteredPlayers.map(ply => ({
       text: ply.name,
       value: <MenuItem primaryText={ply.name} />,
     }));
-    const aliases = players.filter(ply => ply.name.indexOf(ply.alias) === -1).map(ply => ({
+    const aliases = filteredPlayers.filter(ply => ply.name.indexOf(ply.alias) === -1).map(ply => ({
       text: ply.alias,
       value: <MenuItem primaryText={ply.alias} />,
     }));

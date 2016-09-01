@@ -148,6 +148,7 @@ export default class MatchesTable extends Component {
           clearOnSelect
           selectPlayer={playerId => this._togglePlayer(playerId)}
           hintText={this.context.t('match.chooseOtherPlayer')}
+          competition={match.competition}
         />
       </div>
     );

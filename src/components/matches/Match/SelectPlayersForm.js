@@ -50,7 +50,8 @@ export default class SelectPlayersForm extends Component {
           clearOnSelect
           selectPlayer={this.props.selectPlayer.bind(this, this.props.match.id, this.props.match.block || 'Captain', null)}
           style={{marginLeft: 10}}
-          hintText={this.context.t('match.chooseOtherPlayer')} />
+          hintText={this.context.t('match.chooseOtherPlayer')}
+          competition={team.competition} />
       </div>
     );
   }
