@@ -53,11 +53,11 @@ export default class PlayerAutoComplete extends Component {
     }
     const playerMenuItems = filteredPlayers.map(ply => ({
       text: ply.name,
-      value: <MenuItem primaryText={ply.name} />,
+      value: <MenuItem primaryText={ply.name} secondaryText={competition ? ply[competition.toLowerCase()].ranking : undefined} />,
     }));
     const aliases = filteredPlayers.filter(ply => ply.name.indexOf(ply.alias) === -1).map(ply => ({
       text: ply.alias,
-      value: <MenuItem primaryText={ply.alias} />,
+      value: <MenuItem primaryText={ply.alias} secondaryText={competition ? ply[competition.toLowerCase()].ranking : undefined} />,
     }));
 
 
