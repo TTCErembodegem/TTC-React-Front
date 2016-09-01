@@ -97,7 +97,7 @@ export default class MatchesWeek extends Component {
           <div>
             <h4><strong>Vttl</strong></h4>
             <MatchesTable editMode={this.state.editMode} matches={matches.filter(x => x.competition === 'Vttl').sort((a, b) => a.date - b.date)} user={this.props.user} />
-            <hr />
+            {this.state.filter !== 'Vttl' ? <hr style={{marginLeft: '10%', marginRight: '10%', marginTop: 50}} /> : null}
           </div>
         ) : null}
 
