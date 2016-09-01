@@ -14,6 +14,7 @@ import Icon from '../controls/Icon.js';
 import MatchVs from './Match/MatchVs.js';
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 import { TeamCaptainIcon } from '../players/PlayerCard.js';
+import { PlayerCompetitionBadge, PlayerCompetitionButton } from '../players/PlayerBadges.js';
 
 function isPickedForMatch(status) {
   return status === 'Play' || status === 'Captain' || status === 'Major';
@@ -46,21 +47,11 @@ export default class MatchesTable extends Component {
     this.state = {editMatch: {}, players: []};
   }
 
-  _renderPlayerBadge(plyInfo) {
-    return (
-      <span
-        className={'label label-as-badge label-' + (getPlayingStatusClass(plyInfo.matchPlayer.status) || 'default')}
-        key={plyInfo.player.id + plyInfo.matchPlayer.status}
-        style={Object.assign({fontSize: 14, display: 'inline-block'}, this.props.tableForm ? {} : {marginBottom: 5, marginRight: 6})}>
-        {plyInfo.player.alias}
-      </span>
-    );
-  }
   _renderMatchPlayers(match) {
     const players = match.getPlayerFormation();
     return (
       <div style={{marginBottom: 4, marginTop: -5}}>
-        {players.map(::this._renderPlayerBadge)}
+        {players.map(plyInfo => <PlayerCompetitionBadge plyInfo={plyInfo} competition={match.competition} style={{marginRight: 5}} />)}
       </div>
     );
   }
@@ -71,7 +62,7 @@ export default class MatchesTable extends Component {
   }
   _getTablePlayerHeaders() {
     if (!this.props.team) {
-      return null;
+      return [];
     }
     return this._getTablePlayers()
     .map(ply => (
@@ -101,7 +92,7 @@ export default class MatchesTable extends Component {
       if (!this.props.user.canEditMatchPlayers(match)) {
         return (
           <td style={{textAlign: 'center'}} key={plyInfo.player.id} className={getPlayingStatusClass(playerDecision ? playerDecision.matchPlayer.status : '')}>
-            {majorDecision ? this._renderPlayerBadge(majorDecision) : null}
+            {majorDecision ? <PlayerCompetitionBadge plyInfo={majorDecision} /> : null}
           </td>
         );
       }
@@ -117,27 +108,14 @@ export default class MatchesTable extends Component {
       const onButtonClick = this._toggleTablePlayer.bind(this, plyInfo.player.id, match);
       return (
         <td style={{textAlign: 'center'}} key={plyInfo.player.id} className={getPlayingStatusClass(playerDecision ? playerDecision.matchPlayer.status : '')}>
-          {this._renderPlayerPickedButton(captainDecision, !!captainDecision.matchPlayer.status, false, onButtonClick)}
+          <PlayerCompetitionButton
+            plyInfo={captainDecision}
+            isPicked={!!captainDecision.matchPlayer.status}
+            actionIconClass="fa fa-thumbs-o-up"
+            onButtonClick={onButtonClick} />
         </td>
       );
     });
-  }
-
-  _renderPlayerPickedButton(plyInfo, isPicked, addRightMargin = true, onButtonClick = null) {
-    onButtonClick = onButtonClick || this._togglePlayer.bind(this, plyInfo.player.id);
-    const matchPlayer = plyInfo.matchPlayer;
-    return (
-      <button
-        key={plyInfo.player.id + matchPlayer.status}
-        className={'btn btn-xs btn-' + (getPlayingStatusClass(matchPlayer) || 'default')}
-        title={matchPlayer.statusNote}
-        style={{marginRight: addRightMargin ? 5 : 0, marginBottom: 5}}
-        onClick={onButtonClick}>
-        {matchPlayer.statusNote ? <Icon fa="fa fa-comment-o" style={{marginRight: 5, marginLeft: 0}} /> : null}
-        {plyInfo.player.alias}
-        <Icon fa="fa fa-thumbs-o-up" style={{marginRight: 0, marginLeft: 5, visibility: isPicked ? '' : 'hidden'}} />
-      </button>
-    );
   }
 
   _renderEditMatchPlayers() {
@@ -145,23 +123,25 @@ export default class MatchesTable extends Component {
     return (
       <div style={{marginBottom: 4, marginTop: -30}}>
         <h4>{this.context.t('match.plys.choiceCaptain')}</h4>
-        {this.state.playersEdit.map(plyInfo => {
-          const matchPlayer = plyInfo.matchPlayer;
-          return (
-            <button
-              key={plyInfo.player.id + matchPlayer.status}
-              className={'btn btn-success btn-sm'}
-              title={matchPlayer.statusNote}
-              style={{marginRight: 5, marginBottom: 5}}
-              onClick={this._togglePlayer.bind(this, plyInfo.player.id)}>
-              {plyInfo.player.alias}
-              {isPickedForMatch(matchPlayer.status) ? <Icon fa="fa fa-trash-o" style={{marginRight: -5, marginLeft: 5}} /> : null}
-            </button>
-          );
-        })}
+        {this.state.playersEdit.map(plyInfo => (
+          <PlayerCompetitionButton
+            plyInfo={plyInfo}
+            isPicked={isPickedForMatch(plyInfo.matchPlayer.status)}
+            actionIconClass="fa fa-trash-o"
+            onButtonClick={this._togglePlayer.bind(this, plyInfo.player.id)}
+            competition={match.competition}
+            style={{marginRight: 5}} />
+        ))}
 
         <h4>{this.context.t('match.plys.choicePlayers')}</h4>
-        {this.state.players.map(plyInfo => this._renderPlayerPickedButton(plyInfo, !!this.state.playersEdit.find(x => x.id === plyInfo.id)))}
+        {this.state.players.map(plyInfo => (
+          <PlayerCompetitionButton
+            plyInfo={plyInfo}
+            isPicked={!!this.state.playersEdit.find(x => x.id === plyInfo.id)}
+            actionIconClass="fa fa-thumbs-o-up"
+            onButtonClick={this._togglePlayer.bind(this, plyInfo.player.id)}
+            style={{marginRight: 5}} />
+        ))}
 
         <br />
         <PlayerAutoComplete
@@ -376,6 +356,17 @@ export default class MatchesTable extends Component {
         </thead>
         <tbody>
           {matchRows}
+          {this.props.tableForm && this.props.editMode ? (
+            <tr>
+              <td colSpan={3}>&nbsp;</td>
+              {this._getTablePlayers().map((ply, index) => {
+                const played = this.props.matches.filter(match => match.players.find(mp => mp.playerId === ply.player.id && mp.status === match.block))
+                return (
+                  <td key={ply.player.id} style={{textAlign: 'center', fontWeight: 'bold'}}>{played.size}</td>
+                );
+              })}
+            </tr>
+          ) : null}
         </tbody>
       </Table>
     );
