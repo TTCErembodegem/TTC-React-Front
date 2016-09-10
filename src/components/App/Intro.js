@@ -120,7 +120,7 @@ export default class Intro extends Component {
                   <a href="http://vdhkeukens.be/" target="_blank"><img src="/img/sponsors/vdhkeukens.png" /></a>
                 </Paper>
                 <Paper style={{...bottomSponsorsStyle, marginLeft: 10}}>
-                  <a href="http://www.doopsuikersymphony.be/" target="_blank"><img src="/img/sponsors/symphony.jpg" /></a>
+                  <a href="http://www.doopsuikersymphony.be/" target="_blank"><img src="/img/sponsors/symphony.png" /></a>
                 </Paper>
               </div>
             </Row>
@@ -166,9 +166,9 @@ export default class Intro extends Component {
               </Paper>
             </Col>
             <Col style={{marginTop: 20}}>
-              <Paper style={topSponsorsOnBottomPaperStyle}>
-                <a href="http://www.doopsuikersymphony.be/" target="_blank">
-                  <img style={{height: 100, width: 200, marginLeft: -5}} src="/img/sponsors/symphony.jpg" />
+              <Paper style={{...topSponsorsOnBottomPaperStyle, textAlign: 'center'}}>
+                <a href="http://www.doopsuikersymphony.be/" target="_blank" style={{height: 100, width: 200, marginLeft: -5}}>
+                  <img src="/img/sponsors/symphony.png" />
                 </a>
               </Paper>
             </Col>
