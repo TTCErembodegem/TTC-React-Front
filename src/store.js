@@ -2,6 +2,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 //import { devTools } from 'redux-devtools';
 //import createLogger from 'redux-logger';
 import thunk from 'redux-thunk';
+import { OwnClubId } from './models/ClubModel.js';
 
 import rootReducer from './reducers';
 
@@ -71,6 +72,9 @@ export const util = {
   getClub(clubId) {
     const clubs = store.getState().clubs;
     return clubs.find(club => club.id === clubId);
+  },
+  getOwnClub() {
+    return util.getClub(OwnClubId);
   },
 
   getPlayer(playerId) {

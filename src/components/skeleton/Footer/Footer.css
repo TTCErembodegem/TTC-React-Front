@@ -1,8 +1,8 @@
 @import '../../variables.css';
 
 :root {
-  --footer-height-desktop: 8em;
-  --footer-height-mobile: 13em;
+  --footer-height-desktop: 6em;
+  --footer-height-mobile: 10em;
 }
 
 html, body, #app, #react {

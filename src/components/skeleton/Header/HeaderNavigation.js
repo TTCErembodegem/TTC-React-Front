@@ -59,6 +59,8 @@ class Navigation extends Component {
         <MenuItem onTouchTap={this._goto.bind(this, t.route('players'))}>{t('nav.players')}</MenuItem>
         {storeUtil.getUser().isAdmin() ? <MenuItem onTouchTap={this._goto.bind(this, t.route('admin'))}>{t('nav.admin')}</MenuItem> : null}
         <Divider />
+        <MenuItem onTouchTap={this._goto.bind(this, t.route('generalInfo'))}>{t('nav.generalInfo')}</MenuItem>
+        <MenuItem onTouchTap={this._goto.bind(this, t.route('administration'))}>{t('nav.administration')}</MenuItem>
         <MenuItem onTouchTap={this._goto.bind(this, t.route('links'))}>{t('nav.links')}</MenuItem>
         <MenuItem onTouchTap={this._goto.bind(this, t.route('facts'))}>{t('nav.facts')}</MenuItem>
         <MenuItem onTouchTap={this.handleClickHelpButton}>{t('nav.help')}</MenuItem>

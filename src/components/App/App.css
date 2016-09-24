@@ -54,6 +54,12 @@ pre {
   cursor: default;
 }
 
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .iconize div {
   display: inline-block;
   margin-left: 12px;

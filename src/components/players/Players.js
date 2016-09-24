@@ -8,9 +8,8 @@ import { createFrenoyLink } from '../../models/PlayerModel.js';
 import Table from 'react-bootstrap/lib/Table';
 import TextField from 'material-ui/TextField';
 
-import Icon from '../controls/Icon.js';
 import TabbedContainer from '../controls/TabbedContainer.js';
-import Telephone from '../controls/Telephone.js';
+import { Telephone, Icon, Email } from '../controls.js';
 import { PlayerCompetition } from './PlayerCard.js';
 import PlayersCardGallery from './PlayersCardGallery.js';
 
@@ -251,7 +250,7 @@ export default class Players extends Component {
               <tr key={ply.id} className={cn({'match-won': ply.isMe()})}>
                 <td className="hidden-xs">
                   <strong>{ply.name}</strong>
-                  {this.props.user.playerId ? <div>{ply.formattedMobile()}</div> : null}
+                  {this.props.user.playerId ? <div><Email email={ply.contact.email} /><br />{ply.formattedMobile()}</div> : null}
                 </td>
                 <td className="visible-xs">
                   <strong>{this.props.user.playerId ? ply.alias : ply.name}</strong>

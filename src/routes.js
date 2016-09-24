@@ -7,6 +7,8 @@ import Login from './components/users/Login.js';
 import ForgotPassword from './components/users/ForgotPassword.js';
 import Profile from './components/users/Profile.js';
 import Links from './components/other/Links.js';
+import Administration from './components/other/Administration.js';
+import GeneralInfo from './components/other/GeneralInfo.js';
 import Matches from './components/matches/Matches.js';
 import MatchesToday from './components/matches/MatchesToday.js';
 import MatchesWeek from './components/matches/MatchesWeek.js';
@@ -28,13 +30,15 @@ const Routes = () => (
 
       <Route path={t.route('matches')} component={Matches} />
       <Route path={t.route('matchesToday')} component={MatchesToday} />
-      <Route path={t.route('matchesWeek')} component={MatchesWeek} />
+      <Route path={t.route('matchesWeek') + '(/:tabKey)'} component={MatchesWeek} />
       <Route path={t.route('match')} component={RoutedMatchCard}/>
 
       <Route path={t.route('teams') + '(/:tabKey)'} component={Teams}/>
 
       <Route path={t.route('facts')} component={Facts} />
       <Route path={t.route('links')} component={Links} />
+      <Route path={t.route('administration')} component={Administration}/>
+      <Route path={t.route('generalInfo')} component={GeneralInfo}/>
 
       <Route path={t.route('admin') + '(/:tabKey)'} component={Admin}/>
       <Route path="*" component={Matches}/>

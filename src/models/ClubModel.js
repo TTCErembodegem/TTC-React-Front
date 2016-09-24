@@ -1,4 +1,5 @@
 export const OwnClubId = 1;
+export const OwnClubEmail = 'info@ttc-erembodegem.be';
 
 export default class ClubModel {
   constructor(json) {

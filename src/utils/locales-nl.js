@@ -32,6 +32,8 @@ export default {
     admin: '/admin',
     links: '/links',
     facts: '/weetjes',
+    administration: '/bestuur',
+    generalInfo: '/club-info',
   },
   trans: {
     fullClubName: 'TTC Erembodegem',
@@ -65,6 +67,8 @@ export default {
       help: 'Help',
       closeMenu: 'Menu sluiten',
       admin: 'Admin',
+      administration: 'Bestuur',
+      generalInfo: 'Clubinfo',
     },
     profile: {
       main: 'Profiel',
@@ -176,6 +180,23 @@ export default {
       downloadExcel: 'Excel export',
       downloadExcelFileName: 'Spelerslijst',
     },
+    clubs: {
+      generalInfo: {
+        title: 'Clubinfo',
+        contact: 'Contact',
+        openDays: 'Competitie & Training',
+        ourEmail: 'Ons email',
+        ourAddress: 'Ons adres',
+        moneyMoney: 'Lidgeld',
+        googleMap: 'Kaart',
+      },
+      managementTitle: 'Het bestuur',
+      managerTypes: {
+        Chairman: 'Voorzitter',
+        Secretary: 'Secretaris',
+        Treasurer: 'Penningmeester'
+      }
+    },
     match: {
       plys: {
         saveAndBlockAll: 'Bewaren en Blokkeren',
@@ -260,10 +281,8 @@ export default {
       location: 'Groeneweg 28, 9300 Erembodegem',
       trainingDays: 'Training: di. en do. vanaf 20u',
       competitionDays: 'Competitie: ma., wo. en vr. 20u', //  'en za. om 14u' --> niet meer goed op mobile :(
-      telephoneNumber: '0495/24 94 20',
       adultMembership: '€90 voor volwassenen',
       youthMembership: '€50 voor -18 jarigen',
-      contact: 'Contacteer ons'
     },
     links: {
       federations: 'De bonden & hun uitslagenborden',
