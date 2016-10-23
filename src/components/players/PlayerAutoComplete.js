@@ -27,14 +27,16 @@ export default class PlayerAutoComplete extends Component {
 
   _onPlayerSelected(text) {
     const isPickedFromList = typeof text === 'object';
+    var matchedPlayers;
     if (isPickedFromList) {
       text = text.text;
+      matchedPlayers = this.props.players.filter(ply => ply.name === text || ply.alias === text);
+    } else {
+      matchedPlayers = this.props.players.filter(ply => this._filter(text, ply.name));
     }
     this.setState({searchText: text});
 
     if (text) {
-      // const matchedPlayers = this.props.players.filter(ply => ply.name.toUpperCase().startsWith(text.toUpperCase()) || ply.alias.toUpperCase().startsWith(text.toUpperCase()));
-      const matchedPlayers = this.props.players.filter(ply => this._filter(text, ply.name));
       if (matchedPlayers.size === 1) {
         this.props.selectPlayer(matchedPlayers.first().id);
         if (this.props.clearOnSelect) {
@@ -82,6 +84,6 @@ export default class PlayerAutoComplete extends Component {
     searchText = searchText.trim().toLowerCase();
     const lastName = personName.toLowerCase().substring(0, personName.lastIndexOf(' '));
     const firstName = personName.toLowerCase().substring(personName.lastIndexOf(' ') + 1);
-    return firstName.indexOf(searchText) === 0 || lastName.indexOf(searchText) === 0;
+    return `${firstName} ${lastName}`.indexOf(searchText) === 0 || `${lastName} ${firstName}`.indexOf(searchText) === 0;
   }
 }
