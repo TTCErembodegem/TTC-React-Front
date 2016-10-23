@@ -60,6 +60,10 @@ export default class Profile extends Component {
   }
 
   render() {
+    if (!this.props.user.playerId) {
+      return <div />;
+    }
+
     const t = this.context.t;
     const tabConfig = [{
       key: tabEventKeys.main,
@@ -81,8 +85,17 @@ export default class Profile extends Component {
       title: t('profile.editAvatar'),
     }];
 
-    if (!this.props.user.playerId) {
-      return <div />;
+    if (this.props.user.isSystem()) {
+      return (
+        <div>
+          <h1>SYSTEM USER</h1>
+          <RaisedButton
+            label={t('login.logoutButton')}
+            secondary={true}
+            style={{marginTop: -15}}
+            onClick={this.props.logout} />
+        </div>
+      );
     }
 
     return (
