@@ -114,7 +114,7 @@ export default {
       oldPassword: 'Huidig paswoord',
       newPassword: 'Nieuw paswoord',
       forgotLink: 'Paswoord vergeten?',
-      fogotMailSent: 'Een email met je nieuw paswoord is verzonden',
+      fogotMailSent: 'Een email met een paswoord reset link is verzonden',
       sendNewButton: 'Nieuw paswoord sturen',
       passwordChangedSuccess: 'Paswoord succesvol gewijzigd',
       passwordChangedFail: 'Paswoord wijzigen is mislukt'

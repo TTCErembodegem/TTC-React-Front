@@ -4,7 +4,7 @@ import { Router, Route, browserHistory } from 'react-router';
 import App from './components/App';
 import Players from './components/players/Players.js';
 import Login from './components/users/Login.js';
-import ForgotPassword from './components/users/ForgotPassword.js';
+import ForgotPassword, { ForgotPasswordReset } from './components/users/ForgotPassword.js';
 import Profile from './components/users/Profile.js';
 import Links from './components/other/Links.js';
 import Administration from './components/other/Administration.js';
@@ -23,6 +23,7 @@ const Routes = () => (
   <Router history={browserHistory}>
     <Route path="/" component={App}>
       <Route path={t.route('login')} component={Login} />
+      <Route path={t.route('forgotPassword') + '/:guid'} component={ForgotPasswordReset} />
       <Route path={t.route('forgotPassword')} component={ForgotPassword} />
       <Route path={t.route('profile') + '(/:tabKey)'} component={Profile} />
 

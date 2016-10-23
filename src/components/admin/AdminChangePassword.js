@@ -10,7 +10,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 export default class AdminChangePassword extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
-    setNewPassword: PropTypes.func.isRequired,
+    adminSetNewPassword: PropTypes.func.isRequired,
     onEnd: PropTypes.func.isRequired,
   }
 
@@ -49,7 +49,7 @@ export default class AdminChangePassword extends Component {
           primary={true}
           style={{marginTop: 15}}
           onClick={() => {
-            this.props.setNewPassword(this.state);
+            this.props.adminSetNewPassword(this.state);
             this.props.onEnd();
           }}
           disabled={!this.state.playerId && !this.state.newPassword} />

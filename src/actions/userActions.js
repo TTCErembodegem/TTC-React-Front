@@ -1,3 +1,4 @@
+import { browserHistory } from 'react-router';
 import * as ActionTypes from './ActionTypes.js';
 import http from '../utils/httpClient.js';
 import { util as storeUtil } from '../store.js';
@@ -54,31 +55,45 @@ export function uploadPlayer(imageBase64, playerId, type) {
   };
 }
 
-export function requestNewPassword({playerId, email}) {
+export function requestResetPasswordLink({playerId, email}) {
   return dispatch => {
-    return http.post('/users/RequestNewPassword', {playerId, email})
+    return http.post('/users/requestResetPasswordLink', {playerId, email})
       .then(function() {
         dispatch(showSnackbar(trans('password.fogotMailSent')));
         window.history.back();
       }, function(err) {
         dispatch(showSnackbar(trans('common.apiFail')));
-       console.log('requestNewPassword!', err); // eslint-disable-line
+       console.log('requestResetPasswordLink!', err); // eslint-disable-line
       });
   };
 }
-export function setNewPassword({playerId, newPassword}) {
+export function setNewPasswordFromGuid({guid, playerId, password}) {
   return dispatch => {
-    return http.post('/users/SetNewPassword', {playerId, newPassword})
+    return http.post('/users/SetNewPasswordFromGuid', {guid, playerId, password})
       .then(function() {
         dispatch(showSnackbar(trans('common.apiSuccess')));
+        dispatch(login({playerId, password}, false));
+        browserHistory.push('');
       }, function(err) {
         dispatch(showSnackbar(trans('common.apiFail')));
-       console.log('setNewPassword!', err); // eslint-disable-line
+       console.log('setNewPasswordFromGuid!', err); // eslint-disable-line
       });
   };
 }
 
-export function login(credentials) {
+export function adminSetNewPassword({playerId, newPassword}) {
+  return dispatch => {
+    return http.post('/users/AdminSetNewPassword', {playerId, newPassword})
+      .then(function() {
+        dispatch(showSnackbar(trans('common.apiSuccess')));
+      }, function(err) {
+        dispatch(showSnackbar(trans('common.apiFail')));
+       console.log('adminSetNewPassword!', err); // eslint-disable-line
+      });
+  };
+}
+
+export function login(credentials, redirect = true) {
   var creds = Object.assign({}, credentials);
   var playerName;
   if (typeof creds.playerId === 'number') {
@@ -96,7 +111,7 @@ export function login(credentials) {
         if (!data) {
           dispatch(logFailed(playerName));
         } else {
-          dispatch(loggedIn(data));
+          dispatch(loggedIn(data, redirect));
           broadcastSnackbar(trans('login.loggedIn', data.alias));
           dispatch(initialLoad());
         }
