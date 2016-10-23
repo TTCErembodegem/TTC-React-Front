@@ -47,7 +47,10 @@ const editStyleIcon = {
 export default class PlayersImageGallery extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
-    players: PropTypes.PlayerModelList.isRequired,
+    players: PropTypes.oneOfType([
+      PropTypes.PlayerModelList.isRequired,
+      PropTypes.array.isRequired,
+    ]),
     user: PropTypes.UserModel.isRequired,
     competition: PropTypes.competition.isRequired,
     viewport: PropTypes.viewport,
