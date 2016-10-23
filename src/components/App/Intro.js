@@ -190,6 +190,7 @@ export default class Intro extends Component {
 }
 
 // TODO: React warning: setState on unmounted component = Typist (loading schlager is gone too fast now...)
+// https://github.com/jstejada/react-typist/issues/6#issuecomment-250910698
 class RestartingTypist extends Component {
   static propTypes = {
     timeout: PropTypes.number,
