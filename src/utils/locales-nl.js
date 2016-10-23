@@ -189,6 +189,9 @@ export default {
         ourAddress: 'Ons adres',
         moneyMoney: 'Lidgeld',
         googleMap: 'Kaart',
+        other: 'Ander',
+        bankNr: 'Bankrekeningnummer',
+        orgNr: 'BTW nummer vzw',
       },
       managementTitle: 'Het bestuur',
       managerTypes: {

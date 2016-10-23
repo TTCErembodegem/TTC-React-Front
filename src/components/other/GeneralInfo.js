@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from '../PropTypes.js';
 import { OwnEmail, GoogleMap } from '../controls.js';
 
+const clubBankNr = 'BE55 0016 5927 6744';
+const clubOrgNr = 'BE 0840.545.283';
+
 export default class GeneralInfo extends Component {
   static contextTypes = PropTypes.contextTypes;
   render() {
@@ -20,9 +23,15 @@ export default class GeneralInfo extends Component {
             {this.context.t('footer.trainingDays')}
 
             <h1>{this.context.t('clubs.generalInfo.moneyMoney')}</h1>
+            <strong>{this.context.t('clubs.generalInfo.bankNr')}</strong> {clubBankNr}<br />
             {this.context.t('footer.adultMembership')}
             <br />
             {this.context.t('footer.youthMembership')}
+
+            <h1>{this.context.t('clubs.generalInfo.other')}</h1>
+            <strong>{this.context.t('clubs.generalInfo.orgNr')}</strong> {clubOrgNr}<br />
+
+
           </div>
           <div className="col-md-6">
             <h1 className="visible-sm">{this.context.t('clubs.generalInfo.googleMap')}</h1>
