@@ -79,7 +79,15 @@ export const PlayerCompetition = ({comp, player, t}) => {
   return (
     <span>
       {isCaptain ? <TeamCaptainIcon t={t} /> : null}
-      {comp} {team ? team.teamCode : null} <small>({compDetails.ranking})</small>
+      {comp} {team ? team.teamCode : null}
+      <small style={{marginLeft: 10}}>{compDetails.ranking} <PlayerFrenoyLink comp={compDetails} /></small>
     </span>
   );
 };
+
+import { createFrenoyLink } from '../../models/PlayerModel.js';
+export const PlayerFrenoyLink = ({comp}) => (
+  <a href={createFrenoyLink(comp)} target="_blank">
+    <Icon fa="fa fa-search" />
+  </a>
+);

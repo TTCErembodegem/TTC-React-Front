@@ -3,14 +3,13 @@ import PropTypes, { connect, withViewport, keyMirror } from '../PropTypes.js';
 import cn from 'classnames';
 import moment from 'moment';
 import http from '../../utils/httpClient.js';
-import { createFrenoyLink } from '../../models/PlayerModel.js';
 
 import Table from 'react-bootstrap/lib/Table';
 import TextField from 'material-ui/TextField';
 
 import TabbedContainer from '../controls/TabbedContainer.js';
 import { Telephone, Icon, Email } from '../controls.js';
-import { PlayerCompetition } from './PlayerCard.js';
+import { PlayerCompetition, PlayerFrenoyLink } from './PlayerCard.js';
 import PlayersCardGallery from './PlayersCardGallery.js';
 
 const tabEventKeys = keyMirror({
@@ -124,7 +123,7 @@ export default class Players extends Component {
               <td>{ply.vttl.uniqueIndex}</td>
               <td className="hidden-xs">{ply.name}</td>
               <td className="visible-xs">{ply.alias}</td>
-              <td>{this._renderPlayerCompetitionRanking(ply.vttl)}</td>
+              <td>{ply.vttl.ranking} <PlayerFrenoyLink comp={ply.vttl} /></td>
               <td className="hidden-xs">{ply.style.name}</td>
               <td className="hidden-xs">{ply.style.bestStroke}</td>
             </tr>
@@ -159,7 +158,7 @@ export default class Players extends Component {
               <td>{ply.sporta.uniqueIndex}</td>
               <td className="hidden-xs">{ply.name}</td>
               <td className="visible-xs">{ply.alias}</td>
-              <td>{this._renderPlayerCompetitionRanking(ply.sporta)}</td>
+              <td>{ply.sporta.ranking} <PlayerFrenoyLink comp={ply.sporta} /></td>
               <td>{ply.sporta.rankingValue}</td>
               <td className="hidden-xs">{ply.style.name}</td>
               <td className="hidden-xs">{ply.style.bestStroke}</td>
@@ -167,17 +166,6 @@ export default class Players extends Component {
           ))}
         </tbody>
       </Table>
-    );
-  }
-  _renderPlayerCompetitionRanking(comp) {
-    return (
-      <span>
-        {comp.ranking}
-        &nbsp;
-        <a href={createFrenoyLink(comp)} target="_blank">
-          <Icon fa="fa fa-search" />
-        </a>
-      </span>
     );
   }
 
