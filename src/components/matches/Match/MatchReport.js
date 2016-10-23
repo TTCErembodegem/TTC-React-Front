@@ -155,7 +155,7 @@ export default class MatchReport extends Component {
               ) : null}
 
               <FlatButton
-                label={this.context.t('match.report.commentsOpenForm')}
+                label={this.context.t('match.report.commentsOpenForm' + (this.state.commentFormOpen ? 'Confirm' : ''))}
                 onClick={::this._onCommentForm}
                 style={{paddingLeft: 0}} />
 

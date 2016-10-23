@@ -250,6 +250,7 @@ export default {
         reportWrittenBy: 'door ${}',
         commentsTitle: 'Opvolging',
         commentsOpenForm: 'Reageren',
+        commentsOpenFormConfirm: 'Reactie plaatsen',
         commentsPhoto: 'Foto plaatsen',
         commentPosted: 'Verklarende aantekening toegevoegd',
         commentDeleted: 'Verklarende aantekening verwijderd',
