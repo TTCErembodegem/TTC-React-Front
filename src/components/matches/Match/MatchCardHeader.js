@@ -4,11 +4,14 @@ import moment from 'moment';
 
 import MatchForm from '../Match/MatchForm.js';
 import MatchScore from '../MatchScore.js';
-import Icon from '../../controls/Icon.js';
+import Icon, { ThrillerBadge, ThrillerIcon } from '../../controls/Icon.js';
 
 import { Card, CardHeader } from 'material-ui/Card';
 
 const daysAgoBackFullDate = 7;
+
+const thrillerIconWith = 25;
+const ThrillerIconSpan = <span style={{width: thrillerIconWith, float: 'left'}}>&nbsp;</span>;
 
 // BigMatchCardHeader == MatchesToday on Club monitor
 export class BigMatchCardHeader extends Component {
@@ -45,30 +48,7 @@ export class BigMatchCardHeader extends Component {
   }
 }
 
-export const ThrillerIcon = ({color = undefined}) => (
-  <Icon fa="fa fa-heartbeat faa-pulse animated" style={{marginLeft: 3, marginRight: 7, marginTop: 3, color: color}} />
-);
 
-export const ThrillerBadge = ({t, match}) => {
-  const team = match.getTeam();
-  const thrillerType = team.getThriller(match);
-  if (thrillerType) {
-    const thrillerStyle = {
-      position: 'absolute',
-      top: 60,
-      left: 15,
-      fontSize: 16,
-      paddingRight: 13,
-    };
-    return (
-      <span className="label label-as-badge label-danger" style={thrillerStyle}>
-        <ThrillerIcon />
-        {t('match.' + thrillerType)}
-      </span>
-    );
-  }
-  return <div />;
-};
 
 
 export default class SmallMatchCardHeader extends Component {
@@ -118,16 +98,18 @@ class MatchCardHeader extends Component {
     const iPlay = this.props.user.playsIn(match.teamId);
 
     var subtitle = [];
-    if (match.date.isSame(moment(), 'day') && match.isHomeMatch) {
-      subtitle.push(<span key="2">{this.context.t('match.date', match.getDisplayDate())}</span>);
-    } else {
-      subtitle.push(
-        <span key="2">{match.date > moment() || match.date < moment().add(-daysAgoBackFullDate, 'day') ?
-          this.context.t('match.date', match.getDisplayDate())
-          : match.date.fromNow()}
-        </span>
-      );
-    }
+    subtitle.push(ThrillerIconSpan);
+    subtitle.push(this.context.t('match.date', match.getDisplayDate()));
+    // if (match.date.isSame(moment(), 'day') && match.isHomeMatch) {
+    //   subtitle.push(<span key="2">{this.context.t('match.date', match.getDisplayDate())}</span>);
+    // } else {
+    //   subtitle.push(
+    //     <span key="2">{match.date > moment() || match.date < moment().add(-daysAgoBackFullDate, 'day') ?
+    //       this.context.t('match.date', match.getDisplayDate())
+    //       : match.date.fromNow()}
+    //     </span>
+    //   );
+    // }
 
     if (match.comments.size || match.description) {
       const hasNewComment = this.props.config.get('newMatchComment' + match.id);
@@ -159,7 +141,11 @@ class MatchCardHeader extends Component {
     const matchScoreStyle = {position: 'absolute', top: 14, right: 0, marginRight: 7, fontSize: 16, marginLeft: 12, float: 'right'};
 
     return (
-      <Card style={{backgroundColor: iPlay ? '#F0F0F0' : '#fafafa'}} onExpandChange={::this._onExpandChange} initiallyExpanded={this.props.isOpen}>
+      <Card
+        style={{backgroundColor: iPlay ? '#F0F0F0' : '#fafafa'}}
+        onExpandChange={::this._onExpandChange}
+        initiallyExpanded={this.props.isOpen}
+      >
         <CardHeader
           title={this._renderTitle(match)}
           subtitle={subtitle}
@@ -167,6 +153,7 @@ class MatchCardHeader extends Component {
           textStyle={{padding: 0}}
           showExpandableButton={false}
           actAsExpander={!this.props.isOpen}
+          subtitleStyle={{marginTop: 4}}
         >
 
           {!scoreFormVisible ? <MatchScore match={match} style={matchScoreStyle} /> : null}
@@ -179,10 +166,12 @@ class MatchCardHeader extends Component {
   }
 
   _renderTitle(match) {
+    const team = match.getTeam();
     return (
-      <div>
+      <div style={{whiteSpace: 'nowrap'}}>
+        {team.getThriller(match) ? <ThrillerIcon color="red" /> : ThrillerIconSpan}
         {this._renderTeamNameAndPosition(match, match.isHomeMatch ? undefined : match.opponent)}
-        <span className={/*match.isHomeMatch ? '' : 'match-opponent-team'*/undefined} style={{marginLeft: 7, marginRight: 7, fontWeight: 'normal'}}>
+        <span className={match.isHomeMatch ? '' : 'match-opponent-team'} style={{marginLeft: 7, marginRight: 7}}>
           {this.context.t('match.vs')}
         </span>
         {this._renderTeamNameAndPosition(match, match.isHomeMatch ? match.opponent : undefined)}
@@ -194,7 +183,7 @@ class MatchCardHeader extends Component {
     const divisionRanking = team.getDivisionRanking(opponent);
     return (
       <span>
-        <span style={{fontWeight: 'normal'}}>{divisionRanking.position ? divisionRanking.position + '. ' : ''}</span>
+        <span className={opponent ? 'match-opponent-team' : ''}>{divisionRanking.position ? divisionRanking.position + '. ' : ''}</span>
         <span className={opponent ? 'match-opponent-team' : ''}>
           {opponent ? match.renderOpponentTitle() : team.renderOwnTeamTitle()}
         </span>

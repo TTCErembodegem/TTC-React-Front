@@ -4,7 +4,7 @@ import PropTypes, { connect } from '../PropTypes.js';
 import cn from 'classnames';
 
 import { setSetting } from '../../actions/configActions.js';
-import Icon from '../controls/Icon.js';
+import Icon, { TrophyIcon } from '../controls/Icon.js';
 
 function getClassName(isHomeMatch, home, out) {
   if (home === out) {
@@ -78,13 +78,16 @@ export default class MatchScore extends Component {
     }
 
     const score = match.score || {home: 0, out: 0};
-    const classColor = this.props.match.isDerby ? 'match-won' : getClassName(match.isHomeMatch, score.home, score.out);
+    const classColor = match.isDerby ? 'match-won' : getClassName(match.isHomeMatch, score.home, score.out);
     return (
       <span
         className={cn('label label-as-badge', classColor, this.state.isUpdated ? 'faa-tada animated' : '')}
         style={this.props.style}>
 
-        <span>{score.home + ' - ' + score.out}</span>
+        <span>
+          {classColor === 'match-won' && !match.isDerby ? <TrophyIcon style={{marginRight: 7, marginTop: 4, fontWeight: 'normal'}} color="#FFE568" /> : null}
+          {score.home + ' - ' + score.out}
+        </span>
       </span>
     );
   }

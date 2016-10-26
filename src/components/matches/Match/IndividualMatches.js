@@ -3,7 +3,7 @@ import PropTypes from '../../PropTypes.js';
 import cn from 'classnames';
 import { matchOutcome } from '../../../models/MatchModel.js';
 
-import Icon from '../../controls/Icon.js';
+import Icon, { TrophyIcon } from '../../controls/Icon.js';
 import Table from 'react-bootstrap/lib/Table';
 
 export default class IndividualMatches extends Component {
@@ -49,7 +49,7 @@ export default class IndividualMatches extends Component {
                 })}
                 //onMouseOver={this._onIndividualMatchHover.bind(this, game.ownPlayer.playerId)}
                 onClick={this._onIndividualMatchChange.bind(this, game.ownPlayer.playerId)}>
-                <td key="0">{this._getVictoryIcon(game)}</td>
+                <td key="0">{game.outcome === matchOutcome.Won ? <TrophyIcon /> : null}</td>
                 {game.ownPlayer.playerId ? ([
                   <td className={cn({accentuate: game.outcome === matchOutcome.Won})} key="1">{this._getPlayerDesc(game.home)}</td>,
                   <td className={cn({accentuate: game.outcome === matchOutcome.Won})} key="2">{this._getPlayerDesc(game.out)}</td>
@@ -75,12 +75,6 @@ export default class IndividualMatches extends Component {
       return `${player.alias} (${player.ranking})`;
     }
     return player.alias;
-  }
-
-  _getVictoryIcon(game) {
-    if (game.outcome === matchOutcome.Won) {
-      return <Icon fa="fa fa-trophy" color="#FCB514" />;
-    }
   }
 
   // _onIndividualMatchHover(selectedPlayerId) {

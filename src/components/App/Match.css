@@ -34,19 +34,19 @@
 
 
 .match-lost {
-  background-color: #FF6666;
+  background-color: #FF5144;
 }
 
 .match-won {
-  background-color: #A2C93A;
+  background-color: #6BCBFF;
 }
 
 .match-draw {
-  background-color: #F05408;
+  background-color: #FF9E4F;
 }
 
 .match-opponent-team {
-  color: #D3D3D3;
+  color: #707070;
 }
 
 

@@ -25,10 +25,23 @@ export default class Matches extends Component {
   }
 
   // render() {
-  //   const matches = this.props.matches
+  //   const today = moment().startOf('day');
+  //   const matches = this.props.matches.filter(cal => cal.date.isAfter(today, 'day')).groupBy(match => moment(match.date).startOf('day'))
   //   return (
   //     <div>
-
+  //       {matches.map((matchesOnDay, matchDate) => {
+  //         //console.log('ughoh', matchDate, matchesOnDay);
+  //         return (
+  //         <div>
+  //           <div>
+  //             <div>{matchDate.format('D/M')}</div>
+  //             <div>{matchDate.format('dd')}</div>
+  //           </div>
+  //           <div>
+  //             {this._renderMatches(matchesOnDay)}
+  //           </div>
+  //         </div>
+  //       )})}
   //     </div>
   //   );
   // }
@@ -39,9 +52,9 @@ export default class Matches extends Component {
     //const showFutureMatchesDays = 7;
     //const showPlayedMatchesDays = 20;
 
-    var today = moment();
-    //var yesterday = moment().subtract(1, 'days');  || cal.date.isSame(yesterday, 'day')
-    var ownMatches = this.props.matches;
+    const today = moment();
+    //const yesterday = moment().subtract(1, 'days');  || cal.date.isSame(yesterday, 'day')
+    const ownMatches = this.props.matches;
 
     var matchesToday = ownMatches.filter(cal => cal.date.isSame(today, 'day'));
     var matchesNext = ownMatches

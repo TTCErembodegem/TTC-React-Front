@@ -10,7 +10,7 @@ import Table from 'react-bootstrap/lib/Table';
 import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
 import Button from 'react-bootstrap/lib/Button';
 
-import Icon from '../controls/Icon.js';
+import Icon, { TrophyIcon } from '../controls/Icon.js';
 import MatchVs from './Match/MatchVs.js';
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 import { TeamCaptainIcon } from '../players/PlayerCard.js';
@@ -254,7 +254,7 @@ export default class MatchesTable extends Component {
       matchRows.push(
         <tr key={match.id} style={stripeColor}>
           <td>
-            {displayVictoryIcon ? <Icon fa="fa fa-trophy" color="#FCB514" style={{marginRight: 5}} /> : null}
+            {displayVictoryIcon ? <TrophyIcon style={{marginRight: 5}} /> : null}
             {thrillerIcon}
             {t('match.date', match.getDisplayDate())}
           </td>

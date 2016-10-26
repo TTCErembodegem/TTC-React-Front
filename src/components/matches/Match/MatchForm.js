@@ -22,7 +22,7 @@ export default class MatchForm extends Component {
     const isEditable = this.props.user.canChangeMatchScore(match);
 
     return (
-      <div style={{width: this.props.big ? 230 : 150}}>
+      <div style={{width: this.props.big ? 250 : 170}}>
         {isEditable ? <MatchManipulation big={this.props.big}
           style={{float: 'left', marginRight: 5}}
           plusClick={this._onUpdateScore.bind(this, {matchId: match.id, home: score.home + 1, out: score.out})}
