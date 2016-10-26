@@ -111,7 +111,7 @@ export default class OpponentsLastMatches extends Component {
               this._getMatchDetails(match)
             ];
           })}
-          {!this.state.showAll ? (
+          {!this.state.showAll && this.props.readonlyMatches.size > AmountOfOpponentMatchesToShow ? (
             <tr key="showAll">
               <td colSpan={5} style={{textAlign: 'center'}}>
                 <IconButton iconClassName="fa fa-chevron-circle-down" onClick={::this._onLoadAll} />
