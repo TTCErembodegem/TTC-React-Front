@@ -247,12 +247,7 @@ export default class MatchesTable extends Component {
       var thrillerIcon;
       const team = match.getTeam();
       if (team.getThriller(match)) {
-        thrillerIcon = (
-          <Icon
-            fa="fa fa-heartbeat faa-pulse animated"
-            style={{marginLeft: 3, marginRight: 7, marginTop: 3, color: 'red'}}
-          />
-        );
+        thrillerIcon = <ThrillerIcon color="red" />;
       }
 
       // Complexity galore
@@ -373,3 +368,5 @@ export default class MatchesTable extends Component {
     );
   }
 }
+
+import { ThrillerIcon } from './Match/MatchCardHeader.js';

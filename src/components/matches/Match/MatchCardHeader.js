@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes, { browserHistory } from '../../PropTypes.js';
 import moment from 'moment';
 
-import FavoriteMatch from '../FavoriteMatch.js';
 import MatchForm from '../Match/MatchForm.js';
 import MatchScore from '../MatchScore.js';
 import Icon from '../../controls/Icon.js';
@@ -38,35 +37,38 @@ export class BigMatchCardHeader extends Component {
           <div style={{position: 'absolute', top: 23, right: 15}}>
             <MatchForm match={match} t={this.context.t} user={this.props.user} big />
           </div>
-          {this._getThriller()}
+          <ThrillerBadge t={this.context.t} match={match} />
         </CardHeader>
         {this.props.children}
       </Card>
     );
   }
-
-  _getThriller() {
-    const match = this.props.match;
-    const team = match.getTeam();
-    const thrillerType = team.getThriller(match);
-    if (thrillerType) {
-      const thrillerStyle = {
-        position: 'absolute',
-        top: 60,
-        left: 15,
-        fontSize: 16,
-        paddingRight: 13,
-      };
-      return (
-        <span className="label label-as-badge label-danger" style={thrillerStyle}>
-          <Icon fa="fa fa-heartbeat faa-pulse animated" style={{marginLeft: 3, marginRight: 7, marginTop: 3}} />
-          {this.context.t('match.' + thrillerType)}
-        </span>
-      );
-    }
-  }
 }
 
+export const ThrillerIcon = ({color = undefined}) => (
+  <Icon fa="fa fa-heartbeat faa-pulse animated" style={{marginLeft: 3, marginRight: 7, marginTop: 3, color: color}} />
+);
+
+export const ThrillerBadge = ({t, match}) => {
+  const team = match.getTeam();
+  const thrillerType = team.getThriller(match);
+  if (thrillerType) {
+    const thrillerStyle = {
+      position: 'absolute',
+      top: 60,
+      left: 15,
+      fontSize: 16,
+      paddingRight: 13,
+    };
+    return (
+      <span className="label label-as-badge label-danger" style={thrillerStyle}>
+        <ThrillerIcon />
+        {t('match.' + thrillerType)}
+      </span>
+    );
+  }
+  return <div />;
+};
 
 
 export default class SmallMatchCardHeader extends Component {
@@ -157,7 +159,7 @@ class MatchCardHeader extends Component {
     const matchScoreStyle = {position: 'absolute', top: 14, right: 0, marginRight: 7, fontSize: 16, marginLeft: 12, float: 'right'};
 
     return (
-      <Card style={{backgroundColor: '#fafafa'}} onExpandChange={::this._onExpandChange} initiallyExpanded={this.props.isOpen}>
+      <Card style={{backgroundColor: iPlay ? '#F0F0F0' : '#fafafa'}} onExpandChange={::this._onExpandChange} initiallyExpanded={this.props.isOpen}>
         <CardHeader
           title={this._renderTitle(match)}
           subtitle={subtitle}
@@ -165,7 +167,7 @@ class MatchCardHeader extends Component {
           textStyle={{padding: 0}}
           showExpandableButton={false}
           actAsExpander={!this.props.isOpen}
-          avatar={iPlay && !this.props.isOpen && !scoreFormVisible ? <FavoriteMatch /> : null}>
+        >
 
           {!scoreFormVisible ? <MatchScore match={match} style={matchScoreStyle} /> : null}
           {scoreFormVisible && scoreFormInHeader ? matchForm : null}
@@ -177,48 +179,25 @@ class MatchCardHeader extends Component {
   }
 
   _renderTitle(match) {
-    // TODO: if long club names and is FavoriteMatch then title wraps on small devices (ellipsis would be great here)
+    return (
+      <div>
+        {this._renderTeamNameAndPosition(match, match.isHomeMatch ? undefined : match.opponent)}
+        <span className={/*match.isHomeMatch ? '' : 'match-opponent-team'*/undefined} style={{marginLeft: 7, marginRight: 7, fontWeight: 'normal'}}>
+          {this.context.t('match.vs')}
+        </span>
+        {this._renderTeamNameAndPosition(match, match.isHomeMatch ? match.opponent : undefined)}
+      </div>
+    )
+  }
+  _renderTeamNameAndPosition(match, opponent) {
     const team = match.getTeam();
-    if (match.isHomeMatch) {
-      return (
-        <div>
-          <span>{team.renderOwnTeamTitle()}</span>
-          {!match.isPlayed ? this._renderOwnTeamPosition(team) : ' '}
-          <span className="match-opponent-team">{this.context.t('match.vs')}</span>
-          {!match.isPlayed ? this._renderOpponentPosition(match) : ' '}
-          <span className="match-opponent-team">{match.renderOpponentTitle()}</span>
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <span className="match-opponent-team">{match.renderOpponentTitle()}</span>
-          {!match.isPlayed ? this._renderOpponentPosition(match) : ' '}
-          <span className="match-opponent-team">{this.context.t('match.vs')}</span>
-          {!match.isPlayed ? this._renderOwnTeamPosition(team) : ' '}
-          <span>{team.renderOwnTeamTitle()}</span>
-        </div>
-      );
-    }
-  }
-
-  _renderOwnTeamPosition(team) {
-    const ranking = team.getDivisionRanking();
+    const divisionRanking = team.getDivisionRanking(opponent);
     return (
-      <span className="label label-as-badge label-info" style={{marginLeft: 5, marginRight: 5, paddingTop: 5}}>
-        {ranking ? ranking.position : '?'}
-      </span>
-    );
-  }
-  _renderOpponentPosition(match) {
-    var ranking = match.getTeam().getDivisionRanking(match.opponent);
-    if (!ranking) {
-      ranking = {position: '?'};
-    }
-
-    return (
-      <span className="label label-as-badge label-info" style={{marginLeft: 5, marginRight: 5, paddingTop: 5}}>
-        {ranking.position}
+      <span>
+        <span style={{fontWeight: 'normal'}}>{divisionRanking.position ? divisionRanking.position + '. ' : ''}</span>
+        <span className={opponent ? 'match-opponent-team' : ''}>
+          {opponent ? match.renderOpponentTitle() : team.renderOwnTeamTitle()}
+        </span>
       </span>
     );
   }

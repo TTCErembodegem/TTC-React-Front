@@ -24,6 +24,15 @@ export default class Matches extends Component {
     this.context.setTitle();
   }
 
+  // render() {
+  //   const matches = this.props.matches
+  //   return (
+  //     <div>
+
+  //     </div>
+  //   );
+  // }
+
   render() {
     // TODO: put in some global config (or perhaps server config?)
     const matchesToShow = 10;
