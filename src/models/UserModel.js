@@ -66,7 +66,7 @@ export default class UserModel {
     return true;
   }
   canEditPlayersOnMatchDay(match) {
-    return this.playsIn(match.teamId) && match.date.isSame(moment(), 'day');
+    return this.isAdmin() || this.playerId && match.date.isSame(moment(), 'day');
   }
   canPostReport(teamId) {
     return this.playsIn(teamId) || this.can(security.CAN_EDITALLREPORTS);
