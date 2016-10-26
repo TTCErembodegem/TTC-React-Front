@@ -317,7 +317,7 @@ export default {
       viewMain: 'Overzicht',
       viewMatches: 'Matchen',
       viewRanking: 'Rangschikking',
-      frenoyResults: 'Resultaten Frenoy',
+      frenoyResults: 'Frenoy',
     },
     facts: require('./locales-nl-facts.js')
   },
