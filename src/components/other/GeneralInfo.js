@@ -29,6 +29,8 @@ export default class GeneralInfo extends Component {
             {this.context.t('footer.youthMembership')}
 
             <h1>{this.context.t('clubs.generalInfo.other')}</h1>
+            <strong>VTTL</strong> OVL134<br />
+            <strong>Sporta</strong> 4055<br />
             <strong>{this.context.t('clubs.generalInfo.orgNr')}</strong> {clubOrgNr}<br />
 
 
