@@ -218,6 +218,7 @@ class TodaysEvents extends Component {
 
     return (
       <div>
+        <Strike text="Nieuwjaarsreceptie: zaterdag 7/1/2017 vanaf 19u30" />
         {trainingEvent}
         {lastPlayedMatches.size ? (
           <div>
