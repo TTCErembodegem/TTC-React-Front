@@ -10,6 +10,7 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import Paper from 'material-ui/Paper';
 import Typist from 'react-typist';
+import * as Sponsor from './Sponsors.js';
 
 @connect(state => {
   return {
@@ -66,22 +67,11 @@ export default class Intro extends Component {
     const showTopSponsors = this.props.viewport.width > 800;
     var topSponsors;
     if (showTopSponsors) {
-      const topSponsorPaperStyle = {
-        height: 100,
-        width: 250,
-        padding: 15,
-        display: 'inline-block',
-      };
-
       topSponsors = (
         <Row style={{marginTop: 10}}>
           <div style={{width: 460, margin: 'auto'}}>
-            <Paper style={topSponsorPaperStyle}>
-              <Location loc={bakkerijVanLierde} t={this.context.t} />
-            </Paper>
-            <Paper style={{...topSponsorPaperStyle, float: 'right', width: 200}}>
-              <Location loc={slagerijGuy} t={this.context.t} />
-            </Paper>
+            <Sponsor.BakkerijVanLierde top={showTopSponsors} />
+            <Sponsor.SlagerijGuy top={showTopSponsors} />
           </div>
         </Row>
       );
@@ -107,31 +97,19 @@ export default class Intro extends Component {
             ) : <TodaysEvents {...this.props} />}
           </Col>
         </Row>
-        {this.props.viewport.width > 800 ? (
+        {showTopSponsors ? (
           <div>
             <Row style={{marginTop: 25, marginBottom: 15}}>
               <div style={{width: 770, margin: 'auto'}}>
-                <Paper style={bottomSponsorsStyle}>
-                  <a href="http://www.stonedesign.be/" target="_blank"><img src="/img/sponsors/stonedesign.png" /></a>
-                </Paper>
-                <Paper style={{...bottomSponsorsStyle, marginLeft: 10}}>
-                  <a href="http://vdhkeukens.be/" target="_blank"><img src="/img/sponsors/vdhkeukens.png" /></a>
-                </Paper>
-                <Paper style={{...bottomSponsorsStyle, marginLeft: 10}}>
-                  <a href="http://www.doopsuikersymphony.be/" target="_blank"><img src="/img/sponsors/symphony.png" /></a>
-                </Paper>
+                <Sponsor.StoneDesign top={showTopSponsors} />
+                <Sponsor.Symphony top={showTopSponsors} style={{marginLeft: 10}} />
+                <Sponsor.Vdhkeukens top={showTopSponsors} style={{marginLeft: 10}} />
               </div>
             </Row>
             <Row style={{marginBottom: 15}}>
               <div style={{width: 500, margin: 'auto'}}>
-                <Paper style={{...bottomSponsorsStyle, marginLeft: 10}}>
-                  <a href="http://www.nostech.be/" target="_blank">
-                    <img style={{marginLeft: -5}} src="/img/sponsors/nostech.jpg" />
-                  </a>
-                </Paper>
-                <Paper style={{...bottomSponsorsStyle, marginLeft: 10}}>
-                  <img src="/img/sponsors/pongit.jpg" />
-                </Paper>
+                <Sponsor.Nostech top={showTopSponsors} style={{}} />
+                <Sponsor.pongit top={showTopSponsors} style={{marginLeft: 10}} />
               </div>
             </Row>
           </div>
@@ -140,47 +118,25 @@ export default class Intro extends Component {
           <Row style={{margin: 10}}>
             <Strike text={this.context.t('intro.ourSponsors')} style={{marginBottom: 5}} />
             <Col>
-              <Paper style={topSponsorsOnBottomPaperStyle}>
-                <Location loc={bakkerijVanLierde} t={this.context.t} />
-              </Paper>
+              <Sponsor.BakkerijVanLierde top={showTopSponsors} />
             </Col>
             <Col style={{marginTop: 20}}>
-              <Paper style={topSponsorsOnBottomPaperStyle}>
-                <Location loc={slagerijGuy} t={this.context.t} />
-              </Paper>
+              <Sponsor.SlagerijGuy top={showTopSponsors} />
             </Col>
             <Col style={{marginTop: 20}}>
-              <Paper style={topSponsorsOnBottomPaperStyle}>
-                <a href="http://www.stonedesign.be/" target="_blank">
-                  <img style={{marginTop: 15, marginLeft: -5}} src="/img/sponsors/stonedesign.png" />
-                </a>
-              </Paper>
+              <Sponsor.Symphony top={showTopSponsors} style={{}} />
             </Col>
             <Col style={{marginTop: 20}}>
-              <Paper style={topSponsorsOnBottomPaperStyle}>
-                <a href="http://vdhkeukens.be/" target="_blank">
-                  <img style={{height: 100, width: 200, marginLeft: -5}} src="/img/sponsors/vdhkeukens.png" />
-                </a>
-              </Paper>
+              <Sponsor.Vdhkeukens top={showTopSponsors} style={{}} />
             </Col>
             <Col style={{marginTop: 20}}>
-              <Paper style={{...topSponsorsOnBottomPaperStyle, textAlign: 'center'}}>
-                <a href="http://www.doopsuikersymphony.be/" target="_blank" style={{height: 100, width: 200, marginLeft: -5}}>
-                  <img src="/img/sponsors/symphony.png" />
-                </a>
-              </Paper>
+              <Sponsor.pongit top={showTopSponsors} style={{}} />
             </Col>
             <Col style={{marginTop: 20}}>
-              <Paper style={topSponsorsOnBottomPaperStyle}>
-                <img style={{height: 100, width: 200, marginLeft: -5}} src="/img/sponsors/pongit.jpg" />
-              </Paper>
+              <Sponsor.Nostech top={showTopSponsors} style={{}} />
             </Col>
             <Col style={{marginTop: 20}}>
-              <Paper style={topSponsorsOnBottomPaperStyle}>
-                <a href="http://www.nostech.be/" target="_blank">
-                  <img style={{marginLeft: -5}} src="/img/sponsors/nostech.jpg" />
-                </a>
-              </Paper>
+              <Sponsor.StoneDesign top={showTopSponsors} />
             </Col>
           </Row>
         ) : null}
