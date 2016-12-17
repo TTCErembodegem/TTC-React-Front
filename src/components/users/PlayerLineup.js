@@ -53,10 +53,17 @@ export default class PlayerLinup extends Component {
     var matches = _.uniqBy(_.flatten(allMatchesToCome), value => value.date.format('YYYYMMDD'))
       .filter(match => moment().isBefore(match.date))
       .sort((a, b) => a.date - b.date);
-    if (this.state.matchesFilter === 'first') {
-      matches = matches.filter(x => x.date.month() >= 7);
+
+    const firstMatches = matches.filter(x => x.date.month() >= 7);
+    const lastMatches = matches.filter(x => x.date.month() < 7);
+
+    var hasMore;
+    if (this.state.matchesFilter === 'first' && firstMatches.length !== 0) {
+      matches = firstMatches;
+      hasMore = lastMatches.length !== 0;
     } else {
-      matches = matches.filter(x => x.date.month() < 7);
+      matches = lastMatches;
+      hasMore = firstMatches.length !== 0;
     }
 
     const allText = t('players.all');
@@ -188,15 +195,17 @@ export default class PlayerLinup extends Component {
           </tbody>
         </Table>
 
-        <div style={{textAlign: 'center'}}>
-          <button
-            className="btn btn-default"
-            onClick={() => this.setState({matchesFilter: this.state.matchesFilter === 'first' ? 'last' : 'first'})}>
-            <Icon fa="fa fa-chevron-circle-down" />
-            &nbsp;
-            {this.context.t('comp.round' + (this.state.matchesFilter === 'first' ? 'Back' : 'First'))}
-          </button>
-        </div>
+        {hasMore ? (
+          <div style={{textAlign: 'center'}}>
+            <button
+              className="btn btn-default"
+              onClick={() => this.setState({matchesFilter: this.state.matchesFilter === 'first' ? 'last' : 'first'})}>
+              <Icon fa="fa fa-chevron-circle-down" />
+              &nbsp;
+              {this.context.t('comp.round' + (this.state.matchesFilter === 'first' ? 'Back' : 'First'))}
+            </button>
+          </div>
+        ) : null}
       </div>
     );
   }
