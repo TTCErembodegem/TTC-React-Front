@@ -72,10 +72,15 @@ export default class Intro extends Component {
         {big ? (
           <div>
             <Row style={{marginTop: 25, marginBottom: 15}}>
-              <div style={{width: 770, margin: 'auto'}}>
-                <Sponsor.StoneDesign big={big} />
-                <Sponsor.Symphony big={big} style={{marginLeft: 10}} />
+              <div style={{width: 500, margin: 'auto'}}>
+                <Sponsor.Symphony big={big} />
                 <Sponsor.Vdhkeukens big={big} style={{marginLeft: 10}} />
+              </div>
+            </Row>
+            <Row style={{marginBottom: 15}}>
+              <div style={{width: 600, margin: 'auto'}}>
+                <Sponsor.KachelsTfe big={big} />
+                <Sponsor.StoneDesign big={big} style={{marginLeft: 10}} />
               </div>
             </Row>
             <Row style={{marginBottom: 15}}>
@@ -99,6 +104,9 @@ export default class Intro extends Component {
             </Col>
             <Col style={{marginTop: 20}}>
               <Sponsor.Vdhkeukens big={big} />
+            </Col>
+            <Col style={{marginTop: 20}}>
+              <Sponsor.KachelsTfe big={big} />
             </Col>
             <Col style={{marginTop: 20}}>
               <Sponsor.pongit big={big} />

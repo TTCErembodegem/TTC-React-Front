@@ -70,6 +70,7 @@ export const Vdhkeukens = props => <ImageSponsor url="http://vdhkeukens.be" img=
 export const Symphony = props => <ImageSponsor url="http://doopsuikersymphony.be" img="symphony.png" {...props} />;
 export const pongit = props => <ImageSponsor img="pongit.jpg" {...props} />;
 export const Nostech = props => <ImageSponsor url="http://www.nostech.be" img="nostech.jpg" {...props} />;
+export const KachelsTfe = props => <ImageSponsor url="http://www.kachels-tfe.be/" img="kachels-tfe.png" {...props} />;
 
 class ImageSponsor extends Component {
   static propTypes = {
