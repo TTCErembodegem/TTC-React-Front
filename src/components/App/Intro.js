@@ -71,22 +71,21 @@ export default class Intro extends Component {
         </Row>
         {big ? (
           <div>
-            <Row style={{marginTop: 25, marginBottom: 15}}>
-              <div style={{width: 500, margin: 'auto'}}>
-                <Sponsor.Symphony big={big} />
-                <Sponsor.Vdhkeukens big={big} style={{marginLeft: 10}} />
+            <Row style={{marginTop: 25, marginBottom: 15, marginLeft: -65}}>
+              <div style={{width: 650, margin: 'auto'}}>
+                <Sponsor.Symphony big={big} style={{padding: 15}} />
+                <div className="pull-right">
+                  <Sponsor.Vdhkeukens big={big} style={{paddingRight: 20}} />
+                  <br />
+                  <Sponsor.KachelsTfe big={big} style={{marginTop: 10, paddingRight: 20}} />
+                </div>
               </div>
             </Row>
             <Row style={{marginBottom: 15}}>
-              <div style={{width: 600, margin: 'auto'}}>
-                <Sponsor.KachelsTfe big={big} />
-                <Sponsor.StoneDesign big={big} style={{marginLeft: 10}} />
-              </div>
-            </Row>
-            <Row style={{marginBottom: 15}}>
-              <div style={{width: 500, margin: 'auto'}}>
+              <div style={{width: 700, margin: 'auto'}}>
                 <Sponsor.Nostech big={big} />
                 <Sponsor.pongit big={big} style={{marginLeft: 10}} />
+                <Sponsor.StoneDesign big={big} style={{marginLeft: 10, height: 110}} />
               </div>
             </Row>
           </div>
@@ -100,7 +99,7 @@ export default class Intro extends Component {
               <Sponsor.SlagerijGuy big={big} />
             </Col>
             <Col style={{marginTop: 20}}>
-              <Sponsor.Symphony big={big} />
+              <Sponsor.Symphony big={big} style={{padding: 5}} />
             </Col>
             <Col style={{marginTop: 20}}>
               <Sponsor.Vdhkeukens big={big} />
