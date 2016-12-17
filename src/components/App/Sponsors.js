@@ -1,13 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes, { connect, withViewport, withContext, withStyles } from '../PropTypes.js';
-import moment from 'moment';
-
-import Strike from '../controls/Strike.js';
-import MatchCardHeader from '../matches/Match/MatchCardHeader.js';
+import PropTypes from '../PropTypes.js';
 import Location from '../controls/Location.js';
-
-import Row from 'react-bootstrap/lib/Row';
-import Col from 'react-bootstrap/lib/Col';
 import Paper from 'material-ui/Paper';
 
 const topSponsorPaperStyle = {
@@ -23,23 +16,10 @@ const topSponsorsOnBottomPaperStyle = {
   margin: 'auto',
 };
 
-const bottomSponsorsStyleSmall = {
-  padding: 15,
-  width: '100%',
-  textAlign: 'center',
-  margin: 'auto',
-};
-
-const bottomSponsorsStyleBig = {
-  padding: 5,
-  textAlign: 'center',
-  display: 'inline-block'
-};
-
 export class BakkerijVanLierde extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
-    top: PropTypes.bool.isRequired,
+    big: PropTypes.bool.isRequired,
   };
 
   render() {
@@ -52,7 +32,7 @@ export class BakkerijVanLierde extends Component {
     };
 
     return (
-      <Paper style={this.props.top ? topSponsorPaperStyle : topSponsorsOnBottomPaperStyle}>
+      <Paper style={this.props.big ? {...topSponsorPaperStyle, width: 220} : topSponsorsOnBottomPaperStyle}>
         <Location loc={loc} t={this.context.t} />
       </Paper>
     );
@@ -62,7 +42,7 @@ export class BakkerijVanLierde extends Component {
 export class SlagerijGuy extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
-    top: PropTypes.bool.isRequired,
+    big: PropTypes.bool.isRequired,
   };
 
   render() {
@@ -74,7 +54,7 @@ export class SlagerijGuy extends Component {
       mobile: '053211359',
     };
 
-    const style = this.props.top ? {...topSponsorPaperStyle, float: 'right', width: 200} : topSponsorsOnBottomPaperStyle;
+    const style = this.props.big ? {...topSponsorPaperStyle, float: 'right', width: 200} : topSponsorsOnBottomPaperStyle;
     return (
       <Paper style={style}>
         <Location loc={loc} t={this.context.t} />
@@ -83,15 +63,17 @@ export class SlagerijGuy extends Component {
   }
 }
 
-export const StoneDesign = ({top, style}) => <ImageSponsor top={top} url="http://www.stonedesign.be" img="stonedesign.png" style={style} />;
-export const Vdhkeukens = ({top, style}) => <ImageSponsor top={top} url="http://vdhkeukens.be" img="vdhkeukens.png" style={style} />;
-export const Symphony = ({top, style}) => <ImageSponsor top={top} url="http://doopsuikersymphony.be" img="symphony.png" style={style} />;
-export const pongit = ({top, style}) => <ImageSponsor top={top} img="pongit.jpg" style={style} />;
-export const Nostech = ({top, style}) => <ImageSponsor top={top} url="http://www.nostech.be" img="nostech.jpg" style={style} />;
+
+
+export const StoneDesign = props => <ImageSponsor url="http://www.stonedesign.be" img="stonedesign.png" {...props} />;
+export const Vdhkeukens = props => <ImageSponsor url="http://vdhkeukens.be" img="vdhkeukens.png" {...props} />;
+export const Symphony = props => <ImageSponsor url="http://doopsuikersymphony.be" img="symphony.png" {...props} />;
+export const pongit = props => <ImageSponsor img="pongit.jpg" {...props} />;
+export const Nostech = props => <ImageSponsor url="http://www.nostech.be" img="nostech.jpg" {...props} />;
 
 class ImageSponsor extends Component {
   static propTypes = {
-    top: PropTypes.bool.isRequired,
+    big: PropTypes.bool.isRequired,
     url: PropTypes.string,
     img: PropTypes.string.isRequired,
     style: PropTypes.object,
@@ -101,7 +83,7 @@ class ImageSponsor extends Component {
   };
 
   render() {
-    const style = this.props.top ? bottomSponsorsStyleBig : bottomSponsorsStyleSmall;
+    const style = this.props.big ? bottomSponsorsStyleBig : bottomSponsorsStyleSmall;
     const img = <img src={'/img/sponsors/' + this.props.img} />;
     return (
       <Paper style={{...style, ...this.props.style}}>
@@ -110,3 +92,16 @@ class ImageSponsor extends Component {
     );
   }
 }
+
+const bottomSponsorsStyleBig = {
+  padding: 5,
+  textAlign: 'center',
+  display: 'inline-block'
+};
+
+const bottomSponsorsStyleSmall = {
+  padding: 15,
+  width: '100%',
+  textAlign: 'center',
+  margin: 'auto',
+};

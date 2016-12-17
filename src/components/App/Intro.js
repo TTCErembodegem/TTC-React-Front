@@ -36,57 +36,29 @@ export default class Intro extends Component {
   };
 
   render() {
-    const slagerijGuy = {
-      description: 'Slagerij Guy',
-      address: 'Erembodegem Dorp 72',
-      postalCode: 9320,
-      city: 'Erembodegem',
-      mobile: '053211359',
-    };
-
-    const bakkerijVanLierde = {
-      description: 'Brood & banket Van Lierde',
-      address: 'Hogeweg 113',
-      postalCode: 9320,
-      city: 'Erembodegem',
-      mobile: '053212720',
-    };
-
     var inClub = {
       players: this.props.players.size,
       teamsSporta: this.props.teams.filter(t => t.competition === 'Sporta').size,
       teamsVttl: this.props.teams.filter(t => t.competition === 'Vttl').size,
     };
 
-    const bottomSponsorsStyle = {
-      padding: 5,
-      textAlign: 'center',
-      display: 'inline-block'
-    };
-
-    const showTopSponsors = this.props.viewport.width > 800;
+    const big = this.props.viewport.width > 800;
     var topSponsors;
-    if (showTopSponsors) {
+    if (big) {
       topSponsors = (
         <Row style={{marginTop: 10}}>
           <div style={{width: 460, margin: 'auto'}}>
-            <Sponsor.BakkerijVanLierde top={showTopSponsors} />
-            <Sponsor.SlagerijGuy top={showTopSponsors} />
+            <Sponsor.BakkerijVanLierde big={big} />
+            <Sponsor.SlagerijGuy big={big} />
           </div>
         </Row>
       );
     }
 
-    const topSponsorsOnBottomPaperStyle = {
-      padding: 15,
-      width: 220,
-      margin: 'auto',
-    };
-
     return (
       <div>
         {topSponsors}
-        <Row style={{marginTop: showTopSponsors ? 25 : undefined}}>
+        <Row style={{marginTop: big ? 25 : undefined}}>
           <Col sm={6} style={{verticalAlign: 'top'}}>
             <h1>{this.context.t('intro.title')}</h1>
             {this.context.t('intro.text', inClub)}
@@ -97,49 +69,48 @@ export default class Intro extends Component {
             ) : <TodaysEvents {...this.props} />}
           </Col>
         </Row>
-        {showTopSponsors ? (
+        {big ? (
           <div>
             <Row style={{marginTop: 25, marginBottom: 15}}>
               <div style={{width: 770, margin: 'auto'}}>
-                <Sponsor.StoneDesign top={showTopSponsors} />
-                <Sponsor.Symphony top={showTopSponsors} style={{marginLeft: 10}} />
-                <Sponsor.Vdhkeukens top={showTopSponsors} style={{marginLeft: 10}} />
+                <Sponsor.StoneDesign big={big} />
+                <Sponsor.Symphony big={big} style={{marginLeft: 10}} />
+                <Sponsor.Vdhkeukens big={big} style={{marginLeft: 10}} />
               </div>
             </Row>
             <Row style={{marginBottom: 15}}>
               <div style={{width: 500, margin: 'auto'}}>
-                <Sponsor.Nostech top={showTopSponsors} style={{}} />
-                <Sponsor.pongit top={showTopSponsors} style={{marginLeft: 10}} />
+                <Sponsor.Nostech big={big} />
+                <Sponsor.pongit big={big} style={{marginLeft: 10}} />
               </div>
             </Row>
           </div>
-        ) : null}
-        {!showTopSponsors ? (
+        ) : (
           <Row style={{margin: 10}}>
             <Strike text={this.context.t('intro.ourSponsors')} style={{marginBottom: 5}} />
             <Col>
-              <Sponsor.BakkerijVanLierde top={showTopSponsors} />
+              <Sponsor.BakkerijVanLierde big={big} />
             </Col>
             <Col style={{marginTop: 20}}>
-              <Sponsor.SlagerijGuy top={showTopSponsors} />
+              <Sponsor.SlagerijGuy big={big} />
             </Col>
             <Col style={{marginTop: 20}}>
-              <Sponsor.Symphony top={showTopSponsors} style={{}} />
+              <Sponsor.Symphony big={big} />
             </Col>
             <Col style={{marginTop: 20}}>
-              <Sponsor.Vdhkeukens top={showTopSponsors} style={{}} />
+              <Sponsor.Vdhkeukens big={big} />
             </Col>
             <Col style={{marginTop: 20}}>
-              <Sponsor.pongit top={showTopSponsors} style={{}} />
+              <Sponsor.pongit big={big} />
             </Col>
             <Col style={{marginTop: 20}}>
-              <Sponsor.Nostech top={showTopSponsors} style={{}} />
+              <Sponsor.Nostech big={big} />
             </Col>
             <Col style={{marginTop: 20}}>
-              <Sponsor.StoneDesign top={showTopSponsors} />
+              <Sponsor.StoneDesign big={big} />
             </Col>
           </Row>
-        ) : null}
+        )}
       </div>
     );
   }
