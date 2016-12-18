@@ -9,7 +9,7 @@ import TextField from 'material-ui/TextField';
 
 import TabbedContainer from '../controls/TabbedContainer.js';
 import { Telephone, Icon, Email } from '../controls.js';
-import { PlayerCompetition, PlayerFrenoyLink } from './PlayerCard.js';
+import { PlayerAllCompetitions, PlayerFrenoyLink } from './PlayerCard.js';
 import PlayersCardGallery from './PlayersCardGallery.js';
 
 const tabEventKeys = keyMirror({
@@ -222,14 +222,15 @@ export default class Players extends Component {
 
   _renderTabAll() {
     const players = this._getAllPlayers();
+    const showCompetitionColumn = !this.props.user.playerId || this.props.viewport.width > 700;
     return (
       <Table condensed hover>
         <thead>
           <tr>
             <th>{this.context.t('player.name')}</th>
             {this.props.user.playerId ? <th>{this.context.t('player.address')}</th> : null}
-            <th className="hidden-xs">{this.context.t('common.competition')}</th>
-            <th className="hidden-xs">{this.context.t('player.style')}</th>
+            {showCompetitionColumn ? <th>{this.context.t('common.competition')}</th> : null}
+            <th className="hidden-sm hidden-xs">{this.context.t('player.style')}</th>
           </tr>
         </thead>
         <tbody>
@@ -253,12 +254,12 @@ export default class Players extends Component {
                     {ply.contact.city}
                   </td>
                 ) : null}
-                <td className="hidden-xs">
-                  <PlayerCompetition comp="Vttl" player={ply} t={this.context.t} />
-                  {ply.sporta && ply.vttl ? <br /> : null}
-                  <PlayerCompetition comp="Sporta" player={ply} t={this.context.t} />
-                </td>
-                <td className="hidden-xs">
+                {showCompetitionColumn ? (
+                  <td>
+                    <PlayerAllCompetitions player={ply} t={this.context.t} />
+                  </td>
+                ) : null}
+                <td className="hidden-sm hidden-xs">
                   {ply.style.name}
                   <br />
                   <small>{ply.style.bestStroke}</small>

@@ -57,6 +57,12 @@ PlayerCard.Competition = ({player, t}) => (
   <div style={{marginTop: 5}}>
     <strong>{t('common.competition')}</strong>
     <br />
+    <PlayerAllCompetitions player={player} t={t} />
+  </div>
+);
+
+export const PlayerAllCompetitions = ({player, t}) => (
+  <div>
     <PlayerCompetition comp="Vttl" player={player} t={t} />
     {player.vttl && player.sporta ? <br /> : null}
     <PlayerCompetition comp="Sporta" player={player} t={t} />
