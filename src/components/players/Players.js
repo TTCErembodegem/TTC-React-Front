@@ -243,6 +243,7 @@ export default class Players extends Component {
                 <td className="visible-xs">
                   <strong>{this.props.user.playerId ? ply.alias : ply.name}</strong>
                   <br />
+                  {this.props.user.playerId ? <div><Email email={ply.contact.email} /><br /></div> : null}
                   <Telephone number={ply.contact.mobile} hideIcon style={{fontSize: 10}} />
                 </td>
                 {this.props.user.playerId ? (
