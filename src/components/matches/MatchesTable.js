@@ -3,6 +3,7 @@ import PropTypes, { connect, withViewport, browserHistory } from '../PropTypes.j
 import { getPlayingStatusClass, getPlayingStatusColor } from '../../models/PlayerModel.js';
 import { util as storeUtil } from '../../store.js';
 import _ from 'lodash';
+import cn from 'classnames';
 
 import { editMatchPlayers } from '../../actions/matchActions.js';
 
@@ -14,6 +15,8 @@ import MatchVs from './Match/MatchVs.js';
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 import { TeamCaptainIcon } from '../players/PlayerCard.js';
 import { PlayerCompetitionBadge, PlayerCompetitionButton } from '../players/PlayerBadges.js';
+import MatchScore from './MatchScore.js';
+import OwnPlayer from './Match/OwnPlayer.js';
 
 function isPickedForMatch(status) {
   return status === 'Play' || status === 'Captain' || status === 'Major';
@@ -35,24 +38,17 @@ export default class MatchesTable extends Component {
     team: PropTypes.TeamModel,
     onTablePlayerSelect: PropTypes.func,
     tablePlayers: PropTypes.array,
+    striped: PropTypes.bool,
   }
   static defaultProps = {
     allowOpponentOnly: false,
     editMode: false,
     tableForm: false,
+    striped: false,
   }
   constructor(props) {
     super(props);
     this.state = {editMatch: {}, players: []};
-  }
-
-  _renderMatchPlayers(match) {
-    const players = match.getPlayerFormation();
-    return (
-      <div style={{marginBottom: 4, marginTop: -5}}>
-        {players.map(plyInfo => <PlayerCompetitionBadge plyInfo={plyInfo} competition={match.competition} style={{marginRight: 5}} />)}
-      </div>
-    );
   }
 
   _getTablePlayers() {
@@ -226,12 +222,8 @@ export default class MatchesTable extends Component {
     }
   }
 
-  _isCaptain(match) {
-    const team = match.getTeam();
-    return team.isCaptain(this.props.user.getPlayer());
-  }
   _getUserStatus(match) {
-    return this._isCaptain(match) ? 'Captain' : 'Major';
+    return this.props.user.canManageTeams() ? 'Major' : 'Captain';
   }
 
   render() {
@@ -239,9 +231,10 @@ export default class MatchesTable extends Component {
     const matchRows = [];
 
     this.props.matches.forEach((match, i) => {
-      const stripeColor = {backgroundColor: i % 2 === 0 && !this.props.tableForm ? '#f9f9f9' : undefined};
-      const displayVictoryIcon = match.scoreType === 'Won';
-      const score = match.renderScore();
+      var stripeColor = {backgroundColor: i % 2 === 0 && !this.props.tableForm ? '#f9f9f9' : undefined};
+      if (this.props.user.playerId && !this.props.striped) {
+        stripeColor.backgroundColor = match.plays(this.props.user.playerId) || match.getTeam().plays(this.props.user.playerId) ? '#f9f9f9' : undefined;
+      }
 
       var thrillerIcon;
       const team = match.getTeam();
@@ -253,93 +246,48 @@ export default class MatchesTable extends Component {
       matchRows.push(
         <tr key={match.id} style={stripeColor}>
           <td>
-            {displayVictoryIcon ? <TrophyIcon style={{marginRight: 5}} /> : null}
             {thrillerIcon}
-            {t('match.date', match.getDisplayDate())}
+            {match.getResponsiveDisplayDate(t.bind(t, 'match.date'), this.props.viewport.width)}
           </td>
           <td className="hidden-xs">{match.frenoyMatchId}</td>
           <td><MatchVs match={match} opponentOnly={this.props.allowOpponentOnly && this.props.viewport.width < 450} /></td>
           {this.props.tableForm ? null : (<td>
             {!this.props.editMode || match.isSyncedWithFrenoy ? (
-              <button className="btn btn-default" onClick={() => browserHistory.push(t.route('match', {matchId: match.id}))}>
-                {score || t('match.details')}
-              </button>
+              <ViewMatchDetailsButton match={match} t={t} />
 
-            ) : this.state.editMatch.id !== match.id && this.props.user.canEditMatchPlayers(match) ? (
-              <button
-                onClick={this._onOpenEditMatchForm.bind(this, match)}
-                className="btn btn-default pull-right"
-                style={{marginRight: 5}}
-                title={t('match.plys.tooltipOpenForm')}
-              >
-                <span className="fa-stack fa-sm">
-                  {!match.block ? (
-                    <Icon fa="fa fa-pencil-square-o fa-stack-1x" />
-                  ) : (
-                    <span>
-                      <Icon fa="fa fa-anchor fa-stack-1x" />
-                      <Icon fa="fa fa-ban fa-stack-2x text-danger" />
-                    </span>
-                  )}
-                </span>
-              </button>
+            ) : !this.props.user.canEditMatchPlayers(match) ? (
+              <CannotEditMatchIcon />
 
             ) : this.state.editMatch.id !== match.id ? (
-              <span className="fa-stack fa-sm pull-right" style={{marginRight: 8, marginTop: 5}}>
-                <Icon fa="fa fa-pencil-square-o fa-stack-1x" />
-                <Icon fa="fa fa-ban fa-stack-2x text-danger" />
-              </span>
+              <OpenMatchForEditButton onClick={this._onOpenEditMatchForm.bind(this, match)} match={match} t={t} />
 
             ) : (
-              <div className="pull-right" style={{whiteSpace: 'nowrap'}}>
-                <button
-                  className={'btn btn-default ' + (this.state.playersEdit.size !== team.getTeamPlayerCount() ? 'disabled' : '')}
-                  onClick={this._saveFormation.bind(this, {blockAlso: true, closeForm: true})}
-                  style={{marginRight: 5}}
-                  title={t('match.plys.tooltipSaveAndBlock')}
-                >
-
-                  <Icon fa="fa fa-anchor" />
-                </button>
-
-                <button
-                  className="btn btn-default"
-                  onClick={this._saveFormation.bind(this, {blockAlso: false, closeForm: true})}
-                  title={t('match.plys.tooltipSave')}
-                >
-                  <Icon fa="fa fa-floppy-o" />
-                </button>
-              </div>
+              <SaveMatchButtons
+                onSave={this._saveFormation.bind(this, {blockAlso: false, closeForm: true})}
+                onBlock={this._saveFormation.bind(this, {blockAlso: true, closeForm: true})}
+                t={t}
+              />
             )}
           </td>)}
           {this.props.tableForm ? this._renderTableEditMatchPlayers(match) : null}
         </tr>
       );
 
-      if (!this.props.tableForm) {
-        if (this.props.editMode && this.state.editMatch.id === match.id && this.props.user.canEditMatchPlayers(match)) {
-          matchRows.push(
-            <tr key={match.id + '_b'} style={stripeColor}>
-              <td colSpan={4} style={{border: 'none'}}>
-                {this._renderEditMatchPlayers()}
-              </td>
-            </tr>
-          );
-
-        } else if (match.players.size) {
-          matchRows.push(
-            <tr key={match.id + '_b'} style={stripeColor}>
-              <td colSpan={4} style={{border: 'none'}}>
-                {this._renderMatchPlayers(match)}
-              </td>
-            </tr>
-          );
-        }
+      // Display the players of the match
+      const isMatchInEdit = this.props.editMode && this.state.editMatch.id === match.id && this.props.user.canEditMatchPlayers(match);
+      if (!this.props.tableForm && match.players.size && (isMatchInEdit || match.block || match.isSyncedWithFrenoy)) {
+        matchRows.push(
+          <tr key={match.id + '_b'} style={stripeColor}>
+            <td colSpan={4} style={{border: 'none'}}>
+              {isMatchInEdit ? this._renderEditMatchPlayers() : <ReadOnlyMatchPlayers match={match} t={t} />}
+            </td>
+          </tr>
+        );
       }
     });
 
     return (
-      <Table condensed>
+      <Table>
         <thead>
           <tr>
             <th>{t('common.date')}</th>
@@ -367,3 +315,90 @@ export default class MatchesTable extends Component {
     );
   }
 }
+
+const ReadOnlyMatchPlayers = ({match, t}) => {
+  if (match.isSyncedWithFrenoy) {
+    return (
+      <div style={{marginBottom: 4, marginTop: -5}}>
+        {match.getOwnPlayers().map(ply => (
+          <div style={{display: 'inline-block', marginRight: 7}} key={ply.playerId}>
+            <OwnPlayer match={match} ply={ply} key={ply.position} />
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  const players = match.getPlayerFormation();
+  return (
+    <div style={{marginBottom: 4, marginTop: -5}}>
+      {match.block ? <MatchBlockIcon match={match} t={t} /> : null}
+      {players.map(plyInfo => <PlayerCompetitionBadge plyInfo={plyInfo} competition={match.competition} style={{marginRight: 5}} key={plyInfo.player.id} />)}
+    </div>
+  );
+}
+
+const MatchBlockIcon = ({match, t}) => (
+  <Icon fa="fa fa-anchor" title={t('match.block.' + match.block)} style={{marginRight: 8}} color={match.block !== 'Major' ? 'gray' : null} />
+);
+
+
+
+
+const ViewMatchDetailsButton = ({match, t}) => {
+  const score = match.renderScore();
+  return (
+    <a className={cn({'btn btn-default': !score, clickable: !!score})} onClick={() => browserHistory.push(t.route('match', {matchId: match.id}))}>
+      {score ? <MatchScore match={match} style={{fontSize: 16}} /> : t('match.details')}
+    </a>
+  );
+}
+
+const CannotEditMatchIcon = () => (
+  <span className="fa-stack fa-sm pull-right" style={{marginRight: 8, marginTop: 5}}>
+    <Icon fa="fa fa-pencil-square-o fa-stack-1x" />
+    <Icon fa="fa fa-ban fa-stack-2x text-danger" />
+  </span>
+);
+
+const OpenMatchForEditButton = ({onClick, match, t}) => (
+  <button
+    onClick={onClick}
+    className="btn btn-default pull-right"
+    style={{marginRight: 5}}
+    title={t('match.plys.tooltipOpenForm')}
+  >
+    <span className="fa-stack fa-sm">
+      {!match.block ? (
+        <Icon fa="fa fa-pencil-square-o fa-stack-1x" />
+      ) : (
+        <span>
+          <Icon fa="fa fa-anchor fa-stack-1x" />
+          <Icon fa="fa fa-ban fa-stack-2x text-danger" />
+        </span>
+      )}
+    </span>
+  </button>
+);
+
+const SaveMatchButtons = ({onSave, onBlock, t}) => (
+  <div className="pull-right" style={{whiteSpace: 'nowrap'}}>
+    <button
+      className="btn btn-default"
+      onClick={onBlock}
+      style={{marginRight: 5}}
+      title={t('match.plys.tooltipSaveAndBlock')}
+    >
+
+      <Icon fa="fa fa-anchor" />
+    </button>
+
+    <button
+      className="btn btn-default"
+      onClick={onSave}
+      title={t('match.plys.tooltipSave')}
+    >
+      <Icon fa="fa fa-floppy-o" />
+    </button>
+  </div>
+);

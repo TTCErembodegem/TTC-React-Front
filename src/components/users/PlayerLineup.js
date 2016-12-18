@@ -15,6 +15,7 @@ import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import Icon from '../controls/Icon.js';
 import MatchVs from '../matches/Match/MatchVs.js';
+import { getFirstOrLastMatches, getFirstOrLast, SwitchBetweenFirstAndLastRoundButton } from '../teams/Teams.js';
 
 @connect(state => ({matches: state.matches}), {selectPlayer})
 export default class PlayerLinup extends Component {
@@ -33,7 +34,7 @@ export default class PlayerLinup extends Component {
       filter: null,
       showCommentId: false,
       comment: '',
-      matchesFilter: moment().month() >= 7 ? 'first' : 'last',
+      matchesFilter: getFirstOrLast(),
     };
   }
 
@@ -49,23 +50,12 @@ export default class PlayerLinup extends Component {
       teams = teams.filter(x => x.competition === this.state.filter);
     }
 
-    const allMatchesToCome = teams.map(team => team.getMatches().toArray());
-    var matches = _.uniqBy(_.flatten(allMatchesToCome), value => value.date.format('YYYYMMDD'))
+    var allMatchesToCome = teams.map(team => team.getMatches().toArray());
+    allMatchesToCome = _.uniqBy(_.flatten(allMatchesToCome), value => value.date.format('YYYYMMDD'))
       .filter(match => moment().isBefore(match.date))
       .sort((a, b) => a.date - b.date);
 
-    const firstMatches = matches.filter(x => x.date.month() >= 7);
-    const lastMatches = matches.filter(x => x.date.month() < 7);
-
-    var hasMore;
-    if (this.state.matchesFilter === 'first' && firstMatches.length !== 0) {
-      matches = firstMatches;
-      hasMore = lastMatches.length !== 0;
-    } else {
-      matches = lastMatches;
-      hasMore = firstMatches.length !== 0;
-    }
-
+    const {matches, hasMore} = getFirstOrLastMatches(allMatchesToCome, this.state.matchesFilter);
     const allText = t('players.all');
     const activeFilter = this.state.filter || allText;
 
@@ -196,15 +186,7 @@ export default class PlayerLinup extends Component {
         </Table>
 
         {hasMore ? (
-          <div style={{textAlign: 'center'}}>
-            <button
-              className="btn btn-default"
-              onClick={() => this.setState({matchesFilter: this.state.matchesFilter === 'first' ? 'last' : 'first'})}>
-              <Icon fa="fa fa-chevron-circle-down" />
-              &nbsp;
-              {this.context.t('comp.round' + (this.state.matchesFilter === 'first' ? 'Back' : 'First'))}
-            </button>
-          </div>
+          <SwitchBetweenFirstAndLastRoundButton setState={::this.setState} matchesFilter={this.state.matchesFilter} t={this.context.t} />
         ) : null}
       </div>
     );

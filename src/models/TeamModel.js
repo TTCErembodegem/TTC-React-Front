@@ -119,6 +119,9 @@ export default class TeamModel {
 
     return players.sort(sortMappedPlayers(this.competition));
   }
+  plays(playerId) {
+    return this.players.find(ply => ply.playerId === playerId);
+  }
 
   getMatches() {
     return storeUtils.matches.getAllMatches()

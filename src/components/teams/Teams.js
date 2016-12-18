@@ -17,6 +17,25 @@ import ButtonStack from '../controls/ButtonStack.js';
 import PlayersCardGallery from '../players/PlayersCardGallery.js';
 import MatchesTable from '../matches/MatchesTable.js';
 
+export function getFirstOrLastMatches(allMatchesToCome, filter) {
+  const firstMatches = allMatchesToCome.filter(x => x.date.month() >= 7);
+  const lastMatches = allMatchesToCome.filter(x => x.date.month() < 7);
+  if (filter === 'first' && firstMatches.length !== 0) {
+    return {
+      matches: firstMatches,
+      hasMore: lastMatches.length !== 0
+    };
+  }
+  return {
+    matches: lastMatches,
+    hasMore: firstMatches.length !== 0
+  };
+}
+export function getFirstOrLast() {
+  const today = moment();
+  return today.month() >= 7 && !(today.month() === 11 && today.date() > 20) ? 'first' : 'last';
+}
+
 @connect(state => {
   return {
     config: state.config,
@@ -48,7 +67,7 @@ export default class Teams extends Component {
     super(props);
     this.state = {
       view: 'matches',
-      matchesFilter: moment().month() >= 7 ? 'first' : 'last',
+      matchesFilter: getFirstOrLast(),
       editMode: false,
       tablePlayers: this._getAlreadyPicked(props),
       tableMatches: [],
@@ -138,6 +157,7 @@ export default class Teams extends Component {
       });
     }
 
+    const {matches} = getFirstOrLastMatches(team.getMatches(), this.state.matchesFilter);
     return (
       <div>
         <div className="btn-toolbar" style={{padding: 10}}>
@@ -147,7 +167,7 @@ export default class Teams extends Component {
             activeView={this.state.view}
             onClick={view => this.setState({view})} />
 
-          {this.state.view.startsWith('matches') && this.props.user.canEditMatchesOrIsCaptain() ? (
+          {this.state.view.startsWith('matches') && this.props.user.canEditMatchesOrIsCaptain() && matches.some(m => !m.isSyncedWithFrenoy) ? (
             <div className="pull-right" style={{marginLeft: 5}}>
               {this.state.editMode && this.state.view != 'matches' ? (
                 <button className="btn btn-danger" style={{marginRight: 5}} onClick={::this._saveAndBlockAll}>
@@ -171,7 +191,7 @@ export default class Teams extends Component {
           </a>
         </div>
         <h4 style={{marginLeft: 5}}>{team.getDivisionDescription()}</h4>
-        {this._renderTabViewContent(team)}
+        {this._renderTabViewContent(team, matches)}
       </div>
     );
   }
@@ -198,22 +218,16 @@ export default class Teams extends Component {
     });
     this.setState({tableMatches: []});
   }
-  _renderTabViewContent(team) {
+  _renderTabViewContent(team, matches) {
     switch (this.state.view) {
     case 'matches':
     case 'matchesTable':
-      let matchesForTeam = team.getMatches().sort((a, b) => a.date - b.date);
-      if (this.state.matchesFilter === 'first') {
-        matchesForTeam = matchesForTeam.filter(x => x.date.month() >= 7);
-      } else {
-        matchesForTeam = matchesForTeam.filter(x => x.date.month() < 7);
-      }
-
       return (
         <div>
           <MatchesTable
-            matches={matchesForTeam}
+            matches={matches}
             allowOpponentOnly
+            striped
             user={this.props.user}
             editMode={this.state.editMode}
 
@@ -223,15 +237,7 @@ export default class Teams extends Component {
             onTablePlayerSelect={(plyInfos, match) => this.setState({tablePlayers: plyInfos, tableMatches: this.state.tableMatches.concat([match.id])})}
           />
 
-          <div style={{textAlign: 'center'}}>
-            <button
-              className="btn btn-default"
-              onClick={() => this.setState({matchesFilter: this.state.matchesFilter === 'first' ? 'last' : 'first'})}>
-              <Icon fa="fa fa-chevron-circle-down" />
-              &nbsp;
-              {this.context.t('comp.round' + (this.state.matchesFilter === 'first' ? 'Back' : 'First'))}
-            </button>
-          </div>
+          <SwitchBetweenFirstAndLastRoundButton setState={::this.setState} matchesFilter={this.state.matchesFilter} t={this.context.t} />
         </div>
       );
     case 'ranking':
@@ -265,6 +271,18 @@ export default class Teams extends Component {
     );
   }
 }
+
+export const SwitchBetweenFirstAndLastRoundButton = ({t, setState, matchesFilter}) => (
+  <div style={{textAlign: 'center'}}>
+    <button
+      className="btn btn-default"
+      onClick={() => setState({matchesFilter: matchesFilter === 'first' ? 'last' : 'first'})}>
+      <Icon fa="fa fa-chevron-circle-down" />
+      &nbsp;
+      {t('comp.round' + (matchesFilter === 'first' ? 'Back' : 'First'))}
+    </button>
+  </div>
+);
 
 const DivisionRanking = ({team, t}) => (
   <Table condensed hover>

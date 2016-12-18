@@ -5,6 +5,14 @@ import Icon from '../../controls/Icon.js';
 import Table from 'react-bootstrap/lib/Table';
 import { createFrenoyLinkByUniqueId } from '../../../models/PlayerModel.js';
 
+export const FrenoyLink = ({competition, uniqueIndex}) => {
+  const frenoyLink = createFrenoyLinkByUniqueId(competition, uniqueIndex);
+  if (!frenoyLink) {
+    return <div />;
+  }
+  return <a href={frenoyLink} target="_blank"><Icon fa="fa fa-search" /></a>;
+};
+
 @withViewport
 export default class OpponentsFormation extends Component {
   static contextTypes = PropTypes.contextTypes;
@@ -27,11 +35,10 @@ export default class OpponentsFormation extends Component {
         </thead>
         <tbody>
           {this.props.formations.map(f => {
-            const frenoyLink = createFrenoyLinkByUniqueId(this.props.competition, f.player.uniqueIndex);
             return (<tr key={f.player.uniqueIndex}>
               <td>
-                {f.player.name}
-                {frenoyLink ? <a href={frenoyLink} target="_blank" style={{marginLeft: 7}}><Icon fa="fa fa-search" /></a> : null}
+                <span style={{marginRight: 7}}>{f.player.name}</span>
+                <FrenoyLink competition={this.props.competition} uniqueIndex={f.player.uniqueIndex} />
               </td>
               <td>{f.player.ranking}</td>
               <td>{f.count}</td>

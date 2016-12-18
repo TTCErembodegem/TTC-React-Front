@@ -7,6 +7,8 @@ import PlayerModel from './PlayerModel.js';
 import { OwnClubId } from './ClubModel.js';
 import { sortPlayers, sortMappedPlayers } from './TeamModel.js';
 
+const defaultStartHour = 20;
+
 export var matchOutcome = keyMirror({
   NotYetPlayed: '',
   Won: '',
@@ -70,6 +72,20 @@ export default class MatchModel {
     }
     return this.date.format('ddd D/M HH');
   }
+  getResponsiveDisplayDate(t, viewportWidth) {
+    if (viewportWidth > 768) {
+      return t(this.getDisplayDate());
+    }
+
+    if (this.isStandardStartTime()) {
+      return this.getDisplayDate('s');
+    }
+    return t(this.date.format('D/M HH' + (this.date.minutes() ? ':mm' : '')));
+  }
+  isStandardStartTime() {
+    return !this.date.minutes() && this.date.hours() === defaultStartHour;
+  }
+
   renderOpponentTitle() {
     const club = this.getOpponentClub();
     return club.name + ' ' + this.opponent.teamCode;

@@ -12,12 +12,12 @@ const MatchVs = ({match, opponentOnly}) => {
     );
   }
 
-  const us = match.getTeam().renderOwnTeamTitle();
+  const us = <span className="label label-as-badge label-info" style={{fontSize: 14}}>{match.getTeam().renderOwnTeamTitle()}</span>;
   const separator = <Icon fa="fa fa-arrows-h" />;
   if (match.isHomeMatch) {
-    return <span><strong>{us}</strong> {separator} {them}</span>;
+    return <span>{us} {separator} {them}</span>;
   }
-  return <span>{them} {separator} <strong>{us}</strong></span>;
+  return <span>{them} {separator} {us}</span>;
 };
 
 export default MatchVs;

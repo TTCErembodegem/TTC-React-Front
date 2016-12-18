@@ -11,6 +11,9 @@ export default class MatchesWeek extends Component {
   static propTypes = {
     matches: PropTypes.MatchModelList.isRequired,
     user: PropTypes.UserModel.isRequired,
+    params: PropTypes.shape({
+      tabKey: PropTypes.string
+    }),
   }
 
   constructor(props) {
@@ -21,33 +24,52 @@ export default class MatchesWeek extends Component {
       editMode: false,
       filter: 'all',
     };
+
+    const currentWeek = this.getCurrentWeek(props);
+    if (currentWeek) {
+      this.state = Object.assign(this.state, currentWeek);
+    }
   }
 
-  componentWillReceiveProps(props) {
-    if (!this.state.fixedWeek) {
+  getCurrentWeek(props) {
+    if ((!this.state.fixedWeek || props.params.tabKey !== this.state.currentWeek) && props.matches.size) {
       const today = moment();
       const sortedMatches = props.matches.sort((a, b) => a.date - b.date);
       const currentWeekMatch = sortedMatches.find(x => x.date > today);
       const lastWeekMatch = sortedMatches.last();
       const lastWeek = lastWeekMatch ? lastWeekMatch.week : 22;
-      this.setState({
+
+      var calcedState = {
         currentWeek: currentWeekMatch ? currentWeekMatch.week : lastWeek,
         lastWeek: lastWeek,
-      });
+        fixedWeek: true
+      };
+      if (props.params.tabKey) {
+        calcedState.currentWeek = parseInt(props.params.tabKey, 10);
+      }
+      return calcedState;
+    }
+  }
+
+  componentWillReceiveProps(props) {
+    const currentWeek = this.getCurrentWeek(props);
+    if (currentWeek) {
+      this.setState(currentWeek);
     }
   }
 
   _onChangeWeek(weekDiff) {
-    this.setState({currentWeek: this.state.currentWeek + weekDiff, fixedWeek: true});
+    browserHistory.push(this.context.t.route('matchesWeek') + '/' + (this.state.currentWeek + weekDiff));
   }
 
   render() {
-    if (!this.props.matches.size) {
-      return null;
-    }
     const t = this.context.t;
 
     const matches = this.props.matches.filter(match => match.week === this.state.currentWeek);
+    if (!matches.size) {
+      return null;
+    }
+
     const selectedWeek = matches.first().date.clone();
 
     const viewsConfig = [{
@@ -86,7 +108,7 @@ export default class MatchesWeek extends Component {
             activeView={this.state.filter}
             onClick={newFilter => this.setState({filter: newFilter})} />
 
-          {this.props.user.canManageTeams() ? (
+          {this.props.user.canManageTeams() && matches.some(m => !m.isSyncedWithFrenoy) ? (
             <button onClick={() => this.setState({editMode: !this.state.editMode})} className="btn btn-default" style={{marginLeft: 5}}>
               <Icon fa="fa fa-pencil-square-o" />
             </button>

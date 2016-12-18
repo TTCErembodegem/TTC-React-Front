@@ -24,10 +24,11 @@ export default class MatchScore extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     config: PropTypes.object.isRequired,
+    setSetting: PropTypes.func.isRequired,
+
     match: PropTypes.MatchModel.isRequired,
     style: PropTypes.object,
     forceDisplay: PropTypes.bool.isRequired,
-    setSetting: PropTypes.func.isRequired,
   }
   static defaultProps = {
     forceDisplay: false

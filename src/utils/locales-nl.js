@@ -201,6 +201,10 @@ export default {
       }
     },
     match: {
+      block: {
+        Captain: 'Geblokkeerd door de kapitein',
+        Major: 'Geblokkeerd door Jelle'
+      },
       plys: {
         saveAndBlockAll: 'Bewaren en Blokkeren',
         choiceCaptain: 'OPGESTELD',
