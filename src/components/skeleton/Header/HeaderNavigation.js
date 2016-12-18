@@ -19,6 +19,21 @@ class Navigation extends Component {
     isNavOpening: PropTypes.bool.isRequired,
   }
 
+  todayTimeout = undefined;
+  constructor() {
+    super();
+    this.state = {swap: true};
+  }
+
+  componentDidMount() {
+    this.todayTimeout = setInterval(() => this.setState({swap: !this.state.swap}), 1000 * 60 * 60 * 6);
+  }
+  componentWillUnmount() {
+    if (this.todayTimeout) {
+      clearInterval(this.todayTimeout);
+    }
+  }
+
   handleClickOutside() {
     // TODO: this doesn't seem to be working on iPhone
     //       Probably need to listen to onTouchStart etc?
