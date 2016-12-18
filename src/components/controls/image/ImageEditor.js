@@ -3,6 +3,8 @@ import Slider from 'material-ui/Slider';
 import AvatarEditor from 'react-avatar-editor';
 import FlatButton from 'material-ui/FlatButton';
 
+// TODO: Check to replace with: http://blog.mmcfarland.net/react-darkroom/
+
 const ImageEditor = React.createClass({
   propTypes: {
     t: PropTypes.func.isRequired,
