@@ -150,7 +150,7 @@ export default class Teams extends Component {
       key: 'players',
       text: this.context.t('match.tabs.players')
     }];
-    if (this.props.user.playerId) {
+    if (this.props.user.playerId && this.props.viewport.width > 1100) {
       viewsConfig.splice(1, 0, {
         key: 'matchesTable',
         text: this.context.t('teamCalendar.downloadExcelFileName')
