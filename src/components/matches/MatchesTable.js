@@ -303,7 +303,7 @@ export default class MatchesTable extends Component {
             <tr>
               <td colSpan={3}>&nbsp;</td>
               {this._getTablePlayers().map((ply, index) => {
-                const played = this.props.matches.filter(match => match.players.find(mp => mp.playerId === ply.player.id && mp.status === match.block))
+                const played = this.props.matches.filter(match => this.props.tablePlayers.find(frm => frm.matchId === match.id && frm.id === ply.player.id));
                 return (
                   <td key={ply.player.id} style={{textAlign: 'center', fontWeight: 'bold'}}>{played.size}</td>
                 );
