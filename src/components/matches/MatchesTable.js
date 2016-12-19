@@ -332,7 +332,7 @@ const ReadOnlyMatchPlayers = ({match, t}) => {
   const players = match.getPlayerFormation();
   return (
     <div style={{marginBottom: 4, marginTop: -5}}>
-      {match.block ? <MatchBlockIcon match={match} t={t} /> : null}
+      {match.block && !match.isSyncedWithFrenoy ? <MatchBlockIcon match={match} t={t} /> : null}
       {players.map(plyInfo => <PlayerCompetitionBadge plyInfo={plyInfo} competition={match.competition} style={{marginRight: 5}} key={plyInfo.player.id} />)}
     </div>
   );
