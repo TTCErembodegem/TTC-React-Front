@@ -82,6 +82,7 @@ export function setNewPasswordFromGuid({guid, playerId, password}) {
 }
 
 export function adminSetNewPassword({playerId, newPassword}) {
+  if (typeof playerId === 'string') playerId = -1;
   return dispatch => {
     return http.post('/users/AdminSetNewPassword', {playerId, newPassword})
       .then(function() {
