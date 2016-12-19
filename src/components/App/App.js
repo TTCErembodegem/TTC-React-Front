@@ -38,7 +38,9 @@ export default class App extends Component {
       //paddingLeft: this.props.viewport.width < 600 ? 5 : undefined,
       //paddingRight: this.props.viewport.width < 600 ? 5 : undefined,
     };
-    if (this.props.config.get('container100PerWidth')) {
+
+    const isBigTodayMatches = this.props.config.get('container100PerWidth');
+    if (isBigTodayMatches) {
       containerStyle.width = '100%';
     }
 
@@ -56,7 +58,7 @@ export default class App extends Component {
               </Grid>
               <div className="push"></div>
             </div>
-            <Footer />
+            {!isBigTodayMatches ? <Footer /> : null}
             <Snackbar
               open={!!this.props.config.get('snackbar')}
               message={this.props.config.get('snackbar') || ''}
