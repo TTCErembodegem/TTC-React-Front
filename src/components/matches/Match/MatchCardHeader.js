@@ -11,7 +11,7 @@ import { Card, CardHeader } from 'material-ui/Card';
 const daysAgoBackFullDate = 7;
 
 const thrillerIconWith = 25;
-const ThrillerIconSpan = <span style={{width: thrillerIconWith, float: 'left'}}>&nbsp;</span>;
+const ThrillerIconSpan = <span key="1" style={{width: thrillerIconWith, float: 'left'}}>&nbsp;</span>;
 
 // BigMatchCardHeader == MatchesToday on Club monitor
 export class BigMatchCardHeader extends Component {
@@ -21,7 +21,7 @@ export class BigMatchCardHeader extends Component {
     children: PropTypes.node,
     user: PropTypes.UserModel.isRequired,
     isOpen: PropTypes.bool.isRequired,
-    forceEdit: PropTypes.bool.isRequired,
+    forceEdit: PropTypes.bool,
   }
 
   render() {
@@ -59,7 +59,7 @@ export default class SmallMatchCardHeader extends Component {
     children: PropTypes.node,
     user: PropTypes.UserModel.isRequired,
     isOpen: PropTypes.bool.isRequired,
-    forceEdit: PropTypes.bool.isRequired,
+    forceEdit: PropTypes.bool,
     onOpen: PropTypes.func,
     noScoreEdit: PropTypes.bool,
     width: PropTypes.number,
@@ -89,7 +89,7 @@ class MatchCardHeader extends Component {
     children: PropTypes.node,
     user: PropTypes.UserModel.isRequired,
     isOpen: PropTypes.bool.isRequired,
-    forceEdit: PropTypes.bool.isRequired,
+    forceEdit: PropTypes.bool,
     onOpen: PropTypes.func.isRequired,
     noScoreEdit: PropTypes.bool,
     width: PropTypes.number,
@@ -110,7 +110,7 @@ class MatchCardHeader extends Component {
     if (!smallAndScoring) {
       // The date and scoring form overlapped on small devices
       // --> ScoreForm is on Today matches, so displaying the date is not really necessary
-      subtitle.push(this.context.t('match.date', match.getDisplayDate()));
+      subtitle.push(<span key="2">{this.context.t('match.date', match.getDisplayDate())}</span>);
     }
 
     if (match.comments.size || match.description) {

@@ -5,6 +5,8 @@ import * as matchActions from '../../../actions/matchActions.js';
 import MatchScore from '../MatchScore.js';
 import Icon from '../../controls/Icon.js';
 
+const scoreOrDefault = match => match.score || {home: 0, out: 0};
+
 @connect(() => ({}), matchActions)
 export default class MatchForm extends Component {
   static contextTypes = PropTypes.contextTypes;
@@ -15,17 +17,22 @@ export default class MatchForm extends Component {
     updateScore: PropTypes.func.isRequired,
     big: PropTypes.bool,
   }
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       useInput: false,
       inputScore: '',
+      currentScore: scoreOrDefault(props.match)
     };
+    this._onUpdateScoreDebounced = _.debounce(this._onUpdateScoreDebounced, 1000);
+  }
+  componentWillReceiveProps(nextProps) {
+    this.setState({currentScore: scoreOrDefault(nextProps.match)});
   }
 
   render() {
     const match = this.props.match;
-    const score = match.score || {home: 0, out: 0};
+    const score = this.state.currentScore;
     const isEditable = this.props.user.canChangeMatchScore(match);
 
     if (this.state.useInput) {
@@ -73,9 +80,13 @@ export default class MatchForm extends Component {
   }
 
   _onUpdateScore(matchScore, e) {
-    this.props.updateScore(matchScore);
     e.stopPropagation();
     e.preventDefault();
+    this.setState({currentScore: matchScore});
+    this._onUpdateScoreDebounced(matchScore);
+  }
+  _onUpdateScoreDebounced(matchScore) {
+    this.props.updateScore(matchScore).then(() => this.setState({currentScore: scoreOrDefault(this.props.match)}));
   }
 }
 
