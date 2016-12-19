@@ -59,7 +59,7 @@ export default class Scoresheet extends Component {
               <th colSpan={2}>{this.props.match.frenoyMatchId}</th>
               <th>{this.props.t('comp.vttl.uniqueIndex')}</th>
               <th>{isSmall ? '' : this.props.t('comp.rankingIndex')}</th>
-              <th>{isSmall ? '' : this.props.t('comp.vttl.index')}</th>
+              <th>{isSmall ? '' : this.props.t('comp.index')}</th>
               <th>{isSmall ? '' : this.props.t('comp.ranking')}</th>
             </tr>
           </thead>
