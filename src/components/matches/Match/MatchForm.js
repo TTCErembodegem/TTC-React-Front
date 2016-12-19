@@ -15,21 +15,41 @@ export default class MatchForm extends Component {
     updateScore: PropTypes.func.isRequired,
     big: PropTypes.bool,
   }
+  constructor() {
+    super();
+    this.state = {
+      useInput: false,
+      inputScore: '',
+    };
+  }
 
   render() {
     const match = this.props.match;
     const score = match.score || {home: 0, out: 0};
     const isEditable = this.props.user.canChangeMatchScore(match);
 
+    if (this.state.useInput) {
+      return (
+        <form>
+        <div className="form-group">
+          <input onChange={e => this.setState({inputScore: e.target.value})} placeholder="xx-xx" style={{width: 70, height: 30}} />
+          <button type="button" className="btn btn-default" onClick={() => this._onInputScoreUpdate()} style={{marginLeft: 7}}>
+            <Icon fa="fa fa-floppy-o" />
+          </button>
+        </div>
+        </form>
+      );
+    }
+
     return (
-      <div style={{width: this.props.big ? 250 : 170}}>
+      <div style={{width: this.props.big ? 280 : 175}}>
         {isEditable ? <MatchManipulation big={this.props.big}
           style={{float: 'left', marginRight: 5}}
           plusClick={this._onUpdateScore.bind(this, {matchId: match.id, home: score.home + 1, out: score.out})}
           minClick={this._onUpdateScore.bind(this, {matchId: match.id, home: score.home - 1, out: score.out})} />
         : null}
 
-        <div style={{display: 'inline'}}>
+        <div style={{display: 'inline'}} onClick={() => this.setState({useInput: !this.state.useInput})}>
           <MatchScore match={match} forceDisplay={true} style={{fontSize: this.props.big ? 46 : 24}} />
         </div>
 
@@ -41,6 +61,15 @@ export default class MatchForm extends Component {
 
       </div>
     );
+  }
+
+  _onInputScoreUpdate() {
+    const newScores = this.state.inputScore.split('-');
+    if (newScores.length === 2) {
+      const [home, out] = newScores.map(n => parseInt(n.trim(), 10));
+      this.props.updateScore({matchId: this.props.match.id, home, out});
+    }
+    this.setState({useInput: false});
   }
 
   _onUpdateScore(matchScore, e) {

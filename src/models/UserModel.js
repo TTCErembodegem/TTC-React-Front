@@ -72,7 +72,7 @@ export default class UserModel {
     return this.playsIn(teamId) || this.can(security.CAN_EDITALLREPORTS);
   }
   canChangeMatchScore(match) {
-    if (match.scoreType !== 'BeingPlayed') {
+    if (match.isSyncedWithFrenoy) {
       return false;
     }
     return this.playsIn(match.teamId) || this.isAdmin() || match.players.find(p => p.playerId === this.playerId);

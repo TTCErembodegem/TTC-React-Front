@@ -82,9 +82,6 @@ export default class MatchModel {
     }
     return t(this.date.format('D/M HH' + (this.date.minutes() ? ':mm' : '')));
   }
-  isStandardStartTime() {
-    return !this.date.minutes() && this.date.hours() === defaultStartHour;
-  }
 
   renderOpponentTitle() {
     const club = this.getOpponentClub();
@@ -110,6 +107,13 @@ export default class MatchModel {
     console.error('MatchModel.getClub passed ' + which, 'expected home or away.'); // eslint-disable-line
   }
 
+  isStandardStartTime() {
+    return !this.date.minutes() && this.date.hours() === defaultStartHour;
+  }
+  isBeingPlayed() {
+    const diff = moment.duration(moment().diff(this.date)).asHours();
+    return Math.abs(diff) < 10;
+  }
   won(opponent) {
     if (this.score.home === this.score.out) {
       return false;

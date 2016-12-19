@@ -21,6 +21,7 @@ export class BigMatchCardHeader extends Component {
     children: PropTypes.node,
     user: PropTypes.UserModel.isRequired,
     isOpen: PropTypes.bool.isRequired,
+    forceEdit: PropTypes.bool.isRequired,
   }
 
   render() {
@@ -58,6 +59,7 @@ export default class SmallMatchCardHeader extends Component {
     children: PropTypes.node,
     user: PropTypes.UserModel.isRequired,
     isOpen: PropTypes.bool.isRequired,
+    forceEdit: PropTypes.bool.isRequired,
     onOpen: PropTypes.func,
     noScoreEdit: PropTypes.bool,
     width: PropTypes.number,
@@ -87,6 +89,7 @@ class MatchCardHeader extends Component {
     children: PropTypes.node,
     user: PropTypes.UserModel.isRequired,
     isOpen: PropTypes.bool.isRequired,
+    forceEdit: PropTypes.bool.isRequired,
     onOpen: PropTypes.func.isRequired,
     noScoreEdit: PropTypes.bool,
     width: PropTypes.number,
@@ -97,23 +100,21 @@ class MatchCardHeader extends Component {
     const match = this.props.match;
     const iPlay = this.props.user.playsIn(match.teamId);
 
+    const scoreFormVisible = !this.props.noScoreEdit && (match.isBeingPlayed() || this.props.forceEdit) && this.props.user.canChangeMatchScore(this.props.match);
+    const scoreFormInHeader = !!this.props.routed;
+    const smallAndScoring = scoreFormVisible && this.props.width < 480;
+
     var subtitle = [];
     subtitle.push(ThrillerIconSpan);
-    subtitle.push(this.context.t('match.date', match.getDisplayDate()));
-    // if (match.date.isSame(moment(), 'day') && match.isHomeMatch) {
-    //   subtitle.push(<span key="2">{this.context.t('match.date', match.getDisplayDate())}</span>);
-    // } else {
-    //   subtitle.push(
-    //     <span key="2">{match.date > moment() || match.date < moment().add(-daysAgoBackFullDate, 'day') ?
-    //       this.context.t('match.date', match.getDisplayDate())
-    //       : match.date.fromNow()}
-    //     </span>
-    //   );
-    // }
+
+    if (!smallAndScoring) {
+      // The date and scoring form overlapped on small devices
+      // --> ScoreForm is on Today matches, so displaying the date is not really necessary
+      subtitle.push(this.context.t('match.date', match.getDisplayDate()));
+    }
 
     if (match.comments.size || match.description) {
       const hasNewComment = this.props.config.get('newMatchComment' + match.id);
-      // TODO: on small devices with big matchform, the new msg indicator is below the + of the matchform
       subtitle.push(
         <span key="3" style={{marginLeft: 9, color: hasNewComment ? '#E3170D' : '#d3d3d3'}}>
           {match.comments.size ? <small>{match.comments.size}</small> : null}
@@ -122,12 +123,8 @@ class MatchCardHeader extends Component {
       );
     }
 
-    const scoreFormVisible = !this.props.noScoreEdit && this.props.user.canChangeMatchScore(this.props.match);
-    const scoreFormInHeader = !!this.props.routed;
-
     var matchFormStyle;
-    const small = scoreFormVisible && this.props.width < 480;
-    if (small) {
+    if (smallAndScoring) {
       matchFormStyle = {position: 'absolute', top: 50, right: 25};
     } else {
       matchFormStyle = {position: 'absolute', top: 23, right: 25};
@@ -149,7 +146,7 @@ class MatchCardHeader extends Component {
         <CardHeader
           title={this._renderTitle(match)}
           subtitle={subtitle}
-          style={{height: small ? 100 : undefined, padding: 15}}
+          style={{height: smallAndScoring ? 100 : undefined, padding: 15}}
           textStyle={{padding: 0}}
           showExpandableButton={false}
           actAsExpander={!this.props.isOpen}

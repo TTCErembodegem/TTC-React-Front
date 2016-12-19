@@ -123,7 +123,14 @@ export default class MatchCard extends Component {
     }];
 
     return (
-      <HeaderComponent {...this.props} backgroundColor="#fafafa" isOpen={this.props.isOpen} style={{margin: 50}} config={this.props.config}>
+      <HeaderComponent
+        {...this.props}
+        backgroundColor="#fafafa"
+        isOpen={this.props.isOpen}
+        style={{margin: 50}}
+        config={this.props.config}
+        forceEdit={this.state.forceEditPlayers}
+      >
         <CardText expandable={true} style={{paddingTop: 0, paddingLeft: 5, paddingRight: 5}}>
           <TabbedContainer
             defaultTabKey={tabEventKeys.players}
@@ -147,8 +154,9 @@ export default class MatchCard extends Component {
     return isAllowedToEdit && !match.isSyncedWithFrenoy ? (
       <Icon fa="fa fa-pencil-square-o" onClick={::this._onStartEditPlayers} className="match-card-tab-icon" />) : null;
   }
-  _onStartEditPlayers() {
+  _onStartEditPlayers(event) {
     this.setState({forceEditPlayers: !this.state.forceEditPlayers});
+    event.stopPropagation();
   }
   _onTabSelect(eventKey) {
     if (eventKey === tabEventKeys.report) {
