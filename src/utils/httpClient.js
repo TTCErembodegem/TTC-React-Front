@@ -53,7 +53,7 @@ const HttpClient = {
     .catch(err => {
       if (err.status === 408) {
         // 408 Request Timeout: Usually mysql_max_connections = retry
-        return Promise.delay(100).then(() => HttpClient.get(path, qs));
+        return Promise.delay(300).then(() => HttpClient.get(path, qs));
       } else {
         return Promise.reject(err);
       }
@@ -83,7 +83,7 @@ const HttpClient = {
     .catch(err => {
       if (err.status === 408) {
         // 408 Request Timeout: Usually mysql_max_connections = retry
-        return Promise.delay(100).then(() => HttpClient.post(url, data));
+        return Promise.delay(300).then(() => HttpClient.post(url, data));
       } else {
         return Promise.reject(err);
       }
