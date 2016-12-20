@@ -155,8 +155,9 @@ export default class MatchCard extends Component {
       <Icon fa="fa fa-pencil-square-o" onClick={::this._onStartEditPlayers} className="match-card-tab-icon" />) : null;
   }
   _onStartEditPlayers(event) {
-    this.setState({forceEditPlayers: !this.state.forceEditPlayers});
     event.stopPropagation();
+    event.preventDefault();
+    this.setState({forceEditPlayers: !this.state.forceEditPlayers});
   }
   _onTabSelect(eventKey) {
     if (eventKey === tabEventKeys.report) {
