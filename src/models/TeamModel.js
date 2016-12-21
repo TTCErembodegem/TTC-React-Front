@@ -8,35 +8,6 @@ export const teamPlayerType = {
 };
 
 
-class TeamFrenoyModel {
-  constructor(frenoy, team) {
-    this.divisionId = frenoy.divisionId;
-    this.linkId = frenoy.linkId;
-    this.teamId = frenoy.teamId;
-    this.seasonId = team.year - 2000 + 1;
-
-    this.teamCompetition = team.competition;
-  }
-
-  getUrl(type) {
-    const season = this.seasonId;
-    const linkId = this.linkId;
-    if (this.teamCompetition === 'Vttl') {
-      if (type === 'results') {
-        return `http://competitie.vttl.be/index.php?menu=4&season=${season}&province=5&club_id=282&perteam=1&div_id=${linkId}`;
-      } else if (type === 'ranking') {
-        return `http://competitie.vttl.be/index.php?menu=5&season=${season}&div_id=${linkId}`;
-      }
-    } else if (this.teamCompetition === 'Sporta') {
-      if (type === 'results') {
-        return `http://ttonline.sporta.be/competitie/index.php?menu=4&season=${season}&province=4&club_id=37&perteam=1&div_id=${linkId}`;
-      } else if (type === 'ranking') {
-        return `http://ttonline.sporta.be/competitie/index.php?menu=5&season=${season}&province=4&club_id=37&perteam=1&div_id=${linkId}`;
-      }
-    }
-  }
-}
-
 export default class TeamModel {
   constructor(json) {
     this.competition = json.competition;
@@ -135,6 +106,39 @@ export default class TeamModel {
     return this.getDivisionRanking().position >= (this.ranking.length - 2);
   }
 }
+
+
+
+class TeamFrenoyModel {
+  constructor(frenoy, team) {
+    this.divisionId = frenoy.divisionId;
+    this.linkId = frenoy.linkId;
+    this.teamId = frenoy.teamId;
+    this.seasonId = team.year - 2000 + 1;
+
+    this.teamCompetition = team.competition;
+  }
+
+  getUrl(type) {
+    const season = this.seasonId;
+    const linkId = this.linkId;
+    if (this.teamCompetition === 'Vttl') {
+      if (type === 'results') {
+        return `http://competitie.vttl.be/index.php?menu=4&season=${season}&province=5&club_id=282&perteam=1&div_id=${linkId}`;
+      } else if (type === 'ranking') {
+        return `http://competitie.vttl.be/index.php?menu=5&season=${season}&div_id=${linkId}`;
+      }
+    } else if (this.teamCompetition === 'Sporta') {
+      if (type === 'results') {
+        return `http://ttonline.sporta.be/competitie/index.php?menu=4&season=${season}&province=4&club_id=37&perteam=1&div_id=${linkId}`;
+      } else if (type === 'ranking') {
+        return `http://ttonline.sporta.be/competitie/index.php?menu=5&season=${season}&province=4&club_id=37&perteam=1&div_id=${linkId}`;
+      }
+    }
+  }
+}
+
+
 
 export function sortPlayers(competition) {
   return (plyA, plyB) => {

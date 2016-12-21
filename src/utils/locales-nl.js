@@ -318,9 +318,15 @@ export default {
       matchesDraw: 'Gelijk',
       points: 'Punten',
 
+      matchesWon: 'Overwinningen',
+      matchesDraw: 'Gelijk gespeeld',
+      matchesLost: 'Verloren',
+
       viewMain: 'Overzicht',
       viewMatches: 'Matchen',
       viewRanking: 'Rangschikking',
+      playersPicked: 'Opstelling',
+      individual: 'Individueel',
       frenoyResults: 'Frenoy',
     },
     facts: require('./locales-nl-facts.js')

@@ -6,13 +6,15 @@ import Immutable from 'immutable';
 import http from '../../utils/httpClient.js';
 
 import TabbedContainer from '../controls/TabbedContainer.js';
-import Table from 'react-bootstrap/lib/Table';
 
 import { OwnClubId } from '../../models/ClubModel.js';
 import { util as storeUtil } from '../../store.js';
 import { editMatchPlayers } from '../../actions/matchActions.js';
 
-import Icon from '../controls/Icon.js';
+import DivisionRanking from './DivisionRanking.js';
+import TeamOverview from './TeamOverview.js';
+import TeamHeader, { TeamTabTitle } from './TeamHeader.js';
+import Icon, { TrophyIcon, Badgy } from '../controls/Icon.js';
 import ButtonStack from '../controls/ButtonStack.js';
 import PlayersCardGallery from '../players/PlayersCardGallery.js';
 import MatchesTable from '../matches/MatchesTable.js';
@@ -66,7 +68,7 @@ export default class Teams extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      view: 'matches',
+      view: 'main',
       matchesFilter: getFirstOrLast(),
       editMode: false,
       tablePlayers: this._getAlreadyPicked(props),
@@ -116,19 +118,8 @@ export default class Teams extends Component {
       })
       .then(() => this.setState({isDownloading: false}));
   }
-
-  _renderOwnTeamPosition(team) {
-    var positionClassName;
-    if (team.isTopper()) {
-      positionClassName = 'match-won';
-    } else if (team.isInDegradationZone()) {
-      positionClassName = 'match-lost';
-    } else {
-      positionClassName = 'label-default';
-    }
-
-    const ranking = team.getDivisionRanking();
-    return <span className={cn('label label-as-badge ' + positionClassName)}>{ranking.position}</span>;
+  _isSmall() {
+    return this.props.viewport.width < 700;
   }
 
   _renderTabContent(teamCode) {
@@ -137,10 +128,10 @@ export default class Teams extends Component {
       return null;
     }
 
-    var viewsConfig = [/*{
+    var viewsConfig = [{
       key: 'main',
       text: this.context.t('teamCalendar.viewMain'),
-    }, */{
+    }, {
       key: 'matches',
       text: this.context.t('teamCalendar.viewMatches')
     }, {
@@ -151,9 +142,9 @@ export default class Teams extends Component {
       text: this.context.t('match.tabs.players')
     }];
     if (this.props.user.playerId && this.props.viewport.width > 1100) {
-      viewsConfig.splice(1, 0, {
+      viewsConfig.splice(2, 0, {
         key: 'matchesTable',
-        text: this.context.t('teamCalendar.downloadExcelFileName')
+        text: this.context.t('teamCalendar.playersPicked')
       });
     }
 
@@ -163,7 +154,7 @@ export default class Teams extends Component {
         <div className="btn-toolbar" style={{padding: 10}}>
           <ButtonStack
             config={viewsConfig}
-            small={this.props.viewport.width < 700}
+            small={this._isSmall()}
             activeView={this.state.view}
             onClick={view => this.setState({view})} />
 
@@ -190,7 +181,7 @@ export default class Teams extends Component {
             <button className="btn btn-default">{this.context.t('teamCalendar.frenoyResults')}</button>
           </a>
         </div>
-        <h4 style={{marginLeft: 5}}>{team.getDivisionDescription()}</h4>
+        <TeamHeader team={team} t={this.context.t} showRanking={!this._isSmall()} />
         {this._renderTabViewContent(team, matches)}
       </div>
     );
@@ -220,6 +211,8 @@ export default class Teams extends Component {
   }
   _renderTabViewContent(team, matches) {
     switch (this.state.view) {
+    case 'main':
+      return <TeamOverview team={team} t={this.context.t} user={this.props.user} />;
     case 'matches':
     case 'matchesTable':
       return (
@@ -245,16 +238,17 @@ export default class Teams extends Component {
     case 'players':
       return <PlayersCardGallery players={Immutable.List(team.getPlayers().map(x => x.player))} />;
     default:
-      return <div>summary</div>;
+      return <div />;
     }
   }
 
   render() {
+    const t = this.context.t;
     const tabConfig = this.props.teams.filter(team => team.competition === this._getCompetition()).toArray().map(team => {
       return {
         key: team.teamCode,
-        title: team.renderOwnTeamTitle(),
-        headerChildren: this._renderOwnTeamPosition(team),
+        title: '',
+        headerChildren: <TeamTabTitle team={team} t={t} showRanking={this._isSmall()} />,
       };
     });
 
@@ -265,7 +259,7 @@ export default class Teams extends Component {
           defaultTabKey={this.getDefaultTeam()}
           tabKeys={tabConfig}
           tabRenderer={::this._renderTabContent}
-          route={{base: this.context.t.route('teams', {competition: this.props.params.competition})}}
+          route={{base: t.route('teams', {competition: this.props.params.competition})}}
           widthTreshold={750} />
       </div>
     );
@@ -282,34 +276,4 @@ export const SwitchBetweenFirstAndLastRoundButton = ({t, setState, matchesFilter
       {t('comp.round' + (matchesFilter === 'first' ? 'Back' : 'First'))}
     </button>
   </div>
-);
-
-const DivisionRanking = ({team, t}) => (
-  <Table condensed hover>
-    <thead>
-      <tr>
-        <th>{t('teamCalendar.position')}</th>
-        <th>{t('teamCalendar.name')}</th>
-        <th className="hidden-xs">{t('teamCalendar.matchesWon')}</th>
-        <th className="hidden-xs">{t('teamCalendar.matchesLost')}</th>
-        <th className="hidden-xs">{t('teamCalendar.matchesDraw')}</th>
-        <th>{t('teamCalendar.points')}</th>
-      </tr>
-    </thead>
-    <tbody>
-      {team.ranking.map(teamRanking => (
-        <tr
-          className={cn({'match-won': teamRanking.clubId === OwnClubId, 'accentuate': teamRanking.clubId === OwnClubId})}
-          key={teamRanking.clubId + teamRanking.teamCode}
-        >
-          <td>{teamRanking.position}</td>
-          <td>{storeUtil.getClub(teamRanking.clubId).name + ' ' + teamRanking.teamCode}</td>
-          <td className="hidden-xs">{teamRanking.gamesWon}</td>
-          <td className="hidden-xs">{teamRanking.gamesLost}</td>
-          <td className="hidden-xs">{teamRanking.gamesDraw}</td>
-          <td>{teamRanking.points}</td>
-        </tr>
-      ))}
-    </tbody>
-  </Table>
 );
