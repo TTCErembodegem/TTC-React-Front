@@ -65,12 +65,14 @@ export default class MatchesWeek extends Component {
   render() {
     const t = this.context.t;
 
-    const matches = this.props.matches.filter(match => match.week === this.state.currentWeek);
-    if (!matches.size) {
+    const selectedWeekMatch = this.props.matches.find(match => match.week === this.state.currentWeek);
+    if (!selectedWeekMatch) {
       return null;
     }
 
-    const selectedWeek = matches.first().date.clone();
+    const weekStart = selectedWeekMatch.date.clone().startOf('week');
+    const weekEnd = selectedWeekMatch.date.clone().endOf('week');
+    const matches = this.props.matches.filter(match => match.week === this.state.currentWeek || match.date.isBetween(weekStart, weekEnd));
 
     const viewsConfig = [{
       key: 'all',
@@ -93,9 +95,9 @@ export default class MatchesWeek extends Component {
           {t('match.week')}&nbsp;
           {this.state.currentWeek}
           :&nbsp;
-          {selectedWeek.startOf('week').format('D/M')}
+          {weekStart.format('D/M')}
             &nbsp;-&nbsp;
-          {selectedWeek.endOf('week').format('D/M')}
+          {weekEnd.format('D/M')}
           {this.state.currentWeek < this.state.lastWeek ? (
             <Icon fa="fa fa-arrow-right" style={{marginLeft: 10}} onClick={::this._onChangeWeek.bind(this, 1)} />
           ) : null}
