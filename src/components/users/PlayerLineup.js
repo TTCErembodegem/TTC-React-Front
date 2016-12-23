@@ -133,7 +133,7 @@ export default class PlayerLinup extends Component {
                   <MatchVs match={match} />
 
                   {this.state.showCommentId !== match.id && !match.block ? (
-                    <Button onClick={() => this.setState({showCommentId: match.id, comment: matchPlayer ? matchPlayer.statusNote : ''})} className="visible-xs">
+                    <Button onClick={() => this.setState({showCommentId: match.id, comment: matchPlayer ? matchPlayer.statusNote : ''})} className="visible-xs" style={{marginTop: 8}}>
                       <Icon fa="fa fa-comment-o" />
                     </Button>
                   ) : null}
