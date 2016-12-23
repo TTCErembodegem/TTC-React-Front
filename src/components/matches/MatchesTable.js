@@ -348,7 +348,7 @@ const ViewMatchDetailsButton = ({match, t}) => {
   const score = match.renderScore();
   return (
     <a className={cn({'btn btn-default': !score, clickable: !!score})} onClick={() => browserHistory.push(t.route('match', {matchId: match.id}))}>
-      {score ? <MatchScore match={match} style={{fontSize: 16}} /> : t('match.details')}
+      {score ? <MatchScore match={match} style={{fontSize: 16}} showComments /> : t('match.details')}
     </a>
   );
 }

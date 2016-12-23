@@ -29,6 +29,7 @@ export default class MatchScore extends Component {
     match: PropTypes.MatchModel.isRequired,
     style: PropTypes.object,
     forceDisplay: PropTypes.bool.isRequired,
+    showComments: PropTypes.bool,
   }
   static defaultProps = {
     forceDisplay: false
@@ -88,6 +89,7 @@ export default class MatchScore extends Component {
         <span>
           {classColor === 'match-won' && !match.isDerby ? <TrophyIcon style={{marginRight: 7, marginTop: 4, fontWeight: 'normal'}} color="#FFE568" /> : null}
           {score.home + ' - ' + score.out}
+          {this.props.showComments && (match.comments.size || match.description) ? <Icon fa="fa fa-comment-o" style={{marginLeft: 8}} /> : null}
         </span>
       </span>
     );
