@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import Icon from './Icon.js';
+import { Icon } from './Icon.js';
 
 export function displayFormat(n) {
   if (!n) {

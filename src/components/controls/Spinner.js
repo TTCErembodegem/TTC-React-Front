@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import CircularProgress from 'material-ui/CircularProgress';
-import Icon from './Icon.js';
+import { Icon } from './Icon.js';
 
 export default class Spinner extends Component {
   static defaultProps = {

@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import cn from 'classnames';
 
-export default class Icon extends Component {
+export class Icon extends Component {
   static propTypes = {
     fa: PropTypes.string.isRequired,
     color: PropTypes.string,

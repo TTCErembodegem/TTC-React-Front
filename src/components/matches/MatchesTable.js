@@ -9,7 +9,7 @@ import { editMatchPlayers } from '../../actions/matchActions.js';
 import Table from 'react-bootstrap/lib/Table';
 import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
 import Button from 'react-bootstrap/lib/Button';
-import Icon, { TrophyIcon, ThrillerIcon } from '../controls/Icon.js';
+import { Icon, TrophyIcon, ThrillerIcon } from '../controls';
 import MatchVs from './Match/MatchVs.js';
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 import { TeamCaptainIcon } from '../players/PlayerCard.js';
@@ -357,7 +357,7 @@ const ViewMatchDetailsButton = ({match, t}) => {
   );
 }
 
-const CannotEditMatchIcon = () => (
+export const CannotEditMatchIcon = () => (
   <span className="fa-stack fa-sm pull-right" style={{marginRight: 8, marginTop: 5}}>
     <Icon fa="fa fa-pencil-square-o fa-stack-1x" />
     <Icon fa="fa fa-ban fa-stack-2x text-danger" />

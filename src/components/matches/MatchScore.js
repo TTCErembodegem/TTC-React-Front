@@ -4,7 +4,7 @@ import PropTypes, { connect } from '../PropTypes.js';
 import cn from 'classnames';
 
 import { setSetting } from '../../actions/configActions.js';
-import Icon, { TrophyIcon } from '../controls/Icon.js';
+import { Icon, TrophyIcon } from '../controls/Icon.js';
 
 function getClassName(isHomeMatch, home, out) {
   if (home === out) {

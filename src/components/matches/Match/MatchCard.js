@@ -5,9 +5,7 @@ import { OwnClubId } from '../../../models/ClubModel.js';
 import * as matchActions from '../../../actions/matchActions.js';
 import { setSetting } from '../../../actions/configActions.js';
 
-import TabbedContainer from '../../controls/TabbedContainer.js';
-import Spinner from '../../controls/Spinner.js';
-import Icon from '../../controls/Icon.js';
+import { Icon, Spinner, TabbedContainer } from '../../controls';
 import { CardText } from 'material-ui/Card';
 
 import MatchCardHeader, { BigMatchCardHeader } from './MatchCardHeader.js';

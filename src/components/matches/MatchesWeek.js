@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes, { connect, browserHistory } from '../PropTypes.js';
 import moment from 'moment';
-import Icon from '../controls/Icon.js';
+import { Icon, ButtonStack } from '../controls';
 import MatchesTable from './MatchesTable.js';
-import ButtonStack from '../controls/ButtonStack.js';
 
 @connect(state => ({matches: state.matches, user: state.user}))
 export default class MatchesWeek extends Component {

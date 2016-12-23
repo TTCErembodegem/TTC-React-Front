@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes, { withViewport} from '../../PropTypes.js';
 
-import Icon from '../../controls/Icon.js';
+import { Icon } from '../../controls/Icon.js';
 import Table from 'react-bootstrap/lib/Table';
 import { createFrenoyLinkByUniqueId } from '../../../models/PlayerModel.js';
 

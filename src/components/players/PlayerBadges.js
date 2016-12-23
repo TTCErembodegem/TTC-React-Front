@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from '../PropTypes.js';
 import { getPlayingStatusClass, getPlayingStatusColor } from '../../models/PlayerModel.js';
 
-import Icon from '../controls/Icon.js';
+import { Icon } from '../controls/Icon.js';
 
 export class PlayerCompetitionBadge extends Component {
   static propTypes = {

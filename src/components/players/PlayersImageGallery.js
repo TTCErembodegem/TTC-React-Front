@@ -10,8 +10,7 @@ import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
 
-import Icon from '../controls/Icon.js';
-import Telephone from '../controls/Telephone.js';
+import { Icon, Telephone } from '../controls';
 import PlayerPlayingStyle from './PlayerPlayingStyle.js';
 import PlayerImage from './PlayerImage.js';
 import PlayerAvatar from './PlayerAvatar.js';

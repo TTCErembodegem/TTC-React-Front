@@ -7,8 +7,7 @@ import Table from 'react-bootstrap/lib/Table';
 import Button from 'react-bootstrap/lib/Button';
 import TextField from 'material-ui/TextField';
 
-import Icon from '../controls/Icon.js';
-import ButtonStack from '../controls/ButtonStack.js';
+import { Icon, ButtonStack } from '../controls';
 import AdminPlayerForm from './AdminPlayerForm.js';
 import AdminChangePassword from './AdminChangePassword.js';
 

@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 
-import Icon from './Icon.js';
+import { Icon } from './Icon.js';
 import Telephone from './Telephone.js';
 
 const Location = ({loc, t}) => (

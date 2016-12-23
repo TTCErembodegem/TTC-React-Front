@@ -1,5 +1,5 @@
 import React from 'react';
-import Icon from '../../controls/Icon.js';
+import { Icon } from '../../controls/Icon.js';
 
 const MatchVs = ({match, opponentOnly}) => {
   const them = match.renderOpponentTitle();

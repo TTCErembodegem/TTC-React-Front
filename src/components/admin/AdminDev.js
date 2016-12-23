@@ -3,8 +3,7 @@ import PropTypes, { connect } from '../PropTypes.js';
 import { List, Map } from 'immutable';
 import _ from 'lodash';
 
-import ButtonStack from '../controls/ButtonStack.js';
-import Icon from '../controls/Icon.js';
+import { ButtonStack, Icon } from '../controls';
 
 @connect(state => state)
 export default class AdminDev extends React.Component {

@@ -13,8 +13,9 @@ import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
 import Button from 'react-bootstrap/lib/Button';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import FormControl from 'react-bootstrap/lib/FormControl';
-import Icon from '../controls/Icon.js';
+import { Icon, CommentButton } from '../controls';
 import MatchVs from '../matches/Match/MatchVs.js';
+import { CannotEditMatchIcon } from '../matches/MatchesTable.js';
 import { getFirstOrLastMatches, getFirstOrLast, SwitchBetweenFirstAndLastRoundButton } from '../teams/Teams.js';
 
 @connect(state => ({matches: state.matches}), {selectPlayer})
@@ -91,12 +92,7 @@ export default class PlayerLinup extends Component {
             const getOnChangePlaying = status => this._onChangePlaying.bind(this, match, status, statusNote);
             var buttons;
             if (match.block) {
-              buttons = (
-                <span className="fa-stack fa-sm pull-right" style={{marginRight: 8, marginTop: 5}}>
-                  <i className="fa fa-pencil-square-o fa-stack-1x"></i>
-                  <i className="fa fa-ban fa-stack-2x text-danger"></i>
-                </span>
-              );
+              buttons = CannotEditMatchIcon;
             } else {
               buttons = (
                 <ButtonToolbar>
@@ -113,9 +109,7 @@ export default class PlayerLinup extends Component {
                     {t('profile.play.canDontKnow')}
                   </Button>
                   {this.state.showCommentId !== match.id ? (
-                    <Button onClick={() => this.setState({showCommentId: match.id, comment: statusNote})} className="hidden-xs">
-                      <Icon fa="fa fa-comment-o" />
-                    </Button>
+                    <CommentButton onClick={() => this.setState({showCommentId: match.id, comment: statusNote})} className="hidden-xs" />
                   ) : null}
                 </ButtonToolbar>
               );
@@ -133,28 +127,17 @@ export default class PlayerLinup extends Component {
                   <MatchVs match={match} />
 
                   {this.state.showCommentId !== match.id && !match.block ? (
-                    <Button onClick={() => this.setState({showCommentId: match.id, comment: matchPlayer ? matchPlayer.statusNote : ''})} className="visible-xs" style={{marginTop: 8}}>
-                      <Icon fa="fa fa-comment-o" />
-                    </Button>
+                    <CommentButton onClick={() => this.setState({showCommentId: match.id, comment: matchPlayer ? matchPlayer.statusNote : ''})} className="visible-xs" style={{marginTop: 8}} />
                   ) : null}
                   {this.state.showCommentId === match.id ? (
                     <div className="visible-xs" style={{marginTop: 12}}>
                       <br />
                       <br />
-                      <ControlLabel>{this.context.t('profile.play.extraCommentHelp')}</ControlLabel>
-                      <FormControl
-                        type="text"
-                        value={this.state.comment || ''}
-                        placeholder={this.context.t('profile.play.extraComment')}
-                        onChange={e => this.setState({comment: e.target.value})} />
-
+                      <CommentEditForm onChange={e => this.setState({comment: e.target.value})} value={this.state.comment || ''} t={t} />
                     </div>
                   ) : matchPlayer && matchPlayer.statusNote ? (
                     <div className="visible-xs">
-                      <br />
-                      <strong>{this.context.t('profile.play.extraComment')}</strong>
-                      <br />
-                      {matchPlayer.statusNote}
+                      <Comment matchPlayer={matchPlayer} t={t} />
                     </div>
                   ) : null}
                 </td>
@@ -162,21 +145,9 @@ export default class PlayerLinup extends Component {
                 <td className="hidden-xs">
                   {buttons}
                   {this.state.showCommentId === match.id ? (
-                    <div>
-                      <ControlLabel>{this.context.t('profile.play.extraCommentHelp')}</ControlLabel>
-                      <FormControl
-                        type="text"
-                        value={this.state.comment || ''}
-                        placeholder={this.context.t('profile.play.extraComment')}
-                        onChange={e => this.setState({comment: e.target.value})} />
-
-                    </div>
+                    <CommentEditForm onChange={e => this.setState({comment: e.target.value})} value={this.state.comment || ''} t={t} />
                   ) : matchPlayer && matchPlayer.statusNote ? (
-                    <div>
-                      <strong>{this.context.t('profile.play.extraComment')}</strong>
-                      <br />
-                      {matchPlayer.statusNote}
-                    </div>
+                    <Comment matchPlayer={matchPlayer} t={t} />
                   ) : null}
                 </td>
               </tr>
@@ -186,9 +157,28 @@ export default class PlayerLinup extends Component {
         </Table>
 
         {hasMore ? (
-          <SwitchBetweenFirstAndLastRoundButton setState={::this.setState} matchesFilter={this.state.matchesFilter} t={this.context.t} />
+          <SwitchBetweenFirstAndLastRoundButton setState={::this.setState} matchesFilter={this.state.matchesFilter} t={t} />
         ) : null}
       </div>
     );
   }
 }
+
+const Comment = ({matchPlayer, t}) => (
+  <div>
+    <strong>{t('profile.play.extraComment')}</strong>
+    <br />
+    {matchPlayer.statusNote}
+  </div>
+);
+
+const CommentEditForm = ({onChange, value, t}) => (
+  <div>
+    <ControlLabel>{t('profile.play.extraCommentHelp')}</ControlLabel>
+    <FormControl
+      type="text"
+      value={value}
+      placeholder={t('profile.play.extraComment')}
+      onChange={onChange} />
+  </div>
+);

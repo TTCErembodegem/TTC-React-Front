@@ -4,7 +4,7 @@ import moment from 'moment';
 
 import MatchForm from '../Match/MatchForm.js';
 import MatchScore from '../MatchScore.js';
-import Icon, { ThrillerBadge, ThrillerIcon } from '../../controls/Icon.js';
+import { Icon, ThrillerBadge, ThrillerIcon } from '../../controls/Icon.js';
 
 import { Card, CardHeader } from 'material-ui/Card';
 

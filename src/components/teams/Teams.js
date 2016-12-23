@@ -13,7 +13,7 @@ import { editMatchPlayers } from '../../actions/matchActions.js';
 import DivisionRanking from './DivisionRanking.js';
 import TeamOverview from './TeamOverview.js';
 import TeamHeader, { TeamTabTitle } from './TeamHeader.js';
-import Icon, { TrophyIcon, Badgy } from '../controls/Icon.js';
+import { Icon, TrophyIcon, Badgy } from '../controls';
 import ButtonStack from '../controls/ButtonStack.js';
 import PlayersCardGallery from '../players/PlayersCardGallery.js';
 import MatchesTable from '../matches/MatchesTable.js';

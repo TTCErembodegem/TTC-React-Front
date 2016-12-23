@@ -4,7 +4,7 @@ import { Link, browserHistory } from 'react-router';
 
 import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
-import Icon from '../../controls/Icon.js';
+import { Icon } from '../../controls/Icon.js';
 import Navigation from './HeaderNavigation.js';
 
 @withStyles(require('./Header.css'))

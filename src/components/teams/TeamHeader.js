@@ -1,5 +1,5 @@
 import React from 'react';
-import Icon, { Badgy } from '../controls/Icon.js';
+import { Icon, Badgy } from '../controls';
 
 const TeamHeader = ({team, t, showRanking}) => (
   <div>

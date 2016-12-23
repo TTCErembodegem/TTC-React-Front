@@ -3,7 +3,7 @@ import PropTypes from '../../PropTypes.js';
 import cn from 'classnames';
 import { matchOutcome } from '../../../models/MatchModel.js';
 
-import Icon, { TrophyIcon } from '../../controls/Icon.js';
+import { Icon, TrophyIcon } from '../../controls/Icon.js';
 import Table from 'react-bootstrap/lib/Table';
 
 export default class IndividualMatches extends Component {
