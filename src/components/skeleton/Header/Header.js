@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes, { withStyles } from '../../PropTypes.js';
+import PropTypes, { withStyles, storeUtil } from '../../PropTypes.js';
 import { Link, browserHistory } from 'react-router';
-import { util as storeUtil } from '../../../store.js';
 
 import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';

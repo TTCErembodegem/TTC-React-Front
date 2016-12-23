@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes, { connect, withViewport } from '../PropTypes.js';
+import PropTypes, { connect, withViewport, storeUtil } from '../PropTypes.js';
 import moment from 'moment';
 import cn from 'classnames';
 import Immutable from 'immutable';
@@ -8,7 +8,6 @@ import http from '../../utils/httpClient.js';
 import TabbedContainer from '../controls/TabbedContainer.js';
 
 import { OwnClubId } from '../../models/ClubModel.js';
-import { util as storeUtil } from '../../store.js';
 import { editMatchPlayers } from '../../actions/matchActions.js';
 
 import DivisionRanking from './DivisionRanking.js';
@@ -212,7 +211,7 @@ export default class Teams extends Component {
   _renderTabViewContent(team, matches) {
     switch (this.state.view) {
     case 'main':
-      return <TeamOverview team={team} t={this.context.t} user={this.props.user} />;
+      return <TeamOverview team={team} t={this.context.t} user={this.props.user} small={this._isSmall()} />;
     case 'matches':
     case 'matchesTable':
       return (

@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import PropTypes from '../../PropTypes.js';
+import PropTypes, { storeUtil } from '../../PropTypes.js';
 import cn from 'classnames';
 
 import { matchOutcome } from '../../../models/MatchModel.js';
 import rankingSorter from '../../../models/utils/rankingSorter.js';
 import { PlayerCompetitionBadge } from '../../players/PlayerBadges.js';
 import Icon from '../../controls/Icon.js';
-import { util as storeUtil } from '../../../store.js';
 
 const OwnPlayer = ({match, ply, playerAsBadge = false}) => {
   const result = getRankingResults(match, ply);

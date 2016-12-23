@@ -32,7 +32,7 @@ export default Object.assign({}, ReactPropTypes, {
   map: ImmutablePropTypes.map,
 });
 
-export { util as storeUtil } from '../store.js';
+export storeUtil from '../storeUtil.js';
 export { connect } from 'react-redux';
 export { browserHistory } from 'react-router';
 export keyMirror from 'fbjs/lib/keyMirror';

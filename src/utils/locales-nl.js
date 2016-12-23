@@ -317,6 +317,7 @@ export default {
       matchesLost: 'Verloren',
       matchesDraw: 'Gelijk',
       points: 'Punten',
+      matches: 'Matchen',
 
       matchesWon: 'Overwinningen',
       matchesDraw: 'Gelijk gespeeld',

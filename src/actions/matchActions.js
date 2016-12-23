@@ -1,7 +1,7 @@
 import Promise from 'bluebird';
 import * as ActionTypes from './ActionTypes.js';
 import http from '../utils/httpClient.js';
-import { util as storeUtil } from '../store.js';
+import storeUtil from '../storeUtil.js';
 import { showSnackbar, setSetting } from './configActions.js';
 import { broadcastReload } from '../hub.js';
 import trans from '../locales.js';

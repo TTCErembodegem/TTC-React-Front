@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import PropTypes, { connect, withViewport, keyMirror } from '../../PropTypes.js';
+import PropTypes, { connect, withViewport, keyMirror, storeUtil } from '../../PropTypes.js';
 
 import { OwnClubId } from '../../../models/ClubModel.js';
 import * as matchActions from '../../../actions/matchActions.js';
 import { setSetting } from '../../../actions/configActions.js';
-import { util as storeUtils } from '../../../store.js';
 
 import TabbedContainer from '../../controls/TabbedContainer.js';
 import Spinner from '../../controls/Spinner.js';
@@ -201,7 +200,7 @@ export default class MatchCard extends Component {
   }
 
   _renderOpponentsRanking() {
-    const matches = storeUtils.matches
+    const matches = storeUtil.matches
       .getFromOpponent(this.props.match)
       .filter(match => match.id !== this.props.match.id);
 
@@ -215,11 +214,11 @@ export default class MatchCard extends Component {
         (match.away.clubId === OwnClubId && match.away.teamCode === this.props.match.getTeam().teamCode)
       ));
 
-    const firstRoundRealMatch = firstRoundMatch ? storeUtils.getMatch(firstRoundMatch.id) : null;
+    const firstRoundRealMatch = firstRoundMatch ? storeUtil.getMatch(firstRoundMatch.id) : null;
     return <OpponentsLastMatches match={this.props.match} readonlyMatches={theirOtherMatches} otherMatch={firstRoundRealMatch} />;
   }
   _renderOpponentFormation() {
-    const formations = storeUtils.matches
+    const formations = storeUtil.matches
       .getFormation(this.props.match)
       .sort((a, b) => a.count < b.count ? 1 : -1);
 

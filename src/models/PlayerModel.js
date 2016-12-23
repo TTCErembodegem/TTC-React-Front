@@ -1,4 +1,4 @@
-import { util as storeUtil } from '../store.js';
+import storeUtil from '../storeUtil.js';
 
 export default class PlayerModel {
   constructor(json = {security: 'Player'}) {

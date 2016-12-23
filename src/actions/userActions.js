@@ -1,7 +1,7 @@
 import { browserHistory } from 'react-router';
 import * as ActionTypes from './ActionTypes.js';
 import http from '../utils/httpClient.js';
-import { util as storeUtil } from '../store.js';
+import storeUtil from '../storeUtil.js';
 import initialLoad from './initialLoad.js';
 import { showSnackbar } from './configActions.js';
 import { broadcastSnackbar } from '../hub.js';

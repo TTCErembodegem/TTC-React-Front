@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes, { connect, withViewport } from '../../PropTypes.js';
-import { util as storeUtils } from '../../../store.js';
+import PropTypes, { connect, withViewport, storeUtil } from '../../PropTypes.js';
 import MatchCard from './MatchCard.js';
 import { fetchMatch } from '../../../actions/initialLoad.js';
 
@@ -24,7 +23,7 @@ export default class RoutedMatchCard extends Component {
 
   _getMatch(props) {
     const matchId = parseInt(props.params.matchId, 10);
-    const match = storeUtils.getMatch(matchId);
+    const match = storeUtil.getMatch(matchId);
     if (!match) {
       this.props.fetchMatch(this.props.params.matchId);
     }

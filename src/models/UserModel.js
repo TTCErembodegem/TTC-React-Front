@@ -1,4 +1,4 @@
-import { util as storeUtil } from '../store.js';
+import storeUtil from '../storeUtil.js';
 import keyMirror from 'fbjs/lib/keyMirror';
 import moment from 'moment';
 

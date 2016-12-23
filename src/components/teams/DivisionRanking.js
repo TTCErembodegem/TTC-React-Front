@@ -2,7 +2,7 @@ import React from 'react';
 import Table from 'react-bootstrap/lib/Table';
 import cn from 'classnames';
 import { OwnClubId } from '../../models/ClubModel.js';
-import { util as storeUtil } from '../../store.js';
+import storeUtil from '../../storeUtil.js';
 
 const DivisionRanking = ({team, t}) => (
   <Table condensed hover>

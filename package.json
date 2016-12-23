@@ -39,7 +39,6 @@
     "superagent-bluebird-promise": "^3.0.2"
   },
   "devDependencies": {
-    "express": "4.13.3",
     "autoprefixer": "^6.0.3",
     "babel": "^5.8.23",
     "babel-eslint": "^4.1.3",
@@ -51,10 +50,12 @@
     "eslint": "^2.0.0",
     "eslint-plugin-react": "^3.5.1",
     "esprima-harmony-jscs": "^1.1.0-bin",
+    "express": "4.13.3",
     "file-loader": "^0.8.4",
     "gaze": "^0.5.2",
     "git-repository": "^0.1.1",
     "glob": "^5.0.15",
+    "jasmine": "^2.5.2",
     "jest-cli": "^0.5.10",
     "jscs": "^2.3.1",
     "jscs-import-spaces": "^1.0.0",
@@ -67,6 +68,7 @@
     "postcss-import": "^7.0.0",
     "postcss-loader": "^0.6.0",
     "postcss-nested": "^1.0.0",
+    "proxyquire": "^1.7.10",
     "psi": "^1.0.6",
     "react-transform-catch-errors": "^1.0.2",
     "react-transform-hmr": "^1.0.4",
@@ -90,7 +92,8 @@
   },
   "scripts": {
     "lint": "eslint src tools && jscs src tools",
-    "test": "eslint src && jest",
+    "test": "babel-node ./spec/run.js",
+    "test:w": "nodemon --exec \"npm test\"",
     "clean": "babel-node --eval \"require('./tools/clean')().catch(err => console.error(err.stack))\"",
     "copy": "babel-node --eval \"require('./tools/copy')().catch(err => console.error(err.stack))\"",
     "bundle": "babel-node --eval \"require('./tools/bundle')().catch(err => console.error(err.stack))\"",

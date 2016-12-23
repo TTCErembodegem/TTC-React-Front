@@ -1,4 +1,4 @@
-import { util as storeUtils} from '../store.js';
+import storeUtil from '../storeUtil.js';
 import moment from 'moment';
 
 export const teamPlayerType = {
@@ -84,7 +84,7 @@ export default class TeamModel {
     }
 
     players = players.map(ply => ({
-      player: storeUtils.getPlayer(ply.playerId),
+      player: storeUtil.getPlayer(ply.playerId),
       type: ply.type
     }));
 
@@ -95,8 +95,12 @@ export default class TeamModel {
   }
 
   getMatches() {
-    return storeUtils.matches.getAllMatches()
+    return storeUtil.matches.getAllMatches()
       .filter(match => match.teamId === this.id);
+  }
+  getPlayerStats() {
+    const matches = this.getMatches().filter(m => m.isSyncedWithFrenoy);
+    return getPlayerStats(matches);
   }
 
   isTopper() {
@@ -107,6 +111,44 @@ export default class TeamModel {
   }
 }
 
+export function getPlayerStats(matches) {
+  var result = {};
+  matches.forEach(match => {
+    const gameResults = match.getGameMatches();
+    const homeOrOut = match.isHomeMatch ? 'home' : 'out';
+
+    gameResults.forEach(game => {
+      if (!result[game.ownPlayer.playerId]) {
+        result[game.ownPlayer.playerId] = {
+          ply: game.ownPlayer,
+          won: {},
+          lost: {},
+          games: 0,
+          victories: 0,
+        };
+      }
+
+      const playerResult = result[game.ownPlayer.playerId];
+      playerResult.games++;
+
+      const otherPlayer = game[!match.isHomeMatch ? 'home' : 'out'];
+      if (game.outcome === 'Won') {
+        playerResult.victories++;
+        if (!playerResult.won[otherPlayer.ranking]) {
+          playerResult.won[otherPlayer.ranking] = 0;
+        }
+        playerResult.won[otherPlayer.ranking]++;
+      } else {
+        if (!playerResult.lost[otherPlayer.ranking]) {
+          playerResult.lost[otherPlayer.ranking] = 0;
+        }
+        playerResult.lost[otherPlayer.ranking]++;
+      }
+    });
+  });
+
+  return Object.keys(result).map(key => result[key]);
+}
 
 
 class TeamFrenoyModel {

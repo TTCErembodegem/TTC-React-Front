@@ -2,7 +2,7 @@ import Immutable from 'immutable';
 import keyMirror from 'fbjs/lib/keyMirror';
 import moment from 'moment';
 
-import store, { util as storeUtils} from '../store.js';
+import storeUtil from '../storeUtil.js';
 import PlayerModel from './PlayerModel.js';
 import { OwnClubId } from './ClubModel.js';
 import { sortPlayers, sortMappedPlayers } from './TeamModel.js';
@@ -92,17 +92,17 @@ export default class MatchModel {
     if (this.home) {
       console.error('called getOpponentClub on OtherMatch'); // eslint-disable-line
     }
-    return storeUtils.getClub(this.opponent.clubId) || {};
+    return storeUtil.getClub(this.opponent.clubId) || {};
   }
   getClub(which) {
     if (this.opponent) {
       console.warn('MatchModel.getClub: use getOpponentClub for TTC Erembodegem matches'); // eslint-disable-line
     }
     if (which === 'home') {
-      return storeUtils.getClub(this.home.clubId);
+      return storeUtil.getClub(this.home.clubId);
     }
     if (which === 'away') {
-      return storeUtils.getClub(this.away.clubId);
+      return storeUtil.getClub(this.away.clubId);
     }
     console.error('MatchModel.getClub passed ' + which, 'expected home or away.'); // eslint-disable-line
   }
@@ -138,11 +138,11 @@ export default class MatchModel {
   }
 
   getTeam() {
-    return storeUtils.getTeam(this.teamId);
+    return storeUtil.getTeam(this.teamId);
   }
 
   getPreviousMatch() {
-    var otherMatch = store.getState().matches
+    var otherMatch = storeUtil.getAllMatches().matches
       .find(m => m.teamId === this.teamId &&
         m.opponent.clubId === this.opponent.clubId &&
         m.opponent.teamCode === this.opponent.teamCode &&
@@ -190,7 +190,7 @@ export default class MatchModel {
     return plys.filter(ply => ply.playerId)
       .map(ply => ({
         id: ply.playerId,
-        player: storeUtils.getPlayer(ply.playerId),
+        player: storeUtil.getPlayer(ply.playerId),
         matchPlayer: ply
       }))
       .filter(filter)

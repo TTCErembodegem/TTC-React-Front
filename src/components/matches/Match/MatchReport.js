@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes, { connect } from '../../PropTypes.js';
-import { util as storeUtils } from '../../../store.js';
+import PropTypes, { connect, storeUtil } from '../../PropTypes.js';
 import * as matchActions from '../../../actions/matchActions.js';
 
 import TimeAgo from '../../controls/TimeAgo.js';
@@ -58,7 +57,7 @@ export default class MatchReport extends Component {
     };
 
     var reportWriterText;
-    const reportWriter = storeUtils.getPlayer(this.props.match.reportPlayerId);
+    const reportWriter = storeUtil.getPlayer(this.props.match.reportPlayerId);
     if (reportWriter) {
       reportWriterText = (
         <div style={{marginTop: -10, color: '#736F6E'}}>
@@ -248,7 +247,7 @@ class Comment extends Component {
   }
   render() {
     const comment = this.props.comment;
-    const poster = storeUtils.getPlayer(comment.playerId) || {alias: 'SYSTEM'};
+    const poster = storeUtil.getPlayer(comment.playerId) || {alias: 'SYSTEM'};
     const canDeleteComment = !!this.props.deleteComment;
 
     return (

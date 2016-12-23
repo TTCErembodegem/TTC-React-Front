@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes, { connect, withViewport } from '../PropTypes.js';
+import PropTypes, { connect, withViewport, storeUtil } from '../PropTypes.js';
 import _ from 'lodash';
-import { util as storeUtil } from '../../store.js';
 
 import * as configActions from '../../actions/configActions.js';
 import MatchCard from './Match/MatchCard.js';

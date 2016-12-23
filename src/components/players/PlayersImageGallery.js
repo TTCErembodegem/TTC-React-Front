@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes, { connect, withContext } from '../PropTypes.js';
-import { util as storeUtil } from '../../store.js';
+import PropTypes, { connect, withContext, storeUtil } from '../PropTypes.js';
 
 import * as playerActions from '../../actions/playerActions.js';
 import { playerUtils } from '../../models/PlayerModel.js';

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes, { connect, withViewport, browserHistory } from '../PropTypes.js';
+import PropTypes, { connect, withViewport, browserHistory, storeUtil } from '../PropTypes.js';
 import { getPlayingStatusClass, getPlayingStatusColor } from '../../models/PlayerModel.js';
-import { util as storeUtil } from '../../store.js';
 import _ from 'lodash';
 import cn from 'classnames';
 
@@ -333,7 +332,7 @@ const ReadOnlyMatchPlayers = ({match, t}) => {
   return (
     <div style={{marginBottom: 4, marginTop: -5}}>
       {match.block && !match.isSyncedWithFrenoy ? <MatchBlockIcon match={match} t={t} /> : null}
-      {players.map(plyInfo => <PlayerCompetitionBadge plyInfo={plyInfo} competition={match.competition} style={{marginRight: 5}} key={plyInfo.player.id} />)}
+      {players.map(plyInfo => <PlayerCompetitionBadge plyInfo={plyInfo} competition={match.competition} style={{marginBottom: 4, marginRight: 5}} key={plyInfo.player.id} />)}
     </div>
   );
 }
