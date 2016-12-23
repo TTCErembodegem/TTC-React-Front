@@ -124,7 +124,9 @@ export default class MatchesTable extends Component {
             actionIconClass="fa fa-trash-o"
             onButtonClick={this._togglePlayer.bind(this, plyInfo.player.id)}
             competition={match.competition}
-            style={{marginRight: 5}} />
+            style={{marginRight: 5}}
+            key={plyInfo.player.id}
+          />
         ))}
 
         <h4>{this.context.t('match.plys.choicePlayers')}</h4>
@@ -134,7 +136,9 @@ export default class MatchesTable extends Component {
             isPicked={!!this.state.playersEdit.find(x => x.id === plyInfo.id)}
             actionIconClass="fa fa-thumbs-o-up"
             onButtonClick={this._togglePlayer.bind(this, plyInfo.player.id)}
-            style={{marginRight: 5}} />
+            style={{marginRight: 5}}
+            key={plyInfo.player.id}
+          />
         ))}
 
         <br />
