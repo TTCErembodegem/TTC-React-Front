@@ -25,7 +25,7 @@ export const TeamTabTitle = ({team, showRanking, t}) => {
   return (
     <div>
       <Badgy type={positionClassName} style={{marginRight: 8, marginTop: -5}}>
-        {ranking.position}
+        {ranking.position} / {team.ranking.length}
       </Badgy>
       {team.renderOwnTeamTitle()}
       {showRanking ? (

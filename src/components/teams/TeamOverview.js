@@ -15,7 +15,7 @@ const TeamOverview = ({team, user, small, t}) => {
       <TeamOverviewRanking team={team} t={t} small={small} />
       <TeamOverviewMatches matches={nextMatches} user={user} team={team} title={t('match.nextMatches')} />
       <TeamOverviewMatches matches={prevMatches} user={user} team={team} title={t('match.playedMatches')} />
-      <TeamOverviewPlayers team={team} t={t} />
+      <TeamOverviewPlayers team={team} t={t} user={user} />
     </div>
   );
 }
@@ -71,7 +71,7 @@ const TeamOverviewMatches = ({matches, user, team, title}) => {
   );
 }
 
-const TeamOverviewPlayers = ({team, t}) => {
+const TeamOverviewPlayers = ({team, user, t}) => {
   const stats = team.getPlayerStats();
   return (
     <div>
@@ -86,11 +86,13 @@ const TeamOverviewPlayers = ({team, t}) => {
         </thead>
         <tbody>
           {stats.sort((a, b) => b.games - a.games).map(stat => (
-            <tr key={stat.ply.playerId}>
-              <td><strong>{stat.ply.alias}</strong></td>
+            <tr key={stat.ply.playerId} className={stat.ply.playerId === user.playerId ? 'match-won' : ''}>
+              <td>
+                <strong>{stat.ply.alias}</strong> <small style={{marginLeft: 8}}>{stat.ply.ranking}</small>
+              </td>
               <td>{Math.floor(stat.games / team.getTeamPlayerCount())}</td>
               <td>
-                {stat.victories}
+                {stat.victories} / {stat.games}
                 &nbsp;
                 ({Math.round(stat.victories / stat.games * 100)}%)
               </td>

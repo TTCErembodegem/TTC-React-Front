@@ -142,7 +142,7 @@ export default class MatchModel {
   }
 
   getPreviousMatch() {
-    var otherMatch = storeUtil.getAllMatches().matches
+    var otherMatch = storeUtil.matches.getAllMatches()
       .find(m => m.teamId === this.teamId &&
         m.opponent.clubId === this.opponent.clubId &&
         m.opponent.teamCode === this.opponent.teamCode &&
