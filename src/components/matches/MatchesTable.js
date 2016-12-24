@@ -8,8 +8,9 @@ import { editMatchPlayers } from '../../actions/matchActions.js';
 
 import Table from 'react-bootstrap/lib/Table';
 import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
+import FormControl from 'react-bootstrap/lib/FormControl';
 import Button from 'react-bootstrap/lib/Button';
-import { Icon, TrophyIcon, ThrillerIcon } from '../controls';
+import { Icon, TrophyIcon, ThrillerIcon, CommentButton } from '../controls';
 import MatchVs from './Match/MatchVs.js';
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 import { TeamCaptainIcon } from '../players/PlayerCard.js';
@@ -47,7 +48,7 @@ export default class MatchesTable extends Component {
   }
   constructor(props) {
     super(props);
-    this.state = {editMatch: {}, players: []};
+    this.state = {editMatch: {}, players: [], comment: {}};
   }
 
   _getTablePlayers() {
@@ -179,6 +180,9 @@ export default class MatchesTable extends Component {
       editMatch: match,
       players: playerChoices.concat(playersWithoutChoice.map(toDontKnowPlayer)),
       playersEdit: playersEdit,
+      comment: {
+        value: match.formationComment || ''},
+        edit: false,
     });
   }
   _toggleTablePlayer(playerId, match) {
@@ -217,7 +221,8 @@ export default class MatchesTable extends Component {
       matchId: this.state.editMatch.id,
       playerIds: this.state.playersEdit.map(x => x.id).toArray(),
       blockAlso: blockAlso,
-      newStatus: this._getUserStatus(this.state.editMatch)
+      newStatus: this._getUserStatus(this.state.editMatch),
+      comment: this.state.comment.value,
     });
 
     if (closeForm) {
@@ -268,6 +273,7 @@ export default class MatchesTable extends Component {
               <SaveMatchButtons
                 onSave={this._saveFormation.bind(this, {blockAlso: false, closeForm: true})}
                 onBlock={this._saveFormation.bind(this, {blockAlso: true, closeForm: true})}
+                onCommentsToggle={() => this.setState({comment: Object.assign({}, this.state.comment, {edit: !this.state.comment.edit})})}
                 t={t}
               />
             )}
@@ -276,11 +282,27 @@ export default class MatchesTable extends Component {
         </tr>
       );
 
-      // Display the players of the match
+      // Match formation comments row
+      if (!this.props.tableForm && this.props.editMode && this.props.user.canEditMatchPlayers(match) &&
+        (this.state.editMatch.id === match.id || match.formationComment)) {
+        matchRows.push(
+          <tr key={match.id + '_b'} style={stripeColor}>
+            <td colSpan={4} style={{border: 'none'}}>
+              {this.state.editMatch.id === match.id ? (
+                <CommentForm model={this.state.comment} onUpdate={model => this.setState({comment: model})} t={this.context.t} />
+              ) : (
+                <i>{match.formationComment}</i>
+              )}
+            </td>
+          </tr>
+        );
+      }
+
+      // Display the players of the match (non TableForm)
       const isMatchInEdit = this.props.editMode && this.state.editMatch.id === match.id && this.props.user.canEditMatchPlayers(match);
       if (!this.props.tableForm && match.players.size && (isMatchInEdit || match.block || match.isSyncedWithFrenoy)) {
         matchRows.push(
-          <tr key={match.id + '_b'} style={stripeColor}>
+          <tr key={match.id + '_c'} style={stripeColor}>
             <td colSpan={4} style={{border: 'none'}}>
               {isMatchInEdit ? this._renderEditMatchPlayers() : <ReadOnlyMatchPlayers match={match} t={t} />}
             </td>
@@ -346,6 +368,20 @@ const MatchBlockIcon = ({match, t}) => (
 );
 
 
+var CommentForm = ({model, onUpdate, t}) => {
+  return (
+    <div style={{width: '50%', marginTop: -20, marginBottom: 15}}>
+      {model.edit ? (
+        <FormControl
+          type="text"
+          value={model.value}
+          placeholder={t('match.plys.extraComment')}
+          onChange={e => onUpdate(Object.assign({}, model, {value: e.target.value}))}
+        />
+      ) : <i>{model.value}</i>}
+    </div>
+  );
+}
 
 
 const ViewMatchDetailsButton = ({match, t}) => {
@@ -384,8 +420,9 @@ const OpenMatchForEditButton = ({onClick, match, t}) => (
   </button>
 );
 
-const SaveMatchButtons = ({onSave, onBlock, t}) => (
+const SaveMatchButtons = ({onSave, onBlock, onCommentsToggle, t}) => (
   <div className="pull-right" style={{whiteSpace: 'nowrap'}}>
+    <CommentButton onClick={() => onCommentsToggle()} style={{marginRight: 5}} />
     <button
       className="btn btn-default"
       onClick={onBlock}

@@ -32,6 +32,7 @@ export default class MatchModel {
     this.scoreType = json.scoreType; // NotYetPlayed, Won, Lost, Draw, WalkOver, BeingPlayed
     this.isPlayed = json.isPlayed;
     this.players = Immutable.List(json.players);
+    this.formationComment = json.formationComment;
     this.games = Immutable.List(json.games);
 
     // TODO: probably better to split MatchModel and ReadOnlyMatchModel/OtherMatchModel
