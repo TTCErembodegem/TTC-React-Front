@@ -245,9 +245,11 @@ export default class MatchesTable extends Component {
       }
 
       var thrillerIcon;
-      const team = match.getTeam();
-      if (team.getThriller(match)) {
-        thrillerIcon = <ThrillerIcon color="red" />;
+      if (match.shouldBePlayed) {
+        const team = match.getTeam();
+        if (team.getThriller(match)) {
+          thrillerIcon = <ThrillerIcon color="red" />;
+        }
       }
 
       // Complexity galore
@@ -255,7 +257,7 @@ export default class MatchesTable extends Component {
         <tr key={match.id} style={stripeColor}>
           <td>
             {thrillerIcon}
-            {match.getResponsiveDisplayDate(t.bind(t, 'match.date'), this.props.viewport.width)}
+            {match.shouldBePlayed ? match.getResponsiveDisplayDate(t.bind(t, 'match.date'), this.props.viewport.width) : null}
           </td>
           <td className="hidden-xs">{match.frenoyMatchId}</td>
           <td><MatchVs match={match} opponentOnly={this.props.allowOpponentOnly && this.props.viewport.width < 450} /></td>
@@ -300,7 +302,7 @@ export default class MatchesTable extends Component {
 
       // Display the players of the match (non TableForm)
       const isMatchInEdit = this.props.editMode && this.state.editMatch.id === match.id && this.props.user.canEditMatchPlayers(match);
-      if (!this.props.tableForm && match.players.size && (isMatchInEdit || match.block || match.isSyncedWithFrenoy)) {
+      if (!this.props.tableForm && (isMatchInEdit || match.block || match.isSyncedWithFrenoy)) {
         matchRows.push(
           <tr key={match.id + '_c'} style={stripeColor}>
             <td colSpan={4} style={{border: 'none'}}>
@@ -346,8 +348,8 @@ const ReadOnlyMatchPlayers = ({match, t}) => {
     return (
       <div style={{marginBottom: 4, marginTop: -5}}>
         {match.getOwnPlayers().map(ply => (
-          <div style={{display: 'inline-block', marginRight: 7}} key={ply.playerId}>
-            <OwnPlayer match={match} ply={ply} key={ply.position} />
+          <div style={{display: 'inline-block', marginRight: 7}} key={ply.uniqueIndex}>
+            <OwnPlayer match={match} ply={ply} />
           </div>
         ))}
       </div>
@@ -385,6 +387,10 @@ var CommentForm = ({model, onUpdate, t}) => {
 
 
 const ViewMatchDetailsButton = ({match, t}) => {
+  if (!match.shouldBePlayed) {
+    return <div />;
+  }
+
   const score = match.renderScore();
   return (
     <a className={cn({'btn btn-default': !score, clickable: !!score})} onClick={() => browserHistory.push(t.route('match', {matchId: match.id}))}>

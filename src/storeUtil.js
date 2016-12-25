@@ -48,11 +48,13 @@ const util = {
     const matches = store.getState().matches;
     return matches.find(match => match.id === matchId);
   },
+  getMatches() {
+    return store.getState().matches;
+  },
 
   matches: {
     getTodayMatches() {
-      const matches = store.getState().matches;
-      return matches.filter(cal => cal.isBeingPlayed());
+      return util.getMatches().filter(cal => cal.isBeingPlayed());
     },
     getFromOpponent(match) {
       const result = getOpponentMatches(match);
@@ -60,7 +62,7 @@ const util = {
     },
 
     getAllMatches() {
-      return store.getState().matches;
+      return util.getMatches();
     },
 
     getFormation(match) {

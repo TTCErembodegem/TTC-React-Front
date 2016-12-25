@@ -22,6 +22,7 @@ export default class MatchModel {
   constructor(json) {
     this.id = json.id;
     this.frenoyMatchId = json.frenoyMatchId;
+    this.shouldBePlayed = json.shouldBePlayed;
     this.isSyncedWithFrenoy = json.isSyncedWithFrenoy;
     this.week = json.week;
     this.competition = json.competition;

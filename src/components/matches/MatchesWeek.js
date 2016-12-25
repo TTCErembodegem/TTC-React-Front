@@ -4,7 +4,7 @@ import moment from 'moment';
 import { Icon, ButtonStack } from '../controls';
 import MatchesTable from './MatchesTable.js';
 
-@connect(state => ({matches: state.matches, user: state.user}))
+@connect(state => ({matches: state.matches, user: state.user, freeMatches: state.freeMatches}))
 export default class MatchesWeek extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
@@ -71,7 +71,13 @@ export default class MatchesWeek extends Component {
 
     const weekStart = selectedWeekMatch.date.clone().startOf('week');
     const weekEnd = selectedWeekMatch.date.clone().endOf('week');
-    const matches = this.props.matches.filter(match => match.week === this.state.currentWeek || match.date.isBetween(weekStart, weekEnd));
+    const matchFilter = match => match.week === this.state.currentWeek || match.date.isBetween(weekStart, weekEnd);
+
+    var matches = this.props.matches.filter(matchFilter);
+    if (this.state.editMode) {
+      const freeMatches = this.props.freeMatches.filter(matchFilter);
+      matches = matches.concat(freeMatches);
+    }
 
     const viewsConfig = [{
       key: 'all',

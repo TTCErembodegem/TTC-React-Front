@@ -8,7 +8,7 @@ export default function matches(state = Immutable.List([]), action = null) {
   const {type, payload} = action;
   switch (type) {
   case ActionTypes.MATCHES_LOADED:
-    return immutableHelpers.merge(state, payload, x => new MatchModel(x));
+    return immutableHelpers.merge(state, payload, x => new MatchModel(x), x => x.shouldBePlayed);
   default:
     return state;
   }
