@@ -29,6 +29,11 @@ class TeamOverviewRanking extends Component {
   render() {
     const {team, small, t} = this.props;
     var ranking = team.ranking;
+
+    if (ranking.length === 0) {
+      return <div />;
+    }
+
     if (small) {
       const ownTeamIndex = team.ranking.findIndex(r => r.clubId === OwnClubId);
       const lastTeamToShow = Math.min(ownTeamIndex + 3, team.ranking.length);

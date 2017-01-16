@@ -45,7 +45,7 @@ export default class TeamModel {
       return this.getDivisionRanking({clubId: this.clubId, teamCode: this.teamCode});
     }
     var result = this.ranking.find(x => x.clubId === opponent.clubId && x.teamCode === opponent.teamCode);
-    return result || {};
+    return result || {empty: true};
   }
   getThriller(match) {
     if (match.date.isBefore(moment())) {

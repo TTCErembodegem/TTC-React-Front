@@ -24,9 +24,11 @@ export const TeamTabTitle = ({team, showRanking, t}) => {
   const ranking = team.getDivisionRanking();
   return (
     <div>
-      <Badgy type={positionClassName} style={{marginRight: 8, marginTop: -5}}>
-        {ranking.position} / {team.ranking.length}
-      </Badgy>
+      {!ranking.empty ? (
+        <Badgy type={positionClassName} style={{marginRight: 8, marginTop: -5}}>
+          {ranking.position} / {team.ranking.length}
+        </Badgy>
+      ) : null}
       {team.renderOwnTeamTitle()}
       {showRanking ? (
         <div style={{marginRight: 0}} className="pull-right">
@@ -40,6 +42,10 @@ export const TeamTabTitle = ({team, showRanking, t}) => {
 
 const TeamRankingBadges = ({team, t}) => {
   const ranking = team.getDivisionRanking();
+  if (ranking.empty) {
+    return null;
+  }
+
   return (
     <div style={{fontSize: 14, display: 'inline', marginTop: -10}}>
       <TeamOverviewBadge amount={ranking.gamesWon} colorClass="match-won" fa="fa-thumbs-up" tooltip={t('teamCalendar.matchesWon')} />
