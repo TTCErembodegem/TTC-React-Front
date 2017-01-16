@@ -1,4 +1,3 @@
-/*eslint-disable */
 export default {
   lang: 'nl',
   routes: {
@@ -324,9 +323,9 @@ export default {
       points: 'Punten',
       matches: 'Matchen',
 
-      matchesWon: 'Overwinningen',
-      matchesDraw: 'Gelijk gespeeld',
-      matchesLost: 'Verloren',
+      matchesWonBadge: 'Overwinningen',
+      matchesDrawBadge: 'Gelijk gespeeld',
+      matchesLostBadge: 'Verloren',
 
       viewMain: 'Overzicht',
       viewMatches: 'Matchen',
