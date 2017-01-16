@@ -8,7 +8,7 @@ import Table from 'react-bootstrap/lib/Table';
 import TextField from 'material-ui/TextField';
 
 import TabbedContainer from '../controls/TabbedContainer.js';
-import { Telephone, Icon, Email } from '../controls.js';
+import { Telephone, Icon, Email, DownloadExcelIcon } from '../controls.js';
 import { PlayerAllCompetitions, PlayerFrenoyLink } from './PlayerCard.js';
 import PlayersCardGallery from './PlayersCardGallery.js';
 
@@ -45,19 +45,6 @@ export default class Players extends Component {
   constructor(props) {
     super(props);
     this.state = {filter: ''};
-  }
-
-  _downloadExcel() {
-    if (this.state.isDownloading) {
-      return;
-    }
-    this.setState({isDownloading: true});
-    http.download.playersExcel(this.context.t('players.downloadExcelFileName'))
-      .catch(err => {
-        console.error('err', err);
-      })
-      .delay(2000)
-      .then(() => this.setState({isDownloading: false}));
   }
 
   _renderToolbar(activeTab) {
@@ -187,13 +174,12 @@ export default class Players extends Component {
     return (
       <div style={{marginTop: 20, marginBottom: 10}}>
         {this.props.user.playerId ? (
-          <a
-            onClick={::this._downloadExcel}
+          <DownloadExcelIcon
+            onClick={() => http.download.playersExcel(this.context.t('players.downloadExcelFileName'))}
             title={this.context.t('players.downloadExcel')}
-            className="pull-right clickable"
-            style={{marginTop: 5}}>
-            <Icon fa={this.state.isDownloading ? 'fa fa-spinner fa-pulse fa-2x' : 'fa fa-file-excel-o fa-2x'} />
-          </a>
+            className="pull-right"
+            style={{marginTop: 5}}
+          />
         ) : null}
 
         <TabbedContainer

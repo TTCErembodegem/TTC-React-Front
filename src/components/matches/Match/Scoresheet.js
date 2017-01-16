@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from '../../PropTypes.js';
+import http from '../../../utils/httpClient.js';
 import Table from 'react-bootstrap/lib/Table';
+import {DownloadExcelIcon} from '../../controls.js';
 
 export default class Scoresheet extends Component {
   static propTypes = {
@@ -21,7 +23,14 @@ export default class Scoresheet extends Component {
               <th colSpan={2}>{this.props.match.frenoyMatchId}</th>
               <th>{this.props.t('comp.sporta.uniqueIndex')}</th>
               <th>{this.props.t('comp.ranking')}</th>
-              <th>{this.props.t('comp.sporta.rankingValue')}</th>
+              <th>
+                {this.props.t('comp.sporta.rankingValue')}
+                <DownloadExcelIcon
+                  onChange={() => http.download.scoresheetExcel(this.props.match)}
+                  title={this.props.t('comp.sporta.downloadScoresheet')}
+                  className="pull-right"
+                />
+              </th>
             </tr>
           </thead>
           <tbody>

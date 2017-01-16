@@ -3,6 +3,7 @@ import request from 'superagent-bluebird-promise';
 import querystring from 'querystring';
 import assert from 'assert';
 import moment from 'moment';
+import t from '../locales.js';
 
 const LogRequestTimes = false;
 
@@ -134,6 +135,27 @@ HttpClient.download.playersExcel = function(fileName) {
   return HttpClient.download('/players/ExcelExport').then(res => {
     var link = document.createElement('a');
     link.download = fileName + '_' + moment().format('YYYY-MM-DD') + '.xlsx';
+    link.href = 'data:application/octet-stream;base64,' + res.body;
+    link.click();
+  })
+}
+
+HttpClient.download.scoresheetExcel = function(match) {
+  return HttpClient.download('/match/ExcelScoresheet/' + match.id).then(res => {
+    var fileName = t('players.scoresheetFileName', {
+      frenoyId: match.frenoyMatchId.replace('/', '-'),
+      teamCode: match.getTeam().teamCode,
+      theirClub: match.getOpponentClub().name,
+      theirTeam: match.opponent.teamCode,
+    });
+
+    // make this button ALWAYS VISIBLE!!!
+    // fileName: '{frenoyId} Sporta {teamCode} vs {theirClub} {theirTeam}',
+
+    console.log('filename', fileName);
+
+    var link = document.createElement('a');
+    link.download = fileName + '.xlsx';
     link.href = 'data:application/octet-stream;base64,' + res.body;
     link.click();
   })
