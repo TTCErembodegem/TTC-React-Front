@@ -101,7 +101,7 @@ const TeamOverviewPlayers = ({team, user, t}) => {
               );
             }
             return (
-              <tr key={stat.ply.id} className={stat.ply.id === user.id ? 'match-won' : ''}>
+              <tr key={stat.ply.id} className={stat.ply.id === user.playerId ? 'match-won' : ''}>
                 <td><PlayerCompetition comp={team.competition} player={stat.ply} withName={true} t={t} /></td>
                 <td>{Math.floor(stat.games / team.getTeamPlayerCount())}</td>
                 <td><TeamOverviewPlayerStats stat={stat} /></td>

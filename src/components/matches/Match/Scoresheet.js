@@ -11,6 +11,14 @@ export default class Scoresheet extends Component {
     viewport: PropTypes.viewport,
   }
 
+
+  // TODO: download excel from site with stuff filled in
+  //<DownloadExcelIcon
+  //  onChange={() => http.download.scoresheetExcel(this.props.match)}
+  //  title={this.props.t('comp.sporta.downloadScoresheet')}
+  //  className="pull-right"
+  ///>
+
   render() {
     const isSmall = this.props.viewport.width < 550;
     const competition = this.props.match.competition;
@@ -25,11 +33,7 @@ export default class Scoresheet extends Component {
               <th>{this.props.t('comp.ranking')}</th>
               <th>
                 {this.props.t('comp.sporta.rankingValue')}
-                <DownloadExcelIcon
-                  onChange={() => http.download.scoresheetExcel(this.props.match)}
-                  title={this.props.t('comp.sporta.downloadScoresheet')}
-                  className="pull-right"
-                />
+
               </th>
             </tr>
           </thead>
