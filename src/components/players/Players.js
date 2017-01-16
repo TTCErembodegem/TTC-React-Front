@@ -125,6 +125,9 @@ export default class Players extends Component {
       players = players.filter(x => x.name.toLowerCase().includes(this.state.filter));
     }
     players = players.sort((a, b) => a.sporta.position - b.sporta.position);
+
+    // Sorting as required by the Sporta scoresheet Excel
+    //players = players.sort((a, b) => a.name.localeCompare(b.name));
     return (
       <Table condensed hover>
         <thead>
