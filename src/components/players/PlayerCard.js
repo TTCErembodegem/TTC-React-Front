@@ -74,7 +74,9 @@ export const TeamCaptainIcon = ({t}) => (
   <Icon fa="fa fa-star" color="#FFB00F" style={{marginRight: 5}} title={t('player.teamCaptain')} />
 );
 
-export const PlayerCompetition = ({comp, player, t}) => {
+export const PlayerCompetition = ({comp, player, t, withName = false}) => {
+  // withName = Jorn C2 (frenoylink)
+  // !withName = Sporta (ploeg) C2 (frenoylink)
   const compDetails = player.getCompetition(comp);
   if (!compDetails.ranking) {
     return <div />;
@@ -85,7 +87,7 @@ export const PlayerCompetition = ({comp, player, t}) => {
   return (
     <span>
       {isCaptain ? <TeamCaptainIcon t={t} /> : null}
-      {comp} {team ? team.teamCode : null}
+      {withName ? <strong>{player.alias}</strong> : <span>{comp} {team ? team.teamCode : null}</span>}
       <small style={{marginLeft: 10}}>{compDetails.ranking} <PlayerFrenoyLink comp={compDetails} /></small>
     </span>
   );

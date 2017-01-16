@@ -215,6 +215,7 @@ export default class MatchModel {
   }
 
   getGameMatches() {
+    // result.ownPlayer = {} == double game
     if (!this.games.size) {
       return [];
     }
@@ -235,6 +236,7 @@ export default class MatchModel {
         result.ownPlayer = result.home.playerId ? result.home : result.out;
       } else {
         result.ownPlayer = {};
+        result.isDoubles = true;
       }
       return result;
     });

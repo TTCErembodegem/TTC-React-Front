@@ -118,31 +118,39 @@ export function getPlayerStats(matches) {
     const homeOrOut = match.isHomeMatch ? 'home' : 'out';
 
     gameResults.forEach(game => {
-      if (!result[game.ownPlayer.playerId]) {
-        result[game.ownPlayer.playerId] = {
-          ply: game.ownPlayer,
+      const playerId = game.ownPlayer.playerId || 0;
+      const isDoubles = !playerId;
+
+      if (!result[playerId]) {
+        result[playerId] = {
+          ply: storeUtil.getPlayer(playerId) || {},
           won: {},
           lost: {},
           games: 0,
           victories: 0,
+          isDoubles: isDoubles,
         };
       }
 
-      const playerResult = result[game.ownPlayer.playerId];
+      const playerResult = result[playerId];
       playerResult.games++;
-
-      const otherPlayer = game[!match.isHomeMatch ? 'home' : 'out'];
       if (game.outcome === 'Won') {
         playerResult.victories++;
-        if (!playerResult.won[otherPlayer.ranking]) {
-          playerResult.won[otherPlayer.ranking] = 0;
+      }
+
+      if (!isDoubles) {
+        const otherPlayer = game[!match.isHomeMatch ? 'home' : 'out'];
+        if (game.outcome === 'Won') {
+          if (!playerResult.won[otherPlayer.ranking]) {
+            playerResult.won[otherPlayer.ranking] = 0;
+          }
+          playerResult.won[otherPlayer.ranking]++;
+        } else {
+          if (!playerResult.lost[otherPlayer.ranking]) {
+            playerResult.lost[otherPlayer.ranking] = 0;
+          }
+          playerResult.lost[otherPlayer.ranking]++;
         }
-        playerResult.won[otherPlayer.ranking]++;
-      } else {
-        if (!playerResult.lost[otherPlayer.ranking]) {
-          playerResult.lost[otherPlayer.ranking] = 0;
-        }
-        playerResult.lost[otherPlayer.ranking]++;
       }
     });
   });

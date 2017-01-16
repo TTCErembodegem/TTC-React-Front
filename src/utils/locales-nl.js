@@ -265,6 +265,8 @@ export default {
       },
       playersVictoryTitle: 'Overwinningen',
       playersOpponentsTitle: 'Tegenstanders',
+      double: 'Dubbel',
+      doubles: 'Dubbels',
       individual: {
         matchTitle: 'Match',
         setsTitle: 'Sets',

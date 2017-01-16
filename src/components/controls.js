@@ -1,11 +1,12 @@
 export ButtonStack from './controls/ButtonStack.js';
 export Editor from './controls/Editor.js';
-export Email, { OwnEmail } from './controls/Email.js';
+export Email, {OwnEmail} from './controls/Email.js';
 export GoogleMap from './controls/GoogleMap.js';
 export * from './controls/Icon.js';
 export * from './controls/Button.js';
-export Location, { Website } from './controls/Location.js';
+export Location, {Website} from './controls/Location.js';
 export Spinner from './controls/Spinner.js';
 export TabbedContainer from './controls/TabbedContainer.js';
 export Telephone from './controls/Telephone.js';
 export TimeAgo from './controls/TimeAgo.js';
+export * from './players/PlayerCard.js';

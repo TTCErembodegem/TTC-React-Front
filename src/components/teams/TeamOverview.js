@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import moment from 'moment';
-import { OwnClubId } from '../../models/ClubModel.js';
+import {OwnClubId} from '../../models/ClubModel.js';
 import cn from 'classnames';
 import storeUtil from '../../storeUtil.js';
 import Table from 'react-bootstrap/lib/Table';
 import MatchesTable from '../matches/MatchesTable.js';
+import {PlayerCompetition} from '../controls.js';
 
 const TeamOverview = ({team, user, small, t}) => {
   const today = moment().startOf('day');
@@ -85,23 +86,35 @@ const TeamOverviewPlayers = ({team, user, t}) => {
           </tr>
         </thead>
         <tbody>
-          {stats.sort((a, b) => b.games - a.games).map(stat => (
-            <tr key={stat.ply.playerId} className={stat.ply.playerId === user.playerId ? 'match-won' : ''}>
-              <td>
-                <strong>{stat.ply.alias}</strong> <small style={{marginLeft: 8}}>{stat.ply.ranking}</small>
-              </td>
-              <td>{Math.floor(stat.games / team.getTeamPlayerCount())}</td>
-              <td>
-                {stat.victories} / {stat.games}
-                &nbsp;
-                ({Math.round(stat.victories / stat.games * 100)}%)
-              </td>
-            </tr>
-          ))}
+          {stats.sort((a, b) => b.games - a.games).map(stat => {
+            if (stat.isDoubles) {
+              return (
+                <tr key="doubles">
+                  <td colSpan={2}><strong>{t('match.doubles')}</strong></td>
+                  <td><TeamOverviewPlayerStats stat={stat} /></td>
+                </tr>
+              );
+            }
+            return (
+              <tr key={stat.ply.playerId} className={stat.ply.playerId === user.playerId ? 'match-won' : ''}>
+                <td><PlayerCompetition comp={team.competition} player={stat.ply} withName={true} t={t} /></td>
+                <td>{Math.floor(stat.games / team.getTeamPlayerCount())}</td>
+                <td><TeamOverviewPlayerStats stat={stat} /></td>
+              </tr>
+            );
+          })}
         </tbody>
       </Table>
     </div>
   );
 }
+
+const TeamOverviewPlayerStats = ({stat}) => (
+  <span>
+    {stat.victories} / {stat.games}
+    &nbsp;
+    ({Math.round(stat.victories / stat.games * 100)}%)
+  </span>
+);
 
 export default TeamOverview;

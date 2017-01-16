@@ -64,6 +64,8 @@ describe('TeamModel', () => {
       ]);
     });
 
+    // TODO: These will now probably fail because isDoubles was added
+
     it('should calculate wins/losses against opponent rankings', function() {
       const result = getPlayerStats(this.matches);
       expect(result[0].won.E6).toBe(1);
