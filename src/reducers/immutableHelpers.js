@@ -14,6 +14,8 @@ export function merge(state, payload, classify, filter) {
     return state;
   }
   if (state.size === 0) {
+    // TODO: Free matches may be zero sized here after initial load
+    // second update... crash because payload is not an array
     let result = payload;
     if (filter) {
       result = result.filter(filter);

@@ -74,10 +74,10 @@ export default class MatchesWeek extends Component {
     const matchFilter = match => match.week === this.state.currentWeek || match.date.isBetween(weekStart, weekEnd);
 
     var matches = this.props.matches.filter(matchFilter);
-    if (this.state.editMode) {
-      const freeMatches = this.props.freeMatches.filter(matchFilter);
-      matches = matches.concat(freeMatches);
-    }
+    // if (this.state.editMode) {
+    //   const freeMatches = this.props.freeMatches.filter(matchFilter);
+    //   matches = matches.concat(freeMatches);
+    // }
 
     const viewsConfig = [{
       key: 'all',
