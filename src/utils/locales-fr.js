@@ -32,6 +32,8 @@ export default {
     admin: '/admin',
     links: '/links',
     facts: '/weetjes',
+    administration: '/bestuur',
+    generalInfo: '/club-info',
   },
   trans: {
     fullClubName: 'TTC Erembodegem',
@@ -65,6 +67,8 @@ export default {
       help: 'Help',
       closeMenu: 'Fermer menu',
       admin: 'Admin',
+      administration: 'Administration',
+      generalInfo: 'Info de club',
     },
     profile: {
       main: 'Profil',
@@ -166,6 +170,8 @@ export default {
       },
       roundFirst: 'Heenronde',
       roundBack: 'Terugronde',
+      downloadScoresheet: 'Télécharger feuille de match',
+      scoresheetFileName: '${frenoyId} Sporta ${teamCode} vs ${theirClub} ${theirTeam}',
     },
     players: {
       title: 'Aperçu de joueurs ${a}',
@@ -177,13 +183,44 @@ export default {
       downloadExcel: 'Excel export',
       downloadExcelFileName: 'ListeJoueurs',
     },
+    clubs: {
+      generalInfo: {
+        title: 'Infos de club',
+        contact: 'Contact',
+        openDays: 'Compétition & Entraînement',
+        ourEmail: 'Notre adresse mail',
+        ourAddress: 'Notre adresse',
+        moneyMoney: 'Cotisation',
+        googleMap: 'Route',
+        other: 'Autres',
+        bankNr: 'Compte bancaire',
+        orgNr: 'numéro de TVA vzw',
+      },
+      managementTitle: 'Adminstration',
+      managerTypes: {
+        Chairman: 'Président',
+        Secretary: 'Sécretaire',
+        Treasurer: 'Trésorier'
+      }
+    },
     match: {
+      block: {
+        Captain: 'Bloqué par capitaine',
+        Major: 'Bloqué par Jelle'
+      },
       plys: {
+        saveAndBlockAll: 'Bewaren en Blokkeren',
         choiceCaptain: 'OPGESTELD',
         choicePlayers: 'Keuze spelers',
         blockMatchTitle: 'Opstelling',
+
         snackbarSaved: 'Opstelling bewaard',
-        snackbarBlocked: 'Bewaard en blokkering gewijzigd',
+        snackbarBlocked: 'Bewaard en geblokkeerd',
+
+        tooltipSaveAndBlock: 'Opstelling bewaren en match blokkeren',
+        tooltipSave: 'Opstelling bewaren ZONDER blokkeren',
+        tooltipOpenForm: 'Opstelling bewerken',
+        extraComment: 'Extra info bij de match',
       },
       week: 'Semaine',
       todayMatches: 'aujourdhui',
@@ -221,6 +258,7 @@ export default {
         reportWrittenBy: 'par ${}',
         commentsTitle: 'Succession',
         commentsOpenForm: 'Réagir',
+        commentsOpenFormConfirm: 'Ajouter commentaire',
         commentsPhoto: 'Ajouté photo',
         commentPosted: 'Ajouté commentaire',
         commentDeleted: 'Supprimé commentaire',
@@ -286,10 +324,17 @@ export default {
       matchesLost: 'Défaite',
       matchesDraw: 'Match nul',
       points: 'Points',
+      matches: 'Matchs',
+
+      matchesWonBadge: 'Victoires',
+      matchesDrawBadge: 'Egalités',
+      matchesLostBadge: 'Défaits',
 
       viewMain: 'Résumé',
       viewMatches: 'Matchs',
       viewRanking: 'Rangschikking',
+      playersPicked: 'Formation',
+      individual: 'Individuel',
       frenoyResults: 'Résultats Frenoy',
     },
     facts: require('./locales-fr-facts.js')
@@ -297,6 +342,8 @@ export default {
  timeAgo: {
     prefixAgo: 'il y a',
     prefixFromNow: 'd\'ici',
+    suffixAgo: "il y a",
+    suffixFromNow: null,
     seconds: 'moins d\'une minute',
     minute: 'une minute',
     minutes: '%d minutes',
@@ -307,6 +354,8 @@ export default {
     month: 'un mois',
     months: '%d mois',
     year: 'un an',
-    years: '%d ans'
+    years: '%d ans',
+    wordSeparator: " ",
+    numbers: []
   }
 };
