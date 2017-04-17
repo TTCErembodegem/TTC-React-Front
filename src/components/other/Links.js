@@ -44,9 +44,12 @@ export default class Links extends Component {
             <tr>
               <td>
                 <a href="http://ttcsintpauwels.be/competitie/vttl/bereken-je-klassement/" target="_blank">
-                  {this.context.t('links.vttlCalculation')}
+                  {this.context.t('links.vttlCalculationOne')}
                 </a>
               </td>
+            </tr>
+            <tr>
+              <td><a href="http://www.ttcdepinte.be/classify" target="_blank">{this.context.t('links.vttlCalculationTwo')}</a></td>
             </tr>
             <tr>
               <td>
