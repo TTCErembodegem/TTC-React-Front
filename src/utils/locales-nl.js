@@ -306,8 +306,9 @@ export default {
       vttlResults: 'Resultaten VTTL',
       sportaResults: 'Resultaten Sporta',
       varia: 'Varia',
-      vttlCalculation: 'Klassementsberekening VTTL',
-      sportaCalculation: 'Klassementsberekening Sporta',
+      vttlCalculationOne: 'Klassementsberekening VTTL (TTC Sint-Pauwels)',
+      vttlCalculationTwo: 'Klassementsberekening TTC De Pinte'
+      sportaCalculation: 'Klassementsberekening Sporta (TTC Sint-Pauwels)',
       francis: 'Francis tafeltennisshop',
       ttactua: 'Tafeltennisactua',
     },
