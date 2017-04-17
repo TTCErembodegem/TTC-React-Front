@@ -64,6 +64,9 @@ export default class Links extends Component {
             <tr>
               <td><a href="http://www.tafeltennisactua.be/" target="_blank">{this.context.t('links.ttactua')}</a></td>
             </tr>
+            <tr>
+              <td><a href="http://www.tabletennisdaily.co.uk/" target="_blank">{this.context.t('links.tabletennisDaily')}</a></td>
+            </tr>
           </tbody>
         </table>
       </div>

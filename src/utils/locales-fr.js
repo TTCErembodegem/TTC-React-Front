@@ -314,6 +314,7 @@ export default {
       sportaCalculation: 'Calculation de classement Sporta (TTC Sint-Pauwels)',
       francis: 'Francis tafeltennisshop',
       ttactua: 'Tafeltennisactua',
+      tabletennisDaily: 'TableTennisDaily'
     },
     teamCalendar: {
       downloadExcelFileName: 'Formations',
