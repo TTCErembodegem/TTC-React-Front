@@ -49,14 +49,14 @@ export default class Links extends Component {
               </td>
             </tr>
             <tr>
-              <td><a href="http://www.ttcdepinte.be/classify" target="_blank">{this.context.t('links.vttlCalculationTwo')}</a></td>
-            </tr>
-            <tr>
               <td>
                 <a href="http://ttcsintpauwels.be/competitie/sporta/bereken-je-klassement/" target="_blank">
                   {this.context.t('links.sportaCalculation')}
                 </a>
               </td>
+            </tr>
+            <tr>
+              <td><a href="http://www.ttcdepinte.be/classify" target="_blank">{this.context.t('links.vttlCalculationTwo')}</a></td>
             </tr>
             <tr>
               <td><a href="http://www.tafeltennisshop.be/" target="_blank">{this.context.t('links.francis')}</a></td>
