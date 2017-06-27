@@ -293,8 +293,8 @@ export default {
       location: 'Groeneweg 28, 9300 Erembodegem',
       trainingDays: 'Training: di. en do. vanaf 20u',
       competitionDays: 'Competitie: ma., wo. en vr. 20u', //  'en za. om 14u' --> niet meer goed op mobile :(
-      adultMembership: '€90 voor volwassenen',
-      youthMembership: '€50 voor -18 jarigen',
+      adultMembership: '€92 voor volwassenen',
+      youthMembership: '€52 voor -18 jarigen',
     },
     links: {
       federations: 'De bonden & hun uitslagenborden',

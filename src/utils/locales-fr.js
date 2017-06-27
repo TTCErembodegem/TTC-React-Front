@@ -295,8 +295,8 @@ export default {
       trainingDays: 'Entraînement: di. en do. 20h',
       competitionDays: 'Compétition: ma., wo. en vr. 20h', //  'en za. om 14u' --> niet meer goed op mobile :(
       telephoneNumber: '0495/24 94 20',
-      adultMembership: '€90 pour adultes',
-      youthMembership: '€50 voor jeunes',
+      adultMembership: '€92 pour adultes',
+      youthMembership: '€52 voor jeunes',
       contact: 'Contactez-nous'
     },
     links: {
