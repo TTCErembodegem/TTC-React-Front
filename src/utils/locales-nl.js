@@ -193,6 +193,7 @@ export default {
         other: 'Ander',
         bankNr: 'Bankrekeningnummer',
         orgNr: 'BTW nummer vzw',
+        balls: 'Wij spelen met',
       },
       managementTitle: 'Het bestuur',
       managerTypes: {

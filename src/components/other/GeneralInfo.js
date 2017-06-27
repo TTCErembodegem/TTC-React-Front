@@ -4,6 +4,7 @@ import { OwnEmail, GoogleMap } from '../controls.js';
 
 const clubBankNr = 'BE55 0016 5927 6744';
 const clubOrgNr = 'BE 0840.545.283';
+const compBalls = 'Xushaofa tt-bal 3-ster SYNTH 40 mm';
 
 export default class GeneralInfo extends Component {
   static contextTypes = PropTypes.contextTypes;
@@ -16,6 +17,7 @@ export default class GeneralInfo extends Component {
             <h1>{this.context.t('clubs.generalInfo.contact')}</h1>
             <strong>{this.context.t('clubs.generalInfo.ourAddress')}</strong> {this.context.t('footer.location')}
             <div><strong>{this.context.t('clubs.generalInfo.ourEmail')}</strong> <OwnEmail /></div>
+            <strong>{this.context.t('clubs.generalInfo.orgNr')}</strong> {clubOrgNr}<br />
 
             <h1>{this.context.t('clubs.generalInfo.openDays')}</h1>
             {this.context.t('footer.competitionDays')}
@@ -31,8 +33,9 @@ export default class GeneralInfo extends Component {
             <h1>{this.context.t('clubs.generalInfo.other')}</h1>
             <strong>VTTL</strong> OVL134<br />
             <strong>Sporta</strong> 4055<br />
-            <strong>{this.context.t('clubs.generalInfo.orgNr')}</strong> {clubOrgNr}<br />
-
+            <br />
+            <strong>{this.context.t('clubs.generalInfo.balls')}</strong><br />
+            {compBalls}<br />
 
           </div>
           <div className="col-md-6">
