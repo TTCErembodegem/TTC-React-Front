@@ -190,7 +190,6 @@ export default {
         ourAddress: 'Ons adres',
         moneyMoney: 'Lidgeld',
         googleMap: 'Kaart',
-        other: 'Ander',
         bankNr: 'Bankrekeningnummer',
         orgNr: 'BTW nummer vzw',
         balls: 'Wij spelen met',
@@ -296,6 +295,7 @@ export default {
       competitionDays: 'Competitie: ma., wo. en vr. 20u', //  'en za. om 14u' --> niet meer goed op mobile :(
       adultMembership: '€92 voor volwassenen',
       youthMembership: '€52 voor -18 jarigen',
+      additionalMembership: 'Een extra €68 komt bovenop het lidgeld dat kan teruggevorderd worden door 4 kaarten voor het eetfestijn te verkopen.',
     },
     links: {
       federations: 'De bonden & hun uitslagenborden',

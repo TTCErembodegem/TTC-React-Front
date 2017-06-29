@@ -23,19 +23,21 @@ export default class GeneralInfo extends Component {
             {this.context.t('footer.competitionDays')}
             <br />
             {this.context.t('footer.trainingDays')}
-
-            <h1>{this.context.t('clubs.generalInfo.moneyMoney')}</h1>
-            <strong>{this.context.t('clubs.generalInfo.bankNr')}</strong> {clubBankNr}<br />
-            {this.context.t('footer.adultMembership')}
-            <br />
-            {this.context.t('footer.youthMembership')}
-
-            <h1>{this.context.t('clubs.generalInfo.other')}</h1>
+            <br /><br />
             <strong>VTTL</strong> OVL134<br />
             <strong>Sporta</strong> 4055<br />
             <br />
             <strong>{this.context.t('clubs.generalInfo.balls')}</strong><br />
             {compBalls}<br />
+
+
+            <h1>{this.context.t('clubs.generalInfo.moneyMoney')}</h1>
+            {this.context.t('footer.adultMembership')}
+            <br />
+            {this.context.t('footer.youthMembership')}
+            <div style={{marginTop: 16, fontSize: 12}}>{this.context.t('footer.additionalMembership')}</div>
+            <br />
+            <strong>{this.context.t('clubs.generalInfo.bankNr')}</strong> {clubBankNr}<br />
 
           </div>
           <div className="col-md-6">
