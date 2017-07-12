@@ -196,7 +196,7 @@ class TodaysEvents extends Component {
 
     return (
       <div>
-        <Strike text="Dubbeltornooi: Vrijdag 12/5/2017 20:00" />
+        <Strike text="Eetfestijn: Zaterdag 23/09/2017 van 18u tot 22u" />
         {trainingEvent}
         {lastPlayedMatches.size ? (
           <div>
