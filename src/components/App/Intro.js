@@ -189,23 +189,31 @@ class TodaysEvents extends Component {
       trainingEvent = <Strike text={t('intro.trainingToday')} />;
     }
 
-    const lastPlayedMatches = this.props.matches
-      .filter(cal => cal.date.isBefore(today, 'day'))
-      .sort((a, b) => b.date - a.date)
-      .take(2);
-
     return (
       <div>
-        <Strike text="Eetfestijn: Zaterdag 23/09/2017 van 18u tot 22u" />
         {trainingEvent}
-        {lastPlayedMatches.size ? (
-          <div>
-            <Strike text={t('intro.playedMatches')} />
-            {this._renderMatches(lastPlayedMatches)}
-          </div>
-        ) : null}
+        <Eetfestijn />
       </div>
     );
+
+    // TODO: Put this back after the Eetfestijn:
+    // const lastPlayedMatches = this.props.matches
+    //   .filter(cal => cal.date.isBefore(today, 'day'))
+    //   .sort((a, b) => b.date - a.date)
+    //   .take(2);
+
+    // return (
+    //   <div>
+    //     <Strike text="Eetfestijn: Zaterdag 23/09/2017 van 18u tot 22u" />
+    //     {trainingEvent}
+    //     {lastPlayedMatches.size ? (
+    //       <div>
+    //         <Strike text={t('intro.playedMatches')} />
+    //         {this._renderMatches(lastPlayedMatches)}
+    //       </div>
+    //     ) : null}
+    //   </div>
+    // );
   }
 
   _renderMatches(matches) {
@@ -220,3 +228,46 @@ class TodaysEvents extends Component {
     );
   }
 }
+
+const eetfesijnStyle = {
+  padding: 0,
+  width: 400,
+  margin: 'auto',
+};
+const eetfestijnGoogleMaps = "https://maps.google.com/maps?q=Botermelkstraat+63,+9300+Aalst&hl=en&ll=50.953115,4.061058&spn=0.009449,0.023475&sll=50.952442,4.062345&sspn=0.001188,0.002934&t=m&hnear=Botermelkstraat+63,+Aalst+9300+Aalst,+Oost-Vlaanderen,+Vlaams+Gewest,+Belgium&z=16";
+const Eetfestijn = () => {
+  return (
+    <Paper style={eetfesijnStyle}>
+      <div id="eetfestijn">
+        <h1 style={{fontSize: 26}}>
+        Eetfestijn TTC Erembodegem
+        <br />
+        Zaterdag 23 september 2017
+        </h1>
+
+        Van 18u00 tot 22u00 in zaal <a className="eetfestijn" href={eetfestijnGoogleMaps} target="_blank">Sint-Paulus</a>
+        <br />
+        Botermelkstraat 63, 9300 Aalst
+
+        <br /><br />
+
+        <table width="100%" border="0" align="center">
+          <tr><th colspan={2} style={{textAlign: 'center'}}><font size="+1">Menu</font></th></tr>
+          <tr>
+            <td width="99%"><b>Varkenshaasje</b> met sla, tomaten<br /> en saus naar keuze</td><td width="1%">&euro;17</td>
+          </tr>
+          <tr>
+            <td><b>Kabeljauw</b> met normandische saus</td><td>&euro;17</td>
+          </tr>
+          <tr>
+            <td><b>Kindermenu</b>: kip met appelmoes</td><td><font size="-1">&euro;8,5</font></td>
+          </tr>
+        </table>
+
+        <br />
+        <span>Steunkaarten ook beschikbaar voor &euro;2.50</span>
+      </div>
+    </Paper>
+  )
+}
+
