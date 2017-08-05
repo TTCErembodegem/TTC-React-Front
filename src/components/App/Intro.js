@@ -251,17 +251,19 @@ const Eetfestijn = () => {
 
         <br /><br />
 
-        <table width="100%" border="0" align="center">
-          <tr><th colspan={2} style={{textAlign: 'center'}}><font size="+1">Menu</font></th></tr>
-          <tr>
-            <td width="99%"><b>Varkenshaasje</b> met sla, tomaten<br /> en saus naar keuze</td><td width="1%">&euro;17</td>
-          </tr>
-          <tr>
-            <td><b>Kabeljauw</b> met normandische saus</td><td>&euro;17</td>
-          </tr>
-          <tr>
-            <td><b>Kindermenu</b>: kip met appelmoes</td><td><font size="-1">&euro;8,5</font></td>
-          </tr>
+        <table width="100%">
+          <tbody>
+            <tr><th colSpan={2} style={{textAlign: 'center'}}><font size="+1">Menu</font></th></tr>
+            <tr>
+              <td width="99%"><b>Varkenshaasje</b> met sla, tomaten<br /> en saus naar keuze</td><td width="1%">&euro;17</td>
+            </tr>
+            <tr>
+              <td><b>Kabeljauw</b> met normandische saus</td><td>&euro;17</td>
+            </tr>
+            <tr>
+              <td><b>Kindermenu</b>: kip met appelmoes</td><td><font size="-1">&euro;8,5</font></td>
+            </tr>
+          </tbody>
         </table>
 
         <br />
