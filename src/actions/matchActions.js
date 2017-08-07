@@ -16,7 +16,8 @@ export function simpleLoaded(data) {
 }
 
 function frenoySync(dispatch, m) {
-  if (!m.isSyncedWithFrenoy && moment().isAfter(moment(m.date))) {
+  if (!m.isSyncedWithFrenoy && moment().isAfter(m.date) && m.shouldBePlayed) {
+    // Non played matches date is 0001-01-01T00:00:00
     return http.post('/matches/FrenoyMatchSync', {id: m.id})
       .then(function(newmatch) {
         dispatch(simpleLoaded(newmatch));
