@@ -4,7 +4,7 @@ import Location from '../controls/Location.js';
 import Paper from 'material-ui/Paper';
 
 const topSponsorPaperStyle = {
-  height: 100,
+  height: 110,
   padding: 15,
   display: 'inline-block',
 };

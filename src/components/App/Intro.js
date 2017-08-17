@@ -47,7 +47,7 @@ export default class Intro extends Component {
     if (big) {
       topSponsors = (
         <Row style={{marginTop: 10}}>
-          <div style={{width: 460, margin: 'auto'}}>
+          <div style={{width: 480, margin: 'auto'}}>
             <Sponsor.BakkerijVanLierde big={big} />
             <Sponsor.SlagerijGuy big={big} />
           </div>
