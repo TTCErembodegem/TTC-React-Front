@@ -5,14 +5,13 @@ import Paper from 'material-ui/Paper';
 
 const topSponsorPaperStyle = {
   height: 100,
-  width: 250,
   padding: 15,
   display: 'inline-block',
 };
 
 const topSponsorsOnBottomPaperStyle = {
   padding: 15,
-  width: 220,
+  width: 300,
   margin: 'auto',
 };
 
@@ -32,7 +31,7 @@ export class BakkerijVanLierde extends Component {
     };
 
     return (
-      <Paper style={this.props.big ? {...topSponsorPaperStyle, width: 220} : topSponsorsOnBottomPaperStyle}>
+      <Paper style={this.props.big ? {...topSponsorPaperStyle} : topSponsorsOnBottomPaperStyle}>
         <Location loc={loc} t={this.context.t} />
       </Paper>
     );
@@ -54,7 +53,7 @@ export class SlagerijGuy extends Component {
       mobile: '053211359',
     };
 
-    const style = this.props.big ? {...topSponsorPaperStyle, float: 'right', width: 200} : topSponsorsOnBottomPaperStyle;
+    const style = this.props.big ? {...topSponsorPaperStyle, float: 'right'} : topSponsorsOnBottomPaperStyle;
     return (
       <Paper style={style}>
         <Location loc={loc} t={this.context.t} />
