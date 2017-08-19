@@ -79,6 +79,9 @@ const TeamOverviewMatches = ({matches, user, team, title}) => {
 
 const TeamOverviewPlayers = ({team, user, t}) => {
   const stats = team.getPlayerStats();
+  if (stats.length === 0) {
+    return <div />;
+  }
   return (
     <div>
       <h3>{t('teamCalendar.individual')}</h3>
