@@ -1,0 +1,13 @@
+.players {
+  table-layout: fixed;
+}
+
+.row-by-two tr:nth-child(odd) td {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.row-by-two tr:nth-child(even) td {
+  border-top: 0;
+  padding-top: 0;
+}

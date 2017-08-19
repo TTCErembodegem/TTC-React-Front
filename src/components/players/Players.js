@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes, { connect, withViewport, keyMirror } from '../PropTypes.js';
+import PropTypes, { connect, withViewport, keyMirror, withStyles } from '../PropTypes.js';
 import cn from 'classnames';
 import moment from 'moment';
 import http from '../../utils/httpClient.js';
@@ -28,6 +28,7 @@ const tabEventKeys = keyMirror({
   };
 })
 @withViewport
+@withStyles(require('./Players.css'))
 export default class Players extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
@@ -50,7 +51,7 @@ export default class Players extends Component {
   _renderToolbar(activeTab) {
     var marginLeft = 5;
     if (activeTab === tabEventKeys.gallery) {
-      marginLeft = this.props.viewport.width > 450 ? 25 : 10;
+      marginLeft = this.props.viewport.width > 450 ? 25 : 0;
     }
     return (
       <div style={{marginRight: 5, marginLeft: marginLeft}}>
@@ -212,13 +213,21 @@ export default class Players extends Component {
   _renderTabAll() {
     const players = this._getAllPlayers();
     const showCompetitionColumn = !this.props.user.playerId || this.props.viewport.width > 700;
+
+    if (!this.props.user.playerId) {
+      return <NotLoggedInPlayersAll players={players} t={this.context.t} />;
+    }
+    if (this.props.viewport.width < 700) {
+      return <SmallPlayersAll players={players} t={this.context.t} />;
+    }
+
     return (
-      <Table condensed hover>
+      <Table condensed hover className="players">
         <thead>
           <tr>
             <th>{this.context.t('player.name')}</th>
-            {this.props.user.playerId ? <th>{this.context.t('player.address')}</th> : null}
-            {showCompetitionColumn ? <th>{this.context.t('common.competition')}</th> : null}
+            <th>{this.context.t('player.address')}</th>
+            <th>{this.context.t('common.competition')}</th>
             <th className="hidden-sm hidden-xs">{this.context.t('player.style')}</th>
           </tr>
         </thead>
@@ -226,38 +235,100 @@ export default class Players extends Component {
           {players.map(ply => {
             return (
               <tr key={ply.id} className={cn({'match-won': ply.isMe()})}>
-                <td className="hidden-xs">
+                <td>
                   <strong>{ply.name}</strong>
-                  {this.props.user.playerId ? <div><Email email={ply.contact.email} /><br />{ply.formattedMobile()}</div> : null}
-                </td>
-                <td className="visible-xs">
-                  <strong>{this.props.user.playerId ? ply.alias : ply.name}</strong>
                   <br />
-                  {this.props.user.playerId ? <div><Email email={ply.contact.email} /><br /></div> : null}
-                  <Telephone number={ply.contact.mobile} hideIcon style={{fontSize: 10}} />
+                  <Email email={ply.contact.email} />
+                  <br />
+                  <Telephone number={ply.contact.mobile} hideIcon />
                 </td>
-                {this.props.user.playerId ? (
-                  <td>
-                    {ply.contact.address}
-                    <br />
-                    {ply.contact.city}
-                  </td>
-                ) : null}
-                {showCompetitionColumn ? (
-                  <td>
-                    <PlayerAllCompetitions player={ply} t={this.context.t} />
-                  </td>
-                ) : null}
+                <td>
+                  {ply.contact.address}
+                  <br />
+                  {ply.contact.city}
+                </td>
+                <td>
+                  <PlayerAllCompetitions player={ply} t={this.context.t} />
+                </td>
                 <td className="hidden-sm hidden-xs">
                   {ply.style.name}
                   <br />
                   <small>{ply.style.bestStroke}</small>
                 </td>
               </tr>
-            );}
-          )}
+            );
+          })}
         </tbody>
       </Table>
     );
   }
 }
+
+const NotLoggedInPlayersAll = ({players, t}) => {
+  return (
+    <Table condensed hover className="players">
+      <thead>
+        <tr>
+          <th>{t('player.name')}</th>
+          <th>{t('common.competition')}</th>
+          <th className="hidden-sm hidden-xs">{t('player.style')}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {players.map(ply => {
+          return (
+            <tr key={ply.id}>
+              <td>
+                <strong>{ply.name}</strong>
+              </td>
+              <td>
+                <PlayerAllCompetitions player={ply} t={t} />
+              </td>
+              <td className="hidden-sm hidden-xs">
+                {ply.style.name}
+                <br />
+                <small>{ply.style.bestStroke}</small>
+              </td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </Table>
+  );
+};
+
+const SmallPlayersAll = ({players, t}) => {
+  return (
+    <Table condensed hover className="players row-by-two">
+      <thead>
+        <tr>
+          <th>{t('player.name')}</th>
+          <th>{t('player.address')}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {players.map(ply => {
+          return [
+            <tr key={ply.id + '_name'} className={cn({'match-won': ply.isMe()})}>
+              <td colSpan={2}>
+                <strong>{ply.name}</strong>
+              </td>
+            </tr>,
+            <tr key={ply.id} className={cn({'match-won': ply.isMe()})}>
+              <td className="truncate">
+                <Email email={ply.contact.email} />
+                <br />
+                <Telephone number={ply.contact.mobile} hideIcon />
+              </td>
+              <td>
+                {ply.contact.address}
+                <br />
+                {ply.contact.city}
+              </td>
+            </tr>
+          ];
+        })}
+      </tbody>
+    </Table>
+  );
+};
