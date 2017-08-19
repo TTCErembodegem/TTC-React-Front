@@ -231,7 +231,7 @@ class TodaysEvents extends Component {
 
 const eetfesijnStyle = {
   padding: 0,
-  width: 400,
+  width: '100%',
   margin: 'auto',
 };
 const eetfestijnGoogleMaps = "https://maps.google.com/maps?q=Botermelkstraat+63,+9300+Aalst&hl=en&ll=50.953115,4.061058&spn=0.009449,0.023475&sll=50.952442,4.062345&sspn=0.001188,0.002934&t=m&hnear=Botermelkstraat+63,+Aalst+9300+Aalst,+Oost-Vlaanderen,+Vlaams+Gewest,+Belgium&z=16";
