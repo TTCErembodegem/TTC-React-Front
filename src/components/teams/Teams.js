@@ -97,10 +97,15 @@ export default class Teams extends Component {
   }
   getDefaultTeam() {
     if (this.props.user.playerId) {
-      const yourTeam = this.props.user.getTeams().find(team => team.competition === this._getCompetition());
-      if (yourTeam) {
-        return yourTeam.teamCode;
+      const yourTeams = this.props.user.getTeams().filter(team => team.competition === this._getCompetition());
+      if (yourTeams.length === 0) {
+        return 'A';
       }
+      if (yourTeams.length === 1) {
+        return yourTeams[0].teamCode;
+      }
+      const notReserve = yourTeams.find(t => t.getPlayers('standard').some(p => p.player.id === this.props.user.playerId));
+      return notReserve ? notReserve.teamCode : yourTeams[0].teamCode;
     }
     return 'A';
   }
