@@ -26,9 +26,9 @@ function bearer(req) {
   }
 }
 
-const HttpClient = {
+var HttpClient = {
   download: path => {
-    return request.get(getUrl(path)).use(bearer);
+    return request.get(getUrl(path)).accept('json').use(bearer);
   },
   get: (path, qs) => {
     const fullUrl = 'GET ' + (qs ? path + '?' + querystring.encode(qs) : path);
@@ -127,45 +127,80 @@ const HttpClient = {
   })
 };
 
+function b64ToBlob(b64Data, contentType = "", sliceSize = 512) {
+  contentType = contentType || 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 
-export default HttpClient;
+  const byteCharacters = atob(b64Data);
+  const byteArrays = [];
+
+  for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+    const slice = byteCharacters.slice(offset, offset + sliceSize);
+    const byteNumbers = new Array(slice.length);
+    for (let i = 0; i < slice.length; i++) {
+      byteNumbers[i] = slice.charCodeAt(i);
+    }
+
+    const byteArray = new Uint8Array(byteNumbers);
+    byteArrays.push(byteArray);
+  }
+
+  const blob = new Blob(byteArrays, {type: contentType});
+  return blob;
+}
+
+function downloadExcel(respBody, fileName, addTimestampToFileName = false) {
+  const blob = b64ToBlob(respBody);
+  if (addTimestampToFileName) {
+    fileName += fileName + '_' + moment().format('YYYY-MM-DD') + '.xlsx';
+  }
+
+  if (window.navigator.msSaveOrOpenBlob) {
+    window.navigator.msSaveBlob(blob, fileName);
+  } else {
+    var link = document.createElement('a');
+    link.download = fileName;
+    link.href = URL.createObjectURL(blob);
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+  }
+}
 
 
 HttpClient.download.playersExcel = function(fileName) {
   return HttpClient.download('/players/ExcelExport').then(res => {
-    var link = document.createElement('a');
-    link.download = fileName + '_' + moment().format('YYYY-MM-DD') + '.xlsx';
-    link.href = 'data:application/octet-stream;base64,' + res.body;
-    link.click();
+    downloadExcel(res.body, fileName, true);
   })
 }
 
-HttpClient.download.scoresheetExcel = function(match) {
-  return HttpClient.download('/match/ExcelScoresheet/' + match.id).then(res => {
-    var fileName = t('players.scoresheetFileName', {
-      frenoyId: match.frenoyMatchId.replace('/', '-'),
-      teamCode: match.getTeam().teamCode,
-      theirClub: match.getOpponentClub().name,
-      theirTeam: match.opponent.teamCode,
-    });
+//link.href = 'data:application/octet-stream;base64,' + res.body;
+// --> Does not work in IE
 
-    // make this button ALWAYS VISIBLE!!!
-    // fileName: '{frenoyId} Sporta {teamCode} vs {theirClub} {theirTeam}',
+// HttpClient.download.scoresheetExcel = function(match) {
+//   return HttpClient.download('/match/ExcelScoresheet/' + match.id).then(res => {
+//     var fileName = t('players.scoresheetFileName', {
+//       frenoyId: match.frenoyMatchId.replace('/', '-'),
+//       teamCode: match.getTeam().teamCode,
+//       theirClub: match.getOpponentClub().name,
+//       theirTeam: match.opponent.teamCode,
+//     });
 
-    console.log('filename', fileName);
+//     // make this button ALWAYS VISIBLE!!!
+//     // fileName: '{frenoyId} Sporta {teamCode} vs {theirClub} {theirTeam}',
 
-    var link = document.createElement('a');
-    link.download = fileName + '.xlsx';
-    link.href = 'data:application/octet-stream;base64,' + res.body;
-    link.click();
-  })
-}
+//     console.log('filename', fileName);
+
+//     var link = document.createElement('a');
+//     link.download = fileName + '.xlsx';
+//     link.href = 'data:application/octet-stream;base64,' + res.body;
+//     link.click();
+//   })
+// }
 
 HttpClient.download.teamsExcel = function(fileName) {
   return HttpClient.download('/teams/ExcelExport').then(res => {
-    var link = document.createElement('a');
-    link.download = fileName + '_' + moment().format('YYYY-MM-DD') + '.xlsx';
-    link.href = 'data:application/octet-stream;base64,' + res.body;
-    link.click();
+    downloadExcel(res.body, fileName, true);
   })
 }
+
+export default HttpClient;
