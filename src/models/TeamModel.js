@@ -16,9 +16,9 @@ export default class TeamModel {
     this.teamCode = json.teamCode;
     this.clubId = json.clubId;
     this.year = json.year;
-    this.opponents = json.opponents;
-    this.players = json.players;
-    this.ranking = json.ranking;
+    this.opponents = json.opponents; // : {teamCode: A-Z, clubId: number}[]
+    this.players = json.players; // : {playerId: number, type: teamPlayerType}[]
+    this.ranking = json.ranking; // : {clubId, teamCode, position, points, gamesWon, gamesDraw, gamesLost}[]
     this.frenoy = new TeamFrenoyModel(json.frenoy, this);
   }
 

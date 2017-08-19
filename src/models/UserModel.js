@@ -15,7 +15,7 @@ const security = keyMirror({
 export default class UserModel {
   constructor(json) {
     this.playerId = json.playerId;
-    this.teams = json.teams;
+    this.teams = json.teams; // : number[]
     this._security = json.security;
   }
 
