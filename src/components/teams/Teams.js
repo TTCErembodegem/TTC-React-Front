@@ -96,9 +96,8 @@ export default class Teams extends Component {
     return this.props.params.competition[0].toUpperCase() + this.props.params.competition.substr(1);
   }
   getDefaultTeam() {
-    const teams = this.props.teams.filter(x => x.competition === this._getCompetition());
     if (this.props.user.playerId) {
-      let yourTeam = this.props.user.getTeams().find(team => team.competition);
+      const yourTeam = this.props.user.getTeams().find(team => team.competition === this._getCompetition());
       if (yourTeam) {
         return yourTeam.teamCode;
       }
