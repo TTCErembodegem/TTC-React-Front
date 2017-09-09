@@ -62,6 +62,9 @@ export var playerUtils = {
 
 export function createFrenoyLink(comp) {
   // old and reliable but with frenoyLink that needs to be fetched manually
+  if (!comp.frenoyLink) {
+    return createFrenoyLinkByUniqueId(comp.competition, comp.uniqueIndex);
+  }
   if (comp.competition === 'Vttl') {
     return 'http://competitie.vttl.be/index.php?menu=6&result=1&sel=' + comp.frenoyLink;
   } else {
