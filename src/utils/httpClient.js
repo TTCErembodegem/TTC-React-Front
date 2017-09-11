@@ -151,7 +151,7 @@ function b64ToBlob(b64Data, contentType = "", sliceSize = 512) {
 function downloadExcel(respBody, fileName, addTimestampToFileName = false) {
   const blob = b64ToBlob(respBody);
   if (addTimestampToFileName) {
-    fileName += '_' + moment().format('YYYY-MM-DD') + '.xlsx';
+    fileName += ' ' + moment().format('YYYY-MM-DD') + '.xlsx';
   }
 
   if (window.navigator.msSaveOrOpenBlob) {

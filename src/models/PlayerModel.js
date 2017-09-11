@@ -3,13 +3,13 @@ import storeUtil from '../storeUtil.js';
 export default class PlayerModel {
   constructor(json = {security: 'Player'}) {
     this.alias = json.alias || json.name || '';
-    this.contact = json.contact || {};
+    this.contact = json.contact || {}; // playerId, email, mobile, address, city
     this.id = json.id;
     this.active = json.active;
     this.name = json.name;
-    this.sporta = json.sporta;
+    this.sporta = json.sporta; // clubId, competition, frenoyLink, position (=index), ranking, rankingIndex, rankingValue
     this.vttl = json.vttl;
-    this.style = json.style || {};
+    this.style = json.style || {}; // playerId, name, bestStroke
     this.quitYear = json.quitYear;
     this.security = json.security;
   }
