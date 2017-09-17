@@ -8,3 +8,9 @@ export const CommentButton = ({onClick, className, style}) => (
     <Icon fa="fa fa-comment-o" />
   </Button>
 );
+
+export const SaveButton = ({onClick, title, style}) => (
+  <button className="btn btn-default"onClick={onClick} title={title} style={style}>
+    <Icon fa="fa fa-floppy-o" />
+  </button>
+);

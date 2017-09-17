@@ -10,7 +10,7 @@ import Table from 'react-bootstrap/lib/Table';
 import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import Button from 'react-bootstrap/lib/Button';
-import { Icon, TrophyIcon, ThrillerIcon, CommentButton } from '../controls';
+import { Icon, TrophyIcon, ThrillerIcon, CommentButton, SaveButton } from '../controls';
 import MatchVs from './Match/MatchVs.js';
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 import { TeamCaptainIcon } from '../players/PlayerCard.js';
@@ -68,11 +68,14 @@ export default class MatchesTable extends Component {
     ));
   }
   _renderTableEditMatchPlayers(match) {
+    //console.log('--------------------------------');
     const majorFormation = match.getPlayerFormation();
     if (!this.props.editMode) {
       return this._getTablePlayers()
       .map((ply, index) => {
         const playerDecision = majorFormation.find(frm => frm.id === ply.player.id);
+        //if (playerDecision)
+        //  console.log(match.frenoyMatchId, playerDecision.player.alias, playerDecision.matchPlayer.status);
         return (
           <td key={ply.player.id} className={getPlayingStatusClass(playerDecision ? playerDecision.matchPlayer.status : '')}>&nbsp;</td>
         );
@@ -100,6 +103,20 @@ export default class MatchesTable extends Component {
           player: plyInfo.player
         };
       }
+
+      // TODO: oh god... :)
+      // Zie problem: als Major gedeeltelijke Captain/Major table:
+      // --> Momenteel zie je als Major enkel de Captains bij non-edit
+      // --> In edit mode: een anchor icon om aan te geven dat kapitein dat gekozen heeft?
+
+      // --> Different logins: Major, Captain, Member
+      // --> Member can see Edit buttons but can then not change anything
+      // --> Non edit view with backgroundColors is no good: use the badges instead
+      // --> The count at the bottom are incorrect: they count only captain, not major???
+      // --> Add anchor before the table
+
+      // --> This'll be for next season? :)
+
       const onButtonClick = this._toggleTablePlayer.bind(this, plyInfo.player.id, match);
       return (
         <td style={{textAlign: 'center'}} key={plyInfo.player.id} className={getPlayingStatusClass(playerDecision ? playerDecision.matchPlayer.status : '')}>
@@ -439,12 +456,6 @@ const SaveMatchButtons = ({onSave, onBlock, onCommentsToggle, t}) => (
       <Icon fa="fa fa-anchor" />
     </button>
 
-    <button
-      className="btn btn-default"
-      onClick={onSave}
-      title={t('match.plys.tooltipSave')}
-    >
-      <Icon fa="fa fa-floppy-o" />
-    </button>
+    <SaveButton onClick={onSave} title={t('match.plys.tooltipSave')} />
   </div>
 );

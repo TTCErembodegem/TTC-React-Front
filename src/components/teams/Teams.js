@@ -13,7 +13,7 @@ import { editMatchPlayers } from '../../actions/matchActions.js';
 import DivisionRanking from './DivisionRanking.js';
 import TeamOverview from './TeamOverview.js';
 import TeamHeader, { TeamTabTitle } from './TeamHeader.js';
-import { Icon, TrophyIcon, Badgy } from '../controls';
+import { Icon, TrophyIcon, Badgy, SaveButton } from '../controls';
 import ButtonStack from '../controls/ButtonStack.js';
 import PlayersCardGallery from '../players/PlayersCardGallery.js';
 import MatchesTable from '../matches/MatchesTable.js';
@@ -164,9 +164,14 @@ export default class Teams extends Component {
           {this.state.view.startsWith('matches') && this.props.user.canEditMatchesOrIsCaptain() && matches.some(m => !m.isSyncedWithFrenoy) ? (
             <div className="pull-right" style={{marginLeft: 5}}>
               {this.state.editMode && this.state.view != 'matches' ? (
-                <button className="btn btn-danger" style={{marginRight: 5}} onClick={::this._saveAndBlockAll}>
-                  {this.context.t('match.plys.saveAndBlockAll')}
-                </button>
+                <div style={{display: 'inline'}}>
+                  <button className="btn btn-danger" style={{marginRight: 5}} onClick={this._saveAndBlockAll.bind(this, true)}>
+                    {this.context.t('match.plys.saveAndBlockAll')}
+                  </button>
+                  {this.props.user.canManageTeams() ? (
+                    <SaveButton onClick={this._saveAndBlockAll.bind(this, false)} title={this.context.t('match.plys.tooltipSave')} style={{marginRight: 5}} />
+                  ) : null}
+                </div>
               ) : null}
               <button onClick={() => this.setState({editMode: !this.state.editMode})} className="btn btn-default">
                 <Icon fa="fa fa-pencil-square-o" />
@@ -193,7 +198,7 @@ export default class Teams extends Component {
   _getPlayerStatus() {
     return this.props.user.canManageTeams() ? 'Major' : 'Captain';
   }
-  _saveAndBlockAll() {
+  _saveAndBlockAll(majorBlock) {
     if (!this.state.tableMatches.length) {
       return;
     }
@@ -206,7 +211,7 @@ export default class Teams extends Component {
         matchId: matchId,
         playerIds: plyInfos.map(x => x.id),
         blockAlso: true,
-        newStatus: this._getPlayerStatus()
+        newStatus: !majorBlock ? 'Captain' : this._getPlayerStatus()
       }, false)
       .catch(e => console.error('saveAndBlockAll', e));
     });
