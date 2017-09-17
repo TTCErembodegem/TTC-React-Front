@@ -11,6 +11,7 @@ import TabbedContainer from '../controls/TabbedContainer.js';
 import { Telephone, Icon, Email, DownloadExcelIcon } from '../controls.js';
 import { PlayerAllCompetitions, PlayerFrenoyLink } from './PlayerCard.js';
 import PlayersCardGallery from './PlayersCardGallery.js';
+import { PlayerPlayingStyle, PlayerPlayingStyleForm } from "./PlayerPlayingStyle.js";
 
 const tabEventKeys = keyMirror({
   all: '',
@@ -113,7 +114,10 @@ export default class Players extends Component {
               <td className="visible-xs">{ply.alias}</td>
               <td>{ply.vttl.ranking} <PlayerFrenoyLink comp={ply.vttl} /></td>
               <td className="hidden-xs">{ply.style.name}</td>
-              <td className="hidden-xs">{ply.style.bestStroke}</td>
+              <td className="hidden-xs">
+                <PlayerPlayingStyleForm player={ply} iconStyle="edit-icon" style={{color: '#d3d3d3', float: 'right'}} />
+                {ply.style.bestStroke}
+              </td>
             </tr>
           ))}
         </tbody>
@@ -152,7 +156,10 @@ export default class Players extends Component {
               <td>{ply.sporta.ranking} <PlayerFrenoyLink comp={ply.sporta} /></td>
               <td>{ply.sporta.rankingValue}</td>
               <td className="hidden-xs">{ply.style.name}</td>
-              <td className="hidden-xs">{ply.style.bestStroke}</td>
+              <td className="hidden-xs">
+                <PlayerPlayingStyleForm player={ply} iconStyle="edit-icon" style={{color: '#d3d3d3', float: 'right'}} />
+                {ply.style.bestStroke}
+              </td>
             </tr>
           ))}
         </tbody>
@@ -251,9 +258,7 @@ export default class Players extends Component {
                   <PlayerAllCompetitions player={ply} t={this.context.t} />
                 </td>
                 <td className="hidden-sm hidden-xs">
-                  {ply.style.name}
-                  <br />
-                  <small>{ply.style.bestStroke}</small>
+                  <PlayerPlayingStyle ply={ply} />
                 </td>
               </tr>
             );
@@ -285,9 +290,7 @@ const NotLoggedInPlayersAll = ({players, t}) => {
                 <PlayerAllCompetitions player={ply} t={t} />
               </td>
               <td className="hidden-sm hidden-xs">
-                {ply.style.name}
-                <br />
-                <small>{ply.style.bestStroke}</small>
+                <PlayerPlayingStyle ply={ply} />
               </td>
             </tr>
           );

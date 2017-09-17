@@ -4,6 +4,7 @@ import PropTypes, { contextTypes } from '../PropTypes.js';
 import { Card } from 'material-ui/Card';
 import PlayerImage from './PlayerImage.js';
 import { Email, Icon, Telephone } from '../controls.js';
+import { PlayerPlayingStyleForm } from "./PlayerPlayingStyle.js";
 
 export default class PlayerCard extends Component {
   static contextTypes = PropTypes.contextTypes;
@@ -16,6 +17,10 @@ export default class PlayerCard extends Component {
       address: PropTypes.string,
       city: PropTypes.string,
     }),
+    style: PropTypes.shape({
+      name: PropTypes.string,
+      bestStroke: PropTypes.string
+    }),
     children: PropTypes.any
   };
 
@@ -24,11 +29,12 @@ export default class PlayerCard extends Component {
     const cardWidth = 350;
     return (
       <Card style={{width: cardWidth, height: 256}}>
+        {player.style ? <PlayerPlayingStyleForm player={player} iconStyle="edit-icon" style={{color: '#d3d3d3', float: 'right', display: 'inline'}} /> : null}
         <div style={{float: 'left'}}>
           <PlayerImage playerId={player.id} center={false} />
         </div>
         <div style={{float: 'left', marginLeft: 6, width: cardWidth - 208}}>
-          <h4 style={{marginBottom: 0}}>{player.name.length > 15 && player.alias ? player.alias : player.name}</h4>
+          <h4 style={{marginBottom: 0, marginTop: 0}}>{player.name.length > 15 && player.alias ? player.alias : player.name}</h4>
           {player.contact.email ? (
             <div className="truncate" style={{width: 150}}>
               <Email email={player.contact.email} />
