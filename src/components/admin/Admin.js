@@ -6,11 +6,13 @@ import AdminPlayers from './AdminPlayers.js';
 import AdminTeams from './AdminTeams.js';
 import AdminDev from './AdminDev.js';
 import AdminPlayerLineup from './AdminPlayerLineup.js';
+import ProfilePhotoForm from '../users/ProfilePhotoForm.js';
 
 const tabEventKeys = keyMirror({
   players: '',
   teams: '',
   formation: '',
+  pictures: '',
   dev: '',
 });
 
@@ -49,6 +51,8 @@ export default class Admin extends Component {
       return <AdminPlayers players={this.props.players} recreantAndQuitters={this.props.admin.players} />;
     case tabEventKeys.formation:
       return <AdminPlayerLineup />;
+    case tabEventKeys.pictures:
+      return <ProfilePhotoForm admin={true} />;
     case tabEventKeys.dev:
       return <AdminDev />;
     }
@@ -68,6 +72,9 @@ export default class Admin extends Component {
     }, {
       key: tabEventKeys.formation,
       title: 'Opstellingen',
+    }, {
+      key: tabEventKeys.pictures,
+      title: 'Foto\'s',
     }, {
       key: tabEventKeys.dev,
       title: 'Dev',

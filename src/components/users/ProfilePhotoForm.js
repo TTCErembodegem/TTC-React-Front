@@ -6,6 +6,7 @@ import FlatButton from 'material-ui/FlatButton';
 import ImageEditor from '../controls/image/ImageEditor.js';
 import { playerUtils } from '../../models/PlayerModel.js';
 import ImageDropzone from '../controls/image/ImageDropzone.js';
+import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 
 export class ProfilePhotoAvatarForm extends Component {
   render() {
@@ -22,7 +23,8 @@ export class ProfilePhotoAvatarForm extends Component {
 }, {uploadPlayer})
 export default class ProfilePhotoForm extends Component {
   static contextTypes = PropTypes.contextTypes;
-  static propTypes ={
+  static propTypes = {
+    admin: PropTypes.bool,
     user: PropTypes.UserModel.isRequired,
     size: PropTypes.shape({
       width: PropTypes.number.isRequired,
@@ -35,7 +37,8 @@ export default class ProfilePhotoForm extends Component {
   static defaultProps = {
     size: playerUtils.getPlayerImageSize(),
     type: 'player-photo',
-    borderRadius: 0
+    borderRadius: 0,
+    admin: false,
   }
 
   constructor() {
@@ -44,6 +47,7 @@ export default class ProfilePhotoForm extends Component {
       fileName: null,
       preview: null,
       croppingRect: null,
+      playerId: null,
     };
   }
 
@@ -54,6 +58,14 @@ export default class ProfilePhotoForm extends Component {
       <div style={{marginBottom: 10, paddingLeft: 10}} className="row">
         <div className="col-sm-6">
           <h3>{t('photos.uploadNewTitle')}</h3>
+
+          {this.props.admin ? (
+            <PlayerAutoComplete
+              selectPlayer={playerId => this.setState({playerId})}
+              hintText={this.context.t('system.playerSelect')}
+            />
+          ) : null}
+
           <ImageDropzone t={t} fileUploaded={fileName => this.setState({fileName})} />
           {this.state.fileName ? (
             <div>
@@ -94,6 +106,6 @@ export default class ProfilePhotoForm extends Component {
     this.setState({preview, croppingRect});
   }
   _saveImage() {
-    this.props.uploadPlayer(this.state.preview, this.props.user.playerId, this.props.type);
+    this.props.uploadPlayer(this.state.preview, this.state.playerId || this.props.user.playerId, this.props.type);
   }
 }
