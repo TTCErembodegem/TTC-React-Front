@@ -19,6 +19,13 @@ import PlayersCardGallery from '../players/PlayersCardGallery.js';
 import MatchesTable from '../matches/MatchesTable.js';
 
 export function getFirstOrLastMatches(allMatchesToCome, filter) {
+  if (filter === 'all') {
+    return {
+      matches: allMatchesToCome,
+      hasMore: false
+    };
+  }
+
   const firstMatches = allMatchesToCome.filter(x => x.date.month() >= 7);
   const lastMatches = allMatchesToCome.filter(x => x.date.month() < 7);
   if (filter === 'first' && firstMatches.length !== 0) {
@@ -276,12 +283,18 @@ export default class Teams extends Component {
 
 export const SwitchBetweenFirstAndLastRoundButton = ({t, setState, matchesFilter}) => (
   <div style={{textAlign: 'center'}}>
-    <button
-      className="btn btn-default"
-      onClick={() => setState({matchesFilter: matchesFilter === 'first' ? 'last' : 'first'})}>
-      <Icon fa="fa fa-chevron-circle-down" />
-      &nbsp;
-      {t('comp.round' + (matchesFilter === 'first' ? 'Back' : 'First'))}
-    </button>
+    <ButtonStack
+      config={[
+        {key: 'all', text: t('players.all')},
+        {key: 'first', text: t('comp.roundFirst')},
+        {key: 'last', text: t('comp.roundBack')}
+      ]}
+      small={false}
+      activeView={matchesFilter}
+      onClick={newFilter => {
+        setState({matchesFilter: newFilter});
+        window.scrollTo(0, 0);
+      }}
+    />
   </div>
 );

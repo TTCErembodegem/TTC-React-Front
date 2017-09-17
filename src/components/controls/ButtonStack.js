@@ -3,10 +3,10 @@ import cn from 'classnames';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 
-const ButtonStack = ({small, config, activeView, onClick}) => {
+const ButtonStack = ({small, config, activeView, onClick, id = 'team-view'}) => {
   if (small) {
     return (
-      <DropdownButton title={(config.find(x => x.key === activeView) || {text: activeView}).text} id="team-view">
+      <DropdownButton title={(config.find(x => x.key === activeView) || {text: activeView}).text} id={id}>
         {config.map(button => (
           <MenuItem eventKey={button.key} key={button.key} onSelect={onClick.bind(null, button.key)}>{button.text}</MenuItem>
         ))}
