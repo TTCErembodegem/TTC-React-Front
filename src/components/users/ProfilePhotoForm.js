@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes, { connect, withContext } from '../PropTypes.js';
+import PropTypes, { connect, withContext, storeUtil } from '../PropTypes.js';
 import { uploadPlayer } from '../../actions/userActions.js';
 
 import FlatButton from 'material-ui/FlatButton';
@@ -7,6 +7,8 @@ import ImageEditor from '../controls/image/ImageEditor.js';
 import { playerUtils } from '../../models/PlayerModel.js';
 import ImageDropzone from '../controls/image/ImageDropzone.js';
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
+import PlayerImage from '../players/PlayerImage.js';
+import PlayerAvatar from '../players/PlayerAvatar.js';
 
 export class ProfilePhotoAvatarForm extends Component {
   render() {
@@ -57,7 +59,10 @@ export default class ProfilePhotoForm extends Component {
     return (
       <div style={{marginBottom: 10, paddingLeft: 10}} className="row">
         <div className="col-sm-6">
-          <h3>{t('photos.uploadNewTitle')}</h3>
+          <h3>
+            {t('photos.uploadNewTitle')}
+            <small> ({this.props.size.width}px x {this.props.size.height}px)</small>
+          </h3>
 
           {this.props.admin ? (
             <PlayerAutoComplete
@@ -96,6 +101,16 @@ export default class ProfilePhotoForm extends Component {
                   onTouchTap={::this._saveImage} />
               </div>
             </div>
+          </div>
+        ) : null}
+        {!this.props.admin ? (
+          <div className="col-sm-6">
+            <h3>{t('photos.existingTitle')}</h3>
+            {this.props.type === 'player-photo' ? (
+              <PlayerImage playerId={this.state.playerId || this.props.user.playerId} />
+            ) : (
+              <PlayerAvatar player={storeUtil.getPlayer(this.props.user.playerId)} />
+            )}
           </div>
         ) : null}
       </div>

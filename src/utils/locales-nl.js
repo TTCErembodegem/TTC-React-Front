@@ -119,6 +119,7 @@ export default {
       passwordChangedFail: 'Paswoord wijzigen is mislukt'
     },
     photos: {
+      existingTitle: 'Huidige foto',
       uploadNewTitle: 'Nieuwe foto opladen',
       uploadNewInstructions: 'Sleep een foto of klik om een foto te kiezen',
       adjustTitle: 'Foto bijsnijden',
