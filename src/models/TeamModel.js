@@ -191,9 +191,10 @@ class TeamFrenoyModel {
 
 
 export function sortPlayers(competition) {
+  // TODO: TeamModel.sortPlayers not in use?
   return (plyA, plyB) => {
-    var aComp = plyA.getCompetition(competition);
-    var bComp = plyB.getCompetition(competition);
+    const aComp = plyA.getCompetition(competition);
+    const bComp = plyB.getCompetition(competition);
     if (!aComp) {
       return -1;
     }
@@ -206,12 +207,23 @@ export function sortPlayers(competition) {
 
 export function sortMappedPlayers(competition) {
   return (plyA, plyB) => {
-    var aComp = plyA.player.getCompetition(competition);
-    var bComp = plyB.player.getCompetition(competition);
+    const aComp = plyA.player.getCompetition(competition);
+    const bComp = plyB.player.getCompetition(competition);
     if (!aComp) {
       return -1;
     }
     if (!bComp) {
+      return 1;
+    }
+
+    if (plyA.type === plyB.type) {
+      return aComp.position - bComp.position;
+    }
+
+    if (plyA.type === teamPlayerType.captain || plyB.type === teamPlayerType.reserve) {
+      return -1;
+    }
+    if (plyB.type === teamPlayerType.captain || plyA.type === teamPlayerType.reserve) {
       return 1;
     }
     return aComp.position - bComp.position;

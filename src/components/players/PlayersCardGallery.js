@@ -5,7 +5,7 @@ import PlayerCard from './PlayerCard.js';
 import { Card, CardText } from 'material-ui/Card';
 
 @withViewport
-export default class Players extends Component {
+export default class PlayersCardGallery extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     players: PropTypes.PlayerModelList.isRequired,
