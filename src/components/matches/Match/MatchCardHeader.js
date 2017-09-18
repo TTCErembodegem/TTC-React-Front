@@ -5,6 +5,7 @@ import moment from 'moment';
 import MatchForm from '../Match/MatchForm.js';
 import MatchScore from '../MatchScore.js';
 import { Icon, ThrillerBadge, ThrillerIcon } from '../../controls/Icon.js';
+import MatchVs from './MatchVs.js';
 
 import { Card, CardHeader } from 'material-ui/Card';
 
@@ -182,7 +183,7 @@ class MatchCardHeader extends Component {
       <span>
         <span className={opponent ? 'match-opponent-team' : ''}>{divisionRanking.position ? divisionRanking.position + '. ' : ''}</span>
         <span className={opponent ? 'match-opponent-team' : ''}>
-          {opponent ? match.renderOpponentTitle() : team.renderOwnTeamTitle()}
+          {opponent ? <MatchVs match={match} themOnly={true} /> : team.renderOwnTeamTitle()}
         </span>
       </span>
     );
