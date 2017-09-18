@@ -173,15 +173,15 @@ class TodaysEvents extends Component {
     const t = this.context.t;
 
     const today = moment();
-    const matchesToday = this.props.matches.filter(cal => cal.date.isSame(today, 'day'));
-    if (matchesToday.size) {
-      return (
-        <div>
-          <Strike text={t('intro.matchesToday')} />
-          {this._renderMatches(matchesToday)}
-        </div>
-      );
-    }
+    // const matchesToday = this.props.matches.filter(cal => cal.date.isSame(today, 'day'));
+    // if (matchesToday.size) {
+    //   return (
+    //     <div>
+    //       <Strike text={t('intro.matchesToday')} />
+    //       {this._renderMatches(matchesToday)}
+    //     </div>
+    //   );
+    // }
 
     // TODO: training weekdays & hour hardcoded (+ duplicated in footer)
     var trainingEvent;
