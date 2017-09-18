@@ -49,7 +49,6 @@ export class PlayerPlayingStyleForm extends Component {
   }
 
   _openStyle(ply) {
-    console.log('uhoh', ply);
     this.setState({editingPlayer: ply, newStyle: Object.assign({}, ply.style), editingBy: storeUtil.getUser().playerId});
   }
   _closeStyle() {

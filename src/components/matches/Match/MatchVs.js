@@ -5,7 +5,6 @@ const MatchVs = ({match, opponentOnly, themOnly = false}) => {
   const forfait = match.getTeam().getDivisionRanking(match.opponent).isForfait;
   var them = match.renderOpponentTitle();
   if (forfait) {
-    console.log(match.frenoyMatchId, match.opponent, match.getTeam().getDivisionRanking(match.opponent));
     them = <span style={{textDecoration: 'line-through'}}>{them}</span>
   }
 

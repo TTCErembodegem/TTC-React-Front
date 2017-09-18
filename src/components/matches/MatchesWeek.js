@@ -90,13 +90,10 @@ export default class MatchesWeek extends Component {
       text: 'Sporta'
     }];
 
-    //<button className="btn btn-default">
-    //  <Icon fa="fa fa-envelope-o" onClick={() => console.log('emailing opstelling...')} />
-    //</button>
     return (
       <div>
         <h3 style={{textAlign: 'center'}}>
-          <Icon fa="fa fa-arrow-left" style={{marginRight: 10, visibility: this.state.currentWeek > 1 ? '' : 'hidden'}} onClick={::this._onChangeWeek.bind(this, -1)} />
+          <Icon fa="fa fa-arrow-left" style={{marginRight: 10, visibility: this.state.currentWeek > 1 ? '' : 'hidden'}} onClick={this._onChangeWeek.bind(this, -1)} />
           {t('match.week')}&nbsp;
           {this.state.currentWeek}
           :&nbsp;
@@ -104,7 +101,7 @@ export default class MatchesWeek extends Component {
             &nbsp;-&nbsp;
           {weekEnd.format('D/M')}
           {this.state.currentWeek < this.state.lastWeek ? (
-            <Icon fa="fa fa-arrow-right" style={{marginLeft: 10}} onClick={::this._onChangeWeek.bind(this, 1)} />
+            <Icon fa="fa fa-arrow-right" style={{marginLeft: 10}} onClick={this._onChangeWeek.bind(this, 1)} />
           ) : null}
         </h3>
 

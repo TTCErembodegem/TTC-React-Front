@@ -188,8 +188,6 @@ HttpClient.download.playersExcel = function(fileName) {
 //     // make this button ALWAYS VISIBLE!!!
 //     // fileName: '{frenoyId} Sporta {teamCode} vs {theirClub} {theirTeam}',
 
-//     console.log('filename', fileName);
-
 //     var link = document.createElement('a');
 //     link.download = fileName + '.xlsx';
 //     link.href = 'data:application/octet-stream;base64,' + res.body;
