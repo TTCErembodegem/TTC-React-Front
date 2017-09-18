@@ -16,9 +16,9 @@ import PlayerAvatar from './PlayerAvatar.js';
 
 
 
-export const PlayerPlayingStyle = ({ply}) => (
+export const PlayerPlayingStyle = ({ply, allowEdit = true}) => (
   <span>
-    <PlayerPlayingStyleForm player={ply} iconStyle="edit-icon" style={{color: '#d3d3d3', float: 'right'}} />
+    {allowEdit ? <PlayerPlayingStyleForm player={ply} iconStyle="edit-icon" style={{color: '#d3d3d3', float: 'right'}} /> : null}
     {ply.style.name}
     <br />
     <small>{ply.style.bestStroke}</small>

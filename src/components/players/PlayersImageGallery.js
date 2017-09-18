@@ -86,7 +86,7 @@ export default class PlayersImageGallery extends Component {
                       <span>{ply.name}</span> <small>{comp ? comp.ranking : '??'}</small>
                     </span>
                   )}
-                  subtitle={this.props.subtitle ? this.props.subtitle(ply) : <PlayerPlayingStyle ply={ply} />}
+                  subtitle={this.props.subtitle ? this.props.subtitle(ply) : <PlayerPlayingStyle ply={ply} allowEdit={false} />}
                 >
                   <PlayerPlayingStyleForm player={ply} iconStyle="edit-icon" style={editStyleIcon} />
                   <PlayerImage playerId={ply.id} />
