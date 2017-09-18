@@ -18,7 +18,7 @@ export default class TeamModel {
     this.year = json.year;
     this.opponents = json.opponents; // : {teamCode: A-Z, clubId: number}[]
     this.players = json.players; // : {playerId: number, type: teamPlayerType}[]
-    this.ranking = json.ranking; // : {clubId, teamCode, position, points, gamesWon, gamesDraw, gamesLost}[]
+    this.ranking = json.ranking; // : {clubId, teamCode, isForfait, position, points, gamesWon, gamesDraw, gamesLost}[]
     this.frenoy = new TeamFrenoyModel(json.frenoy, this);
   }
 
@@ -44,7 +44,7 @@ export default class TeamModel {
     if (opponent === 'our-ranking') {
       return this.getDivisionRanking({clubId: this.clubId, teamCode: this.teamCode});
     }
-    var result = this.ranking.find(x => x.clubId === opponent.clubId && x.teamCode === opponent.teamCode);
+    const result = this.ranking.find(x => x.clubId === opponent.clubId && x.teamCode === opponent.teamCode);
     return result || {empty: true};
   }
   getThriller(match) {

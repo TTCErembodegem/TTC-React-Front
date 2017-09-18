@@ -33,8 +33,8 @@ export function freeMatches(state = Immutable.List([]), action = null) {
   const {type, payload} = action;
   switch (type) {
   case ActionTypes.MATCHES_LOADED:
-    console.log('LOADED: freeMatches', payload, state.toArray());
-    //return immutableHelpers.merge(state, payload, x => new MatchModel(x), x => !x.shouldBePlayed);
+    //console.log('LOADED: freeMatches', payload, state.toArray());
+    return immutableHelpers.merge(state, payload, x => new MatchModel(x), x => !x.shouldBePlayed);
     return state;
   default:
     return state;
