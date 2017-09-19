@@ -75,15 +75,11 @@ export default class MatchModel {
     }
     return this.date.format('ddd D/M HH');
   }
-  getResponsiveDisplayDate(t, viewportWidth) {
-    if (viewportWidth > 768) {
-      return t(this.getDisplayDate());
+  getDisplayTime() {
+    if (this.date.minutes()) {
+      return this.date.format('HH:mm');
     }
-
-    if (this.isStandardStartTime()) {
-      return this.getDisplayDate('s');
-    }
-    return t(this.date.format('D/M HH' + (this.date.minutes() ? ':mm' : '')));
+    return this.date.format('HH');
   }
 
   renderOpponentTitle() {

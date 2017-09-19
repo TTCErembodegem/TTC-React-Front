@@ -22,6 +22,42 @@ function isPickedForMatch(status) {
   return status === 'Play' || status === 'Captain' || status === 'Major';
 }
 
+
+@withViewport
+class MatchDate extends Component {
+  static contextTypes = PropTypes.contextTypes;
+  static propTypes = {
+    viewport: PropTypes.viewport,
+    match: PropTypes.MatchModel.isRequired,
+  }
+
+  render() {
+    const t = this.context.t;
+    const match = this.props.match;
+
+    if (this.props.viewport.width > 768) {
+      // Big
+      if (match.isStandardStartTime()) {
+        return <span>{t('match.date', match.getDisplayDate())}</span>;
+      } else {
+        return <span>{match.getDisplayDate('d')} <strong>{t('match.date', match.getDisplayTime())}</strong></span>;
+      }
+    }
+
+    // Small
+    if (match.isStandardStartTime()) {
+      return <span>{match.getDisplayDate('s')}</span>;
+    }
+    return (
+      <span>
+        {match.getDisplayDate('s')}
+        &nbsp;
+        <strong>{t('match.date', match.getDisplayTime())}</strong>
+      </span>
+    );
+  }
+}
+
 @withViewport
 @connect(state => ({}), {editMatchPlayers})
 export default class MatchesTable extends Component {
@@ -274,7 +310,7 @@ export default class MatchesTable extends Component {
         <tr key={match.id} style={stripeColor}>
           <td>
             {thrillerIcon}
-            {match.shouldBePlayed ? match.getResponsiveDisplayDate(t.bind(t, 'match.date'), this.props.viewport.width) : null}
+            {match.shouldBePlayed ? <MatchDate match={match} /> : null}
           </td>
           <td className="hidden-xs">{match.frenoyMatchId}</td>
           <td><MatchVs match={match} opponentOnly={this.props.allowOpponentOnly && this.props.viewport.width < 450} /></td>

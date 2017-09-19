@@ -2,7 +2,6 @@ import $, { setHubPrototype } from './utils/hubProxy.js';
 import { getUrl } from './utils/httpClient.js';
 import store from './store.js';
 import { showSnackbar } from './actions/configActions.js';
-//import { loaded as loadedPlayer } from './actions/playerActions.js';
 import * as loader from './actions/initialLoad.js';
 import { matchUpdated } from './actions/matchActions.js';
 
