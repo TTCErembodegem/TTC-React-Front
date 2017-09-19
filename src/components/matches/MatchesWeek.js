@@ -94,12 +94,7 @@ export default class MatchesWeek extends Component {
       <div>
         <h3 style={{textAlign: 'center'}}>
           <Icon fa="fa fa-arrow-left" style={{marginRight: 10, visibility: this.state.currentWeek > 1 ? '' : 'hidden'}} onClick={this._onChangeWeek.bind(this, -1)} />
-          {t('match.week')}&nbsp;
-          {this.state.currentWeek}
-          :&nbsp;
-          {weekStart.format('D/M')}
-            &nbsp;-&nbsp;
-          {weekEnd.format('D/M')}
+          <WeekTitle t={t} weekNr={this.state.currentWeek} weekStart={weekStart} weekEnd={weekEnd} />
           {this.state.currentWeek < this.state.lastWeek ? (
             <Icon fa="fa fa-arrow-right" style={{marginLeft: 10}} onClick={this._onChangeWeek.bind(this, 1)} />
           ) : null}
@@ -137,3 +132,14 @@ export default class MatchesWeek extends Component {
     );
   }
 }
+
+const WeekTitle = ({t, weekNr, weekStart, weekEnd}) => (
+  <span>
+    {t('match.week')}&nbsp;
+    {weekNr}
+    :&nbsp;
+    {weekStart.format('D/M')}
+      &nbsp;-&nbsp;
+    {weekEnd.format('D/M')}
+  </span>
+);
