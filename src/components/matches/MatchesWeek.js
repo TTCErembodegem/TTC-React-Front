@@ -11,7 +11,8 @@ export default class MatchesWeek extends Component {
     matches: PropTypes.MatchModelList.isRequired,
     user: PropTypes.UserModel.isRequired,
     params: PropTypes.shape({
-      tabKey: PropTypes.string
+      tabKey: PropTypes.string,
+      comp: PropTypes.string,
     }),
   }
 
@@ -21,7 +22,6 @@ export default class MatchesWeek extends Component {
       currentWeek: 1,
       lastWeek: 22,
       editMode: false,
-      filter: 'all',
     };
 
     const currentWeek = this.getCurrentWeek(props);
@@ -58,7 +58,12 @@ export default class MatchesWeek extends Component {
   }
 
   _onChangeWeek(weekDiff) {
-    browserHistory.push(this.context.t.route('matchesWeek') + '/' + (this.state.currentWeek + weekDiff));
+    const comp = this.props.params.comp;
+    const compFilter = comp && comp !== 'all' ? '/' + this.props.params.comp : '';
+    browserHistory.push(this.context.t.route('matchesWeek') + '/' + (this.state.currentWeek + weekDiff) + compFilter);
+  }
+  _onChangeCompetition(comp) {
+    browserHistory.push(this.context.t.route('matchesWeek') + '/' + this.state.currentWeek + (comp && comp !== 'all' ? '/' + comp : ''));
   }
 
   render() {
@@ -104,8 +109,8 @@ export default class MatchesWeek extends Component {
           <ButtonStack
             config={viewsConfig}
             small={false}
-            activeView={this.state.filter}
-            onClick={newFilter => this.setState({filter: newFilter})} />
+            activeView={this.props.params.comp || 'all'}
+            onClick={compFilter => this._onChangeCompetition(compFilter)} />
 
           {this.props.user.canManageTeams() && matches.some(m => !m.isSyncedWithFrenoy) ? (
             <button onClick={() => this.setState({editMode: !this.state.editMode})} className="btn btn-default" style={{marginLeft: 5}}>
@@ -114,15 +119,15 @@ export default class MatchesWeek extends Component {
           ) : null}
         </span>
 
-        {this.state.filter !== 'Sporta' ? (
+        {this.props.params.comp !== 'Sporta' ? (
           <div>
             <h4><strong>Vttl</strong></h4>
             <MatchesTable editMode={this.state.editMode} matches={matches.filter(x => x.competition === 'Vttl').sort((a, b) => a.date - b.date)} user={this.props.user} />
-            {this.state.filter !== 'Vttl' ? <hr style={{marginLeft: '10%', marginRight: '10%', marginTop: 50}} /> : null}
+            {this.props.params.comp !== 'Vttl' ? <hr style={{marginLeft: '10%', marginRight: '10%', marginTop: 50}} /> : null}
           </div>
         ) : null}
 
-        {this.state.filter !== 'Vttl' ? (
+        {this.props.params.comp !== 'Vttl' ? (
           <div>
             <h4><strong>Sporta</strong></h4>
             <MatchesTable editMode={this.state.editMode} matches={matches.filter(x => x.competition === 'Sporta').sort((a, b) => a.date - b.date)} user={this.props.user} />
