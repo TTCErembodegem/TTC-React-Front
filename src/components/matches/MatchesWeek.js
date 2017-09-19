@@ -95,6 +95,10 @@ export default class MatchesWeek extends Component {
       text: 'Sporta'
     }];
 
+    //const matchSorter = (a, b) => a.date - b.date;
+    const matchSorter = (a, b) => a.getTeam().teamCode - b.getTeam().teamCode;
+    // TODO: fixed sort by team now... adding sorting should only be done after serious refactoring of MatchesTable
+
     return (
       <div>
         <h3 style={{textAlign: 'center'}}>
@@ -122,7 +126,7 @@ export default class MatchesWeek extends Component {
         {this.props.params.comp !== 'Sporta' ? (
           <div>
             <h4><strong>Vttl</strong></h4>
-            <MatchesTable editMode={this.state.editMode} matches={matches.filter(x => x.competition === 'Vttl').sort((a, b) => a.date - b.date)} user={this.props.user} />
+            <MatchesTable editMode={this.state.editMode} matches={matches.filter(x => x.competition === 'Vttl').sort(matchSorter)} user={this.props.user} />
             {this.props.params.comp !== 'Vttl' ? <hr style={{marginLeft: '10%', marginRight: '10%', marginTop: 50}} /> : null}
           </div>
         ) : null}
@@ -130,7 +134,7 @@ export default class MatchesWeek extends Component {
         {this.props.params.comp !== 'Vttl' ? (
           <div>
             <h4><strong>Sporta</strong></h4>
-            <MatchesTable editMode={this.state.editMode} matches={matches.filter(x => x.competition === 'Sporta').sort((a, b) => a.date - b.date)} user={this.props.user} />
+            <MatchesTable editMode={this.state.editMode} matches={matches.filter(x => x.competition === 'Sporta').sort(matchSorter)} user={this.props.user} />
           </div>
         ) : null}
       </div>
