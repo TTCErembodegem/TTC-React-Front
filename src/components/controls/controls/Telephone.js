@@ -1,5 +1,5 @@
 import React, {PropTypes, Component} from 'react';
-import {Icon} from '../Icon.js';
+import {Icon} from '../Icons/Icon.js';
 import {displayMobile} from '../../../models/PlayerModel.js';
 
 function callFormat(n) {

@@ -1,11 +1,11 @@
 import React from 'react';
 import Table from 'react-bootstrap/lib/Table';
 import cn from 'classnames';
-import { OwnClubId } from '../../models/ClubModel.js';
+import {OwnClubId} from '../../models/ClubModel.js';
 import storeUtil from '../../storeUtil.js';
 
 
-const DivisionRanking = ({team, t}) => {
+export const DivisionRanking = ({team, t}) => {
   return (
     <Table condensed hover>
       <thead>
@@ -36,5 +36,3 @@ const DivisionRanking = ({team, t}) => {
     </Table>
   );
 };
-
-export default DivisionRanking;

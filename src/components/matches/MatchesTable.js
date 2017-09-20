@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
-import PropTypes, { connect, withViewport, browserHistory, storeUtil } from '../PropTypes.js';
-import { getPlayingStatusClass, getPlayingStatusColor } from '../../models/PlayerModel.js';
+import React, {Component} from 'react';
+import PropTypes, {connect, withViewport, browserHistory, storeUtil} from '../PropTypes.js';
+import {getPlayingStatusClass, getPlayingStatusColor} from '../../models/PlayerModel.js';
 import _ from 'lodash';
 import cn from 'classnames';
 
-import { editMatchPlayers } from '../../actions/matchActions.js';
+import {editMatchPlayers} from '../../actions/matchActions.js';
 
 import Table from 'react-bootstrap/lib/Table';
 import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import Button from 'react-bootstrap/lib/Button';
-import { Icon, TrophyIcon, ThrillerIcon, CommentButton, SaveButton } from '../controls';
+import {Icon, TrophyIcon, ThrillerIcon, CommentButton, SaveButton} from '../controls.js';
 import MatchVs from './Match/MatchVs.js';
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
-import { TeamCaptainIcon } from '../players/PlayerCard.js';
-import { PlayerCompetitionBadge, PlayerCompetitionButton } from '../players/PlayerBadges.js';
+import {TeamCaptainIcon} from '../players/PlayerCard.js';
+import {PlayerCompetitionBadge, PlayerCompetitionButton} from '../players/PlayerBadges.js';
 import MatchScore from './MatchScore.js';
 import OwnPlayer from './Match/OwnPlayer.js';
 

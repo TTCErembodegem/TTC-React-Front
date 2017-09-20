@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import PropTypes, { connect, withViewport } from '../PropTypes.js';
-import { updatePlayer, frenoySync } from '../../actions/playerActions.js';
+import React, {Component} from 'react';
+import PropTypes, {connect, withViewport} from '../PropTypes.js';
+import {updatePlayer, frenoySync} from '../../actions/playerActions.js';
 import moment from 'moment';
 
 import Table from 'react-bootstrap/lib/Table';
 import Button from 'react-bootstrap/lib/Button';
 import TextField from 'material-ui/TextField';
 
-import { Icon, ButtonStack } from '../controls';
+import {Icon, ButtonStack} from '../controls.js';
 import AdminPlayerForm from './AdminPlayerForm.js';
 import AdminChangePassword from './AdminChangePassword.js';
 

@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import PropTypes, { connect } from '../PropTypes.js';
-import { List, Map } from 'immutable';
+import React, {Component} from 'react';
+import PropTypes, {connect} from '../PropTypes.js';
+import {List, Map} from 'immutable';
 import _ from 'lodash';
 
-import { ButtonStack, Icon } from '../controls';
+import {ButtonStack, Icon} from '../controls.js';
 
 @connect(state => state)
 export default class AdminDev extends React.Component {

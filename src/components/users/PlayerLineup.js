@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import PropTypes, { connect } from '../PropTypes.js';
+import React, {Component} from 'react';
+import PropTypes, {connect} from '../PropTypes.js';
 import _ from 'lodash';
 import moment from 'moment';
 import cn from 'classnames';
 
-import { selectPlayer } from '../../actions/matchActions.js';
-import { getPlayingStatusClass } from '../../models/PlayerModel.js';
+import {selectPlayer} from '../../actions/matchActions.js';
+import {getPlayingStatusClass} from '../../models/PlayerModel.js';
 
 import TextField from 'material-ui/TextField';
 import Table from 'react-bootstrap/lib/Table';
@@ -13,10 +13,11 @@ import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
 import Button from 'react-bootstrap/lib/Button';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import FormControl from 'react-bootstrap/lib/FormControl';
-import { Icon, CommentButton } from '../controls';
+import {Icon, CommentButton} from '../controls.js';
 import MatchVs from '../matches/Match/MatchVs.js';
-import { CannotEditMatchIcon } from '../matches/MatchesTable.js';
-import { getFirstOrLastMatches, getFirstOrLast, SwitchBetweenFirstAndLastRoundButton } from '../teams/Teams.js';
+import {CannotEditMatchIcon} from '../matches/MatchesTable.js';
+import {getFirstOrLastMatches, getFirstOrLast} from '../teams/Teams.js';
+import {SwitchBetweenFirstAndLastRoundButton} from '../teams/SwitchBetweenFirstAndLastRoundButton.js';
 
 @connect(state => ({matches: state.matches}), {selectPlayer})
 export default class PlayerLinup extends Component {

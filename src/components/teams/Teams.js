@@ -10,10 +10,11 @@ import {TabbedContainer} from '../controls/TabbedContainer.js';
 import {OwnClubId} from '../../models/ClubModel.js';
 import {editMatchPlayers} from '../../actions/matchActions.js';
 
-import DivisionRanking from './DivisionRanking.js';
-import TeamOverview from './TeamOverview.js';
-import TeamHeader, {TeamTabTitle} from './TeamHeader.js';
-import {Icon, TrophyIcon, Badgy, SaveButton, FrenoyButton, ExcelButton, ButtonStack} from '../controls';
+import {DivisionRanking} from './DivisionRanking.js';
+import {TeamOverview} from './TeamOverview.js';
+import {TeamHeader, TeamTabTitle} from './TeamHeader.js';
+import {Icon, TrophyIcon, Badgy, SaveButton, FrenoyButton, ExcelButton, ButtonStack} from '../controls.js';
+import {SwitchBetweenFirstAndLastRoundButton} from './SwitchBetweenFirstAndLastRoundButton.js';
 import PlayersCardGallery from '../players/PlayersCardGallery.js';
 import MatchesTable from '../matches/MatchesTable.js';
 
@@ -154,7 +155,8 @@ export default class Teams extends Component {
             config={viewsConfig}
             small={this._isSmall()}
             activeView={this.state.view}
-            onClick={view => this.setState({view})} />
+            onClick={view => this.setState({view})}
+          />
 
           {this.state.view.startsWith('matches') && this.props.user.canEditMatchesOrIsCaptain() && matches.some(m => !m.isSyncedWithFrenoy) ? (
             <div className="pull-right" style={{marginLeft: 5}}>
@@ -266,21 +268,3 @@ export default class Teams extends Component {
     );
   }
 }
-
-export const SwitchBetweenFirstAndLastRoundButton = ({t, setState, matchesFilter}) => (
-  <div style={{textAlign: 'center'}}>
-    <ButtonStack
-      config={[
-        {key: 'all', text: t('players.all')},
-        {key: 'first', text: t('comp.roundFirst')},
-        {key: 'last', text: t('comp.roundBack')}
-      ]}
-      small={false}
-      activeView={matchesFilter}
-      onClick={newFilter => {
-        setState({matchesFilter: newFilter});
-        window.scrollTo(0, 0);
-      }}
-    />
-  </div>
-);

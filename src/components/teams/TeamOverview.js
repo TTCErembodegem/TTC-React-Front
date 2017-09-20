@@ -7,7 +7,7 @@ import Table from 'react-bootstrap/lib/Table';
 import MatchesTable from '../matches/MatchesTable.js';
 import {PlayerCompetition} from '../controls.js';
 
-const TeamOverview = ({team, user, small, t}) => {
+export const TeamOverview = ({team, user, small, t}) => {
   const today = moment().startOf('day');
   const nextMatches = team.getMatches().sort((a, b) => a.date - b.date).filter(m => m.date.isSame(today, 'day') || m.date.isAfter(today, 'day')).take(2);
   const prevMatches = team.getMatches().sort((a, b) => b.date - a.date).filter(m => m.date.isBefore(today, 'day')).take(2);
@@ -124,5 +124,3 @@ const TeamOverviewPlayerStats = ({stat}) => (
     ({Math.round(stat.victories / stat.games * 100)}%)
   </span>
 );
-
-export default TeamOverview;

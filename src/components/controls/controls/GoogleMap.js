@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from '../../PropTypes.js';
 
 export class GoogleMap extends Component {

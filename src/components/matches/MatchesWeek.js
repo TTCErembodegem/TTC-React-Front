@@ -3,7 +3,7 @@ import PropTypes, { connect, browserHistory } from '../PropTypes.js';
 import moment from 'moment';
 import * as adminActions from '../../actions/adminActions.js';
 
-import { Icon, ButtonStack } from '../controls';
+import {Icon, ButtonStack} from '../controls.js';
 import MatchesTable from './MatchesTable.js';
 import Button from 'react-bootstrap/lib/Button';
 

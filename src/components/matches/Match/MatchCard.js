@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import PropTypes, { connect, withViewport, keyMirror, storeUtil } from '../../PropTypes.js';
+import React, {Component} from 'react';
+import PropTypes, {connect, withViewport, keyMirror, storeUtil} from '../../PropTypes.js';
 
-import { OwnClubId } from '../../../models/ClubModel.js';
+import {OwnClubId} from '../../../models/ClubModel.js';
 import * as matchActions from '../../../actions/matchActions.js';
-import { setSetting } from '../../../actions/configActions.js';
+import {setSetting} from '../../../actions/configActions.js';
 
-import { Icon, Spinner, TabbedContainer } from '../../controls';
-import { CardText } from 'material-ui/Card';
+import {Icon, Spinner, TabbedContainer} from '../../controls.js';
+import {CardText} from 'material-ui/Card';
 
-import MatchCardHeader, { BigMatchCardHeader } from './MatchCardHeader.js';
+import MatchCardHeader, {BigMatchCardHeader} from './MatchCardHeader.js';
 import MatchPlayerResults from './MatchPlayerResults.js';
 import IndividualMatches from './IndividualMatches.js';
 import OpponentClubLocations from './OpponentClubLocations.js';

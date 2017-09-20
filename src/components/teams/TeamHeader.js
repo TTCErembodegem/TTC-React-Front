@@ -1,7 +1,7 @@
 import React from 'react';
-import { Icon, Badgy } from '../controls';
+import {Icon, Badgy} from '../controls.js';
 
-const TeamHeader = ({team, t, showRanking}) => (
+export const TeamHeader = ({team, t, showRanking}) => (
   <div>
     <h4 style={{marginLeft: 5}}>
       {team.getDivisionDescription()}
@@ -63,5 +63,3 @@ const TeamOverviewBadge = ({amount, colorClass, fa, tooltip}) => {
     </Badgy>
   );
 }
-
-export default TeamHeader;

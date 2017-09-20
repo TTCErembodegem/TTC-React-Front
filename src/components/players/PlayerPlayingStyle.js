@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import PropTypes, { connect, contextTypes, withContext, storeUtil } from '../PropTypes.js';
+import React, {Component} from 'react';
+import PropTypes, {connect, contextTypes, withContext, storeUtil} from '../PropTypes.js';
 
 import * as playerActions from '../../actions/playerActions.js';
 
-import { GridList, GridTile } from 'material-ui/GridList';
+import {GridList, GridTile} from 'material-ui/GridList';
 import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
 
-import { Icon, Telephone } from '../controls';
+import {Icon, Telephone} from '../controls.js';
 import PlayerAutoComplete from './PlayerAutoComplete.js';
 import PlayerStyleAutocomplete from './PlayerStyleAutocomplete.js';
 import PlayerAvatar from './PlayerAvatar.js';
