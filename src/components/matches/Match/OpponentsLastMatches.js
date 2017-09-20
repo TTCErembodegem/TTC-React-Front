@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import PropTypes, { withViewport } from '../../PropTypes.js';
-import { Link, browserHistory } from 'react-router';
+import React, {Component} from 'react';
+import PropTypes, {withViewport} from '../../PropTypes.js';
+import {Link, browserHistory} from 'react-router';
 import _ from 'lodash';
 
 import Table from 'react-bootstrap/lib/Table';
 import IconButton from 'material-ui/IconButton';
 import OpponentPlayer from './OpponentPlayer.js';
-import Spinner from '../../controls/Spinner.js';
+import {Spinner} from '../../controls.js';
 import MatchScore from '../MatchScore.js';
 
 const AmountOfOpponentMatchesToShow = 5;

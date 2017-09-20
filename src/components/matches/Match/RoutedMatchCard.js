@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import PropTypes, { connect, withViewport, storeUtil } from '../../PropTypes.js';
+import React, {Component} from 'react';
+import PropTypes, {connect, withViewport, storeUtil} from '../../PropTypes.js';
 import MatchCard from './MatchCard.js';
-import { fetchMatch } from '../../../actions/initialLoad.js';
+import {fetchMatch} from '../../../actions/initialLoad.js';
 
-import { FullScreenSpinner } from '../../controls/Spinner.js';
+import {FullScreenSpinner} from '../../controls.js';
 
 @withViewport
 @connect(state => {

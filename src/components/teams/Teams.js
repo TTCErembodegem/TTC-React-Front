@@ -1,20 +1,19 @@
-import React, { Component } from 'react';
-import PropTypes, { connect, withViewport, storeUtil } from '../PropTypes.js';
+import React, {Component} from 'react';
+import PropTypes, {connect, withViewport, storeUtil} from '../PropTypes.js';
 import moment from 'moment';
 import cn from 'classnames';
 import Immutable from 'immutable';
 import http from '../../utils/httpClient.js';
 
-import TabbedContainer from '../controls/TabbedContainer.js';
+import {TabbedContainer} from '../controls/TabbedContainer.js';
 
-import { OwnClubId } from '../../models/ClubModel.js';
-import { editMatchPlayers } from '../../actions/matchActions.js';
+import {OwnClubId} from '../../models/ClubModel.js';
+import {editMatchPlayers} from '../../actions/matchActions.js';
 
 import DivisionRanking from './DivisionRanking.js';
 import TeamOverview from './TeamOverview.js';
-import TeamHeader, { TeamTabTitle } from './TeamHeader.js';
-import { Icon, TrophyIcon, Badgy, SaveButton, FrenoyButton, ExcelButton } from '../controls';
-import ButtonStack from '../controls/ButtonStack.js';
+import TeamHeader, {TeamTabTitle} from './TeamHeader.js';
+import {Icon, TrophyIcon, Badgy, SaveButton, FrenoyButton, ExcelButton, ButtonStack} from '../controls';
 import PlayersCardGallery from '../players/PlayersCardGallery.js';
 import MatchesTable from '../matches/MatchesTable.js';
 

@@ -9,7 +9,6 @@ import PlayerAutoComplete from '../../players/PlayerAutoComplete.js';
 import PlayerAvatar from '../../players/PlayerAvatar.js';
 
 import * as matchActions from '../../../actions/matchActions.js';
-import { displayFormat } from '../../controls/Telephone.js';
 import { getPlayingStatusColor } from '../../../models/PlayerModel.js';
 
 @connect(state => {
@@ -120,7 +119,7 @@ class SelectablePlayerAvatar extends Component {
         leftAvatar={this._renderAvatar(player)}
         onTouchTap={this.props.select}
         primaryText={player.alias}
-        secondaryText={displayFormat(player.contact.mobile)} />
+        secondaryText={player.contact.getMobile()} />
     );
   }
   _renderAvatar(player) {

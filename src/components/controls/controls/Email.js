@@ -1,9 +1,9 @@
 import React, { PropTypes, Component } from 'react';
 import cn from 'classnames';
 
-import { OwnClubEmail } from '../../models/ClubModel.js';
+import { OwnClubEmail } from '../../../models/ClubModel.js';
 
-export default class Email extends Component {
+export class Email extends Component {
   static propTypes = {
     email: PropTypes.string,
     className: PropTypes.string,

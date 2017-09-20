@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import PropTypes, { connect } from '../../PropTypes.js';
+import React, {Component} from 'react';
+import PropTypes, {connect} from '../../PropTypes.js';
 import * as matchActions from '../../../actions/matchActions.js';
 
 import MatchScore from '../MatchScore.js';
-import { Icon } from '../../controls/Icon.js';
+import {Icon} from '../../controls/Icon.js';
 
 const scoreOrDefault = match => match.score || {home: 0, out: 0};
 

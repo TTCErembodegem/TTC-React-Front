@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes, { connect, keyMirror } from '../PropTypes.js';
 
-import { displayFormat } from '../controls/Telephone.js';
 import * as loginActions from '../../actions/userActions.js';
 
 import RaisedButton from 'material-ui/RaisedButton';
-import TabbedContainer from '../controls/TabbedContainer.js';
+import {TabbedContainer} from '../controls/TabbedContainer.js';
 
 import ChangePassword from '../users/ChangePassword.js';
 import ChangePlayerDetails from '../users/ChangePlayerDetails.js';
@@ -118,7 +117,7 @@ const ProfilePlayerDetails = ({player, t, logout}) => (
     <p>
       <strong>{t('player.email')}</strong>&nbsp;{player.contact.email}
       <br />
-      <strong>{t('player.gsm')}</strong>&nbsp;{displayFormat(player.contact.mobile)}
+      <strong>{t('player.gsm')}</strong>&nbsp;{player.contact.getMobile()}
       <br />
       <strong>{t('player.address')}</strong>&nbsp;{player.contact.address}
       <br />

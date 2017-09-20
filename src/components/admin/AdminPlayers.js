@@ -147,7 +147,7 @@ const ActivesTable = ({players, onEditPlayer, onUpdatePlayer}) => (
               <a href={'mailto:' + ply.contact.email}>{ply.contact.email}</a>
               <span style={{marginLeft: 20, marginRight: 20}} className="hidden-sm hidden-xs">{ply.contact.address + ', ' + ply.contact.city}</span>
               <br className="visible-sm visible-xs" />
-              <span>{ply.formattedMobile()}</span>
+              <span>{ply.contact.getMobile()}</span>
             </small>
           </td>
           <td className="hidden-xs">{concatCompetitions(ply.vttl, ply.sporta)}</td>

@@ -2,7 +2,7 @@
 // But translated with jquery-timeago inWords
 'use strict';
 
-import timeAgoInWords from '../../utils/timeAgoInWords.js';
+import timeAgoInWords from '../../../utils/timeAgoInWords.js';
 import _ from 'lodash';
 
 const React = require('react');

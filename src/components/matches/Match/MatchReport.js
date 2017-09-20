@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
-import PropTypes, { connect, storeUtil } from '../../PropTypes.js';
+import React, {Component} from 'react';
+import PropTypes, {connect, storeUtil} from '../../PropTypes.js';
 import * as matchActions from '../../../actions/matchActions.js';
 
-import TimeAgo from '../../controls/TimeAgo.js';
-import { Icon } from '../../controls/Icon.js';
-import Editor from '../../controls/Editor.js';
+import {Icon} from '../../controls/Icon.js';
+import {Editor, TimeAgo} from '../../controls.js';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Checkbox from 'material-ui/Checkbox';

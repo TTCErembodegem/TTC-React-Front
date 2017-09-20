@@ -3,7 +3,7 @@ import storeUtil from '../storeUtil.js';
 export default class PlayerModel {
   constructor(json = {security: 'Player'}) {
     this.alias = json.alias || json.name || '';
-    this.contact = json.contact || {}; // playerId, email, mobile, address, city
+    this.contact = new PlayerContactModel(json.contact); // playerId, email, mobile, address, city
     this.id = json.id;
     this.active = json.active;
     this.name = json.name;
@@ -23,13 +23,6 @@ export default class PlayerModel {
     return this.id === storeUtil.getUser().playerId;
   }
 
-  formattedMobile() {
-    if (!this.contact.mobile) {
-      return '';
-    }
-    return this.contact.mobile.replace(/(\d{4})(\d{2})(\d{2})(\d{2})/, '$1 / $2 $3 $4');
-  }
-
   getTeam(competition) {
     const teams = storeUtil.getTeams()
       .filter(team => team.competition === competition)
@@ -38,6 +31,27 @@ export default class PlayerModel {
     return teams.first();
   }
 }
+
+
+export function displayMobile(n) {
+  if (!n) {
+    return '';
+  }
+  return n.replace(/^(\d{3,4})(\d{2})(\d{2})(\d{2})$/, '$1/$2 $3 $4');
+}
+
+
+class PlayerContactModel {
+  constructor(contact) {
+    // playerId, email, mobile, address, city
+    Object.assign(this, contact);
+  }
+
+  getMobile() {
+    return displayMobile(this.mobile);
+  }
+}
+
 
 export var playerUtils = {
   getPlayerImageSize() {

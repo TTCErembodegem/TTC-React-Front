@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import PropTypes from '../PropTypes.js';
+import PropTypes from '../../PropTypes.js';
 
-export default class GoogleMap extends Component {
+export class GoogleMap extends Component {
   static contextTypes = PropTypes.contextTypes;
   render() {
     return (

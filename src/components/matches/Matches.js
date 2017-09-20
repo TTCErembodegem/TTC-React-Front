@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import PropTypes, { connect } from '../PropTypes.js';
+import React, {Component} from 'react';
+import PropTypes, {connect} from '../PropTypes.js';
 import moment from 'moment';
 
-import Strike from '../controls/Strike.js';
+import {Strike} from '../controls.js';
 import MatchCardHeader from './Match/MatchCardHeader.js';
 
 @connect(state => {

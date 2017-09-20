@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import PropTypes, { connect, keyMirror } from '../PropTypes.js';
+import React, {Component} from 'react';
+import PropTypes, {connect, keyMirror} from '../PropTypes.js';
 
-import TabbedContainer from '../controls/TabbedContainer.js';
+import {TabbedContainer} from '../controls/TabbedContainer.js';
 import AdminPlayers from './AdminPlayers.js';
 import AdminTeams from './AdminTeams.js';
 import AdminDev from './AdminDev.js';

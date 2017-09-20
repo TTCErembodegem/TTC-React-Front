@@ -1,6 +1,5 @@
 import React from 'react';
-
-import Location from '../../controls/Location.js';
+import {Location} from '../../controls.js';
 
 const OpponentClubLocations = ({club, t}) => (
   <div className="match-card-tab-content">

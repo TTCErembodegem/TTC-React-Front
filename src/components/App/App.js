@@ -5,7 +5,7 @@ import Header from '../skeleton/Header';
 import Footer from '../skeleton/Footer';
 import Intro from './Intro.js';
 import Grid from 'react-bootstrap/lib/Grid';
-import { FullScreenSpinner } from '../controls/Spinner.js';
+import { FullScreenSpinner } from '../controls.js';
 
 import Snackbar from 'material-ui/Snackbar';
 import * as configActions from '../../actions/configActions.js';

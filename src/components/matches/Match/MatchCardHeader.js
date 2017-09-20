@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import PropTypes, { browserHistory } from '../../PropTypes.js';
+import React, {Component} from 'react';
+import PropTypes, {browserHistory} from '../../PropTypes.js';
 import moment from 'moment';
 
 import MatchForm from '../Match/MatchForm.js';
 import MatchScore from '../MatchScore.js';
-import { Icon, ThrillerBadge, ThrillerIcon } from '../../controls/Icon.js';
+import {Icon, ThrillerBadge, ThrillerIcon} from '../../controls/Icon.js';
 import MatchVs from './MatchVs.js';
 
-import { Card, CardHeader } from 'material-ui/Card';
+import {Card, CardHeader} from 'material-ui/Card';
 
 const daysAgoBackFullDate = 7;
 

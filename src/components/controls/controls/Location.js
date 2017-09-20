@@ -1,9 +1,9 @@
-import React, { PropTypes, Component } from 'react';
+import React, {PropTypes, Component} from 'react';
 
-import { Icon } from './Icon.js';
-import Telephone from './Telephone.js';
+import {Icon} from '../Icon.js';
+import {Telephone} from './Telephone.js';
 
-const Location = ({loc, t}) => (
+export const Location = ({loc, t}) => (
   <div>
     <div className="iconize">
       <Icon fa="fa fa-map-marker" style={{verticalAlign: 'top'}} />
@@ -22,7 +22,6 @@ const Location = ({loc, t}) => (
   </div>
 );
 
-export default Location;
 
 class Website extends Component {
   static propTypes = {

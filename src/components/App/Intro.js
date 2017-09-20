@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
-import PropTypes, { connect, withViewport, withContext, withStyles } from '../PropTypes.js';
+import React, {Component} from 'react';
+import PropTypes, {connect, withViewport, withContext, withStyles} from '../PropTypes.js';
 import moment from 'moment';
 
-import Strike from '../controls/Strike.js';
+import {Strike, Location} from '../controls.js';
 import MatchCardHeader from '../matches/Match/MatchCardHeader.js';
-import Location from '../controls/Location.js';
 
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';

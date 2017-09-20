@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from '../PropTypes.js';
-import Location from '../controls/Location.js';
+import {Location} from '../controls.js';
 import Paper from 'material-ui/Paper';
 
 const topSponsorPaperStyle = {

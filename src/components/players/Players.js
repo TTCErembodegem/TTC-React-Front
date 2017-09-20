@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import PropTypes, { connect, withViewport, keyMirror, withStyles } from '../PropTypes.js';
+import React, {Component} from 'react';
+import PropTypes, {connect, withViewport, keyMirror, withStyles} from '../PropTypes.js';
 import cn from 'classnames';
 import moment from 'moment';
 import http from '../../utils/httpClient.js';
@@ -7,11 +7,11 @@ import http from '../../utils/httpClient.js';
 import Table from 'react-bootstrap/lib/Table';
 import TextField from 'material-ui/TextField';
 
-import TabbedContainer from '../controls/TabbedContainer.js';
-import { Telephone, Icon, Email, ExcelButton } from '../controls.js';
-import { PlayerAllCompetitions, PlayerFrenoyLink } from './PlayerCard.js';
+import {TabbedContainer} from '../controls/TabbedContainer.js';
+import {Telephone, Icon, Email, ExcelButton} from '../controls.js';
+import {PlayerAllCompetitions, PlayerFrenoyLink} from './PlayerCard.js';
 import PlayersCardGallery from './PlayersCardGallery.js';
-import { PlayerPlayingStyle, PlayerPlayingStyleForm } from "./PlayerPlayingStyle.js";
+import {PlayerPlayingStyle, PlayerPlayingStyleForm} from "./PlayerPlayingStyle.js";
 
 const tabEventKeys = keyMirror({
   all: '',
@@ -247,7 +247,7 @@ export default class Players extends Component {
                   <br />
                   <Email email={ply.contact.email} />
                   <br />
-                  <Telephone number={ply.contact.mobile} hideIcon />
+                  <Telephone player={ply} hideIcon />
                 </td>
                 <td>
                   {ply.contact.address}
@@ -321,7 +321,7 @@ const SmallPlayersAll = ({players, t}) => {
               <td className="truncate">
                 <Email email={ply.contact.email} />
                 <br />
-                <Telephone number={ply.contact.mobile} hideIcon />
+                <Telephone player={ply} hideIcon />
               </td>
               <td>
                 {ply.contact.address}

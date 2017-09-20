@@ -107,7 +107,7 @@ export default class PlayersImageGallery extends Component {
                 <PlayerPlayingStyleForm player={ply} iconStyle="avatar" />
                 <strong style={{marginLeft: 5}}>{ply.alias}</strong> <small>{comp ? comp.ranking : '??'}</small>
 
-                {user.playerId ? <Telephone number={ply.contact.mobile} style={{marginTop: 7}} /> : (
+                {user.playerId ? <Telephone player={ply} style={{marginTop: 7}} /> : (
                   <p className="ellipsis" style={{marginTop: 7}}>{ply.style.name}</p>
                 )}
               </Paper>

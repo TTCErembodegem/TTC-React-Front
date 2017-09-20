@@ -40,7 +40,7 @@ export default class PlayerCard extends Component {
               <Email email={player.contact.email} />
             </div>
           ) : null}
-          <Telephone number={player.contact.mobile} hideIcon />
+          <Telephone player={player} hideIcon />
 
           {this.props.children}
 

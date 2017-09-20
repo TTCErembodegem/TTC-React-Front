@@ -7,7 +7,7 @@ import PanelGroup from 'react-bootstrap/lib/PanelGroup';
 import Panel from 'react-bootstrap/lib/Panel';
 
 @withViewport
-export default class TabbedContainer extends Component {
+export class TabbedContainer extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     defaultTabKey: PropTypes.string.isRequired,
