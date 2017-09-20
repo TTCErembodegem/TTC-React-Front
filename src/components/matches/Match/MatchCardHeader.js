@@ -4,7 +4,7 @@ import moment from 'moment';
 
 import MatchForm from '../Match/MatchForm.js';
 import MatchScore from '../MatchScore.js';
-import {Icon, ThrillerBadge, ThrillerIcon} from '../../controls/Icon.js';
+import {Icon, ThrillerBadge, ThrillerIcon, CommentIcon} from '../../controls/Icon.js';
 import MatchVs from './MatchVs.js';
 
 import {Card, CardHeader} from 'material-ui/Card';
@@ -119,7 +119,7 @@ class MatchCardHeader extends Component {
       subtitle.push(
         <span key="3" style={{marginLeft: 9, color: hasNewComment ? '#E3170D' : '#d3d3d3'}}>
           {match.comments.size ? <small>{match.comments.size}</small> : null}
-          <Icon fa="fa fa-comment-o" />
+          <CommentIcon />
         </span>
       );
     }

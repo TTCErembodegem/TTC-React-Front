@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router';
-import PropTypes, { connect } from '../PropTypes.js';
+import React, {Component} from 'react';
+import {Link} from 'react-router';
+import PropTypes, {connect} from '../PropTypes.js';
 import cn from 'classnames';
 
-import { setSetting } from '../../actions/configActions.js';
-import { Icon, TrophyIcon } from '../controls/Icon.js';
+import {setSetting} from '../../actions/configActions.js';
+import {Icon, TrophyIcon, CommentIcon} from '../controls/Icon.js';
 
 function getClassName(isHomeMatch, home, out) {
   if (home === out) {
@@ -89,7 +89,7 @@ export default class MatchScore extends Component {
         <span>
           {classColor === 'match-won' && !match.isDerby ? <TrophyIcon style={{marginRight: 7, marginTop: 4, fontWeight: 'normal'}} color="#FFE568" /> : null}
           {score.home + ' - ' + score.out}
-          {this.props.showComments && (match.comments.size || match.description) ? <Icon fa="fa fa-comment-o" style={{marginLeft: 8}} /> : null}
+          {this.props.showComments && (match.comments.size || match.description) ? <CommentIcon style={{marginLeft: 8}} /> : null}
         </span>
       </span>
     );

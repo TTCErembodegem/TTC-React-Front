@@ -5,7 +5,7 @@ import {OwnClubId} from '../../../models/ClubModel.js';
 import * as matchActions from '../../../actions/matchActions.js';
 import {setSetting} from '../../../actions/configActions.js';
 
-import {Icon, Spinner, TabbedContainer} from '../../controls.js';
+import {Icon, Spinner, TabbedContainer, CommentIcon} from '../../controls.js';
 import {CardText} from 'material-ui/Card';
 
 import MatchCardHeader, {BigMatchCardHeader} from './MatchCardHeader.js';
@@ -143,7 +143,7 @@ export default class MatchCard extends Component {
     if (!hasNewComment) {
       return;
     }
-    return <Icon fa="fa fa-comment-o" className="match-card-tab-icon" />;
+    return <CommentIcon className="match-card-tab-icon" />;
   }
   _getPlayersEditIcon() {
     const match = this.props.match;

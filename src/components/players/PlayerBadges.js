@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from '../PropTypes.js';
-import { getPlayingStatusClass, getPlayingStatusColor } from '../../models/PlayerModel.js';
+import {getPlayingStatusClass, getPlayingStatusColor} from '../../models/PlayerModel.js';
 
-import { Icon } from '../controls/Icon.js';
+import {Icon, CommentIcon} from '../controls/Icon.js';
 
 export class PlayerCompetitionBadge extends Component {
   static propTypes = {
@@ -54,7 +54,7 @@ export class PlayerCompetitionButton extends Component {
         title={matchPlayer.statusNote}
         style={Object.assign({marginBottom: 5}, this.props.style)}
         onClick={this.props.onButtonClick}>
-        {matchPlayer.statusNote ? <Icon fa="fa fa-comment-o" style={{marginRight: 5, marginLeft: 0}} /> : null}
+        {matchPlayer.statusNote ? <CommentIcon style={{marginRight: 5, marginLeft: 0}} /> : null}
         {plyInfo.player.alias}
         {this.props.competition && comp ? <span style={{marginLeft: 5, fontSize: 10}}>{comp.ranking}</span> : null}
         <Icon fa={this.props.actionIconClass} style={{marginRight: 0, marginLeft: 5, visibility: this.props.isPicked ? '' : 'hidden'}} />
