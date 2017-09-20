@@ -7,7 +7,7 @@ import Table from 'react-bootstrap/lib/Table';
 import Button from 'react-bootstrap/lib/Button';
 import TextField from 'material-ui/TextField';
 
-import {Icon, ButtonStack} from '../controls.js';
+import {Icon, ButtonStack, EditButton} from '../controls.js';
 import AdminPlayerForm from './AdminPlayerForm.js';
 import AdminChangePassword from './AdminChangePassword.js';
 
@@ -153,7 +153,7 @@ const ActivesTable = ({players, onEditPlayer, onUpdatePlayer}) => (
           <td className="hidden-xs">{concatCompetitions(ply.vttl, ply.sporta)}</td>
           <td className="hidden-xs">{ply.security === 'Player' ? '' : ply.security}</td>
           <td>
-            <Icon fa="fa fa-pencil-square-o clickable" onClick={() => onEditPlayer(ply)} style={{fontSize: 26}} />
+            <EditButton onClick={() => onEditPlayer(ply)} style={{fontSize: 26}} />
             {!ply.vttl && !ply.sporta ? (
               <button className="btn btn-default" style={{marginLeft: 10}} onClick={() => {
                 ply.active = false;

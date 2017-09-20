@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 import PropTypes, {connect} from '../../PropTypes.js';
 import cn from 'classnames';
 import Button from 'react-bootstrap/lib/Button';
-import {Icon} from '../Icon.js';
+import {EditIcon} from '../Icon.js';
 
-export const EditButton = ({onClick, title, style}) => (
+export const EditButton = ({onClick, title, style, fa}) => (
   <button className="btn btn-default"onClick={onClick} title={title} style={style}>
-    <Icon fa="fa fa-pencil-square-o" />
+    <EditIcon className={fa} />
   </button>
 );

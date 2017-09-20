@@ -218,7 +218,7 @@ export default {
 
         tooltipSaveAndBlock: 'Opstelling bewaren en match blokkeren',
         tooltipSave: 'Opstelling bewaren ZONDER blokkeren',
-        tooltipOpenForm: 'Opstelling bewerken',
+        tooltipOpenForm: 'Match opstelling bewerken',
         extraComment: 'Extra info bij de match',
       },
       week: 'Week',

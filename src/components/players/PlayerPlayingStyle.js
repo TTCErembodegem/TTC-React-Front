@@ -9,7 +9,7 @@ import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
 
-import {Icon, Telephone} from '../controls.js';
+import {Icon, Telephone, EditIcon} from '../controls.js';
 import PlayerAutoComplete from './PlayerAutoComplete.js';
 import PlayerStyleAutocomplete from './PlayerStyleAutocomplete.js';
 import PlayerAvatar from './PlayerAvatar.js';
@@ -91,9 +91,8 @@ export class PlayerPlayingStyleForm extends Component {
 
     } else {
       openFormIcon = (
-        <Icon
-          title={t('player.editStyle.tooltip', ply.alias)}
-          fa="fa fa-pencil-square-o"
+        <EditIcon
+          tooltip={t('player.editStyle.tooltip', ply.alias)}
           style={this.props.style}
           onClick={this._openStyle.bind(this, ply)}
         />

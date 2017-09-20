@@ -5,7 +5,7 @@ import {OwnClubId} from '../../../models/ClubModel.js';
 import * as matchActions from '../../../actions/matchActions.js';
 import {setSetting} from '../../../actions/configActions.js';
 
-import {Icon, Spinner, TabbedContainer, CommentIcon} from '../../controls.js';
+import {Icon, Spinner, TabbedContainer, CommentIcon, EditIcon} from '../../controls.js';
 import {CardText} from 'material-ui/Card';
 
 import MatchCardHeader, {BigMatchCardHeader} from './MatchCardHeader.js';
@@ -148,8 +148,7 @@ export default class MatchCard extends Component {
   _getPlayersEditIcon() {
     const match = this.props.match;
     const isAllowedToEdit = this.props.user.canEditPlayersOnMatchDay(match);
-    return isAllowedToEdit && !match.isSyncedWithFrenoy ? (
-      <Icon fa="fa fa-pencil-square-o" onClick={::this._onStartEditPlayers} className="match-card-tab-icon" />) : null;
+    return isAllowedToEdit && !match.isSyncedWithFrenoy ? <EditIcon onClick={::this._onStartEditPlayers} className="match-card-tab-icon" /> : null;
   }
   _onStartEditPlayers(event) {
     event.stopPropagation();

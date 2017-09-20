@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes, {connect, storeUtil} from '../../PropTypes.js';
 import * as matchActions from '../../../actions/matchActions.js';
 
-import {Icon} from '../../controls/Icon.js';
+import {Icon, EditIcon} from '../../controls.js';
 import {Editor, TimeAgo} from '../../controls.js';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
@@ -176,11 +176,13 @@ export default class MatchReport extends Component {
         <h3>
           {this.context.t('match.report.title')}
           {canPostReport ? (
-            <small><Icon
-              fa="fa fa-pencil-square-o"
-              title={this.context.t('match.report.editTooltip')}
-              onClick={::this._onReportFormOpen}
-              style={{marginLeft: 5, color: '#D3D3D3'}}/></small>
+            <small>
+              <EditIcon
+                tooltip={this.context.t('match.report.editTooltip')}
+                onClick={::this._onReportFormOpen}
+                style={{marginLeft: 5, color: '#D3D3D3'}}
+              />
+            </small>
           ) : null}
         </h3>
         {reportText}

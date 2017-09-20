@@ -17,46 +17,12 @@ import {TeamCaptainIcon} from '../players/PlayerCard.js';
 import {PlayerCompetitionBadge, PlayerCompetitionButton} from '../players/PlayerBadges.js';
 import MatchScore from './MatchScore.js';
 import OwnPlayer from './Match/OwnPlayer.js';
+import {CannotEditMatchIcon, SaveMatchButtons, ViewMatchDetailsButton, MatchDate, OpenMatchForEditButton} from './controls/index.js';
 
 function isPickedForMatch(status) {
   return status === 'Play' || status === 'Captain' || status === 'Major';
 }
 
-
-@withViewport
-class MatchDate extends Component {
-  static contextTypes = PropTypes.contextTypes;
-  static propTypes = {
-    viewport: PropTypes.viewport,
-    match: PropTypes.MatchModel.isRequired,
-  }
-
-  render() {
-    const t = this.context.t;
-    const match = this.props.match;
-
-    if (this.props.viewport.width > 768) {
-      // Big
-      if (match.isStandardStartTime()) {
-        return <span>{t('match.date', match.getDisplayDate())}</span>;
-      } else {
-        return <span>{match.getDisplayDate('d')} <strong>{t('match.date', match.getDisplayTime())}</strong></span>;
-      }
-    }
-
-    // Small
-    if (match.isStandardStartTime()) {
-      return <span>{match.getDisplayDate('s')}</span>;
-    }
-    return (
-      <span>
-        {match.getDisplayDate('s')}
-        &nbsp;
-        <strong>{t('match.date', match.getDisplayTime())}</strong>
-      </span>
-    );
-  }
-}
 
 @withViewport
 @connect(state => ({user: state.user}), {editMatchPlayers})
@@ -437,61 +403,3 @@ var CommentForm = ({model, onUpdate, t}) => {
     </div>
   );
 }
-
-
-const ViewMatchDetailsButton = ({match, t}) => {
-  if (!match.shouldBePlayed) {
-    return <div />;
-  }
-
-  const score = match.renderScore();
-  return (
-    <a className={cn({'btn btn-default': !score, clickable: !!score})} onClick={() => browserHistory.push(t.route('match', {matchId: match.id}))}>
-      {score ? <MatchScore match={match} style={{fontSize: 16}} showComments /> : t('match.details')}
-    </a>
-  );
-}
-
-export const CannotEditMatchIcon = () => (
-  <span className="fa-stack fa-sm pull-right" style={{marginRight: 8, marginTop: 5}}>
-    <Icon fa="fa fa-pencil-square-o fa-stack-1x" />
-    <Icon fa="fa fa-ban fa-stack-2x text-danger" />
-  </span>
-);
-
-const OpenMatchForEditButton = ({onClick, match, t}) => (
-  <button
-    onClick={onClick}
-    className="btn btn-default pull-right"
-    style={{marginRight: 5}}
-    title={t('match.plys.tooltipOpenForm')}
-  >
-    <span className="fa-stack fa-sm">
-      {!match.block ? (
-        <Icon fa="fa fa-pencil-square-o fa-stack-1x" />
-      ) : (
-        <span>
-          <Icon fa="fa fa-anchor fa-stack-1x" />
-          <Icon fa="fa fa-ban fa-stack-2x text-danger" />
-        </span>
-      )}
-    </span>
-  </button>
-);
-
-const SaveMatchButtons = ({onSave, onBlock, onCommentsToggle, t}) => (
-  <div className="pull-right" style={{whiteSpace: 'nowrap'}}>
-    <CommentButton onClick={() => onCommentsToggle()} style={{marginRight: 5}} />
-    <button
-      className="btn btn-default"
-      onClick={onBlock}
-      style={{marginRight: 5}}
-      title={t('match.plys.tooltipSaveAndBlock')}
-    >
-
-      <Icon fa="fa fa-anchor" />
-    </button>
-
-    <SaveButton onClick={onSave} title={t('match.plys.tooltipSave')} />
-  </div>
-);

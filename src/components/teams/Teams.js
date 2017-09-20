@@ -13,7 +13,7 @@ import {editMatchPlayers} from '../../actions/matchActions.js';
 import {DivisionRanking} from './DivisionRanking.js';
 import {TeamOverview} from './TeamOverview.js';
 import {TeamHeader, TeamTabTitle} from './TeamHeader.js';
-import {Icon, TrophyIcon, Badgy, SaveButton, FrenoyButton, ExcelButton, ButtonStack} from '../controls.js';
+import {Icon, TrophyIcon, Badgy, SaveButton, FrenoyButton, ExcelButton, ButtonStack, EditButton} from '../controls.js';
 import {SwitchBetweenFirstAndLastRoundButton} from './SwitchBetweenFirstAndLastRoundButton.js';
 import PlayersCardGallery from '../players/PlayersCardGallery.js';
 import MatchesTable from '../matches/MatchesTable.js';
@@ -170,9 +170,11 @@ export default class Teams extends Component {
                   ) : null}
                 </div>
               ) : null}
-              <button onClick={() => this.setState({editMode: !this.state.editMode})} className="btn btn-default">
-                <Icon fa="fa fa-pencil-square-o" />
-              </button>
+              <EditButton
+                onClick={() => this.setState({editMode: !this.state.editMode})}
+                fa="fa-2x"
+                title={this.context.t('match.plys.tooltipOpenForm')}
+              />
             </div>
           ) : null}
 
@@ -181,8 +183,8 @@ export default class Teams extends Component {
               onClick={() => http.download.teamsExcel(this.context.t('teamCalendar.downloadExcelFileName'))}
               tooltip={this.context.t('teamCalendar.downloadExcel')}
             />
-            <FrenoyButton team={team} linkTo="ranking" />
             <FrenoyButton team={team} linkTo="results" />
+            <FrenoyButton team={team} linkTo="ranking" />
           </div>
         </div>
         <TeamHeader team={team} t={this.context.t} showRanking={!this._isSmall()} />
