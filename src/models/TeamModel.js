@@ -10,7 +10,7 @@ export const teamPlayerType = {
 
 export default class TeamModel {
   constructor(json) {
-    this.competition = json.competition;
+    this.competition = json.competition; // 'Sporta' or 'Vttl'
     this.divisionName = json.divisionName;
     this.id = json.id;
     this.teamCode = json.teamCode;

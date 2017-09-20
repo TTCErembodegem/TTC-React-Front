@@ -14,8 +14,8 @@ const TeamOverview = ({team, user, small, t}) => {
   return (
     <div style={{paddingLeft: 5, paddingRight: 5}}>
       <TeamOverviewRanking team={team} t={t} small={small} />
-      <TeamOverviewMatches matches={nextMatches} user={user} team={team} title={t('match.nextMatches')} />
-      <TeamOverviewMatches matches={prevMatches} user={user} team={team} title={t('match.playedMatches')} />
+      <TeamOverviewMatches matches={nextMatches} team={team} title={t('match.nextMatches')} />
+      <TeamOverviewMatches matches={prevMatches} team={team} title={t('match.playedMatches')} />
       <TeamOverviewPlayers team={team} t={t} user={user} />
     </div>
   );
@@ -65,14 +65,14 @@ class TeamOverviewRanking extends Component {
 
 const ucFirst = input => input[0].toUpperCase() + input.substr(1);
 
-const TeamOverviewMatches = ({matches, user, team, title}) => {
+const TeamOverviewMatches = ({matches, team, title}) => {
   if (matches.size === 0) {
     return <div />;
   }
   return (
     <div>
       <h3>{ucFirst(title)}</h3>
-      <MatchesTable matches={matches} allowOpponentOnly user={user} team={team} />
+      <MatchesTable matches={matches} allowOpponentOnly team={team} />
     </div>
   );
 }

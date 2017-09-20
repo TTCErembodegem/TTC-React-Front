@@ -8,7 +8,7 @@ import Table from 'react-bootstrap/lib/Table';
 import TextField from 'material-ui/TextField';
 
 import TabbedContainer from '../controls/TabbedContainer.js';
-import { Telephone, Icon, Email, DownloadExcelIcon } from '../controls.js';
+import { Telephone, Icon, Email, ExcelButton } from '../controls.js';
 import { PlayerAllCompetitions, PlayerFrenoyLink } from './PlayerCard.js';
 import PlayersCardGallery from './PlayersCardGallery.js';
 import { PlayerPlayingStyle, PlayerPlayingStyleForm } from "./PlayerPlayingStyle.js";
@@ -60,6 +60,13 @@ export default class Players extends Component {
           hintText={this.context.t('players.search')}
           onChange={e => this.setState({filter: e.target.value.toLowerCase()})}
           style={{width: 150}} />
+
+          <ExcelButton
+            onClick={() => http.download.playersExcel(this.context.t('players.downloadExcelFileName'))}
+            tooltip={this.context.t('players.downloadExcel')}
+            className="pull-right"
+            style={{marginTop: 5}}
+          />
       </div>
     );
   }
@@ -81,7 +88,9 @@ export default class Players extends Component {
     }
     return (
       <div>
-        <div>{this._renderToolbar(tabKey)}</div>
+        <div>
+          {this._renderToolbar(tabKey)}
+        </div>
         {tabContent}
       </div>
     );
@@ -184,15 +193,6 @@ export default class Players extends Component {
 
     return (
       <div style={{marginTop: 20, marginBottom: 10}}>
-        {this.props.user.playerId ? (
-          <DownloadExcelIcon
-            onClick={() => http.download.playersExcel(this.context.t('players.downloadExcelFileName'))}
-            title={this.context.t('players.downloadExcel')}
-            className="pull-right"
-            style={{marginTop: 5}}
-          />
-        ) : null}
-
         <TabbedContainer
           params={this.props.params}
           defaultTabKey={tabEventKeys.all}

@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes, { connect, browserHistory } from '../PropTypes.js';
 import moment from 'moment';
+import * as adminActions from '../../actions/adminActions.js';
+
 import { Icon, ButtonStack } from '../controls';
 import MatchesTable from './MatchesTable.js';
+import Button from 'react-bootstrap/lib/Button';
 
 @connect(state => ({matches: state.matches, user: state.user, freeMatches: state.freeMatches}))
 export default class MatchesWeek extends Component {
@@ -22,6 +25,7 @@ export default class MatchesWeek extends Component {
       currentWeek: 1,
       lastWeek: 22,
       editMode: false,
+      mailFormOpen: false,
     };
 
     const currentWeek = this.getCurrentWeek(props);
@@ -66,10 +70,14 @@ export default class MatchesWeek extends Component {
     browserHistory.push(this.context.t.route('matchesWeek') + '/' + this.state.currentWeek + (comp && comp !== 'all' ? '/' + comp : ''));
   }
 
+  // TODO: Speelweek "Sporta A" linken naar /teams/a
+  // TODO: Speelweek: link to Frenoy?
+
   render() {
     const t = this.context.t;
 
     const selectedWeekMatch = this.props.matches.find(match => match.week === this.state.currentWeek);
+    // ATTN: The above calc is not correct :)
     if (!selectedWeekMatch) {
       return null;
     }
@@ -84,6 +92,18 @@ export default class MatchesWeek extends Component {
       matches = matches.concat(freeMatches);
     }
 
+    if (this.state.mailFormOpen) {
+      return (
+        <div>
+          <h3 style={{textAlign: 'center'}}><WeekTitle t={t} weekNr={this.state.currentWeek} weekStart={weekStart} weekEnd={weekEnd} /></h3>
+          <MatchesWeekMail
+            onHide={() => this.setState({mailFormOpen: false})}
+            matches={matches.filter(x => !this.state.filter || x.competition === this.state.filter).filter(x => x.shouldBePlayed)}
+          />
+        </div>
+      );
+    }
+
     const viewsConfig = [{
       key: 'all',
       text: this.context.t('players.all')
@@ -95,10 +115,7 @@ export default class MatchesWeek extends Component {
       text: 'Sporta'
     }];
 
-    //const matchSorter = (a, b) => a.date - b.date;
-    const matchSorter = (a, b) => a.getTeam().teamCode - b.getTeam().teamCode;
-    // TODO: fixed sort by team now... adding sorting should only be done after serious refactoring of MatchesTable
-
+    const compFilter = this.props.params.comp || 'all';
     return (
       <div>
         <h3 style={{textAlign: 'center'}}>
@@ -113,34 +130,75 @@ export default class MatchesWeek extends Component {
           <ButtonStack
             config={viewsConfig}
             small={false}
-            activeView={this.props.params.comp || 'all'}
-            onClick={compFilter => this._onChangeCompetition(compFilter)} />
+            activeView={compFilter}
+            onClick={newCompFilter => this._onChangeCompetition(newCompFilter)} />
 
           {this.props.user.canManageTeams() && matches.some(m => !m.isSyncedWithFrenoy) ? (
             <button onClick={() => this.setState({editMode: !this.state.editMode})} className="btn btn-default" style={{marginLeft: 5}}>
               <Icon fa="fa fa-pencil-square-o" />
             </button>
           ) : null}
+          {this.props.user.isAdmin() && matches.some(m => !m.isSyncedWithFrenoy) ? (
+            <button className="btn btn-default" style={{marginLeft: 5}}>
+              <Icon fa="fa fa-envelope-o" onClick={() => this.setState({mailFormOpen: !this.state.mailFormOpen})} />
+            </button>
+          ) : null}
         </span>
 
-        {this.props.params.comp !== 'Sporta' ? (
-          <div>
-            <h4><strong>Vttl</strong></h4>
-            <MatchesTable editMode={this.state.editMode} matches={matches.filter(x => x.competition === 'Vttl').sort(matchSorter)} user={this.props.user} />
-            {this.props.params.comp !== 'Vttl' ? <hr style={{marginLeft: '10%', marginRight: '10%', marginTop: 50}} /> : null}
-          </div>
-        ) : null}
-
-        {this.props.params.comp !== 'Vttl' ? (
-          <div>
-            <h4><strong>Sporta</strong></h4>
-            <MatchesTable editMode={this.state.editMode} matches={matches.filter(x => x.competition === 'Sporta').sort(matchSorter)} user={this.props.user} />
-          </div>
-        ) : null}
+        {compFilter !== 'Sporta' ? <MatchesWeekPerCompetition comp="Vttl" editMode={this.state.editMode} matches={matches} /> : null}
+        {compFilter !== 'Vttl' && compFilter !== 'Sporta' ? <hr style={{marginLeft: '10%', marginRight: '10%', marginTop: 50}} /> : null}
+        {compFilter !== 'Vttl' ? <MatchesWeekPerCompetition comp="Sporta" editMode={this.state.editMode} matches={matches} /> : null}
       </div>
     );
   }
 }
+
+
+const MatchesWeekPerCompetition = ({comp, editMode, matches}) => {
+  // TODO: fixed sort by team now... adding sorting should only be done after serious refactoring of MatchesTable
+  //const matchSorter = (a, b) => a.date - b.date;
+  const matchSorter = (a, b) => a.getTeam().teamCode - b.getTeam().teamCode;
+
+  return (
+    <div>
+      <h4><strong>{comp}</strong></h4>
+      <MatchesTable editMode={editMode} matches={matches.filter(x => x.competition === comp).sort(matchSorter)} />
+    </div>
+  );
+};
+
+
+@connect(state => ({user: state.user}), adminActions)
+class MatchesWeekMail extends Component {
+  static contextTypes = PropTypes.contextTypes;
+  static propTypes = {
+    emailFormation: PropTypes.func.isRequired,
+    matches: PropTypes.MatchModelList.isRequired,
+    user: PropTypes.UserModel.isRequired,
+    onHide: PropTypes.func.isRequired,
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+    };
+  }
+
+  render() {
+    const t = this.context.t;
+
+    return (
+      <div>
+        <h1>{t('week.emailTitle')}</h1>
+
+        <Button bsStyle="danger" onClick={() => this.props.emailFormation()}>{t('week.sendEmail')}</Button>
+        <Button onClick={this.props.onHide} style={{marginLeft: 6}}>{t('common.cancel')}</Button>
+      </div>
+    );
+  }
+}
+
+
 
 const WeekTitle = ({t, weekNr, weekStart, weekEnd}) => (
   <span>

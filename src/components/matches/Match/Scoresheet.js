@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from '../../PropTypes.js';
 import http from '../../../utils/httpClient.js';
 import Table from 'react-bootstrap/lib/Table';
-import {DownloadExcelIcon} from '../../controls.js';
+import {ExcelButton} from '../../controls.js';
 
 export default class Scoresheet extends Component {
   static propTypes = {
@@ -13,7 +13,7 @@ export default class Scoresheet extends Component {
 
 
   // TODO: download excel from site with stuff filled in
-  //<DownloadExcelIcon
+  //<ExcelButton
   //  onChange={() => http.download.scoresheetExcel(this.props.match)}
   //  title={this.props.t('comp.sporta.downloadScoresheet')}
   //  className="pull-right"

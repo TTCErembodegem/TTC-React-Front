@@ -59,7 +59,7 @@ class MatchDate extends Component {
 }
 
 @withViewport
-@connect(state => ({}), {editMatchPlayers})
+@connect(state => ({user: state.user}), {editMatchPlayers})
 export default class MatchesTable extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {

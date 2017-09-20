@@ -179,7 +179,7 @@ export default {
       all: 'Alle',
       gallery: 'Gallerij',
 
-      downloadExcel: 'Excel export',
+      downloadExcel: 'Excel spelerslijst downloaden',
       downloadExcelFileName: 'Spelerslijst',
     },
     clubs: {
@@ -314,7 +314,12 @@ export default {
       francis: 'Francis tafeltennisshop',
       tabletennisDaily: 'TableTennisDaily'
     },
+    week: {
+      emailTitle: 'Opstelling mailen',
+      sendEmail: 'Email versturen',
+    },
     teamCalendar: {
+      downloadExcel: 'Excel ploegopstellingen downloaden',
       downloadExcelFileName: 'Opstellingen',
       match: 'Wedstrijd',
       score: 'Score',
@@ -335,7 +340,8 @@ export default {
       viewRanking: 'Rangschikking',
       playersPicked: 'Opstelling',
       individual: 'Individueel',
-      frenoyResults: 'Frenoy',
+      frenoyresults: 'Ga naar resultaten op Frenoy',
+      frenoyranking: 'Ga naar rangschikking op Frenoy',
     },
     facts: require('./locales-nl-facts.js')
   },

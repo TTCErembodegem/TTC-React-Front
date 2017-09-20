@@ -13,7 +13,7 @@ import { editMatchPlayers } from '../../actions/matchActions.js';
 import DivisionRanking from './DivisionRanking.js';
 import TeamOverview from './TeamOverview.js';
 import TeamHeader, { TeamTabTitle } from './TeamHeader.js';
-import { Icon, TrophyIcon, Badgy, SaveButton } from '../controls';
+import { Icon, TrophyIcon, Badgy, SaveButton, FrenoyButton, ExcelButton } from '../controls';
 import ButtonStack from '../controls/ButtonStack.js';
 import PlayersCardGallery from '../players/PlayersCardGallery.js';
 import MatchesTable from '../matches/MatchesTable.js';
@@ -117,17 +117,6 @@ export default class Teams extends Component {
     return 'A';
   }
 
-  _downloadExcel() {
-    if (this.state.isDownloading) {
-      return;
-    }
-    this.setState({isDownloading: true});
-    http.download.teamsExcel(this.context.t('teamCalendar.downloadExcelFileName'))
-      .catch(err => {
-        console.error('err', err);
-      })
-      .then(() => this.setState({isDownloading: false}));
-  }
   _isSmall() {
     return this.props.viewport.width < 700;
   }
@@ -186,15 +175,14 @@ export default class Teams extends Component {
             </div>
           ) : null}
 
-          {this.props.user.playerId ? (
-            <button onClick={::this._downloadExcel} className="btn btn-default pull-right">
-              <Icon fa={this.state.isDownloading ? 'fa fa-spinner fa-pulse' : 'fa fa-file-excel-o'} />
-            </button>
-          ) : null}
-
-          <a href={team.frenoy.getUrl('results')} target="_blank" className="pull-right">
-            <button className="btn btn-default">{this.context.t('teamCalendar.frenoyResults')}</button>
-          </a>
+          <div className="button-bar-right">
+            <ExcelButton
+              onClick={() => http.download.teamsExcel(this.context.t('teamCalendar.downloadExcelFileName'))}
+              tooltip={this.context.t('teamCalendar.downloadExcel')}
+            />
+            <FrenoyButton team={team} linkTo="ranking" />
+            <FrenoyButton team={team} linkTo="results" />
+          </div>
         </div>
         <TeamHeader team={team} t={this.context.t} showRanking={!this._isSmall()} />
         {this._renderTabViewContent(team, matches)}
@@ -236,7 +224,6 @@ export default class Teams extends Component {
             matches={matches}
             allowOpponentOnly
             striped
-            user={this.props.user}
             editMode={this.state.editMode}
 
             tableForm={this.state.view === 'matchesTable'}

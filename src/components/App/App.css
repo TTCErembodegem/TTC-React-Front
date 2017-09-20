@@ -44,7 +44,16 @@ pre {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+}
 
+.button-bar-right {
+  float: right;
+}
+
+.button-bar-right > div:not(:last-child),
+.button-bar-right > a:not(:last-child),
+.button-bar-right > button:not(:last-child) {
+  margin-right: 6px;
 }
 
 .clickable {
