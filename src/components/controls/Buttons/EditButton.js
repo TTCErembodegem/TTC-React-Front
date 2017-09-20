@@ -4,8 +4,8 @@ import cn from 'classnames';
 import Button from 'react-bootstrap/lib/Button';
 import {Icon} from '../Icon.js';
 
-export const CommentButton = ({onClick, className, style}) => (
-  <Button onClick={onClick} className={className} style={style}>
-    <Icon fa="fa fa-comment-o" />
-  </Button>
+export const EditButton = ({onClick, title, style}) => (
+  <button className="btn btn-default"onClick={onClick} title={title} style={style}>
+    <Icon fa="fa fa-pencil-square-o" />
+  </button>
 );

@@ -1,11 +1,13 @@
-import React, { Component } from 'react';
-import PropTypes, { connect, browserHistory } from '../PropTypes.js';
+import React, {Component} from 'react';
+import PropTypes, {connect, browserHistory} from '../PropTypes.js';
 import moment from 'moment';
 import * as adminActions from '../../actions/adminActions.js';
 
-import {Icon, ButtonStack} from '../controls.js';
+import {Icon, ButtonStack, EmailButton, EditButton} from '../controls.js';
 import MatchesTable from './MatchesTable.js';
 import Button from 'react-bootstrap/lib/Button';
+import {MatchesWeekMail} from './MatchesWeeks/MatchesWeekEmail.js';
+import {WeekTitle} from './MatchesWeeks/weekTitle.js';
 
 @connect(state => ({matches: state.matches, user: state.user, freeMatches: state.freeMatches}))
 export default class MatchesWeek extends Component {
@@ -70,9 +72,6 @@ export default class MatchesWeek extends Component {
     browserHistory.push(this.context.t.route('matchesWeek') + '/' + this.state.currentWeek + (comp && comp !== 'all' ? '/' + comp : ''));
   }
 
-  // TODO: Speelweek "Sporta A" linken naar /teams/a
-  // TODO: Speelweek: link to Frenoy?
-
   render() {
     const t = this.context.t;
 
@@ -126,22 +125,19 @@ export default class MatchesWeek extends Component {
           ) : null}
         </h3>
 
-        <span className="pull-right">
+        <span className="button-bar-right">
           <ButtonStack
             config={viewsConfig}
             small={false}
             activeView={compFilter}
-            onClick={newCompFilter => this._onChangeCompetition(newCompFilter)} />
+            onClick={newCompFilter => this._onChangeCompetition(newCompFilter)}
+          />
 
           {this.props.user.canManageTeams() && matches.some(m => !m.isSyncedWithFrenoy) ? (
-            <button onClick={() => this.setState({editMode: !this.state.editMode})} className="btn btn-default" style={{marginLeft: 5}}>
-              <Icon fa="fa fa-pencil-square-o" />
-            </button>
+            <EditButton onClick={() => this.setState({editMode: !this.state.editMode})} />
           ) : null}
           {this.props.user.isAdmin() && matches.some(m => !m.isSyncedWithFrenoy) ? (
-            <button className="btn btn-default" style={{marginLeft: 5}}>
-              <Icon fa="fa fa-envelope-o" onClick={() => this.setState({mailFormOpen: !this.state.mailFormOpen})} />
-            </button>
+            <EmailButton onClick={() => this.setState({mailFormOpen: !this.state.mailFormOpen})} />
           ) : null}
         </span>
 
@@ -166,47 +162,3 @@ const MatchesWeekPerCompetition = ({comp, editMode, matches}) => {
     </div>
   );
 };
-
-
-@connect(state => ({user: state.user}), adminActions)
-class MatchesWeekMail extends Component {
-  static contextTypes = PropTypes.contextTypes;
-  static propTypes = {
-    emailFormation: PropTypes.func.isRequired,
-    matches: PropTypes.MatchModelList.isRequired,
-    user: PropTypes.UserModel.isRequired,
-    onHide: PropTypes.func.isRequired,
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  }
-
-  render() {
-    const t = this.context.t;
-
-    return (
-      <div>
-        <h1>{t('week.emailTitle')}</h1>
-
-        <Button bsStyle="danger" onClick={() => this.props.emailFormation()}>{t('week.sendEmail')}</Button>
-        <Button onClick={this.props.onHide} style={{marginLeft: 6}}>{t('common.cancel')}</Button>
-      </div>
-    );
-  }
-}
-
-
-
-const WeekTitle = ({t, weekNr, weekStart, weekEnd}) => (
-  <span>
-    {t('match.week')}&nbsp;
-    {weekNr}
-    :&nbsp;
-    {weekStart.format('D/M')}
-      &nbsp;-&nbsp;
-    {weekEnd.format('D/M')}
-  </span>
-);

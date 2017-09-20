@@ -1,4 +1,4 @@
-import React, { PropTypes, Component } from 'react';
+import React, {PropTypes, Component} from 'react';
 import http from '../../../utils/httpClient.js';
 import Dropzone from 'react-dropzone';
 

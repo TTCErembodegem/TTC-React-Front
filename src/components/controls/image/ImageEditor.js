@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, {PropTypes} from 'react';
 import Slider from 'material-ui/Slider';
 import AvatarEditor from 'react-avatar-editor';
 import FlatButton from 'material-ui/FlatButton';
