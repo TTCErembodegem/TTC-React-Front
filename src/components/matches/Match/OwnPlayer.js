@@ -10,7 +10,7 @@ import { Icon } from '../../controls/Icon.js';
 const OwnPlayer = ({match, ply, playerAsBadge = false}) => {
   const result = getRankingResults(match, ply);
   if (result.wo) {
-    return <div className="irrelevant">{ply.alias}</div>;
+    return <s>{ply.alias}</s>;
   }
 
   const teamPlayerCount = match.getTeam().getTeamPlayerCount();

@@ -5,7 +5,7 @@ const MatchVs = ({match, opponentOnly, themOnly = false}) => {
   const forfait = match.getTeam().getDivisionRanking(match.opponent).isForfait;
   var them = match.renderOpponentTitle();
   if (forfait) {
-    them = <span style={{textDecoration: 'line-through'}}>{them}</span>
+    them = <s>{them}</s>
   }
 
   if (themOnly) {

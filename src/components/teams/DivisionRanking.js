@@ -21,7 +21,7 @@ export const DivisionRanking = ({team, t}) => {
       <tbody>
         {team.ranking.map(teamRanking => (
           <tr
-            className={cn({'match-won accentuate': teamRanking.clubId === OwnClubId, 'match-lost': teamRanking.isForfait})}
+            className={cn({'match-won accentuate': teamRanking.clubId === OwnClubId, 'irrelevant': teamRanking.isForfait})}
             key={teamRanking.clubId + teamRanking.teamCode}
           >
             <td>{teamRanking.position}</td>
