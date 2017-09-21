@@ -17,6 +17,7 @@ import {Icon, TrophyIcon, Badgy, SaveButton, FrenoyButton, ExcelButton, ButtonSt
 import {SwitchBetweenFirstAndLastRoundButton} from './SwitchBetweenFirstAndLastRoundButton.js';
 import PlayersCardGallery from '../players/PlayersCardGallery.js';
 import MatchesTable from '../matches/MatchesTable.js';
+import {TeamMatchesWeek} from './TeamMatchesWeek.js';
 
 export function getFirstOrLastMatches(allMatchesToCome, filter) {
   if (filter === 'all') {
@@ -66,9 +67,9 @@ export default class Teams extends Component {
     editMatchPlayers: PropTypes.func.isRequired,
 
     params: PropTypes.shape({
-      competition: PropTypes.oneOf(['vttl', 'sporta']).isRequired,
+      competition: PropTypes.oneOf(['Vttl', 'Sporta']).isRequired,
       tabKey: PropTypes.string, // tabKey == TeamCode
-      view: PropTypes.oneOf(['main', 'matches', 'ranking', 'players', 'matchesTable']),
+      view: PropTypes.oneOf(['main', 'matches', 'ranking', 'players', 'matchesTable', 'week']),
     }).isRequired,
   }
 
@@ -99,12 +100,9 @@ export default class Teams extends Component {
     return [];
   }
 
-  _getCompetition() {
-    return this.props.params.competition[0].toUpperCase() + this.props.params.competition.substr(1);
-  }
   getDefaultTeam() {
     if (this.props.user.playerId) {
-      const yourTeams = this.props.user.getTeams().filter(team => team.competition === this._getCompetition());
+      const yourTeams = this.props.user.getTeams().filter(team => team.competition === this.props.params.competition);
       if (yourTeams.length === 0) {
         return 'A';
       }
@@ -131,15 +129,15 @@ export default class Teams extends Component {
   }
 
   _renderTabContent(teamCode) {
-    const team = this.props.teams.find(t => t.teamCode === teamCode && t.competition === this._getCompetition());
+    const team = this.props.teams.find(t => t.teamCode === teamCode && t.competition === this.props.params.competition);
     if (!team) {
       return null;
     }
 
     const transView = key => this.context.t('teamCalendar.view.' + key);
-    var viewsConfig = ['main', 'matches', 'ranking', 'players'];
-    if (this.props.user.playerId && this.props.viewport.width > 1100) {
-      viewsConfig.splice(2, 0, 'matchesTable');
+    var viewsConfig = ['main', 'week', 'matches', 'ranking', 'players'];
+    if (this.props.user.playerId && this.props.viewport.width > 1000) {
+      viewsConfig.splice(3, 0, 'matchesTable');
     }
     viewsConfig = viewsConfig.map(v => ({key: v, text: transView(v)}));
 
@@ -240,6 +238,9 @@ export default class Teams extends Component {
     case 'players':
       return <PlayersCardGallery players={Immutable.List(team.getPlayers().map(x => x.player))} />;
 
+    case 'week':
+      return <TeamMatchesWeek team={team} />
+
     case 'main':
     default:
       return <TeamOverview team={team} t={this.context.t} user={this.props.user} small={this._isSmall()} />;
@@ -248,7 +249,7 @@ export default class Teams extends Component {
 
   render() {
     const t = this.context.t;
-    const tabConfig = this.props.teams.filter(team => team.competition === this._getCompetition()).toArray().map(team => {
+    const tabConfig = this.props.teams.filter(team => team.competition === this.props.params.competition).toArray().map(team => {
       return {
         key: team.teamCode,
         title: '',

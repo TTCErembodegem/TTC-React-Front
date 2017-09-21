@@ -341,6 +341,7 @@ export default {
         ranking: 'Rangschikking',
         matchesTable: 'Opstelling',
         players: 'Spelers',
+        week: 'Speelweek',
       },
       individual: 'Individueel',
       frenoyresults: 'Ga naar resultaten op Frenoy',
