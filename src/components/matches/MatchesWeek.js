@@ -17,7 +17,7 @@ export default class MatchesWeek extends Component {
     user: PropTypes.UserModel.isRequired,
     params: PropTypes.shape({
       tabKey: PropTypes.string,
-      comp: PropTypes.string,
+      comp: PropTypes.oneOf(['Vttl', 'Sporta']),
     }),
   }
 

@@ -34,7 +34,7 @@ const Routes = () => (
       <Route path={t.route('matchesWeek') + '(/:tabKey)(/:comp)'} component={MatchesWeek} />
       <Route path={t.route('match')} component={RoutedMatchCard}/>
 
-      <Route path={t.route('teams') + '(/:tabKey)'} component={Teams}/>
+      <Route path={t.route('teams') + '(/:tabKey)(/:view)'} component={Teams}/>
 
       <Route path={t.route('facts')} component={Facts} />
       <Route path={t.route('links')} component={Links} />

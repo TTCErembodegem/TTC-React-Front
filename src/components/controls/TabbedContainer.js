@@ -28,7 +28,8 @@ export class TabbedContainer extends Component {
     style: PropTypes.object,
     route: PropTypes.shape({
       base: PropTypes.string.isRequired,
-      subs: PropTypes.string
+      subs: PropTypes.string,
+      suffix: PropTypes.string,
     }),
 
     viewport: PropTypes.viewport,
@@ -101,11 +102,16 @@ export class TabbedContainer extends Component {
 
   _onTabSelect(eventKey) {
     if (this.props.route) {
+      var url;
       if (this.props.route.subs) {
-        browserHistory.push(this.props.route.base + '/' + this.context.t.route(this.props.route.subs + '.' + eventKey));
+        url = this.props.route.base + '/' + this.context.t.route(this.props.route.subs + '.' + eventKey);
       } else {
-        browserHistory.push(this.props.route.base + '/' + eventKey);
+        url = this.props.route.base + '/' + eventKey;
       }
+      if (this.props.route.suffix) {
+        url += '/' + this.props.route.suffix;
+      }
+      browserHistory.push(url);
     }
     const forceClose = this._showAccordion() && eventKey === this.state.openTabKey && !this.state.forceClose;
     this.setState({openTabKey: eventKey, forceClose});

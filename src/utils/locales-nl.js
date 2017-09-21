@@ -335,10 +335,13 @@ export default {
       matchesDrawBadge: 'Gelijk gespeeld',
       matchesLostBadge: 'Verloren',
 
-      viewMain: 'Overzicht',
-      viewMatches: 'Matchen',
-      viewRanking: 'Rangschikking',
-      playersPicked: 'Opstelling',
+      view: {
+        main: 'Overzicht',
+        matches: 'Matchen',
+        ranking: 'Rangschikking',
+        matchesTable: 'Opstelling',
+        players: 'Spelers',
+      },
       individual: 'Individueel',
       frenoyresults: 'Ga naar resultaten op Frenoy',
       frenoyranking: 'Ga naar rangschikking op Frenoy',
