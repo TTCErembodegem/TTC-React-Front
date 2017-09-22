@@ -5,7 +5,7 @@ import storeUtil from '../../storeUtil.js';
 import Table from 'react-bootstrap/lib/Table';
 import MatchesTable from '../matches/MatchesTable.js';
 import {PlayerCompetition} from '../controls.js';
-
+import {WeekCalcer} from '../matches/MatchesWeeks/WeekCalcer.js';
 
 export class TeamMatchesWeek extends Component {
 
