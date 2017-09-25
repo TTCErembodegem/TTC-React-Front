@@ -135,7 +135,7 @@ export default class Teams extends Component {
     }
 
     const transView = key => this.context.t('teamCalendar.view.' + key);
-    var viewsConfig = ['main', 'week', 'matches', 'ranking', 'players'];
+    var viewsConfig = ['main', 'matches', 'ranking', 'players'];
     if (this.props.user.playerId && this.props.viewport.width > 1000) {
       viewsConfig.splice(3, 0, 'matchesTable');
     }
