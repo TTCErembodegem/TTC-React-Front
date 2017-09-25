@@ -67,7 +67,7 @@ export var playerUtils = {
     };
   },
   getImageUrl(playerId) {
-    return '/img/players/' + playerId + '.png';
+    return '/img/players/' + playerId + '.png?1';
   },
   getAvatarImageUrl(playerId) {
     return '/img/players/' + playerId + '_avatar.png';
