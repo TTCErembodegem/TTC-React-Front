@@ -117,7 +117,7 @@ export default class MatchesWeek extends Component {
 const MatchesWeekPerCompetition = ({comp, editMode, matches}) => {
   // TODO: fixed sort by team now... adding sorting should only be done after serious refactoring of MatchesTable
   //const matchSorter = (a, b) => a.date - b.date;
-  const matchSorter = (a, b) => a.getTeam().teamCode - b.getTeam().teamCode;
+  const matchSorter = (a, b) => a.getTeam().teamCode.localeCompare(b.getTeam().teamCode);
 
   return (
     <div>
