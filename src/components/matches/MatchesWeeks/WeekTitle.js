@@ -14,6 +14,10 @@ export class WeekTitle extends Component {
       const weekCalcer = this.props.weekCalcer;
       const week = weekCalcer.getWeek();
 
+      if (!week) {
+        return null;
+      }
+
       return (
         <h3 style={{textAlign: 'center'}}>
           {this.props.weekChange ? (
