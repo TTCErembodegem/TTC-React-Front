@@ -41,7 +41,7 @@ class TeamOverviewRanking extends Component {
     }
     return (
       <div>
-        <h3>{t('teamCalendar.viewRanking')}</h3>
+        <h3>{t('teamCalendar.view.ranking')}</h3>
         {ranking.map(teamRanking => {
           const isOwnClub = teamRanking.clubId === OwnClubId;
           const points = isOwnClub ? teamRanking.points : `(${teamRanking.points})`;
