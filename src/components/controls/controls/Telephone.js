@@ -25,13 +25,13 @@ export class Telephone extends Component {
     const {number, hideIcon, player, ...props} = this.props;
     var nr = player ? player.contact.mobile : number;
     if (hideIcon) {
-      return <a href={'tel:' + callFormat(number)} {...props}>{displayMobile(number)}</a>;
+      return <a href={'tel:' + callFormat(nr)} {...props}>{displayMobile(nr)}</a>;
     }
 
     return (
       <div className="iconize" {...props}>
         <Icon fa="fa fa-phone" />
-        <a style={{marginLeft: 7}} href={'tel:' + callFormat(number)}>{displayMobile(number)}</a>
+        <a style={{marginLeft: 7}} href={'tel:' + callFormat(nr)}>{displayMobile(nr)}</a>
       </div>
     );
   }

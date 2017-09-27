@@ -1,41 +1,25 @@
 import React, {Component} from 'react';
 import PropTypes, {connect, withViewport, keyMirror, withStyles} from '../PropTypes.js';
-import cn from 'classnames';
-import moment from 'moment';
-import http from '../../utils/httpClient.js';
-
-import Table from 'react-bootstrap/lib/Table';
-import TextField from 'material-ui/TextField';
 
 import {TabbedContainer} from '../controls/TabbedContainer.js';
-import {Telephone, Icon, Email, ExcelButton} from '../controls.js';
-import {PlayerAllCompetitions, PlayerFrenoyLink} from './PlayerCard.js';
 import PlayersCardGallery from './PlayersCardGallery.js';
-import {PlayerPlayingStyle, PlayerPlayingStyleForm} from "./PlayerPlayingStyle.js";
+import {PlayersToolbar} from './Players/PlayersToolbar.js';
+import {PlayersVttl} from './Players/PlayersVttl.js';
+import {PlayersSporta} from './Players/PlayersSporta.js';
+import {PlayersAllNotLoggedIn} from './Players/PlayersAllNotLoggedIn.js';
+import {PlayersAllSmall} from './Players/PlayersAllSmall.js';
+import {PlayersAllBig} from './Players/PlayersAllBig.js';
 
-const tabEventKeys = keyMirror({
-  all: '',
-  vttl: '',
-  sporta: '',
-  gallery: '',
-});
-
-@connect(state => {
-  return {
-    config: state.config,
-    players: state.players,
-    teams: state.teams,
-    user: state.user,
-  };
-})
+@connect(state => ({
+  players: state.players,
+  user: state.user,
+}))
 @withViewport
 @withStyles(require('./Players.css'))
 export default class Players extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
-    config: PropTypes.object.isRequired,
     players: PropTypes.PlayerModelList.isRequired,
-    teams: PropTypes.TeamModelList.isRequired,
     user: PropTypes.UserModel.isRequired,
     viewport: PropTypes.viewport,
 
@@ -49,145 +33,48 @@ export default class Players extends Component {
     this.state = {filter: ''};
   }
 
-  _renderToolbar(activeTab) {
+  _renderTabContent(tabKey) {
     var marginLeft = 5;
-    if (activeTab === tabEventKeys.gallery) {
+    if (tabKey === 'gallery') {
       marginLeft = this.props.viewport.width > 450 ? 25 : 0;
     }
-    return (
-      <div style={{marginRight: 5, marginLeft: marginLeft}}>
-        <TextField
-          hintText={this.context.t('players.search')}
-          onChange={e => this.setState({filter: e.target.value.toLowerCase()})}
-          style={{width: 150}} />
 
-          <ExcelButton
-            onClick={() => http.download.playersExcel(this.context.t('players.downloadExcelFileName'))}
-            tooltip={this.context.t('players.downloadExcel')}
-            className="pull-right"
-            style={{marginTop: 5}}
-          />
-      </div>
-    );
-  }
-  _renderTabContent(tabKey) {
+
     var tabContent;
     switch (tabKey) {
-    case tabEventKeys.all:
+    case 'all':
       tabContent = this._renderTabAll();
       break;
-    case tabEventKeys.vttl:
-      tabContent = this._renderTabVttl();
+    case 'vttl':
+      tabContent = <PlayersVttl filter={this.state.filter} />;
       break;
-    case tabEventKeys.sporta:
-      tabContent = this._renderTabSporta();
+    case 'sporta':
+      tabContent = <PlayersSporta filter={this.state.filter} />;
       break;
-    case tabEventKeys.gallery:
-      tabContent = this._renderTabGallery();
+    case 'gallery':
+      tabContent = <PlayersCardGallery players={this._getAllPlayers()} />;
       break;
     }
     return (
       <div>
-        <div>
-          {this._renderToolbar(tabKey)}
-        </div>
+        <PlayersToolbar marginLeft={marginLeft} onFilterChange={text => this.setState({filter: text})} />
         {tabContent}
       </div>
     );
   }
 
-  _renderTabVttl() {
-    var players = this.props.players.filter(x => x.vttl);
-    if (this.state.filter) {
-      players = players.filter(x => x.name.toLowerCase().includes(this.state.filter));
-    }
-    players = players.sort((a, b) => a.vttl.position - b.vttl.position);
-    return (
-      <Table condensed hover>
-        <thead>
-          <tr>
-            <th>{this.context.t('comp.index')}</th>
-            <th>{this.context.t('comp.vttl.uniqueIndex')}</th>
-            <th>{this.context.t('player.name')}</th>
-            <th><span className="hidden-xs">{this.context.t('comp.ranking')}</span></th>
-            <th className="hidden-xs">{this.context.t('player.style')}</th>
-            <th className="hidden-xs">{this.context.t('player.bestStroke')}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {players.map(ply => (
-            <tr key={ply.id} className={cn({'match-won': ply.isMe()})}>
-              <td>{ply.vttl.rankingIndex}</td>
-              <td>{ply.vttl.uniqueIndex}</td>
-              <td className="hidden-xs">{ply.name}</td>
-              <td className="visible-xs">{ply.alias}</td>
-              <td>{ply.vttl.ranking} <PlayerFrenoyLink comp={ply.vttl} /></td>
-              <td className="hidden-xs">{ply.style.name}</td>
-              <td className="hidden-xs">
-                <PlayerPlayingStyleForm player={ply} iconStyle="edit-icon" style={{color: '#d3d3d3', float: 'right'}} />
-                {ply.style.bestStroke}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-    );
-  }
-  _renderTabSporta() {
-    var players = this.props.players.filter(x => x.sporta);
-    if (this.state.filter) {
-      players = players.filter(x => x.name.toLowerCase().includes(this.state.filter));
-    }
-    players = players.sort((a, b) => a.sporta.position - b.sporta.position);
-
-    // Sorting as required by the Sporta scoresheet Excel
-    //players = players.sort((a, b) => a.name.localeCompare(b.name));
-    return (
-      <Table condensed hover>
-        <thead>
-          <tr>
-            <th>{this.context.t('comp.index')}</th>
-            <th>{this.context.t('comp.sporta.uniqueIndex')}</th>
-            <th>{this.context.t('player.name')}</th>
-            <th><span className="hidden-xs">{this.context.t('comp.ranking')}</span></th>
-            <th>{this.context.t('comp.sporta.rankingValue')}</th>
-            <th className="hidden-xs">{this.context.t('player.style')}</th>
-            <th className="hidden-xs">{this.context.t('player.bestStroke')}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {players.map(ply => (
-            <tr key={ply.id} className={cn({'match-won': ply.isMe()})}>
-              <td>{ply.sporta.rankingIndex}</td>
-              <td>{ply.sporta.uniqueIndex}</td>
-              <td className="hidden-xs">{ply.name}</td>
-              <td className="visible-xs">{ply.alias}</td>
-              <td>{ply.sporta.ranking} <PlayerFrenoyLink comp={ply.sporta} /></td>
-              <td>{ply.sporta.rankingValue}</td>
-              <td className="hidden-xs">{ply.style.name}</td>
-              <td className="hidden-xs">
-                <PlayerPlayingStyleForm player={ply} iconStyle="edit-icon" style={{color: '#d3d3d3', float: 'right'}} />
-                {ply.style.bestStroke}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-    );
-  }
-
   render() {
     const tabKeysConfig = [{
-      key: tabEventKeys.all,
+      key: 'all',
       title: this.context.t('players.all'),
     }, {
-      key: tabEventKeys.vttl,
+      key: 'vttl',
       title: 'Vttl',
     }, {
-      key: tabEventKeys.sporta,
+      key: 'sporta',
       title: 'Sporta',
     }, {
-      key: tabEventKeys.gallery,
+      key: 'gallery',
       title: this.context.t('players.gallery'),
     }];
 
@@ -195,13 +82,25 @@ export default class Players extends Component {
       <div style={{marginTop: 20, marginBottom: 10}}>
         <TabbedContainer
           params={this.props.params}
-          defaultTabKey={tabEventKeys.all}
+          defaultTabKey="all"
           tabKeys={tabKeysConfig}
           tabRenderer={::this._renderTabContent}
           route={{base: this.context.t.route('players'), subs: 'playerTabs'}}
           forceTabs />
       </div>
     );
+  }
+
+  _renderTabAll() {
+    const players = this._getAllPlayers();
+    if (!this.props.user.playerId) {
+      return <PlayersAllNotLoggedIn players={players} t={this.context.t} />;
+    }
+    if (this.props.viewport.width < 700) {
+      return <PlayersAllSmall players={players} t={this.context.t} />;
+    }
+
+    return <PlayersAllBig players={players} t={this.context.t} />;
   }
 
   _getAllPlayers() {
@@ -211,127 +110,4 @@ export default class Players extends Component {
     }
     return players.sort((a, b) => a.name.localeCompare(b.name));
   }
-
-  _renderTabGallery() {
-    const players = this._getAllPlayers();
-    return <PlayersCardGallery players={players} />;
-  }
-
-  _renderTabAll() {
-    const players = this._getAllPlayers();
-    const showCompetitionColumn = !this.props.user.playerId || this.props.viewport.width > 700;
-
-    if (!this.props.user.playerId) {
-      return <NotLoggedInPlayersAll players={players} t={this.context.t} />;
-    }
-    if (this.props.viewport.width < 700) {
-      return <SmallPlayersAll players={players} t={this.context.t} />;
-    }
-
-    return (
-      <Table condensed hover className="players">
-        <thead>
-          <tr>
-            <th>{this.context.t('player.name')}</th>
-            <th>{this.context.t('player.address')}</th>
-            <th>{this.context.t('common.competition')}</th>
-            <th className="hidden-sm hidden-xs">{this.context.t('player.style')}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {players.map(ply => {
-            return (
-              <tr key={ply.id} className={cn({'match-won': ply.isMe()})}>
-                <td>
-                  <strong>{ply.name}</strong>
-                  <br />
-                  <Email email={ply.contact.email} />
-                  <br />
-                  <Telephone player={ply} hideIcon />
-                </td>
-                <td>
-                  {ply.contact.address}
-                  <br />
-                  {ply.contact.city}
-                </td>
-                <td>
-                  <PlayerAllCompetitions player={ply} t={this.context.t} />
-                </td>
-                <td className="hidden-sm hidden-xs">
-                  <PlayerPlayingStyle ply={ply} />
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
-    );
-  }
 }
-
-const NotLoggedInPlayersAll = ({players, t}) => {
-  return (
-    <Table condensed hover className="players">
-      <thead>
-        <tr>
-          <th>{t('player.name')}</th>
-          <th>{t('common.competition')}</th>
-          <th className="hidden-sm hidden-xs">{t('player.style')}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {players.map(ply => {
-          return (
-            <tr key={ply.id}>
-              <td>
-                <strong>{ply.name}</strong>
-              </td>
-              <td>
-                <PlayerAllCompetitions player={ply} t={t} />
-              </td>
-              <td className="hidden-sm hidden-xs">
-                <PlayerPlayingStyle ply={ply} />
-              </td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </Table>
-  );
-};
-
-const SmallPlayersAll = ({players, t}) => {
-  return (
-    <Table condensed hover className="players row-by-two">
-      <thead>
-        <tr>
-          <th>{t('player.name')}</th>
-          <th>{t('player.address')}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {players.map(ply => {
-          return [
-            <tr key={ply.id + '_name'} className={cn({'match-won': ply.isMe()})}>
-              <td colSpan={2}>
-                <strong>{ply.name}</strong>
-              </td>
-            </tr>,
-            <tr key={ply.id} className={cn({'match-won': ply.isMe()})}>
-              <td className="truncate">
-                <Email email={ply.contact.email} />
-                <br />
-                <Telephone player={ply} hideIcon />
-              </td>
-              <td>
-                {ply.contact.address}
-                <br />
-                {ply.contact.city}
-              </td>
-            </tr>
-          ];
-        })}
-      </tbody>
-    </Table>
-  );
-};
