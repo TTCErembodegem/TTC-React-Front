@@ -64,6 +64,16 @@ pre {
   cursor: default;
 }
 
+.frenoy-week-link,
+.frenoy-week-link:active,
+.frenoy-week-link:hover,
+.frenoy-week-link:visited {
+  color: black;
+}
+.frenoy-week-link:hover {
+  text-decoration: underline;
+}
+
 .truncate {
   white-space: nowrap;
   overflow: hidden;

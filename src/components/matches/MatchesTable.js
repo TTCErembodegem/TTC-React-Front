@@ -10,7 +10,7 @@ import Table from 'react-bootstrap/lib/Table';
 import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import Button from 'react-bootstrap/lib/Button';
-import {Icon, TrophyIcon, ThrillerIcon, CommentButton, SaveButton} from '../controls.js';
+import {Icon, TrophyIcon, ThrillerIcon, CommentButton, SaveButton, FrenoyWeekLink} from '../controls.js';
 import MatchVs from './Match/MatchVs.js';
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 import {TeamCaptainIcon} from '../players/PlayerCard.js';
@@ -279,7 +279,7 @@ export default class MatchesTable extends Component {
             {thrillerIcon}
             {match.shouldBePlayed ? <MatchDate match={match} /> : null}
           </td>
-          <td className="hidden-xs">{match.frenoyMatchId}</td>
+          <td className="hidden-xs"><FrenoyWeekLink match={match} /></td>
           <td><MatchVs match={match} opponentOnly={this.props.allowOpponentOnly && this.props.viewport.width < 450} ownTeamLink={this.props.ownTeamLink} /></td>
           {this.props.tableForm ? null : (<td>
             {!this.props.editMode || match.isSyncedWithFrenoy ? (
