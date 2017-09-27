@@ -84,10 +84,12 @@ export default class MatchesWeek extends Component {
       {key: 'Sporta', text: 'Sporta'}
     ];
 
+    // TODO: MatchesWeekEmail: hier gewoon het icon en verander de route... /mail
+
     const compFilter = this.props.params.comp || 'all';
     return (
       <div>
-        <WeekTitle t={t} weekCalcer={weekCalcer} weekChange={::this._onChangeWeek} />
+        <WeekTitle weekCalcer={weekCalcer} weekChange={::this._onChangeWeek} />
 
         <span className="button-bar-right">
           <ButtonStack
@@ -101,7 +103,7 @@ export default class MatchesWeek extends Component {
             <EditButton onClick={() => this.setState({editMode: !this.state.editMode})} />
           ) : null}
           {this.props.user.isAdmin() && matches.some(m => !m.isSyncedWithFrenoy) ? (
-            <MatchesWeekEmail matches={matches.filter(x => !this.state.filter || x.competition === this.state.filter).filter(x => x.shouldBePlayed)} />
+            <MatchesWeekEmail weekCalcer={weekCalcer} matches={matches.filter(x => !this.state.filter || x.competition === this.state.filter).filter(x => x.shouldBePlayed)} />
           ) : null}
         </span>
 
@@ -122,7 +124,7 @@ const MatchesWeekPerCompetition = ({comp, editMode, matches}) => {
   return (
     <div>
       <h4><strong>{comp}</strong></h4>
-      <MatchesTable editMode={editMode} matches={matches.filter(x => x.competition === comp).sort(matchSorter)} />
+      <MatchesTable editMode={editMode} matches={matches.filter(x => x.competition === comp).sort(matchSorter)} ownTeamLink="week" />
     </div>
   );
 };

@@ -25,6 +25,8 @@ export class MatchesWeekEmail extends Component {
   render() {
     const t = this.context.t;
 
+    //matches={matches.filter(x => !this.state.filter || x.competition === this.state.filter).filter(x => x.shouldBePlayed)}
+
     if (!this.state.mailFormOpen) {
       return <EmailButton onClick={() => this.setState({mailFormOpen: !this.state.mailFormOpen})} />;
     }

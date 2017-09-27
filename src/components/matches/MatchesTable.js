@@ -41,6 +41,7 @@ export default class MatchesTable extends Component {
     onTablePlayerSelect: PropTypes.func,
     tablePlayers: PropTypes.array,
     striped: PropTypes.bool,
+    ownTeamLink: PropTypes.oneOf(['main', 'matches', 'ranking', 'players', 'matchesTable', 'week']),
   }
   static defaultProps = {
     allowOpponentOnly: false,
@@ -279,7 +280,7 @@ export default class MatchesTable extends Component {
             {match.shouldBePlayed ? <MatchDate match={match} /> : null}
           </td>
           <td className="hidden-xs">{match.frenoyMatchId}</td>
-          <td><MatchVs match={match} opponentOnly={this.props.allowOpponentOnly && this.props.viewport.width < 450} /></td>
+          <td><MatchVs match={match} opponentOnly={this.props.allowOpponentOnly && this.props.viewport.width < 450} ownTeamLink={this.props.ownTeamLink} /></td>
           {this.props.tableForm ? null : (<td>
             {!this.props.editMode || match.isSyncedWithFrenoy ? (
               <ViewMatchDetailsButton match={match} t={t} />

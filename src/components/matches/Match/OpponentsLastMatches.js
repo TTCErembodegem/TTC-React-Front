@@ -58,6 +58,7 @@ export default class OpponentsLastMatches extends Component {
       matches = matches.take(AmountOfOpponentMatchesToShow);
     }
     if (matches.size === 0) {
+      // TODO: Do not show spinner if these guys just haven't played any matches yet...
       return <div className="match-card-tab-content"><h3><Spinner /></h3></div>;
     }
 

@@ -18,6 +18,7 @@ export class WeekCalcer {
   }
 
   getWeek() {
+    // TODO: // + natuurlijk de weekCalcer fixen :p
     const selectedWeekMatch = this.matches.find(match => match.week === this.currentWeek);
     if (!selectedWeekMatch) {
       return;

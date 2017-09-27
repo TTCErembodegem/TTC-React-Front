@@ -135,7 +135,7 @@ export default class Teams extends Component {
     }
 
     const transView = key => this.context.t('teamCalendar.view.' + key);
-    var viewsConfig = ['main', 'matches', 'ranking', 'players'];
+    var viewsConfig = ['main', 'week', 'matches', 'ranking', 'players'];
     if (this.props.user.playerId && this.props.viewport.width > 1000) {
       viewsConfig.splice(3, 0, 'matchesTable');
     }
@@ -182,7 +182,7 @@ export default class Teams extends Component {
             <FrenoyButton team={team} linkTo="ranking" />
           </div>
         </div>
-        <TeamHeader team={team} t={this.context.t} showRanking={!this._isSmall()} />
+        {view !== 'week' ? <TeamHeader team={team} t={this.context.t} showRanking={!this._isSmall()} /> : null}
         {this._renderTabViewContent(team, matches)}
       </div>
     );
