@@ -64,13 +64,14 @@ pre {
   cursor: default;
 }
 
-.frenoy-week-link,
-.frenoy-week-link:active,
-.frenoy-week-link:hover,
-.frenoy-week-link:visited {
+.link-hover-underline,
+.link-hover-underline:active,
+.link-hover-underline:hover,
+.link-hover-underline:visited {
+  cursor: pointer;
   color: black;
 }
-.frenoy-week-link:hover {
+.link-hover-underline:hover {
   text-decoration: underline;
 }
 

@@ -1,10 +1,10 @@
 import React from 'react';
-import { Router, Route, browserHistory } from 'react-router';
+import {Router, Route, browserHistory} from 'react-router';
 
 import App from './components/App';
 import Players from './components/players/Players.js';
 import Login from './components/users/Login.js';
-import ForgotPassword, { ForgotPasswordReset } from './components/users/ForgotPassword.js';
+import ForgotPassword, {ForgotPasswordReset} from './components/users/ForgotPassword.js';
 import Profile from './components/users/Profile.js';
 import Links from './components/other/Links.js';
 import Administration from './components/other/Administration.js';
@@ -46,5 +46,12 @@ const Routes = () => (
     </Route>
   </Router>
 );
+
+
+export const browseTo = {
+  team(team, view = 'main') {
+    browserHistory.push(t.route('teams').replace(':competition', team.competition) + '/' + team.teamCode + '/' + view);
+  }
+};
 
 export default Routes;

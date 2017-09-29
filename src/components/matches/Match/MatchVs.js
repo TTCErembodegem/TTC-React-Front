@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes, {browserHistory} from '../../PropTypes.js';
 import cn from 'classnames';
 import {Icon} from '../../controls/Icon.js';
+import {browseTo} from '../../../routes.js';
 
 export default class MatchVs extends Component {
   static contextTypes = PropTypes.contextTypes;
@@ -33,7 +34,7 @@ export default class MatchVs extends Component {
     var us = <span className={cn('label label-as-badge label-info', {clickable: this.props.ownTeamLink})} style={{fontSize: 14}}>{team.renderOwnTeamTitle()}</span>;
     if (this.props.ownTeamLink) {
       us = (
-        <a onClick={() => browserHistory.push(this.context.t.route('teams').replace(':competition', team.competition) + '/' + team.teamCode + '/' + this.props.ownTeamLink)}>
+        <a onClick={() => browseTo.team(team, this.props.ownTeamLink)}>
           {us}
         </a>
       );

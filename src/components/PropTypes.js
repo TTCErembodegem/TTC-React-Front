@@ -1,4 +1,4 @@
-import { PropTypes as ReactPropTypes } from 'react';
+import {PropTypes as ReactPropTypes} from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
 import MatchModel from '../models/MatchModel.js';
@@ -6,7 +6,7 @@ import TeamModel from '../models/TeamModel.js';
 import ClubModel from '../models/ClubModel.js';
 import UserModel from '../models/UserModel.js';
 import PlayerModel from '../models/PlayerModel.js';
-import { contextTypes } from '../utils/decorators/withContext.js';
+import {contextTypes} from '../utils/decorators/withContext.js';
 
 export default Object.assign({}, ReactPropTypes, {
   contextTypes,
@@ -33,8 +33,9 @@ export default Object.assign({}, ReactPropTypes, {
 });
 
 export storeUtil from '../storeUtil.js';
-export { connect } from 'react-redux';
-export { browserHistory } from 'react-router';
+export {connect} from 'react-redux';
+export {browserHistory} from 'react-router';
+export {browseTo} from '../routes.js';
 export keyMirror from 'fbjs/lib/keyMirror';
 
 export withViewport from '../utils/decorators/withViewport.js';

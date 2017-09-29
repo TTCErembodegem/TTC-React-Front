@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PropTypes, {browserHistory} from '../../PropTypes.js';
+import PropTypes, {browserHistory, browseTo} from '../../PropTypes.js';
 import moment from 'moment';
 
 import MatchForm from '../Match/MatchForm.js';
@@ -145,7 +145,7 @@ class MatchCardHeader extends Component {
         initiallyExpanded={this.props.isOpen}
       >
         <CardHeader
-          title={this._renderTitle(match)}
+          title={<MatchCardHeaderSmallTitle match={match} t={this.context.t} withLinks={this.props.isOpen} />}
           subtitle={subtitle}
           style={{height: smallAndScoring ? 100 : undefined, padding: 15}}
           textStyle={{padding: 0}}
@@ -163,35 +163,63 @@ class MatchCardHeader extends Component {
     );
   }
 
-  _renderTitle(match) {
-    const team = match.getTeam();
-    return (
-      <div style={{whiteSpace: 'nowrap'}}>
-        {team.getThriller(match) ? <ThrillerIcon color="red" /> : ThrillerIconSpan}
-        {this._renderTeamNameAndPosition(match, match.isHomeMatch ? undefined : match.opponent)}
-        <span className={match.isHomeMatch ? '' : 'match-opponent-team'} style={{marginLeft: 7, marginRight: 7}}>
-          {this.context.t('match.vs')}
-        </span>
-        {this._renderTeamNameAndPosition(match, match.isHomeMatch ? match.opponent : undefined)}
-      </div>
-    )
-  }
-  _renderTeamNameAndPosition(match, opponent) {
-    const team = match.getTeam();
-    const divisionRanking = team.getDivisionRanking(opponent);
-    return (
-      <span>
-        <span className={opponent ? 'match-opponent-team' : ''}>{divisionRanking.position ? divisionRanking.position + '. ' : ''}</span>
-        <span className={opponent ? 'match-opponent-team' : ''}>
-          {opponent ? <MatchVs match={match} themOnly={true} /> : team.renderOwnTeamTitle()}
-        </span>
-      </span>
-    );
-  }
-
   _onExpandChange(isOpen) {
     if (this.props.onOpen) {
       this.props.onOpen(isOpen);
     }
   }
 }
+
+
+
+const MatchCardHeaderSmallTitle = ({match, withLinks, t}) => {
+  const team = match.getTeam();
+  return (
+    <div style={{whiteSpace: 'nowrap'}}>
+      {team.getThriller(match) ? <ThrillerIcon color="red" /> : ThrillerIconSpan}
+
+      {match.isHomeMatch ? <OwnTeamTitle match={match} withLinks={withLinks} /> : <TheirTeamTitle match={match} />}
+
+      <span style={{marginLeft: 7, marginRight: 7}}>
+        {t('match.vs')}
+      </span>
+
+      {!match.isHomeMatch ? <OwnTeamTitle match={match} withLinks={withLinks} /> : <TheirTeamTitle match={match} />}
+    </div>
+  )
+};
+
+
+const OwnTeamTitle = ({match, withLinks}) => {
+  const team = match.getTeam();
+  const divisionRanking = team.getDivisionRanking();
+
+  const title = (
+    <span>
+      {divisionRanking.position ? divisionRanking.position + '. ' : ''}
+      {team.renderOwnTeamTitle()}
+    </span>
+  );
+
+  if (!withLinks) {
+    return title;
+  }
+
+  return (
+    <a onClick={() => browseTo.team(team)} className="link-hover-underline">
+      {title}
+    </a>
+  );
+};
+
+
+const TheirTeamTitle = ({match}) => {
+  const team = match.getTeam();
+  const divisionRanking = team.getDivisionRanking(match.opponent);
+  return (
+    <span className="match-opponent-team">
+      {divisionRanking.position ? divisionRanking.position + '. ' : ''}
+      <MatchVs match={match} themOnly={true} />
+    </span>
+  );
+};

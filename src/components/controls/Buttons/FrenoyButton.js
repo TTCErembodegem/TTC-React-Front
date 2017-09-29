@@ -45,7 +45,7 @@ export class FrenoyWeekLink extends Component {
     const match = this.props.match;
     const team = match.getTeam();
     return (
-      <a href={team.frenoy.getWeekUrl(match.week)} target="_blank" className="frenoy-week-link">
+      <a href={team.frenoy.getWeekUrl(match.week)} target="_blank" className="link-hover-underline">
         {match.frenoyMatchId}
       </a>
     );
