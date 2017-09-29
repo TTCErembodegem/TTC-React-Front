@@ -35,6 +35,8 @@ export class WeekCalcer {
   }
 
   calcCurrentWeek() {
+    //.endOf('isoWeek')
+    // TODO: currentWeek => already next week on friday after 20h...
     const today = moment();
     const currentWeekMatch = this.matches.find(x => x.date > today);
     return currentWeekMatch ? currentWeekMatch.week : this.lastWeek;

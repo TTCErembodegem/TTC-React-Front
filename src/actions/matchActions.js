@@ -15,8 +15,10 @@ export function simpleLoaded(data) {
   };
 }
 
+const shouldSync = match => !match.isSyncedWithFrenoy && moment().isAfter(match.date) && match.shouldBePlayed && match.scoreType !== 'BeingPlayed';
+
 function frenoySync(dispatch, m) {
-  if (!m.isSyncedWithFrenoy && moment().isAfter(m.date) && m.shouldBePlayed) {
+  if (shouldSync(m)) {
     // Non played matches date is 0001-01-01T00:00:00
     return http.post('/matches/FrenoyMatchSync', {id: m.id})
       .then(function(newmatch) {
@@ -27,6 +29,20 @@ function frenoySync(dispatch, m) {
     );
   }
   return null;
+}
+
+function frenoyReadOnlyMatchSync(match) {
+  return dispatch => {
+    if (shouldSync(match)) {
+      http.post('/matches/FrenoyOtherMatchSync', {id: match.id})
+        .then(function(newmatch) {
+          dispatch(readOnlyLoaded(Object.assign(newmatch, {frenoyDivisionId: match.frenoyDivisionId})));
+        }, function(err) {
+          console.error(err); // eslint-disable-line
+        }
+      );
+    }
+  }
 }
 
 export function loaded(data, dispatch) {
@@ -55,14 +71,14 @@ export function readOnlyLoaded(data) {
 }
 
 export function getLastOpponentMatches(teamId, opponent) {
-  if (storeUtil.getConfig().get('GetLastOpponentMatches' + teamId + opponent.teamCode + opponent.clubId)) {
+  if (storeUtil.getConfig().get('GetOpponentMatches' + teamId + opponent.teamCode + opponent.clubId)) {
     return {type: 'empty', payload: ''};
   }
 
   return dispatch => {
-    return http.get('/matches/GetLastOpponentMatches', {teamId, ...opponent})
+    return http.get('/matches/GetOpponentMatches', {teamId, ...opponent})
       .then(function(matches) {
-        dispatch(setSetting('GetLastOpponentMatches' + teamId + opponent.teamCode + opponent.clubId, true));
+        dispatch(setSetting('GetOpponentMatches' + teamId + opponent.teamCode + opponent.clubId, true));
 
         if (!matches || !matches.length) {
           return;
@@ -71,23 +87,27 @@ export function getLastOpponentMatches(teamId, opponent) {
         dispatch(readOnlyLoaded(matches));
 
         matches.forEach(match => {
-          if (!match.isSyncedWithFrenoy && moment().isAfter(moment(match.date))) {
-            http.post('/matches/FrenoyOtherMatchSync', {id: match.id})
-              .then(function(newmatch) {
-                dispatch(readOnlyLoaded(Object.assign(newmatch, {frenoyDivisionId: match.frenoyDivisionId})));
-              }, function(err) {
-                console.error(err); // eslint-disable-line
-              }
-            );
-          }
+          dispatch(frenoyReadOnlyMatchSync(match));
         });
 
       }, function(err) {
-        console.log('GetLastOpponentMatches!', err); // eslint-disable-line
+        console.log('GetOpponentMatches!', err); // eslint-disable-line
       }
     );
   };
 }
+
+
+export function GetOpponentMatches(team) {
+  return dispatch => {
+    var p = Promise.resolve();
+    team.opponents.forEach(opponent => {
+      p = p.then(() => dispatch(getLastOpponentMatches(team.id, opponent)));
+    });
+    return p;
+  };
+}
+
 
 export function selectPlayer(matchId, status, statusNote, playerId) {
   return dispatch => {

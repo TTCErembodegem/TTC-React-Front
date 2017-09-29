@@ -5,17 +5,19 @@ import MatchesTable from '../matches/MatchesTable.js';
 import {PlayerCompetition} from '../controls.js';
 import {WeekCalcer} from '../matches/MatchesWeeks/WeekCalcer.js';
 import {WeekTitle} from '../matches/MatchesWeeks/WeekTitle.js';
+import {GetOpponentMatches} from '../../actions/matchActions.js';
 
 
 @connect(state => ({
   matches: state.matches,
   readonlyMatches: state.readonlyMatches,
-}))
+}), {GetOpponentMatches})
 export class TeamMatchesWeek extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     matches: PropTypes.MatchModelList.isRequired,
     readonlyMatches: PropTypes.MatchModelList.isRequired,
+    GetOpponentMatches: PropTypes.func.isRequired,
     team: PropTypes.TeamModel.isRequired,
   }
 
@@ -26,21 +28,20 @@ export class TeamMatchesWeek extends Component {
     };
   }
 
-  render() {
-    var matches = this.props.matches;
+  componentDidMount() {
+    this.props.GetOpponentMatches(this.props.team);
+  }
 
-    var ownMatches = this.props.team.getMatches();
+  render() {
+    const ownMatches = this.props.team.getMatches();
     const weekCalcer = new WeekCalcer(ownMatches, this.state.currentWeek);
+    //<MatchesTable editMode={false} matches={weekCalcer.getMatches()} />
 
     var otherMatches = this.props.readonlyMatches
       .filter(m => m.week === weekCalcer.currentWeek)
       .filter(m => m.competition === this.props.team.competition)
       .filter(m => m.frenoyDivisionId === this.props.team.frenoy.divisionId);
 
-    // TODO: we'll need to load them:
-    // like matchActions :: getLastOpponentMatches
-
-    // Geen MatchesTable (thank god)
 
     console.log('yaye', otherMatches.toArray());
 
@@ -48,7 +49,11 @@ export class TeamMatchesWeek extends Component {
       <div>
         <WeekTitle weekCalcer={weekCalcer} weekChange={weekDiff => this.setState({currentWeek: weekCalcer.currentWeek + weekDiff})} />
 
-        <MatchesTable editMode={false} matches={weekCalcer.getMatches()} />
+        {otherMatches.map(m => (
+          <div key={m.id}>
+            {m.id} - {m.frenoyMatchId}
+          </div>
+        ))}
       </div>
     )
   }
