@@ -14,8 +14,8 @@ export const TeamOverview = ({team, user, small, t}) => {
   return (
     <div style={{paddingLeft: 5, paddingRight: 5}}>
       <TeamOverviewRanking team={team} t={t} small={small} />
-      <TeamOverviewMatches matches={nextMatches} team={team} title={t('match.nextMatches')} />
       <TeamOverviewMatches matches={prevMatches} team={team} title={t('match.playedMatches')} />
+      <TeamOverviewMatches matches={nextMatches} team={team} title={t('match.nextMatches')} />
       <TeamOverviewPlayers team={team} t={t} user={user} />
     </div>
   );

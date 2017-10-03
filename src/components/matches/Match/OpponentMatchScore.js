@@ -8,7 +8,7 @@ export const OpponentMatchScore = ({readonlyMatch}) => {
   }
 
   if (readonlyMatch.scoreType === 'WalkOver') {
-    return <span>WO</span>;
+    return <span>WO</span>; // TODO: translation
   }
 
   if (!readonlyMatch.isSyncedWithFrenoy) {
