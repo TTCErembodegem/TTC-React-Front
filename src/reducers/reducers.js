@@ -1,7 +1,6 @@
 import Immutable from 'immutable';
 import * as immutableHelpers from './immutableHelpers.js';
 import * as ActionTypes from '../actions/ActionTypes.js';
-//import _ from 'lodash';
 
 import PlayerModel from '../models/PlayerModel.js';
 import TeamModel from '../models/TeamModel.js';

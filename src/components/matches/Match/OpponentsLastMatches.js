@@ -7,18 +7,10 @@ import IconButton from 'material-ui/IconButton';
 import OpponentPlayer from './OpponentPlayer.js';
 import {Spinner} from '../../controls.js';
 import MatchScore from '../MatchScore.js';
-import {OtherMatchPlayerResults} from './OtherMatchPlayerResults.js';
+import {OtherMatchPlayerResultsTableRow} from './OtherMatchPlayerResults.js';
+import {MatchPlayerRankings} from '../controls/MatchPlayerRankings.js';
 
 const AmountOfOpponentMatchesToShow = 5;
-
-// TODO: showAll prop to override AmountOfOpponentMatchesToShow
-// TODO: this is ReadOnlyMatchesTable --> it should accept only readOnlyMatches...
-// --> Will also need to display matches not yet played... how? klassementen & uitslag vorige week?
-
-// otherMatch => BackMatch
-// match => uses match.opponent to just show the opponent (but on the new view this is not possible...)
-// --> change props a little to accept just a "teamUnderInvestigation?" (or if match=null...?)
-// --> how to display on small devices then? (can hide date - but still want to see the Thriller icon)
 
 @withViewport
 export default class OpponentsLastMatches extends Component {
@@ -71,16 +63,12 @@ export default class OpponentsLastMatches extends Component {
           {matches.map(match => {
             const opponent = this.props.opponent;
             const isHomeMatch = match.home.clubId === opponent.clubId && match.home.teamCode === opponent.teamCode;
-            var opponentFormation;
-            if (isHomeMatch) {
-              opponentFormation = match.players.filter(m => m.home);
-            } else {
-              opponentFormation = match.players.filter(m => !m.home);
-            }
-
             return [
-              <tr key={match.id} className={'clickable ' + (match.won(opponent) ? 'accentuate success' : '')}
-                onClick={this._onOpenOpponentMatch.bind(this, match.id)}>
+              <tr
+                key={match.id}
+                className={'clickable ' + (match.won(opponent) ? 'accentuate success' : '')}
+                onClick={() => this.setState({[match.id]: !this.state[match.id]})}
+              >
 
                 <td key="1">{match.getDisplayDate(this.props.viewport.width > widthRemoveColumn ? 'd' : 's')}</td>
                 {this.props.viewport.width > widthRemoveColumn ? [
@@ -93,17 +81,17 @@ export default class OpponentsLastMatches extends Component {
                   </td>
                 )}
 
-                <td key="5">{this._getFormationRankingString(opponentFormation.map(ply => ply.ranking))}</td>
+                <td key="5"><MatchPlayerRankings match={match} homeTeam={isHomeMatch} /></td>
 
                 <td key="6">{match.score.home}&nbsp;-&nbsp;{match.score.out}</td>
               </tr>,
-              this._getMatchDetails(match)
+              <OtherMatchPlayerResultsTableRow show={this.state[match.id]} match={match} colSpan={5} />
             ];
           })}
           {!this.state.showAll && this.props.readonlyMatches.size > AmountOfOpponentMatchesToShow ? (
             <tr key="showAll">
               <td colSpan={5} style={{textAlign: 'center'}}>
-                <IconButton iconClassName="fa fa-chevron-circle-down" onClick={::this._onLoadAll} />
+                <IconButton iconClassName="fa fa-chevron-circle-down" onClick={() => this.setState({showAll: true})} />
               </td>
             </tr>
           ) : null}
@@ -111,36 +99,5 @@ export default class OpponentsLastMatches extends Component {
       </Table>
       </div>
     );
-  }
-  _getFormationRankingString(rankings) {
-    const unique = (value, index, self) => self.indexOf(value) === index;
-    const diffs = rankings.toArray().filter(unique);
-    return (
-      <span>
-        {diffs.map((ranking, index) => {
-          const cnt = rankings.reduce((prev, cur) => prev + (cur === ranking ? 1 : 0), 0);
-          return (
-            <span key={ranking}>
-              {cnt > 1 ? <small>{cnt}x</small> : null}
-              {ranking}
-              {index < diffs.length - 1 ? ', ' : null}
-            </span>
-          );
-        })}
-      </span>
-    );
-  }
-
-  _onLoadAll() {
-    this.setState({showAll: true});
-  }
-  _onOpenOpponentMatch(matchId) {
-    this.setState({[matchId]: !this.state[matchId]});
-  }
-  _getMatchDetails(match) {
-    if (!this.state[match.id]) {
-      return null;
-    }
-    return <OtherMatchPlayerResults match={match} />
   }
 }

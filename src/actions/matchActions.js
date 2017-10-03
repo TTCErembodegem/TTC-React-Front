@@ -98,7 +98,7 @@ export function getLastOpponentMatches(teamId, opponent) {
 }
 
 
-export function GetOpponentMatches(team) {
+export function getOpponentMatches(team) {
   return dispatch => {
     var p = Promise.resolve();
     team.opponents.forEach(opponent => {

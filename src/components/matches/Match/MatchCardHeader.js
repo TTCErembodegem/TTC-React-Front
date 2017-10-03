@@ -6,6 +6,7 @@ import MatchForm from '../Match/MatchForm.js';
 import MatchScore from '../MatchScore.js';
 import {Icon, ThrillerBadge, ThrillerIcon, CommentIcon} from '../../controls/Icon.js';
 import MatchVs from './MatchVs.js';
+import {TheirTeamTitle} from './TheirTeamTitle.js';
 
 import {Card, CardHeader} from 'material-ui/Card';
 
@@ -209,17 +210,5 @@ const OwnTeamTitle = ({match, withLinks}) => {
     <a onClick={() => browseTo.team(team)} className="link-hover-underline">
       {title}
     </a>
-  );
-};
-
-
-const TheirTeamTitle = ({match}) => {
-  const team = match.getTeam();
-  const divisionRanking = team.getDivisionRanking(match.opponent);
-  return (
-    <span className="match-opponent-team">
-      {divisionRanking.position ? divisionRanking.position + '. ' : ''}
-      <MatchVs match={match} themOnly={true} />
-    </span>
   );
 };
