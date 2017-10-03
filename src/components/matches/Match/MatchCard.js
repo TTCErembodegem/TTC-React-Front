@@ -18,6 +18,7 @@ import OpponentsFormation from './OpponentsFormation.js';
 import MatchReport from './MatchReport.js';
 import Scoresheet from './Scoresheet.js';
 import PlayersImageGallery from '../../players/PlayersImageGallery.js';
+import {MatchOtherRoundButton} from '../controls/ViewMatchDetailsButton.js';
 
 const tabEventKeys = keyMirror({
   players: '',
@@ -205,14 +206,12 @@ export default class MatchCard extends Component {
       .filter(match => match.score && (match.score.home || match.score.out))
       .sort((a, b) => a.date.isBefore(b.date) ? 1 : -1);
 
-    // TODO: findFirstRoundMatch: move this to team model or something
-    const firstRoundMatch = matches.find(match => (
-        (match.home.clubId === OwnClubId && match.home.teamCode === this.props.match.getTeam().teamCode) ||
-        (match.away.clubId === OwnClubId && match.away.teamCode === this.props.match.getTeam().teamCode)
-      ));
-
-    const firstRoundRealMatch = firstRoundMatch ? storeUtil.getMatch(firstRoundMatch.id) : null;
-    return <OpponentsLastMatches match={this.props.match} readonlyMatches={theirOtherMatches} otherMatch={firstRoundRealMatch} />;
+    return (
+      <div>
+        <MatchOtherRoundButton match={this.props.match} />
+        <OpponentsLastMatches opponent={this.props.match.opponent} readonlyMatches={theirOtherMatches} />
+      </div>
+    );
   }
   _renderOpponentFormation() {
     const formations = storeUtil.matches

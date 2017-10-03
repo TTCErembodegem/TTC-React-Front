@@ -58,3 +58,14 @@ export class TeamMatchesWeek extends Component {
     )
   }
 }
+
+class OtherMatchesTable extends Component {
+  static contextTypes = PropTypes.contextTypes;
+  static propTypes = {
+    matches: PropTypes.MatchModelList.isRequired,
+  }
+
+  render() {
+
+  }
+}

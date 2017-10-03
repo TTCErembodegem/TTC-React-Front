@@ -1,22 +1,33 @@
 import React, {Component} from 'react';
 import PropTypes, {withViewport} from '../../PropTypes.js';
 import {Link, browserHistory} from 'react-router';
-import _ from 'lodash';
 
 import Table from 'react-bootstrap/lib/Table';
 import IconButton from 'material-ui/IconButton';
 import OpponentPlayer from './OpponentPlayer.js';
 import {Spinner} from '../../controls.js';
 import MatchScore from '../MatchScore.js';
+import {OtherMatchPlayerResults} from './OtherMatchPlayerResults.js';
 
 const AmountOfOpponentMatchesToShow = 5;
+
+// TODO: showAll prop to override AmountOfOpponentMatchesToShow
+// TODO: this is ReadOnlyMatchesTable --> it should accept only readOnlyMatches...
+// --> Will also need to display matches not yet played... how? klassementen & uitslag vorige week?
+
+// otherMatch => BackMatch
+// match => uses match.opponent to just show the opponent (but on the new view this is not possible...)
+// --> change props a little to accept just a "teamUnderInvestigation?" (or if match=null...?)
+// --> how to display on small devices then? (can hide date - but still want to see the Thriller icon)
 
 @withViewport
 export default class OpponentsLastMatches extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
-    match: PropTypes.MatchModel.isRequired,
-    otherMatch: PropTypes.MatchModel,
+    opponent: PropTypes.shape({
+      clubId: PropTypes.number.isRequired,
+      teamCode: PropTypes.string.isRequired,
+    }),
     readonlyMatches: PropTypes.object.isRequired,
     viewport: PropTypes.viewport,
   }
@@ -28,30 +39,8 @@ export default class OpponentsLastMatches extends Component {
     };
   }
 
-  _gotoMatchCard(match) {
-    const matchRoute = this.context.t.route('match', {matchId: match.id});
-    browserHistory.push(matchRoute);
-  }
-
   render() {
     const widthRemoveColumn = 500; // combine Home&Away columns to just one Opponent column on small devices
-    var firstBattle;
-    const otherMatch = this.props.otherMatch;
-    if (otherMatch) {
-      const wasPrev = this.props.match.date > otherMatch.date;
-      firstBattle = (
-        <Link to={this.context.t.route('match', {matchId: otherMatch.id})}>
-          <button type="button" className="btn btn-default"
-            onClick={this._gotoMatchCard.bind(this, otherMatch)}
-            style={{margin: 7}}>
-            <div>
-              <span style={{marginRight: 6}}>{this.context.t('match.' + (wasPrev ? 'gotoPreviousEncounter' : 'gotoNextEncounter'))}</span>
-              <MatchScore match={otherMatch} forceDisplay={true} />
-            </div>
-          </button>
-        </Link>
-      );
-    }
 
     var matches = this.props.readonlyMatches;
     if (!this.state.showAll) {
@@ -64,7 +53,6 @@ export default class OpponentsLastMatches extends Component {
 
     return (
       <div>
-      {firstBattle}
       <Table condensed className="match-card-tab-table">
         <thead>
           <tr>
@@ -81,7 +69,7 @@ export default class OpponentsLastMatches extends Component {
         </thead>
         <tbody>
           {matches.map(match => {
-            const opponent = this.props.match.opponent;
+            const opponent = this.props.opponent;
             const isHomeMatch = match.home.clubId === opponent.clubId && match.home.teamCode === opponent.teamCode;
             var opponentFormation;
             if (isHomeMatch) {
@@ -91,7 +79,7 @@ export default class OpponentsLastMatches extends Component {
             }
 
             return [
-              <tr key={match.id} className={'clickable ' + (match.won(this.props.match.opponent) ? 'accentuate success' : '')}
+              <tr key={match.id} className={'clickable ' + (match.won(opponent) ? 'accentuate success' : '')}
                 onClick={this._onOpenOpponentMatch.bind(this, match.id)}>
 
                 <td key="1">{match.getDisplayDate(this.props.viewport.width > widthRemoveColumn ? 'd' : 's')}</td>
@@ -125,7 +113,8 @@ export default class OpponentsLastMatches extends Component {
     );
   }
   _getFormationRankingString(rankings) {
-    const diffs = _.uniq(rankings.toArray());
+    const unique = (value, index, self) => self.indexOf(value) === index;
+    const diffs = rankings.toArray().filter(unique);
     return (
       <span>
         {diffs.map((ranking, index) => {
@@ -152,16 +141,6 @@ export default class OpponentsLastMatches extends Component {
     if (!this.state[match.id]) {
       return null;
     }
-    return (
-      <tr key={match.id + '_details'}>
-        <td colSpan={5}>
-          <h4 style={{marginTop: 5}}>{match.getClub('home').name} {match.home.teamCode}</h4>
-          {match.getOwnPlayers().map(ply => <OpponentPlayer ply={ply} key={ply.position} t={this.context.t} competition={match.competition} />)}
-
-          <h4>{match.getClub('away').name} {match.away.teamCode}</h4>
-          {match.getTheirPlayers().map(ply => <OpponentPlayer ply={ply} key={ply.position} t={this.context.t} competition={match.competition} />)}
-        </td>
-      </tr>
-    );
+    return <OtherMatchPlayerResults match={match} />
   }
 }
