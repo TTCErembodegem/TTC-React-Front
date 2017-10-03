@@ -283,7 +283,7 @@ export default class MatchesTable extends Component {
           <td><MatchVs match={match} opponentOnly={this.props.allowOpponentOnly && this.props.viewport.width < 450} ownTeamLink={this.props.ownTeamLink} /></td>
           {this.props.tableForm ? null : (<td>
             {!this.props.editMode || match.isSyncedWithFrenoy ? (
-              <ViewMatchDetailsButton match={match} t={t} />
+              <ViewMatchDetailsButton match={match} />
 
             ) : !this.props.user.canEditMatchPlayers(match) ? (
               <CannotEditMatchIcon />

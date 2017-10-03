@@ -1,5 +1,5 @@
 import store from './store.js';
-import { OwnClubId } from './models/ClubModel.js';
+import {OwnClubId} from './models/ClubModel.js';
 
 function getOpponentMatches(match) {
   const opponent = match.opponent;

@@ -6,17 +6,30 @@ import MatchScore from '../MatchScore.js';
 import cn from 'classnames';
 
 
-export const ViewMatchDetailsButton = ({match, t}) => {
-  if (!match.shouldBePlayed) {
-    return <div />;
+export class ViewMatchDetailsButton extends Component {
+  static contextTypes = PropTypes.contextTypes;
+  static propTypes = {
+    match: PropTypes.MatchModel.isRequired,
+    size: PropTypes.oneOf(['xs'])
   }
+  render() {
+    const match = this.props.match;
+    if (!match.shouldBePlayed) {
+      return null;
+    }
 
-  const score = match.renderScore();
-  return (
-    <a className={cn({'btn btn-default': !score, clickable: !!score})} onClick={() => browserHistory.push(t.route('match', {matchId: match.id}))}>
-      {score ? <MatchScore match={match} style={{fontSize: 16}} showComments /> : t('match.details')}
-    </a>
-  );
+    const t = this.context.t;
+    const size = this.props.size;
+    const score = match.renderScore();
+    return (
+      <a
+        className={cn({'btn btn-default': !score, clickable: !!score, ['btn-' + size]: !!size})}
+        onClick={() => browserHistory.push(t.route('match', {matchId: match.id}))}
+      >
+        {score ? <MatchScore match={match} style={{fontSize: size === 'xs' ? 12 : 16}} showComments /> : t('match.details')}
+      </a>
+    );
+  }
 }
 
 

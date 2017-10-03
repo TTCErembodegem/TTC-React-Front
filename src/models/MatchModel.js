@@ -4,8 +4,8 @@ import moment from 'moment';
 
 import storeUtil from '../storeUtil.js';
 import PlayerModel from './PlayerModel.js';
-import { OwnClubId } from './ClubModel.js';
-import { sortPlayers, sortMappedPlayers } from './TeamModel.js';
+import {OwnClubId} from './ClubModel.js';
+import {sortPlayers, sortMappedPlayers} from './TeamModel.js';
 
 // TODO: Duplicted in backend. Should be in db.
 const defaultStartHour = 20;
@@ -58,6 +58,11 @@ export default class MatchModel {
       // OtherMatch
       this.home = json.home;
       this.away = json.away;
+
+      this.isOurMatch = this.home.clubId === OwnClubId || this.away.clubId === OwnClubId;
+      if (this.isOurMatch) {
+        this.getOurMatch = () => storeUtil.getMatch(this.id);
+      }
     }
   }
 
