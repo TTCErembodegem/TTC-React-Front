@@ -1,7 +1,8 @@
 import moment from 'moment';
 
 export class WeekCalcer {
-  constructor(matches, currentWeek) {
+  constructor(matches, currentWeek, includeFreeMatches = false) {
+    this.includeFreeMatches = includeFreeMatches;
     this.matches = matches.sort((a, b) => a.date - b.date);
     this.lastWeek = this.calcLastWeek();
     this.currentWeek = currentWeek || this.calcCurrentWeek();
@@ -13,16 +14,16 @@ export class WeekCalcer {
       return [];
     }
 
-    const matchFilter = match => match.week === this.currentWeek || match.date.isBetween(week.start, week.end);
+    const matchFilter = match => match.date.isBetween(week.start, week.end) || (this.includeFreeMatches && match.week === this.currentWeek);
     return this.matches.filter(matchFilter);
   }
 
   getWeek() {
-    // TODO: // + natuurlijk de weekCalcer fixen :p
     const selectedWeekMatch = this.matches.find(match => match.week === this.currentWeek);
     if (!selectedWeekMatch) {
       return;
     }
+
     return {
       start: selectedWeekMatch.date.clone().startOf('week'),
       end: selectedWeekMatch.date.clone().endOf('week')
@@ -35,8 +36,6 @@ export class WeekCalcer {
   }
 
   calcCurrentWeek() {
-    //.endOf('isoWeek')
-    // TODO: currentWeek => already next week on friday after 20h...
     const today = moment();
     const currentWeekMatch = this.matches.find(x => x.date > today);
     return currentWeekMatch ? currentWeekMatch.week : this.lastWeek;

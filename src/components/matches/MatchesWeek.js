@@ -72,9 +72,9 @@ export default class MatchesWeek extends Component {
       allMatches = allMatches.concat(this.props.freeMatches);
     }
 
-    const weekCalcer = new WeekCalcer(allMatches, this.state.currentWeek);
+    const weekCalcer = new WeekCalcer(allMatches, this.state.currentWeek, this.state.editMode);
     const matches = weekCalcer.getMatches();
-    if (matches.length === 0) {
+    if (matches.size === 0) {
       return null;
     }
 
@@ -121,10 +121,15 @@ const MatchesWeekPerCompetition = ({comp, editMode, matches}) => {
   //const matchSorter = (a, b) => a.date - b.date;
   const matchSorter = (a, b) => a.getTeam().teamCode.localeCompare(b.getTeam().teamCode);
 
+  matches = matches.filter(x => x.competition === comp);
+  if (matches.size === 0) {
+    return null;
+  }
+
   return (
     <div>
       <h4><strong>{comp}</strong></h4>
-      <MatchesTable editMode={editMode} matches={matches.filter(x => x.competition === comp).sort(matchSorter)} ownTeamLink="week" />
+      <MatchesTable editMode={editMode} matches={matches.sort(matchSorter)} ownTeamLink="week" />
     </div>
   );
 };
