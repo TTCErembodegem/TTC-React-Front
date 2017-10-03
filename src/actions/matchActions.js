@@ -15,7 +15,7 @@ export function simpleLoaded(data) {
   };
 }
 
-const shouldSync = match => !match.isSyncedWithFrenoy && moment().isAfter(match.date) && match.shouldBePlayed && match.scoreType !== 'BeingPlayed';
+const shouldSync = match => !match.isSyncedWithFrenoy && moment().isAfter(match.date) && match.shouldBePlayed;
 
 function frenoySync(dispatch, m) {
   if (shouldSync(m)) {
