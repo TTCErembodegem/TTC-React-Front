@@ -32,6 +32,11 @@ export class TeamMatchesWeek extends Component {
   componentDidMount() {
     this.props.getOpponentMatches(this.props.team);
   }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.team !== this.props.team) {
+      this.props.getOpponentMatches(nextProps.team);
+    }
+  }
 
   render() {
     const ownMatches = this.props.team.getMatches();
@@ -40,7 +45,8 @@ export class TeamMatchesWeek extends Component {
     var otherMatches = this.props.readonlyMatches
       .filter(m => m.week === weekCalcer.currentWeek)
       .filter(m => m.competition === this.props.team.competition)
-      .filter(m => m.frenoyDivisionId === this.props.team.frenoy.divisionId);
+      .filter(m => m.frenoyDivisionId === this.props.team.frenoy.divisionId)
+      .filter(m => m.shouldBePlayed);
 
     return (
       <div>

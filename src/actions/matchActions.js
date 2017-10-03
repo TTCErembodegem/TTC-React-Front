@@ -89,6 +89,7 @@ export function getLastOpponentMatches(teamId, opponent) {
         matches.forEach(match => {
           dispatch(frenoyReadOnlyMatchSync(match));
         });
+        return null;
 
       }, function(err) {
         console.log('GetOpponentMatches!', err); // eslint-disable-line
