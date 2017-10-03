@@ -7,7 +7,7 @@ import {WeekCalcer} from '../matches/MatchesWeeks/WeekCalcer.js';
 import {WeekTitle} from '../matches/MatchesWeeks/WeekTitle.js';
 import {getOpponentMatches} from '../../actions/matchActions.js';
 import {OpponentMatches} from '../matches/Match/OpponentMatches.js';
-import {FrenoyWeekLink} from '../controls.js';
+import {FrenoyWeekButton} from '../controls.js';
 
 @connect(state => ({
   matches: state.matches,
@@ -44,8 +44,8 @@ export class TeamMatchesWeek extends Component {
 
     return (
       <div>
+        <FrenoyWeekButton team={this.props.team} week={weekCalcer.currentWeek} className="pull-right" style={{marginRight: 10}} />
         <WeekTitle weekCalcer={weekCalcer} weekChange={weekDiff => this.setState({currentWeek: weekCalcer.currentWeek + weekDiff})} />
-
         <OpponentMatches team={this.props.team} readonlyMatches={otherMatches} />
       </div>
     )

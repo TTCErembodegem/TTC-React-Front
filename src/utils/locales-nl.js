@@ -346,6 +346,7 @@ export default {
       individual: 'Individueel',
       frenoyresults: 'Ga naar resultaten op Frenoy',
       frenoyranking: 'Ga naar rangschikking op Frenoy',
+      frenoyweek: 'Ga naar weekoverzicht op Frenoy',
     },
     facts: require('./locales-nl-facts.js')
   },

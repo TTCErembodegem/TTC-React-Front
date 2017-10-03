@@ -35,6 +35,40 @@ export class FrenoyButton extends Component {
 }
 
 
+
+export class FrenoyWeekButton extends Component {
+  static contextTypes = PropTypes.contextTypes;
+  static propTypes = {
+    team: PropTypes.TeamModel.isRequired,
+    week: PropTypes.number.isRequired,
+    className: PropTypes.string,
+    style: PropTypes.object,
+  }
+
+  render() {
+    const style = getFrenoyColors(this.props.team.competition);
+    return (
+      <a
+        href={this.props.team.frenoy.getWeekUrl(this.props.week)}
+        target="_blank"
+        className={this.props.className}
+        style={Object.assign({display: 'inline-block'}, this.props.style)}
+      >
+        <button className="btn btn-default" style={{backgroundColor: style.bgColor}}>
+          <Icon
+            fa="fa fa-2x fa-calendar"
+            color={style.color}
+            tooltip={this.context.t('teamCalendar.frenoyweek')}
+          />
+        </button>
+      </a>
+    );
+  }
+}
+
+
+
+
 export class FrenoyWeekLink extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
