@@ -197,7 +197,7 @@ const OwnTeamTitle = ({match, withLinks}) => {
 
   const title = (
     <span>
-      {divisionRanking.position ? divisionRanking.position + '. ' : ''}
+      {divisionRanking.position ? <small>{divisionRanking.position + '. '}</small> : ''}
       {team.renderOwnTeamTitle()}
     </span>
   );

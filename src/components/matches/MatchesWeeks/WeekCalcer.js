@@ -5,6 +5,7 @@ export class WeekCalcer {
     this.includeFreeMatches = includeFreeMatches;
     this.matches = matches.sort((a, b) => a.date - b.date);
     this.lastWeek = this.calcLastWeek();
+    this.firstWeek = this.calcFirstWeek();
     this.currentWeek = currentWeek || this.calcCurrentWeek();
   }
 
@@ -33,6 +34,10 @@ export class WeekCalcer {
   calcLastWeek() {
     const lastWeekMatch = this.matches.last();
     return lastWeekMatch ? lastWeekMatch.week : 22;
+  }
+  calcFirstWeek() {
+    const firstWeekMatch = this.matches.first();
+    return firstWeekMatch ? firstWeekMatch.week : 1;
   }
 
   calcCurrentWeek() {

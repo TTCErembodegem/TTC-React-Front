@@ -39,20 +39,32 @@ export class TeamMatchesWeek extends Component {
   }
 
   render() {
-    const ownMatches = this.props.team.getMatches();
-    const weekCalcer = new WeekCalcer(ownMatches, this.state.currentWeek);
-
-    var otherMatches = this.props.readonlyMatches
-      .filter(m => m.week === weekCalcer.currentWeek)
+    const otherMatches = this.props.readonlyMatches
       .filter(m => m.competition === this.props.team.competition)
       .filter(m => m.frenoyDivisionId === this.props.team.frenoy.divisionId)
       .filter(m => m.shouldBePlayed);
+
+    const weekCalcer = new WeekCalcer(otherMatches, this.state.currentWeek);
+
+    const thisWeekMatches = otherMatches.filter(m => m.week === weekCalcer.currentWeek);
+
+    var prevWeekMatches = null;
+    if (!this.state.currentWeek && weekCalcer.currentWeek > weekCalcer.firstWeek) {
+      prevWeekMatches = otherMatches.filter(m => m.week === weekCalcer.currentWeek - 1);
+    }
 
     return (
       <div>
         <FrenoyWeekButton team={this.props.team} week={weekCalcer.currentWeek} className="pull-right" style={{marginRight: 10}} />
         <WeekTitle weekCalcer={weekCalcer} weekChange={weekDiff => this.setState({currentWeek: weekCalcer.currentWeek + weekDiff})} />
-        <OpponentMatches team={this.props.team} readonlyMatches={otherMatches} />
+        <OpponentMatches team={this.props.team} readonlyMatches={thisWeekMatches} />
+
+        {prevWeekMatches ? (
+          <div style={{marginTop: 50}}>
+            <WeekTitle weekCalcer={new WeekCalcer(otherMatches, weekCalcer.currentWeek - 1)} />
+            <OpponentMatches team={this.props.team} readonlyMatches={prevWeekMatches} />
+          </div>
+        ) : null}
       </div>
     )
   }

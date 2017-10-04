@@ -39,7 +39,7 @@ export class WeekTitle extends Component {
           {this.props.weekChange ? (
             <Icon
               fa="fa fa-arrow-left"
-              style={{marginRight: 10, visibility: weekCalcer.currentWeek > 1 ? '' : 'hidden'}}
+              style={{marginRight: 10, visibility: weekCalcer.currentWeek > weekCalcer.firstWeek ? '' : 'hidden'}}
               onClick={() => this.props.weekChange(-1)}
             />
           ) : null}

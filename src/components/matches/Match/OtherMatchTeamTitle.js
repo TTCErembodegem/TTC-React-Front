@@ -1,19 +1,27 @@
 import React, {Component} from 'react';
+import {DivisionRankingLabel} from '../controls/DivisionRankingLabel.js';
 
 export const OtherMatchTeamTitle = ({team, readonlyMatch, isHome}) => {
   const divisionRanking = team.getDivisionRanking(isHome ? readonlyMatch.home : readonlyMatch.away);
 
-  var teamTitle = null;
-  if (isHome && readonlyMatch.getClub('home')) {
-    teamTitle = readonlyMatch.getClub('home').name + ' ' + readonlyMatch.home.teamCode;
+  const homeClub = readonlyMatch.getClub('home');
+  const awayClub = readonlyMatch.getClub('away');
 
-  } else if (!isHome && readonlyMatch.getClub('away')) {
-    teamTitle = readonlyMatch.getClub('away').name + ' ' + readonlyMatch.away.teamCode;
+  var teamTitle = null;
+  if (isHome && homeClub) {
+    teamTitle = homeClub.name + ' ' + readonlyMatch.home.teamCode;
+
+  } else if (!isHome && awayClub) {
+    teamTitle = awayClub.name + ' ' + readonlyMatch.away.teamCode;
+  }
+
+  if (divisionRanking.isForfait) {
+    return <s>{teamTitle}</s>;
   }
 
   return (
     <span>
-      <small className="match-opponent-team">{divisionRanking.position ? divisionRanking.position + '. ' : ''}</small>
+      <DivisionRankingLabel divisionRanking={divisionRanking} />
       {teamTitle}
     </span>
   );
