@@ -50,7 +50,11 @@ export default class AdminDev extends React.Component {
 
     return (
       <div style={{padding: 5}}>
-        <div className="pull-right"><a href="http://ttc-tst-webapp.azurewebsites.net/">Goto test site</a></div>
+        <div className="pull-right">
+          <a href="http://ttc-tst-webapp.azurewebsites.net/">Goto test site</a>
+          <br />
+          <a href="http://ttc-erembodegem.be/tabtapi-test/" target="_blank">Goto TabT test site</a>
+        </div>
         <ButtonStack
           config={viewsConfig}
           small={false}
