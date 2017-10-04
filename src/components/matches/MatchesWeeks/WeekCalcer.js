@@ -36,7 +36,8 @@ export class WeekCalcer {
     return lastWeekMatch ? lastWeekMatch.week : 22;
   }
   calcFirstWeek() {
-    const firstWeekMatch = this.matches.first();
+    const firstWeek = this.matches.map(x => x.week).reduce((min, next) => Math.min(min, next), 22);
+    const firstWeekMatch = this.matches.find(x => x.week === firstWeek);
     return firstWeekMatch ? firstWeekMatch.week : 1;
   }
 
