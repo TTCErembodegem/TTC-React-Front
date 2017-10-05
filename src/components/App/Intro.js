@@ -55,6 +55,19 @@ export default class Intro extends Component {
       );
     }
 
+    const thnxEetfestijn = (
+      <div style={{marginTop: 25}}>
+        <em><Strike text="Weeral een geslaagd eetfestijn!" /></em>
+
+        Iedereen bedankt voor het helpen tijdens het eetfestijn,
+        zonder jullie ging het niet gelukt zijn!
+
+        <br /><br />
+
+        <strong>In 2018 gaat het eetfestijn door op zaterdag 22 september. Zet het alvast in jullie agenda!</strong>
+      </div>
+    );
+
     return (
       <div>
         {topSponsors}
@@ -62,6 +75,7 @@ export default class Intro extends Component {
           <Col sm={6} style={{verticalAlign: 'top'}}>
             <h1>{this.context.t('intro.title')}</h1>
             {this.context.t('intro.text', inClub)}
+            {thnxEetfestijn}
           </Col>
           <Col sm={6}>
             {!this.props.config.get('initialLoadCompleted') ? (
