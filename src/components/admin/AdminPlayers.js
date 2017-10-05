@@ -90,7 +90,8 @@ export default class AdminPlayers extends Component {
             config={viewsConfig}
             small={this.props.viewport.width < 550}
             activeView={this.state.filter}
-            onClick={newFilter => this.setState({filter: newFilter})} />
+            onClick={newFilter => this.setState({filter: newFilter})}
+          />
         </div>
         <br />
 

@@ -32,8 +32,6 @@ export class MatchesWeekEmail extends Component {
       return <EmailButton onClick={() => this.setState({mailFormOpen: !this.state.mailFormOpen})} />;
     }
 
-    const emails = this.props.players.toArray().filter(p => p.active && p.contact && p.contact.email).map(p => p.contact.email.trim());
-
     return (
       <div>
         <h1>{t('week.emailTitle')}</h1>
@@ -41,11 +39,6 @@ export class MatchesWeekEmail extends Component {
 
         <Button bsStyle="danger" onClick={() => this.props.emailFormation()}>{t('week.sendEmail')}</Button>
         <Button onClick={() => this.setState({mailFormOpen: false})} style={{marginLeft: 6}}>{t('common.cancel')}</Button>
-
-        <textarea
-          style={{width: 700, height: 500, float: 'left'}}
-          defaultValue={emails.join(';\n')}
-        />
       </div>
     );
   }
