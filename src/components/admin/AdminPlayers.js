@@ -58,7 +58,7 @@ export default class AdminPlayers extends Component {
     case 'active':
     default:
       players = this.props.players;
-      if (this.state.filter) {
+      if (this.state.playerFilter) {
         players = players.filter(x => x.name.toLowerCase().includes(this.state.playerFilter));
       }
       playersContent = (
@@ -154,6 +154,15 @@ const ActivesTable = ({players, onEditPlayer, onUpdatePlayer}) => (
           <td className="hidden-xs">{ply.security === 'Player' ? '' : ply.security}</td>
           <td>
             <EditButton onClick={() => onEditPlayer(ply)} style={{fontSize: 26}} />
+
+            <button className="btn btn-default" style={{marginLeft: 5}} onClick={() => {
+              ply.hasKey = !ply.hasKey;
+              onUpdatePlayer(ply, {activeChanged: true});
+            }}
+            >
+              <Icon fa="fa fa-key fa-2x" color={ply.hasKey ? 'green' : undefined} />
+            </button>
+
             {!ply.vttl && !ply.sporta ? (
               <button className="btn btn-default" style={{marginLeft: 10}} onClick={() => {
                 ply.active = false;

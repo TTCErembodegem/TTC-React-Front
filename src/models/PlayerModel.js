@@ -12,6 +12,7 @@ export default class PlayerModel {
     this.style = json.style || {}; // playerId, name, bestStroke
     this.quitYear = json.quitYear;
     this.security = json.security;
+    this.hasKey = json.hasKey;
   }
 
   getCompetition(competition) {
