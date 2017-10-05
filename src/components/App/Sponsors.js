@@ -31,9 +31,11 @@ export class BakkerijVanLierde extends Component {
     };
 
     return (
-      <Paper style={this.props.big ? {...topSponsorPaperStyle} : topSponsorsOnBottomPaperStyle}>
-        <Location loc={loc} t={this.context.t} />
-      </Paper>
+      <a href="https://www.facebook.com/BakkerijKarelVanLierde" target="_blank">
+        <Paper style={this.props.big ? {...topSponsorPaperStyle} : topSponsorsOnBottomPaperStyle}>
+          <Location loc={loc} t={this.context.t} />
+        </Paper>
+      </a>
     );
   }
 }
