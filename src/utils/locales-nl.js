@@ -199,7 +199,9 @@ export default {
       managerTypes: {
         Chairman: 'Voorzitter',
         Secretary: 'Secretaris',
-        Treasurer: 'Penningmeester'
+        Treasurer: 'Penningmeester',
+        Vttl: 'Competitie Vttl',
+        Sporta: 'Competitie Sporta',
       }
     },
     match: {
