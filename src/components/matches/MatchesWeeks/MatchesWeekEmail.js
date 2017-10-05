@@ -6,10 +6,11 @@ import {EmailButton} from '../../controls.js';
 import {WeekTitle} from './WeekTitle.js';
 import {WeekCalcer} from './WeekCalcer.js';
 
-@connect(state => ({user: state.user}), adminActions)
+@connect(state => ({user: state.user, players: state.players}), adminActions)
 export class MatchesWeekEmail extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
+    players: PropTypes.PlayerModelList.isRequired,
     emailFormation: PropTypes.func.isRequired,
     user: PropTypes.UserModel.isRequired,
     weekCalcer: PropTypes.instanceOf(WeekCalcer).isRequired,
@@ -31,7 +32,7 @@ export class MatchesWeekEmail extends Component {
       return <EmailButton onClick={() => this.setState({mailFormOpen: !this.state.mailFormOpen})} />;
     }
 
-    // TODO: need to launch an action that we want to take over the full screen :)
+    const emails = this.props.players.toArray().filter(p => p.active && p.contact && p.contact.email).map(p => p.contact.email.trim());
 
     return (
       <div>
@@ -40,6 +41,11 @@ export class MatchesWeekEmail extends Component {
 
         <Button bsStyle="danger" onClick={() => this.props.emailFormation()}>{t('week.sendEmail')}</Button>
         <Button onClick={() => this.setState({mailFormOpen: false})} style={{marginLeft: 6}}>{t('common.cancel')}</Button>
+
+        <textarea
+          style={{width: 700, height: 500, float: 'left'}}
+          defaultValue={emails.join(';\n')}
+        />
       </div>
     );
   }
