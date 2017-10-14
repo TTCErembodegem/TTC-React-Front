@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import PropTypes, { contextTypes } from '../PropTypes.js';
+import React, {Component} from 'react';
+import PropTypes, {contextTypes} from '../PropTypes.js';
 
-import { Card } from 'material-ui/Card';
+import {Card} from 'material-ui/Card';
 import PlayerImage from './PlayerImage.js';
-import { Email, Icon, Telephone } from '../controls.js';
-import { PlayerPlayingStyleForm } from "./PlayerPlayingStyle.js";
+import {Email, Icon, Telephone} from '../controls.js';
+import {PlayerPlayingStyleForm} from "./PlayerPlayingStyle.js";
 
 export default class PlayerCard extends Component {
   static contextTypes = PropTypes.contextTypes;

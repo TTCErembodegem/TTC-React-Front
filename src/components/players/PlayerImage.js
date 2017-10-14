@@ -1,5 +1,5 @@
-import React, { PropTypes, Component } from 'react';
-import { playerUtils } from '../../models/PlayerModel.js';
+import React, {PropTypes, Component} from 'react';
+import {playerUtils} from '../../models/PlayerModel.js';
 
 export default class PlayerImage extends Component {
   static propTypes = {

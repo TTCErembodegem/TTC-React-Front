@@ -1,14 +1,16 @@
-import React, { Component } from 'react';
-import PropTypes, { connect, storeUtil } from '../PropTypes.js';
+import React, {Component} from 'react';
+import PropTypes, {connect, storeUtil} from '../PropTypes.js';
 import PlayerCard from '../players/PlayerCard.js';
+import Panel from 'react-bootstrap/lib/Panel';
+import Image from 'react-bootstrap/lib/Image';
+import {Email, Icon, Telephone} from '../controls.js';
+import {playerUtils} from '../../models/PlayerModel.js';
 
-@connect(state => {
-  return {
-    players: state.players,
-    clubs: state.clubs,
-  };
-}
-)export default class Administration extends Component {
+@connect(state => ({
+  players: state.players,
+  clubs: state.clubs,
+}))
+export default class Administration extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     players: PropTypes.PlayerModelList.isRequired,
@@ -27,14 +29,36 @@ import PlayerCard from '../players/PlayerCard.js';
         <div className="row">
           {managers.sort((a, b) => a.sortOrder - b.sortOrder).map(manager => (
             <div className="col-lg-4 col-md-6" key={manager.playerId} style={{paddingBottom: 10}}>
-              <PlayerCard
-                id={manager.playerId}
-                name={manager.name}
-                contact={manager.contact}
-              >
+              <Panel header={(
+                  <span>
+                    <strong>{manager.name}</strong>
+                    <br />
+                    {manager.description === 'Default' ? <br /> : this.context.t('clubs.managerTypes.' + manager.description)}
+                  </span>
+                )}>
+
+
+                <div style={{textAlign: 'center', marginBottom: 15}}>
+                  <Image src={playerUtils.getImageUrl(manager.playerId)} circle />
+                </div>
+
+                <i className="fa fa-envelope" style={{marginRight: 8}} />
+                <Email email={manager.contact.email} />
                 <br />
-                <strong>{manager.description === 'Default' ? null : this.context.t('clubs.managerTypes.' + manager.description)}</strong>
-              </PlayerCard>
+
+                <i className="fa fa-phone" style={{marginRight: 8}} />
+                <Telephone player={manager} hideIcon />
+
+                {manager.contact.address ? (
+                  <div style={{marginTop: 10}}>
+                    <strong>{this.context.t('player.address')}</strong>
+                    <br />
+                    {manager.contact.address}
+                    <br />
+                    {manager.contact.city}
+                  </div>
+                ) : null}
+              </Panel>
             </div>
           ))}
         </div>
