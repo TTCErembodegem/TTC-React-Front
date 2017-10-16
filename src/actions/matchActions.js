@@ -23,6 +23,7 @@ function frenoySync(dispatch, m, forceSync = false) {
     return http.post('/matches/FrenoyMatchSync?forceSync=' + forceSync, {id: m.id})
       .then(function(newmatch) {
         dispatch(simpleLoaded(newmatch));
+        broadcastReload('match', newmatch.id);
       }, function(err) {
         console.error(err); // eslint-disable-line
       }
