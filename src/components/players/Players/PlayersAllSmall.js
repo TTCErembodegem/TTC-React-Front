@@ -1,6 +1,7 @@
 import React from 'react';
 import Table from 'react-bootstrap/lib/Table';
 import {Telephone, Email} from '../../controls.js';
+import cn from 'classnames';
 
 export const PlayersAllSmall = ({players, t}) => {
   return (
