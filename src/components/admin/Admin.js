@@ -8,6 +8,7 @@ import AdminDev from './AdminDev.js';
 import AdminPlayerLineup from './AdminPlayerLineup.js';
 import ProfilePhotoForm from '../users/ProfilePhotoForm.js';
 import {AdminEmail} from './AdminEmail.js';
+import {AdminMatches} from './AdminMatches.js';
 
 const tabEventKeys = keyMirror({
   players: '',
@@ -15,6 +16,7 @@ const tabEventKeys = keyMirror({
   formation: '',
   pictures: '',
   emails: '',
+  matches: '',
   dev: '',
 });
 
@@ -59,6 +61,8 @@ export default class Admin extends Component {
       return <AdminEmail />;
     case tabEventKeys.dev:
       return <AdminDev />;
+    case tabEventKeys.matches:
+      return <AdminMatches />;
     }
   }
 
@@ -76,6 +80,9 @@ export default class Admin extends Component {
     }, {
       key: tabEventKeys.formation,
       title: 'Opstellingen',
+    }, {
+      key: tabEventKeys.matches,
+      title: 'Matches',
     }, {
       key: tabEventKeys.pictures,
       title: 'Foto\'s',

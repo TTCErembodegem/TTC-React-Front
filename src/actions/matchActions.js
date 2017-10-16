@@ -17,10 +17,10 @@ export function simpleLoaded(data) {
 
 const shouldSync = match => !match.isSyncedWithFrenoy && moment().isAfter(match.date) && match.shouldBePlayed;
 
-function frenoySync(dispatch, m) {
-  if (shouldSync(m)) {
+function frenoySync(dispatch, m, forceSync = false) {
+  if (forceSync || shouldSync(m)) {
     // Non played matches date is 0001-01-01T00:00:00
-    return http.post('/matches/FrenoyMatchSync', {id: m.id})
+    return http.post('/matches/FrenoyMatchSync?forceSync=' + forceSync, {id: m.id})
       .then(function(newmatch) {
         dispatch(simpleLoaded(newmatch));
       }, function(err) {
@@ -43,6 +43,10 @@ function frenoyReadOnlyMatchSync(match) {
       );
     }
   }
+}
+
+export function forceFrenoySync(matchId) {
+  return dispatch => frenoySync(dispatch, {id: matchId}, true);
 }
 
 export function loaded(data, dispatch) {
