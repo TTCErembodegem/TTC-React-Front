@@ -3,6 +3,7 @@ import PropTypes from '../../PropTypes.js';
 import http from '../../../utils/httpClient.js';
 import Table from 'react-bootstrap/lib/Table';
 import {ExcelButton} from '../../controls.js';
+import {FrenoyWeekLink} from '../../controls.js';
 
 export default class Scoresheet extends Component {
   static propTypes = {
@@ -28,7 +29,7 @@ export default class Scoresheet extends Component {
         <Table condensed className="match-card-tab-table">
           <thead>
             <tr>
-              <th colSpan={2}>{this.props.match.frenoyMatchId}</th>
+              <th colSpan={2}><FrenoyWeekLink match={this.props.match} /></th>
               <th>{this.props.t('comp.sporta.uniqueIndex')}</th>
               <th>{this.props.t('comp.ranking')}</th>
               <th>
