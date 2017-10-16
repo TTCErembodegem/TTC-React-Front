@@ -379,15 +379,14 @@ const ReadOnlyMatchPlayers = ({match, t}) => {
   const players = match.getPlayerFormation();
   return (
     <div style={{marginBottom: 4, marginTop: -5}}>
-      {match.block && !match.isSyncedWithFrenoy ? <MatchBlockIcon match={match} t={t} /> : null}
       {players.map(plyInfo => <PlayerCompetitionBadge plyInfo={plyInfo} competition={match.competition} style={{marginBottom: 4, marginRight: 5}} key={plyInfo.player.id} />)}
     </div>
   );
 }
 
-const MatchBlockIcon = ({match, t}) => (
-  <Icon fa="fa fa-anchor" title={t('match.block.' + match.block)} style={{marginRight: 8}} color={match.block !== 'Major' ? 'gray' : null} />
-);
+// const MatchBlockIcon = ({match, t}) => (
+//   <Icon fa="fa fa-anchor" title={t('match.block.' + match.block)} style={{marginRight: 8}} color={match.block !== 'Major' ? 'gray' : null} />
+// );
 
 
 var CommentForm = ({model, onUpdate, t}) => {
