@@ -31,25 +31,57 @@
 }
 
 
+.btn-Vttl {
+  color: white;
+  background-color: #3A5CAA;
+}
+.btn-Vttl:hover {
+  color: white;
+  background-color: #314e91;
+  /*border-bottom: 5px solid #0D255D;*/
+}
 
+.btn-Sporta {
+  color: black;
+  background-color: #9ACA66;
+}
+.btn-Sporta:hover {
+  color: black;
+  background-color: #89c14d;
+  /*border-bottom: 5px solid #EEFF33;*/
+}
 
 .match-lost {
   background-color: #FF5144;
 }
+.match-lost:hover {
+  background-color: #ff3122;
+}
+
 
 .match-won {
   background-color: #6BCBFF;
 }
+.match-won:hover {
+  background-color: #49bfff;
+}
+
 
 .match-draw {
   background-color: #FF9E4F;
+}
+.match-draw:hover {
+  background-color: #ff8b2d;
 }
 
 .match-opponent-team {
   color: #707070;
 }
 
-
+.label-info.clickable:hover,
+.label-info.clickable:focus {
+  background-color: #31b0d5;
+}
 
 
 

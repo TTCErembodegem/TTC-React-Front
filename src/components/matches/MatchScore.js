@@ -17,9 +17,7 @@ function getClassName(isHomeMatch, home, out) {
   return won ? 'match-won' : 'match-lost';
 }
 
-@connect(state => ({
-  config: state.config
-}), {setSetting})
+@connect(state => ({config: state.config}), {setSetting})
 export default class MatchScore extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
@@ -83,7 +81,7 @@ export default class MatchScore extends Component {
     const classColor = match.isDerby ? 'match-won' : getClassName(match.isHomeMatch, score.home, score.out);
     return (
       <span
-        className={cn('label label-as-badge', classColor, this.state.isUpdated ? 'faa-tada animated' : '')}
+        className={cn('label label-as-badge', classColor, {'faa-tada animated': this.state.isUpdated})}
         style={this.props.style}>
 
         <span>
