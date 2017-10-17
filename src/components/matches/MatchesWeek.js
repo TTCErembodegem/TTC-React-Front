@@ -26,25 +26,19 @@ export default class MatchesWeek extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentWeek: 1,
-      initialWeekSet: false,
+      currentWeek: undefined,
       editMode: false,
     };
 
     const currentWeek = this.getCurrentWeek(props);
     if (currentWeek) {
-      this.state = Object.assign(this.state, currentWeek, {});
+      this.state = Object.assign(this.state, currentWeek);
     }
   }
 
   getCurrentWeek(props) {
-    if ((!this.state.initialWeekSet || props.params.tabKey !== this.state.currentWeek) && props.matches.size) {
-      const weekCalcer = new WeekCalcer(props.matches);
-      return {
-        currentWeek: props.params.tabKey ? parseInt(props.params.tabKey, 10) : weekCalcer.currentWeek,
-        lastWeek: weekCalcer.lastWeek,
-        initialWeekSet: true
-      };
+    if (props.params.tabKey && props.matches.size) {
+      return {currentWeek: parseInt(props.params.tabKey, 10)};
     }
   }
 
@@ -55,13 +49,13 @@ export default class MatchesWeek extends Component {
     }
   }
 
-  _onChangeWeek(weekDiff) {
+  _onChangeWeek(currentWeek, weekDiff) {
     const comp = this.props.params.comp;
     const compFilter = comp && comp !== 'all' ? '/' + this.props.params.comp : '';
-    browserHistory.push(this.context.t.route('matchesWeek') + '/' + (this.state.currentWeek + weekDiff) + compFilter);
+    browserHistory.push(this.context.t.route('matchesWeek') + '/' + (currentWeek + weekDiff) + compFilter);
   }
-  _onChangeCompetition(comp) {
-    browserHistory.push(this.context.t.route('matchesWeek') + '/' + this.state.currentWeek + (comp && comp !== 'all' ? '/' + comp : ''));
+  _onChangeCompetition(currentWeek, comp) {
+    browserHistory.push(this.context.t.route('matchesWeek') + '/' + currentWeek + (comp && comp !== 'all' ? '/' + comp : ''));
   }
 
   render() {
@@ -79,7 +73,7 @@ export default class MatchesWeek extends Component {
     }
 
     const viewsConfig = [
-      {key: 'all', text: this.context.t('players.all')},
+      {key: 'all', text: t('players.all')},
       {key: 'Vttl', text: 'Vttl'},
       {key: 'Sporta', text: 'Sporta'}
     ];
@@ -89,14 +83,14 @@ export default class MatchesWeek extends Component {
     const compFilter = this.props.params.comp || 'all';
     return (
       <div>
-        <WeekTitle weekCalcer={weekCalcer} weekChange={::this._onChangeWeek} />
+        <WeekTitle weekCalcer={weekCalcer} weekChange={this._onChangeWeek.bind(this, weekCalcer.currentWeek)} />
 
         <span className="button-bar-right">
           <ButtonStack
             config={viewsConfig}
             small={false}
             activeView={compFilter}
-            onClick={newCompFilter => this._onChangeCompetition(newCompFilter)}
+            onClick={newCompFilter => this._onChangeCompetition(weekCalcer.currentWeek, newCompFilter)}
           />
 
           {this.props.user.canManageTeams() && matches.some(m => !m.isSyncedWithFrenoy) ? (
