@@ -30,11 +30,11 @@ export class TeamMatchesWeek extends Component {
   }
 
   componentDidMount() {
-    this.props.getOpponentMatches(this.props.team);
+    this.props.getOpponentMatches(this.props.team.id);
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.team !== this.props.team) {
-      this.props.getOpponentMatches(nextProps.team);
+      this.props.getOpponentMatches(nextProps.team.id);
     }
   }
 

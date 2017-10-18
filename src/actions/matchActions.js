@@ -75,15 +75,16 @@ export function readOnlyLoaded(data) {
   };
 }
 
-export function getLastOpponentMatches(teamId, opponent) {
-  if (storeUtil.getConfig().get('GetOpponentMatches' + teamId + opponent.teamCode + opponent.clubId)) {
+export function getOpponentMatches(teamId) {
+  const key = 'GetOpponentMatches' + teamId;
+  if (storeUtil.getConfig().get(key)) {
     return {type: 'empty', payload: ''};
   }
 
   return dispatch => {
-    return http.get('/matches/GetOpponentMatches', {teamId, ...opponent})
+    return http.get('/matches/GetOpponentMatches', {teamId})
       .then(function(matches) {
-        dispatch(setSetting('GetOpponentMatches' + teamId + opponent.teamCode + opponent.clubId, true));
+        dispatch(setSetting(key, true));
 
         if (!matches || !matches.length) {
           return;
@@ -100,17 +101,6 @@ export function getLastOpponentMatches(teamId, opponent) {
         console.log('GetOpponentMatches!', err); // eslint-disable-line
       }
     );
-  };
-}
-
-
-export function getOpponentMatches(team) {
-  return dispatch => {
-    var p = Promise.resolve();
-    team.opponents.forEach(opponent => {
-      p = p.then(() => dispatch(getLastOpponentMatches(team.id, opponent)));
-    });
-    return p;
   };
 }
 

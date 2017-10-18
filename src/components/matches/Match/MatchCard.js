@@ -46,7 +46,7 @@ export default class MatchCard extends Component {
     user: PropTypes.UserModel.isRequired,
     readonlyMatches: PropTypes.object.isRequired,
     viewport: PropTypes.viewport,
-    getLastOpponentMatches: PropTypes.func.isRequired,
+    getOpponentMatches: PropTypes.func.isRequired,
     setSetting: PropTypes.func.isRequired,
 
     match: PropTypes.MatchModel.isRequired,
@@ -74,7 +74,7 @@ export default class MatchCard extends Component {
   }
 
   componentDidMount() {
-    this.props.getLastOpponentMatches(this.props.match.teamId, this.props.match.opponent);
+    this.props.getOpponentMatches(this.props.match.teamId);
   }
 
   render() {
