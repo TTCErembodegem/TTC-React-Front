@@ -27,8 +27,8 @@ export default class PlayerImage extends Component {
     const align = this.props.center ? 'center' : undefined;
     if (!this.state.isLoaded) {
       return (
-        <div style={{textAlign: align, marginTop: 10, opacity: 0.4}}>
-          <span className="fa-stack fa-4x">
+        <div style={{textAlign: align, marginTop: 10, opacity: 0.4, height: 189}}>
+          <span className="fa-stack fa-5x">
             <i className="fa fa-camera fa-stack-1x" />
             <i className="fa fa-ban fa-stack-2x text-danger" />
           </span>

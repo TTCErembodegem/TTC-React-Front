@@ -1,21 +1,24 @@
 import React, {Component} from 'react';
-import PropTypes from '../PropTypes.js';
+import PropTypes, {connect} from '../PropTypes.js';
 
 import Panel from 'react-bootstrap/lib/Panel';
 import PlayerImage from './PlayerImage.js';
 import {Email, Icon, Telephone, PlayerAddress} from '../controls.js';
 import {PlayerPlayingStyleForm} from './PlayerPlayingStyle.js';
 
+@connect(state => ({user: state.user}))
 export default class PlayerCard extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
+    user: PropTypes.UserModel.isRequired,
     player: PropTypes.PlayerModel.isRequired,
   };
 
   render() {
     const {player} = this.props;
+    const loggedIn = this.props.user.playerId;
     return (
-      <Panel style={{height: 440}} header={(
+      <Panel style={{height: loggedIn ? 440 : 300}} header={(
         <div style={{height: 40}}>
           <div style={{float: 'left'}}>
             <strong>{player.name}</strong>
