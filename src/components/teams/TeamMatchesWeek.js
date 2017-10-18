@@ -48,6 +48,8 @@ export class TeamMatchesWeek extends Component {
 
     var prevWeekMatches = null;
     if (!this.state.currentWeek && weekCalcer.currentWeek > weekCalcer.firstWeek) {
+      // TODO: Should calculate NEXT and PREVIOUS matches
+      // --> At this point in the week, the match can already be played
       const prevWeekCalcer = new WeekCalcer(otherMatches, weekCalcer.currentWeek - 1);
       prevWeekMatches = prevWeekCalcer.getMatches();
     }
