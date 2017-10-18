@@ -1,8 +1,8 @@
 import 'babel-core/polyfill';
 
 import React from 'react';
-import { render } from 'react-dom';
-import { Provider } from 'react-redux';
+import {render} from 'react-dom';
+import {Provider} from 'react-redux';
 import Routes from './routes.js';
 import store from './store.js';
 import Promise from 'bluebird';
@@ -13,8 +13,6 @@ Promise.config({
   cancellation: true,
   //monitoring: true
 });
-
-// TODO: change webpack config to add sourcemaps
 
 //import FastClick from 'fastclick';
 // Make taps on links and buttons work fast on mobiles

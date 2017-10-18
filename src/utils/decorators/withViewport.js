@@ -1,6 +1,6 @@
-import React, { Component } from 'react'; // eslint-disable-line no-unused-vars
+import React, {Component} from 'react'; // eslint-disable-line no-unused-vars
 import EventEmitter from 'eventemitter3';
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 
 let EE;
 let viewport = {width: 1366, height: 768}; // Default size for server-side rendering

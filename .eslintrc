@@ -1,7 +1,7 @@
 {
   "parser": "babel-eslint",
   "extends": "eslint:recommended",
-  "ecmaFeatures": {
+  "parserOptions": {
     "arrowFunctions": true,
     "binaryLiterals": true,
     "blockBindings": true,
@@ -44,6 +44,7 @@
   },
 
   "rules": {
+    "object-curly-spacing": ["error", "never"],
     "semi": [2, "always"],
     "comma-dangle": 0,
     "quotes": [1, "single"],
@@ -101,7 +102,6 @@
     "react/prop-types": 2,
     "react/react-in-jsx-scope": 0,
     "react/self-closing-comp": 2,
-    "react/sort-comp": 0,
-    "react/wrap-multilines": 1
+    "react/sort-comp": 0
   }
 }
