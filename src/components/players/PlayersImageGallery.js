@@ -30,7 +30,7 @@ const gridStyles = {
 const editStyleIcon = {
   position: 'absolute',
   top: 5,
-  right: 5,
+  right: 15,
   color: '#d3d3d3',
 };
 
@@ -86,7 +86,7 @@ export default class PlayersImageGallery extends Component {
                   subtitle={this.props.subtitle ? this.props.subtitle(ply) : <PlayerPlayingStyle ply={ply} allowEdit={false} />}
                 >
                   <PlayerPlayingStyleForm player={ply} iconStyle="edit-icon" style={editStyleIcon} />
-                  <PlayerImage playerId={ply.id} />
+                  <PlayerImage playerId={ply.id} circle={false} />
                 </GridTile>
               );
             })}

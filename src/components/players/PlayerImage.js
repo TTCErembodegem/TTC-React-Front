@@ -5,9 +5,11 @@ export default class PlayerImage extends Component {
   static propTypes = {
     playerId: PropTypes.number.isRequired,
     center: PropTypes.bool,
+    circle: PropTypes.bool,
   }
   static defaultProps = {
     center: true,
+    circle: true,
   };
 
   constructor(props) {
@@ -38,7 +40,7 @@ export default class PlayerImage extends Component {
 
     return (
       <div style={{textAlign: align}}>
-        <img src={this.state.img} className="img-circle" style={{height: 200}} />
+        <img src={this.state.img} className={this.props.circle ? 'img-circle' : 'img-rounded'} style={{height: 200}} />
       </div>
     );
   }
