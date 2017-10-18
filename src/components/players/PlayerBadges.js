@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from '../PropTypes.js';
-import {getPlayingStatusClass, getPlayingStatusColor} from '../../models/PlayerModel.js';
+import {getPlayingStatusClass} from '../../models/PlayerModel.js';
 
 import {Icon, CommentIcon} from '../controls/Icon.js';
 

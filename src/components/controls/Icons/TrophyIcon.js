@@ -1,7 +1,11 @@
-import React, {PropTypes, Component} from 'react';
-import cn from 'classnames';
+import React, {PropTypes} from 'react';
 import {Icon} from './Icon.js';
 
-export const TrophyIcon = ({style, color}) => (
-  <Icon fa="fa fa-trophy" color={color || '#FCB514'} style={style} />
+export const TrophyIcon = ({style = undefined, color = '#FCB514'}) => (
+  <Icon fa="fa fa-trophy" color={color} style={style} />
 );
+
+TrophyIcon.propTypes = {
+  style: PropTypes.object,
+  color: PropTypes.string,
+};

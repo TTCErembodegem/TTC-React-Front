@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import PropTypes, { withViewport, browserHistory } from '../PropTypes.js';
+import React, {Component} from 'react';
+import PropTypes, {withViewport, browserHistory} from '../PropTypes.js';
 
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';

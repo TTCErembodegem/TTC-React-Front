@@ -1,7 +1,5 @@
-import React, {Component} from 'react';
-import PropTypes, {connect} from '../../PropTypes.js';
-import cn from 'classnames';
-import Button from 'react-bootstrap/lib/Button';
+import React from 'react';
+import PropTypes from '../../PropTypes.js';
 import {Icon} from '../Icon.js';
 
 export const SaveButton = ({onClick, title, style}) => (
@@ -9,3 +7,9 @@ export const SaveButton = ({onClick, title, style}) => (
     <Icon fa="fa fa-floppy-o" />
   </button>
 );
+
+SaveButton.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  style: PropTypes.object,
+};

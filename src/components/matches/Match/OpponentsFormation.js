@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import PropTypes, { withViewport} from '../../PropTypes.js';
+import React, {Component} from 'react';
+import PropTypes, {withViewport} from '../../PropTypes.js';
 
-import { Icon } from '../../controls/Icon.js';
+import {Icon} from '../../controls/Icon.js';
 import Table from 'react-bootstrap/lib/Table';
-import { createFrenoyLinkByUniqueId } from '../../../models/PlayerModel.js';
+import {createFrenoyLinkByUniqueId} from '../../../models/PlayerModel.js';
 
 export const FrenoyLink = ({competition, uniqueIndex}) => {
   const frenoyLink = createFrenoyLinkByUniqueId(competition, uniqueIndex);
@@ -12,6 +12,13 @@ export const FrenoyLink = ({competition, uniqueIndex}) => {
   }
   return <a href={frenoyLink} target="_blank"><Icon fa="fa fa-search" /></a>;
 };
+
+FrenoyLink.propTypes = {
+  competition: PropTypes.oneOf(['Vttl', 'Sporta']).isRequired,
+  uniqueIndex: PropTypes.number.isRequired,
+};
+
+
 
 @withViewport
 export default class OpponentsFormation extends Component {

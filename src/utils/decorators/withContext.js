@@ -1,4 +1,4 @@
-import React, { PropTypes, Component } from 'react'; // eslint-disable-line no-unused-vars
+import React, {PropTypes, Component} from 'react'; // eslint-disable-line no-unused-vars
 import t from '../../locales.js';
 
 function withContext(ComposedComponent) {

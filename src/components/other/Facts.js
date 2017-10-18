@@ -1,6 +1,6 @@
 /* eslint-disable */
-import React, { Component } from 'react';
-import { contextTypes } from '../../utils/decorators/withContext.js';
+import React, {Component} from 'react';
+import {contextTypes} from '../../utils/decorators/withContext.js';
 
 import Accordion from 'react-bootstrap/lib/Accordion';
 import Panel from 'react-bootstrap/lib/Panel';

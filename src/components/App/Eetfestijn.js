@@ -7,7 +7,8 @@ const eetfesijnStyle = {
   margin: 'auto',
 };
 
-const eetfestijnGoogleMaps = "https://maps.google.com/maps?q=Botermelkstraat+63,+9300+Aalst&hl=en&ll=50.953115,4.061058&spn=0.009449,0.023475&sll=50.952442,4.062345&sspn=0.001188,0.002934&t=m&hnear=Botermelkstraat+63,+Aalst+9300+Aalst,+Oost-Vlaanderen,+Vlaams+Gewest,+Belgium&z=16";
+// eslint-disable-next-line
+const eetfestijnGoogleMaps = 'https://maps.google.com/maps?q=Botermelkstraat+63,+9300+Aalst&hl=en&ll=50.953115,4.061058&spn=0.009449,0.023475&sll=50.952442,4.062345&sspn=0.001188,0.002934&t=m&hnear=Botermelkstraat+63,+Aalst+9300+Aalst,+Oost-Vlaanderen,+Vlaams+Gewest,+Belgium&z=16';
 
 const eetfestijnSets = {
   date: 'Zaterdag 23 september 2017',
@@ -23,7 +24,7 @@ const eetfestijnSets = {
     price: '8,50'
   },
   support: {
-    price: "2,50"
+    price: '2,50'
   }
 };
 
@@ -32,12 +33,13 @@ export const Eetfestijn = () => {
     <Paper style={eetfesijnStyle}>
       <div id="eetfestijn">
         <h1 style={{fontSize: 26}}>
-        Eetfestijn TTC Erembodegem
-        <br />
-        {eetfestijnSets.date}
+          Eetfestijn TTC Erembodegem
+          <br />
+          {eetfestijnSets.date}
         </h1>
 
-        Van {eetfestijnSets.startHour} tot {eetfestijnSets.endHour} in zaal <a className="eetfestijn" href={eetfestijnGoogleMaps} target="_blank">Sint-Paulus</a>
+        Van {eetfestijnSets.startHour} tot {eetfestijnSets.endHour} in zaal
+        <a className="eetfestijn" href={eetfestijnGoogleMaps} target="_blank">Sint-Paulus</a>
         <br />
         Botermelkstraat 63, 9300 Aalst
 
@@ -62,5 +64,5 @@ export const Eetfestijn = () => {
         <span>Steunkaarten ook beschikbaar voor &euro;{eetfestijnSets.support.price}</span>
       </div>
     </Paper>
-  )
-}
+  );
+};

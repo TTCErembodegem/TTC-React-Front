@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes, {connect, storeUtil} from '../PropTypes.js';
-import PlayerCard from '../players/PlayerCard.js';
 import Panel from 'react-bootstrap/lib/Panel';
 import Image from 'react-bootstrap/lib/Image';
-import {Email, Icon, Telephone} from '../controls.js';
+import {Email, Telephone} from '../controls.js';
 import {playerUtils} from '../../models/PlayerModel.js';
 
 @connect(state => ({
@@ -30,13 +29,12 @@ export default class Administration extends Component {
           {managers.sort((a, b) => a.sortOrder - b.sortOrder).map(manager => (
             <div className="col-lg-4 col-md-6" key={manager.playerId} style={{paddingBottom: 10}}>
               <Panel header={(
-                  <span>
-                    <strong>{manager.name}</strong>
-                    <br />
-                    {manager.description === 'Default' ? <br /> : this.context.t('clubs.managerTypes.' + manager.description)}
-                  </span>
-                )}>
-
+                <span>
+                  <strong>{manager.name}</strong>
+                  <br />
+                  {manager.description === 'Default' ? <br /> : this.context.t('clubs.managerTypes.' + manager.description)}
+                </span>
+              )}>
 
                 <div style={{textAlign: 'center', marginBottom: 15}}>
                   <Image src={playerUtils.getImageUrl(manager.playerId)} circle />

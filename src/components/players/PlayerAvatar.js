@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from '../PropTypes.js';
 
-import { playerUtils } from '../../models/PlayerModel.js';
+import {playerUtils} from '../../models/PlayerModel.js';
 import Avatar from 'material-ui/Avatar';
 
 export default class PlayerAvatar extends Component {

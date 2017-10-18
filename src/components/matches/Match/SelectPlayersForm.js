@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import PropTypes, { connect } from '../../PropTypes.js';
+import React, {Component} from 'react';
+import PropTypes, {connect} from '../../PropTypes.js';
 
 import Avatar from 'material-ui/Avatar';
-import { List, ListItem } from 'material-ui/List';
+import {List, ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 
 import PlayerAutoComplete from '../../players/PlayerAutoComplete.js';
 import PlayerAvatar from '../../players/PlayerAvatar.js';
 
 import * as matchActions from '../../../actions/matchActions.js';
-import { getPlayingStatusColor } from '../../../models/PlayerModel.js';
+import {getPlayingStatusColor} from '../../../models/PlayerModel.js';
 
 @connect(state => {
   return {
@@ -126,3 +126,9 @@ class SelectablePlayerAvatar extends Component {
     return <Avatar backgroundColor={this.props.backgroundColor}>{player.alias[0]}</Avatar>;
   }
 }
+
+SelectableMatchPlayerAvatar.propTypes = {
+  match: PropTypes.MatchModel.isRequired,
+  player: PropTypes.PlayerModel.isRequired,
+  select: PropTypes.func.isRequired,
+};

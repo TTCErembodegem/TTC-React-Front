@@ -5,7 +5,7 @@ import moment from 'moment';
 import storeUtil from '../storeUtil.js';
 import PlayerModel from './PlayerModel.js';
 import {OwnClubId} from './ClubModel.js';
-import {sortPlayers, sortMappedPlayers} from './TeamModel.js';
+import {sortMappedPlayers} from './TeamModel.js';
 
 // TODO: Duplicted in backend. Should be in db.
 const defaultStartHour = 20;

@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import PropTypes, { connect } from '../PropTypes.js';
+import React, {Component} from 'react';
+import PropTypes, {connect} from '../PropTypes.js';
 
 import * as playerActions from '../../actions/playerActions.js';
-import { userRoles } from '../../models/UserModel.js';
+import {userRoles} from '../../models/UserModel.js';
 import PlayerModel from '../../models/PlayerModel.js';
 
 import SelectField from 'material-ui/SelectField';

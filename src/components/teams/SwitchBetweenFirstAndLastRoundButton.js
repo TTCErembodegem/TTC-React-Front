@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import PropTypes, {connect} from '../PropTypes.js';
+import React from 'react';
+import PropTypes from '../PropTypes.js';
 import {ButtonStack} from '../controls.js';
 
 export const SwitchBetweenFirstAndLastRoundButton = ({t, setState, matchesFilter}) => (
@@ -19,3 +19,9 @@ export const SwitchBetweenFirstAndLastRoundButton = ({t, setState, matchesFilter
     />
   </div>
 );
+
+SwitchBetweenFirstAndLastRoundButton.propTypes = {
+  t: PropTypes.func.isRequired,
+  setState: PropTypes.func.isRequired,
+  matchesFilter: PropTypes.string.isRequired,
+};

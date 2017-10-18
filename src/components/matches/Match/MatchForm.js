@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes, {connect} from '../../PropTypes.js';
 import * as matchActions from '../../../actions/matchActions.js';
+import _ from 'lodash';
 
 import MatchScore from '../MatchScore.js';
 import {Icon} from '../../controls/Icon.js';
@@ -38,33 +39,37 @@ export default class MatchForm extends Component {
     if (this.state.useInput) {
       return (
         <form>
-        <div className="form-group">
-          <input onChange={e => this.setState({inputScore: e.target.value})} placeholder="xx-xx" style={{width: 70, height: 30}} />
-          <button type="button" className="btn btn-default" onClick={() => this._onInputScoreUpdate()} style={{marginLeft: 7}}>
-            <Icon fa="fa fa-floppy-o" />
-          </button>
-        </div>
+          <div className="form-group">
+            <input onChange={e => this.setState({inputScore: e.target.value})} placeholder="xx-xx" style={{width: 70, height: 30}} />
+            <button type="button" className="btn btn-default" onClick={() => this._onInputScoreUpdate()} style={{marginLeft: 7}}>
+              <Icon fa="fa fa-floppy-o" />
+            </button>
+          </div>
         </form>
       );
     }
 
     return (
       <div style={{width: this.props.big ? 280 : 175}}>
-        {isEditable ? <MatchManipulation big={this.props.big}
-          style={{float: 'left', marginRight: 5}}
-          plusClick={this._onUpdateScore.bind(this, {matchId: match.id, home: score.home + 1, out: score.out})}
-          minClick={this._onUpdateScore.bind(this, {matchId: match.id, home: score.home - 1, out: score.out})} />
-        : null}
+        {isEditable ? (
+          <MatchManipulation big={this.props.big}
+            style={{float: 'left', marginRight: 5}}
+            plusClick={this._onUpdateScore.bind(this, {matchId: match.id, home: score.home + 1, out: score.out})}
+            minClick={this._onUpdateScore.bind(this, {matchId: match.id, home: score.home - 1, out: score.out})}
+          />
+        ) : null}
 
         <div style={{display: 'inline'}} onClick={() => this.setState({useInput: !this.state.useInput})}>
           <MatchScore match={match} forceDisplay={true} style={{fontSize: this.props.big ? 46 : 24}} />
         </div>
 
-        {isEditable ? <MatchManipulation big={this.props.big}
-          style={{float: 'right'}}
-          plusClick={this._onUpdateScore.bind(this, {matchId: match.id, home: score.home, out: score.out + 1})}
-          minClick={this._onUpdateScore.bind(this, {matchId: match.id, home: score.home, out: score.out - 1})} />
-        : null}
+        {isEditable ? (
+          <MatchManipulation big={this.props.big}
+            style={{float: 'right'}}
+            plusClick={this._onUpdateScore.bind(this, {matchId: match.id, home: score.home, out: score.out + 1})}
+            minClick={this._onUpdateScore.bind(this, {matchId: match.id, home: score.home, out: score.out - 1})}
+          />
+        ) : null}
 
       </div>
     );
@@ -96,3 +101,10 @@ const MatchManipulation = ({style, plusClick, minClick, big}) => (
     <div style={{verticalAlign: 'bottom'}}><Icon fa="fa fa-minus-circle fa-2x" onClick={minClick} /></div>
   </div>
 );
+
+MatchManipulation.propTypes = {
+  style: PropTypes.object,
+  plusClick: PropTypes.func.isRequired,
+  minClick: PropTypes.func.isRequired,
+  big: PropTypes.bool.isRequired,
+};

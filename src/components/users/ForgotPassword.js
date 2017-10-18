@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import PropTypes, { connect } from '../PropTypes.js';
+import React, {Component} from 'react';
+import PropTypes, {connect} from '../PropTypes.js';
 
 import * as loginActions from '../../actions/userActions.js';
-import { paperStyle } from './Login.js';
+import {paperStyle} from './Login.js';
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 
 import TextField from 'material-ui/TextField';

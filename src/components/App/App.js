@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import PropTypes, { connect, withViewport, withContext, withStyles } from '../PropTypes.js';
+import React, {Component} from 'react';
+import PropTypes, {connect, withViewport, withContext, withStyles} from '../PropTypes.js';
 
 import Header from '../skeleton/Header';
 import Footer from '../skeleton/Footer';
 import Intro from './Intro.js';
 import Grid from 'react-bootstrap/lib/Grid';
-import { FullScreenSpinner } from '../controls.js';
+import {FullScreenSpinner} from '../controls.js';
 
 import Snackbar from 'material-ui/Snackbar';
 import * as configActions from '../../actions/configActions.js';
@@ -56,7 +56,7 @@ export default class App extends Component {
                   <Intro />
                 }
               </Grid>
-              <div className="push"></div>
+              <div className="push" />
             </div>
             {!isBigTodayMatches ? <Footer /> : null}
             <Snackbar

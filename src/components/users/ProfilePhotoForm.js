@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import PropTypes, { connect, withContext, storeUtil } from '../PropTypes.js';
-import { uploadPlayer } from '../../actions/userActions.js';
+import React, {Component} from 'react';
+import PropTypes, {connect, withContext, storeUtil} from '../PropTypes.js';
+import {uploadPlayer} from '../../actions/userActions.js';
 
 import FlatButton from 'material-ui/FlatButton';
-import ImageEditor from '../controls/image/ImageEditor.js';
-import { playerUtils } from '../../models/PlayerModel.js';
+import {ImageEditor} from '../controls/image/ImageEditor.js';
+import {playerUtils} from '../../models/PlayerModel.js';
 import ImageDropzone from '../controls/image/ImageDropzone.js';
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 import PlayerImage from '../players/PlayerImage.js';

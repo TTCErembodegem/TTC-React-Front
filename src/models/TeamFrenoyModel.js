@@ -33,8 +33,10 @@ export class TeamFrenoyModel {
   getWeekUrl(weekName) {
     weekName = weekName < 10 ? '0' + weekName : weekName;
     if (this.teamCompetition === 'Vttl') {
+      // eslint-disable-next-line
       return `https://competitie.vttl.be/index.php?menu=4&season=${this.seasonId}&province=5&club_id=282&div_id=${this.linkId}&modif=0&week_name=${weekName}`;
     } else {
+      // eslint-disable-next-line
       return `https://ttonline.sporta.be/competitie/index.php?menu=4&season=${this.seasonId}&province=4&club_id=37&div_id=${this.linkId}&modif=0&week_name=${weekName}`;
     }
   }

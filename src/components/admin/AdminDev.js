@@ -73,7 +73,7 @@ class AdminStateDisplayer extends Component {
   }
   constructor(props) {
     super(props);
-    this.state = {filter: ''}
+    this.state = {filter: ''};
   }
 
   render() {
@@ -87,7 +87,7 @@ class AdminStateDisplayer extends Component {
                 return true;
               }
             }
-            if (entry[key] == this.state.filter) {
+            if (entry[key] === this.state.filter) {
               return true;
             }
           }

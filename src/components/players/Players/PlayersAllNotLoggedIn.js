@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from '../../PropTypes.js';
 import Table from 'react-bootstrap/lib/Table';
 import {PlayerAllCompetitions} from '../PlayerCard.js';
 import {PlayerPlayingStyle} from '../PlayerPlayingStyle.js';
@@ -32,4 +33,9 @@ export const PlayersAllNotLoggedIn = ({players, t}) => {
       </tbody>
     </Table>
   );
+};
+
+PlayersAllNotLoggedIn.propTypes = {
+  t: PropTypes.func.isRequired,
+  players: PropTypes.PlayerModelList.isRequired,
 };

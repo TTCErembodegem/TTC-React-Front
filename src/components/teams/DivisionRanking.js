@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from '../PropTypes.js';
 import Table from 'react-bootstrap/lib/Table';
 import cn from 'classnames';
 import {OwnClubId} from '../../models/ClubModel.js';
@@ -35,4 +36,9 @@ export const DivisionRanking = ({team, t}) => {
       </tbody>
     </Table>
   );
+};
+
+DivisionRanking.propTypes = {
+  t: PropTypes.func.isRequired,
+  team: PropTypes.TeamModel.isRequired,
 };

@@ -51,9 +51,9 @@ export class MatchOtherRoundButton extends Component {
       .filter(match => match.id !== this.props.match.id);
 
     const firstRoundMatchInfo = matches.find(match => (
-        (match.home.clubId === OwnClubId && match.home.teamCode === this.props.match.getTeam().teamCode) ||
-        (match.away.clubId === OwnClubId && match.away.teamCode === this.props.match.getTeam().teamCode)
-      ));
+      (match.home.clubId === OwnClubId && match.home.teamCode === this.props.match.getTeam().teamCode) ||
+      (match.away.clubId === OwnClubId && match.away.teamCode === this.props.match.getTeam().teamCode)
+    ));
 
     const firstRoundMatch = firstRoundMatchInfo ? storeUtil.getMatch(firstRoundMatchInfo.id) : null;
     if (!firstRoundMatch) {

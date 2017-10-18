@@ -3,7 +3,6 @@ import request from 'superagent-bluebird-promise';
 import querystring from 'querystring';
 import assert from 'assert';
 import moment from 'moment';
-import t from '../locales.js';
 
 const LogRequestTimes = false;
 
@@ -37,20 +36,16 @@ var HttpClient = {
         console.time(fullUrl); // eslint-disable-line
       }
       return null;
-    })
-    .then(() => request
+    }).then(() => request
       .get(getUrl(path))
       .query(qs)
       .use(bearer)
       .accept('application/json')
-    )
-    .tap(() => {
+    ).tap(() => {
       if (LogRequestTimes) {
         console.timeEnd(fullUrl); // eslint-disable-line
       }
-    })
-    .then(res => res.body)
-    .catch(err => {
+    }).then(res => res.body, err => {
       if (err.status === 408) {
         // 408 Request Timeout: Usually mysql_max_connections = retry
         return Promise.delay(300).then(() => HttpClient.get(path, qs));
@@ -66,21 +61,17 @@ var HttpClient = {
         console.time(fullUrl); // eslint-disable-line
       }
       return null;
-    })
-    .then(() => request
+    }).then(() => request
       .post(getUrl(url))
       .send(data)
       .use(bearer)
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
-    )
-    .tap(() => {
+    ).tap(() => {
       if (LogRequestTimes) {
         console.timeEnd(fullUrl); // eslint-disable-line
       }
-    })
-    .then(res => res.body)
-    .catch(err => {
+    }).then(res => res.body, err => {
       if (err.status === 408) {
         // 408 Request Timeout: Usually mysql_max_connections = retry
         return Promise.delay(300).then(() => HttpClient.post(url, data));
@@ -127,7 +118,7 @@ var HttpClient = {
   })
 };
 
-function b64ToBlob(b64Data, contentType = "", sliceSize = 512) {
+function b64ToBlob(b64Data, contentType = '', sliceSize = 512) {
   contentType = contentType || 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 
   const byteCharacters = atob(b64Data);
@@ -170,8 +161,8 @@ function downloadExcel(respBody, fileName, addTimestampToFileName = false) {
 HttpClient.download.playersExcel = function(fileName) {
   return HttpClient.download('/players/ExcelExport').then(res => {
     downloadExcel(res.body, fileName, true);
-  })
-}
+  });
+};
 
 //link.href = 'data:application/octet-stream;base64,' + res.body;
 // --> Does not work in IE
@@ -198,7 +189,7 @@ HttpClient.download.playersExcel = function(fileName) {
 HttpClient.download.teamsExcel = function(fileName) {
   return HttpClient.download('/teams/ExcelExport').then(res => {
     downloadExcel(res.body, fileName, true);
-  })
-}
+  });
+};
 
 export default HttpClient;

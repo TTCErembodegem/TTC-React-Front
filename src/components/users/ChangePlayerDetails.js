@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import PropTypes, { connect } from '../PropTypes.js';
+import React, {Component} from 'react';
+import PropTypes, {connect} from '../PropTypes.js';
 
 import * as playerActions from '../../actions/playerActions.js';
 

@@ -29,8 +29,8 @@ export default class PlayerImage extends Component {
       return (
         <div style={{textAlign: align, marginTop: 10, opacity: 0.4}}>
           <span className="fa-stack fa-4x">
-            <i className="fa fa-camera fa-stack-1x"></i>
-            <i className="fa fa-ban fa-stack-2x text-danger"></i>
+            <i className="fa fa-camera fa-stack-1x" />
+            <i className="fa fa-ban fa-stack-2x text-danger" />
           </span>
         </div>
       );

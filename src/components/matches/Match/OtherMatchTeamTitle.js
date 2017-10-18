@@ -1,4 +1,5 @@
-import React, {Component} from 'react';
+import React from 'react';
+import PropTypes from '../../PropTypes.js';
 import {DivisionRankingLabel} from '../controls/DivisionRankingLabel.js';
 
 export const OtherMatchTeamTitle = ({team, readonlyMatch, isHome}) => {
@@ -25,4 +26,10 @@ export const OtherMatchTeamTitle = ({team, readonlyMatch, isHome}) => {
       {teamTitle}
     </span>
   );
+};
+
+OtherMatchTeamTitle.propTypes = {
+  team: PropTypes.TeamModel.isRequired,
+  readonlyMatch: PropTypes.MatchModel.isRequired,
+  isHome: PropTypes.bool.isRequired,
 };

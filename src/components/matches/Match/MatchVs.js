@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PropTypes, {browserHistory} from '../../PropTypes.js';
+import PropTypes from '../../PropTypes.js';
 import cn from 'classnames';
 import {Icon} from '../../controls/Icon.js';
 import {browseTo} from '../../../routes.js';
@@ -28,7 +28,7 @@ export default class MatchVs extends Component {
         <DivisionRankingLabel divisionRanking={divisionRanking} />
         {match.renderOpponentTitle()}
       </span>
-    )
+    );
 
     if (divisionRanking.isForfait) {
       them = <s>{them}</s>;

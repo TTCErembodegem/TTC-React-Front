@@ -1,15 +1,13 @@
 import React, {Component} from 'react';
-import PropTypes, {connect, contextTypes, withContext, storeUtil} from '../PropTypes.js';
+import PropTypes, {connect, withContext, storeUtil} from '../PropTypes.js';
 
 import * as playerActions from '../../actions/playerActions.js';
 
-import {GridList, GridTile} from 'material-ui/GridList';
 import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
-import Paper from 'material-ui/Paper';
 
-import {Icon, Telephone, EditIcon} from '../controls.js';
+import {EditIcon} from '../controls.js';
 import PlayerAutoComplete from './PlayerAutoComplete.js';
 import PlayerStyleAutocomplete from './PlayerStyleAutocomplete.js';
 import PlayerAvatar from './PlayerAvatar.js';
@@ -24,6 +22,11 @@ export const PlayerPlayingStyle = ({ply, allowEdit = true}) => (
     <small>{ply.style.bestStroke}</small>
   </span>
 );
+
+PlayerPlayingStyle.propTypes = {
+  ply: PropTypes.object.isRequired,
+  allowEdit: PropTypes.bool,
+};
 
 
 

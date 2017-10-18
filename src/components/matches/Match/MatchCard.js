@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import PropTypes, {connect, withViewport, keyMirror, storeUtil} from '../../PropTypes.js';
 
-import {OwnClubId} from '../../../models/ClubModel.js';
 import * as matchActions from '../../../actions/matchActions.js';
 import {setSetting} from '../../../actions/configActions.js';
 
-import {Icon, Spinner, TabbedContainer, CommentIcon, EditIcon} from '../../controls.js';
+import {Spinner, TabbedContainer, CommentIcon, EditIcon} from '../../controls.js';
 import {CardText} from 'material-ui/Card';
 
 import MatchCardHeader, {BigMatchCardHeader} from './MatchCardHeader.js';
@@ -65,7 +64,7 @@ export default class MatchCard extends Component {
 
   constructor(props) {
     if (props.small) { // TODO: remove this if small prop is never passed (doesn't seem to be the case...)
-      console.error('passed props.small to MatchCard');
+      console.error('passed props.small to MatchCard'); // eslint-disable-line
     }
     super(props);
     this.state = {
@@ -230,7 +229,7 @@ export default class MatchCard extends Component {
     const team = match.getTeam();
 
     if (match.isSyncedWithFrenoy) {
-      return <MatchPlayerResults match={match} team={match.getTeam()} t={this.context.t} />;
+      return <MatchPlayerResults match={match} t={this.context.t} />;
     }
 
     const playingPlayers = match.getPlayerFormation('onlyFinal').map(x => x.player);

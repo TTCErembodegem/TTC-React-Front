@@ -9,7 +9,7 @@ if (typeof document !== 'undefined') {
   var MediumEditor = require('medium-editor');
 }
 
-module.exports = React.createClass({
+export const Editor = React.createClass({
   displayName: 'MediumEditor',
   propTypes: {
     text: React.PropTypes.string,

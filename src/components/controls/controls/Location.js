@@ -22,6 +22,11 @@ export const Location = ({loc, t}) => (
   </div>
 );
 
+Location.propTypes = {
+  t: PropTypes.func.isRequired,
+  loc: PropTypes.object.isRequired,
+};
+
 
 class Website extends Component {
   static propTypes = {

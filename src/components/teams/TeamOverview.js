@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from '../PropTypes.js';
 import moment from 'moment';
 import {OwnClubId} from '../../models/ClubModel.js';
 import cn from 'classnames';
@@ -9,7 +10,7 @@ import {PlayerCompetition} from '../controls.js';
 
 export const TeamOverview = ({team, user, small, t}) => {
   const today = moment().startOf('day');
-  const nextMatches = team.getMatches().sort((a, b) => a.date - b.date).filter(m => m.date.isSame(today, 'day') || m.date.isAfter(today, 'day')).take(2);
+  const nextMatches = team.getMatches().sort((a, b) => a.date - b.date).filter(m => m.date.isSame(today, 'day') || m.date.isAfter(today, 'day')).take(2); // eslint-disable-line
   const prevMatches = team.getMatches().sort((a, b) => b.date - a.date).filter(m => m.date.isBefore(today, 'day')).take(2);
   return (
     <div style={{paddingLeft: 5, paddingRight: 5}}>
@@ -19,15 +20,27 @@ export const TeamOverview = ({team, user, small, t}) => {
       <TeamOverviewPlayers team={team} t={t} user={user} />
     </div>
   );
-}
+};
+
+TeamOverview.propTypes = {
+  team: PropTypes.TeamModel.isRequired,
+  user: PropTypes.UserModel.isRequired,
+  small: PropTypes.bool.isRequired,
+  t: PropTypes.func.isRequired,
+};
 
 class TeamOverviewRanking extends Component {
+  static contextTypes = PropTypes.contextTypes;
+  static propTypes = {
+    team: PropTypes.TeamModel.isRequired,
+    small: PropTypes.bool.isRequired,
+  }
   constructor(props) {
     super(props);
     this.state = {showAll: !props.small};
   }
   render() {
-    const {team, small, t} = this.props;
+    const {team, small} = this.props;
     var ranking = team.ranking;
 
     if (ranking.length === 0) {
@@ -36,12 +49,11 @@ class TeamOverviewRanking extends Component {
 
     if (small) {
       const ownTeamIndex = team.ranking.findIndex(r => r.clubId === OwnClubId);
-      const lastTeamToShow = Math.min(ownTeamIndex + 3, team.ranking.length);
       ranking = team.ranking.slice(Math.max(ownTeamIndex - 2, 0), ownTeamIndex + 3);
     }
     return (
       <div>
-        <h3>{t('teamCalendar.view.ranking')}</h3>
+        <h3>{this.context.t('teamCalendar.view.ranking')}</h3>
         {ranking.map(teamRanking => {
           const isOwnClub = teamRanking.clubId === OwnClubId;
           const points = isOwnClub ? teamRanking.points : `(${teamRanking.points})`;
@@ -75,7 +87,15 @@ const TeamOverviewMatches = ({matches, team, title}) => {
       <MatchesTable matches={matches} allowOpponentOnly team={team} />
     </div>
   );
-}
+};
+
+TeamOverviewMatches.propTypes = {
+  matches: PropTypes.MatchModelList.isRequired,
+  team: PropTypes.TeamModel.isRequired,
+  title: PropTypes.string.isRequired,
+};
+
+
 
 const TeamOverviewPlayers = ({team, user, t}) => {
   const stats = team.getPlayerStats();
@@ -115,7 +135,15 @@ const TeamOverviewPlayers = ({team, user, t}) => {
       </Table>
     </div>
   );
-}
+};
+
+TeamOverviewPlayers.propTypes = {
+  t: PropTypes.func.isRequired,
+  user: PropTypes.UserModel.isRequired,
+  team: PropTypes.TeamModel.isRequired,
+};
+
+
 
 const TeamOverviewPlayerStats = ({stat}) => (
   <span>
@@ -124,3 +152,10 @@ const TeamOverviewPlayerStats = ({stat}) => (
     ({Math.round(stat.victories / stat.games * 100)}%)
   </span>
 );
+
+TeamOverviewPlayerStats.propTypes = {
+  stat: PropTypes.shape({
+    victories: PropTypes.number.isRequired,
+    games: PropTypes.number.isRequired,
+  }),
+};

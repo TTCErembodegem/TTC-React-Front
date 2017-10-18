@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from '../../PropTypes.js';
 import cn from 'classnames';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
@@ -25,4 +26,12 @@ export const ButtonStack = ({small, config, activeView, onClick, id = 'team-view
       ))}
     </div>
   );
+};
+
+ButtonStack.propTypes = {
+  small: PropTypes.bool,
+  config: PropTypes.any.isRequired,
+  activeView: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  id: PropTypes.string,
 };

@@ -8,6 +8,16 @@ import UserModel from '../models/UserModel.js';
 import PlayerModel from '../models/PlayerModel.js';
 import {contextTypes} from '../utils/decorators/withContext.js';
 
+export storeUtil from '../storeUtil.js'; // eslint-disable-line
+export {connect} from 'react-redux';
+export {browserHistory} from 'react-router';
+export {browseTo} from '../routes.js';
+export keyMirror from 'fbjs/lib/keyMirror'; // eslint-disable-line
+
+export withViewport from '../utils/decorators/withViewport.js'; // eslint-disable-line
+export withContext from '../utils/decorators/withContext.js'; // eslint-disable-line
+export withStyles from '../utils/decorators/withStyles.js'; // eslint-disable-line
+
 export default Object.assign({}, ReactPropTypes, {
   contextTypes,
 
@@ -31,13 +41,3 @@ export default Object.assign({}, ReactPropTypes, {
 
   map: ImmutablePropTypes.map,
 });
-
-export storeUtil from '../storeUtil.js';
-export {connect} from 'react-redux';
-export {browserHistory} from 'react-router';
-export {browseTo} from '../routes.js';
-export keyMirror from 'fbjs/lib/keyMirror';
-
-export withViewport from '../utils/decorators/withViewport.js';
-export withContext from '../utils/decorators/withContext.js';
-export withStyles from '../utils/decorators/withStyles.js';

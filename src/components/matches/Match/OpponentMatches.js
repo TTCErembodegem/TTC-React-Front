@@ -1,13 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes, {withViewport} from '../../PropTypes.js';
 import cn from 'classnames';
-import {Link, browserHistory} from 'react-router';
 
 import Table from 'react-bootstrap/lib/Table';
-import IconButton from 'material-ui/IconButton';
-import OpponentPlayer from './OpponentPlayer.js';
 import {Spinner, TrophyIcon} from '../../controls.js';
-import MatchScore from '../MatchScore.js';
 import {OtherMatchPlayerResultsTableRow} from './OtherMatchPlayerResults.js';
 import {MatchPlayerRankings} from '../controls/MatchPlayerRankings.js';
 import {OtherMatchTeamTitle} from './OtherMatchTeamTitle.js';
@@ -38,7 +34,6 @@ export class OpponentMatches extends Component {
     }
 
     return (
-      <div>
       <Table condensed className="match-card-tab-table">
         <thead>
           <tr>
@@ -70,7 +65,6 @@ export class OpponentMatches extends Component {
           })}
         </tbody>
       </Table>
-      </div>
     );
   }
 }
@@ -87,4 +81,10 @@ const OpponentTeamTitle = ({team, readonlyMatch, isHome}) => {
       {!isHome && readonlyMatch.scoreType === 'Won' ? <TrophyIcon style={{marginLeft: 10}} /> : null}
     </div>
   );
+};
+
+OpponentTeamTitle.propTypes = {
+  team: PropTypes.TeamModel.isRequired,
+  readonlyMatch: PropTypes.MatchModel.isRequired,
+  isHome: PropTypes.bool.isRequired,
 };

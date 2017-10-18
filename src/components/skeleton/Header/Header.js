@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import PropTypes, { withStyles, storeUtil } from '../../PropTypes.js';
-import { Link, browserHistory } from 'react-router';
+import React, {Component} from 'react';
+import PropTypes, {withStyles, storeUtil} from '../../PropTypes.js';
+import {Link, browserHistory} from 'react-router';
 
 import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
-import { Icon } from '../../controls/Icon.js';
+import {Icon} from '../../controls/Icon.js';
 import Navigation from './HeaderNavigation.js';
 
 @withStyles(require('./Header.css'))
@@ -28,7 +28,7 @@ export default class Header extends Component {
     const loginOrProfile = !this.props.user.playerId ?
       <FlatButton label={t('nav.login')} onClick={() => browserHistory.push(t.route('login'))} /> :
       <Link className="Header-link Header-icon-right" to={t.route('profile')}>
-          <Icon fa="fa fa-2x fa-user" title={name} />
+        <Icon fa="fa fa-2x fa-user" title={name} />
       </Link>;
 
     return (

@@ -1,4 +1,4 @@
-import { trans, routes, timeAgo } from './utils/locales-nl.js';
+import {trans, routes, timeAgo} from './utils/locales-nl.js';
 
 var translate = function(key, params) {
   var str;
@@ -26,7 +26,8 @@ var translate = function(key, params) {
 
 translate.reverseRoute = function(baseRoute, translatedRoute) {
   var result;
-  _.forOwn(routes[baseRoute], (value, key) => {
+  Object.keys(routes[baseRoute]).forEach(key => {
+    const value = routes[baseRoute][key];
     if (value === translatedRoute) {
       result = key;
     }

@@ -1,5 +1,6 @@
 import React from 'react';
-import { FrenoyLink } from './OpponentsFormation.js';
+import PropTypes from '../../PropTypes.js';
+import {FrenoyLink} from './OpponentsFormation.js';
 
 const OpponentPlayer = ({ply, t, competition}) => (
   <div>
@@ -10,5 +11,12 @@ const OpponentPlayer = ({ply, t, competition}) => (
     <small style={{marginLeft: 7}}> {ply.won ? t('match.enemyVictory', ply.won) : null}</small>
   </div>
 );
+
+OpponentPlayer.propTypes = {
+  t: PropTypes.func.isRequired,
+  ply: PropTypes.object.isRequired,
+  competition: PropTypes.oneOf(['Vttl', 'Sporta']).isRequired,
+};
+
 
 export default OpponentPlayer;

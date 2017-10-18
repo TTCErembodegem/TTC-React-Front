@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
-import PropTypes, { connect } from '../PropTypes.js';
+import React, {Component} from 'react';
+import PropTypes, {connect} from '../PropTypes.js';
 import * as userActions from '../../actions/userActions.js';
 
-import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 

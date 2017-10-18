@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PropTypes, {connect, withViewport, keyMirror, withStyles} from '../PropTypes.js';
+import PropTypes, {connect, withViewport, withStyles} from '../PropTypes.js';
 
 import {TabbedContainer} from '../controls/TabbedContainer.js';
 import PlayersCardGallery from './PlayersCardGallery.js';

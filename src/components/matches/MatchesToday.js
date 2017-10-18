@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import PropTypes, { connect, withViewport, storeUtil } from '../PropTypes.js';
+import React, {Component} from 'react';
+import PropTypes, {connect, withViewport, storeUtil} from '../PropTypes.js';
 import _ from 'lodash';
 
 import * as configActions from '../../actions/configActions.js';

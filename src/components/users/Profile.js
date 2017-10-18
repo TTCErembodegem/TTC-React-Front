@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import PropTypes, { connect, keyMirror } from '../PropTypes.js';
+import React, {Component} from 'react';
+import PropTypes, {connect, keyMirror} from '../PropTypes.js';
 
 import * as loginActions from '../../actions/userActions.js';
 
@@ -8,7 +8,7 @@ import {TabbedContainer} from '../controls/TabbedContainer.js';
 
 import ChangePassword from '../users/ChangePassword.js';
 import ChangePlayerDetails from '../users/ChangePlayerDetails.js';
-import ProfilePhotoForm, { ProfilePhotoAvatarForm } from '../users/ProfilePhotoForm.js';
+import ProfilePhotoForm, {ProfilePhotoAvatarForm} from '../users/ProfilePhotoForm.js';
 import PlayerLineup from './PlayerLineup.js';
 
 const tabEventKeys = keyMirror({
@@ -52,9 +52,10 @@ export default class Profile extends Component {
       return <ProfilePhotoAvatarForm />;
     case tabEventKeys.editPassword:
       return <ChangePassword />;
-    case tabEventKeys.editHolidays:
+    case tabEventKeys.editHolidays: {
       let user = this.props.user;
-      return <PlayerLineup teams={user.getTeams()} playerId={user.playerId} />
+      return <PlayerLineup teams={user.getTeams()} playerId={user.playerId} />;
+    }
     }
   }
 
@@ -131,3 +132,9 @@ const ProfilePlayerDetails = ({player, t, logout}) => (
       onClick={() => logout()} />
   </div>
 );
+
+ProfilePlayerDetails.propTypes = {
+  player: PropTypes.PlayerModel.isRequired,
+  t: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
+};

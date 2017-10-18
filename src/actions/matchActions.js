@@ -2,8 +2,8 @@ import Promise from 'bluebird';
 import * as ActionTypes from './ActionTypes.js';
 import http from '../utils/httpClient.js';
 import storeUtil from '../storeUtil.js';
-import { showSnackbar, setSetting } from './configActions.js';
-import { broadcastReload } from '../hub.js';
+import {showSnackbar, setSetting} from './configActions.js';
+import {broadcastReload} from '../hub.js';
 import trans from '../locales.js';
 import moment from 'moment';
 import _ from 'lodash';
@@ -26,8 +26,7 @@ function frenoySync(dispatch, m, forceSync = false) {
         broadcastReload('match', newmatch.id);
       }, function(err) {
         console.error(err); // eslint-disable-line
-      }
-    );
+      });
   }
   return null;
 }
@@ -40,10 +39,9 @@ function frenoyReadOnlyMatchSync(match) {
           dispatch(readOnlyLoaded(Object.assign(newmatch, {frenoyDivisionId: match.frenoyDivisionId})));
         }, function(err) {
           console.error(err); // eslint-disable-line
-        }
-      );
+        });
     }
-  }
+  };
 }
 
 export function forceFrenoySync(matchId) {
@@ -99,8 +97,7 @@ export function getOpponentMatches(teamId) {
 
       }, function(err) {
         console.log('GetOpponentMatches!', err); // eslint-disable-line
-      }
-    );
+      });
   };
 }
 
@@ -143,8 +140,7 @@ export function selectPlayer(matchId, status, statusNote, playerId) {
 
       }, function(err) {
         console.log('TogglePlayer!', err); // eslint-disable-line
-      }
-    );
+      });
   };
 }
 
@@ -194,8 +190,7 @@ export function updateScore(matchScore) {
 
       }, function(err) {
         console.log('UpdateScore!', err); // eslint-disable-line
-      }
-    );
+      });
   };
 }
 
@@ -207,8 +202,7 @@ export function frenoyTeamSync(teamId) {
 
       }, function(err) {
         console.log('frenoyTeamSync!', err); // eslint-disable-line
-      }
-    );
+      });
   };
 }
 
@@ -226,8 +220,7 @@ export function postReport(matchId, reportText) {
 
       }, function(err) {
         console.log('Report!', err); // eslint-disable-line
-      }
-    );
+      });
   };
 }
 
@@ -244,8 +237,7 @@ export function postComment(comment) {
 
       }, function(err) {
         console.log('Comment!', err); // eslint-disable-line
-      }
-    );
+      });
   };
 }
 
@@ -262,7 +254,6 @@ export function deleteComment(commentId) {
 
       }, function(err) {
         console.log('Delete Comment!', err); // eslint-disable-line
-      }
-    );
+      });
   };
 }

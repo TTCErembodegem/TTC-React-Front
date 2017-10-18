@@ -1,5 +1,5 @@
-import React, {PropTypes, Component} from 'react';
-import cn from 'classnames';
+import React from 'react';
+// import PropTypes from '../../PropTypes.js';
 import {Icon} from './Icon.js';
 
 export const EditIcon = (props) => (

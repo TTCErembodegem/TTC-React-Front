@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from '../PropTypes.js';
 import {Icon, Badgy} from '../controls.js';
 
 export const TeamHeader = ({team, t, showRanking}) => (
@@ -9,6 +10,13 @@ export const TeamHeader = ({team, t, showRanking}) => (
     </h4>
   </div>
 );
+
+TeamHeader.propTypes = {
+  team: PropTypes.TeamModel.isRequired,
+  t: PropTypes.func.isRequired,
+  showRanking: PropTypes.bool.isRequired,
+};
+
 
 
 export const TeamTabTitle = ({team, showRanking, t}) => {
@@ -37,7 +45,14 @@ export const TeamTabTitle = ({team, showRanking, t}) => {
       ) : null}
     </div>
   );
-}
+};
+
+TeamTabTitle.propTypes = {
+  team: PropTypes.TeamModel.isRequired,
+  t: PropTypes.func.isRequired,
+  showRanking: PropTypes.bool.isRequired,
+};
+
 
 
 const TeamRankingBadges = ({team, t}) => {
@@ -53,7 +68,15 @@ const TeamRankingBadges = ({team, t}) => {
       <TeamOverviewBadge amount={ranking.gamesLost} colorClass="match-lost" fa="fa-thumbs-down" tooltip={t('teamCalendar.matchesLostBadge')} />
     </div>
   );
-}
+};
+
+TeamRankingBadges.propTypes = {
+  team: PropTypes.TeamModel.isRequired,
+  t: PropTypes.func.isRequired,
+};
+
+
+
 
 const TeamOverviewBadge = ({amount, colorClass, fa, tooltip}) => {
   return (
@@ -62,4 +85,11 @@ const TeamOverviewBadge = ({amount, colorClass, fa, tooltip}) => {
       {amount}
     </Badgy>
   );
-}
+};
+
+TeamOverviewBadge.propTypes = {
+  amount: PropTypes.number.isRequired,
+  colorClass: PropTypes.string.isRequired,
+  fa: PropTypes.string.isRequired,
+  tooltip: PropTypes.string.isRequired,
+};

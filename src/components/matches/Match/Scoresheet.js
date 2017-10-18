@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from '../../PropTypes.js';
-import http from '../../../utils/httpClient.js';
 import Table from 'react-bootstrap/lib/Table';
-import {ExcelButton} from '../../controls.js';
 import {FrenoyWeekLink} from '../../controls.js';
 
 export default class Scoresheet extends Component {

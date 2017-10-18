@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import PropTypes, { connect, withViewport } from '../PropTypes.js';
+import React, {Component} from 'react';
+import PropTypes, {connect, withViewport} from '../PropTypes.js';
 import Immutable from 'immutable';
-import { toggleTeamPlayer } from '../../actions/playerActions.js';
-import { frenoyTeamSync } from '../../actions/matchActions.js';
+import {toggleTeamPlayer} from '../../actions/playerActions.js';
+import {frenoyTeamSync} from '../../actions/matchActions.js';
 import _ from 'lodash';
 
 import Paper from 'material-ui/Paper';
@@ -13,7 +13,7 @@ import Button from 'react-bootstrap/lib/Button';
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 import PlayersImageGallery from '../players/PlayersImageGallery.js';
 
-import { teamPlayerType } from '../../models/TeamModel.js';
+import {teamPlayerType} from '../../models/TeamModel.js';
 
 @connect(state => {
   return {user: state.user};
@@ -123,3 +123,7 @@ const AdminTeamsToolbar = ({onFilterChange}) => (
     <Button bsStyle="info" onClick={() => onFilterChange('Sporta')}>Sporta</Button>
   </div>
 );
+
+AdminTeamsToolbar.propTypes = {
+  onFilterChange: PropTypes.func.isRequired,
+};

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from '../../PropTypes.js';
 import Table from 'react-bootstrap/lib/Table';
 import {Telephone, Email} from '../../controls.js';
 import cn from 'classnames';
@@ -37,4 +38,9 @@ export const PlayersAllSmall = ({players, t}) => {
       </tbody>
     </Table>
   );
+};
+
+PlayersAllSmall.propTypes = {
+  t: PropTypes.func.isRequired,
+  players: PropTypes.PlayerModelList.isRequired,
 };

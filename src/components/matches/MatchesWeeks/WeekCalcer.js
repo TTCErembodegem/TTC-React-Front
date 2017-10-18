@@ -42,8 +42,9 @@ export class WeekCalcer {
 
     if (!this.currentWeek) {
       let testWeek = moment().startOf('week');
+      const indexFinder = w => w.start.isSame(testWeek, 'day');
       while (!this.currentWeek) {
-        this.currentWeek = this.weeks.findIndex(w => w.start.isSame(testWeek, 'day')) + 1;
+        this.currentWeek = this.weeks.findIndex(indexFinder) + 1;
         testWeek = testWeek.add(1, 'week');
         if (testWeek.isAfter(this.weeks[this.weeks.length - 1].end)) {
           this.currentWeek = this.lastWeek;

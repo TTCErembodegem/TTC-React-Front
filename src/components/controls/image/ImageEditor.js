@@ -37,16 +37,18 @@ const ImageEditor = React.createClass({
           image={this.props.image}
           style={{width: this.props.size.width, height: this.props.size.height, cursor: 'hand'}} />
 
-          <Slider defaultValue={1} min={1} max={5} step={0.01}
-            ref="scale"
-            style={{width: 230, marginBottom: 20, marginTop: 20}}
-            onChange={this.handleScale} />
+        <Slider defaultValue={1} min={1} max={5} step={0.01}
+          ref="scale"
+          style={{width: 230, marginBottom: 20, marginTop: 20}}
+          onChange={this.handleScale}
+        />
 
-          <FlatButton
-            label={this.props.t('photos.preview')}
-            secondary={true}
-            style={{marginTop: -40, marginBottom: 10}}
-            onTouchTap={this.handleSave} />
+        <FlatButton
+          label={this.props.t('photos.preview')}
+          secondary={true}
+          style={{marginTop: -40, marginBottom: 10}}
+          onTouchTap={this.handleSave}
+        />
       </div>
     );
   },

@@ -4,11 +4,7 @@ import PropTypes, {connect} from '../PropTypes.js';
 import AutoComplete from 'material-ui/AutoComplete';
 import MenuItem from 'material-ui/MenuItem';
 
-@connect(state => {
-  return {
-    players: state.players,
-  };
-})
+@connect(state => ({players: state.players}))
 export default class PlayerAutoComplete extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
@@ -50,7 +46,7 @@ export default class PlayerAutoComplete extends Component {
   }
 
   render() {
-    const { players, selectPlayer, dispatch, clearOnSelect, competition, ...props } = this.props;
+    const {players, selectPlayer, dispatch, clearOnSelect, competition, ...props} = this.props; // eslint-disable-line
     var filteredPlayers = players;
     if (competition) {
       filteredPlayers = players.filter(x => x[competition.toLowerCase()]);

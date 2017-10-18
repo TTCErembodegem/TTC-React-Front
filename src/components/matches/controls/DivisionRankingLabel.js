@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from '../../PropTypes.js';
 
 export const DivisionRankingLabel = ({divisionRanking}) => {
   if (!divisionRanking) {
@@ -9,6 +9,13 @@ export const DivisionRankingLabel = ({divisionRanking}) => {
   return <small className="match-opponent-team">{divisionRanking.position}. </small>;
 };
 
+DivisionRankingLabel.propTypes = {
+  divisionRanking: PropTypes.shape({
+    position: PropTypes.number.isrequired,
+  }).isRequired,
+};
+
+
 
 export const OurDivisionRankingLabel = ({team}) => {
   const divisionRanking = team.getDivisionRanking('our-ranking');
@@ -17,4 +24,8 @@ export const OurDivisionRankingLabel = ({team}) => {
   }
 
   return <small style={{marginRight: 6}}>{divisionRanking.position}.</small>;
+};
+
+OurDivisionRankingLabel.propTypes = {
+  team: PropTypes.TeamModel.isRequired,
 };

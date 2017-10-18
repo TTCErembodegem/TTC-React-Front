@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from '../PropTypes.js';
 import {Location} from '../controls.js';
 import Paper from 'material-ui/Paper';
@@ -73,6 +73,21 @@ export const pongit = props => <ImageSponsor url="http://pongit.be" img="pongit.
 export const Nostech = props => <ImageSponsor url="http://www.nostech.be" img="nostech.jpg" {...props} />;
 export const KachelsTfe = props => <ImageSponsor url="http://www.kachels-tfe.be/" img="kachels-tfe.png" {...props} />;
 
+
+const bottomSponsorsStyleBig = {
+  padding: 5,
+  textAlign: 'center',
+  display: 'inline-block'
+};
+
+const bottomSponsorsStyleSmall = {
+  padding: 15,
+  width: '100%',
+  textAlign: 'center',
+  margin: 'auto',
+};
+
+
 class ImageSponsor extends Component {
   static propTypes = {
     big: PropTypes.bool.isRequired,
@@ -94,16 +109,3 @@ class ImageSponsor extends Component {
     );
   }
 }
-
-const bottomSponsorsStyleBig = {
-  padding: 5,
-  textAlign: 'center',
-  display: 'inline-block'
-};
-
-const bottomSponsorsStyleSmall = {
-  padding: 15,
-  width: '100%',
-  textAlign: 'center',
-  margin: 'auto',
-};

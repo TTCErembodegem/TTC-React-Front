@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import PropTypes, {contextTypes} from '../PropTypes.js';
+import PropTypes from '../PropTypes.js';
 
 import {Card} from 'material-ui/Card';
 import PlayerImage from './PlayerImage.js';
 import {Email, Icon, Telephone} from '../controls.js';
-import {PlayerPlayingStyleForm} from "./PlayerPlayingStyle.js";
+import {PlayerPlayingStyleForm} from './PlayerPlayingStyle.js';
 
 export default class PlayerCard extends Component {
   static contextTypes = PropTypes.contextTypes;
@@ -29,7 +29,9 @@ export default class PlayerCard extends Component {
     const cardWidth = 350;
     return (
       <Card style={{width: cardWidth, height: 256}}>
-        {player.style ? <PlayerPlayingStyleForm player={player} iconStyle="edit-icon" style={{color: '#d3d3d3', float: 'right', display: 'inline'}} /> : null}
+        {player.style ? (
+          <PlayerPlayingStyleForm player={player} iconStyle="edit-icon" style={{color: '#d3d3d3', float: 'right', display: 'inline'}} />
+        ) : null}
         <div style={{float: 'left'}}>
           <PlayerImage playerId={player.id} center={false} />
         </div>
@@ -67,6 +69,13 @@ PlayerCard.Competition = ({player, t}) => (
   </div>
 );
 
+PlayerCard.Competition.propTypes = {
+  player: PropTypes.PlayerModel.isRequired,
+  t: PropTypes.func.isRequired,
+};
+
+
+
 export const PlayerAllCompetitions = ({player, t}) => (
   <div>
     <PlayerCompetition comp="Vttl" player={player} t={t} />
@@ -75,10 +84,19 @@ export const PlayerAllCompetitions = ({player, t}) => (
   </div>
 );
 
+PlayerAllCompetitions.propTypes = {
+  player: PropTypes.PlayerModel.isRequired,
+  t: PropTypes.func.isRequired,
+};
+
 
 export const TeamCaptainIcon = ({t}) => (
   <Icon fa="fa fa-star" color="#FFB00F" style={{marginRight: 5}} title={t('player.teamCaptain')} />
 );
+
+TeamCaptainIcon.propTypes = {t: PropTypes.func.isRequired};
+
+
 
 export const PlayerCompetition = ({comp, player, t, withName = false}) => {
   // withName = Jorn C2 (frenoylink)
@@ -99,9 +117,19 @@ export const PlayerCompetition = ({comp, player, t, withName = false}) => {
   );
 };
 
-import { createFrenoyLink } from '../../models/PlayerModel.js';
+PlayerCompetition.propTypes = {
+  comp: PropTypes.oneOf(['Vttl', 'Sporta']).isRequired,
+  player: PropTypes.PlayerModel.isRequired,
+  t: PropTypes.func.isRequired,
+  withName: PropTypes.bool,
+};
+
+
+import {createFrenoyLink} from '../../models/PlayerModel.js';
 export const PlayerFrenoyLink = ({comp}) => (
   <a href={createFrenoyLink(comp)} target="_blank">
     <Icon fa="fa fa-search" />
   </a>
 );
+
+PlayerFrenoyLink.propTypes = {comp: PropTypes.object.isRequired};

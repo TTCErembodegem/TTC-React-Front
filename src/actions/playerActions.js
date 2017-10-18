@@ -1,9 +1,9 @@
 import * as ActionTypes from './ActionTypes.js';
 import http from '../utils/httpClient.js';
 import storeUtil from '../storeUtil.js';
-import { showSnackbar } from './configActions.js';
-import { broadcastSnackbar, broadcastReload } from '../hub.js';
-import { teamsLoaded } from './initialLoad.js';
+import {showSnackbar} from './configActions.js';
+import {broadcastSnackbar, broadcastReload} from '../hub.js';
+import {teamsLoaded} from './initialLoad.js';
 
 import trans from '../locales.js';
 

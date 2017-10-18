@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes, {connect} from '../PropTypes.js';
 //import {PlayerCompetitionBadge} from '../players/PlayerBadges.js';
-import {ButtonStack, Icon} from '../controls.js';
+import {ButtonStack} from '../controls.js';
 
 @connect(state => ({players: state.players, inactivePlayers: state.admin.players, teams: state.teams}))
 export class AdminEmail extends Component {
@@ -37,8 +37,6 @@ export class AdminEmail extends Component {
   }
 
   render() {
-    const t = this.context.t;
-
     const viewsConfig = [
       {key: 'all', text: 'Alle'},
       {key: 'comp', text: 'Competitie'},
@@ -79,7 +77,7 @@ export class AdminEmail extends Component {
 
         <div className="row" style={{marginTop: 25}}>
           <div className="col-md-6">
-            {selectedPlayers.map(p => <PlayerEmail player={p} />)}
+            {selectedPlayers.map(p => <PlayerEmail player={p} key={p.id} />)}
           </div>
 
           <div className="col-md-6">
@@ -104,4 +102,8 @@ const PlayerEmail = ({player}) => {
       {' '}
     </span>
   );
-}
+};
+
+PlayerEmail.propTypes = {
+  player: PropTypes.PlayerModel.isRequired,
+};

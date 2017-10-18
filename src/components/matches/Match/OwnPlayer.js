@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
-import PropTypes, { storeUtil } from '../../PropTypes.js';
-import cn from 'classnames';
+import React from 'react';
+import PropTypes, {storeUtil} from '../../PropTypes.js';
 
-import { matchOutcome } from '../../../models/MatchModel.js';
+import {matchOutcome} from '../../../models/MatchModel.js';
 import rankingSorter from '../../../models/utils/rankingSorter.js';
-import { PlayerCompetitionBadge } from '../../players/PlayerBadges.js';
-import { Icon } from '../../controls/Icon.js';
+import {PlayerCompetitionBadge} from '../../players/PlayerBadges.js';
+import {Icon} from '../../controls/Icon.js';
 
 const OwnPlayer = ({match, ply, playerAsBadge = false}) => {
   const result = getRankingResults(match, ply);
@@ -34,6 +33,15 @@ const OwnPlayer = ({match, ply, playerAsBadge = false}) => {
     </div>
   );
 };
+
+
+OwnPlayer.propTypes = {
+  match: PropTypes.MatchModel.isRequired,
+  ply: PropTypes.object.isRequired,
+  playerAsBadge: PropTypes.bool,
+};
+
+
 
 function renderWinsNode(result, teamPlayerCount) {
   var winNode = '';

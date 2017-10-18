@@ -1,16 +1,12 @@
 import React, {Component} from 'react';
 import PropTypes, {browserHistory, browseTo} from '../../PropTypes.js';
-import moment from 'moment';
 
 import MatchForm from '../Match/MatchForm.js';
 import MatchScore from '../MatchScore.js';
-import {Icon, ThrillerBadge, ThrillerIcon, CommentIcon} from '../../controls/Icon.js';
-import MatchVs from './MatchVs.js';
+import {ThrillerBadge, ThrillerIcon, CommentIcon} from '../../controls/Icon.js';
 import {TheirTeamTitle} from './TheirTeamTitle.js';
 
 import {Card, CardHeader} from 'material-ui/Card';
-
-const daysAgoBackFullDate = 7;
 
 const thrillerIconWith = 25;
 const ThrillerIconSpan = <span key="1" style={{width: thrillerIconWith, float: 'left'}}>&nbsp;</span>;
@@ -102,7 +98,10 @@ class MatchCardHeader extends Component {
     const match = this.props.match;
     const iPlay = this.props.user.playsIn(match.teamId);
 
-    const scoreFormVisible = !this.props.noScoreEdit && (match.isBeingPlayed() || this.props.forceEdit) && this.props.user.canChangeMatchScore(this.props.match);
+    const scoreFormVisible = !this.props.noScoreEdit &&
+      (match.isBeingPlayed() || this.props.forceEdit) &&
+      this.props.user.canChangeMatchScore(this.props.match);
+
     const scoreFormInHeader = !!this.props.routed;
     const smallAndScoring = scoreFormVisible && this.props.width < 480;
 
@@ -187,7 +186,13 @@ const MatchCardHeaderSmallTitle = ({match, withLinks, t}) => {
 
       {!match.isHomeMatch ? <OwnTeamTitle match={match} withLinks={withLinks} /> : <TheirTeamTitle match={match} />}
     </div>
-  )
+  );
+};
+
+MatchCardHeaderSmallTitle.propTypes = {
+  match: PropTypes.MatchModel.isRequired,
+  withLinks: PropTypes.bool.isRequired,
+  t: PropTypes.func.isRequired,
 };
 
 
@@ -211,4 +216,9 @@ const OwnTeamTitle = ({match, withLinks}) => {
       {title}
     </a>
   );
+};
+
+OwnTeamTitle.propTypes = {
+  match: PropTypes.MatchModel.isRequired,
+  withLinks: PropTypes.bool.isRequired,
 };

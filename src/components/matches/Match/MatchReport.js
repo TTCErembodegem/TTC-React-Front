@@ -255,7 +255,8 @@ class Comment extends Component {
       <div
         onMouseEnter={() => this.setState({hover: true})}
         onMouseLeave={() => this.setState({hover: false})}
-        style={Object.assign({padding: 6, marginRight: 10}, this.state.hover ? {backgroundColor: '#EEE9E9'} : {})}>
+        style={Object.assign({padding: 6, marginRight: 10}, this.state.hover ? {backgroundColor: '#EEE9E9'} : {})}
+      >
 
         <div style={{display: 'inline-block', width: '100%'}}>
           {this.state.hover && canDeleteComment ? (
@@ -268,8 +269,11 @@ class Comment extends Component {
           <TimeAgo date={comment.postedOn} style={{color: '#999'}} />
         </div>
 
-        {comment.imageUrl ? <div><img src={comment.imageUrl} style={{maxWidth: '95%'}} /></div>
-        : <div dangerouslySetInnerHTML={{__html: comment.text}} />}
+        {comment.imageUrl ? (
+          <div><img src={comment.imageUrl} style={{maxWidth: '95%'}} /></div>
+        ) : (
+          <div dangerouslySetInnerHTML={{__html: comment.text}} />
+        )}
       </div>
     );
   }

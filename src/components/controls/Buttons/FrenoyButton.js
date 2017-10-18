@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import PropTypes, {connect} from '../../PropTypes.js';
+import PropTypes from '../../PropTypes.js';
 import cn from 'classnames';
-import Button from 'react-bootstrap/lib/Button';
 import {Icon} from '../Icon.js';
 
 export class FrenoyButton extends Component {

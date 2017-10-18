@@ -1,4 +1,4 @@
-import React, { PropTypes, Component } from 'react';
+import React, {PropTypes, Component} from 'react';
 import AutoComplete from 'material-ui/AutoComplete';
 
 export default class PlayerStyleAutocomplete extends Component {

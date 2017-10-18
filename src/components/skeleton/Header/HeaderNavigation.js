@@ -1,6 +1,6 @@
-import React, { Component, PropTypes } from 'react';
-import { browserHistory } from 'react-router';
-import { contextTypes } from '../../../utils/decorators/withContext.js';
+import React, {Component, PropTypes} from 'react';
+import {browserHistory} from 'react-router';
+import {contextTypes} from '../../../utils/decorators/withContext.js';
 import storeUtil from '../../../storeUtil.js';
 
 import enhanceWithClickOutside from 'react-click-outside';

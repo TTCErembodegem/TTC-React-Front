@@ -21,7 +21,8 @@ export class Icon extends Component {
         })}
         title={tooltip}
         onClick={onClick}
-        style={{color: color, ...style}}></i>
+        style={{color: color, ...style}}
+      />
     );
   }
 }

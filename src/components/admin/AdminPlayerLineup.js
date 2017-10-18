@@ -1,15 +1,11 @@
-import React, { Component } from 'react';
-import PropTypes, { connect, withViewport, storeUtil } from '../PropTypes.js';
-import Immutable from 'immutable';
-import _ from 'lodash';
+import React, {Component} from 'react';
+import PropTypes, {connect, withViewport, storeUtil} from '../PropTypes.js';
 
 import Button from 'react-bootstrap/lib/Button';
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 import PlayerLinup from '../users/PlayerLineup.js';
 
-@connect(state => {
-  return {matches: state.matches};
-}, {})
+@connect(state => ({matches: state.matches}))
 @withViewport
 export default class AdminPlayerLineup extends React.Component {
   static propTypes = {

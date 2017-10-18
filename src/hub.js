@@ -1,9 +1,9 @@
-import $, { setHubPrototype } from './utils/hubProxy.js';
-import { getUrl } from './utils/httpClient.js';
+import $, {setHubPrototype} from './utils/hubProxy.js';
+import {getUrl} from './utils/httpClient.js';
 import store from './store.js';
-import { showSnackbar } from './actions/configActions.js';
+import {showSnackbar} from './actions/configActions.js';
 import * as loader from './actions/initialLoad.js';
-import { matchUpdated } from './actions/matchActions.js';
+import {matchUpdated} from './actions/matchActions.js';
 
 var hubReady = false;
 

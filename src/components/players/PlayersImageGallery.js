@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PropTypes, {connect, withContext, storeUtil} from '../PropTypes.js';
+import PropTypes, {connect, withContext} from '../PropTypes.js';
 
 import * as playerActions from '../../actions/playerActions.js';
 import {playerUtils} from '../../models/PlayerModel.js';
@@ -7,11 +7,9 @@ import {playerUtils} from '../../models/PlayerModel.js';
 import {GridList, GridTile} from 'material-ui/GridList';
 import Paper from 'material-ui/Paper';
 
-import {Icon, Telephone} from '../controls.js';
+import {Telephone} from '../controls.js';
 import {PlayerPlayingStyle, PlayerPlayingStyleForm} from './PlayerPlayingStyle.js';
 import PlayerImage from './PlayerImage.js';
-import PlayerAutoComplete from './PlayerAutoComplete.js';
-import PlayerStyleAutocomplete from './PlayerStyleAutocomplete.js';
 
 const PlayersImageWidth = playerUtils.getPlayerImageSize().width + 30;
 const PlayersImageHeight = playerUtils.getPlayerImageSize().height;
@@ -57,7 +55,6 @@ export default class PlayersImageGallery extends Component {
 
   render() {
     const {players, user, competition, viewport} = this.props;
-    const t = this.context.t;
 
     const playerPaperStyle = {
       height: 80,
@@ -124,5 +121,3 @@ export default class PlayersImageGallery extends Component {
     );
   }
 }
-
-export default PlayersImageGallery;

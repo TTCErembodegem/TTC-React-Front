@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from '../PropTypes.js';
-import { OwnEmail, GoogleMap } from '../controls.js';
+import {OwnEmail, GoogleMap} from '../controls.js';
 
 const clubBankNr = 'BE55 0016 5927 6744';
 const clubOrgNr = 'BE 0840.545.283';

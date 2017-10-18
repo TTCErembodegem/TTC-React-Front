@@ -1,9 +1,9 @@
 import Promise from 'bluebird';
 import * as ActionTypes from './ActionTypes.js';
 import http from '../utils/httpClient.js';
-import { simpleLoaded, loaded as matchesLoaded } from './matchActions.js';
-import { loaded as playersLoaded } from './playerActions.js';
-import { showSnackbar } from './configActions.js';
+import {simpleLoaded, loaded as matchesLoaded} from './matchActions.js';
+import {loaded as playersLoaded} from './playerActions.js';
+import {showSnackbar} from './configActions.js';
 
 export function clubsLoaded(data) {
   return {
@@ -90,8 +90,7 @@ export default function() {
       initialRequest(dispatch, '/teams', teamsLoaded),
       initialRequest(dispatch, '/players', playersLoaded),
       initialRequest(dispatch, '/clubs', clubsLoaded),
-    ])
-    .then(initialLoad => {
+    ]).then(initialLoad => {
       console.info('initialLoadCompleted'); // eslint-disable-line
       dispatch(initialLoadCompleted());
 
@@ -100,8 +99,7 @@ export default function() {
         dispatch(showSnackbar('TTC data kon niet geladen worden'));
       }
       return initialLoad;
-    })
-    .then(initialLoad => {
+    }).then(initialLoad => {
       var p = Promise.resolve();
 
       const matches = initialLoad[0];
@@ -111,8 +109,7 @@ export default function() {
       p = p.then(() => loadTeamRankings(teams, dispatch));
 
       return p;
-    })
-    .then(() => console.info('secundary load completed')) // eslint-disable-line
-    .catch(err => console.error('initial load failed', err)); // eslint-disable-line
+    }).then(() => console.info('secundary load completed')) // eslint-disable-line
+      .catch(err => console.error('initial load failed', err)); // eslint-disable-line
   };
 }

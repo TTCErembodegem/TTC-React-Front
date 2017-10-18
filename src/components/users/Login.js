@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import PropTypes, { connect } from '../PropTypes.js';
-import { Link } from 'react-router';
+import React, {Component} from 'react';
+import PropTypes, {connect} from '../PropTypes.js';
+import {Link} from 'react-router';
 
 import * as loginActions from '../../actions/userActions.js';
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';

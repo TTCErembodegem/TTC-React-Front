@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { contextTypes } from '../../utils/decorators/withContext.js';
+import React, {Component} from 'react';
+import {contextTypes} from '../../utils/decorators/withContext.js';
 
 export default class Links extends Component {
   static contextTypes = contextTypes;

@@ -1,10 +1,16 @@
-import React, {PropTypes, Component} from 'react';
-import cn from 'classnames';
+import React from 'react';
+import PropTypes from '../../PropTypes.js';
 import {Icon} from './Icon.js';
 
 export const ThrillerIcon = ({color = undefined}) => (
   <Icon fa="fa fa-heartbeat faa-pulse animated" style={{marginLeft: 3, marginRight: 7, marginTop: 3, color: color}} />
 );
+
+ThrillerIcon.propTypes = {
+  color: PropTypes.string,
+};
+
+
 
 // Badgy because material-ui also defines a Badge
 export const Badgy = ({type, children, style, tooltip}) => (
@@ -12,6 +18,15 @@ export const Badgy = ({type, children, style, tooltip}) => (
     {children}
   </span>
 );
+
+Badgy.propTypes = {
+  type: PropTypes.string.isRequired,
+  tooltip: PropTypes.string,
+  style: PropTypes.object,
+  children: PropTypes.any,
+};
+
+
 
 export const ThrillerBadge = ({t, match}) => {
   const team = match.getTeam();
@@ -32,4 +47,9 @@ export const ThrillerBadge = ({t, match}) => {
     );
   }
   return <div />;
+};
+
+ThrillerBadge.propTypes = {
+  t: PropTypes.func.isRequired,
+  match: PropTypes.MatchModel.isRequired,
 };

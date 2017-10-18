@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from '../../PropTypes.js';
 import Table from 'react-bootstrap/lib/Table';
 import cn from 'classnames';
 import {PlayerAllCompetitions} from '../PlayerCard.js';
@@ -43,3 +44,8 @@ export const PlayersAllBig = ({players, t}) => (
     </tbody>
   </Table>
 );
+
+PlayersAllBig.propTypes = {
+  t: PropTypes.func.isRequired,
+  players: PropTypes.PlayerModelList.isRequired,
+};

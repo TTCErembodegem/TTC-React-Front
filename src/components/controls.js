@@ -1,4 +1,4 @@
-export Editor from './controls/Editor.js';
+export * from './controls/Editor.js';
 export * from './controls/TabbedContainer.js';
 
 export * from './controls/Icon.js';
@@ -10,6 +10,6 @@ export * from './controls/controls/Location.js';
 export * from './controls/controls/Spinner.js';
 export * from './controls/controls/Strike.js';
 export * from './controls/controls/Telephone.js';
-export TimeAgo from './controls/controls/TimeAgo.js';
+export * from './controls/controls/TimeAgo.js';
 
 export * from './players/PlayerCard.js';

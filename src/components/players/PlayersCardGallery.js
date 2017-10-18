@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import PropTypes, { withViewport, contextTypes } from '../PropTypes.js';
+import React, {Component} from 'react';
+import PropTypes, {withViewport} from '../PropTypes.js';
 import PlayerImage from './PlayerImage.js';
 import PlayerCard from './PlayerCard.js';
-import { Card, CardText } from 'material-ui/Card';
+import {Card, CardText} from 'material-ui/Card';
 
 @withViewport
 export default class PlayersCardGallery extends Component {

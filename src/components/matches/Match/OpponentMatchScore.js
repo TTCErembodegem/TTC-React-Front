@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from '../../PropTypes.js';
 import {ViewMatchDetailsButton} from '../controls/ViewMatchDetailsButton.js';
 
 export const OpponentMatchScore = ({readonlyMatch}) => {
@@ -16,4 +17,8 @@ export const OpponentMatchScore = ({readonlyMatch}) => {
   }
 
   return <span>{readonlyMatch.score.home} - {readonlyMatch.score.out}</span>;
-}
+};
+
+OpponentMatchScore.propTypes = {
+  readonlyMatch: PropTypes.MatchModel.isRequired,
+};

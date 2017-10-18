@@ -4,7 +4,6 @@ import {updatePlayer, frenoySync} from '../../actions/playerActions.js';
 import moment from 'moment';
 
 import Table from 'react-bootstrap/lib/Table';
-import Button from 'react-bootstrap/lib/Button';
 import TextField from 'material-ui/TextField';
 
 import {Icon, ButtonStack, EditButton} from '../controls.js';
@@ -98,9 +97,10 @@ export default class AdminPlayers extends Component {
         {playersContent ? (
           <div>
             <TextField
-            hintText="Zoek speler"
-            onChange={e => this.setState({playerFilter: e.target.value.toLowerCase()})}
-            style={{width: 150, marginLeft: 10}} />
+              hintText="Zoek speler"
+              onChange={e => this.setState({playerFilter: e.target.value.toLowerCase()})}
+              style={{width: 150, marginLeft: 10}}
+            />
 
             <button
               className="btn btn-default pull-right"
@@ -182,6 +182,12 @@ const ActivesTable = ({players, onEditPlayer, onUpdatePlayer}) => (
   </Table>
 );
 
+ActivesTable.propTypes = {
+  players: PropTypes.PlayerModelList.isRequired,
+  onEditPlayer: PropTypes.func.isRequired,
+  onUpdatePlayer: PropTypes.func.isRequired,
+};
+
 
 const InactivesTable = ({players, onUpdatePlayer}) => (
   <Table condensed hover>
@@ -217,3 +223,9 @@ const InactivesTable = ({players, onUpdatePlayer}) => (
     </tbody>
   </Table>
 );
+
+
+InactivesTable.propTypes = {
+  players: PropTypes.PlayerModelList.isRequired,
+  onUpdatePlayer: PropTypes.func.isRequired,
+};

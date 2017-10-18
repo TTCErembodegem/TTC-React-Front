@@ -116,7 +116,7 @@ export function getPlayerStats(matches) {
   var result = {};
   matches.forEach(match => {
     const gameResults = match.getGameMatches();
-    const homeOrOut = match.isHomeMatch ? 'home' : 'out';
+    //const homeOrOut = match.isHomeMatch ? 'home' : 'out';
 
     gameResults.forEach(game => {
       const playerId = game.ownPlayer.playerId || 0;

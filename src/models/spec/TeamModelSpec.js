@@ -1,7 +1,7 @@
-import proxyquire from 'proxyquire';
-import { List, Map } from 'immutable';
+// import proxyquire from 'proxyquire';
+import {List} from 'immutable';
 
-import { getPlayerStats } from '../TeamModel.js';
+import {getPlayerStats} from '../TeamModel.js';
 import MatchModel from '../MatchModel.js';
 
 // const teamJson = {

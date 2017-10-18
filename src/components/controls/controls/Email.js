@@ -1,6 +1,4 @@
 import React, {PropTypes, Component} from 'react';
-import cn from 'classnames';
-
 import {OwnClubEmail} from '../../../models/ClubModel.js';
 
 export class Email extends Component {
@@ -27,6 +25,6 @@ export class OwnEmail extends Component {
     className: PropTypes.string,
   };
   render() {
-    return <Email email={OwnClubEmail} {...this.props} />
+    return <Email email={OwnClubEmail} {...this.props} />;
   }
 }

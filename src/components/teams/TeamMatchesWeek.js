@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes, {connect} from '../PropTypes.js';
 
-import MatchesTable from '../matches/MatchesTable.js';
-import {PlayerCompetition} from '../controls.js';
 import {WeekCalcer} from '../matches/MatchesWeeks/WeekCalcer.js';
 import {WeekTitle} from '../matches/MatchesWeeks/WeekTitle.js';
 import {getOpponentMatches} from '../../actions/matchActions.js';
@@ -67,6 +65,6 @@ export class TeamMatchesWeek extends Component {
           </div>
         ) : null}
       </div>
-    )
+    );
   }
 }

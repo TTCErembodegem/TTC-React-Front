@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import {combineReducers} from 'redux';
 
 import * as reducers from './reducers.js';
 import matches from './matchReducers.js';

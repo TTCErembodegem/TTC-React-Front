@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from '../../PropTypes.js';
 import {CommentButton, SaveButton, Icon} from '../../controls.js';
 
 export const SaveMatchButtons = ({onSave, onBlock, onCommentsToggle, t}) => (
@@ -17,3 +18,10 @@ export const SaveMatchButtons = ({onSave, onBlock, onCommentsToggle, t}) => (
     <SaveButton onClick={onSave} title={t('match.plys.tooltipSave')} />
   </div>
 );
+
+SaveMatchButtons.propTypes = {
+  onSave: PropTypes.func.isRequired,
+  onBlock: PropTypes.func.isRequired,
+  onCommentsToggle: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired,
+};

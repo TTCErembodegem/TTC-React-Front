@@ -1,7 +1,5 @@
-import React, {Component} from 'react';
-import PropTypes, {connect} from '../../PropTypes.js';
-import cn from 'classnames';
-import Button from 'react-bootstrap/lib/Button';
+import React from 'react';
+import PropTypes from '../../PropTypes.js';
 import {EditIcon} from '../Icon.js';
 
 export const EditButton = ({onClick, title, style, fa}) => (
@@ -9,3 +7,10 @@ export const EditButton = ({onClick, title, style, fa}) => (
     <EditIcon className={fa} />
   </button>
 );
+
+EditButton.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  title: PropTypes.string,
+  style: PropTypes.object,
+  fa: PropTypes.string,
+};

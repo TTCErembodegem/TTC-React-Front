@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import PropTypes, {connect} from '../../PropTypes.js';
+import React from 'react';
+import PropTypes from '../../PropTypes.js';
 import {Icon, EditIcon} from '../../controls.js';
 
 export const OpenMatchForEditButton = ({onClick, match, t}) => (
@@ -21,3 +21,9 @@ export const OpenMatchForEditButton = ({onClick, match, t}) => (
     </span>
   </button>
 );
+
+OpenMatchForEditButton.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  match: PropTypes.MatchModel.isRequired,
+  t: PropTypes.func.isRequired,
+};

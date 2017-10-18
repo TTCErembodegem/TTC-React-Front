@@ -85,7 +85,9 @@ export default class MatchScore extends Component {
         style={this.props.style}>
 
         <span>
-          {classColor === 'match-won' && !match.isDerby ? <TrophyIcon style={{marginRight: 7, marginTop: 4, fontWeight: 'normal'}} color="#FFE568" /> : null}
+          {classColor === 'match-won' && !match.isDerby ? (
+            <TrophyIcon style={{marginRight: 7, marginTop: 4, fontWeight: 'normal'}} color="#FFE568" />
+          ) : null}
           {score.home + ' - ' + score.out}
           {this.props.showComments && (match.comments.size || match.description) ? <CommentIcon style={{marginLeft: 8}} /> : null}
         </span>

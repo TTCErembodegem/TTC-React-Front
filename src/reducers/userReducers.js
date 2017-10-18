@@ -1,7 +1,7 @@
 import Immutable from 'immutable';
 //import * as immutableHelpers from './immutableHelpers.js';
 import * as ActionTypes from '../actions/ActionTypes.js';
-import { browserHistory } from 'react-router';
+import {browserHistory} from 'react-router';
 
 import UserModel from '../models/UserModel.js';
 

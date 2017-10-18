@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import PropTypes, {connect} from '../PropTypes.js';
-import {ButtonStack, Icon} from '../controls.js';
 import {forceFrenoySync} from '../../actions/matchActions.js';
 
 @connect(state => ({matches: state.matches}), {forceFrenoySync})
@@ -17,8 +16,6 @@ export class AdminMatches extends Component {
   }
 
   render() {
-    const t = this.context.t;
-
     return (
       <div style={{paddingLeft: 15}}>
         <h1>Force Frenoy Sync</h1>

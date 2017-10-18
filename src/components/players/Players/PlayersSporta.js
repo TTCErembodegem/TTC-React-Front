@@ -3,9 +3,8 @@ import PropTypes, {connect} from '../../PropTypes.js';
 import cn from 'classnames';
 import Table from 'react-bootstrap/lib/Table';
 
-import {Telephone, Icon, Email, ExcelButton} from '../../controls.js';
 import {PlayerFrenoyLink} from '../PlayerCard.js';
-import {PlayerPlayingStyleForm} from "../PlayerPlayingStyle.js";
+import {PlayerPlayingStyleForm} from '../PlayerPlayingStyle.js';
 
 
 @connect(state => ({players: state.players}))

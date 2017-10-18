@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes, {connect} from '../../PropTypes.js';
 import cn from 'classnames';
-import Button from 'react-bootstrap/lib/Button';
 import {Icon} from '../Icon.js';
 
 @connect(state => ({user: state.user}))
@@ -12,6 +11,7 @@ export class ExcelButton extends Component {
     tooltip: PropTypes.string,
     className: PropTypes.string,
     style: PropTypes.any,
+    user: PropTypes.UserModel.isRequired,
   }
 
   constructor() {
@@ -27,7 +27,7 @@ export class ExcelButton extends Component {
 
     this.props.onClick()
       .catch(err => {
-        console.error('err', err);
+        console.error('err', err); // eslint-disable-line
       })
       .then(() => this.setState({isDownloading: false}));
   }

@@ -1,19 +1,17 @@
 import React, {Component} from 'react';
-import PropTypes, {connect, withViewport, storeUtil, browserHistory} from '../PropTypes.js';
+import PropTypes, {connect, withViewport, browserHistory} from '../PropTypes.js';
 import moment from 'moment';
-import cn from 'classnames';
 import Immutable from 'immutable';
 import http from '../../utils/httpClient.js';
+import _ from 'lodash';
 
 import {TabbedContainer} from '../controls/TabbedContainer.js';
-
-import {OwnClubId} from '../../models/ClubModel.js';
 import {editMatchPlayers} from '../../actions/matchActions.js';
 
 import {DivisionRanking} from './DivisionRanking.js';
 import {TeamOverview} from './TeamOverview.js';
 import {TeamHeader, TeamTabTitle} from './TeamHeader.js';
-import {Icon, TrophyIcon, Badgy, SaveButton, FrenoyButton, ExcelButton, ButtonStack, EditButton} from '../controls.js';
+import {SaveButton, FrenoyButton, ExcelButton, ButtonStack, EditButton} from '../controls.js';
 import {SwitchBetweenFirstAndLastRoundButton} from './SwitchBetweenFirstAndLastRoundButton.js';
 import PlayersCardGallery from '../players/PlayersCardGallery.js';
 import MatchesTable from '../matches/MatchesTable.js';
@@ -90,7 +88,6 @@ export default class Teams extends Component {
     if (props.user.canEditMatchesOrIsCaptain()) {
       var alreadyPicked = [];
       props.matches.forEach(match => {
-        const team = match.getTeam();
         const formation = match.getPlayerFormation(this._getPlayerStatus());
         const matchPicked = formation.map(frm => Object.assign({}, frm, {matchId: match.id})).toArray();
         Array.prototype.push.apply(alreadyPicked, matchPicked);
@@ -155,13 +152,17 @@ export default class Teams extends Component {
 
           {view.startsWith('matches') && this.props.user.canEditMatchesOrIsCaptain() && matches.some(m => !m.isSyncedWithFrenoy) ? (
             <div className="pull-right" style={{marginLeft: 5}}>
-              {this.state.editMode && view != 'matches' ? (
+              {this.state.editMode && view !== 'matches' ? (
                 <div style={{display: 'inline'}}>
                   <button className="btn btn-danger" style={{marginRight: 5}} onClick={this._saveAndBlockAll.bind(this, true)}>
                     {this.context.t('match.plys.saveAndBlockAll')}
                   </button>
                   {this.props.user.canManageTeams() ? (
-                    <SaveButton onClick={this._saveAndBlockAll.bind(this, false)} title={this.context.t('match.plys.tooltipSave')} style={{marginRight: 5}} />
+                    <SaveButton
+                      onClick={this._saveAndBlockAll.bind(this, false)}
+                      title={this.context.t('match.plys.tooltipSave')}
+                      style={{marginRight: 5}}
+                    />
                   ) : null}
                 </div>
               ) : null}
@@ -197,17 +198,17 @@ export default class Teams extends Component {
     }
 
     _(this.state.tablePlayers)
-    .filter(tb => this.state.tableMatches.indexOf(tb.matchId) !== -1)
-    .groupBy('matchId')
-    .forOwn((plyInfos, matchId) => {
-      this.props.editMatchPlayers({
-        matchId: matchId,
-        playerIds: plyInfos.map(x => x.id),
-        blockAlso: true,
-        newStatus: !majorBlock ? 'Captain' : this._getPlayerStatus()
-      }, false)
-      .catch(e => console.error('saveAndBlockAll', e));
-    });
+      .filter(tb => this.state.tableMatches.indexOf(tb.matchId) !== -1)
+      .groupBy('matchId')
+      .forOwn((plyInfos, matchId) => {
+        this.props.editMatchPlayers({
+          matchId: matchId,
+          playerIds: plyInfos.map(x => x.id),
+          blockAlso: true,
+          newStatus: !majorBlock ? 'Captain' : this._getPlayerStatus()
+        }, false)
+        .catch(e => console.error('saveAndBlockAll', e)); // eslint-disable-line
+      });
     this.setState({tableMatches: []});
   }
   _renderTabViewContent(team, matches) {
@@ -225,7 +226,9 @@ export default class Teams extends Component {
             tableForm={this.props.params.view === 'matchesTable'}
             team={team}
             tablePlayers={this.state.tablePlayers}
-            onTablePlayerSelect={(plyInfos, match) => this.setState({tablePlayers: plyInfos, tableMatches: this.state.tableMatches.concat([match.id])})}
+            onTablePlayerSelect={(plyInfos, match) => {
+              this.setState({tablePlayers: plyInfos, tableMatches: this.state.tableMatches.concat([match.id])});
+            }}
           />
 
           <SwitchBetweenFirstAndLastRoundButton setState={::this.setState} matchesFilter={this.state.matchesFilter} t={this.context.t} />
@@ -239,7 +242,7 @@ export default class Teams extends Component {
       return <PlayersCardGallery players={Immutable.List(team.getPlayers().map(x => x.player))} />;
 
     case 'week':
-      return <TeamMatchesWeek team={team} />
+      return <TeamMatchesWeek team={team} />;
 
     case 'main':
     default:

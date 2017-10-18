@@ -1,11 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes, {connect, browserHistory} from '../PropTypes.js';
-import moment from 'moment';
-import * as adminActions from '../../actions/adminActions.js';
 
-import {Icon, ButtonStack, EmailButton, EditButton} from '../controls.js';
+import {ButtonStack, EditButton} from '../controls.js';
 import MatchesTable from './MatchesTable.js';
-import Button from 'react-bootstrap/lib/Button';
 import {MatchesWeekEmail} from './MatchesWeeks/MatchesWeekEmail.js';
 import {WeekTitle} from './MatchesWeeks/WeekTitle.js';
 import {WeekCalcer} from './MatchesWeeks/WeekCalcer.js';
@@ -16,6 +13,7 @@ export default class MatchesWeek extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     matches: PropTypes.MatchModelList.isRequired,
+    freeMatches: PropTypes.MatchModelList.isRequired,
     user: PropTypes.UserModel.isRequired,
     params: PropTypes.shape({
       tabKey: PropTypes.string, // : number == current Frenoy week
@@ -97,7 +95,10 @@ export default class MatchesWeek extends Component {
             <EditButton onClick={() => this.setState({editMode: !this.state.editMode})} />
           ) : null}
           {this.props.user.isAdmin() && matches.some(m => !m.isSyncedWithFrenoy) ? (
-            <MatchesWeekEmail weekCalcer={weekCalcer} matches={matches.filter(x => !this.state.filter || x.competition === this.state.filter).filter(x => x.shouldBePlayed)} />
+            <MatchesWeekEmail
+              weekCalcer={weekCalcer}
+              matches={matches.filter(x => !this.state.filter || x.competition === this.state.filter).filter(x => x.shouldBePlayed)}
+            />
           ) : null}
         </span>
 
@@ -126,4 +127,10 @@ const MatchesWeekPerCompetition = ({comp, editMode, matches}) => {
       <MatchesTable editMode={editMode} matches={matches.sort(matchSorter)} ownTeamLink="week" />
     </div>
   );
+};
+
+MatchesWeekPerCompetition.propTypes = {
+  comp: PropTypes.oneOf(['Vttl', 'Sporta']).isRequired,
+  editMode: PropTypes.bool.isRequired,
+  matches: PropTypes.MatchModelList.isRequired,
 };

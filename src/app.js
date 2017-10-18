@@ -20,7 +20,7 @@ Promise.config({
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
-import { showSnackbar } from './actions/configActions.js';
+import {showSnackbar} from './actions/configActions.js';
 import http from './utils/httpClient.js';
 window.onerror = function(message, source, lineno, colno, error) { // eslint-disable-line
   console.log('oh noes!', arguments); // eslint-disable-line
@@ -31,7 +31,7 @@ window.onerror = function(message, source, lineno, colno, error) { // eslint-dis
 import moment from 'moment';
 moment.locale('nl');
 
-import { validateToken } from './actions/userActions.js';
+import {validateToken} from './actions/userActions.js';
 var token = localStorage.getItem('token');
 if (token) {
   store.dispatch(validateToken(token));

@@ -7,7 +7,7 @@ import _ from 'lodash';
 
 const React = require('react');
 
-module.exports = React.createClass({
+export const TimeAgo = React.createClass({
   displayName: 'Time-Ago',
   timeoutId: 0,
   getDefaultProps: function() {

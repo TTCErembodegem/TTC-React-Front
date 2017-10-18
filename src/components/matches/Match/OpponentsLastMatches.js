@@ -1,12 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes, {withViewport} from '../../PropTypes.js';
-import {Link, browserHistory} from 'react-router';
 
 import Table from 'react-bootstrap/lib/Table';
 import IconButton from 'material-ui/IconButton';
-import OpponentPlayer from './OpponentPlayer.js';
 import {Spinner} from '../../controls.js';
-import MatchScore from '../MatchScore.js';
 import {OtherMatchPlayerResultsTableRow} from './OtherMatchPlayerResults.js';
 import {MatchPlayerRankings} from '../controls/MatchPlayerRankings.js';
 
@@ -44,7 +41,6 @@ export default class OpponentsLastMatches extends Component {
     }
 
     return (
-      <div>
       <Table condensed className="match-card-tab-table">
         <thead>
           <tr>
@@ -76,8 +72,11 @@ export default class OpponentsLastMatches extends Component {
                   <td key="3">{match.getClub('away').name} {match.away.teamCode}</td>
                 ] : (
                   <td key="4">
-                    {isHomeMatch ? (match.getClub('away').name + ' ' + match.away.teamCode)
-                    : (match.getClub('home').name + ' ' + match.home.teamCode)}
+                    {isHomeMatch ? (
+                      match.getClub('away').name + ' ' + match.away.teamCode
+                    ) : (
+                      match.getClub('home').name + ' ' + match.home.teamCode
+                    )}
                   </td>
                 )}
 
@@ -97,7 +96,6 @@ export default class OpponentsLastMatches extends Component {
           ) : null}
         </tbody>
       </Table>
-      </div>
     );
   }
 }

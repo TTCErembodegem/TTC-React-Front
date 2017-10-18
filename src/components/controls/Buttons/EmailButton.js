@@ -1,6 +1,5 @@
-import React, {Component} from 'react';
-import PropTypes, {connect} from '../../PropTypes.js';
-import cn from 'classnames';
+import React from 'react';
+import PropTypes from '../../PropTypes.js';
 import Button from 'react-bootstrap/lib/Button';
 import {Icon} from '../Icon.js';
 
@@ -9,3 +8,9 @@ export const EmailButton = ({onClick, className, style}) => (
     <Icon fa="fa fa-envelope-o" />
   </Button>
 );
+
+EmailButton.propTypes = {
+  onClick: PropTypes.func,
+  className: PropTypes.string,
+  style: PropTypes.object,
+};

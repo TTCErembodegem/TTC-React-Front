@@ -2,15 +2,14 @@ import React, {Component} from 'react';
 import PropTypes, {connect, withViewport, withContext, withStyles} from '../PropTypes.js';
 import moment from 'moment';
 
-import {Strike, Location} from '../controls.js';
+import {Strike} from '../controls.js';
 import MatchCardHeader from '../matches/Match/MatchCardHeader.js';
 
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
-import Paper from 'material-ui/Paper';
 import Typist from 'react-typist';
 import * as Sponsor from './Sponsors.js';
-import {Eetfestijn} from './Eetfestijn.js';
+//import {Eetfestijn} from './Eetfestijn.js';
 
 @connect(state => {
   return {
@@ -146,12 +145,12 @@ class RestartingTypist extends Component {
   }
   state = {typing: true}
   done = () => {
-    this.setState({ typing: false }, () => {
-      setTimeout(() => this.setState({ typing: true }), this.props.timeout || 1200);
+    this.setState({typing: false}, () => {
+      setTimeout(() => this.setState({typing: true}), this.props.timeout || 1200);
     });
   }
   render() {
-    const {children, timeout, ...props} = this.props;
+    const {children, timeout, ...props} = this.props; // eslint-disable-line
     return this.state.typing ? <Typist {...props} onTypingDone={this.done}>{children}</Typist> : <span>{children}</span>;
   }
 }
@@ -171,6 +170,11 @@ const Loading = ({t, bigScreen}) => (
     </div>
   </div>
 );
+
+Loading.propTypes = {
+  t: PropTypes.func.isRequired,
+  bigScreen: PropTypes.bool.isRequired,
+};
 
 
 class TodaysEvents extends Component {

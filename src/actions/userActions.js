@@ -1,10 +1,10 @@
-import { browserHistory } from 'react-router';
+import {browserHistory} from 'react-router';
 import * as ActionTypes from './ActionTypes.js';
 import http from '../utils/httpClient.js';
 import storeUtil from '../storeUtil.js';
 import initialLoad from './initialLoad.js';
-import { showSnackbar } from './configActions.js';
-import { broadcastSnackbar } from '../hub.js';
+import {showSnackbar} from './configActions.js';
+import {broadcastSnackbar} from '../hub.js';
 
 import trans from '../locales.js';
 
@@ -82,7 +82,9 @@ export function setNewPasswordFromGuid({guid, playerId, password}) {
 }
 
 export function adminSetNewPassword({playerId, newPassword}) {
-  if (typeof playerId === 'string') playerId = -1;
+  if (typeof playerId === 'string') {
+    playerId = -1;
+  }
   return dispatch => {
     return http.post('/users/AdminSetNewPassword', {playerId, newPassword})
       .then(function() {

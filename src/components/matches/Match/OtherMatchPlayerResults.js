@@ -26,7 +26,7 @@ export class OtherMatchPlayerResults extends Component {
   }
 }
 
-export const OtherMatchPlayerResultsTableRow = ({show, match, colSpan = 5}) => {
+export const OtherMatchPlayerResultsTableRow = ({match, show, colSpan = 5}) => {
   if (!show) {
     return null;
   }
@@ -38,4 +38,11 @@ export const OtherMatchPlayerResultsTableRow = ({show, match, colSpan = 5}) => {
       </td>
     </tr>
   );
+};
+
+
+OtherMatchPlayerResultsTableRow.propTypes = {
+  match: PropTypes.MatchModel.isRequired,
+  show: PropTypes.bool,
+  colSpan: PropTypes.number,
 };

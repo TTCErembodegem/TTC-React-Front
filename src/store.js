@@ -1,12 +1,12 @@
-import { createStore, applyMiddleware, compose } from 'redux';
-//import { devTools } from 'redux-devtools';
+import {createStore, applyMiddleware, compose} from 'redux';
+//import {devTools} from 'redux-devtools';
 //import createLogger from 'redux-logger';
 import thunk from 'redux-thunk';
 
 import rootReducer from './reducers';
 
 var finalCreateStore;
-if (false) {
+if (false) { // eslint-disable-line
   //console.error('finalCreateStore DEBUG');
   finalCreateStore = compose(
     //applyMiddleware(createLogger({collapsed: true})),
