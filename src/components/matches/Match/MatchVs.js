@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-import PropTypes from '../../PropTypes.js';
+import PropTypes, {browseTo} from '../../PropTypes.js';
 import cn from 'classnames';
 import {Icon} from '../../controls/Icon.js';
-import {browseTo} from '../../../routes.js';
 import {DivisionRankingLabel, OurDivisionRankingLabel} from '../controls/DivisionRankingLabel.js';
 
 export default class MatchVs extends Component {

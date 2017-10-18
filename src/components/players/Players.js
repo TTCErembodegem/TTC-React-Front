@@ -42,7 +42,7 @@ export default class Players extends Component {
 
     var tabContent;
     switch (tabKey) {
-    case 'all':
+    case 'list':
       tabContent = this._renderTabAll();
       break;
     case 'vttl':
@@ -65,8 +65,8 @@ export default class Players extends Component {
 
   render() {
     const tabKeysConfig = [{
-      key: 'all',
-      title: this.context.t('players.all'),
+      key: 'gallery',
+      title: this.context.t('players.gallery'),
     }, {
       key: 'vttl',
       title: 'Vttl',
@@ -74,15 +74,15 @@ export default class Players extends Component {
       key: 'sporta',
       title: 'Sporta',
     }, {
-      key: 'gallery',
-      title: this.context.t('players.gallery'),
+      key: 'list',
+      title: this.context.t('players.list'),
     }];
 
     return (
       <div style={{marginTop: 20, marginBottom: 10}}>
         <TabbedContainer
           params={this.props.params}
-          defaultTabKey="all"
+          defaultTabKey={this.props.viewport.width < 450 ? 'list' : 'gallery'}
           tabKeys={tabKeysConfig}
           tabRenderer={::this._renderTabContent}
           route={{base: this.context.t.route('players'), subs: 'playerTabs'}}

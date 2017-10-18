@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PropTypes, {connect} from '../PropTypes.js';
+import PropTypes, {connect, browseTo} from '../PropTypes.js';
 
 import Panel from 'react-bootstrap/lib/Panel';
 import PlayerImage from './PlayerImage.js';
@@ -97,7 +97,13 @@ export const PlayerCompetition = ({comp, player, t, withName = false}) => {
   return (
     <span>
       {isCaptain ? <TeamCaptainIcon t={t} /> : null}
-      {withName ? <strong>{player.alias}</strong> : <span>{comp} {team ? team.teamCode : null}</span>}
+      {withName ? (
+        <strong>{player.alias}</strong>
+      ) : (
+        <a onClick={() => browseTo.team(team)} className="link-hover-underline">
+          {comp} {team ? team.teamCode : null}
+        </a>
+      )}
       <small style={{marginLeft: 10}}>{compDetails.ranking} <PlayerFrenoyLink comp={compDetails} /></small>
     </span>
   );

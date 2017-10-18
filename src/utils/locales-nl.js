@@ -15,7 +15,7 @@ export default {
 
     players: '/spelers',
     playerTabs: {
-      all: 'alle',
+      list: 'lijst',
       vttl: 'vttl',
       sporta: 'sporta',
       gallery: 'gallerij',
@@ -176,8 +176,8 @@ export default {
       title: 'Spelers overzicht ${a}',
       search: 'Speler zoeken',
 
-      all: 'Alle',
-      gallery: 'Gallerij',
+      list: 'Lijst',
+      gallery: 'Spelers',
 
       downloadExcel: 'Excel spelerslijst downloaden',
       downloadExcelFileName: 'Spelerslijst',
