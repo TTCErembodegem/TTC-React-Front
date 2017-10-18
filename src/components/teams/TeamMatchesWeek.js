@@ -46,18 +46,17 @@ export class TeamMatchesWeek extends Component {
 
     const weekCalcer = new WeekCalcer(otherMatches, this.state.currentWeek);
 
-    const thisWeekMatches = otherMatches.filter(m => m.week === weekCalcer.currentWeek);
-
     var prevWeekMatches = null;
     if (!this.state.currentWeek && weekCalcer.currentWeek > weekCalcer.firstWeek) {
-      prevWeekMatches = otherMatches.filter(m => m.week === weekCalcer.currentWeek - 1);
+      const prevWeekCalcer = new WeekCalcer(otherMatches, weekCalcer.currentWeek - 1);
+      prevWeekMatches = prevWeekCalcer.getMatches();
     }
 
     return (
       <div>
         <FrenoyWeekButton team={this.props.team} week={weekCalcer.currentWeek} className="pull-right" style={{marginRight: 10}} />
         <WeekTitle weekCalcer={weekCalcer} weekChange={weekDiff => this.setState({currentWeek: weekCalcer.currentWeek + weekDiff})} />
-        <OpponentMatches team={this.props.team} readonlyMatches={thisWeekMatches} />
+        <OpponentMatches team={this.props.team} readonlyMatches={weekCalcer.getMatches()} />
 
         {prevWeekMatches ? (
           <div style={{marginTop: 50}}>

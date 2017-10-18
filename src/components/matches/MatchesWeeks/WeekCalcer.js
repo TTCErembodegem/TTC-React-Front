@@ -9,6 +9,7 @@ export class WeekCalcer {
 
   getMatches() {
     const week = this.getWeek();
+    // TODO: the includeFreeMatches is broken because this.weeks needs a weekSorta and weekVttl prop...
     const matchFilter = match => match.date.isBetween(week.start, week.end) || (this.includeFreeMatches && match.week === this.currentWeek);
     return this.matches.filter(matchFilter);
   }
@@ -40,8 +41,15 @@ export class WeekCalcer {
     this.lastWeek = this.weeks.length;
 
     if (!this.currentWeek) {
-      const nowWeek = moment().startOf('week');
-      this.currentWeek = this.weeks.findIndex(w => w.start.isSame(nowWeek, 'day')) + 1;
+      let testWeek = moment().startOf('week');
+      while (!this.currentWeek) {
+        this.currentWeek = this.weeks.findIndex(w => w.start.isSame(testWeek, 'day')) + 1;
+        testWeek = testWeek.add(1, 'week');
+        if (testWeek.isAfter(this.weeks[this.weeks.length - 1].end)) {
+          this.currentWeek = this.lastWeek;
+          break;
+        }
+      }
     }
   }
 }
