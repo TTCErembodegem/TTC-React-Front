@@ -13,3 +13,4 @@ export * from './controls/controls/Telephone.js';
 export * from './controls/controls/TimeAgo.js';
 
 export * from './players/PlayerCard.js';
+export * from './players/controls/PlayerAddress.js';

@@ -24,6 +24,9 @@ export class Telephone extends Component {
 
     const {number, hideIcon, player, ...props} = this.props;
     var nr = player ? player.contact.mobile : number;
+    if (!nr) {
+      return null;
+    }
     if (hideIcon) {
       return <a href={'tel:' + callFormat(nr)} {...props}>{displayMobile(nr)}</a>;
     }

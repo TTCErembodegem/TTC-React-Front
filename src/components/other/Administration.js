@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes, {connect, storeUtil} from '../PropTypes.js';
 import Panel from 'react-bootstrap/lib/Panel';
-import Image from 'react-bootstrap/lib/Image';
-import {Email, Telephone} from '../controls.js';
-import {playerUtils} from '../../models/PlayerModel.js';
+import {Email, Telephone, PlayerAddress} from '../controls.js';
+import PlayerImage from '../players/PlayerImage.js';
 
 @connect(state => ({
   players: state.players,
@@ -36,26 +35,13 @@ export default class Administration extends Component {
                 </span>
               )}>
 
-                <div style={{textAlign: 'center', marginBottom: 15}}>
-                  <Image src={playerUtils.getImageUrl(manager.playerId)} circle />
-                </div>
-
-                <i className="fa fa-envelope" style={{marginRight: 8}} />
-                <Email email={manager.contact.email} />
+                <PlayerImage playerId={manager.playerId} center />
                 <br />
+                <Email email={manager.contact.email} showIcon />
+                <br />
+                <Telephone player={manager} />
 
-                <i className="fa fa-phone" style={{marginRight: 8}} />
-                <Telephone player={manager} hideIcon />
-
-                {manager.contact.address ? (
-                  <div style={{marginTop: 10}}>
-                    <strong>{this.context.t('player.address')}</strong>
-                    <br />
-                    {manager.contact.address}
-                    <br />
-                    {manager.contact.city}
-                  </div>
-                ) : null}
+                <PlayerAddress contact={manager.contact} style={{marginTop: 10}} />
               </Panel>
             </div>
           ))}

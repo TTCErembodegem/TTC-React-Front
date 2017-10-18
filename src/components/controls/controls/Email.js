@@ -5,12 +5,22 @@ export class Email extends Component {
   static propTypes = {
     email: PropTypes.string,
     className: PropTypes.string,
+    showIcon: PropTypes.bool,
   };
 
   render() {
     const email = this.props.email;
     if (!email) {
       return null;
+    }
+
+    if (this.props.showIcon) {
+      return (
+        <span>
+          <i className="fa fa-envelope-o" style={{marginRight: 8}} />
+          <a href={'mailto:' + email} className={this.props.className}>{email}</a>
+        </span>
+      );
     }
 
     return (

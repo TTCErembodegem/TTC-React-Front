@@ -36,6 +36,10 @@ export default class PlayerImage extends Component {
       );
     }
 
-    return <div style={{textAlign: align}}><img src={this.state.img} /></div>;
+    return (
+      <div style={{textAlign: align}}>
+        <img src={this.state.img} className="img-circle" style={{height: 200}} />
+      </div>
+    );
   }
 }

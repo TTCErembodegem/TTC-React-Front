@@ -1,66 +1,49 @@
 import React, {Component} from 'react';
 import PropTypes from '../PropTypes.js';
 
-import {Card} from 'material-ui/Card';
+import Panel from 'react-bootstrap/lib/Panel';
 import PlayerImage from './PlayerImage.js';
-import {Email, Icon, Telephone} from '../controls.js';
+import {Email, Icon, Telephone, PlayerAddress} from '../controls.js';
 import {PlayerPlayingStyleForm} from './PlayerPlayingStyle.js';
 
 export default class PlayerCard extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
-    id: PropTypes.number.isRequired,
-    alias: PropTypes.string,
-    name: PropTypes.string.isRequired,
-    contact: PropTypes.shape({
-      mobile: PropTypes.string,
-      address: PropTypes.string,
-      city: PropTypes.string,
-    }),
-    style: PropTypes.shape({
-      name: PropTypes.string,
-      bestStroke: PropTypes.string
-    }),
-    children: PropTypes.any
+    player: PropTypes.PlayerModel.isRequired,
   };
 
   render() {
-    const player = this.props;
-    const cardWidth = 350;
+    const {player} = this.props;
     return (
-      <Card style={{width: cardWidth, height: 256}}>
-        {player.style ? (
-          <PlayerPlayingStyleForm player={player} iconStyle="edit-icon" style={{color: '#d3d3d3', float: 'right', display: 'inline'}} />
-        ) : null}
-        <div style={{float: 'left'}}>
-          <PlayerImage playerId={player.id} center={false} />
+      <Panel style={{height: 440}} header={(
+        <div style={{height: 40}}>
+          <div style={{float: 'left'}}>
+            <strong>{player.name}</strong>
+            <br />
+            {player.style ? player.style.name : null}
+          </div>
+
+          <div style={{textAlign: 'right', float: 'right'}}>
+            <PlayerAllCompetitions player={player} t={this.context.t} />
+          </div>
+          <div style={{clear: 'both'}} />
         </div>
-        <div style={{float: 'left', marginLeft: 6, width: cardWidth - 208}}>
-          <h4 style={{marginBottom: 0, marginTop: 0}}>{player.name.length > 15 && player.alias ? player.alias : player.name}</h4>
-          {player.contact.email ? (
-            <div className="truncate" style={{width: 150}}>
-              <Email email={player.contact.email} />
-            </div>
-          ) : null}
-          <Telephone player={player} hideIcon />
+      )}>
 
-          {this.props.children}
+        <PlayerPlayingStyleForm player={player} iconStyle="edit-icon" style={{color: '#d3d3d3', float: 'right'}} />
 
-          {player.contact.address ? (
-            <div style={{marginTop: 10}}>
-              <strong>{this.context.t('player.address')}</strong>
-              <br />
-              {player.contact.address}
-              <br />
-              {player.contact.city}
-            </div>
-          ) : null}
-
-        </div>
-      </Card>
+        <PlayerImage playerId={player.id} center />
+        <br />
+        <Email email={player.contact.email} showIcon />
+        <br />
+        <Telephone player={player} />
+        <PlayerAddress contact={player.contact} style={{marginTop: 10}} />
+      </Panel>
     );
   }
 }
+
+
 PlayerCard.Competition = ({player, t}) => (
   <div style={{marginTop: 5}}>
     <strong>{t('common.competition')}</strong>
