@@ -54,7 +54,7 @@
 .match-lost {
   background-color: #FF5144;
 }
-.match-lost:hover {
+.match-lost.clickable:hover {
   background-color: #ff3122;
 }
 
@@ -62,7 +62,7 @@
 .match-won {
   background-color: #6BCBFF;
 }
-.match-won:hover {
+.match-won.clickable:hover {
   background-color: #49bfff;
 }
 
@@ -70,7 +70,7 @@
 .match-draw {
   background-color: #FF9E4F;
 }
-.match-draw:hover {
+.match-draw.clickable:hover {
   background-color: #ff8b2d;
 }
 

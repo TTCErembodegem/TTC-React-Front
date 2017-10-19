@@ -64,7 +64,7 @@ export default class MatchScore extends Component {
           return (
             <Link to={this.context.t.route('match', {matchId: match.id})}>
               <span
-                className={cn('label label-as-badge', classColor2)}
+                className={cn('label label-as-badge clickable', classColor2)}
                 title={this.context.t('match.previousEncounterScore')}
                 style={this.props.style}>
 
@@ -81,7 +81,7 @@ export default class MatchScore extends Component {
     const classColor = match.isDerby ? 'match-won' : getClassName(match.isHomeMatch, score.home, score.out);
     return (
       <span
-        className={cn('label label-as-badge', classColor, {'faa-tada animated': this.state.isUpdated})}
+        className={cn('label label-as-badge clickable', classColor, {'faa-tada animated': this.state.isUpdated})}
         style={this.props.style}>
 
         <span>
