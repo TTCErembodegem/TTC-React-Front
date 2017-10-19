@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from '../../PropTypes.js';
-import {FrenoyLink} from './OpponentsFormation.js';
+import {FrenoyLink} from '../../controls.js';
 
 const OpponentPlayer = ({ply, t, competition}) => (
   <div>

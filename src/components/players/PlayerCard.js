@@ -18,7 +18,7 @@ export default class PlayerCard extends Component {
     const {player} = this.props;
     const loggedIn = this.props.user.playerId;
     return (
-      <Panel style={{height: loggedIn ? 440 : 300}} header={(
+      <Panel style={{height: loggedIn ? 410 : 300}} header={(
         <div style={{height: 40}}>
           <div style={{float: 'left'}}>
             <strong>{player.name}</strong>
@@ -39,8 +39,8 @@ export default class PlayerCard extends Component {
         <br />
         <Email email={player.contact.email} showIcon />
         <br />
-        <Telephone player={player} />
-        <PlayerAddress contact={player.contact} style={{marginTop: 10}} />
+        <Telephone player={player} style={{marginTop: 5}} />
+        <PlayerAddress contact={player.contact} style={{marginTop: 5}} />
       </Panel>
     );
   }

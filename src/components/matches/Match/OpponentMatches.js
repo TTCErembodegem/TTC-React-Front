@@ -70,6 +70,7 @@ export class OpponentMatches extends Component {
 }
 
 const OpponentTeamTitle = ({team, readonlyMatch, isHome}) => {
+  // TODO: @withViewport and hide DivisionRankingLabel on smaller devices
   const otherMatchTeamTitle = <OtherMatchTeamTitle team={team} readonlyMatch={readonlyMatch} isHome={isHome} />;
   if (readonlyMatch.isOurMatch) {
     return otherMatchTeamTitle;

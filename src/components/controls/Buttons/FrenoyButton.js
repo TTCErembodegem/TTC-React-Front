@@ -2,6 +2,23 @@ import React, {Component} from 'react';
 import PropTypes from '../../PropTypes.js';
 import cn from 'classnames';
 import {Icon} from '../Icon.js';
+import {createFrenoyLinkByUniqueId} from '../../../models/PlayerModel.js';
+
+
+export const FrenoyLink = ({competition, uniqueIndex}) => {
+  const frenoyLink = createFrenoyLinkByUniqueId(competition, uniqueIndex);
+  if (!frenoyLink) {
+    return null;
+  }
+  return <a href={frenoyLink} target="_blank"><Icon fa="fa fa-search" /></a>;
+};
+
+FrenoyLink.propTypes = {
+  competition: PropTypes.oneOf(['Vttl', 'Sporta']).isRequired,
+  uniqueIndex: PropTypes.number.isRequired,
+};
+
+
 
 export class FrenoyButton extends Component {
   static contextTypes = PropTypes.contextTypes;

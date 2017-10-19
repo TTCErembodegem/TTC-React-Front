@@ -18,12 +18,13 @@ export class PlayerAddress extends Component {
     }
 
     return (
-      <div style={style}>
-        <strong>{this.context.t('player.address')}</strong>
-        <br />
-        {contact.address}
-        <br />
-        {contact.city}
+      <div style={style} className="iconize">
+        <i className="fa fa-map-marker" style={{verticalAlign: 'top'}} />
+        <div>
+          {contact.address}
+          <br />
+          {contact.city}
+        </div>
       </div>
     );
   }

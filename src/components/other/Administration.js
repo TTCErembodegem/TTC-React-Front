@@ -39,9 +39,9 @@ export default class Administration extends Component {
                 <br />
                 <Email email={manager.contact.email} showIcon />
                 <br />
-                <Telephone player={manager} />
+                <Telephone player={manager} style={{marginTop: 5}} />
 
-                <PlayerAddress contact={manager.contact} style={{marginTop: 10}} />
+                <PlayerAddress contact={manager.contact} style={{marginTop: 5}} />
               </Panel>
             </div>
           ))}
