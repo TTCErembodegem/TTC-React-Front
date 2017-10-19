@@ -106,5 +106,5 @@ MatchManipulation.propTypes = {
   style: PropTypes.object,
   plusClick: PropTypes.func.isRequired,
   minClick: PropTypes.func.isRequired,
-  big: PropTypes.bool.isRequired,
+  big: PropTypes.bool,
 };

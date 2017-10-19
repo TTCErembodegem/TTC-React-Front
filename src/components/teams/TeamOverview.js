@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PropTypes from '../PropTypes.js';
+import PropTypes, {browseTo} from '../PropTypes.js';
 import moment from 'moment';
 import {OwnClubId} from '../../models/ClubModel.js';
 import cn from 'classnames';
@@ -63,14 +63,42 @@ class TeamOverviewRanking extends Component {
               style={{marginRight: 15, display: 'inline-block', fontSize: isOwnClub ? 14 : undefined, fontWeight: isOwnClub ? 'bold' : undefined}}
               className={cn({'label label-as-badge label-info': isOwnClub && !small})}
             >
-              {teamRanking.position}.&nbsp;
-              {storeUtil.getClub(teamRanking.clubId).name} {teamRanking.teamCode}
+              <OpponentLink
+                competition={team.competition}
+                position={teamRanking.position}
+                clubId={teamRanking.clubId}
+                teamCode={teamRanking.teamCode}
+                withLink={!isOwnClub}
+              />
               &nbsp;
               <span style={{marginLeft: 7}}>{points}</span>
             </div>
           );
         })}
       </div>
+    );
+  }
+}
+
+class OpponentLink extends Component {
+  static propTypes = {
+    withLink: PropTypes.bool,
+    competition: PropTypes.oneOf(['Vttl', 'Sporta']).isRequired,
+    position: PropTypes.number,
+    clubId: PropTypes.number.isRequired,
+    teamCode: PropTypes.string,
+  }
+  render() {
+    const {withLink, competition, position, clubId, teamCode} = this.props;
+    let clubName = storeUtil.getClub(clubId).name + ' ' + teamCode;
+    if (withLink) {
+      clubName = <a className="link-hover-underline" onClick={() => browseTo.opponent(competition, clubId, teamCode)}>{clubName}</a>;
+    }
+    return (
+      <span>
+        {position}.&nbsp;
+        {clubName}
+      </span>
     );
   }
 }

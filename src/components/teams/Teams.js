@@ -10,38 +10,13 @@ import {editMatchPlayers} from '../../actions/matchActions.js';
 
 import {DivisionRanking} from './DivisionRanking.js';
 import {TeamOverview} from './TeamOverview.js';
-import {TeamHeader, TeamTabTitle} from './TeamHeader.js';
+import {TeamHeader} from './controls/TeamHeader.js';
+import {TeamTabTitle} from './controls/TeamTabTitle.js';
 import {SaveButton, FrenoyButton, ExcelButton, ButtonStack, EditButton} from '../controls.js';
-import {SwitchBetweenFirstAndLastRoundButton} from './SwitchBetweenFirstAndLastRoundButton.js';
+import {SwitchBetweenFirstAndLastRoundButton, getFirstOrLastMatches, getFirstOrLast} from './SwitchBetweenFirstAndLastRoundButton.js';
 import PlayersCardGallery from '../players/PlayersCardGallery.js';
 import MatchesTable from '../matches/MatchesTable.js';
 import {TeamMatchesWeek} from './TeamMatchesWeek.js';
-
-export function getFirstOrLastMatches(allMatchesToCome, filter) {
-  if (filter === 'all') {
-    return {
-      matches: allMatchesToCome,
-      hasMore: false
-    };
-  }
-
-  const firstMatches = allMatchesToCome.filter(x => x.date.month() >= 7);
-  const lastMatches = allMatchesToCome.filter(x => x.date.month() < 7);
-  if (filter === 'first' && firstMatches.length !== 0) {
-    return {
-      matches: firstMatches,
-      hasMore: lastMatches.length !== 0
-    };
-  }
-  return {
-    matches: lastMatches,
-    hasMore: firstMatches.length !== 0
-  };
-}
-export function getFirstOrLast() {
-  const today = moment();
-  return today.month() >= 7 && !(today.month() === 11 && today.date() > 20) ? 'first' : 'last';
-}
 
 @connect(state => {
   return {
@@ -256,7 +231,7 @@ export default class Teams extends Component {
       return {
         key: team.teamCode,
         title: '',
-        headerChildren: <TeamTabTitle team={team} t={t} showRanking={this._isSmall()} />,
+        headerChildren: <TeamTabTitle team={team} showRanking={this._isSmall()} />,
       };
     });
 

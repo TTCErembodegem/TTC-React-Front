@@ -16,6 +16,7 @@ import RoutedMatchCard from './components/matches/Match/RoutedMatchCard.js';
 import Facts from './components/other/Facts.js';
 import Teams from './components/teams/Teams.js';
 import Admin from './components/admin/Admin.js';
+import {OpponentOverview} from './components/teams/OpponentOverview.js';
 
 import t from './locales.js';
 
@@ -35,6 +36,7 @@ const Routes = () => (
       <Route path={t.route('match')} component={RoutedMatchCard}/>
 
       <Route path={t.route('teams') + '(/:tabKey)(/:view)'} component={Teams}/>
+      <Route path={t.route('opponent')} component={OpponentOverview}/>
 
       <Route path={t.route('facts')} component={Facts} />
       <Route path={t.route('links')} component={Links} />
@@ -51,7 +53,14 @@ const Routes = () => (
 export const browseTo = {
   team(team, view = 'main') {
     browserHistory.push(t.route('teams').replace(':competition', team.competition) + '/' + team.teamCode + '/' + view);
-  }
+  },
+  opponent(competition, clubId, teamCode) {
+    browserHistory.push(t.route('opponent')
+      .replace(':competition', competition)
+      .replace(':clubId', clubId)
+      .replace(':teamCode', teamCode)
+    );
+  },
 };
 
 export default Routes;

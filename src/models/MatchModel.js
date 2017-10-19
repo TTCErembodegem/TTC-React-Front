@@ -56,7 +56,7 @@ export default class MatchModel {
       this.isDerby = json.opponent.clubId === OwnClubId;
     } else {
       // OtherMatch
-      this.home = json.home;
+      this.home = json.home; // teamCode, clubId
       this.away = json.away;
 
       this.isOurMatch = this.home.clubId === OwnClubId || this.away.clubId === OwnClubId;

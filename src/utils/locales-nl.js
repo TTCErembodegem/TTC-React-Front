@@ -27,6 +27,7 @@ export default {
     match: '/match/:matchId',
 
     teams: '/ploegen/:competition',
+    opponent: '/tegenstander/:competition/:clubId/:teamCode',
 
     admin: '/admin',
     links: '/links',
@@ -49,6 +50,8 @@ export default {
       teamFormation: 'Opstelling',
       competition: 'Competitie',
       date: 'Datum',
+      close: 'Sluiten',
+      all: 'Alle',
     },
     system: {
       playerSelect: 'Wie ben je?',

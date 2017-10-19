@@ -104,11 +104,11 @@ export default class TeamModel {
     return getPlayerStats(matches);
   }
 
-  isTopper() {
-    return this.getDivisionRanking().position < 3;
+  isTopper(opponent) {
+    return this.getDivisionRanking(opponent).position < 3;
   }
-  isInDegradationZone() {
-    return this.getDivisionRanking().position >= (this.ranking.length - 2);
+  isInDegradationZone(opponent) {
+    return this.getDivisionRanking(opponent).position >= (this.ranking.length - 2);
   }
 }
 

@@ -1,4 +1,5 @@
-import React, {PropTypes, Component} from 'react';
+import React, {Component} from 'react';
+import PropTypes from '../../PropTypes.js';
 import cn from 'classnames';
 
 export class Icon extends Component {

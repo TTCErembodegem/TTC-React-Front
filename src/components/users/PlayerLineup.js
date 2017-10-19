@@ -15,8 +15,7 @@ import FormControl from 'react-bootstrap/lib/FormControl';
 import {CommentButton} from '../controls.js';
 import MatchVs from '../matches/Match/MatchVs.js';
 import {CannotEditMatchIcon} from '../matches/MatchesTable.js';
-import {getFirstOrLastMatches, getFirstOrLast} from '../teams/Teams.js';
-import {SwitchBetweenFirstAndLastRoundButton} from '../teams/SwitchBetweenFirstAndLastRoundButton.js';
+import {SwitchBetweenFirstAndLastRoundButton, getFirstOrLastMatches, getFirstOrLast} from '../teams/SwitchBetweenFirstAndLastRoundButton.js';
 
 @connect(state => ({matches: state.matches}), {selectPlayer})
 export default class PlayerLinup extends Component {
@@ -57,7 +56,7 @@ export default class PlayerLinup extends Component {
       .sort((a, b) => a.date - b.date);
 
     const {matches, hasMore} = getFirstOrLastMatches(allMatchesToCome, this.state.matchesFilter);
-    const allText = t('players.all');
+    const allText = t('common.all');
     const activeFilter = this.state.filter || allText;
 
     return (

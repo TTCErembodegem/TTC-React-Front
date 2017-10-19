@@ -8,6 +8,7 @@ import {OtherMatchPlayerResultsTableRow} from './OtherMatchPlayerResults.js';
 import {MatchPlayerRankings} from '../controls/MatchPlayerRankings.js';
 import {OtherMatchTeamTitle} from './OtherMatchTeamTitle.js';
 import {OpponentMatchScore} from './OpponentMatchScore.js';
+import {SwitchBetweenFirstAndLastRoundButton, getFirstOrLastMatches, getFirstOrLast} from '../../teams/SwitchBetweenFirstAndLastRoundButton.js';
 
 @withViewport
 export class OpponentMatches extends Component {
@@ -16,11 +17,12 @@ export class OpponentMatches extends Component {
     readonlyMatches: PropTypes.object.isRequired,
     team: PropTypes.TeamModel.isRequired,
     viewport: PropTypes.viewport,
+    roundSwitchButton: PropTypes.bool,
   }
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {matchesFilter: getFirstOrLast()};
   }
 
   render() {
@@ -28,7 +30,8 @@ export class OpponentMatches extends Component {
     const widthWithDate = this.props.viewport.width > 500;
     const widthWithFormation = this.props.viewport.width > 770;
 
-    var matches = this.props.readonlyMatches;
+    const {matches} = getFirstOrLastMatches(this.props.readonlyMatches, this.state.matchesFilter);
+
     if (matches.size === 0) {
       return <div className="match-card-tab-content"><h3><Spinner /></h3></div>;
     }
@@ -64,6 +67,19 @@ export class OpponentMatches extends Component {
             ];
           })}
         </tbody>
+        {this.props.roundSwitchButton ? (
+          <tfoot>
+            <tr>
+              <td colSpan={6}>
+                <SwitchBetweenFirstAndLastRoundButton
+                  setState={::this.setState}
+                  matchesFilter={this.state.matchesFilter}
+                  t={this.context.t}
+                />
+              </td>
+            </tr>
+          </tfoot>
+        ) : null}
       </Table>
     );
   }

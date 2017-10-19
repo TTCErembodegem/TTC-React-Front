@@ -11,8 +11,8 @@ export const DivisionRankingLabel = ({divisionRanking}) => {
 
 DivisionRankingLabel.propTypes = {
   divisionRanking: PropTypes.shape({
-    position: PropTypes.number.isrequired,
-  }).isRequired,
+    position: PropTypes.number.isRequired,
+  }),
 };
 
 

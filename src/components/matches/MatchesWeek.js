@@ -71,7 +71,7 @@ export default class MatchesWeek extends Component {
     }
 
     const viewsConfig = [
-      {key: 'all', text: t('players.all')},
+      {key: 'all', text: t('common.all')},
       {key: 'Vttl', text: 'Vttl'},
       {key: 'Sporta', text: 'Sporta'}
     ];
