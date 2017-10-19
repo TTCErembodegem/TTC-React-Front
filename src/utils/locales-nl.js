@@ -252,6 +252,8 @@ export default {
       },
       report: {
         title: 'Wedstrijdverslag',
+        viewFull: 'Volledig wedstrijdblad bekijken',
+        viewDetails: 'Wedstrijdblad sluiten',
         editTooltip: 'Wedstrijdverslag wijzigen',
         noReport: 'Nog niets te bespeuren...',
         placeHolder: 'Vertel...',

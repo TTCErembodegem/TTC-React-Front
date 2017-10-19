@@ -166,7 +166,7 @@ export default class MatchCard extends Component {
       return this._renderPlayers();
 
     case tabEventKeys.individualMatches:
-      return <IndividualMatches match={this.props.match} ownPlayerId={this.props.user.playerId} t={this.context.t} />;
+      return <IndividualMatches match={this.props.match} />;
 
     case tabEventKeys.report:
       return <MatchReport match={this.props.match} t={this.context.t} user={this.props.user} viewport={this.props.viewport} />;

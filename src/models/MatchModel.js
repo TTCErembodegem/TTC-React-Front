@@ -235,8 +235,13 @@ export default class MatchModel {
       };
 
       if (result.home && result.out) {
-        result.ownPlayer = result.home.playerId ? result.home : result.out;
+        if (result.home.playerId || result.out.playerId) {
+          result.ownPlayer = result.home.playerId ? result.home : result.out;
+        } else {
+          // readonlyMatch does not have ownPlayer
+        }
       } else {
+        // TODO: bug with isDoubles see backend TODO in FrenoyMatchesApi.cs
         result.ownPlayer = {};
         result.isDoubles = true;
       }
