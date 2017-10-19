@@ -77,7 +77,7 @@ PlayerAllCompetitions.propTypes = {
 
 
 export const TeamCaptainIcon = ({t}) => (
-  <Icon fa="fa fa-star" color="#FFB00F" style={{marginRight: 5}} title={t('player.teamCaptain')} />
+  <Icon fa="fa fa-star" color="#FFB00F" style={{marginRight: 5}} tooltip={t('player.teamCaptain')} />
 );
 
 TeamCaptainIcon.propTypes = {t: PropTypes.func.isRequired};

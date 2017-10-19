@@ -402,7 +402,7 @@ ReadOnlyMatchPlayers.propTypes = {
 };
 
 // const MatchBlockIcon = ({match, t}) => (
-//   <Icon fa="fa fa-anchor" title={t('match.block.' + match.block)} style={{marginRight: 8}} color={match.block !== 'Major' ? 'gray' : null} />
+//   <Icon fa="fa fa-anchor" tooltip={t('match.block.' + match.block)} style={{marginRight: 8}} color={match.block !== 'Major' ? 'gray' : null} />
 // );
 
 

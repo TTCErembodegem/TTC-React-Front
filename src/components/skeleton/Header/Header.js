@@ -28,7 +28,7 @@ export default class Header extends Component {
     const loginOrProfile = !this.props.user.playerId ?
       <FlatButton label={t('nav.login')} onClick={() => browserHistory.push(t.route('login'))} /> :
       <Link className="Header-link Header-icon-right" to={t.route('profile')}>
-        <Icon fa="fa fa-2x fa-user" title={name} />
+        <Icon fa="fa fa-2x fa-user" tooltip={name} />
       </Link>;
 
     return (

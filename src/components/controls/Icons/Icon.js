@@ -9,6 +9,7 @@ export class Icon extends Component {
     onClick: PropTypes.func,
     className: PropTypes.string,
     tooltip: PropTypes.string,
+    title: PropTypes.string,
   };
 
   render() {
@@ -19,7 +20,7 @@ export class Icon extends Component {
         className={cn(fa, className, {
           clickable: !!onClick,
         })}
-        title={tooltip}
+        title={tooltip || props.title}
         onClick={onClick}
         style={{color: color, ...style}}
       />
