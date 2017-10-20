@@ -11,10 +11,14 @@ export function withTooltip(ComposedComponent) {
       tooltip: PropTypes.string,
       title: PropTypes.string,
       translate: PropTypes.bool,
-    };
+      tooltipPlacement: PropTypes.string,
+    }
+    static defaultProps = {
+      tooltipPlacement: 'top'
+    }
 
     render() {
-      const {tooltip, title, translate, ...props} = this.props;
+      const {tooltip, title, translate, tooltipPlacement, ...props} = this.props;
 
       var realTooltip = tooltip || title;
       if (!realTooltip) {
@@ -27,7 +31,7 @@ export function withTooltip(ComposedComponent) {
       }
 
       return (
-        <OverlayTrigger placement="top" overlay={<Tooltip id={id}>{realTooltip}</Tooltip>}>
+        <OverlayTrigger placement={tooltipPlacement} overlay={<Tooltip id={id}>{realTooltip}</Tooltip>}>
           <ComposedComponent {...props} />
         </OverlayTrigger>
       );

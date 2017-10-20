@@ -18,6 +18,7 @@ export class BackIcon extends Component {
         className={this.props.className}
         onClick={() => browserHistory.goBack()}
         tooltip={t('common.close')}
+        tooltipPlacement="left"
       />
     );
   }

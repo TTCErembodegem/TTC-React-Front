@@ -19,7 +19,7 @@ DivisionRankingLabel.propTypes = {
 
 export const OurDivisionRankingLabel = ({team}) => {
   const divisionRanking = team.getDivisionRanking('our-ranking');
-  if (!divisionRanking) {
+  if (!divisionRanking || !divisionRanking.position) {
     return null;
   }
 
