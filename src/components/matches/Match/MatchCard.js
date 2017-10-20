@@ -226,20 +226,18 @@ export default class MatchCard extends Component {
       return (
         <PlayersImageGallery
           players={standardPlayers}
-          user={this.props.user}
           competition={team.competition}
-          viewport={this.props.viewport}
-          viewportWidthContainerCount={this.props.viewportWidthContainerCount} />
+          viewportWidthContainerCount={this.props.viewportWidthContainerCount}
+        />
       );
     }
 
     return (
       <PlayersImageGallery
         players={playingPlayers}
-        user={this.props.user}
         competition={team.competition}
-        viewport={this.props.viewport}
-        viewportWidthContainerCount={this.props.viewportWidthContainerCount} />
+        viewportWidthContainerCount={this.props.viewportWidthContainerCount}
+      />
     );
   }
 }

@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
-import PropTypes, {connect, withContext} from '../PropTypes.js';
+import PropTypes, {connect, withContext, withViewport} from '../PropTypes.js';
+import cn from 'classnames';
 
 import * as playerActions from '../../actions/playerActions.js';
 import {playerUtils} from '../../models/PlayerModel.js';
 
 import {GridList, GridTile} from 'material-ui/GridList';
-import Paper from 'material-ui/Paper';
 
-import {Telephone} from '../controls.js';
+import {Telephone, FrenoyLink} from '../controls.js';
 import {PlayerPlayingStyle, PlayerPlayingStyleForm} from './PlayerPlayingStyle.js';
 import PlayerImage from './PlayerImage.js';
 
@@ -35,8 +35,9 @@ const editStyleIcon = {
   color: '#d3d3d3',
 };
 
-@connect(() => ({}), playerActions)
 @withContext
+@withViewport
+@connect(() => ({}), playerActions)
 export default class PlayersImageGallery extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
@@ -44,31 +45,22 @@ export default class PlayersImageGallery extends Component {
       PropTypes.PlayerModelList.isRequired,
       PropTypes.array.isRequired,
     ]),
-    user: PropTypes.UserModel.isRequired,
     competition: PropTypes.competition.isRequired,
     viewport: PropTypes.viewport,
     viewportWidthContainerCount: PropTypes.number.isRequired,
     subtitle: PropTypes.func,
+    forceSmall: PropTypes.bool,
   }
   static defaultProps = {
-    viewportWidthContainerCount: 1 // The amount of containers next to eachother that display a PlayersImageGallery
+    viewportWidthContainerCount: 1, // The amount of containers next to eachother that display a PlayersImageGallery
   }
 
   render() {
-    const {players, user, competition, viewport} = this.props;
+    const {players, competition, viewport} = this.props;
 
-    const playerPaperStyle = {
-      height: 80,
-      width: 150,
-      margin: 5,
-      display: 'inline-block',
-      padding: 5,
-    };
-
-    var gallery;
-    if (viewport.width > 600) {
+    if (viewport.width > 600 && !this.props.forceSmall) {
       // big image gallery
-      gallery = (
+      return (
         <div style={gridStyles.root}>
           <GridList
             cellHeight={PlayersImageHeight}
@@ -96,29 +88,45 @@ export default class PlayersImageGallery extends Component {
       );
     } else {
       // small card gallery
-      gallery = (
+      return (
         <div style={{cursor: 'default'}}>
           {this.props.players.map(ply => {
-            const comp = ply.getCompetition(competition);
-            return (
-              <Paper key={ply.id} zDepth={1} style={playerPaperStyle}>
-                <PlayerPlayingStyleForm player={ply} iconStyle="avatar" />
-                <strong style={{marginLeft: 5}}>{ply.alias}</strong> <small>{comp ? comp.ranking : '??'}</small>
 
-                {user.playerId ? <Telephone player={ply} style={{marginTop: 7}} /> : (
-                  <p className="ellipsis" style={{marginTop: 7}}>{ply.style.name}</p>
-                )}
-              </Paper>
+            return (
+              <div key={ply.id} className={cn({'col-xs-6': viewport.width > 420})} style={{padding: 8}}>
+                <div className="media">
+                  <div className="media-left">
+                    <PlayerPlayingStyleForm player={ply} iconStyle="avatar" />
+                  </div>
+                  <div className="media-body">
+                    <strong>{ply.name}</strong>
+                    <br />
+
+                    {this.props.subtitle ? this.props.subtitle(ply) : <SmallPlayerAvatarCard competition={competition} ply={ply} />}
+                  </div>
+                </div>
+              </div>
             );
           })}
         </div>
       );
     }
-
-    return (
-      <div>
-        {gallery}
-      </div>
-    );
   }
 }
+
+const SmallPlayerAvatarCard = ({competition, ply}) => { // eslint-disable-line
+  const comp = ply.getCompetition(competition);
+  return (
+    <span>
+      <span className="ellipsis" style={{marginTop: 7}}>{ply.style.name}</span>
+      {comp ? (
+        <small>
+          {' ' + comp.ranking + ' '}
+          <FrenoyLink competition={competition} uniqueIndex={ply.uniqueIndex} />
+        </small>
+      ) : null}
+      <br />
+      <Telephone player={ply} hideIcon />
+    </span>
+  );
+};

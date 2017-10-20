@@ -92,12 +92,12 @@ class AdminTeamPlayers extends Component {
 
           <PlayersImageGallery
             players={Immutable.List(team.getPlayers().map(ply => ply.player))}
-            user={this.props.user}
             competition={team.competition}
-            viewport={this.props.viewport}
-            subtitle={this._renderPlayerSubtitle.bind(this, team)} />
+            subtitle={this._renderPlayerSubtitle.bind(this, team)}
+            forceSmall
+          />
 
-          <br />
+          <div style={{clear: 'both'}} />
 
           <SelectField value={this.state.role} onChange={::this._onRoleChange} style={{width: 100, marginRight: 10}}>
             {_.toArray(teamPlayerType).map(role => <MenuItem key={role} value={role} primaryText={role} />)}
