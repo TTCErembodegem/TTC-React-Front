@@ -4,7 +4,7 @@ import PropTypes, {storeUtil} from '../../PropTypes.js';
 import {matchOutcome} from '../../../models/MatchModel.js';
 import rankingSorter from '../../../models/utils/rankingSorter.js';
 import {PlayerCompetitionBadge} from '../../players/PlayerBadges.js';
-import {Icon} from '../../controls/Icon.js';
+import {ThumbsUpIcon, ThumbsGreatIcon} from '../../controls/Icon.js';
 
 const OwnPlayer = ({match, ply, playerAsBadge = false}) => {
   const result = getRankingResults(match, ply);
@@ -28,7 +28,7 @@ const OwnPlayer = ({match, ply, playerAsBadge = false}) => {
           <strong>{plyInfo.player.alias}</strong>
         </span>
       )}
-      {result.win.size !== teamPlayerCount && result.win.size ? <Icon fa="fa fa-thumbs-o-up" style={{marginRight: 5, color: '#D3D3D3'}} /> : null}
+      {result.win.size !== teamPlayerCount && result.win.size ? <ThumbsUpIcon /> : null}
       {winNode}
     </div>
   );
@@ -63,7 +63,7 @@ function renderWinsNode(result, teamPlayerCount) {
         winNode += `, ${wins[key]}x${key}`;
       }
     });
-    winNode = result.win.size === teamPlayerCount ? <Icon fa="fa fa-thumbs-up" /> : <small>{winNode.substr(2)}</small>;
+    winNode = result.win.size === teamPlayerCount ? <ThumbsGreatIcon /> : <small>{winNode.substr(2)}</small>;
   }
   return winNode;
 }

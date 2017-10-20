@@ -4,7 +4,7 @@ import PropTypes, {connect, withViewport, keyMirror, storeUtil} from '../../Prop
 import * as matchActions from '../../../actions/matchActions.js';
 import {setSetting} from '../../../actions/configActions.js';
 
-import {Spinner, TabbedContainer, CommentIcon, EditIcon} from '../../controls.js';
+import {TabbedContainer, CommentIcon, EditIcon} from '../../controls.js';
 import {CardText} from 'material-ui/Card';
 
 import MatchCardHeader, {BigMatchCardHeader} from './MatchCardHeader.js';
@@ -181,7 +181,7 @@ export default class MatchCard extends Component {
       return this._renderOpponentsRanking();
 
     case tabEventKeys.opponentsFormation:
-      return this._renderOpponentFormation();
+      return <OpponentsFormation match={this.props.match} opponent={this.props.match.opponent} />;
 
     case tabEventKeys.admin:
       return (
@@ -211,17 +211,6 @@ export default class MatchCard extends Component {
         <OpponentsLastMatches opponent={this.props.match.opponent} readonlyMatches={theirOtherMatches} />
       </div>
     );
-  }
-  _renderOpponentFormation() {
-    const formations = storeUtil.matches
-      .getFormation(this.props.match)
-      .sort((a, b) => a.count < b.count ? 1 : -1);
-
-    if (formations.length === 0) {
-      return <div className="match-card-tab-content"><h3><Spinner /></h3></div>;
-    }
-
-    return <OpponentsFormation formations={formations} competition={this.props.match.competition} />;
   }
 
   _renderPlayers() {

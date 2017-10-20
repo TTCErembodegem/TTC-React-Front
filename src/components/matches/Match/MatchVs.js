@@ -22,6 +22,7 @@ export default class MatchVs extends Component {
   };
 
   render() {
+    const t = this.context.t;
     const {match, opponentOnly, themOnly} = this.props;
     const team = match.getTeam();
     const divisionRanking = team.getDivisionRanking(match.opponent);
@@ -74,7 +75,7 @@ export default class MatchVs extends Component {
     if (opponentOnly) {
       return (
         <span>
-          {match.isHomeMatch ? <Icon fa="fa fa-home" style={{marginRight: 5}} /> : null}
+          {match.isHomeMatch ? <Icon fa="fa fa-home" style={{marginRight: 5}} tooltip={t('common.matchAtHome')} /> : null}
           {them}
         </span>
       );

@@ -33,7 +33,7 @@ export class TeamPosition extends Component {
     }
 
     return (
-      <Badgy type={positionClassName} style={this.props.style}>
+      <Badgy type={positionClassName} style={this.props.style} translate tooltip="teamCalendar.teamRanking">
         {ranking.position} / {team.ranking.length}
       </Badgy>
     );

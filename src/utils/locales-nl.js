@@ -52,6 +52,7 @@ export default {
       date: 'Datum',
       close: 'Sluiten',
       all: 'Alle',
+      matchAtHome: 'Thuismatch',
     },
     system: {
       playerSelect: 'Wie ben je?',
@@ -233,7 +234,7 @@ export default {
       date: '${}u',
       vs: 'vs',
       topMatch: 'TOPPER',
-      degradationMatch: 'THRILLER',
+      thrillerMatch: '!! THRILLER !!',
       previousEncounterScore: 'Uitslag heenronde',
       gotoPreviousEncounter: 'Details heenronde',
       gotoNextEncounter: 'Details terugronde',
@@ -286,8 +287,7 @@ export default {
         outcome: 'Uitslag',
         timesPlayed: 'Aantredingen',
         player: 'Speler',
-        playerRanking: '',
-        victories: 'Overwinningen / Nederlagen',
+        victories: 'Overwinningen',
       },
       enemyVictory: '${}ov.',
       club: {
@@ -339,8 +339,10 @@ export default {
       matches: 'Matchen',
 
       matchesWonBadge: 'Overwinningen',
+      matchesWonAllBadge: 'Alles gewonnen!',
       matchesDrawBadge: 'Gelijk gespeeld',
-      matchesLostBadge: 'Verloren',
+      matchesLostBadge: 'Nederlagen',
+      teamRanking: 'Stand in de rangschikking',
 
       view: {
         main: 'Overzicht',
@@ -354,6 +356,7 @@ export default {
       frenoyresults: 'Ga naar resultaten op Frenoy',
       frenoyranking: 'Ga naar rangschikking op Frenoy',
       frenoyweek: 'Ga naar weekoverzicht op Frenoy',
+      frenoyPlayerResults: 'Ga naar spelerdetails op Frenoy',
     },
     facts: require('./locales-nl-facts.js')
   },

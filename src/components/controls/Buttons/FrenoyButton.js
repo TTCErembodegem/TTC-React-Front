@@ -4,13 +4,15 @@ import cn from 'classnames';
 import {Icon} from '../Icon.js';
 import {createFrenoyLinkByUniqueId} from '../../../models/PlayerModel.js';
 
+export const FrenoyPlayerDetailsIcon = () => <Icon fa="fa fa-search" translate tooltip="teamCalendar.frenoyPlayerResults" />;
+
 
 export const FrenoyLink = ({competition, uniqueIndex}) => {
   const frenoyLink = createFrenoyLinkByUniqueId(competition, uniqueIndex);
   if (!frenoyLink) {
     return null;
   }
-  return <a href={frenoyLink} target="_blank"><Icon fa="fa fa-search" /></a>;
+  return <a href={frenoyLink} target="_blank"><FrenoyPlayerDetailsIcon /></a>;
 };
 
 FrenoyLink.propTypes = {

@@ -3,7 +3,7 @@ import PropTypes, {connect, browseTo} from '../PropTypes.js';
 
 import Panel from 'react-bootstrap/lib/Panel';
 import PlayerImage from './PlayerImage.js';
-import {Email, Icon, Telephone, PlayerAddress} from '../controls.js';
+import {Email, Icon, Telephone, PlayerAddress, FrenoyPlayerDetailsIcon} from '../controls.js';
 import {PlayerPlayingStyleForm} from './PlayerPlayingStyle.js';
 
 @connect(state => ({user: state.user}))
@@ -120,7 +120,7 @@ PlayerCompetition.propTypes = {
 import {createFrenoyLink} from '../../models/PlayerModel.js';
 export const PlayerFrenoyLink = ({comp}) => (
   <a href={createFrenoyLink(comp)} target="_blank">
-    <Icon fa="fa fa-search" />
+    <FrenoyPlayerDetailsIcon />
   </a>
 );
 

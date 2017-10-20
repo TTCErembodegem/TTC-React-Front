@@ -6,6 +6,7 @@ import {getOpponentMatches} from '../../actions/matchActions.js';
 import {OpponentMatches} from '../matches/Match/OpponentMatches.js';
 import {TeamRankingBadges} from './controls/TeamRankingBadges.js';
 import {TeamPosition} from './controls/TeamPosition.js';
+import OpponentsFormation from '../matches/Match/OpponentsFormation.js';
 
 @connect(state => ({
   matches: state.matches,
@@ -65,13 +66,10 @@ export class OpponentOverview extends Component {
   }
 
   render() {
+    const t = this.context.t;
     const team = this._getTeam();
     const {competition, clubId, teamCode} = this._getQueryStringValues();
     const opponentClub = storeUtil.getClub(clubId);
-
-    if (!team || !opponentClub) {
-      return null;
-    }
 
     const opponent = {clubId, teamCode};
     const otherMatches = this.props.readonlyMatches
@@ -81,13 +79,19 @@ export class OpponentOverview extends Component {
       .filter(m => m.shouldBePlayed)
       .sort((a, b) => a.date - b.date);
 
+    if (!team || !opponentClub || otherMatches.size === 0) {
+      return null;
+    }
+
     return (
       <div style={{marginBottom: 30}}>
         <OpponentOverviewHeader team={team} opponent={opponent} />
-        <div className="col-md-6">
-          Matchen
-        </div>
+        <h3>{t('teamCalendar.individual')}</h3>
+        <OpponentsFormation match={otherMatches.first()} opponent={opponent} />
 
+
+
+        <h3>{t('teamCalendar.matches')}</h3>
         <OpponentMatches team={team} readonlyMatches={otherMatches} roundSwitchButton opponent={opponent} />
       </div>
     );

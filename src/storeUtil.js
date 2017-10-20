@@ -1,8 +1,8 @@
 import store from './store.js';
 import {OwnClubId} from './models/ClubModel.js';
 
-function getOpponentMatches(match) {
-  const opponent = match.opponent;
+function getOpponentMatches(match, opponent = undefined) {
+  opponent = opponent || match.opponent;
   const matches = store.getState().readonlyMatches
     .filter(x => x.competition === match.competition && x.frenoyDivisionId === match.frenoyDivisionId);
 
@@ -65,8 +65,8 @@ const util = {
       return util.getMatches();
     },
 
-    getFormation(match) {
-      const matches = getOpponentMatches(match);
+    getFormation(match, opponent = undefined) {
+      const matches = getOpponentMatches(match, opponent);
       var opponentPlayers = matches.home.map(m => m.players).flatten().filter(m => m.home);
       opponentPlayers = opponentPlayers.concat(matches.away.map(m => m.players).flatten().filter(m => !m.home));
 
@@ -87,7 +87,7 @@ const util = {
         }
       });
 
-      const matchesPerPlayer = match.getTeam().getTeamPlayerCount();
+      const matchesPerPlayer = match.getTeamPlayerCount();
       return Object.values(result).map(ply => Object.assign(ply, {lost: (matchesPerPlayer * ply.count) - ply.won}));
     }
   },

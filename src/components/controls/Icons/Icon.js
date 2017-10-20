@@ -1,27 +1,24 @@
 import React, {Component} from 'react';
-import PropTypes from '../../PropTypes.js';
+import PropTypes, {withTooltip} from '../../PropTypes.js';
 import cn from 'classnames';
 
+@withTooltip
 export class Icon extends Component {
+  static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     fa: PropTypes.string.isRequired,
     color: PropTypes.string,
     style: PropTypes.object,
     onClick: PropTypes.func,
     className: PropTypes.string,
-    tooltip: PropTypes.string,
-    title: PropTypes.string,
   };
 
   render() {
-    const {fa, color, style, onClick, className, tooltip, ...props} = this.props;
+    const {fa, color, style, onClick, className, ...props} = this.props;
     return (
       <i
         {...props}
-        className={cn(fa, className, {
-          clickable: !!onClick,
-        })}
-        title={tooltip || props.title}
+        className={cn(fa, className, {clickable: !!onClick})}
         onClick={onClick}
         style={{color: color, ...style}}
       />

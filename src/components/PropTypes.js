@@ -17,6 +17,7 @@ export keyMirror from 'fbjs/lib/keyMirror'; // eslint-disable-line
 export withViewport from '../utils/decorators/withViewport.js'; // eslint-disable-line
 export withContext from '../utils/decorators/withContext.js'; // eslint-disable-line
 export withStyles from '../utils/decorators/withStyles.js'; // eslint-disable-line
+export {withTooltip} from '../utils/decorators/withTooltip.js';
 
 export default Object.assign({}, ReactPropTypes, {
   contextTypes,

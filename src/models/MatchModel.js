@@ -144,6 +144,9 @@ export default class MatchModel {
   getTeam() {
     return storeUtil.getTeam(this.teamId);
   }
+  getTeamPlayerCount() {
+    return this.competition === 'Vttl' ? 4 : 3;
+  }
 
   getPreviousMatch() {
     var otherMatch = storeUtil.matches.getAllMatches()
