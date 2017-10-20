@@ -95,7 +95,7 @@ export class PlayerPlayingStyleForm extends Component {
     } else {
       openFormIcon = (
         <EditIcon
-          tooltip={t('player.editStyle.tooltip', ply.alias)}
+          tooltip={t('player.editStyle.tooltip', ply.alias)} tooltipPlacement="left"
           style={this.props.style}
           onClick={this._openStyle.bind(this, ply)}
         />

@@ -115,13 +115,13 @@
   padding-left: 7px;
 }
 
-@media (max-width: 600px) {
-  .panel-group {
-    margin-bottom: -10px;
-  }
 
-  .match-card-panel .panel-body {
-    padding: 0px;
-    padding-bottom: 5px;
-  }
+.match-card-panel .panel-group {
+  margin-bottom: -10px;
+}
+
+.match-card-panel .panel-collapse > .panel-body {
+  padding: 0px;
+  padding-top: -20px;
+  padding-bottom: 5px;
 }

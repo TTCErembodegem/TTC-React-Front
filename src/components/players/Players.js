@@ -34,12 +34,6 @@ export default class Players extends Component {
   }
 
   _renderTabContent(tabKey) {
-    var marginLeft = 5;
-    if (tabKey === 'gallery') {
-      marginLeft = this.props.viewport.width > 450 ? 25 : 0;
-    }
-
-
     var tabContent;
     switch (tabKey) {
     case 'list':
@@ -57,7 +51,7 @@ export default class Players extends Component {
     }
     return (
       <div>
-        <PlayersToolbar marginLeft={marginLeft} onFilterChange={text => this.setState({filter: text})} />
+        <PlayersToolbar marginLeft={15} onFilterChange={text => this.setState({filter: text})} />
         {tabContent}
       </div>
     );

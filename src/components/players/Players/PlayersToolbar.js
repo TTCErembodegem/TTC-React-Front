@@ -14,7 +14,7 @@ export class PlayersToolbar extends Component {
   render() {
     const {marginLeft, onFilterChange} = this.props;
     return (
-      <div style={{marginRight: 5, marginLeft: marginLeft}}>
+      <div style={{marginRight: 5, marginLeft: marginLeft, marginBottom: 5}}>
         <TextField
           hintText={this.context.t('players.search')}
           onChange={e => onFilterChange(e.target.value.toLowerCase())}

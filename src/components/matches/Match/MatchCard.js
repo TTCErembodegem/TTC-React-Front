@@ -130,6 +130,7 @@ export default class MatchCard extends Component {
       >
         <CardText expandable={true} style={{paddingTop: 0, paddingLeft: 5, paddingRight: 5}}>
           <TabbedContainer
+            style={{marginBottom: -18}}
             defaultTabKey={tabEventKeys.players}
             tabKeys={tabConfig}
             tabRenderer={::this._renderTabContent}

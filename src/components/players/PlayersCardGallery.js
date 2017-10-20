@@ -15,9 +15,9 @@ export default class PlayersCardGallery extends Component {
 
   render() {
     const players = this.props.players;
-    if (this.props.viewport.width > 370) {
+    if (this.props.viewport.width > 360) {
       return (
-        <div style={{marginLeft: 10, marginRight: 10, marginTop: 10}} className="row">
+        <div style={{margin: 0, padding: 0}} className="row players-gallery">
           {players.map(player => {
             return (
               <div className="col-lg-4 col-sm-6" key={player.id}>
@@ -38,7 +38,11 @@ export default class PlayersCardGallery extends Component {
                 <CardText>
                   <h4>
                     {player.name}
-                    {comp ? <small style={{marginLeft: 6}}>{comp.ranking}</small> : null}
+                    <small style={{marginLeft: 6}}>{comp.ranking}</small>
+                    <br />
+                    <small>
+                      {player.style && player.style.name ? player.style.name : null}
+                    </small>
                   </h4>
                   <PlayerImage playerId={player.id} center />
                 </CardText>

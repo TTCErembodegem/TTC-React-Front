@@ -18,7 +18,7 @@ export default class PlayerCard extends Component {
     const {player} = this.props;
     const loggedIn = this.props.user.playerId;
     return (
-      <Panel style={{height: loggedIn ? 410 : 300}} header={(
+      <Panel style={{height: loggedIn ? 410 : 300, marginBottom: 20}} header={(
         <div style={{height: 40}}>
           <div style={{float: 'left'}}>
             <strong>{player.name}</strong>
