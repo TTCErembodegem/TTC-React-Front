@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PropTypes, {withStyles, storeUtil} from '../../PropTypes.js';
+import PropTypes, {withStyles} from '../../PropTypes.js';
 import {Link, browserHistory} from 'react-router';
 
 import AppBar from 'material-ui/AppBar';
@@ -21,27 +21,28 @@ export default class Header extends Component {
 
   render() {
     const t = this.context.t;
-    var name = storeUtil.getPlayer(this.props.user.playerId);
-    if (name) {
-      name = this._reverseName(name.name);
-    }
-    const loginOrProfile = !this.props.user.playerId ?
-      <FlatButton label={t('nav.login')} onClick={() => browserHistory.push(t.route('login'))} /> :
+    const loginOrProfile = !this.props.user.playerId ? (
+      <FlatButton label={t('nav.login')} onClick={() => browserHistory.push(t.route('login'))} />
+    ) : (
       <Link className="Header-link Header-icon-right" to={t.route('profile')}>
-        <Icon fa="fa fa-2x fa-user" tooltip={name} />
-      </Link>;
+        <Icon fa="fa fa-2x fa-user" translate tooltip="profile.tooltip" tooltipPlacement="left" />
+      </Link>
+    );
 
     return (
       <div>
         <AppBar
           title={<Link className="Header-link" to="/">{this.state.navOpen ? null : t('clubName')}</Link>}
           iconElementRight={loginOrProfile}
-          onLeftIconButtonTouchTap={::this._openNav} />
+          onLeftIconButtonTouchTap={::this._openNav}
+          style={{zIndex: 0}} // zIndex: otherwise hides tooltips
+        />
 
         <Navigation
           navOpen={this.state.navOpen}
           isNavOpening={this.state.isNavOpening}
-          toggleNav={newState => this.setState({navOpen: newState})} />
+          toggleNav={newState => this.setState({navOpen: newState})}
+        />
       </div>
     );
   }
@@ -57,20 +58,5 @@ export default class Header extends Component {
     // TODO: creates bug on mobile that has visual 'selection' of first item in the navigation...
     // (solution: put some sort of icon at the top of the navigation so its non-clickabel?:)
     setTimeout(() => this.setState({isNavOpening: false}), 1000);
-  }
-
-  _reverseName(name) {
-    var nameInParts = name.split(' ');
-    if (nameInParts.length === 2) {
-      return nameInParts[1] + ' ' + nameInParts[0];
-    }
-    if (nameInParts.length === 3) {
-      return nameInParts[nameInParts.length - 1] + ' ' + nameInParts[nameInParts.length - 3]
-       + ' ' + nameInParts[nameInParts.length - 2] ;
-    }
-    if (nameInParts.length === 4) {
-      return nameInParts[nameInParts.length - 1] + ' ' + nameInParts[nameInParts.length - 4]
-       + ' ' + nameInParts[nameInParts.length - 3] + ' ' + nameInParts[nameInParts.length - 2];
-    }
   }
 }

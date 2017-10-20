@@ -52,7 +52,9 @@ export default class MatchForm extends Component {
     return (
       <div style={{width: this.props.big ? 280 : 175}}>
         {isEditable ? (
-          <MatchManipulation big={this.props.big}
+          <MatchManipulation
+            isHome
+            big={this.props.big}
             style={{float: 'left', marginRight: 5}}
             plusClick={this._onUpdateScore.bind(this, {matchId: match.id, home: score.home + 1, out: score.out})}
             minClick={this._onUpdateScore.bind(this, {matchId: match.id, home: score.home - 1, out: score.out})}
@@ -60,11 +62,12 @@ export default class MatchForm extends Component {
         ) : null}
 
         <div style={{display: 'inline'}} onClick={() => this.setState({useInput: !this.state.useInput})}>
-          <MatchScore match={match} forceDisplay={true} style={{fontSize: this.props.big ? 46 : 24}} />
+          <MatchScore match={match} forceDisplay={true} style={{fontSize: this.props.big ? 46 : 24}} showThrophy={false} />
         </div>
 
         {isEditable ? (
-          <MatchManipulation big={this.props.big}
+          <MatchManipulation
+            big={this.props.big}
             style={{float: 'right'}}
             plusClick={this._onUpdateScore.bind(this, {matchId: match.id, home: score.home, out: score.out + 1})}
             minClick={this._onUpdateScore.bind(this, {matchId: match.id, home: score.home, out: score.out - 1})}
@@ -95,10 +98,22 @@ export default class MatchForm extends Component {
   }
 }
 
-const MatchManipulation = ({style, plusClick, minClick, big}) => (
+const MatchManipulation = ({style, plusClick, minClick, big, isHome}) => (
   <div style={{color: '#d3d3d3', marginTop: big ? 0 : -10, ...style}}>
-    <div style={{verticalAlign: 'top'}}><Icon fa="fa fa-plus-circle fa-2x" onClick={plusClick} /></div>
-    <div style={{verticalAlign: 'bottom'}}><Icon fa="fa fa-minus-circle fa-2x" onClick={minClick} /></div>
+    <div style={{verticalAlign: 'top'}}>
+      <Icon
+        fa="fa fa-plus-circle fa-2x"
+        onClick={plusClick}
+        translate tooltip={isHome ? 'match.scoreHomeUp' : 'match.scoreOutUp'} tooltipPlacement="top"
+      />
+    </div>
+    <div style={{verticalAlign: 'bottom'}}>
+      <Icon
+        fa="fa fa-minus-circle fa-2x"
+        onClick={minClick}
+        translate tooltip={isHome ? 'match.scoreHomeDown' : 'match.scoreOutDown'} tooltipPlacement="bottom"
+      />
+    </div>
   </div>
 );
 
@@ -107,4 +122,5 @@ MatchManipulation.propTypes = {
   plusClick: PropTypes.func.isRequired,
   minClick: PropTypes.func.isRequired,
   big: PropTypes.bool,
+  isHome: PropTypes.bool,
 };

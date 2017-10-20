@@ -18,6 +18,7 @@ import MatchReport from './MatchReport.js';
 import Scoresheet from './Scoresheet.js';
 import PlayersImageGallery from '../../players/PlayersImageGallery.js';
 import {MatchOtherRoundButton} from '../controls/ViewMatchDetailsButton.js';
+import {MatchCardAdmin} from './MatchCardAdmin.js';
 
 const tabEventKeys = keyMirror({
   players: '',
@@ -185,14 +186,7 @@ export default class MatchCard extends Component {
       return <OpponentsFormation match={this.props.match} opponent={this.props.match.opponent} />;
 
     case tabEventKeys.admin:
-      return (
-        <div>
-          ID={this.props.match.id}<br />FrenoyId={this.props.match.frenoyMatchId}
-          <pre>
-            {JSON.stringify(this.props.match, null, 4)}
-          </pre>
-        </div>
-      );
+      return <MatchCardAdmin match={this.props.match} />;
     }
     return 'Unknown';
   }

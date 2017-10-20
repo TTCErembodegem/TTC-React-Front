@@ -119,7 +119,7 @@ class MatchCardHeader extends Component {
       subtitle.push(
         <span key="3" style={{marginLeft: 9, color: hasNewComment ? '#E3170D' : '#d3d3d3'}}>
           {match.comments.size ? <small>{match.comments.size}</small> : null}
-          <CommentIcon />
+          <CommentIcon translate tooltip={hasNewComment ? 'match.hasNewComments' : undefined} />
         </span>
       );
     }
@@ -128,7 +128,7 @@ class MatchCardHeader extends Component {
     if (smallAndScoring) {
       matchFormStyle = {position: 'absolute', top: 50, right: 25};
     } else {
-      matchFormStyle = {position: 'absolute', top: 23, right: 25};
+      matchFormStyle = {position: 'absolute', top: 17, right: 7};
     }
     const matchForm = (
       <div style={matchFormStyle}>

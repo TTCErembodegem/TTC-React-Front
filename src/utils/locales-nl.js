@@ -74,6 +74,7 @@ export default {
       generalInfo: 'Clubinfo',
     },
     profile: {
+      tooltip: 'Ga naar jouw profiel',
       main: 'Profiel',
       editPassword: 'Wijzig Paswoord',
       editDetails: 'Wijzig Gegevens',
@@ -209,6 +210,10 @@ export default {
       }
     },
     match: {
+      scoreHomeUp: 'Score thuisploeg verhogen',
+      scoreHomeDown: 'Score thuisploeg verlagen',
+      scoreOutUp: 'Score bezoekers verhogen',
+      scoreOutDown: 'Score bezoekers verlagen',
       block: {
         Captain: 'Geblokkeerd door de kapitein',
         Major: 'Geblokkeerd door Jelle'
@@ -267,10 +272,13 @@ export default {
         commentsOpenForm: 'Reageren',
         commentsOpenFormConfirm: 'Reactie plaatsen',
         commentsPhoto: 'Foto plaatsen',
+        commentsPhotoTooltip: 'Foto aan de match toevoegen',
         commentPosted: 'Verklarende aantekening toegevoegd',
         commentDeleted: 'Verklarende aantekening verwijderd',
         commentVisible: 'Voor iedereen zichtbaar',
+        commentHidden: 'Enkel zichtbaar voor leden van TTC Erembodegem',
       },
+      hasNewComments: 'Er is nieuwe commentaar op de match toegevoegd!',
       playersVictoryTitle: 'Overwinningen',
       playersOpponentsTitle: 'Tegenstanders',
       double: 'Dubbel',

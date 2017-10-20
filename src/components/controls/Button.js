@@ -1,3 +1,4 @@
+export * from './Buttons/Button.js';
 export * from './Buttons/ButtonStack.js';
 
 export * from './Buttons/CommentButton.js';

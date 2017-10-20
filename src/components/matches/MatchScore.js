@@ -30,9 +30,11 @@ export default class MatchScore extends Component {
     style: PropTypes.object,
     forceDisplay: PropTypes.bool.isRequired,
     showComments: PropTypes.bool,
+    showThrophy: PropTypes.bool,
   }
   static defaultProps = {
-    forceDisplay: false
+    forceDisplay: false,
+    showThrophy: true,
   }
 
   constructor(props) {
@@ -87,7 +89,7 @@ export default class MatchScore extends Component {
         style={this.props.style}>
 
         <span>
-          {classColor === 'match-won' && !match.isDerby && this.props.viewport.width > 350 ? (
+          {classColor === 'match-won' && !match.isDerby && this.props.viewport.width > 350 && this.props.showThrophy ? (
             <TrophyIcon style={{marginRight: 7, marginTop: 4, fontWeight: 'normal'}} color="#FFE568" />
           ) : null}
           {score.home + ' - ' + score.out}

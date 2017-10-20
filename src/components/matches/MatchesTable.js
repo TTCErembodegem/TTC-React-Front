@@ -258,6 +258,9 @@ export default class MatchesTable extends Component {
     const t = this.context.t;
     const matchRows = [];
 
+    const viewWidth = this.props.viewport.width;
+    const showDate = viewWidth > 350 || this.props.matches.some(match => !match.isSyncedWithFrenoy);
+
     this.props.matches.forEach((match, i) => {
       var stripeColor = {backgroundColor: i % 2 === 0 && !this.props.tableForm ? '#f9f9f9' : undefined};
       if (this.props.user.playerId && !this.props.striped) {
@@ -272,15 +275,15 @@ export default class MatchesTable extends Component {
         }
       }
 
-      const viewWidth = this.props.viewport.width;
-
       // Complexity galore
       matchRows.push(
         <tr key={match.id} style={stripeColor}>
-          <td>
-            {thrillerIcon}
-            {match.shouldBePlayed ? <MatchDate match={match} /> : null}
-          </td>
+          {showDate ? (
+            <td>
+              {thrillerIcon}
+              {match.shouldBePlayed ? <MatchDate match={match} /> : null}
+            </td>
+          ) : null}
           <td className="hidden-xs"><FrenoyWeekLink match={match} /></td>
           <td>
             <MatchVs
@@ -347,7 +350,7 @@ export default class MatchesTable extends Component {
       <Table>
         <thead>
           <tr>
-            <th>{t('common.date')}</th>
+            {showDate ? <th>{t('common.date')}</th> : null}
             <th className="hidden-xs">{t('common.frenoy')}</th>
             <th>{t('teamCalendar.match')}</th>
             {!this.props.tableForm ? <th>{this.props.editMode ? t('match.plys.blockMatchTitle') : t('teamCalendar.score')}</th> : null}

@@ -2,10 +2,8 @@ import React, {Component} from 'react';
 import PropTypes, {connect, storeUtil} from '../../PropTypes.js';
 import * as matchActions from '../../../actions/matchActions.js';
 
-import {Icon, EditIcon} from '../../controls.js';
-import {Editor, TimeAgo} from '../../controls.js';
+import {Editor, TimeAgo, Button, Icon, EditIcon} from '../../controls.js';
 import RaisedButton from 'material-ui/RaisedButton';
-import FlatButton from 'material-ui/FlatButton';
 import Checkbox from 'material-ui/Checkbox';
 import PlayerAutoComplete from '../../players/PlayerAutoComplete.js';
 import ImageDropzone from '../../controls/image/ImageDropzone.js';
@@ -122,14 +120,16 @@ export default class MatchReport extends Component {
             <Comment
               key={comment.id}
               comment={comment}
-              deleteComment={canDeleteComment || comment.playerId === this.props.user.playerId ? this.props.deleteComment : null} />)
-          )}
+              deleteComment={canDeleteComment || comment.playerId === this.props.user.playerId ? this.props.deleteComment : null}
+            />
+          ))}
           {this.state.commentFormOpen ? (
             <div>
               {this.props.user.isSystem() ? (
                 <PlayerAutoComplete
                   selectPlayer={::this._reportCommentPlayerChange}
-                  hintText={this.context.t('system.playerSelect')} />
+                  hintText={this.context.t('system.playerSelect')}
+                />
               ) : null}
               <Editor
                 tag="pre"
@@ -137,7 +137,8 @@ export default class MatchReport extends Component {
                 style={{height: 55, marginRight: 15}}
                 onChange={::this._reportCommentChange}
                 options={{...editorOptions, disableEditing: !canComment}}
-                contentEditable={canComment} />
+                contentEditable={canComment}
+              />
             </div>
           ) : this.state.commentImageFormOpen ? (
             <ImageDropzone t={this.context.t} fileUploaded={::this._onCommentImageUploaded} type="match" />
@@ -152,17 +153,18 @@ export default class MatchReport extends Component {
                 label={this.context.t('match.report.commentVisible')} />
               ) : null}
 
-              <FlatButton
+              <Button
                 label={this.context.t('match.report.commentsOpenForm' + (this.state.commentFormOpen ? 'Confirm' : ''))}
                 onClick={::this._onCommentForm}
-                style={{paddingLeft: 0}} />
+              />
 
-              <FlatButton
+
+              <Icon
+                fa="fa fa-picture-o btn btn-default"
                 onClick={() => this.setState({commentImageFormOpen: !this.state.commentImageFormOpen, commentFormOpen: false})}
-                style={{marginLeft: 15}}>
-
-                <Icon fa="fa fa-picture-o" />
-              </FlatButton>
+                style={{marginLeft: 15}}
+                translate tooltip="match.report.commentsPhotoTooltip" tooltipPlacement="right"
+              />
 
             </div>
           ) : null}
@@ -264,7 +266,7 @@ class Comment extends Component {
               <Icon fa="fa fa-trash-o fa-lg" onClick={this.props.deleteComment.bind(this, comment.id)} />
             </div>
           ) : null}
-          {comment.hidden ? <Icon fa="fa fa-user-secret" /> : null}
+          {comment.hidden ? <Icon fa="fa fa-user-secret" translate tooltip="match.report.commentHidden" /> : null}
           <strong style={{marginRight: 6}}>{poster.alias}</strong>
           <TimeAgo date={comment.postedOn} style={{color: '#999'}} />
         </div>
