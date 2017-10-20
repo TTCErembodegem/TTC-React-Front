@@ -10,6 +10,7 @@ export default class PlayersCardGallery extends Component {
   static propTypes = {
     players: PropTypes.PlayerModelList.isRequired,
     viewport: PropTypes.viewport,
+    competition: PropTypes.oneOf(['Vttl', 'Sporta']),
   };
 
   render() {
@@ -19,7 +20,7 @@ export default class PlayersCardGallery extends Component {
         <div style={{marginLeft: 10, marginRight: 10, marginTop: 10}} className="row">
           {players.map(player => {
             return (
-              <div className="col-lg-4 col-md-6" key={player.id}>
+              <div className="col-lg-4 col-sm-6" key={player.id}>
                 <PlayerCard player={player} />
               </div>
             );
@@ -30,11 +31,15 @@ export default class PlayersCardGallery extends Component {
     return (
       <div style={{marginLeft: 10, marginRight: 10, marginTop: 10}}>
         {players.map(player => {
+          const comp = player.getCompetition(this.props.competition);
           return (
             <div key={player.id} style={{paddingBottom: 10, textAlign: 'center'}}>
               <Card>
                 <CardText>
-                  <h4>{player.name}</h4>
+                  <h4>
+                    {player.name}
+                    {comp ? <small style={{marginLeft: 6}}>{comp.ranking}</small> : null}
+                  </h4>
                   <PlayerImage playerId={player.id} center />
                 </CardText>
               </Card>

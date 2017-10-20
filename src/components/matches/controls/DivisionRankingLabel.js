@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from '../../PropTypes.js';
 
 export const DivisionRankingLabel = ({divisionRanking}) => {
-  if (!divisionRanking) {
+  if (!divisionRanking || !divisionRanking.position) {
     return null;
   }
 
@@ -11,7 +11,7 @@ export const DivisionRankingLabel = ({divisionRanking}) => {
 
 DivisionRankingLabel.propTypes = {
   divisionRanking: PropTypes.shape({
-    position: PropTypes.number.isRequired,
+    position: PropTypes.number,
   }),
 };
 

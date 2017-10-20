@@ -272,6 +272,8 @@ export default class MatchesTable extends Component {
         }
       }
 
+      const viewWidth = this.props.viewport.width;
+
       // Complexity galore
       matchRows.push(
         <tr key={match.id} style={stripeColor}>
@@ -283,13 +285,15 @@ export default class MatchesTable extends Component {
           <td>
             <MatchVs
               match={match}
-              opponentOnly={this.props.allowOpponentOnly && this.props.viewport.width < 450}
+              opponentOnly={this.props.allowOpponentOnly && viewWidth < 450}
               ownTeamLink={this.props.ownTeamLink}
+              withLinks
+              withPosition={viewWidth > 400}
             />
           </td>
           {this.props.tableForm ? null : (<td>
             {!this.props.editMode || match.isSyncedWithFrenoy ? (
-              <ViewMatchDetailsButton match={match} />
+              <ViewMatchDetailsButton match={match} size={viewWidth < 450 ? 'xs' : null} />
 
             ) : !this.props.user.canEditMatchPlayers(match) ? (
               <CannotEditMatchIcon />

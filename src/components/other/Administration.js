@@ -26,7 +26,7 @@ export default class Administration extends Component {
         <h1>{this.context.t('clubs.managementTitle')}</h1>
         <div className="row">
           {managers.sort((a, b) => a.sortOrder - b.sortOrder).map(manager => (
-            <div className="col-lg-4 col-md-6" key={manager.playerId} style={{paddingBottom: 10}}>
+            <div className="col-lg-4 col-sm-6" key={manager.playerId} style={{paddingBottom: 10}}>
               <Panel header={(
                 <span>
                   <strong>{manager.name}</strong>

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PropTypes, {connect, storeUtil} from '../PropTypes.js';
+import PropTypes, {connect, storeUtil, browserHistory} from '../PropTypes.js';
 
 import {BackIcon} from '../controls.js';
 import {getOpponentMatches} from '../../actions/matchActions.js';
@@ -30,6 +30,7 @@ export class OpponentOverview extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this._escIsBack = ::this._escIsBack;
   }
 
   _getQueryStringValues() {
@@ -48,8 +49,19 @@ export class OpponentOverview extends Component {
       .find(t => t.competition === info.competition && t.ranking.find(x => x.clubId === info.clubId && x.teamCode === info.teamCode));
   }
 
+  _escIsBack(event) {
+    if (event.keyCode === 27) {
+      browserHistory.goBack();
+    }
+  }
+
   componentDidMount() {
+    window.scrollTo(0, 0);
     this.props.getOpponentMatches(this._getTeam().id);
+    document.addEventListener('keydown', this._escIsBack, false);
+  }
+  componentWillUnmount(){
+    document.removeEventListener('keydown', this._escIsBack, false);
   }
 
   render() {
@@ -73,11 +85,10 @@ export class OpponentOverview extends Component {
       <div style={{marginBottom: 30}}>
         <OpponentOverviewHeader team={team} opponent={opponent} />
         <div className="col-md-6">
-          yaye :)
+          Matchen
         </div>
-        <div className="row">
-          <OpponentMatches team={team} readonlyMatches={otherMatches} roundSwitchButton />
-        </div>
+
+        <OpponentMatches team={team} readonlyMatches={otherMatches} roundSwitchButton opponent={opponent} />
       </div>
     );
   }

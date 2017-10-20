@@ -29,8 +29,8 @@ export class MatchDate extends Component {
     return (
       <span>
         {match.getDisplayDate('s')}
-        &nbsp;
-        <strong>{t('match.date', match.getDisplayTime())}</strong>
+        <br />
+        {!match.isSyncedWithFrenoy ? <strong>{t('match.date', match.getDisplayTime())}</strong> : null}
       </span>
     );
   }

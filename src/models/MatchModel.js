@@ -52,7 +52,7 @@ export default class MatchModel {
       }));
       this.comments = Immutable.List(comments);
 
-      this.opponent = json.opponent;
+      this.opponent = json.opponent; // teamCode, clubId
       this.isDerby = json.opponent.clubId === OwnClubId;
     } else {
       // OtherMatch

@@ -11,11 +11,14 @@ export default class MatchVs extends Component {
     opponentOnly: PropTypes.bool.isRequired,
     themOnly: PropTypes.bool,
     ownTeamLink: PropTypes.oneOf(['main', 'matches', 'ranking', 'players', 'matchesTable', 'week']),
+    withLinks: PropTypes.bool,
+    withPosition: PropTypes.bool,
   }
 
   static defaultProps = {
     themOnly: false,
     opponentOnly: false,
+    withPosition: true,
   };
 
   render() {
@@ -24,8 +27,15 @@ export default class MatchVs extends Component {
     const divisionRanking = team.getDivisionRanking(match.opponent);
     var them = (
       <span>
-        <DivisionRankingLabel divisionRanking={divisionRanking} />
-        {match.renderOpponentTitle()}
+        {this.props.withPosition ? <DivisionRankingLabel divisionRanking={divisionRanking} /> : null}
+
+        {this.props.withLinks ? (
+          <a className="link-hover-underline" onClick={() => browseTo.opponent(match.competition, match.opponent)}>
+            {match.renderOpponentTitle()}
+          </a>
+        ) : (
+          match.renderOpponentTitle()
+        )}
       </span>
     );
 

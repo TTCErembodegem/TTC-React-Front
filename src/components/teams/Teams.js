@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import PropTypes, {connect, withViewport, browserHistory} from '../PropTypes.js';
-import moment from 'moment';
 import Immutable from 'immutable';
 import http from '../../utils/httpClient.js';
 import _ from 'lodash';
@@ -214,7 +213,7 @@ export default class Teams extends Component {
       return <DivisionRanking team={team} t={this.context.t} />;
 
     case 'players':
-      return <PlayersCardGallery players={Immutable.List(team.getPlayers().map(x => x.player))} />;
+      return <PlayersCardGallery players={Immutable.List(team.getPlayers().map(x => x.player))} competition={team.competition} />;
 
     case 'week':
       return <TeamMatchesWeek team={team} />;

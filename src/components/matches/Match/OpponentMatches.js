@@ -18,6 +18,10 @@ export class OpponentMatches extends Component {
     team: PropTypes.TeamModel.isRequired,
     viewport: PropTypes.viewport,
     roundSwitchButton: PropTypes.bool,
+    opponent: PropTypes.shape({
+      clubId: PropTypes.number.isRequired,
+      teamCode: PropTypes.string,
+    }),
   }
 
   constructor(props) {
@@ -31,7 +35,6 @@ export class OpponentMatches extends Component {
     const widthWithFormation = this.props.viewport.width > 770;
 
     const {matches} = getFirstOrLastMatches(this.props.readonlyMatches, this.state.matchesFilter);
-
     if (matches.size === 0) {
       return <div className="match-card-tab-content"><h3><Spinner /></h3></div>;
     }
@@ -45,7 +48,7 @@ export class OpponentMatches extends Component {
             {widthWithFormation ? <th key="3">{this.context.t('common.teamFormation')}</th> : null}
             <th key="4">{this.context.t('match.opponents.awayTeam')}</th>
             {widthWithFormation ? <th key="5">{this.context.t('common.teamFormation')}</th> : null}
-            <th key="6">{this.context.t('match.opponents.outcome')}</th>
+            <th key="6">{widthWithDate ? this.context.t('match.opponents.outcome') : null}</th>
           </tr>
         </thead>
         <tbody>
@@ -85,23 +88,37 @@ export class OpponentMatches extends Component {
   }
 }
 
-const OpponentTeamTitle = ({team, readonlyMatch, isHome}) => {
-  // TODO: @withViewport and hide DivisionRankingLabel on smaller devices
-  const otherMatchTeamTitle = <OtherMatchTeamTitle team={team} readonlyMatch={readonlyMatch} isHome={isHome} />;
-  if (readonlyMatch.isOurMatch) {
-    return otherMatchTeamTitle;
-  }
-  return (
-    <div>
-      {otherMatchTeamTitle}
-      {isHome && readonlyMatch.scoreType === 'Lost' ? <TrophyIcon style={{marginLeft: 10}} /> : null}
-      {!isHome && readonlyMatch.scoreType === 'Won' ? <TrophyIcon style={{marginLeft: 10}} /> : null}
-    </div>
-  );
-};
 
-OpponentTeamTitle.propTypes = {
-  team: PropTypes.TeamModel.isRequired,
-  readonlyMatch: PropTypes.MatchModel.isRequired,
-  isHome: PropTypes.bool.isRequired,
-};
+
+@withViewport
+class OpponentTeamTitle extends Component {
+  static propTypes = {
+    viewport: PropTypes.viewport,
+    team: PropTypes.TeamModel.isRequired,
+    readonlyMatch: PropTypes.MatchModel.isRequired,
+    isHome: PropTypes.bool.isRequired,
+  };
+
+  render() {
+    const {team, readonlyMatch, isHome, viewport} = this.props;
+    const otherMatchTeamTitle = (
+      <OtherMatchTeamTitle
+        team={team}
+        readonlyMatch={readonlyMatch}
+        isHome={isHome}
+        withPosition={viewport.width > 500}
+      />
+    );
+
+    if (readonlyMatch.isOurMatch || viewport.width < 400) {
+      return otherMatchTeamTitle;
+    }
+    return (
+      <div>
+        {otherMatchTeamTitle}
+        {isHome && readonlyMatch.scoreType === 'Lost' ? <TrophyIcon style={{marginLeft: 10}} /> : null}
+        {!isHome && readonlyMatch.scoreType === 'Won' ? <TrophyIcon style={{marginLeft: 10}} /> : null}
+      </div>
+    );
+  }
+}

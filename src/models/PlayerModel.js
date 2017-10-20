@@ -16,7 +16,11 @@ export default class PlayerModel {
   }
 
   getCompetition(competition) {
-    var comp = competition === 'Vttl' ? this.vttl : this.sporta;
+    if (!competition) {
+      return {};
+    }
+
+    const comp = competition === 'Vttl' ? this.vttl : this.sporta;
     return comp || {};
   }
 

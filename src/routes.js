@@ -54,13 +54,15 @@ export const browseTo = {
   team(team, view = 'main') {
     browserHistory.push(t.route('teams').replace(':competition', team.competition) + '/' + team.teamCode + '/' + view);
   },
-  opponent(competition, clubId, teamCode) {
-    browserHistory.push(t.route('opponent')
+  opponent(competition, opponent) {
+    browserHistory.push(browseTo.getOpponent(competition, opponent));
+  },
+  getOpponent(competition, {clubId, teamCode}) {
+    return t.route('opponent')
       .replace(':competition', competition)
       .replace(':clubId', clubId)
-      .replace(':teamCode', teamCode)
-    );
-  },
+      .replace(':teamCode', teamCode);
+  }
 };
 
 export default Routes;

@@ -3,8 +3,7 @@ import PropTypes from '../PropTypes.js';
 import Table from 'react-bootstrap/lib/Table';
 import cn from 'classnames';
 import {OwnClubId} from '../../models/ClubModel.js';
-import storeUtil from '../../storeUtil.js';
-
+import {OpponentLink} from './controls/OpponentLink.js';
 
 export const DivisionRanking = ({team, t}) => {
   return (
@@ -26,7 +25,9 @@ export const DivisionRanking = ({team, t}) => {
             key={teamRanking.clubId + teamRanking.teamCode}
           >
             <td>{teamRanking.position}</td>
-            <td>{storeUtil.getClub(teamRanking.clubId).name + ' ' + teamRanking.teamCode}</td>
+            <td>
+              <OpponentLink team={team} opponent={{clubId: teamRanking.clubId, teamCode: teamRanking.teamCode}} withPosition={false} />
+            </td>
             <td className="hidden-xs">{teamRanking.gamesWon}</td>
             <td className="hidden-xs">{teamRanking.gamesLost}</td>
             <td className="hidden-xs">{teamRanking.gamesDraw}</td>

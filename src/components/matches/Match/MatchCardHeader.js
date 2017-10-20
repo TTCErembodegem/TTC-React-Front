@@ -174,17 +174,21 @@ class MatchCardHeader extends Component {
 
 const MatchCardHeaderSmallTitle = ({match, withLinks, t}) => {
   const team = match.getTeam();
+
+  const ourTitle = <OwnTeamTitle match={match} withLinks={withLinks} />;
+  const theirTitle = <TheirTeamTitle match={match} withLinks={withLinks} />;
+
   return (
     <div style={{whiteSpace: 'nowrap'}}>
       {team.getThriller(match) ? <ThrillerIcon color="red" /> : ThrillerIconSpan}
 
-      {match.isHomeMatch ? <OwnTeamTitle match={match} withLinks={withLinks} /> : <TheirTeamTitle match={match} />}
+      {match.isHomeMatch ? ourTitle : theirTitle}
 
       <span style={{marginLeft: 7, marginRight: 7}}>
         {t('match.vs')}
       </span>
 
-      {!match.isHomeMatch ? <OwnTeamTitle match={match} withLinks={withLinks} /> : <TheirTeamTitle match={match} />}
+      {!match.isHomeMatch ? ourTitle : theirTitle}
     </div>
   );
 };

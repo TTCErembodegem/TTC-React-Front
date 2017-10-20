@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import PropTypes, {browseTo} from '../PropTypes.js';
+import PropTypes, {storeUtil} from '../PropTypes.js';
 import moment from 'moment';
 import {OwnClubId} from '../../models/ClubModel.js';
 import cn from 'classnames';
-import storeUtil from '../../storeUtil.js';
 import Table from 'react-bootstrap/lib/Table';
 import MatchesTable from '../matches/MatchesTable.js';
 import {PlayerCompetition} from '../controls.js';
+import {OpponentLink} from './controls/OpponentLink.js';
 
 export const TeamOverview = ({team, user, small, t}) => {
   const today = moment().startOf('day');
@@ -63,13 +63,14 @@ class TeamOverviewRanking extends Component {
               style={{marginRight: 15, display: 'inline-block', fontSize: isOwnClub ? 14 : undefined, fontWeight: isOwnClub ? 'bold' : undefined}}
               className={cn({'label label-as-badge label-info': isOwnClub && !small})}
             >
-              <OpponentLink
-                competition={team.competition}
-                position={teamRanking.position}
-                clubId={teamRanking.clubId}
-                teamCode={teamRanking.teamCode}
-                withLink={!isOwnClub}
-              />
+              {!isOwnClub ? (
+                <OpponentLink team={team} opponent={{clubId: teamRanking.clubId, teamCode: teamRanking.teamCode}} />
+              ) : (
+                <span>
+                  {teamRanking.position}.&nbsp;
+                  {storeUtil.getClub(teamRanking.clubId).name} {teamRanking.teamCode}
+                </span>
+              )}
               &nbsp;
               <span style={{marginLeft: 7}}>{points}</span>
             </div>
@@ -80,28 +81,6 @@ class TeamOverviewRanking extends Component {
   }
 }
 
-class OpponentLink extends Component {
-  static propTypes = {
-    withLink: PropTypes.bool,
-    competition: PropTypes.oneOf(['Vttl', 'Sporta']).isRequired,
-    position: PropTypes.number,
-    clubId: PropTypes.number.isRequired,
-    teamCode: PropTypes.string,
-  }
-  render() {
-    const {withLink, competition, position, clubId, teamCode} = this.props;
-    let clubName = storeUtil.getClub(clubId).name + ' ' + teamCode;
-    if (withLink) {
-      clubName = <a className="link-hover-underline" onClick={() => browseTo.opponent(competition, clubId, teamCode)}>{clubName}</a>;
-    }
-    return (
-      <span>
-        {position}.&nbsp;
-        {clubName}
-      </span>
-    );
-  }
-}
 
 const ucFirst = input => input[0].toUpperCase() + input.substr(1);
 

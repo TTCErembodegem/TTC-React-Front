@@ -1,35 +1,15 @@
 import React from 'react';
 import PropTypes from '../../PropTypes.js';
-import {DivisionRankingLabel} from '../controls/DivisionRankingLabel.js';
+import {OpponentLink} from '../../teams/controls/OpponentLink.js';
 
-export const OtherMatchTeamTitle = ({team, readonlyMatch, isHome}) => {
-  const divisionRanking = team.getDivisionRanking(isHome ? readonlyMatch.home : readonlyMatch.away);
-
-  const homeClub = readonlyMatch.getClub('home');
-  const awayClub = readonlyMatch.getClub('away');
-
-  var teamTitle = null;
-  if (isHome && homeClub) {
-    teamTitle = homeClub.name + ' ' + readonlyMatch.home.teamCode;
-
-  } else if (!isHome && awayClub) {
-    teamTitle = awayClub.name + ' ' + readonlyMatch.away.teamCode;
-  }
-
-  if (divisionRanking.isForfait) {
-    return <s>{teamTitle}</s>;
-  }
-
-  return (
-    <span>
-      <DivisionRankingLabel divisionRanking={divisionRanking} />
-      {teamTitle}
-    </span>
-  );
+export const OtherMatchTeamTitle = ({team, readonlyMatch, isHome, withPosition}) => {
+  const opponent = isHome ? readonlyMatch.home : readonlyMatch.away;
+  return <OpponentLink team={team} opponent={opponent} withPosition={withPosition} />;
 };
 
 OtherMatchTeamTitle.propTypes = {
   team: PropTypes.TeamModel.isRequired,
   readonlyMatch: PropTypes.MatchModel.isRequired,
   isHome: PropTypes.bool.isRequired,
+  withPosition: PropTypes.bool.isRequired,
 };
