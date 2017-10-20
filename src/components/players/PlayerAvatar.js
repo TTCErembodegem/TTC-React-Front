@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import PropTypes from '../PropTypes.js';
+import PropTypes, {withTooltip} from '../PropTypes.js';
 
 import {playerUtils} from '../../models/PlayerModel.js';
 import Avatar from 'material-ui/Avatar';
 
+@withTooltip
 export default class PlayerAvatar extends Component {
   static propTypes = {
     player: PropTypes.PlayerModel.isRequired

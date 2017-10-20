@@ -7,6 +7,7 @@ import Table from 'react-bootstrap/lib/Table';
 import MatchesTable from '../matches/MatchesTable.js';
 import {PlayerCompetition} from '../controls.js';
 import {OpponentLink} from './controls/OpponentLink.js';
+import {TeamPlayerAvatars} from './controls/TeamPlayerAvatars.js';
 
 export const TeamOverview = ({team, user, small, t}) => {
   const today = moment().startOf('day');
@@ -14,6 +15,7 @@ export const TeamOverview = ({team, user, small, t}) => {
   const prevMatches = team.getMatches().sort((a, b) => b.date - a.date).filter(m => m.date.isBefore(today, 'day')).take(2);
   return (
     <div style={{paddingLeft: 5, paddingRight: 5}}>
+      <TeamPlayerAvatars team={team} />
       <TeamOverviewRanking team={team} t={t} small={small} />
       <TeamOverviewMatches matches={prevMatches} team={team} title={t('match.playedMatches')} />
       <TeamOverviewMatches matches={nextMatches} team={team} title={t('match.nextMatches')} />
