@@ -58,6 +58,8 @@ export default class PlayersImageGallery extends Component {
   render() {
     const {players, competition, viewport} = this.props;
 
+    // This one is used in the MatchCard
+
     if (viewport.width > 600 && !this.props.forceSmall) {
       // big image gallery
       return (
@@ -79,7 +81,7 @@ export default class PlayersImageGallery extends Component {
                   subtitle={this.props.subtitle ? this.props.subtitle(ply) : <PlayerPlayingStyle ply={ply} allowEdit={false} />}
                 >
                   <PlayerPlayingStyleForm player={ply} iconStyle="edit-icon" style={editStyleIcon} />
-                  <PlayerImage playerId={ply.id} circle={false} />
+                  <PlayerImage playerId={ply.id} />
                 </GridTile>
               );
             })}

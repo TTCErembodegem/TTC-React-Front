@@ -35,7 +35,7 @@ export default class Administration extends Component {
                 </span>
               )}>
 
-                <PlayerImage playerId={manager.playerId} center />
+                <PlayerImage playerId={manager.playerId} center shape="circle" />
                 <br />
                 <Email email={manager.contact.email} showIcon />
                 <br />

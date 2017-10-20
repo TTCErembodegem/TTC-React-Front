@@ -44,7 +44,7 @@ export default class PlayersCardGallery extends Component {
                       {player.style && player.style.name ? player.style.name : null}
                     </small>
                   </h4>
-                  <PlayerImage playerId={player.id} center />
+                  <PlayerImage playerId={player.id} center shape="thumbnail" />
                 </CardText>
               </Card>
             </div>

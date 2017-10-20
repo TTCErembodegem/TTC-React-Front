@@ -35,7 +35,7 @@ export default class PlayerCard extends Component {
 
         <PlayerPlayingStyleForm player={player} iconStyle="edit-icon" style={{color: '#d3d3d3', float: 'right'}} />
 
-        <PlayerImage playerId={player.id} center />
+        <PlayerImage playerId={player.id} center shape="thumbnail" />
         <br />
         <Email email={player.contact.email} showIcon />
         <br />
