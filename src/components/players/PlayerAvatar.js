@@ -24,7 +24,7 @@ export default class PlayerAvatar extends Component {
   }
 
   render() {
-    var {player, ...props} = this.props;
+    const {player, ...props} = this.props;
 
     if (!this.state.isLoaded) {
       return <Avatar {...props}>{player.alias[0]}</Avatar>;
