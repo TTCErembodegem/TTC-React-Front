@@ -88,14 +88,16 @@ export class TabbedContainer extends Component {
         {tab.title} {tab.headerChildren}
       </div>
     );
+
+    const isOpen = this.state.openTabKey === tab.key && !this.state.forceClose;
     return (
-      <Panel collapsible expanded={this.state.openTabKey === tab.key && !this.state.forceClose}
+      <Panel collapsible expanded={isOpen}
         header={header}
         eventKey={tab.key}
         className="match-card-panel"
         key={tab.key}
       >
-        {this.props.tabRenderer(tab.key)}
+        {isOpen ? this.props.tabRenderer(tab.key) : null}
       </Panel>
     );
   }
