@@ -41,6 +41,7 @@ export class WeekTitle extends Component {
             fa="fa fa-arrow-left"
             style={{marginRight: 10, visibility: weekCalcer.currentWeek > weekCalcer.firstWeek ? '' : 'hidden'}}
             onClick={() => this.props.weekChange(-1)}
+            translate tooltip="week.prevWeek" tooltipPlacement="bottom"
           />
         ) : null}
 
@@ -50,7 +51,12 @@ export class WeekTitle extends Component {
         {extraTitle}
 
         {this.props.weekChange && weekCalcer.currentWeek < weekCalcer.lastWeek ? (
-          <Icon fa="fa fa-arrow-right" style={{marginLeft: 10}} onClick={() => this.props.weekChange(1)} />
+          <Icon
+            fa="fa fa-arrow-right"
+            style={{marginLeft: 10}}
+            onClick={() => this.props.weekChange(1)}
+            translate tooltip="week.nextWeek" tooltipPlacement="bottom"
+          />
         ) : null}
       </h3>
     );

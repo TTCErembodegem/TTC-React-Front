@@ -324,6 +324,8 @@ export default {
     week: {
       emailTitle: 'Opstelling mailen',
       sendEmail: 'Email versturen',
+      prevWeek: 'Ga naar de vorige speelweek',
+      nextWeek: 'Ga naar de volgende speelweek',
     },
     teamCalendar: {
       downloadExcel: 'Excel ploegopstellingen downloaden',
