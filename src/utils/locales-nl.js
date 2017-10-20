@@ -214,6 +214,7 @@ export default {
       scoreHomeDown: 'Score thuisploeg verlagen',
       scoreOutUp: 'Score bezoekers verhogen',
       scoreOutDown: 'Score bezoekers verlagen',
+      scoreComment: 'Match met commentaar',
       block: {
         Captain: 'Geblokkeerd door de kapitein',
         Major: 'Geblokkeerd door Jelle'

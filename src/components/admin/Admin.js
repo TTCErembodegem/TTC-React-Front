@@ -6,7 +6,7 @@ import AdminPlayers from './AdminPlayers.js';
 import AdminTeams from './AdminTeams.js';
 import AdminDev from './AdminDev.js';
 import AdminPlayerLineup from './AdminPlayerLineup.js';
-import ProfilePhotoForm from '../users/ProfilePhotoForm.js';
+import ProfilePhotoForm, {ProfilePhotoAvatarForm} from '../users/ProfilePhotoForm.js';
 import {AdminEmail} from './AdminEmail.js';
 import {AdminMatches} from './AdminMatches.js';
 
@@ -56,7 +56,15 @@ export default class Admin extends Component {
     case tabEventKeys.formation:
       return <AdminPlayerLineup />;
     case tabEventKeys.pictures:
-      return <ProfilePhotoForm admin={true} />;
+      return (
+        <div>
+          <h1 style={{marginLeft: 25}}>Foto</h1>
+          <ProfilePhotoForm admin={true} />
+          <hr style={{marginTop: 50}} />
+          <h1 style={{marginLeft: 25}}>Avatar</h1>
+          <ProfilePhotoAvatarForm admin={true} />
+        </div>
+      );
     case tabEventKeys.emails:
       return <AdminEmail />;
     case tabEventKeys.dev:

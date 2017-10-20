@@ -204,21 +204,18 @@ const OwnTeamTitle = ({match, withLinks}) => {
   const team = match.getTeam();
   const divisionRanking = team.getDivisionRanking();
 
-  const title = (
-    <span>
-      {divisionRanking.position ? <small>{divisionRanking.position + '. '}</small> : ''}
-      {team.renderOwnTeamTitle()}
-    </span>
-  );
-
+  const title = team.renderOwnTeamTitle();
   if (!withLinks) {
-    return title;
+    return <span>{title}</span>;
   }
 
   return (
-    <a onClick={() => browseTo.team(team)} className="link-hover-underline">
-      {title}
-    </a>
+    <span>
+      {divisionRanking.position ? <small>{divisionRanking.position + '. '}</small> : ''}
+      <a onClick={() => browseTo.team(team)} className="link-hover-underline">
+        {title}
+      </a>
+    </span>
   );
 };
 

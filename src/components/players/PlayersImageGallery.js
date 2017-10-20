@@ -18,6 +18,7 @@ const gridStyles = {
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
+    margin: 6,
   },
   gridList: {
     width: '100%',

@@ -90,7 +90,6 @@ export class OpponentOverview extends Component {
         <OpponentsFormation match={otherMatches.first()} opponent={opponent} />
 
 
-
         <h3>{t('teamCalendar.matches')}</h3>
         <OpponentMatches team={team} readonlyMatches={otherMatches} roundSwitchButton opponent={opponent} />
       </div>

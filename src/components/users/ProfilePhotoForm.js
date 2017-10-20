@@ -3,26 +3,23 @@ import PropTypes, {connect, withContext, storeUtil} from '../PropTypes.js';
 import {uploadPlayer} from '../../actions/userActions.js';
 
 import FlatButton from 'material-ui/FlatButton';
-import {ImageEditor} from '../controls/image/ImageEditor.js';
+import ImageEditor from '../controls/image/ImageEditor.js';
 import {playerUtils} from '../../models/PlayerModel.js';
 import ImageDropzone from '../controls/image/ImageDropzone.js';
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 import PlayerImage from '../players/PlayerImage.js';
 import PlayerAvatar from '../players/PlayerAvatar.js';
 
+
 export class ProfilePhotoAvatarForm extends Component {
   render() {
-    return <ProfilePhotoForm size={playerUtils.getPlayerAvatarImageSize()} type="player-avatar" borderRadius={19} />;
+    return <ProfilePhotoForm {...this.props} size={playerUtils.getPlayerAvatarImageSize()} type="player-avatar" borderRadius={19} />;
   }
 }
 
 
 @withContext
-@connect(state => {
-  return {
-    user: state.user,
-  };
-}, {uploadPlayer})
+@connect(state => ({user: state.user}), {uploadPlayer})
 export default class ProfilePhotoForm extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {

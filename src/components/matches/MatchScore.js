@@ -93,7 +93,9 @@ export default class MatchScore extends Component {
             <TrophyIcon style={{marginRight: 7, marginTop: 4, fontWeight: 'normal'}} color="#FFE568" />
           ) : null}
           {score.home + ' - ' + score.out}
-          {this.props.showComments && (match.comments.size || match.description) ? <CommentIcon style={{marginLeft: 8}} /> : null}
+          {this.props.showComments && (match.comments.size || match.description) ? (
+            <CommentIcon style={{marginLeft: 8}} translate tooltip="match.scoreComment" />
+          ) : null}
         </span>
       </span>
     );
