@@ -221,7 +221,7 @@ export default {
       scoreHomeDown: 'Score thuisploeg verlagen',
       scoreOutUp: 'Score bezoekers verhogen',
       scoreOutDown: 'Score bezoekers verlagen',
-      scoreComment: 'Match met commentaar',
+      scoreComment: 'Match met wedstrijdverslag',
       block: {
         Captain: 'Geblokkeerd door de kapitein',
         Major: 'Geblokkeerd door Jelle'
@@ -286,7 +286,7 @@ export default {
         commentVisible: 'Voor iedereen zichtbaar',
         commentHidden: 'Enkel zichtbaar voor leden van TTC Erembodegem',
       },
-      hasNewComments: 'Er is nieuwe commentaar op de match toegevoegd!',
+      hasNewComments: 'Het wedstrijdverslag is gewijzigd!',
       playersVictoryTitle: 'Overwinningen',
       playersOpponentsTitle: 'Tegenstanders',
       double: 'Dubbel',
