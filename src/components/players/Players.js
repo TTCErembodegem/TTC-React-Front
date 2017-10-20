@@ -30,7 +30,11 @@ export default class Players extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {filter: ''};
+    this.state = {
+      filter: '',
+      sort: 'Vttl',
+      sortDir: 'asc',
+    };
   }
 
   _renderTabContent(tabKey) {
@@ -51,7 +55,16 @@ export default class Players extends Component {
     }
     return (
       <div>
-        <PlayersToolbar marginLeft={15} onFilterChange={text => this.setState({filter: text})} />
+        <PlayersToolbar
+          marginLeft={15}
+          onFilterChange={text => this.setState({filter: text})}
+
+          canSort={tabKey !== 'vttl' && tabKey !== 'sporta'}
+          onSortChange={key => this.setState({sort: key})}
+          onSortDirectionChange={key => this.setState({sortDir: key})}
+          activeSort={this.state.sort}
+          activeSortDirection={this.state.sortDir}
+        />
         {tabContent}
       </div>
     );
@@ -98,10 +111,36 @@ export default class Players extends Component {
   }
 
   _getAllPlayers() {
-    const players = this.props.players;
+    let players = this.props.players;
     if (this.state.filter) {
-      return players.filter(x => x.name.toLowerCase().includes(this.state.filter));
+      players = players.filter(x => x.name.toLowerCase().includes(this.state.filter));
     }
-    return players.sort((a, b) => a.name.localeCompare(b.name));
+
+    var filter;
+    switch (this.state.sort) {
+    case 'Vttl':
+    case 'Sporta':
+      filter = (plyA, plyB) => {
+        const compA = plyA.getCompetition(this.state.sort);
+        const compB = plyB.getCompetition(this.state.sort);
+        if (!compA) {
+          return -1;
+        }
+        if (!compB) {
+          return 1;
+        }
+        return compA.position - compB.position;
+      };
+      break;
+    default:
+      filter = (plyA, plyB) => plyA.name.localeCompare(plyB.name);
+    }
+
+    players = players.sort(filter);
+    if (this.state.sortDir === 'desc') {
+      players = players.reverse();
+    }
+
+    return players;
   }
 }

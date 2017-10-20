@@ -20,7 +20,8 @@ export const ButtonStack = ({small, config, activeView, onClick, id = 'team-view
         <button
           className={cn('btn', button.key === activeView ? 'btn-info' : 'btn-default')}
           key={button.key}
-          onClick={onClick.bind(null, button.key)}>
+          onClick={onClick.bind(null, button.key)}
+        >
           {button.text}
         </button>
       ))}
@@ -30,7 +31,7 @@ export const ButtonStack = ({small, config, activeView, onClick, id = 'team-view
 
 ButtonStack.propTypes = {
   small: PropTypes.bool,
-  config: PropTypes.any.isRequired,
+  config: PropTypes.array.isRequired,
   activeView: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
   id: PropTypes.string,

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes, {withTooltip} from '../../PropTypes.js';
 import cn from 'classnames';
-//import {Icon} from '../Icon.js';
+import {Icon} from '../Icon.js';
 
 
 @withTooltip
@@ -22,6 +22,32 @@ export class Button extends Component {
         style={this.props.style}
       >
         {this.props.label}
+      </a>
+    );
+  }
+}
+
+
+
+
+@withTooltip
+export class IconButton extends Component {
+  static contextTypes = PropTypes.contextTypes;
+  static propTypes = {
+    onClick: PropTypes.func.isRequired,
+    fa: PropTypes.string.isRequired,
+    className: PropTypes.string,
+    style: PropTypes.object,
+  }
+
+  render() {
+    return (
+      <a
+        onClick={this.props.onClick}
+        className={cn(this.props.className, 'btn btn-default')}
+        style={this.props.style}
+      >
+        <Icon fa={this.props.fa} />
       </a>
     );
   }

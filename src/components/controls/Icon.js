@@ -1,4 +1,5 @@
 export * from './Icons/Icon.js';
+export * from './Icons/SortIconDropDown.js';
 
 export * from './Icons/BackIcon.js';
 export * from './Icons/CommentIcon.js';

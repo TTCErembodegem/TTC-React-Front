@@ -158,7 +158,14 @@ export default {
       },
 
       updatePlayerSuccess: 'Speler gegevens succesvol gewijzigd',
-      updatePlayerFail: 'Speler gegevens wijzigen is mislukt'
+      updatePlayerFail: 'Speler gegevens wijzigen is mislukt',
+
+      sort: {
+        tooltip: 'Speler sortering instellen',
+        name: 'Naam',
+        vttl: 'Vttl',
+        sporta: 'Sporta',
+      },
     },
     comp: {
       index: 'Index',
