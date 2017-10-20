@@ -31,14 +31,13 @@ export class TeamPlayerAvatars extends Component {
           const avatarStyle = {
             marginLeft: 16,
             marginBottom: 10,
-            border: isCaptain ? '2px solid #FCDC3B' : undefined,
-            boxShadow: '3px 3px 3px #888888',
+            boxShadow: '3px 3px 3px ' + (isCaptain ? '#CD7F32' : '#888888'),
             display: 'inline-block',
           };
 
           return (
             <PlayerAvatar
-              key={ply.id}
+              key={ply.player.id}
               player={ply.player}
               style={avatarStyle}
               tooltip={tooltip}

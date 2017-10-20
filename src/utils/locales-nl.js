@@ -74,7 +74,7 @@ export default {
       generalInfo: 'Clubinfo',
     },
     profile: {
-      tooltip: 'Ga naar jouw profiel',
+      tooltip: 'Open jouw profiel',
       main: 'Profiel',
       editPassword: 'Wijzig Paswoord',
       editDetails: 'Wijzig Gegevens',
