@@ -40,7 +40,7 @@ export class OpponentMatches extends Component {
     }
 
     return (
-      <Table condensed className="match-card-tab-table">
+      <Table condensed striped className="match-card-tab-table">
         <thead>
           <tr>
             {widthWithDate ? <th key="1">{this.context.t('common.date')}</th> : null}
@@ -54,7 +54,8 @@ export class OpponentMatches extends Component {
         <tbody>
           {matches.map(match => {
             const opponent = this.props.opponent;
-            const isTheirHomeMatch = match.home.clubId === opponent.clubId && match.home.teamCode === opponent.teamCode;
+            const isTheirHomeMatch = opponent && match.home.clubId === opponent.clubId && match.home.teamCode === opponent.teamCode;
+            const isTheirOutMatch = opponent && !isTheirHomeMatch;
             return [
               <tr
                 key={match.id}
@@ -78,10 +79,10 @@ export class OpponentMatches extends Component {
 
 
                 <td key="4">
-                  <OpponentTeamTitle team={this.props.team} readonlyMatch={match} isHome={false} isMarked={!isTheirHomeMatch} />
+                  <OpponentTeamTitle team={this.props.team} readonlyMatch={match} isHome={false} isMarked={isTheirOutMatch} />
                 </td>
                 {widthWithFormation ? (
-                  <td key="5" style={{fontWeight: !isTheirHomeMatch ? 'bold' : undefined}}>
+                  <td key="5" style={{fontWeight: isTheirOutMatch ? 'bold' : undefined}}>
                     <MatchPlayerRankings match={match} homeTeam={false} />
                   </td>
                 ) : null}
@@ -122,7 +123,7 @@ class OpponentTeamTitle extends Component {
     team: PropTypes.TeamModel.isRequired,
     readonlyMatch: PropTypes.MatchModel.isRequired,
     isHome: PropTypes.bool.isRequired,
-    isMarked: PropTypes.bool.isRequired,
+    isMarked: PropTypes.bool,
   };
 
   render() {
