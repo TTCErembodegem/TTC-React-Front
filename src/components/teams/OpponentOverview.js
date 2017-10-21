@@ -88,9 +88,15 @@ export class OpponentOverview extends Component {
       <div style={{marginBottom: 30}}>
         <OpponentOverviewHeader team={team} opponent={opponent} />
 
+        <div className="col-md-4">
+          <h3>{t('match.tabs.opponentsFormationTitle')}</h3>
+          <OpponentsTeamFormation matches={otherMatches} opponent={opponent} />
+        </div>
 
-        <h3>{t('teamCalendar.individual')}</h3>
-        <OpponentsFormation match={otherMatches.first()} opponent={opponent} />
+        <div className="col-md-8">
+          <h3>{t('teamCalendar.individual')}</h3>
+          <OpponentsFormation match={otherMatches.first()} opponent={opponent} />
+        </div>
 
         <h3>{t('teamCalendar.matches')}</h3>
         <OpponentMatches team={team} readonlyMatches={otherMatches} roundSwitchButton opponent={opponent} />
