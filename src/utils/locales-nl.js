@@ -48,6 +48,7 @@ export default {
 
       frenoy: 'Frenoy',
       teamFormation: 'Opstelling',
+      teamFormations: 'Opstellingen',
       competition: 'Competitie',
       date: 'Datum',
       close: 'Sluiten',

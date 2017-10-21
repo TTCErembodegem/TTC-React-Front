@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from '../../PropTypes.js';
+import {ThumbsUpIcon, ThumbsDownIcon} from '../../controls.js';
 
 export const TeamOverviewPlayerStats = ({stat}) => (
   <span>
-    {stat.victories} / {stat.games}
+    <ThumbsUpIcon /> {stat.victories}
+    <ThumbsDownIcon style={{marginLeft: 8}} /> {stat.games}
     &nbsp;
     ({Math.round(stat.victories / stat.games * 100)}%)
   </span>

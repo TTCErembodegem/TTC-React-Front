@@ -5,6 +5,8 @@ import MatchesTable from '../matches/MatchesTable.js';
 import {TeamPlayerAvatars} from './controls/TeamPlayerAvatars.js';
 import {TeamOverviewPlayers} from './controls/TeamOverviewPlayers.js';
 import {TeamOverviewRanking} from './controls/TeamOverviewRanking.js';
+import {OpponentsTeamFormation} from '../matches/Match/OpponentsTeamFormation.js';
+
 
 export const TeamOverview = ({team, user, small, t}) => {
   const today = moment().startOf('day');
@@ -13,9 +15,18 @@ export const TeamOverview = ({team, user, small, t}) => {
   return (
     <div style={{paddingLeft: 5, paddingRight: 5}}>
       <TeamPlayerAvatars team={team} />
-      <TeamOverviewRanking team={team} t={t} small={small} />
+      <div className="col-md-8">
+        <TeamOverviewRanking team={team} t={t} small={small} />
+      </div>
+
+      <div className="col-md-4">
+        <h3>{t('common.teamFormations')}</h3>
+        <OpponentsTeamFormation matches={team.getMatches()} hideHeader />
+      </div>
+
       <TeamOverviewMatches matches={prevMatches} team={team} title={t('match.playedMatches')} />
       <TeamOverviewMatches matches={nextMatches} team={team} title={t('match.nextMatches')} />
+
       <TeamOverviewPlayers team={team} t={t} user={user} />
     </div>
   );

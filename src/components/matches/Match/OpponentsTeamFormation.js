@@ -16,6 +16,7 @@ export class OpponentsTeamFormation extends Component {
       clubId: PropTypes.number.isRequired,
       teamCode: PropTypes.string,
     }),
+    hideHeader: PropTypes.bool,
   }
 
   render() {
@@ -24,7 +25,12 @@ export class OpponentsTeamFormation extends Component {
     const createKey = form => form.reduce((key, f) => key + f.amount + f.ranking, '');
 
     const formations = matches.filter(match => match.isSyncedWithFrenoy).reduce((acc, match) => {
-      const isHomeTeam = match.home.clubId === opponent.clubId && match.home.teamCode === opponent.teamCode;
+      var isHomeTeam;
+      if (!opponent) {
+        isHomeTeam = true;
+      } else {
+        isHomeTeam = match.home.clubId === opponent.clubId && match.home.teamCode === opponent.teamCode;
+      }
       const formation = getMatchPlayerRankings(match, isHomeTeam);
 
       const exists = acc.find(form => form.key === createKey(formation));
@@ -45,12 +51,14 @@ export class OpponentsTeamFormation extends Component {
     const t = this.context.t;
     return (
       <Table condensed striped style={{maxWidth: 250}}>
-        <thead>
-          <tr>
-            <th colSpan={2}>{t('common.teamFormation')}</th>
-            <th style={{width: 80}}>{t('comp.sporta.rankingValue')}</th>
-          </tr>
-        </thead>
+        {!this.props.hideHeader ? (
+          <thead>
+            <tr>
+              <th colSpan={2}>{t('common.teamFormation')}</th>
+              <th style={{width: 80}}>{t('comp.sporta.rankingValue')}</th>
+            </tr>
+          </thead>
+        ) : null}
         <tbody>
           {formations.sort((a, b) => b.value - a.value).map(formation => (
             <tr key={formation.key}>
