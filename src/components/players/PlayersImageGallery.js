@@ -124,7 +124,7 @@ const SmallPlayerAvatarCard = ({competition, ply}) => { // eslint-disable-line
       {comp ? (
         <small>
           {' ' + comp.ranking + ' '}
-          <FrenoyLink competition={competition} uniqueIndex={ply.uniqueIndex} />
+          <FrenoyLink competition={competition} uniqueIndex={comp.uniqueIndex} />
         </small>
       ) : null}
       <br />
