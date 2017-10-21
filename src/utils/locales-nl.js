@@ -25,6 +25,16 @@ export default {
     matchesToday: '/vandaag',
     matchesWeek: '/speelweek',
     match: '/match/:matchId',
+    matchTabs: {
+      players: 'spelers',
+      individualMatches: 'individuele-uitslagen',
+      report: 'wedstrijdverslag',
+      opponentClub: 'hun-club',
+      scoresheet: 'wedstrijdsblad',
+      opponentsRanking: 'hun-uitslagen',
+      opponentsFormation: 'hun-spelers',
+      admin: 'admin',
+    },
 
     teams: '/ploegen/:competition',
     opponent: '/tegenstander/:competition/:clubId/:teamCode',

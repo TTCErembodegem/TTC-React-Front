@@ -6,11 +6,7 @@ import {fetchMatch} from '../../../actions/initialLoad.js';
 import {FullScreenSpinner} from '../../controls.js';
 
 @withViewport
-@connect(state => {
-  return {
-    matches: state.matches,
-  };
-}, {fetchMatch})
+@connect(state => ({matches: state.matches}), {fetchMatch})
 export default class RoutedMatchCard extends Component {
   static propTypes = {
     params: PropTypes.shape({
@@ -43,9 +39,16 @@ export default class RoutedMatchCard extends Component {
     if (!this.state.match) {
       return <FullScreenSpinner />;
     }
+
     return (
       <div style={{marginBottom: 20, marginTop: 20, marginLeft: 5, marginRight: 5}}>
-        <MatchCard match={this.state.match} isOpen={true} width={this.props.viewport.width} routed={true} params={this.props.params} />
+        <MatchCard
+          match={this.state.match}
+          isOpen
+          width={this.props.viewport.width}
+          routed
+          params={this.props.params}
+        />
       </div>
     );
   }

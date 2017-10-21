@@ -78,7 +78,7 @@ export default class MatchCard extends Component {
   }
 
   render() {
-    var match = this.props.match;
+    const match = this.props.match;
     const HeaderComponent = this.props.big ? BigMatchCardHeader : MatchCardHeader;
 
     const tabConfig = [{
@@ -131,11 +131,14 @@ export default class MatchCard extends Component {
       >
         <CardText expandable={true} style={{paddingTop: 0, paddingLeft: 5, paddingRight: 5}}>
           <TabbedContainer
+            params={this.props.params}
             style={{marginBottom: -18}}
             defaultTabKey={tabEventKeys.players}
             tabKeys={tabConfig}
             tabRenderer={::this._renderTabContent}
-            onTabSelect={::this._onTabSelect} />
+            onTabSelect={::this._onTabSelect}
+            route={{base: this.context.t.route('match').replace(':matchId', match.id), subs: 'matchTabs'}}
+          />
         </CardText>
       </HeaderComponent>
     );
