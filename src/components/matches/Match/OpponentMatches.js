@@ -53,18 +53,43 @@ export class OpponentMatches extends Component {
         </thead>
         <tbody>
           {matches.map(match => {
+            const opponent = this.props.opponent;
+            const isTheirHomeMatch = match.home.clubId === opponent.clubId && match.home.teamCode === opponent.teamCode;
             return [
               <tr
                 key={match.id}
                 className={cn({clickable: match.isSyncedWithFrenoy, 'accentuate success': match.isOurMatch})}
                 onClick={() => this.setState({[match.id]: !this.state[match.id]})}
               >
-                {widthWithDate ? <td key="1">{match.getDisplayDate(widthShortDate ? 's' : 'd')}</td> : null}
-                <td key="2"><OpponentTeamTitle team={this.props.team} readonlyMatch={match} isHome={true} /></td>
-                {widthWithFormation ? <td key="3"><MatchPlayerRankings match={match} homeTeam={true} /></td> : null}
-                <td key="4"><OpponentTeamTitle team={this.props.team} readonlyMatch={match} isHome={false} /></td>
-                {widthWithFormation ? <td key="5"><MatchPlayerRankings match={match} homeTeam={false} /></td> : null}
-                <td key="6"><OpponentMatchScore readonlyMatch={match} /></td>
+                {widthWithDate ? (
+                  <td key="1">
+                    {match.getDisplayDate(widthShortDate ? 's' : 'd')}
+                  </td>
+                ) : null}
+
+                <td key="2">
+                  <OpponentTeamTitle team={this.props.team} readonlyMatch={match} isHome={true} isMarked={isTheirHomeMatch} />
+                </td>
+                {widthWithFormation ? (
+                  <td key="3" style={{fontWeight: isTheirHomeMatch ? 'bold' : undefined}}>
+                    <MatchPlayerRankings match={match} homeTeam={true} />
+                  </td>
+                ) : null}
+
+
+                <td key="4">
+                  <OpponentTeamTitle team={this.props.team} readonlyMatch={match} isHome={false} isMarked={!isTheirHomeMatch} />
+                </td>
+                {widthWithFormation ? (
+                  <td key="5" style={{fontWeight: !isTheirHomeMatch ? 'bold' : undefined}}>
+                    <MatchPlayerRankings match={match} homeTeam={false} />
+                  </td>
+                ) : null}
+
+
+                <td key="6">
+                  <OpponentMatchScore readonlyMatch={match} />
+                </td>
               </tr>,
               <OtherMatchPlayerResultsTableRow show={match.isSyncedWithFrenoy && this.state[match.id]} match={match} colSpan={6} />
             ];
@@ -97,17 +122,20 @@ class OpponentTeamTitle extends Component {
     team: PropTypes.TeamModel.isRequired,
     readonlyMatch: PropTypes.MatchModel.isRequired,
     isHome: PropTypes.bool.isRequired,
+    isMarked: PropTypes.bool.isRequired,
   };
 
   render() {
-    const {team, readonlyMatch, isHome, viewport} = this.props;
+    const {team, readonlyMatch, isHome, viewport, isMarked} = this.props;
     const otherMatchTeamTitle = (
-      <OtherMatchTeamTitle
-        team={team}
-        readonlyMatch={readonlyMatch}
-        isHome={isHome}
-        withPosition={viewport.width > 500}
-      />
+      <div style={{fontWeight: isMarked ? 'bold' : undefined, display: 'inline'}}>
+        <OtherMatchTeamTitle
+          team={team}
+          readonlyMatch={readonlyMatch}
+          isHome={isHome}
+          withPosition={viewport.width > 500 && !isMarked}
+        />
+      </div>
     );
 
     if (readonlyMatch.isOurMatch || viewport.width < 400) {

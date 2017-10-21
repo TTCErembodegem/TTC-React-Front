@@ -5,6 +5,7 @@ import {matchOutcome} from '../../../models/MatchModel.js';
 
 import {TrophyIcon, FrenoyLink} from '../../controls.js';
 import Table from 'react-bootstrap/lib/Table';
+import {OpponentPlayerLabel} from './OpponentPlayer.js';
 
 @connect(state => ({ownPlayerId: state.user.playerId}))
 export default class IndividualMatches extends Component {
@@ -24,11 +25,11 @@ export default class IndividualMatches extends Component {
     var matchResult = {home: 0, out: 0};
 
     return (
-      <Table condensed className="match-card-tab-table">
+      <Table condensed striped className="match-card-tab-table">
         <thead>
           <tr>
             <th>&nbsp;</th>
-            <th colSpan={2}>{t('match.individual.matchTitle')}</th>
+            <th colSpan={2}>{t('match.individual.matchTitle')} {this.props.match.frenoyMatchId}</th>
             <th>{t('match.individual.setsTitle')}</th>
             <th>{t('match.individual.resultTitle')}</th>
           </tr>
@@ -63,7 +64,7 @@ export default class IndividualMatches extends Component {
 
   _getPlayerDesc(player) {
     if (!player.home) {
-      return `${player.alias} (${player.ranking})`;
+      return <OpponentPlayerLabel player={player} competition={this.props.match.competition} fullName={false} />;
     }
     return player.alias;
   }

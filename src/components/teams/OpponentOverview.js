@@ -7,6 +7,7 @@ import {OpponentMatches} from '../matches/Match/OpponentMatches.js';
 import {TeamRankingBadges} from './controls/TeamRankingBadges.js';
 import {TeamPosition} from './controls/TeamPosition.js';
 import OpponentsFormation from '../matches/Match/OpponentsFormation.js';
+import {OpponentsTeamFormation} from '../matches/Match/OpponentsTeamFormation.js';
 
 @connect(state => ({
   matches: state.matches,
@@ -86,9 +87,10 @@ export class OpponentOverview extends Component {
     return (
       <div style={{marginBottom: 30}}>
         <OpponentOverviewHeader team={team} opponent={opponent} />
+
+
         <h3>{t('teamCalendar.individual')}</h3>
         <OpponentsFormation match={otherMatches.first()} opponent={opponent} />
-
 
         <h3>{t('teamCalendar.matches')}</h3>
         <OpponentMatches team={team} readonlyMatches={otherMatches} roundSwitchButton opponent={opponent} />

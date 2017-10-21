@@ -4,6 +4,23 @@ import PropTypes from '../../PropTypes.js';
 
 const unique = (value, index, self) => self.indexOf(value) === index;
 
+export function getMatchPlayerRankings(match, homeTeam) {
+  var opponentFormation;
+  if (homeTeam) {
+    opponentFormation = match.players.filter(m => m.home);
+  } else {
+    opponentFormation = match.players.filter(m => !m.home);
+  }
+  const rankings = opponentFormation.map(ply => ply.ranking);
+  const diffs = rankings.toArray().filter(unique);
+  return diffs.map(ranking => {
+    return {
+      ranking,
+      amount: rankings.reduce((prev, cur) => prev + (cur === ranking ? 1 : 0), 0)
+    };
+  });
+}
+
 
 export class MatchPlayerRankings extends Component {
   static contextTypes = PropTypes.contextTypes;
@@ -13,24 +30,15 @@ export class MatchPlayerRankings extends Component {
   }
 
   render() {
-    var opponentFormation;
-    if (this.props.homeTeam) {
-      opponentFormation = this.props.match.players.filter(m => m.home);
-    } else {
-      opponentFormation = this.props.match.players.filter(m => !m.home);
-    }
-
-    const rankings = opponentFormation.map(ply => ply.ranking);
-    const diffs = rankings.toArray().filter(unique);
+    const formation = getMatchPlayerRankings(this.props.match, this.props.homeTeam);
     return (
       <span>
-        {diffs.map((ranking, index) => {
-          const cnt = rankings.reduce((prev, cur) => prev + (cur === ranking ? 1 : 0), 0);
+        {formation.map(({ranking, amount}, index) => {
           return (
             <span key={ranking}>
-              {cnt > 1 ? <small>{cnt}x</small> : null}
+              {amount > 1 ? <small>{amount}x</small> : null}
               {ranking}
-              {index < diffs.length - 1 ? ', ' : null}
+              {index < formation.length - 1 ? ', ' : null}
             </span>
           );
         })}

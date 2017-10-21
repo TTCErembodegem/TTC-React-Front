@@ -114,7 +114,7 @@ const TeamOverviewPlayers = ({team, user, t}) => {
   return (
     <div>
       <h3>{t('teamCalendar.individual')}</h3>
-      <Table condensed>
+      <Table condensed striped>
         <thead>
           <tr>
             <th>{t('match.opponents.player')}</th>

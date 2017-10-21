@@ -45,6 +45,7 @@ export default class OpponentsLastMatches extends Component {
         <thead>
           <tr>
             <th key="1">{this.context.t('common.date')}</th>
+            <th key="7" className="hidden-xs">{this.context.t('common.frenoy')}</th>
             {this.props.viewport.width > widthRemoveColumn ? [
               <th key="2">{this.context.t('match.opponents.homeTeam')}</th>,
               <th key="3">{this.context.t('match.opponents.awayTeam')}</th>
@@ -67,6 +68,7 @@ export default class OpponentsLastMatches extends Component {
               >
 
                 <td key="1">{match.getDisplayDate(this.props.viewport.width > widthRemoveColumn ? 'd' : 's')}</td>
+                <td key="7" className="hidden-xs">{match.frenoyMatchId}</td>
                 {this.props.viewport.width > widthRemoveColumn ? [
                   <td key="2">{match.getClub('home').name} {match.home.teamCode}</td>,
                   <td key="3">{match.getClub('away').name} {match.away.teamCode}</td>

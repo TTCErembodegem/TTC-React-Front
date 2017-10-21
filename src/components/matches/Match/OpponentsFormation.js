@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes, {withViewport, storeUtil} from '../../PropTypes.js';
 
-import {ThumbsDownIcon, FrenoyLink, Spinner, ThumbsUpIcon} from '../../controls.js';
+import {ThumbsDownIcon, Spinner, ThumbsUpIcon} from '../../controls.js';
+import {OpponentPlayerLabel} from './OpponentPlayer.js';
 import Table from 'react-bootstrap/lib/Table';
 
 @withViewport
@@ -28,7 +29,7 @@ export default class OpponentsFormation extends Component {
     const showTimesPlayed = this.props.viewport.width > 600;
 
     return (
-      <Table condensed className="match-card-tab-table">
+      <Table condensed striped className="match-card-tab-table">
         <thead>
           <tr>
             <th>{this.context.t('match.opponents.player')}</th>
@@ -40,12 +41,7 @@ export default class OpponentsFormation extends Component {
           {formations.map(f => {
             return (<tr key={f.player.uniqueIndex}>
               <td>
-                <span style={{marginRight: 7}}>{f.player.name}</span>
-                <small>
-                  {f.player.ranking}
-                  &nbsp;
-                  <FrenoyLink competition={this.props.match.competition} uniqueIndex={f.player.uniqueIndex} />
-                </small>
+                <OpponentPlayerLabel player={f.player} competition={this.props.match.competition} />
               </td>
               {showTimesPlayed ? <td>{f.count}</td> : null}
               <td>
