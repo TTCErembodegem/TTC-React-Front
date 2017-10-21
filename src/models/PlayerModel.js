@@ -6,13 +6,18 @@ export default class PlayerModel {
     this.contact = new PlayerContactModel(json.contact); // playerId, email, mobile, address, city
     this.id = json.id;
     this.active = json.active;
-    this.name = json.name;
+    this.firstName = json.firstName;
+    this.lastName = json.lastName;
     this.sporta = json.sporta; // clubId, competition, frenoyLink, position (=index), ranking, rankingIndex, rankingValue
     this.vttl = json.vttl;
     this.style = json.style || {}; // playerId, name, bestStroke
     this.quitYear = json.quitYear;
     this.security = json.security;
     this.hasKey = json.hasKey;
+  }
+
+  get name() {
+    return this.firstName + ' ' + this.lastName;
   }
 
   getCompetition(competition) {
