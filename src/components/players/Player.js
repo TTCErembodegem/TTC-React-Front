@@ -39,10 +39,10 @@ export class Player extends Component {
       <div style={{marginTop: 20, marginBottom: 10}}>
         <BackIcon className="pull-right hidden-sm hidden-xs" />
         <div className="row">
-          <div className="col-xs-12 col-sm-6 col-md-4">
+          <div className="col-xs-12 col-sm-6 col-md-5">
             <PlayerCard player={player} />
           </div>
-          <div className="col-xs-12 col-sm-6 col-md-8">
+          <div className="col-xs-12 col-sm-6 col-md-7">
             &nbsp;
           </div>
         </div>
