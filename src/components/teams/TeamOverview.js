@@ -8,7 +8,7 @@ import {TeamOverviewRanking} from './controls/TeamOverviewRanking.js';
 import {OpponentsTeamFormation} from '../matches/Match/OpponentsTeamFormation.js';
 
 
-export const TeamOverview = ({team, user, small, t}) => {
+export const TeamOverview = ({team, small, t}) => {
   const today = moment().startOf('day');
   const nextMatches = team.getMatches().sort((a, b) => a.date - b.date).filter(m => m.date.isSame(today, 'day') || m.date.isAfter(today, 'day')).take(2); // eslint-disable-line
   const prevMatches = team.getMatches().sort((a, b) => b.date - a.date).filter(m => m.date.isBefore(today, 'day')).take(2);

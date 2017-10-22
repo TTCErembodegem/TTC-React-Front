@@ -220,7 +220,7 @@ export default class Teams extends Component {
 
     case 'main':
     default:
-      return <TeamOverview team={team} t={this.context.t} user={this.props.user} small={this._isSmall()} />;
+      return <TeamOverview team={team} t={this.context.t} small={this._isSmall()} />;
     }
   }
 
