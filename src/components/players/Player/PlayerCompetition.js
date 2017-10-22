@@ -18,6 +18,10 @@ export class PlayerCompetition extends Component {
     }
 
     const team = player.getTeam(competition);
+    if (!team) {
+      return null;
+    }
+
     return (
       <div>
         <h2>
