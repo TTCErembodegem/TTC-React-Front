@@ -4,7 +4,7 @@ import PropTypes, {storeUtil} from '../../PropTypes.js';
 import {matchOutcome} from '../../../models/MatchModel.js';
 import rankingSorter from '../../../models/utils/rankingSorter.js';
 import {PlayerCompetitionBadge} from '../../players/PlayerBadges.js';
-import {ThumbsUpIcon, ThumbsGreatIcon} from '../../controls/Icon.js';
+import {ThumbsUpIcon, ThumbsGreatIcon, PlayerLink} from '../../controls.js';
 
 const OwnPlayer = ({match, ply, playerAsBadge = false}) => {
   const result = getRankingResults(match, ply);
@@ -25,7 +25,7 @@ const OwnPlayer = ({match, ply, playerAsBadge = false}) => {
         <PlayerCompetitionBadge plyInfo={plyInfo} competition={match.competition} style={{marginBottom: 8, marginRight: 8}} />
       ) : (
         <span className="accentuate" style={{marginRight: 7}}>
-          <strong>{plyInfo.player.alias}</strong>
+          <strong><PlayerLink player={plyInfo.player} alias /></strong>
         </span>
       )}
       {result.win.size !== teamPlayerCount && result.win.size ? <ThumbsUpIcon /> : null}

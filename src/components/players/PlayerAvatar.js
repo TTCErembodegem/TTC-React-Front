@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes, {withTooltip} from '../PropTypes.js';
 
 import {playerUtils} from '../../models/PlayerModel.js';
+import {PlayerLink} from '../controls.js';
 import Avatar from 'material-ui/Avatar';
 
 @withTooltip
@@ -25,10 +26,18 @@ export default class PlayerAvatar extends Component {
 
   render() {
     const {player, ...props} = this.props;
-
     if (!this.state.isLoaded) {
-      return <Avatar {...props}>{player.alias[0]}</Avatar>;
+      return (
+        <PlayerLink player={player}>
+          <Avatar {...props}>{player.alias[0]}</Avatar>
+        </PlayerLink>
+      );
     }
-    return <Avatar {...props} src={playerUtils.getAvatarImageUrl(player.id)} />;
+
+    return (
+      <PlayerLink player={player}>
+        <Avatar {...props} src={playerUtils.getAvatarImageUrl(player.id)} />
+      </PlayerLink>
+    );
   }
 }

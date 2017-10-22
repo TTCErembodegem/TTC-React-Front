@@ -14,12 +14,13 @@ export default {
     },
 
     players: '/spelers',
-    playerTabs: {
+    playersTabs: {
       list: 'lijst',
       vttl: 'vttl',
       sporta: 'sporta',
       gallery: 'gallerij',
     },
+    player: '/speler/:playerId',
 
     matches: '/kalender',
     matchesToday: '/vandaag',

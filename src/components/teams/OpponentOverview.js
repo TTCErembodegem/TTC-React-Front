@@ -4,10 +4,9 @@ import PropTypes, {connect, storeUtil, browserHistory} from '../PropTypes.js';
 import {BackIcon} from '../controls.js';
 import {getOpponentMatches} from '../../actions/matchActions.js';
 import {OpponentMatches} from '../matches/Match/OpponentMatches.js';
-import {TeamRankingBadges} from './controls/TeamRankingBadges.js';
-import {TeamPosition} from './controls/TeamPosition.js';
 import OpponentsFormation from '../matches/Match/OpponentsFormation.js';
 import {OpponentsTeamFormation} from '../matches/Match/OpponentsTeamFormation.js';
+import {DivisionHeader} from '../teams/controls/DivisionHeader.js';
 
 @connect(state => ({
   matches: state.matches,
@@ -86,7 +85,14 @@ export class OpponentOverview extends Component {
 
     return (
       <div style={{marginBottom: 30}}>
-        <OpponentOverviewHeader team={team} opponent={opponent} />
+        <BackIcon className="pull-right" />
+        <h1>
+          <span>
+            {opponentClub.name}: {team.competition} {opponent.teamCode}
+          </span>
+          <br />
+          <DivisionHeader team={team} opponent={opponent} />
+        </h1>
 
         <div className="col-md-4">
           <h3>{t('match.tabs.opponentsFormationTitle')}</h3>
@@ -101,38 +107,6 @@ export class OpponentOverview extends Component {
         <h3>{t('teamCalendar.matches')}</h3>
         <OpponentMatches team={team} readonlyMatches={otherMatches} roundSwitchButton opponent={opponent} />
       </div>
-    );
-  }
-}
-
-
-class OpponentOverviewHeader extends Component {
-  static contextTypes = PropTypes.contextTypes;
-  static propTypes = {
-    team: PropTypes.TeamModel.isRequired,
-    opponent: PropTypes.shape({
-      clubId: PropTypes.number.isRequired,
-      teamCode: PropTypes.string,
-    }),
-  }
-
-  render() {
-    const {team, opponent} = this.props;
-    const opponentClub = storeUtil.getClub(opponent.clubId);
-    return (
-      <h1>
-        <BackIcon className="pull-right" />
-        <span>
-          {opponentClub.name}: {team.competition} {opponent.teamCode}
-        </span>
-
-        <br />
-        <small>
-          <TeamPosition team={team} opponent={opponent} />
-          {team.getDivisionDescription()}
-          <TeamRankingBadges team={team} opponent={opponent} style={{/*reset fontSize*/}} />
-        </small>
-      </h1>
     );
   }
 }

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from '../PropTypes.js';
 import {getPlayingStatusClass} from '../../models/PlayerModel.js';
 
-import {Icon, CommentIcon} from '../controls/Icon.js';
+import {Icon, CommentIcon, PlayerLink} from '../controls.js';
 
 export class PlayerCompetitionBadge extends Component {
   static propTypes = {
@@ -20,13 +20,16 @@ export class PlayerCompetitionBadge extends Component {
     const plyInfo = this.props.plyInfo;
     const comp = plyInfo.player.getCompetition(this.props.competition);
     return (
-      <span
-        className={'label label-as-badge label-' + (getPlayingStatusClass(plyInfo.matchPlayer.status) || 'default')}
-        key={plyInfo.player.id + plyInfo.matchPlayer.status}
-        style={Object.assign({fontSize: 14, display: 'inline-block'}, this.props.style)}>
-        {plyInfo.player.alias}
-        {this.props.competition && comp ? <span style={{marginLeft: 5, fontSize: 10}}>{comp.ranking}</span> : null}
-      </span>
+      <PlayerLink player={plyInfo.player} className="clickable">
+        <span
+          className={'clickable label label-as-badge label-' + (getPlayingStatusClass(plyInfo.matchPlayer.status) || 'default')}
+          key={plyInfo.player.id + plyInfo.matchPlayer.status}
+          style={Object.assign({fontSize: 14, display: 'inline-block'}, this.props.style)}
+        >
+          {plyInfo.player.alias}
+          {this.props.competition && comp ? <span style={{marginLeft: 5, fontSize: 10}}>{comp.ranking}</span> : null}
+        </span>
+      </PlayerLink>
     );
   }
 }

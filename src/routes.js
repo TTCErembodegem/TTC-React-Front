@@ -3,6 +3,7 @@ import {Router, Route, browserHistory} from 'react-router';
 
 import App from './components/App';
 import Players from './components/players/Players.js';
+import {Player} from './components/players/Player.js';
 import Login from './components/users/Login.js';
 import ForgotPassword, {ForgotPasswordReset} from './components/users/ForgotPassword.js';
 import Profile from './components/users/Profile.js';
@@ -29,6 +30,7 @@ const Routes = () => (
       <Route path={t.route('profile') + '(/:tabKey)'} component={Profile} />
 
       <Route path={t.route('players') + '(/:tabKey)'} component={Players} />
+      <Route path={t.route('player')} component={Player} />
 
       <Route path={t.route('matches')} component={Matches} />
       <Route path={t.route('matchesToday')} component={MatchesToday} />
@@ -62,6 +64,9 @@ export const browseTo = {
       .replace(':competition', competition)
       .replace(':clubId', clubId)
       .replace(':teamCode', teamCode);
+  },
+  player(player) {
+    return browserHistory.push(t.route('player').replace(':playerId', player.id));
   }
 };
 

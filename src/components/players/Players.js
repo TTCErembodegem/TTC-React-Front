@@ -92,7 +92,7 @@ export default class Players extends Component {
           defaultTabKey={this.props.viewport.width < 450 ? 'list' : 'gallery'}
           tabKeys={tabKeysConfig}
           tabRenderer={::this._renderTabContent}
-          route={{base: this.context.t.route('players'), subs: 'playerTabs'}}
+          route={{base: this.context.t.route('players'), subs: 'playersTabs'}}
           forceTabs />
       </div>
     );

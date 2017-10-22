@@ -27,7 +27,7 @@ export const TeamOverview = ({team, user, small, t}) => {
       <TeamOverviewMatches matches={prevMatches} team={team} title={t('match.playedMatches')} />
       <TeamOverviewMatches matches={nextMatches} team={team} title={t('match.nextMatches')} />
 
-      <TeamOverviewPlayers team={team} t={t} user={user} />
+      <TeamOverviewPlayers team={team} />
     </div>
   );
 };

@@ -3,7 +3,7 @@ import PropTypes, {connect, browseTo} from '../PropTypes.js';
 
 import Panel from 'react-bootstrap/lib/Panel';
 import PlayerImage from './PlayerImage.js';
-import {Email, Icon, Telephone, PlayerAddress, FrenoyPlayerDetailsIcon} from '../controls.js';
+import {Email, Icon, Telephone, PlayerAddress, FrenoyPlayerDetailsIcon, PlayerLink} from '../controls.js';
 import {PlayerPlayingStyleForm} from './PlayerPlayingStyle.js';
 
 @connect(state => ({user: state.user}))
@@ -21,7 +21,7 @@ export default class PlayerCard extends Component {
       <Panel style={{height: loggedIn ? 410 : 300, marginBottom: 20}} header={(
         <div style={{height: 40}}>
           <div style={{float: 'left'}}>
-            <strong>{player.name}</strong>
+            <strong><PlayerLink player={player} /></strong>
             <br />
             {player.style ? player.style.name : null}
           </div>
@@ -64,9 +64,9 @@ PlayerCard.Competition.propTypes = {
 
 export const PlayerAllCompetitions = ({player, t}) => (
   <div>
-    <PlayerCompetition comp="Vttl" player={player} t={t} />
+    <PlayerCompetitionLabel comp="Vttl" player={player} t={t} />
     {player.vttl && player.sporta ? <br /> : null}
-    <PlayerCompetition comp="Sporta" player={player} t={t} />
+    <PlayerCompetitionLabel comp="Sporta" player={player} t={t} />
   </div>
 );
 
@@ -84,7 +84,7 @@ TeamCaptainIcon.propTypes = {t: PropTypes.func.isRequired};
 
 
 
-export const PlayerCompetition = ({comp, player, t, withName = false}) => {
+export const PlayerCompetitionLabel = ({comp, player, t, withName = false}) => {
   // withName = Jorn C2 (frenoylink)
   // !withName = Sporta (ploeg) C2 (frenoylink)
   const compDetails = player.getCompetition(comp);
@@ -98,7 +98,7 @@ export const PlayerCompetition = ({comp, player, t, withName = false}) => {
     <span>
       {isCaptain ? <TeamCaptainIcon t={t} /> : null}
       {withName ? (
-        <strong>{player.alias}</strong>
+        <strong><PlayerLink player={player} alias={withName === 'alias'} /></strong>
       ) : (
         <a onClick={() => browseTo.team(team)} className="link-hover-underline">
           {comp} {team ? team.teamCode : null}
@@ -109,11 +109,14 @@ export const PlayerCompetition = ({comp, player, t, withName = false}) => {
   );
 };
 
-PlayerCompetition.propTypes = {
+PlayerCompetitionLabel.propTypes = {
   comp: PropTypes.oneOf(['Vttl', 'Sporta']).isRequired,
   player: PropTypes.PlayerModel.isRequired,
   t: PropTypes.func.isRequired,
-  withName: PropTypes.bool,
+  withName: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.oneOf(['alias']),
+  ]),
 };
 
 
