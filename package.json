@@ -80,6 +80,7 @@
     "lodash.merge": "^3.3.2",
     "mkdirp": "^0.5.1",
     "ncp": "^2.0.0",
+    "nodemon": "^1.12.1",
     "postcss": "^5.0.10",
     "postcss-calc": "^5.2.0",
     "postcss-cssnext": "^2.1.0",

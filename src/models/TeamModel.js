@@ -112,7 +112,8 @@ export default class TeamModel {
   }
 }
 
-export function getPlayerStats(matches) {
+export function getPlayerStats(matches, withBelles = false) {
+  // ATTN: There are tests for this one...
   var result = {};
   matches.forEach(match => {
     const gameResults = match.getGameMatches();
@@ -130,27 +131,47 @@ export function getPlayerStats(matches) {
           games: 0,
           victories: 0,
           isDoubles: isDoubles,
+          belles: {},
+          belleVictories: 0,
+          belleGames: 0,
         };
       }
 
-      const playerResult = result[playerId];
+      var playerResult = result[playerId];
       playerResult.games++;
       if (game.outcome === 'Won') {
         playerResult.victories++;
       }
 
       if (!isDoubles) {
+        // Singles WIN
         const otherPlayer = game[!match.isHomeMatch ? 'home' : 'out'];
         if (game.outcome === 'Won') {
           if (!playerResult.won[otherPlayer.ranking]) {
             playerResult.won[otherPlayer.ranking] = 0;
           }
           playerResult.won[otherPlayer.ranking]++;
+
         } else {
+          // Singles LOST
           if (!playerResult.lost[otherPlayer.ranking]) {
             playerResult.lost[otherPlayer.ranking] = 0;
           }
           playerResult.lost[otherPlayer.ranking]++;
+        }
+
+        // Belles?
+        if (withBelles && (game.homeSets === 2 || game.outSets === 2)) {
+          playerResult.belleGames++;
+          if (!playerResult.belles[otherPlayer.ranking]) {
+            playerResult.belles[otherPlayer.ranking] = {won: 0, lost: 0};
+          }
+          if (game.outcome === 'Won') {
+            playerResult.belles[otherPlayer.ranking].won++;
+            playerResult.belleVictories++;
+          } else {
+            playerResult.belles[otherPlayer.ranking].lost++;
+          }
         }
       }
     });

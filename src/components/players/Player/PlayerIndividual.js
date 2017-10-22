@@ -28,7 +28,7 @@ export class PlayerIndividual extends Component {
       .filter(match => match.games.some(game => game.homePlayerUniqueIndex === comp.uniqueIndex || game.outPlayerUniqueIndex === comp.uniqueIndex));
 
 
-    const playerResults = getPlayerStats(matchesWithPlayer)
+    const playerResults = getPlayerStats(matchesWithPlayer, true)
       .find(stats => stats.ply.id === player.id);
 
     if (!playerResults) {
@@ -43,29 +43,32 @@ export class PlayerIndividual extends Component {
       won: playerResults.victories,
       lost: playerResults.games - playerResults.victories,
       total: playerResults.games,
+      bellesWon: playerResults.belleVictories,
+      bellesLost: playerResults.belleGames - playerResults.belleVictories,
     };
 
     const t = this.context.t;
     return (
-      <Table condensed striped style={{maxWidth: 200}}>
+      <Table condensed striped style={{maxWidth: 350}}>
         <thead>
           <tr>
             <th colSpan={2}>{t('match.opponents.victories')}</th>
             <th style={{width: 30, textAlign: 'right'}}>%</th>
+            <th style={{width: 120}}>Belles</th>
           </tr>
         </thead>
         <tbody>
           {playedAgainst.map(ranking => {
             const won = playerResults.won[ranking] || 0;
             const lost = playerResults.lost[ranking] || 0;
+            const belles = playerResults.belles[ranking];
 
             return (
               <tr key={ranking} className={comp.ranking === ranking ? 'accentuate' : undefined}>
                 <td>{ranking}</td>
-                <td>
-                  <WonLost won={won} lost={lost} />
-                </td>
+                <td><WonLost won={won} lost={lost} /></td>
                 <td><PercentageLabel won={won} lost={lost} /></td>
+                <td>{belles ? <WonLost won={belles.won} lost={belles.lost} /> : null}</td>
               </tr>
             );
           })}
@@ -75,6 +78,7 @@ export class PlayerIndividual extends Component {
             <td>{total.total}</td>
             <td><WonLost won={total.won} lost={total.lost} /></td>
             <td><PercentageLabel won={total.won} lost={total.lost} decimals={2} /></td>
+            <td><WonLost won={total.bellesWon} lost={total.bellesLost} /></td>
           </tr>
         </tfoot>
       </Table>
