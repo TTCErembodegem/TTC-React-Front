@@ -68,6 +68,9 @@ export default {
       all: 'Alle',
       matchAtHome: 'Thuismatch',
       belles: 'Belles',
+
+      vttl: 'Vttl',
+      sporta: 'Sporta',
     },
 
 
