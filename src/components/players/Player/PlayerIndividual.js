@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes, {connect, withViewport} from '../../PropTypes.js';
-
 import Table from 'react-bootstrap/lib/Table';
-import {ThumbsUpIcon, ThumbsDownIcon} from '../../controls.js';
+
+import {WonLostLabel, PercentageLabel} from '../../controls.js';
 import {getPlayerStats} from '../../../models/TeamModel.js';
 
 @withViewport
@@ -66,9 +66,9 @@ export class PlayerIndividual extends Component {
             return (
               <tr key={ranking} className={comp.ranking === ranking ? 'accentuate' : undefined}>
                 <td>{ranking}</td>
-                <td><WonLost won={won} lost={lost} /></td>
+                <td><WonLostLabel won={won} lost={lost} /></td>
                 <td><PercentageLabel won={won} lost={lost} /></td>
-                <td>{belles ? <WonLost won={belles.won} lost={belles.lost} /> : null}</td>
+                <td>{belles ? <WonLostLabel won={belles.won} lost={belles.lost} /> : null}</td>
               </tr>
             );
           })}
@@ -76,33 +76,12 @@ export class PlayerIndividual extends Component {
         <tfoot>
           <tr className="accentuate">
             <td>{total.total}</td>
-            <td><WonLost won={total.won} lost={total.lost} /></td>
+            <td><WonLostLabel won={total.won} lost={total.lost} /></td>
             <td><PercentageLabel won={total.won} lost={total.lost} decimals={2} /></td>
-            <td><WonLost won={total.bellesWon} lost={total.bellesLost} /></td>
+            <td><WonLostLabel won={total.bellesWon} lost={total.bellesLost} /></td>
           </tr>
         </tfoot>
       </Table>
     );
   }
 }
-
-const WonLost = ({won, lost}) => ( // eslint-disable-line
-  <div>
-    <ThumbsUpIcon style={{marginLeft: 10}} />
-    {won}
-
-    {lost ? <ThumbsDownIcon style={{marginLeft: 8}} /> : null}
-    {lost || ''}
-  </div>
-);
-
-const PercentageLabel = ({won, lost, decimals = 0}) => { // eslint-disable-line
-  if (!won && !lost) {
-    return null;
-  }
-  return (
-    <div className="pull-right">
-      {(won / (lost + won) * 100).toFixed(decimals) + '%'}
-    </div>
-  );
-};
