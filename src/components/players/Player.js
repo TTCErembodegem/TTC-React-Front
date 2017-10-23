@@ -5,8 +5,8 @@ import {BackIcon} from '../controls.js';
 import PlayerCard from './PlayerCard.js';
 import {PlayerCompetition} from './Player/PlayerCompetition.js';
 
-@connect(state => ({players: state.players}))
 @withViewport
+@connect(state => ({players: state.players}))
 export class Player extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
@@ -35,21 +35,18 @@ export class Player extends Component {
 
   render() {
     const player = this._getPlayer();
+    const viewWidth = this.props.viewport.width;
     return (
       <div style={{marginTop: 20, marginBottom: 10}}>
-        <BackIcon className="pull-right hidden-sm hidden-xs" />
+        <BackIcon className="hidden-xs" style={{position: 'absolute', right: 5, top: 80, zIndex: 99}} />
         <div className="row">
-          <div className="col-xs-12 col-sm-6 col-md-5">
-            <PlayerCard player={player} />
+          <div className="col-sm-12 col-md-6">
+            <PlayerCard player={player} showSideBySide={(viewWidth > 550 && viewWidth < 992) || viewWidth > 1100} />
           </div>
-          <div className="col-xs-12 col-sm-6 col-md-7">
-            &nbsp;
-          </div>
-        </div>
-        <div className="row">
           <div className="col-sm-6">
             <PlayerCompetition player={player} competition="Vttl" />
           </div>
+          {this.props.viewport.width > 992 ?<div style={{clear: 'both'}} /> : null}
           <div className="col-sm-6">
             <PlayerCompetition player={player} competition="Sporta" />
           </div>

@@ -4,7 +4,7 @@ import Table from 'react-bootstrap/lib/Table';
 import cn from 'classnames';
 import {PlayerAllCompetitions} from '../PlayerCard.js';
 import {PlayerPlayingStyle} from '../PlayerPlayingStyle.js';
-import {Telephone, Email} from '../../controls.js';
+import {Telephone, Email, PlayerLink} from '../../controls.js';
 
 export const PlayersAllBig = ({players, t}) => (
   <Table condensed hover className="players">
@@ -21,7 +21,7 @@ export const PlayersAllBig = ({players, t}) => (
         return (
           <tr key={ply.id} className={cn({'match-won': ply.isMe()})}>
             <td>
-              <strong>{ply.name}</strong>
+              <strong><PlayerLink player={ply} /></strong>
               <br />
               <Email email={ply.contact.email} />
               <br />

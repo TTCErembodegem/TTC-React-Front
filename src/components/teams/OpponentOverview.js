@@ -91,7 +91,7 @@ export class OpponentOverview extends Component {
             {opponentClub.name}: {team.competition} {opponent.teamCode}
           </span>
           <br />
-          <DivisionHeader team={team} opponent={opponent} />
+          <small><DivisionHeader team={team} opponent={opponent} /></small>
         </h1>
 
         <div className="col-md-4">

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from '../../PropTypes.js';
 import Table from 'react-bootstrap/lib/Table';
-import {Telephone, Email} from '../../controls.js';
+import {Telephone, Email, PlayerLink} from '../../controls.js';
 import cn from 'classnames';
 
 export const PlayersAllSmall = ({players, t}) => {
@@ -18,7 +18,7 @@ export const PlayersAllSmall = ({players, t}) => {
           return [
             <tr key={ply.id + '_name'} className={cn({'match-won': ply.isMe()})}>
               <td colSpan={2}>
-                <strong>{ply.name}</strong>
+                <strong><PlayerLink player={ply} /></strong>
               </td>
             </tr>,
             <tr key={ply.id} className={cn({'match-won': ply.isMe()})}>

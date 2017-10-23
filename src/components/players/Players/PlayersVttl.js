@@ -4,7 +4,7 @@ import cn from 'classnames';
 import Table from 'react-bootstrap/lib/Table';
 import {PlayerFrenoyLink} from '../PlayerCard.js';
 import {PlayerPlayingStyleForm} from '../PlayerPlayingStyle.js';
-
+import {PlayerLink} from '../../controls.js';
 
 @connect(state => ({players: state.players}))
 export class PlayersVttl extends Component {
@@ -37,8 +37,8 @@ export class PlayersVttl extends Component {
             <tr key={ply.id} className={cn({'match-won': ply.isMe()})}>
               <td>{ply.vttl.rankingIndex}</td>
               <td>{ply.vttl.uniqueIndex}</td>
-              <td className="hidden-xs">{ply.name}</td>
-              <td className="visible-xs">{ply.alias}</td>
+              <td className="hidden-xs"><PlayerLink player={ply} /></td>
+              <td className="visible-xs"><PlayerLink player={ply} alias /></td>
               <td>{ply.vttl.ranking} <PlayerFrenoyLink comp={ply.vttl} /></td>
               <td className="hidden-xs">{ply.style.name}</td>
               <td className="hidden-xs">

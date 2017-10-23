@@ -26,10 +26,11 @@ export default class PlayerImage extends Component {
   }
 
   render() {
-    const align = this.props.center ? 'center' : undefined;
+    const {center, playerId, shape, ...props} = this.props; // eslint-disable-line
+    const align = center ? 'center' : undefined;
     if (!this.state.isLoaded) {
       return (
-        <div style={{textAlign: align, marginTop: 10, opacity: 0.4, height: 189}}>
+        <div style={{textAlign: align, marginTop: 10, opacity: 0.4, height: 189}} {...props}>
           <span className="fa-stack fa-5x">
             <i className="fa fa-camera fa-stack-1x" />
             <i className="fa fa-ban fa-stack-2x text-danger" />
@@ -39,8 +40,8 @@ export default class PlayerImage extends Component {
     }
 
     return (
-      <div style={{textAlign: align}}>
-        <img src={this.state.img} className={'img-' + this.props.shape} style={{height: 200}} />
+      <div style={{textAlign: align}} {...props}>
+        <img src={this.state.img} className={'img-' + shape} style={{height: 200}} />
       </div>
     );
   }

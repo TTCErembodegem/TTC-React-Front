@@ -34,7 +34,6 @@ export const TeamOverview = ({team, small, t}) => {
 
 TeamOverview.propTypes = {
   team: PropTypes.TeamModel.isRequired,
-  user: PropTypes.UserModel.isRequired,
   small: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired,
 };

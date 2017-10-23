@@ -3,6 +3,7 @@ import PropTypes, {withViewport} from '../PropTypes.js';
 import PlayerImage from './PlayerImage.js';
 import PlayerCard from './PlayerCard.js';
 import {Card, CardText} from 'material-ui/Card';
+import {PlayerLink} from '../controls.js';
 
 @withViewport
 export default class PlayersCardGallery extends Component {
@@ -15,13 +16,14 @@ export default class PlayersCardGallery extends Component {
 
   render() {
     const players = this.props.players;
-    if (this.props.viewport.width > 360) {
+    const viewWidth = this.props.viewport.width;
+    if (viewWidth > 360) {
       return (
         <div style={{margin: 0, padding: 0}} className="row players-gallery">
           {players.map(player => {
             return (
               <div className="col-lg-4 col-sm-6" key={player.id}>
-                <PlayerCard player={player} />
+                <PlayerCard player={player} showSideBySide={viewWidth < 768 && viewWidth > 550} />
               </div>
             );
           })}
@@ -37,7 +39,7 @@ export default class PlayersCardGallery extends Component {
               <Card>
                 <CardText>
                   <h4>
-                    {player.name}
+                    <PlayerLink player={player} />
                     <small style={{marginLeft: 6}}>{comp.ranking}</small>
                     <br />
                     <small>

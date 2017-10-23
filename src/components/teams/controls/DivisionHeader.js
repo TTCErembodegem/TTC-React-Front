@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from '../../PropTypes.js';
 
-// import {BackIcon} from '../../controls.js';
 import {TeamRankingBadges} from './TeamRankingBadges.js';
 import {TeamPosition} from './TeamPosition.js';
 
@@ -24,11 +23,11 @@ export class DivisionHeader extends Component {
   render() {
     const {team, opponent, withVictoryBadges} = this.props;
     return (
-      <small>
+      <div>
         <TeamPosition team={team} opponent={opponent} />
         {team.getDivisionDescription()}
         {withVictoryBadges ? <TeamRankingBadges team={team} opponent={opponent} style={{/*reset fontSize*/}} /> : null}
-      </small>
+      </div>
     );
   }
 }

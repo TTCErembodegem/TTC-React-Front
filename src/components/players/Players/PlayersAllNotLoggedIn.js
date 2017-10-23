@@ -3,6 +3,7 @@ import PropTypes from '../../PropTypes.js';
 import Table from 'react-bootstrap/lib/Table';
 import {PlayerAllCompetitions} from '../PlayerCard.js';
 import {PlayerPlayingStyle} from '../PlayerPlayingStyle.js';
+import {PlayerLink} from '../../controls.js';
 
 export const PlayersAllNotLoggedIn = ({players, t}) => {
   return (
@@ -19,7 +20,7 @@ export const PlayersAllNotLoggedIn = ({players, t}) => {
           return (
             <tr key={ply.id}>
               <td>
-                <strong>{ply.name}</strong>
+                <strong><PlayerLink player={ply} /></strong>
               </td>
               <td>
                 <PlayerAllCompetitions player={ply} t={t} />
