@@ -13,19 +13,22 @@ export class PlayerCompetition extends Component {
 
   render() {
     const {player, competition} = this.props;
-    const team = player.getTeam(competition);
-    if (!team) {
+    const comp = player.getCompetition(competition);
+    if (!comp.ranking) {
       return null;
     }
 
+    const team = player.getTeam(competition);
     return (
       <Panel header={(
         <div style={{fontSize: 22}}>
           {competition} {team ? team.teamCode : null}
 
-          <span style={{fontSize: 16, marginTop: 5}} className="pull-right">
-            <DivisionHeader team={team} withVictoryBadges={false} />
-          </span>
+          {team ? (
+            <span style={{fontSize: 16, marginTop: 5}} className="pull-right">
+              <DivisionHeader team={team} withVictoryBadges={false} />
+            </span>
+          ) : null}
         </div>
       )}>
 
