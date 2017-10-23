@@ -41,7 +41,7 @@ export class Player extends Component {
         <BackIcon className="hidden-xs" style={{position: 'absolute', right: 5, top: 80, zIndex: 99}} />
         <div className="row">
           <div className="col-sm-12 col-md-6">
-            <PlayerCard player={player} showSideBySide={(viewWidth > 550 && viewWidth < 992) || viewWidth > 1100} />
+            <PlayerCard player={player} showSideBySide={(viewWidth > 550 && viewWidth < 992) || viewWidth > 1200} />
           </div>
           <div className="col-sm-6">
             <PlayerCompetition player={player} competition="Vttl" />
