@@ -28,7 +28,7 @@ export class TeamOverviewPlayers extends Component {
     return (
       <div>
         <h3>{t('teamCalendar.individual')}</h3>
-        <Table condensed striped>
+        <Table condensed striped style={{maxWidth: 550}}>
           <thead>
             <tr>
               <th>{t('match.opponents.player')}</th>
