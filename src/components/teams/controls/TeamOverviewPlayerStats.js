@@ -5,7 +5,7 @@ import {ThumbsUpIcon, ThumbsDownIcon} from '../../controls.js';
 export const TeamOverviewPlayerStats = ({stat}) => (
   <span>
     <ThumbsUpIcon /> {stat.victories}
-    <ThumbsDownIcon style={{marginLeft: 8}} /> {stat.games}
+    <ThumbsDownIcon style={{marginLeft: 8}} /> {stat.games - stat.victories}
     &nbsp;
     ({Math.round(stat.victories / stat.games * 100)}%)
   </span>
