@@ -123,11 +123,14 @@ export default class Players extends Component {
       filter = (plyA, plyB) => {
         const compA = plyA.getCompetition(this.state.sort);
         const compB = plyB.getCompetition(this.state.sort);
-        if (!compA) {
-          return -1;
+        if (!compA.ranking && !compB.ranking) {
+          return 0;
         }
-        if (!compB) {
+        if (!compA.ranking) {
           return 1;
+        }
+        if (!compB.ranking) {
+          return -1;
         }
         return compA.position - compB.position;
       };

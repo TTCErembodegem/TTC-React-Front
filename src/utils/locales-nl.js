@@ -50,6 +50,8 @@ export default {
     fullClubName: 'TTC Erembodegem',
     clubName: 'Erembodegem',
     systemUserAlias: 'Clublokaal',
+
+
     common: {
       apiSuccess: 'Greato success',
       apiFail: 'Oepsie! Mislukt...',
@@ -65,7 +67,10 @@ export default {
       close: 'Sluiten',
       all: 'Alle',
       matchAtHome: 'Thuismatch',
+      belles: 'Belles',
     },
+
+
     system: {
       playerSelect: 'Wie ben je?',
     },

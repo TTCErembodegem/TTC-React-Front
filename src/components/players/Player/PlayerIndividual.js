@@ -54,7 +54,7 @@ export class PlayerIndividual extends Component {
           <tr>
             <th colSpan={2}>{t('match.opponents.victories')}</th>
             <th style={{width: 30, textAlign: 'right'}}>%</th>
-            <th style={{width: 120}}>Belles</th>
+            <th style={{width: 120}}>{t('common.belles')}</th>
           </tr>
         </thead>
         <tbody>
