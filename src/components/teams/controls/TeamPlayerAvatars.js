@@ -23,7 +23,7 @@ export class TeamPlayerAvatars extends Component {
           }
 
           const comp = ply.player.getCompetition(team.competition);
-          if (comp) {
+          if (comp.ranking) {
             tooltip += ' (' + comp.ranking + ')';
           }
 

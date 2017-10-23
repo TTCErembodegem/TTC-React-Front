@@ -182,21 +182,6 @@ export function getPlayerStats(matches, withBelles = false) {
 
 
 
-export function sortPlayers(competition) {
-  // TODO: TeamModel.sortPlayers not in use?
-  return (plyA, plyB) => {
-    const aComp = plyA.getCompetition(competition);
-    const bComp = plyB.getCompetition(competition);
-    if (!aComp) {
-      return -1;
-    }
-    if (!bComp) {
-      return 1;
-    }
-    return aComp.position - bComp.position;
-  };
-}
-
 export function sortMappedPlayers(competition) {
   return (plyA, plyB) => {
     const aComp = plyA.player.getCompetition(competition);

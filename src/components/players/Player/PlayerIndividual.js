@@ -19,7 +19,7 @@ export class PlayerIndividual extends Component {
   render() {
     const {player, competition} = this.props;
     const comp = player.getCompetition(competition);
-    if (!comp) {
+    if (!comp.ranking) {
       return null;
     }
 
