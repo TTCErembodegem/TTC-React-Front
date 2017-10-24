@@ -13,9 +13,9 @@ export class PlayerLink extends Component {
   }
 
   render() {
-    const {player} = this.props;
+    const {player, alias, children, className, ...props} = this.props; // eslint-disable-line
     return (
-      <a onClick={() => browseTo.player(player)} className={this.props.className}>
+      <a onClick={() => browseTo.player(player)} className={className} {...props}>
         {this.getContent()}
       </a>
     );

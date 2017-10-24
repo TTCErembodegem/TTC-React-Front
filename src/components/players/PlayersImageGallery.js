@@ -7,7 +7,7 @@ import {playerUtils} from '../../models/PlayerModel.js';
 
 import {GridList, GridTile} from 'material-ui/GridList';
 
-import {Telephone, FrenoyLink} from '../controls.js';
+import {Telephone, FrenoyLink, PlayerLink} from '../controls.js';
 import {PlayerPlayingStyle, PlayerPlayingStyleForm} from './PlayerPlayingStyle.js';
 import PlayerImage from './PlayerImage.js';
 
@@ -75,7 +75,8 @@ export default class PlayersImageGallery extends Component {
                   key={ply.id}
                   title={(
                     <span>
-                      <span>{ply.name}</span> <small>{comp ? comp.ranking : '??'}</small>
+                      <PlayerLink player={ply} style={{color: 'white'}} />
+                      <small style={{marginLeft: 5}}>{comp ? comp.ranking : '??'}</small>
                     </span>
                   )}
                   subtitle={this.props.subtitle ? this.props.subtitle(ply) : <PlayerPlayingStyle ply={ply} allowEdit={false} />}

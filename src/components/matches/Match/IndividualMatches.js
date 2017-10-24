@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import PropTypes, {connect, withViewport} from '../../PropTypes.js';
+import PropTypes, {connect, withViewport, storeUtil} from '../../PropTypes.js';
 import cn from 'classnames';
 import {matchOutcome} from '../../../models/MatchModel.js';
 
-import {TrophyIcon, FrenoyLink} from '../../controls.js';
+import {TrophyIcon, FrenoyLink, PlayerLink} from '../../controls.js';
 import Table from 'react-bootstrap/lib/Table';
 import {OpponentPlayerLabel} from './OpponentPlayer.js';
 
@@ -65,6 +65,11 @@ export default class IndividualMatches extends Component {
   _getPlayerDesc(player) {
     if (!player.home) {
       return <OpponentPlayerLabel player={player} competition={this.props.match.competition} fullName={false} />;
+    }
+
+    const realPlayer = storeUtil.getPlayer(player.playerId);
+    if (realPlayer) {
+      return <PlayerLink player={realPlayer} />;
     }
     return player.alias;
   }
