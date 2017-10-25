@@ -44,7 +44,7 @@ class Navigation extends Component {
   }
 
   handleClickHelpButton() {
-    window.open('https://github.com/TTCErembodegem/onboarding/blob/master/README.md', '_blank');
+    window.open('http://ttcerembodegem.github.io/onboarding/', '_blank');
   }
 
   handleClickCloseMenuButton = () => this.props.toggleNav(false);
