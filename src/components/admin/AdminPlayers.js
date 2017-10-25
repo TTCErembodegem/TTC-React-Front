@@ -161,7 +161,7 @@ const ActivesTable = ({players, onEditPlayer, onUpdatePlayer}) => (
               onUpdatePlayer(ply, {activeChanged: true});
             }}
             >
-              <Icon fa="fa fa-key fa-2x" color={ply.hasKey ? 'green' : undefined} />
+              <Icon fa="fa fa-key fa-2x" color={ply.hasKey ? 'green' : (ply.hasKey === false ? 'red' : undefined)} />
             </button>
 
             {!ply.vttl && !ply.sporta ? (
