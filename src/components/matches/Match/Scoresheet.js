@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from '../../PropTypes.js';
 import Table from 'react-bootstrap/lib/Table';
-import {FrenoyWeekLink} from '../../controls.js';
+import {FrenoyWeekLink, PlayerLink} from '../../controls.js';
 
 export default class Scoresheet extends Component {
   static propTypes = {
@@ -42,7 +42,7 @@ export default class Scoresheet extends Component {
               return (
                 <tr key={player.name}>
                   <td>{i + 1}</td>
-                  <td>{player.name}</td>
+                  <td><PlayerLink player={player} /></td>
                   <td>{comp.uniqueIndex}</td>
                   <td>{comp.ranking}</td>
                   <td>{comp.rankingValue}</td>
