@@ -28,8 +28,8 @@ export class Player extends Component {
   }
 
   _getPlayer() {
-    const playerId = parseInt(this.props.params.playerId, 10);
-    const player = this.props.players.find(p => p.id === playerId);
+    const playerSlug = this.props.params.playerId;
+    const player = this.props.players.find(p => p.slug === playerSlug);
     return player;
   }
 

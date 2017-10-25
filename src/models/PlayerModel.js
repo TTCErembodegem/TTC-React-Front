@@ -20,6 +20,10 @@ export default class PlayerModel {
     return this.firstName + ' ' + this.lastName;
   }
 
+  get slug() {
+    return this.name.toLowerCase().replace(/\s/g, '-');
+  }
+
   getCompetition(competition) {
     if (!competition) {
       return {};

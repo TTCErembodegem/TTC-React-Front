@@ -66,7 +66,7 @@ export const browseTo = {
       .replace(':teamCode', teamCode);
   },
   player(player) {
-    return browserHistory.push(t.route('player').replace(':playerId', player.id));
+    return browserHistory.push(t.route('player').replace(':playerId', encodeURI(player.slug)));
   }
 };
 
