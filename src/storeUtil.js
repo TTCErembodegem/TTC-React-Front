@@ -72,6 +72,7 @@ const util = {
 
       // TODO: this assumes that if you forfeited, you lost that match (ply has won but not lost property)
       // could be calculated more correctly by looking at the individual match results
+      // --> Now it looks like Aaigem A (Sporta A) won those 9 matches (Guido, Ivo, Paul) +3 matches each that do not show up on Frenoy
       var result = {};
       opponentPlayers.forEach(ply => {
         if (result[ply.uniqueIndex]) {
