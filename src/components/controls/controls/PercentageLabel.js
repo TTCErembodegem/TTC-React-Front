@@ -4,9 +4,15 @@ export const PercentageLabel = ({won, lost, decimals = 0}) => { // eslint-disabl
   if (!won && !lost) {
     return null;
   }
+
+  var percentage = (won / (lost + won) * 100).toFixed(decimals);
+  if (decimals && percentage.substr(percentage.indexOf('.')) === '.00') {
+    percentage = percentage.substr(0, percentage.indexOf('.'));
+  }
+
   return (
     <div className="pull-right">
-      {(won / (lost + won) * 100).toFixed(decimals) + '%'}
+      {percentage.replace('.', ',')}%
     </div>
   );
 };
