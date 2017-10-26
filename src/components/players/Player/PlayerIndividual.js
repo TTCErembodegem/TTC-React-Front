@@ -17,6 +17,7 @@ export class PlayerIndividual extends Component {
   }
 
   render() {
+    const t = this.context.t;
     const {player, competition} = this.props;
     const comp = player.getCompetition(competition);
     if (!comp.ranking) {
@@ -32,7 +33,7 @@ export class PlayerIndividual extends Component {
       .find(stats => stats.ply.id === player.id);
 
     if (!playerResults) {
-      return null;
+      return <span>{t('match.opponents.noMatchesPlayed')}</span>;
     }
 
     const playedAgainst = Object.keys(playerResults.lost).concat(Object.keys(playerResults.won)).concat([comp.ranking])
@@ -47,7 +48,6 @@ export class PlayerIndividual extends Component {
       bellesLost: playerResults.belleGames - playerResults.belleVictories,
     };
 
-    const t = this.context.t;
     return (
       <Table condensed striped style={{maxWidth: 350}}>
         <thead>

@@ -324,6 +324,7 @@ export default {
         timesPlayed: 'Aantredingen',
         player: 'Speler',
         victories: 'Overwinningen',
+        noMatchesPlayed: 'Nog niet aangetreden',
       },
       enemyVictory: '${}ov.',
       club: {
