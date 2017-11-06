@@ -17,7 +17,7 @@ export class MatchCardAdmin extends Component {
     return (
       <div style={{padding: 7}}>
         <button onClick={() => this.props.forceFrenoySync(match.id)} className="btn btn-default pull-right">
-          Nu sycnhroniseren
+          Nu synchroniseren
         </button>
 
         ID={match.id}<br />FrenoyId={match.frenoyMatchId}
