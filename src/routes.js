@@ -1,6 +1,13 @@
 import React from 'react';
 import {Router, Route, browserHistory} from 'react-router';
 
+browserHistory.listen(location => {
+  if (window.ga) {
+    window.ga('set', 'page', location.pathname + location.search);
+    window.ga('send', 'pageview');
+  }
+});
+
 import App from './components/App';
 import Players from './components/players/Players.js';
 import {Player} from './components/players/Player.js';
