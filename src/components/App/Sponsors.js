@@ -57,9 +57,11 @@ export class SlagerijGuy extends Component {
 
     const style = this.props.big ? {...topSponsorPaperStyle, float: 'right'} : topSponsorsOnBottomPaperStyle;
     return (
-      <Paper style={style}>
-        <Location loc={loc} t={this.context.t} />
-      </Paper>
+      <a href="https://www.facebook.com/Slagerij-Guy-en-Paula-805454896289871" target="_blank">
+        <Paper style={style}>
+          <Location loc={loc} t={this.context.t} />
+        </Paper>
+      </a>
     );
   }
 }
