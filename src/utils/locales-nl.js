@@ -268,6 +268,7 @@ export default {
       vs: 'vs',
       topMatch: 'TOPPER',
       thrillerMatch: '!! THRILLER !!',
+      degradationMatch: '!! THRILLER !!',
       previousEncounterScore: 'Uitslag heenronde',
       gotoPreviousEncounter: 'Details heenronde',
       gotoNextEncounter: 'Details terugronde',
