@@ -157,7 +157,7 @@ const ActivesTable = ({players, onEditPlayer, onUpdatePlayer}) => (
             <EditButton onClick={() => onEditPlayer(ply)} style={{fontSize: 26}} />
 
             <button className="btn btn-default" style={{marginLeft: 5}} onClick={() => {
-              ply.hasKey = !ply.hasKey;
+              ply.hasKey = ply.hasKey === false ? null : !ply.hasKey;
               onUpdatePlayer(ply, {activeChanged: true});
             }}
             >
