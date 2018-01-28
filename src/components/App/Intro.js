@@ -56,14 +56,21 @@ export default class Intro extends Component {
 
     const thnxEetfestijn = (
       <div style={{marginTop: 25}}>
-        <em><Strike text="Weeral een geslaagd eetfestijn!" /></em>
+        <Strike text="Vlaamse Kapioenschappen Tafeltennis" />
 
-        Iedereen bedankt voor het helpen tijdens het eetfestijn,
-        zonder jullie ging het niet gelukt zijn!
+        <strong>Zondag 4 februari 2018</strong>
+        <br />
+        <a href="https://goo.gl/maps/yC1PJCX1bzC2" target="_blank">
+          Sportcentrum Schotte
+        </a>
+        <br />
+        Kapellekensbaan 8
+        <br />
+        9320 Aalst
 
         <br /><br />
 
-        <strong>In 2018 gaat het eetfestijn door op zaterdag 22 september. Zet het alvast in jullie agenda!</strong>
+        <a href="http://ttc-erembodegem.be/img/VlaamseKampioenschappen2018.jpg" target="_blank">Download brochure</a>
       </div>
     );
 
