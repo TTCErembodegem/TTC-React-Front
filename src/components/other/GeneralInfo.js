@@ -36,6 +36,8 @@ export default class GeneralInfo extends Component {
             <br />
             {this.context.t('footer.youthMembership')}
             <div style={{marginTop: 16, fontSize: 12}}>{this.context.t('footer.additionalMembership')}</div>
+
+            <div style={{marginTop: 16, fontSize: 12}}>{this.context.t('footer.recreationalMembership')}</div>
             <br />
             <strong>{this.context.t('clubs.generalInfo.bankNr')}</strong> {clubBankNr}<br />
 
