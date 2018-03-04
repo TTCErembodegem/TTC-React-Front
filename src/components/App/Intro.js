@@ -54,25 +54,25 @@ export default class Intro extends Component {
       );
     }
 
-    const thnxEetfestijn = (
-      <div style={{marginTop: 25}}>
-        <Strike text="Vlaamse Kapioenschappen Tafeltennis" />
+    // const thnxEetfestijn = (
+    //   <div style={{marginTop: 25}}>
+    //     <Strike text="Vlaamse Kapioenschappen Tafeltennis" />
 
-        <strong>Zondag 4 februari 2018</strong>
-        <br />
-        <a href="https://goo.gl/maps/yC1PJCX1bzC2" target="_blank">
-          Sportcentrum Schotte
-        </a>
-        <br />
-        Kapellekensbaan 8
-        <br />
-        9320 Aalst
+    //     <strong>Zondag 4 februari 2018</strong>
+    //     <br />
+    //     <a href="https://goo.gl/maps/yC1PJCX1bzC2" target="_blank">
+    //       Sportcentrum Schotte
+    //     </a>
+    //     <br />
+    //     Kapellekensbaan 8
+    //     <br />
+    //     9320 Aalst
 
-        <br /><br />
+    //     <br /><br />
 
-        <a href="http://ttc-erembodegem.be/img/VlaamseKampioenschappen2018.jpg" target="_blank">Download brochure</a>
-      </div>
-    );
+    //     <a href="http://ttc-erembodegem.be/img/VlaamseKampioenschappen2018.jpg" target="_blank">Download brochure</a>
+    //   </div>
+    // );
 
     return (
       <div>
@@ -81,7 +81,6 @@ export default class Intro extends Component {
           <Col sm={6} style={{verticalAlign: 'top'}}>
             <h1>{this.context.t('intro.title')}</h1>
             {this.context.t('intro.text', inClub)}
-            {thnxEetfestijn}
           </Col>
           <Col sm={6}>
             {!this.props.config.get('initialLoadCompleted') ? (
