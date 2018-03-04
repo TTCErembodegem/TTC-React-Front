@@ -59,6 +59,7 @@ export class AdminEmail extends Component {
 
     const selectedPlayers = this._filterPlayers().sort((a, b) => a.alias.localeCompare(b.alias));
     const emails = selectedPlayers.filter(p => p.contact && p.contact.email).map(p => `"${p.name}" <${p.contact.email.trim()}>`);
+    const emailsWithoutName = selectedPlayers.filter(p => p.contact && p.contact.email).map(p => p.contact.email.trim());
 
     //"John Smith" <johnsemail@hisserver.com>
 
@@ -84,6 +85,14 @@ export class AdminEmail extends Component {
             <textarea
               style={{width: '100%', height: 300}}
               value={emails.join('\n')}
+              onChange={() => true}
+            />
+          </div>
+
+          <div className="col-md-6">
+            <textarea
+              style={{width: '100%', height: 300}}
+              value={emailsWithoutName.join(';\n')}
               onChange={() => true}
             />
           </div>
