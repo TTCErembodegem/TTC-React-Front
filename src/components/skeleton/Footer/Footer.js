@@ -4,6 +4,7 @@ import {contextTypes} from '../../../utils/decorators/withContext.js';
 import styles from './Footer.css';
 import withStyles from '../../../utils/decorators/withStyles.js';
 import {Icon, OwnEmail} from '../../controls.js';
+import {CookieNotice} from './CookieNotice.js';
 
 @withStyles(styles)
 export default class Footer extends Component {
@@ -24,6 +25,7 @@ export default class Footer extends Component {
             <OwnEmail className="Footer-link" />
           </div>
         </div>
+        <CookieNotice />
       </div>
     );
   }
