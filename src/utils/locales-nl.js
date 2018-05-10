@@ -177,6 +177,7 @@ export default {
         saved: 'Speelstijl ${ply} aangepast door ${by}: ${newStyle}',
       },
 
+      deletePlaterSuccess: 'Speler permanent verwijderd',
       updatePlayerSuccess: 'Speler gegevens succesvol gewijzigd',
       updatePlayerFail: 'Speler gegevens wijzigen is mislukt',
 

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes, {connect, withViewport} from '../PropTypes.js';
-import {updatePlayer, frenoySync} from '../../actions/playerActions.js';
+import {updatePlayer, frenoySync, deletePlayer} from '../../actions/playerActions.js';
 import moment from 'moment';
 
 import Table from 'react-bootstrap/lib/Table';
@@ -11,12 +11,13 @@ import AdminPlayerForm from './AdminPlayerForm.js';
 import AdminChangePassword from './AdminChangePassword.js';
 
 @withViewport
-@connect(() => ({}), {updatePlayer, frenoySync})
+@connect(() => ({}), {updatePlayer, frenoySync, deletePlayer})
 export default class AdminPlayers extends Component {
   static propTypes = {
     players: PropTypes.object,
     recreantAndQuitters: PropTypes.object,
     updatePlayer: PropTypes.func.isRequired,
+    deletePlayer: PropTypes.func.isRequired,
     viewport: PropTypes.viewport,
     frenoySync: PropTypes.func.isRequired,
   }
@@ -51,7 +52,7 @@ export default class AdminPlayers extends Component {
       if (this.state.filter) {
         players = players.filter(x => x.name.toLowerCase().includes(this.state.playerFilter));
       }
-      playersContent = <InactivesTable players={players} onUpdatePlayer={this.props.updatePlayer} />;
+      playersContent = <InactivesTable players={players} onUpdatePlayer={this.props.updatePlayer} onDeletePlayer={this.props.deletePlayer} />;
       break;
 
     case 'active':
@@ -74,7 +75,7 @@ export default class AdminPlayers extends Component {
       text: 'Spelers beheren'
     }, {
       key: 'inactive',
-      text: 'Recreant activeren'
+      text: 'Activeren / Verwijderen'
     }, {
       key: 'new-player',
       text: 'Nieuw lid'
@@ -189,7 +190,7 @@ ActivesTable.propTypes = {
 };
 
 
-const InactivesTable = ({players, onUpdatePlayer}) => (
+const InactivesTable = ({players, onUpdatePlayer, onDeletePlayer}) => (
   <Table condensed hover>
     <thead>
       <tr>
@@ -217,6 +218,14 @@ const InactivesTable = ({players, onUpdatePlayer}) => (
             >
               Recreant activeren
             </button>
+
+            <button
+              style={{marginLeft: 8}}
+              className="btn btn-default"
+              onClick={() => onDeletePlayer(ply)}
+            >
+              Permanent verwijderen
+            </button>
           </td>
         </tr>
       ))}
@@ -228,4 +237,5 @@ const InactivesTable = ({players, onUpdatePlayer}) => (
 InactivesTable.propTypes = {
   players: PropTypes.PlayerModelList.isRequired,
   onUpdatePlayer: PropTypes.func.isRequired,
+  onDeletePlayer: PropTypes.func.isRequired,
 };

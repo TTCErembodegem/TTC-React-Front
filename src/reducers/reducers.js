@@ -71,6 +71,9 @@ export function admin(state = {players: Immutable.List([])}, action = null) {
     let recreantAndQuitters = immutableHelpers.merge(state.players, payload, x => new PlayerModel(x), x => !x.active && x.alias !== 'SYSTEM');
     return {players: recreantAndQuitters};
   }
+  case ActionTypes.PLAYER_DELETED:
+    return {players: state.players.filter(x => x.id !== payload.id)};
+
   case ActionTypes.PLAYER_ACTIVE_CHANGED: {
     if (payload.isActive) {
       return {players: state.players.filter(x => x.id !== payload.playerId)};

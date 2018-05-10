@@ -85,3 +85,25 @@ export function updatePlayer(player, opts = {}) {
       });
   };
 }
+
+
+export function deletePlayer(player) {
+  return dispatch => {
+    return http.post('/players/DeletePlayer/' + player.id)
+      .then(function() {
+        dispatch(showSnackbar(trans('player.deletePlaterSuccess')));
+        dispatch(deleted(player));
+
+      }, function(err) {
+        dispatch(showSnackbar(trans('player.deletePlayerFail')));
+        console.log('DeletePlayer!', err); // eslint-disable-line
+      });
+  };
+}
+
+function deleted(data) {
+  return {
+    type: ActionTypes.PLAYER_DELETED,
+    payload: data
+  };
+}
