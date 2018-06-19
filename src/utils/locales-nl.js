@@ -337,8 +337,8 @@ export default {
       chooseOtherPlayer: 'Andere speler opstellen'
     },
     footer: {
-      location: 'Groeneweg 28, 9300 Erembodegem',
-      trainingDays: 'Training: di. en do. vanaf 20u',
+      location: 'Sportcentrum Schotte, Kapellekensbaan 8, 9320 Aalst',
+      trainingDays: 'Training: di. en do. vanaf 19u30',
       competitionDays: 'Competitie: ma., wo. en vr. 20u', //  'en za. om 14u' --> niet meer goed op mobile :(
       adultMembership: '€92 voor volwassenen',
       youthMembership: '€52 voor -18 jarigen',
