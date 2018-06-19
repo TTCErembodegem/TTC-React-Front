@@ -337,13 +337,6 @@ export default {
       chooseOtherPlayer: 'Andere speler opstellen'
     },
     footer: {
-      location: 'Sportcentrum Schotte, Kapellekensbaan 8, 9320 Aalst',
-      trainingDays: 'Training: di. en do. vanaf 19u30',
-      competitionDays: 'Competitie: ma., wo. en vr. 20u', //  'en za. om 14u' --> niet meer goed op mobile :(
-      adultMembership: '€92 voor volwassenen',
-      youthMembership: '€52 voor -18 jarigen',
-      additionalMembership: 'Een extra €68 komt bovenop het lidgeld dat kan teruggevorderd worden door 4 kaarten voor het eetfestijn te verkopen.',
-      recreationalMembership: 'Recreanten: €58 voor volwassenen en €18 voor -18 jarigen (+ €102 voor 6 kaarten eetfestijn).',
       cookieNotice: 'We gebruiken cookies om je de best mogelijke ervaring te bieden. Door verder te surfen op onze site gaat u akkoord met ons gebruik van cookies.', // eslint-disable-line
       cookieNoticeClose: 'Sluiten',
     },

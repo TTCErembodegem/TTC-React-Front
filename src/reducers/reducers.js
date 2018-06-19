@@ -9,6 +9,11 @@ import MatchModel from '../models/MatchModel.js';
 
 var defaultConfigState = {
   initialLoadCompleted: false,
+  params: {
+    email: '', googleMapsUrl: '', location: '', trainingDays: '', competitionDays: '',
+    adultMembership: '', youthMembership: '', additionalMembership: '', recreationalMembers: '',
+    frenoyClubIdVttl: '', frenoyClubIdSporta: '',
+  },
 };
 
 export function config(state = Immutable.Map(defaultConfigState), action = null) {
@@ -23,6 +28,8 @@ export function config(state = Immutable.Map(defaultConfigState), action = null)
     return state.remove('snackbar');
   case ActionTypes.SET_SETTING:
     return state.set(payload.key, payload.value);
+  case ActionTypes.CONFIG_LOADED:
+    return state.set('params', payload);
   default:
     return state;
   }

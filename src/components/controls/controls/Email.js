@@ -1,5 +1,5 @@
 import React, {PropTypes, Component} from 'react';
-import {OwnClubEmail} from '../../../models/ClubModel.js';
+import {connect} from '../../PropTypes.js';
 
 export class Email extends Component {
   static propTypes = {
@@ -30,11 +30,13 @@ export class Email extends Component {
 }
 
 
+@connect(state => ({email: state.config.get('params').email}))
 export class OwnEmail extends Component {
   static propTypes = {
     className: PropTypes.string,
+    email: PropTypes.string.isRequired,
   };
   render() {
-    return <Email email={OwnClubEmail} {...this.props} />;
+    return <Email email={this.props.email} {...this.props} />;
   }
 }

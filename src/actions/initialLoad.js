@@ -12,6 +12,13 @@ export function clubsLoaded(data) {
   };
 }
 
+function configLoaded(data) {
+  return {
+    type: ActionTypes.CONFIG_LOADED,
+    payload: data
+  };
+}
+
 export function teamsLoaded(data) {
   return {
     type: ActionTypes.TEAMS_LOADED,
@@ -86,10 +93,12 @@ export default function() {
 
   return dispatch => {
     return Promise.all([
+      // ATTN: Order is important because of following .then()
       initialRequest(dispatch, '/matches', null),
       initialRequest(dispatch, '/teams', teamsLoaded),
       initialRequest(dispatch, '/players', playersLoaded),
       initialRequest(dispatch, '/clubs', clubsLoaded),
+      initialRequest(dispatch, '/config', configLoaded),
     ]).then(initialLoad => {
       console.info('initialLoadCompleted'); // eslint-disable-line
       dispatch(initialLoadCompleted());

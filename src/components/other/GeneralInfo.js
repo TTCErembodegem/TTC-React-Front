@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
-import PropTypes from '../PropTypes.js';
+import PropTypes, {connect} from '../PropTypes.js';
 import {OwnEmail, GoogleMap} from '../controls.js';
 
-const clubBankNr = 'BE55 0016 5927 6744';
-const clubOrgNr = 'BE 0840.545.283';
-const compBalls = 'Xushaofa tt-bal 3-ster SYNTH 40 mm';
-
+@connect(state => ({params: state.config.get('params')}))
 export default class GeneralInfo extends Component {
   static contextTypes = PropTypes.contextTypes;
+
+  static propTypes = {
+    params: PropTypes.object.isRequired,
+  };
+
   render() {
     return (
       <div style={{marginTop: 10, marginBottom: 10}}>
@@ -15,31 +17,31 @@ export default class GeneralInfo extends Component {
         <div className="row">
           <div className="col-md-6">
             <h1>{this.context.t('clubs.generalInfo.contact')}</h1>
-            <strong>{this.context.t('clubs.generalInfo.ourAddress')}</strong> {this.context.t('footer.location')}
+            <strong>{this.context.t('clubs.generalInfo.ourAddress')}</strong> {this.props.params.location}
             <div><strong>{this.context.t('clubs.generalInfo.ourEmail')}</strong> <OwnEmail /></div>
-            <strong>{this.context.t('clubs.generalInfo.orgNr')}</strong> {clubOrgNr}<br />
+            <strong>{this.context.t('clubs.generalInfo.orgNr')}</strong> {this.props.params.clubOrgNr}<br />
 
             <h1>{this.context.t('clubs.generalInfo.openDays')}</h1>
-            {this.context.t('footer.competitionDays')}
+            {this.props.params.competitionDays}
             <br />
-            {this.context.t('footer.trainingDays')}
+            {this.props.params.trainingDays}
             <br /><br />
-            <strong>VTTL</strong> OVL134<br />
-            <strong>Sporta</strong> 4055<br />
+            <strong>VTTL</strong> {this.props.params.frenoyClubIdVttl}<br />
+            <strong>Sporta</strong> {this.props.params.frenoyClubIdSporta}<br />
             <br />
             <strong>{this.context.t('clubs.generalInfo.balls')}</strong><br />
-            {compBalls}<br />
+            {this.props.params.compBalls}<br />
 
 
             <h1>{this.context.t('clubs.generalInfo.moneyMoney')}</h1>
-            {this.context.t('footer.adultMembership')}
+            {this.props.params.adultMembership}
             <br />
-            {this.context.t('footer.youthMembership')}
-            <div style={{marginTop: 16, fontSize: 12}}>{this.context.t('footer.additionalMembership')}</div>
+            {this.props.params.youthMembership}
+            <div style={{marginTop: 16, fontSize: 12}}>{this.props.params.additionalMembership}</div>
 
-            <div style={{marginTop: 16, fontSize: 12}}>{this.context.t('footer.recreationalMembership')}</div>
+            <div style={{marginTop: 16, fontSize: 12}}>{this.props.params.recreationalMembers}</div>
             <br />
-            <strong>{this.context.t('clubs.generalInfo.bankNr')}</strong> {clubBankNr}<br />
+            <strong>{this.context.t('clubs.generalInfo.bankNr')}</strong> {this.props.params.clubBankNr}<br />
 
           </div>
           <div className="col-md-6">

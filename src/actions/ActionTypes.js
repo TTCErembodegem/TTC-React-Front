@@ -4,6 +4,7 @@ export default keyMirror({
   PLAYERS_LOADED: '',
   PLAYER_DELETED: '',
   CLUBS_LOADED: '',
+  CONFIG_LOADED: '',
   TEAMS_LOADED: '',
   INITIAL_LOADED: '',
 

@@ -18,6 +18,10 @@ export function merge(state, payload, classify, filter) {
     // second update... crash because payload is not an array
     let result = payload;
     if (filter) {
+      // if (!result.filter) {
+      //   console.log('state', state);
+      //   console.log('payload', payload);
+      // }
       result = result.filter(filter);
     }
     return Immutable.List(result.map(classify));
