@@ -96,14 +96,13 @@ export default class Intro extends Component {
                 <div className="pull-right">
                   <Sponsor.itenium big={big} style={{paddingRight: 20}} />
                   <br />
-                  <Sponsor.Vdhkeukens big={big} style={{marginTop: 20, paddingRight: 20}} />
+                  <Sponsor.KachelsTfe  big={big} style={{marginTop: 20, paddingRight: 20}} />
                 </div>
               </div>
             </Row>
             <Row style={{marginBottom: 15}}>
-              <div style={{width: 700, margin: 'auto'}}>
+              <div style={{width: 500, margin: 'auto'}}>
                 <Sponsor.Nostech big={big} />
-                <Sponsor.KachelsTfe big={big} style={{marginLeft: 10}} />
                 <Sponsor.StoneDesign big={big} style={{marginLeft: 10, height: 110}} />
               </div>
             </Row>
@@ -118,13 +117,10 @@ export default class Intro extends Component {
               <Sponsor.SlagerijGuy big={big} />
             </Col>
             <Col style={{marginTop: 20}}>
-              <Sponsor.Symphony big={big} style={{padding: 5}} />
-            </Col>
-            <Col style={{marginTop: 20}}>
               <Sponsor.itenium big={big} />
             </Col>
             <Col style={{marginTop: 20}}>
-              <Sponsor.Vdhkeukens big={big} />
+              <Sponsor.Symphony big={big} style={{padding: 5}} />
             </Col>
             <Col style={{marginTop: 20}}>
               <Sponsor.KachelsTfe big={big} />
