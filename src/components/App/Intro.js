@@ -9,7 +9,7 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import Typist from 'react-typist';
 import * as Sponsor from './Sponsors.js';
-  import {Eetfestijn} from './Eetfestijn.js';
+import {Eetfestijn} from './Eetfestijn.js';
 
 @connect(state => {
   return {
@@ -96,7 +96,7 @@ export default class Intro extends Component {
                 <div className="pull-right">
                   <Sponsor.itenium big={big} style={{paddingRight: 20}} />
                   <br />
-                  <Sponsor.KachelsTfe  big={big} style={{marginTop: 20, paddingRight: 20}} />
+                  <Sponsor.KachelsTfe big={big} style={{marginTop: 20, paddingRight: 20}} />
                 </div>
               </div>
             </Row>
