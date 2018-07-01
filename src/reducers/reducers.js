@@ -12,7 +12,7 @@ var defaultConfigState = {
   params: {
     email: '', googleMapsUrl: '', location: '', trainingDays: '', competitionDays: '',
     adultMembership: '', youthMembership: '', additionalMembership: '', recreationalMembers: '',
-    frenoyClubIdVttl: '', frenoyClubIdSporta: '',
+    frenoyClubIdVttl: '', frenoyClubIdSporta: '', compBalls: '', clubBankNr: '', clubOrgNr: '',
   },
 };
 
