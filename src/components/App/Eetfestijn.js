@@ -11,7 +11,7 @@ const eetfesijnStyle = {
 const eetfestijnGoogleMaps = 'https://maps.google.com/maps?q=Botermelkstraat+63,+9300+Aalst&hl=en&ll=50.953115,4.061058&spn=0.009449,0.023475&sll=50.952442,4.062345&sspn=0.001188,0.002934&t=m&hnear=Botermelkstraat+63,+Aalst+9300+Aalst,+Oost-Vlaanderen,+Vlaams+Gewest,+Belgium&z=16';
 
 const eetfestijnSets = {
-  date: 'Zaterdag 23 september 2017',
+  date: 'Zaterdag 22 september 2018',
   startHour: '18u00',
   endHour: '22u00',
   meat: {
@@ -39,6 +39,7 @@ export const Eetfestijn = () => {
         </h1>
 
         Van {eetfestijnSets.startHour} tot {eetfestijnSets.endHour} in zaal
+        &nbsp;
         <a className="eetfestijn" href={eetfestijnGoogleMaps} target="_blank">Sint-Paulus</a>
         <br />
         Botermelkstraat 63, 9300 Aalst

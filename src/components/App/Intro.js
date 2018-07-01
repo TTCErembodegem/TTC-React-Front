@@ -9,7 +9,7 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import Typist from 'react-typist';
 import * as Sponsor from './Sponsors.js';
-//import {Eetfestijn} from './Eetfestijn.js';
+  import {Eetfestijn} from './Eetfestijn.js';
 
 @connect(state => {
   return {
@@ -200,41 +200,40 @@ class TodaysEvents extends Component {
       trainingEvent = <Strike text={t('intro.trainingToday')} />;
     }
 
-    // return (
-    //   <div>
-    //     {trainingEvent}
-    //     <Eetfestijn />
-    //   </div>
-    // );
-
-
-    const matchesToday = this.props.matches.filter(cal => cal.date.isSame(today, 'day'));
-    if (matchesToday.size) {
-      return (
-        <div>
-          <Strike text={t('intro.matchesToday')} />
-          {this._renderMatches(matchesToday)}
-        </div>
-      );
-    }
-
-
-    const lastPlayedMatches = this.props.matches
-      .filter(cal => cal.date.isBefore(today, 'day'))
-      .sort((a, b) => b.date - a.date)
-      .take(2);
-
     return (
       <div>
         {trainingEvent}
-        {lastPlayedMatches.size ? (
-          <div>
-            <Strike text={t('intro.playedMatches')} />
-            {this._renderMatches(lastPlayedMatches)}
-          </div>
-        ) : null}
+        <Eetfestijn />
       </div>
     );
+
+
+    // const matchesToday = this.props.matches.filter(cal => cal.date.isSame(today, 'day'));
+    // if (matchesToday.size) {
+    //   return (
+    //     <div>
+    //       <Strike text={t('intro.matchesToday')} />
+    //       {this._renderMatches(matchesToday)}
+    //     </div>
+    //   );
+    // }
+
+    // const lastPlayedMatches = this.props.matches
+    //   .filter(cal => cal.date.isBefore(today, 'day'))
+    //   .sort((a, b) => b.date - a.date)
+    //   .take(2);
+
+    // return (
+    //   <div>
+    //     {trainingEvent}
+    //     {lastPlayedMatches.size ? (
+    //       <div>
+    //         <Strike text={t('intro.playedMatches')} />
+    //         {this._renderMatches(lastPlayedMatches)}
+    //       </div>
+    //     ) : null}
+    //   </div>
+    // );
   }
 
   _renderMatches(matches) {
