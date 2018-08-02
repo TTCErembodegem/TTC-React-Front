@@ -37,9 +37,11 @@ export default class GeneralInfo extends Component {
             {this.props.params.adultMembership}
             <br />
             {this.props.params.youthMembership}
+            <br />
+            {this.props.params.recreationalMembers}
+
             <div style={{marginTop: 16, fontSize: 12}}>{this.props.params.additionalMembership}</div>
 
-            <div style={{marginTop: 16, fontSize: 12}}>{this.props.params.recreationalMembers}</div>
             <br />
             <strong>{this.context.t('clubs.generalInfo.bankNr')}</strong> {this.props.params.clubBankNr}<br />
 
