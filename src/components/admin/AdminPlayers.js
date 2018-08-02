@@ -10,6 +10,8 @@ import {Icon, ButtonStack, EditButton} from '../controls.js';
 import AdminPlayerForm from './AdminPlayerForm.js';
 import AdminChangePassword from './AdminChangePassword.js';
 
+const keepTrackOfPlayerKeys = false;
+
 @withViewport
 @connect(() => ({}), {updatePlayer, frenoySync, deletePlayer})
 export default class AdminPlayers extends Component {
@@ -157,13 +159,15 @@ const ActivesTable = ({players, onEditPlayer, onUpdatePlayer}) => (
           <td>
             <EditButton onClick={() => onEditPlayer(ply)} style={{fontSize: 26}} />
 
-            <button className="btn btn-default" style={{marginLeft: 5}} onClick={() => {
-              ply.hasKey = ply.hasKey === false ? null : !ply.hasKey;
-              onUpdatePlayer(ply, {activeChanged: true});
-            }}
-            >
-              <Icon fa="fa fa-key fa-2x" color={ply.hasKey ? 'green' : (ply.hasKey === false ? 'red' : undefined)} />
-            </button>
+            {keepTrackOfPlayerKeys ? (
+              <button className="btn btn-default" style={{marginLeft: 5}} onClick={() => {
+                ply.hasKey = ply.hasKey === false ? null : !ply.hasKey;
+                onUpdatePlayer(ply, {activeChanged: true});
+              }}
+              >
+                <Icon fa="fa fa-key fa-2x" color={ply.hasKey ? 'green' : (ply.hasKey === false ? 'red' : undefined)} />
+              </button>
+            ) : null}
 
             {!ply.vttl && !ply.sporta ? (
               <button className="btn btn-default" style={{marginLeft: 10}} onClick={() => {
