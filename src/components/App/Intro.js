@@ -11,6 +11,41 @@ import Typist from 'react-typist';
 import * as Sponsor from './Sponsors.js';
 import {Eetfestijn} from './Eetfestijn.js';
 
+const weirdLocaleYearInfo = (
+  <div>
+    <br />
+    <h2>WIJZIGING ZAAL</h2>
+    <b>Opgelet: TTC Erembodegem speelt niet meer op Groeneweg 36</b>
+
+    <h3>FASE 1</h3>
+    Periode tot en met einde augustus (30/08)
+    <br />
+    Sportzaal “Schotte” (Kappelekensbaan 8 Aalst)
+    <br />
+    Training dinsdag en donderdag van 19:30 tot 23:00
+    <br />
+    Uitzonderingen:
+    <ul>
+      <li>Dinsdag 14/8: van 20u30 (ipv 19u30) tot 23u00</li>
+      <li>Dinsdag 21/8: van 20u30 (ipv 19u30) tot 23u00</li>
+      <li>Dinsdag 28/8: van 20u30 (ipv 19u30) tot 23u00</li>
+    </ul>
+
+    <h3>FASE 2</h3>
+    Periode september tot vermoedelijk oktober/november
+    <br />
+    Sportzaal VTI of de sportzaal van de Hogeschool in de Kwalestraat
+    <br />
+    Training &amp; competitie maandag en dinsdag vanaf 19:30. Zaterdag vanaf 19:00.
+    <br />
+
+    <h3>FASE 3</h3>
+    Sportzaal TechniGO, eerste verdiep (Cesar Haeltermanstraat 71)
+    <br />
+    Training &amp; competitie maandag, woensdag en vrijdag vanaf 19:30
+  </div>
+);
+
 @connect(state => {
   return {
     config: state.config,
@@ -81,6 +116,7 @@ export default class Intro extends Component {
           <Col sm={6} style={{verticalAlign: 'top'}}>
             <h1>{this.context.t('intro.title')}</h1>
             {this.context.t('intro.text', inClub)}
+            {weirdLocaleYearInfo}
           </Col>
           <Col sm={6}>
             {!this.props.config.get('initialLoadCompleted') ? (
