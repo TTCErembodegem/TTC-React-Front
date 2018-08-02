@@ -17,10 +17,16 @@ const weirdLocaleYearInfo = (
     <h2>WIJZIGING ZAAL</h2>
     <b>Opgelet: TTC Erembodegem speelt niet meer op Groeneweg 36</b>
 
+    <br />
+    <br />
+
+    Hierna de huidige stand van zaken (verdere communicatie volgt):
+    <br />
+
     <h3>FASE 1</h3>
     Periode tot en met einde augustus (30/08)
     <br />
-    Sportzaal “Schotte” (Kappelekensbaan 8 Aalst)
+    Sportzaal “Schotte” (Kappelekensbaan 8, Aalst)
     <br />
     Training dinsdag en donderdag van 19:30 tot 23:00
     <br />
@@ -34,7 +40,7 @@ const weirdLocaleYearInfo = (
     <h3>FASE 2</h3>
     Periode september tot vermoedelijk oktober/november
     <br />
-    Sportzaal VTI of de sportzaal van de Hogeschool in de Kwalestraat
+    Sportzaal VTI (Sinte Annalaan 99, Aalst)
     <br />
     Training &amp; competitie maandag en dinsdag vanaf 19:30. Zaterdag vanaf 19:00.
     <br />
