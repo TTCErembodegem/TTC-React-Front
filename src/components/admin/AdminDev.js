@@ -54,6 +54,8 @@ export default class AdminDev extends React.Component {
           <a href="http://ttc-tst-webapp.azurewebsites.net/">Goto test site</a>
           <br />
           <a href="http://ttc-erembodegem.be/tabtapi-test/" target="_blank">Goto TabT test site</a>
+          <br />
+          <a href="http://ttc-erembodegem.be/api/config/log/Get" target="_blank">Goto log dump</a>
         </div>
         <ButtonStack
           config={viewsConfig}
