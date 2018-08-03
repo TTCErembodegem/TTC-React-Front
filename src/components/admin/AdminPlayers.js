@@ -9,6 +9,7 @@ import TextField from 'material-ui/TextField';
 import {Icon, ButtonStack, EditButton} from '../controls.js';
 import AdminPlayerForm from './AdminPlayerForm.js';
 import AdminChangePassword from './AdminChangePassword.js';
+import AdminBoardMembers from './AdminBoardMembers.js';
 
 const keepTrackOfPlayerKeys = false;
 
@@ -49,6 +50,10 @@ export default class AdminPlayers extends Component {
       otherContent = <AdminChangePassword onEnd={::this._setDefaultForm} />;
       break;
 
+    case 'bestuur':
+      otherContent = <AdminBoardMembers onEnd={::this._setDefaultForm} />;
+      break;
+
     case 'inactive':
       players = this.props.recreantAndQuitters;
       if (this.state.filter) {
@@ -84,6 +89,9 @@ export default class AdminPlayers extends Component {
     }, {
       key: 'set-password',
       text: 'Paswoord reset'
+    }, {
+      key: 'bestuur',
+      text: 'Bestuur'
     }];
     return (
       <div>

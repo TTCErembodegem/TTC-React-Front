@@ -20,4 +20,7 @@ export default keyMirror({
   READONLY_MATCHES_LOADED: '', // ReadOnly other match
 
   PLAYER_ACTIVE_CHANGED: '',
+
+  BOARD_SAVED: '',
+  BOARD_DELETED: '',
 });

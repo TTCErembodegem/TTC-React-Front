@@ -107,3 +107,32 @@ function deleted(data) {
     payload: data
   };
 }
+
+
+
+
+export function saveBoardMember({playerId, boardFunction, sort}) {
+  return dispatch => {
+    return http.post('/clubs/Board', {playerId, boardFunction, sort})
+      .then(function() {
+        // dispatch({type: ActionTypes.BOARD_SAVED, payload: playerId});
+        dispatch(showSnackbar(trans('common.apiSuccess')));
+      }, function(err) {
+        dispatch(showSnackbar(trans('common.apiFail')));
+       console.log('saveBoardMember!', err); // eslint-disable-line
+      });
+  };
+}
+
+export function deleteBoardMember({playerId}) {
+  return dispatch => {
+    return http.post('/clubs/Board/' + playerId)
+      .then(function() {
+        // dispatch({type: ActionTypes.BOARD_DELETED, payload: playerId});
+        dispatch(showSnackbar(trans('common.apiSuccess')));
+      }, function(err) {
+        dispatch(showSnackbar(trans('common.apiFail')));
+       console.log('deleteBoardMember!', err); // eslint-disable-line
+      });
+  };
+}

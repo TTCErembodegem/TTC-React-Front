@@ -230,6 +230,7 @@ export default {
       },
       managementTitle: 'Het bestuur',
       managerTypes: {
+        Default: 'Bestuurslid',
         Chairman: 'Voorzitter',
         Secretary: 'Secretaris',
         Treasurer: 'Penningmeester',
@@ -395,7 +396,15 @@ export default {
       frenoyweek: 'Ga naar weekoverzicht op Frenoy',
       frenoyPlayerResults: 'Ga naar spelerdetails op Frenoy',
     },
-    facts: require('./locales-nl-facts.js')
+    facts: require('./locales-nl-facts.js'),
+    admin: {
+      board: {
+        save: 'Bewaren',
+        del: 'Verwijderen',
+        boardFunction: 'Functie',
+        sort: 'Sortering'
+      }
+    }
   },
   timeAgo: {
     prefixAgo: null,
