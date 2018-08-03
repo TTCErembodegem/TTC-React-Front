@@ -81,10 +81,10 @@ export var playerUtils = {
     };
   },
   getImageUrl(playerId) {
-    return '/img/players/' + playerId + '.png?2';
+    return '/img/players/' + playerId + '.png?3';
   },
   getAvatarImageUrl(playerId) {
-    return '/img/players/' + playerId + '_avatar.png?2';
+    return '/img/players/' + playerId + '_avatar.png?3';
   },
 };
 
