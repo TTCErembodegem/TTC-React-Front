@@ -48,7 +48,7 @@ class MadeBy extends Component {
     };
     return (
       <div>
-        <div style={style}>by <a href="http://itenium.be" target="_blank">itenium</a></div>
+        <div style={style}>by <a href="https://itenium.be" target="_blank">itenium</a></div>
         <div style={{clear: 'both'}} />
       </div>
     );
