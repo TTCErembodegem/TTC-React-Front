@@ -71,7 +71,7 @@ export class SlagerijGuy extends Component {
 export const StoneDesign = props => <ImageSponsor url="http://www.stonedesign.be" img="stonedesign.png" {...props} />;
 // export const Vdhkeukens = props => <ImageSponsor url="http://vdhkeukens.be" img="vdhkeukens.png" {...props} />;
 export const Symphony = props => <ImageSponsor url="http://doopsuikersymphony.be" img="symphony.png" {...props} />;
-// export const pongit = props => <ImageSponsor url="http://pongit.be" img="pongit.jpg" {...props} />;
+// export const pongit = props => <ImageSponsor url="https://pongit.be" img="pongit.jpg" {...props} />;
 export const itenium = props => <ImageSponsor url="https://itenium.be" img="itenium.png" {...props} />;
 export const Nostech = props => <ImageSponsor url="http://www.nostech.be" img="nostech.jpg" {...props} />;
 export const KachelsTfe = props => <ImageSponsor url="http://www.kachels-tfe.be/" img="kachels-tfe.png" {...props} />;
