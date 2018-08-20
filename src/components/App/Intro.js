@@ -15,7 +15,7 @@ const weirdLocaleYearInfo = (
   <div>
     <br />
     <h2>WIJZIGING ZAAL</h2>
-    <b>Opgelet: TTC Erembodegem speelt niet meer op Groeneweg 36</b>
+    <b>Opgelet: TTC Erembodegem speelt niet meer op Groeneweg 28</b>
 
     <br />
     <br />
@@ -42,13 +42,17 @@ const weirdLocaleYearInfo = (
     <br />
     Sportzaal VTI (Sinte Annalaan 99, Aalst)
     <br />
-    Training &amp; competitie maandag en dinsdag vanaf 19:30. Zaterdag vanaf 19:00.
+    Training: maandag en dinsdag vanaf 19:30
+    <br />
+    Competitie: maandag en dinsdag vanaf 19:30. Zaterdag vanaf 18:30.
     <br />
 
     <h3>FASE 3</h3>
     Sportzaal TechniGO, eerste verdiep (Cesar Haeltermanstraat 71)
     <br />
-    Training &amp; competitie maandag, woensdag en vrijdag vanaf 19:30
+    Training: maandag en woensdag vanaf 19:30
+    <br />
+    Competitie: maandag, woensdag en vrijdag vanaf 19:30
   </div>
 );
 
