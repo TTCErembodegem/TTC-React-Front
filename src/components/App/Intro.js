@@ -141,8 +141,6 @@ export default class Intro extends Component {
                 <Sponsor.Symphony big={big} style={{padding: 15}} />
                 <div className="pull-right">
                   <Sponsor.itenium big={big} style={{paddingRight: 20}} />
-                  <br />
-                  <Sponsor.KachelsTfe big={big} style={{marginTop: 20, paddingRight: 20}} />
                 </div>
               </div>
             </Row>
@@ -167,9 +165,6 @@ export default class Intro extends Component {
             </Col>
             <Col style={{marginTop: 20}}>
               <Sponsor.Symphony big={big} style={{padding: 5}} />
-            </Col>
-            <Col style={{marginTop: 20}}>
-              <Sponsor.KachelsTfe big={big} />
             </Col>
             <Col style={{marginTop: 20}}>
               <Sponsor.Nostech big={big} />

@@ -74,7 +74,7 @@ export const Symphony = props => <ImageSponsor url="http://doopsuikersymphony.be
 // export const pongit = props => <ImageSponsor url="https://pongit.be" img="pongit.jpg" {...props} />;
 export const itenium = props => <ImageSponsor url="https://itenium.be" img="itenium.png" {...props} />;
 export const Nostech = props => <ImageSponsor url="http://www.nostech.be" img="nostech.jpg" {...props} />;
-export const KachelsTfe = props => <ImageSponsor url="http://www.kachels-tfe.be/" img="kachels-tfe.png" {...props} />;
+// export const KachelsTfe = props => <ImageSponsor url="http://www.kachels-tfe.be/" img="kachels-tfe.png" {...props} />;
 
 
 const bottomSponsorsStyleBig = {
