@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes, {connect, withViewport, withContext, withStyles} from '../PropTypes.js';
-import moment from 'moment';
+// import moment from 'moment';
 
 import {Strike} from '../controls.js';
 import MatchCardHeader from '../matches/Match/MatchCardHeader.js';
