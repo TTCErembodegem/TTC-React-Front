@@ -13,7 +13,7 @@ export default class Links extends Component {
               <td className="tableHeader">{this.context.t('links.federations')}</td>
             </tr>
             <tr>
-              <td><a href="http://www.vttl.be" target="_blank">{this.context.t('links.vttl')}</a></td>
+              <td><a href="https://www.vttl.be" target="_blank">{this.context.t('links.vttl')}</a></td>
             </tr>
             <tr>
               <td><a href="http://www.ovl.vttl.be/" target="_blank">{this.context.t('links.vttlovl')}</a></td>
@@ -22,16 +22,16 @@ export default class Links extends Component {
               <td><a href="http://www.sportafederatie.be/tafeltennis" target="_blank">{this.context.t('links.sporta')}</a></td>
             </tr>
             <tr>
-              <td><a href="http://www.ittf.com/" target="_blank">{this.context.t('links.ittf')}</a></td>
+              <td><a href="https://www.ittf.com/" target="_blank">{this.context.t('links.ittf')}</a></td>
             </tr>
             <tr>
-              <td><a href="http://www.ettu.org/" target="_blank">{this.context.t('links.ettu')}</a></td>
+              <td><a href="https://www.ettu.org/" target="_blank">{this.context.t('links.ettu')}</a></td>
             </tr>
             <tr>
-              <td><a href="http://competitie.vttl.be/index.php?menu=0" target="_blank">{this.context.t('links.vttlResults')}</a></td>
+              <td><a href="https://competitie.vttl.be/index.php?menu=0" target="_blank">{this.context.t('links.vttlResults')}</a></td>
             </tr>
             <tr>
-              <td><a href="http://ttonline.sporta.be/competitie/index.php" target="_blank">{this.context.t('links.sportaResults')}</a></td>
+              <td><a href="https://ttonline.sporta.be/competitie/index.php" target="_blank">{this.context.t('links.sportaResults')}</a></td>
             </tr>
           </tbody>
         </table>
@@ -43,14 +43,14 @@ export default class Links extends Component {
             </tr>
             <tr>
               <td>
-                <a href="http://ttcsintpauwels.be/competitie/vttl/bereken-je-klassement/" target="_blank">
+                <a href="https://ttcsintpauwels.be/competitie/vttl/bereken-je-klassement/" target="_blank">
                   {this.context.t('links.vttlCalculationOne')}
                 </a>
               </td>
             </tr>
             <tr>
               <td>
-                <a href="http://ttcsintpauwels.be/competitie/sporta/bereken-je-klassement/" target="_blank">
+                <a href="https://ttcsintpauwels.be/competitie/sporta/bereken-je-klassement/" target="_blank">
                   {this.context.t('links.sportaCalculation')}
                 </a>
               </td>
@@ -62,7 +62,7 @@ export default class Links extends Component {
               <td><a href="http://www.tafeltennisshop.be/" target="_blank">{this.context.t('links.francis')}</a></td>
             </tr>
             <tr>
-              <td><a href="http://www.tabletennisdaily.co.uk/" target="_blank">{this.context.t('links.tabletennisDaily')}</a></td>
+              <td><a href="https://www.tabletennisdaily.co.uk/" target="_blank">{this.context.t('links.tabletennisDaily')}</a></td>
             </tr>
           </tbody>
         </table>

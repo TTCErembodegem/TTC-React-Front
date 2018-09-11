@@ -117,7 +117,7 @@ export default {
         'slagen we er toch in om met ${teamsVttl} ploegen VTTL en ${teamsSporta} Sporta in competitie te treden. ' +
         'Fairplay en gezelligheid staan centraal bij al onze tafeltennis-activiteiten!',
       matchesToday: 'matchen vandaag',
-      trainingToday: 'vandaag training vanaf 19u30',
+      //trainingToday: 'vandaag training vanaf 19u30',
       playedMatches: 'laatst gespeelde matchen',
       loading: 'Laden...',
       ourSponsors: 'onze sponsers',

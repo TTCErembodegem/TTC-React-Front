@@ -220,8 +220,8 @@ class TodaysEvents extends Component {
   };
 
   render() {
-    const t = this.context.t;
-    const today = moment();
+    // const t = this.context.t;
+    // const today = moment();
 
 
     // TODO: training weekdays & hour hardcoded (+ duplicated in footer)
