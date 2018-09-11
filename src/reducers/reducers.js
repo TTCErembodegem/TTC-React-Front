@@ -30,6 +30,8 @@ export function config(state = Immutable.Map(defaultConfigState), action = null)
     return state.set(payload.key, payload.value);
   case ActionTypes.CONFIG_LOADED:
     return state.set('params', payload);
+  case ActionTypes.UPDATE_CONFIG_PARAM:
+    return state.set('params', {...state.get('params'), [payload.key]: payload.value});
   default:
     return state;
   }

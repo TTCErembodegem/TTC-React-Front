@@ -15,6 +15,7 @@ export default keyMirror({
   SHOW_SNACKBAR: '',
   CLEAR_SNACKBAR: '',
   SET_SETTING: '',
+  UPDATE_CONFIG_PARAM: '',
 
   MATCHES_LOADED: '', // TTC Erembodegem match
   READONLY_MATCHES_LOADED: '', // ReadOnly other match

@@ -9,6 +9,7 @@ import AdminPlayerLineup from './AdminPlayerLineup.js';
 import ProfilePhotoForm, {ProfilePhotoAvatarForm} from '../users/ProfilePhotoForm.js';
 import {AdminEmail} from './AdminEmail.js';
 import {AdminMatches} from './AdminMatches.js';
+import {AdminParams} from './AdminParams.js';
 
 const tabEventKeys = keyMirror({
   players: '',
@@ -17,6 +18,7 @@ const tabEventKeys = keyMirror({
   pictures: '',
   emails: '',
   matches: '',
+  configParams: '',
   dev: '',
 });
 
@@ -71,6 +73,8 @@ export default class Admin extends Component {
       return <AdminDev />;
     case tabEventKeys.matches:
       return <AdminMatches />;
+    case tabEventKeys.configParams:
+      return <AdminParams />;
     }
   }
 
@@ -90,13 +94,16 @@ export default class Admin extends Component {
       title: 'Opstellingen',
     }, {
       key: tabEventKeys.matches,
-      title: 'Matches',
+      title: 'Matchen',
     }, {
       key: tabEventKeys.pictures,
       title: 'Foto\'s',
     }, {
       key: tabEventKeys.emails,
       title: 'Email',
+    }, {
+      key: tabEventKeys.configParams,
+      title: 'Params',
     }, {
       key: tabEventKeys.dev,
       title: 'Dev',
