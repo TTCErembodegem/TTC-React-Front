@@ -30,7 +30,7 @@ const weirdLocaleYearInfo = (
     <br />
     Training: Elke maandag en dinsdag 11/9 vanaf 19:00
     <br />
-    <small style={{marginLeft: 16}}>(Dinsdag 18/11 en 25/11 GEEN training!)</small>
+    <small style={{marginLeft: 16}}>(Dinsdag 18/9 en 25/9 GEEN training!)</small>
     <br />
     Competitie: maandag en dinsdag vanaf 19:00. Zaterdag vanaf 18:30.
     <br />
