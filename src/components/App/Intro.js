@@ -24,7 +24,7 @@ const weirdLocaleYearInfo = (
     <br />
 
     <h3>FASE 2</h3>
-    Periode september tot vermoedelijk oktober/november
+    Periode september tot eind december
     <br />
     Sportzaal VTI (Sinte Annalaan 99, Aalst)
     <br />
@@ -225,10 +225,10 @@ class TodaysEvents extends Component {
 
 
     // TODO: training weekdays & hour hardcoded (+ duplicated in footer)
-    var trainingEvent;
-    if (today.weekday() === 1 || today.weekday() === 3) {
-      trainingEvent = <Strike text={t('intro.trainingToday')} />;
-    }
+    var trainingEvent = null;
+    // if (today.weekday() === 1 || today.weekday() === 3) {
+    //   trainingEvent = <Strike text={t('intro.trainingToday')} />;
+    // }
 
     return (
       <div>
