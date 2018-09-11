@@ -40,8 +40,9 @@ export default class IndividualMatches extends Component {
             return (
               <tr key={game.matchNumber}
                 className={cn({
-                  success: game.ownPlayer.playerId === this.state.pinnedPlayerId,
-                  accentuate: game.ownPlayer.playerId === this.props.ownPlayerId
+                  success: game.ownPlayer.playerId === this.state.pinnedPlayerId && game.outcome === matchOutcome.Won,
+                  danger: game.ownPlayer.playerId === this.state.pinnedPlayerId && game.outcome !== matchOutcome.Won,
+                  accentuate: game.ownPlayer.playerId === this.props.ownPlayerId,
                 })}
                 onClick={this._onIndividualMatchChange.bind(this, game.ownPlayer.playerId)}
               >
