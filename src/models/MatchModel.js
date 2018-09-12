@@ -237,14 +237,24 @@ export default class MatchModel {
         outcome: game.outcome,
       };
 
+
       if (result.home && result.out) {
         if (result.home.playerId || result.out.playerId) {
           result.ownPlayer = result.home.playerId ? result.home : result.out;
         } else {
           // readonlyMatch does not have ownPlayer
+
+          // TODO: 2018: This is risky stuff. FrenoyApi changed and double matches don't seem to
+          // be recognized properly anymore. Could use this to improve: it is now possible to fetch
+          // who played in the doubles...
+          // RISKY: Are readonlyMatches now a problem? (ie all readonlyMatches recognized as doubles match...)
+          // -- We'll see once the next matches are played :)
+          console.log('FrenoyAPI change: Doubles vs readonlyMatches?', game, result);
+          result.ownPlayer = {};
+          result.isDoubles = true;
         }
       } else {
-        // TODO: bug with isDoubles see backend TODO in FrenoyMatchesApi.cs
+        // TODO: 2017: bug with isDoubles see backend TODO in FrenoyMatchesApi.cs
         result.ownPlayer = {};
         result.isDoubles = true;
       }
