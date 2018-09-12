@@ -203,7 +203,7 @@ export default {
       roundFirst: 'Heenronde',
       roundBack: 'Terugronde',
       downloadScoresheet: 'Scoreblad downloaden',
-      scoresheetFileName: '${frenoyId} Sporta ${teamCode} vs ${theirClub} ${theirTeam}',
+      scoresheetFileName: '${frenoyId} Sporta ${teamCode} vs ${theirClub} ${theirTeam}.xlsx',
     },
     players: {
       title: 'Spelers overzicht ${a}',

@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes, {connect} from '../../PropTypes.js';
 import {forceFrenoySync} from '../../../actions/matchActions.js';
-
+import http from '../../../utils/httpClient.js';
+import {ExcelButton} from '../../controls/Button.js';
 
 @connect(null, {forceFrenoySync})
 export class MatchCardAdmin extends Component {
@@ -13,12 +14,16 @@ export class MatchCardAdmin extends Component {
 
   render() {
     const match = this.props.match;
-
     return (
       <div style={{padding: 7}}>
         <button onClick={() => this.props.forceFrenoySync(match.id)} className="btn btn-default pull-right">
           Nu synchroniseren
         </button>
+        <ExcelButton
+          onClick={() => http.download.scoresheetExcel(this.props.match)}
+          tooltip={match.isHomeMatch ? 'Download Scoresheet' : 'Download Scoresheet (UIT match???)'}
+          className={'pull-right ' + (match.isHomeMatch ? 'btn-success' : 'btn-danger')}
+        />
 
         ID={match.id}<br />FrenoyId={match.frenoyMatchId}
 

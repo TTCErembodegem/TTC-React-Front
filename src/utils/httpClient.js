@@ -3,6 +3,7 @@ import request from 'superagent-bluebird-promise';
 import querystring from 'querystring';
 import assert from 'assert';
 import moment from 'moment';
+import t from '../locales.js';
 
 const LogRequestTimes = false;
 
@@ -167,24 +168,19 @@ HttpClient.download.playersExcel = function(fileName) {
 //link.href = 'data:application/octet-stream;base64,' + res.body;
 // --> Does not work in IE
 
-// HttpClient.download.scoresheetExcel = function(match) {
-//   return HttpClient.download('/match/ExcelScoresheet/' + match.id).then(res => {
-//     var fileName = t('players.scoresheetFileName', {
-//       frenoyId: match.frenoyMatchId.replace('/', '-'),
-//       teamCode: match.getTeam().teamCode,
-//       theirClub: match.getOpponentClub().name,
-//       theirTeam: match.opponent.teamCode,
-//     });
+HttpClient.download.scoresheetExcel = function(match) {
+  return HttpClient.download('/matches/ExcelScoresheet/' + match.id).then(res => {
+    // fileName: '{frenoyId} Sporta {teamCode} vs {theirClub} {theirTeam}.xlsx',
+    var fileName = t('comp.scoresheetFileName', {
+      frenoyId: match.frenoyMatchId.replace('/', '-'),
+      teamCode: match.getTeam().teamCode,
+      theirClub: match.getOpponentClub().name,
+      theirTeam: match.opponent.teamCode,
+    });
 
-//     // make this button ALWAYS VISIBLE!!!
-//     // fileName: '{frenoyId} Sporta {teamCode} vs {theirClub} {theirTeam}',
-
-//     var link = document.createElement('a');
-//     link.download = fileName + '.xlsx';
-//     link.href = 'data:application/octet-stream;base64,' + res.body;
-//     link.click();
-//   })
-// }
+    downloadExcel(res.body, fileName);
+  });
+};
 
 HttpClient.download.teamsExcel = function(fileName) {
   return HttpClient.download('/teams/ExcelExport').then(res => {
