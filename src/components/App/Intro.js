@@ -28,11 +28,11 @@ const weirdLocaleYearInfo = (
     <br />
     Sportzaal VTI (Sinte Annalaan 99, Aalst)
     <br />
-    Training: Elke maandag en dinsdag 11/9 vanaf 19:00
+    Training: Elke maandag en dinsdag tussen 20u en 22u
     <br />
     <small style={{marginLeft: 16}}>(Dinsdag 18/9 en 25/9 GEEN training!)</small>
     <br />
-    Competitie: maandag en dinsdag vanaf 19:00. Zaterdag vanaf 18:30.
+    Competitie: maandag en dinsdag vanaf 19:00. Zaterdag vanaf 18:00.
     <br />
 
     <h3>FASE 3</h3>
