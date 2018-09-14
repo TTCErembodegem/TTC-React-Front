@@ -22,7 +22,7 @@ export default class ClubLocationInstructions extends Component {
       <span>
         <b>{params.location}</b>
         <br />
-        Makkelijkst via de <b>Assendries</b> de parking oprijden.
+        Makkelijkst via de <b>Asserendries</b> de parking oprijden.
       </span>
     );
 
