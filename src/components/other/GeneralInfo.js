@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes, {connect} from '../PropTypes.js';
 import {OwnEmail, GoogleMap} from '../controls.js';
+import ClubLocationInstructions from './ClubLocationInstructions.js';
+
 
 @connect(state => ({params: state.config.get('params')}))
 export default class GeneralInfo extends Component {
@@ -16,6 +18,8 @@ export default class GeneralInfo extends Component {
         <h2>{this.context.t('clubs.generalInfo.title')}</h2>
         <div className="row">
           <div className="col-md-6">
+            <ClubLocationInstructions />
+
             <h1>{this.context.t('clubs.generalInfo.contact')}</h1>
             <strong>{this.context.t('clubs.generalInfo.ourAddress')}</strong> {this.props.params.location}
             <div><strong>{this.context.t('clubs.generalInfo.ourEmail')}</strong> <OwnEmail /></div>

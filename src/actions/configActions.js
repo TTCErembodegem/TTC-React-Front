@@ -29,6 +29,7 @@ export function saveConfigParam(key, value) {
     return http.post('/config', {key, value})
       .then(function() {
         dispatch(updateConfigParam(key, value));
+        dispatch(showSnackbar('Parameter saved')); // toastr
       }, function(err) {
         dispatch(showSnackbar(trans('common.apiFail')));
         console.log('saveConfigParam!', err); // eslint-disable-line

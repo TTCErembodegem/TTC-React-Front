@@ -228,6 +228,9 @@ export default {
         orgNr: 'BTW nummer vzw',
         balls: 'Wij spelen met',
       },
+      location: {
+        title: 'Instructies naar ons lokaal',
+      },
       managementTitle: 'Het bestuur',
       managerTypes: {
         Default: 'Bestuurslid',

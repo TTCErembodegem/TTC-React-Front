@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes, {connect, withViewport, withContext, withStyles} from '../PropTypes.js';
 // import moment from 'moment';
+import ClubLocationInstructions from '../other/ClubLocationInstructions.js';
 
 import {Strike} from '../controls.js';
 import MatchCardHeader from '../matches/Match/MatchCardHeader.js';
@@ -11,10 +12,12 @@ import Typist from 'react-typist';
 import * as Sponsor from './Sponsors.js';
 import {Eetfestijn} from './Eetfestijn.js';
 
-const WeirdLocaleYearInfo = ({params}) => (
+
+const WeirdLocaleYearInfo = ({params}) => ( // eslint-disable-line
   <div>
-    <br />
-    <h2>WIJZIGING ZAAL</h2>
+    <h2>
+      WIJZIGING ZAAL
+    </h2>
     <b>Opgelet: TTC Erembodegem speelt niet meer op Groeneweg 28</b>
 
     <br />
@@ -24,9 +27,9 @@ const WeirdLocaleYearInfo = ({params}) => (
     <br />
 
     <h3>FASE 2</h3>
-    Periode september tot eind december
+    <b>{params.location}</b>
     <br />
-    Sportzaal VTI (Sinte Annalaan 99, Aalst)
+    Periode september tot eind december
     <br />
     {params.trainingDays}
     <br />
@@ -113,7 +116,9 @@ export default class Intro extends Component {
         {topSponsors}
         <Row style={{marginTop: big ? 25 : undefined}}>
           <Col sm={6} style={{verticalAlign: 'top'}}>
-            <h1>{this.context.t('intro.title')}</h1>
+            <h3>{this.context.t('intro.title')}</h3>
+            <ClubLocationInstructions />
+            <br />
             {this.context.t('intro.text', inClub)}
             <WeirdLocaleYearInfo params={this.props.config.get('params')} />
           </Col>
