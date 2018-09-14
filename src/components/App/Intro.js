@@ -239,6 +239,8 @@ class TodaysEvents extends Component {
       <div>
         {trainingEvent}
         <Eetfestijn />
+        <br />
+        <img src="/img/lokaal-instructies/3-voorbij-de-container.jpg" className="img-responsive img-rounded" />
       </div>
     );
 
