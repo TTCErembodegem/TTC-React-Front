@@ -11,7 +11,7 @@ import Typist from 'react-typist';
 import * as Sponsor from './Sponsors.js';
 import {Eetfestijn} from './Eetfestijn.js';
 
-const weirdLocaleYearInfo = (
+const WeirdLocaleYearInfo = ({params}) => (
   <div>
     <br />
     <h2>WIJZIGING ZAAL</h2>
@@ -28,11 +28,11 @@ const weirdLocaleYearInfo = (
     <br />
     Sportzaal VTI (Sinte Annalaan 99, Aalst)
     <br />
-    Training: Elke maandag en dinsdag tussen 20u en 22u
+    {params.trainingDays}
     <br />
     <small style={{marginLeft: 16}}>(Dinsdag 18/9 en 25/9 GEEN training!)</small>
     <br />
-    Competitie: maandag en dinsdag vanaf 19:00. Zaterdag vanaf 18:00.
+    {params.competitionDays}
     <br />
 
     <h3>FASE 3</h3>
@@ -115,7 +115,7 @@ export default class Intro extends Component {
           <Col sm={6} style={{verticalAlign: 'top'}}>
             <h1>{this.context.t('intro.title')}</h1>
             {this.context.t('intro.text', inClub)}
-            {weirdLocaleYearInfo}
+            <WeirdLocaleYearInfo params={this.props.config.get('params')} />
           </Col>
           <Col sm={6}>
             {!this.props.config.get('initialLoadCompleted') ? (
