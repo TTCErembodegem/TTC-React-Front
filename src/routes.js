@@ -1,12 +1,12 @@
 import React from 'react';
-import {Router, Route, browserHistory} from 'react-router';
+import {BrowserRouter, Route} from 'react-router-dom';
 
-browserHistory.listen(location => {
-  if (window.ga) {
-    window.ga('set', 'page', location.pathname + location.search);
-    window.ga('send', 'pageview');
-  }
-});
+// browserHistory.listen(location => {
+//   if (window.ga) {
+//     window.ga('set', 'page', location.pathname + location.search);
+//     window.ga('send', 'pageview');
+//   }
+// });
 
 import App from './components/App';
 import Players from './components/players/Players.js';
@@ -29,8 +29,9 @@ import {OpponentOverview} from './components/teams/OpponentOverview.js';
 import t from './locales.js';
 
 const Routes = () => (
-  <Router history={browserHistory}>
-    <Route path="/" component={App}>
+  <BrowserRouter>
+    <div>
+      <Route exact path="/" component={App} />
       <Route path={t.route('login')} component={Login} />
       <Route path={t.route('forgotPassword') + '/:guid'} component={ForgotPasswordReset} />
       <Route path={t.route('forgotPassword')} component={ForgotPassword} />
@@ -54,8 +55,8 @@ const Routes = () => (
 
       <Route path={t.route('admin') + '(/:tabKey)'} component={Admin}/>
       <Route path="*" component={Matches}/>
-    </Route>
-  </Router>
+    </div>
+  </BrowserRouter>
 );
 
 

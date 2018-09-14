@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes, {withStyles, withViewport} from '../../PropTypes.js';
-import {Link, browserHistory} from 'react-router';
+import {Link} from 'react-router-dom';
 
 import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
@@ -22,7 +22,7 @@ export default class Header extends Component {
   }
 
   _goto(route, params = undefined) {
-    browserHistory.push(this.context.t.route(route, params));
+    //browserHistory.push(this.context.t.route(route, params));
   }
 
   render() {

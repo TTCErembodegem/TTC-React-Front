@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Route} from 'react-router-dom';
 import PropTypes, {connect} from '../PropTypes.js';
 
 import * as loginActions from '../../actions/userActions.js';
@@ -49,6 +50,11 @@ export default class ForgotPassword extends Component {
   }
 }
 
+
+
+
+
+
 @connect(() => ({}), loginActions)
 export class ForgotPasswordReset extends Component {
   static contextTypes = PropTypes.contextTypes;
@@ -81,12 +87,15 @@ export class ForgotPasswordReset extends Component {
           type="password"
           onChange={e => this.setState({password: e.target.value})} />
 
-        <RaisedButton
-          label={t('password.changeTitle')}
-          primary={true}
-          style={{marginTop: 15}}
-          onClick={() => this.props.setNewPasswordFromGuid(this.state)}
-          disabled={!this.state.playerId && !this.state.password} />
+        <Route render={({history}) => (
+          <RaisedButton
+            label={t('password.changeTitle')}
+            primary={true}
+            style={{marginTop: 15}}
+            onClick={() => this.props.setNewPasswordFromGuid(this.state).then(() => history.push('/'))}
+            disabled={!this.state.playerId && !this.state.password}
+          />
+        )} />
       </Paper>
     );
   }

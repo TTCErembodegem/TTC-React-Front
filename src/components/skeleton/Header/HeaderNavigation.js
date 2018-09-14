@@ -1,5 +1,5 @@
-import React, {Component, PropTypes} from 'react';
-import {browserHistory} from 'react-router';
+import PropTypes from 'prop-types';
+import React, {Component} from 'react';
 import {contextTypes} from '../../../utils/decorators/withContext.js';
 import storeUtil from '../../../storeUtil.js';
 
@@ -51,7 +51,7 @@ class Navigation extends Component {
 
   _goto(url) {
     this.props.toggleNav(false);
-    browserHistory.push(url);
+    //browserHistory.push(url);
   }
 
   render() {

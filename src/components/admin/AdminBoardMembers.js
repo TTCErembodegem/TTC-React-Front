@@ -3,8 +3,8 @@ import PropTypes, {connect, storeUtil} from '../PropTypes.js';
 import * as playerActions from '../../actions/playerActions.js';
 
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
+import TextField from '@material-ui/core/TextField';
+import RaisedButton from '@material-ui/core/RaisedButton';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 import PropTypes, {browserHistory, storeUtil} from '../../PropTypes.js';
 import {OwnClubId} from '../../../models/ClubModel.js';
 import MatchScore from '../MatchScore.js';

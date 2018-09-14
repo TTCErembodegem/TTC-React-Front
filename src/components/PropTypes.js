@@ -1,4 +1,4 @@
-import {PropTypes as ReactPropTypes} from 'react';
+import ReactPropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
 import MatchModel from '../models/MatchModel.js';
@@ -10,7 +10,6 @@ import {contextTypes} from '../utils/decorators/withContext.js';
 
 export storeUtil from '../storeUtil.js'; // eslint-disable-line
 export {connect} from 'react-redux';
-export {browserHistory} from 'react-router';
 export {browseTo} from '../routes.js';
 export keyMirror from 'fbjs/lib/keyMirror'; // eslint-disable-line
 

@@ -5,6 +5,8 @@
 import timeAgoInWords from '../../../utils/timeAgoInWords.js';
 import _ from 'lodash';
 
+const PropTypes = require('prop-types');
+
 const React = require('react');
 
 export const TimeAgo = React.createClass({
@@ -19,11 +21,11 @@ export const TimeAgo = React.createClass({
     };
   },
   propTypes: {
-    live: React.PropTypes.bool.isRequired,
-    minPeriod: React.PropTypes.number.isRequired,
-    maxPeriod: React.PropTypes.number.isRequired,
-    component: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.func]).isRequired,
-    date: React.PropTypes.object.isRequired,
+    live: PropTypes.bool.isRequired,
+    minPeriod: PropTypes.number.isRequired,
+    maxPeriod: PropTypes.number.isRequired,
+    component: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
+    date: PropTypes.object.isRequired,
   },
   componentDidMount: function() {
     if (this.props.live) {

@@ -2,6 +2,7 @@
 
 var assign = require('object-assign');
 var blacklist = require('blacklist');
+const PropTypes = require('prop-types');
 var React = require('react');
 var ReactDOM = require('react-dom');
 
@@ -12,11 +13,11 @@ if (typeof document !== 'undefined') {
 export const Editor = React.createClass({
   displayName: 'MediumEditor',
   propTypes: {
-    text: React.PropTypes.string,
-    options: React.PropTypes.object,
-    tag: React.PropTypes.string,
-    onChange: React.PropTypes.func,
-    contentEditable: React.PropTypes.bool,
+    text: PropTypes.string,
+    options: PropTypes.object,
+    tag: PropTypes.string,
+    onChange: PropTypes.func,
+    contentEditable: PropTypes.bool,
   },
   getInitialState() {
     return {

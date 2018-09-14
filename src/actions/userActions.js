@@ -1,4 +1,3 @@
-import {browserHistory} from 'react-router';
 import * as ActionTypes from './ActionTypes.js';
 import http from '../utils/httpClient.js';
 import storeUtil from '../storeUtil.js';
@@ -73,7 +72,6 @@ export function setNewPasswordFromGuid({guid, playerId, password}) {
       .then(function() {
         dispatch(showSnackbar(trans('common.apiSuccess')));
         dispatch(login({playerId, password}, false));
-        browserHistory.push('');
       }, function(err) {
         dispatch(showSnackbar(trans('common.apiFail')));
        console.log('setNewPasswordFromGuid!', err); // eslint-disable-line
