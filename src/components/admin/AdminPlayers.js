@@ -108,7 +108,7 @@ export default class AdminPlayers extends Component {
         {playersContent ? (
           <div>
             <TextField
-              hintText="Zoek speler"
+              placeholder="Zoek speler"
               onChange={e => this.setState({playerFilter: e.target.value.toLowerCase()})}
               style={{width: 150, marginLeft: 10}}
             />

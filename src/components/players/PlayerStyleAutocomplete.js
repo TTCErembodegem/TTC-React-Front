@@ -28,8 +28,8 @@ export default class PlayerStyleAutocomplete extends Component {
     //     onNewRequest={::this._onChange}
     //     onUpdateInput={::this._onChange}
     //     searchText={this.props.value}
-    //     floatingLabelText={this.props.t('player.editStyle.style')}
-    //     hintText={playingStyles.join(', ')}
+    //     label={this.props.t('player.editStyle.style')}
+    //     placeholder={playingStyles.join(', ')}
     //     dataSource={playingStyles} />
     // );
 

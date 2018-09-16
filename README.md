@@ -6,7 +6,12 @@ Oh boy:
 - AutoComplete from '@material-ui/core/AutoComplete' replaced with react-select
 - analytics is down
 - matchcardheader -> cards also have different API now...
-- full page loader is gone now
+- replace window.onerror with ErrorBoundary?
+- tooltip is broken in top nav profile icon
+- router: match.params
+- profile: wijzig foto 'ImageEditor'
+
+- login: if text matches 1 person: do enable button
 
 The port for the backend is atm hardcoded in:  
 `src/utils/httpClient.js`

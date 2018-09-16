@@ -50,7 +50,7 @@ class ImageEditor extends React.Component {
           label={this.props.t('photos.preview')}
           secondary={true}
           style={{marginTop: -40, marginBottom: 10}}
-          onTouchTap={this.handleSave}
+          onClick={this.handleSave}
         />
       </div>
     );

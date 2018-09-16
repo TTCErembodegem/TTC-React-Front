@@ -30,9 +30,9 @@ export class PlayersToolbar extends Component {
     return (
       <div style={{marginRight: 5, marginLeft: marginLeft, marginBottom: 5}}>
         <TextField
-          hintText={this.context.t('players.search')}
+          placeholder={this.context.t('players.search')}
           onChange={e => onFilterChange(e.target.value.toLowerCase())}
-          style={{width: 150}}
+          style={{width: 150, marginTop: 8}}
         />
 
         <div className="button-bar-right" style={{marginTop: 5}}>

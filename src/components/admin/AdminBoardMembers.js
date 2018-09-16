@@ -4,7 +4,7 @@ import * as playerActions from '../../actions/playerActions.js';
 
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import {MaterialButton} from '../controls/Button.js';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 
@@ -61,7 +61,8 @@ export default class AdminBoardMembers extends Component {
         <h3>{this.context.t('clubs.managementTitle')}</h3>
         <PlayerAutoComplete
           selectPlayer={::this.playerSelected}
-          hintText={this.context.t('login.loginName')} />
+          placeholder={this.context.t('login.loginName')}
+        />
 
         <br />
 
@@ -80,7 +81,7 @@ export default class AdminBoardMembers extends Component {
         <br />
 
         <TextField
-          floatingLabelText={this.context.t('admin.board.sort')}
+          label={this.context.t('admin.board.sort')}
           type="number"
           onChange={e => this.setState({sort: e.target.value})}
           value={this.state.sort}
@@ -88,17 +89,19 @@ export default class AdminBoardMembers extends Component {
 
         <br />
 
-        <Button variant="contained"
+        <MaterialButton variant="contained"
           label={this.context.t('admin.board.save')}
           style={{marginTop: 15, marginRight: 8}}
           onClick={() => this.props.saveBoardMember(this.state)}
-          disabled={!this.state.playerId} />
+          disabled={!this.state.playerId}
+        />
 
-        <Button variant="contained"
+        <MaterialButton variant="contained"
           label={this.context.t('admin.board.del')}
           style={{marginTop: 15}}
           onClick={() => this.props.deleteBoardMember(this.state)}
-          disabled={!this.state.playerId} />
+          disabled={!this.state.playerId}
+        />
       </div>
     );
   }

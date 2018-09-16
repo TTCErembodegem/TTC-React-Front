@@ -4,8 +4,11 @@ import PropTypes, {connect, withContext, storeUtil} from '../PropTypes.js';
 import * as playerActions from '../../actions/playerActions.js';
 
 import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import {MaterialButton} from '../controls/Button.js';
 
 import {EditIcon} from '../controls.js';
 import PlayerAutoComplete from './PlayerAutoComplete.js';
@@ -87,7 +90,8 @@ export class PlayerPlayingStyleForm extends Component {
         <div
           className="clickable"
           onClick={canChangeStyle ? this._openStyle.bind(this, ply) : undefined}
-          style={{display: 'inline-block'}} title={t('player.editStyle.tooltip', ply.alias)}>
+          style={{display: 'inline-block'}} title={t('player.editStyle.tooltip', ply.alias)}
+        >
           <PlayerAvatar player={ply} style={{backgroundColor: 'gold', margin: 0}} />
         </div>
       );
@@ -108,46 +112,56 @@ export class PlayerPlayingStyleForm extends Component {
     }
 
     const changeStyleModalActions = [
-      <Button
+      <MaterialButton
+        key="1"
         label={t('common.cancel')}
         secondary={true}
-        onTouchTap={::this._closeStyle} />,
-      <Button
+        onClick={::this._closeStyle}
+      />,
+      <MaterialButton
+        key="2"
         label={t('common.save')}
         primary={true}
-        keyboardFocused={true}
-        onTouchTap={::this._saveStyle} />,
+        onClick={::this._saveStyle}
+      />,
     ];
 
     return (
       <Dialog
-        title={t('player.editStyle.title', this.props.player.alias)}
-        actions={changeStyleModalActions}
-        bodyStyle={{minHeight: 145}}
-        modal={false}
         open={!!this.state.editingPlayer}
-        onRequestClose={::this._closeStyle}>
+        onClose={::this._closeStyle}
+      >
+        <DialogTitle>{t('player.editStyle.title', this.props.player.alias)}</DialogTitle>
 
-        <PlayerStyleAutocomplete t={t}
-          value={this.state.newStyle.name || ''}
-          onChange={::this._changeStyle} />
+        <DialogContent style={{minWidth: 320}}>
+          <PlayerStyleAutocomplete t={t}
+            value={this.state.newStyle.name || ''}
+            onChange={::this._changeStyle}
+          />
 
-        <br />
+          <br />
 
-        <TextField
-          style={{marginBottom: -25}}
-          floatingLabelText={t('player.editStyle.bestStroke')}
-          type="text"
-          value={this.state.newStyle.bestStroke}
-          onChange={::this._changeBestStroke} />
+          <TextField
+            style={{marginBottom: -25}}
+            fullWidth
+            label={t('player.editStyle.bestStroke')}
+            type="text"
+            value={this.state.newStyle.bestStroke}
+            onChange={::this._changeBestStroke}
+          />
 
-        {this.props.user.isSystem() ? (
-          <div>
-            <PlayerAutoComplete
-              selectPlayer={::this._changePlayer}
-              floatingLabelText={t('system.playerSelect')} />
-          </div>
-        ) : null}
+          {this.props.user.isSystem() ? (
+            <div>
+              <PlayerAutoComplete
+                selectPlayer={::this._changePlayer}
+                label={t('system.playerSelect')}
+              />
+            </div>
+          ) : null}
+        </DialogContent>
+        <DialogActions>
+          {changeStyleModalActions}
+        </DialogActions>
       </Dialog>
     );
   }

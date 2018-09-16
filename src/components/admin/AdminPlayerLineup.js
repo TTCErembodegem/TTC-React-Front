@@ -51,8 +51,9 @@ class AdminPlayerLineupToolbar extends Component {
       <div style={{padding: 10, display: 'inline-block'}}>
         <PlayerAutoComplete
           selectPlayer={playerId => this.setState({playerId})}
-          hintText="Selecteer speler"
-          style={{marginRight: 20}} />
+          placeholder="Selecteer speler"
+          style={{marginRight: 20}}
+        />
         <Button bsStyle="info" style={{marginRight: 10}} onClick={() => onFilterChange('Vttl', this.state.playerId)}>Vttl</Button>
         <Button bsStyle="info" onClick={() => onFilterChange('Sporta', this.state.playerId)}>Sporta</Button>
       </div>

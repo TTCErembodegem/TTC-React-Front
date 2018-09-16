@@ -3,7 +3,7 @@ import PropTypes, {connect, keyMirror} from '../PropTypes.js';
 
 import * as loginActions from '../../actions/userActions.js';
 
-import Button from '@material-ui/core/Button';
+import {MaterialButton} from '../controls/Button.js';
 import {TabbedContainer} from '../controls/TabbedContainer.js';
 
 import ChangePassword from '../users/ChangePassword.js';
@@ -89,11 +89,12 @@ export default class Profile extends Component {
       return (
         <div>
           <h1>SYSTEM USER</h1>
-          <Button variant="contained"
+          <MaterialButton variant="contained"
             label={t('login.logoutButton')}
             secondary={true}
             style={{marginTop: -15}}
-            onClick={this.props.logout} />
+            onClick={this.props.logout}
+          />
         </div>
       );
     }
@@ -106,7 +107,8 @@ export default class Profile extends Component {
           defaultTabKey={tabEventKeys.main}
           tabKeys={tabConfig}
           route={{base: this.context.t.route('profile'), subs: 'profileTabs'}}
-          tabRenderer={::this._renderTabContent} />
+          tabRenderer={::this._renderTabContent}
+        />
       </div>
     );
   }
@@ -125,11 +127,12 @@ const ProfilePlayerDetails = ({player, t, logout}) => (
       <strong>{t('player.city')}</strong>&nbsp;{player.contact.city}
     </p>
 
-    <Button variant="contained"
+    <MaterialButton variant="contained"
       label={t('login.logoutButton')}
       secondary={true}
       style={{marginTop: 15}}
-      onClick={() => logout()} />
+      onClick={() => logout()}
+    />
   </div>
 );
 

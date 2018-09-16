@@ -6,7 +6,7 @@ import {userRoles} from '../../models/UserModel.js';
 import PlayerModel from '../../models/PlayerModel.js';
 
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import {MaterialButton} from '../controls/Button.js';
 import Paper from '@material-ui/core/Paper';
 import Panel from 'react-bootstrap/lib/Panel';
 import PlayerStyleAutocomplete from '../players/PlayerStyleAutocomplete.js';
@@ -40,21 +40,21 @@ export default class AdminPlayerForm extends Component {
             <h4>Persoonlijk</h4>
             <TextField
               style={{width: 200, marginRight: fieldMargin}}
-              floatingLabelText={this.context.t('Voornaam')}
+              label={this.context.t('Voornaam')}
               defaultValue={player.firstName}
               onChange={e => this.setState({firstName: e.target.value})}
             />
 
             <TextField
               style={{width: 200, marginRight: fieldMargin}}
-              floatingLabelText={this.context.t('Achternaam')}
+              label={this.context.t('Achternaam')}
               defaultValue={player.lastName}
               onChange={e => this.setState({lastName: e.target.value})}
             />
 
             <TextField
               style={{width: 200}}
-              floatingLabelText={this.context.t('player.alias')}
+              label={this.context.t('player.alias')}
               defaultValue={player.alias}
               onChange={e => this.setState({alias: e.target.value})}
             />
@@ -69,7 +69,7 @@ export default class AdminPlayerForm extends Component {
 
             <TextField
               style={{width: 230}}
-              floatingLabelText={this.context.t('player.editStyle.bestStroke')}
+              label={this.context.t('player.editStyle.bestStroke')}
               defaultValue={player.style.bestStroke}
               onChange={e => this.setState({style: Object.assign({}, player.style, {bestStroke: e.target.value})})}
             />
@@ -84,7 +84,7 @@ export default class AdminPlayerForm extends Component {
             <h4>Contact</h4>
             <TextField
               style={{width: 200, marginRight: fieldMargin}}
-              floatingLabelText={this.context.t('player.email')}
+              label={this.context.t('player.email')}
               defaultValue={player.contact.email}
               onChange={e => this.setState({contact: Object.assign({}, player.contact, {email: e.target.value})})}
             />
@@ -92,7 +92,7 @@ export default class AdminPlayerForm extends Component {
             <TextField
               style={{width: 200}}
               type="number"
-              floatingLabelText={this.context.t('player.gsm')}
+              label={this.context.t('player.gsm')}
               defaultValue={player.contact.mobile}
               onChange={e => this.setState({contact: Object.assign({}, player.contact, {mobile: e.target.value})})}
             />
@@ -101,21 +101,21 @@ export default class AdminPlayerForm extends Component {
 
             <TextField
               style={{width: 200, marginRight: fieldMargin}}
-              floatingLabelText={this.context.t('player.address')}
+              label={this.context.t('player.address')}
               defaultValue={player.contact.address}
               onChange={e => this.setState({contact: Object.assign({}, player.contact, {address: e.target.value})})}
             />
 
             <TextField
               style={{width: 200}}
-              floatingLabelText={this.context.t('player.city')}
+              label={this.context.t('player.city')}
               defaultValue={player.contact.city}
               onChange={e => this.setState({contact: Object.assign({}, player.contact, {city: e.target.value})})}
             />
 
           </Panel>
         </div>
-        <Button variant="contained"
+        <MaterialButton variant="contained"
           label={this.context.t('common.save')}
           primary={true}
           style={{marginTop: 5}}
@@ -125,7 +125,7 @@ export default class AdminPlayerForm extends Component {
           }}
         />
 
-        <Button variant="contained"
+        <MaterialButton variant="contained"
           label={this.context.t('common.cancel')}
           style={{marginTop: 5, marginLeft: 10}}
           onClick={() => this.props.onEnd()}
@@ -145,7 +145,7 @@ class PlayerSecuritySelectField extends React.Component {
 
   render() {
     return (
-      <TextField style={{width: 100}} value={this.props.value} onChange={this.props.onChange} floatingLabelText="Toegang">
+      <TextField style={{width: 100}} value={this.props.value} onChange={this.props.onChange} label="Toegang">
         {userRoles.map(role => <option key={role} value={role}>{role}</option>)}
       </TextField>
     );

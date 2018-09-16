@@ -19,7 +19,7 @@ export default class PlayersCardGallery extends Component {
     const viewWidth = this.props.viewport.width;
     if (viewWidth > 360) {
       return (
-        <div style={{margin: 0, padding: 0}} className="row players-gallery">
+        <div style={{marginTop: 15, marginLeft: 0, marginRight: 0, padding: 0}} className="row players-gallery">
           {players.map(player => {
             return (
               <div className="col-lg-4 col-sm-6" key={player.id}>

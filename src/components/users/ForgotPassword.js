@@ -32,18 +32,21 @@ export default class ForgotPassword extends Component {
         <h3>{t('password.newPassword')}</h3>
         <PlayerAutoComplete
           selectPlayer={id => this.setState({playerId: id})}
-          floatingLabelText={t('login.loginName')} />
+          label={t('login.loginName')}
+        />
 
         <TextField
-          floatingLabelText={this.context.t('player.email')}
-          onChange={e => this.setState({email: e.target.value})} />
+          label={this.context.t('player.email')}
+          onChange={e => this.setState({email: e.target.value})}
+        />
 
         <Button variant="contained"
           label={t('password.sendNewButton')}
           primary={true}
           style={{marginTop: 15}}
           onClick={() => this.props.requestResetPasswordLink(this.state)}
-          disabled={!this.state.playerId && !this.state.email} />
+          disabled={!this.state.playerId && !this.state.email}
+        />
 
       </Paper>
     );
@@ -80,12 +83,14 @@ export class ForgotPasswordReset extends Component {
       <Paper zDepth={1} style={{...paperStyle, height: 210}}>
         <PlayerAutoComplete
           selectPlayer={id => this.setState({playerId: id})}
-          floatingLabelText={t('login.loginName')} />
+          label={t('login.loginName')}
+        />
 
         <TextField
-          floatingLabelText={this.context.t('password.newPassword')}
+          label={this.context.t('password.newPassword')}
           type="password"
-          onChange={e => this.setState({password: e.target.value})} />
+          onChange={e => this.setState({password: e.target.value})}
+        />
 
         <Route render={({history}) => (
           <Button variant="contained"

@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 import PropTypes, {connect, storeUtil} from '../../PropTypes.js';
 import * as matchActions from '../../../actions/matchActions.js';
 
-import {Editor, TimeAgo, Button, Icon, EditIcon} from '../../controls.js';
-import MaterialButton from '@material-ui/core/Button';
+import {Editor, TimeAgo, Icon, EditIcon, MaterialButton} from '../../controls.js';
 import Checkbox from '@material-ui/core/Checkbox';
 import PlayerAutoComplete from '../../players/PlayerAutoComplete.js';
 import ImageDropzone from '../../controls/image/ImageDropzone.js';
@@ -128,7 +127,7 @@ export default class MatchReport extends Component {
               {this.props.user.isSystem() ? (
                 <PlayerAutoComplete
                   selectPlayer={::this._reportCommentPlayerChange}
-                  hintText={this.context.t('system.playerSelect')}
+                  placeholder={this.context.t('system.playerSelect')}
                 />
               ) : null}
               <Editor
@@ -153,7 +152,7 @@ export default class MatchReport extends Component {
                 label={this.context.t('match.report.commentVisible')} />
               ) : null}
 
-              <Button
+              <MaterialButton
                 label={this.context.t('match.report.commentsOpenForm' + (this.state.commentFormOpen ? 'Confirm' : ''))}
                 onClick={::this._onCommentForm}
               />

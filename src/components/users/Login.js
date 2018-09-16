@@ -40,11 +40,11 @@ export default class Login extends Component {
         <div style={{textAlign: 'left', marginLeft: 15}}>{t('login.introText')}</div>
         <PlayerAutoComplete
           selectPlayer={id => this.setState({playerId: id})}
-          floatingLabelText={t('login.loginName')} />
+          label={t('login.loginName')} />
 
         <TextField
-          floatingLabelText={t('login.password')}
-          hintText={t('login.passwordHint')}
+          label={t('login.password')}
+          placeholder={t('login.passwordHint')}
           hintStyle={{fontSize: 14}}
           type="password"
           onChange={e => this.setState({password: e.target.value})} />

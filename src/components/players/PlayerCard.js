@@ -25,39 +25,42 @@ export default class PlayerCard extends Component {
     const {player, showSideBySide} = this.props;
     const showAddressBelow = !showSideBySide;
     return (
-      <Panel style={{height: this.props.user.playerId && showAddressBelow ? 410 : 300, marginBottom: 20}} header={(
-        <div style={{height: 40}}>
-          <div style={{float: 'left'}}>
-            <strong><PlayerLink player={player} /></strong>
-            <br />
-            {player.style ? player.style.name : null}
-          </div>
+      <Panel style={{height: this.props.user.playerId && showAddressBelow ? 410 : 300, marginBottom: 20}}>
+        <Panel.Heading>
+          <div style={{height: 40}}>
+            <div style={{float: 'left'}}>
+              <strong><PlayerLink player={player} /></strong>
+              <br />
+              {player.style ? player.style.name : null}
+            </div>
 
-          <div style={{textAlign: 'right', float: 'right'}}>
-            <PlayerAllCompetitions player={player} t={this.context.t} />
+            <div style={{textAlign: 'right', float: 'right'}}>
+              <PlayerAllCompetitions player={player} t={this.context.t} />
+            </div>
+            <div style={{clear: 'both'}} />
           </div>
-          <div style={{clear: 'both'}} />
-        </div>
-      )}>
+        </Panel.Heading>
 
         <PlayerPlayingStyleForm player={player} iconStyle="edit-icon" style={{color: '#d3d3d3', position: 'absolute', top: 75, right: 27}} />
 
-        {!this.props.user.playerId || showAddressBelow ? (
-          <div>
-            <PlayerImage playerId={player.id} center shape="thumbnail" />
-            <br />
-            <PlayerContact player={player} />
-          </div>
-        ) : (
-          <div className="media" style={{marginTop: 0}}>
-            <div className="media-left">
-              <PlayerImage playerId={player.id} shape="thumbnail" className="pull-left" style={{width: 200}} />
-            </div>
-            <div className="media-body">
+        <Panel.Body>
+          {!this.props.user.playerId || showAddressBelow ? (
+            <div>
+              <PlayerImage playerId={player.id} center shape="thumbnail" />
+              <br />
               <PlayerContact player={player} />
             </div>
-          </div>
-        )}
+          ) : (
+            <div className="media" style={{marginTop: 0}}>
+              <div className="media-left">
+                <PlayerImage playerId={player.id} shape="thumbnail" className="pull-left" style={{width: 200}} />
+              </div>
+              <div className="media-body">
+                <PlayerContact player={player} />
+              </div>
+            </div>
+          )}
+        </Panel.Body>
       </Panel>
     );
   }

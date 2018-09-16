@@ -8,7 +8,7 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom';
 //   }
 // });
 
-import App from './components/App';
+import {ComponentWithLayout} from './components/App/ComponentWithLayout.js';
 import Players from './components/players/Players.js';
 import {Player} from './components/players/Player.js';
 import Login from './components/users/Login.js';
@@ -28,14 +28,6 @@ import {OpponentOverview} from './components/teams/OpponentOverview.js';
 import Intro from './components/App/Intro.js';
 
 import t from './locales.js';
-
-const ComponentWithLayout = ({props, Component}) => { // eslint-disable-line
-  return (
-    <App {...props}>
-      <Component {...props}/>
-    </App>
-  );
-};
 
 const Routes = () => (
   <BrowserRouter>

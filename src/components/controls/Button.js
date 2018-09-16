@@ -7,3 +7,5 @@ export * from './Buttons/EmailButton.js';
 export * from './Buttons/ExcelButton.js';
 export * from './Buttons/FrenoyButton.js';
 export * from './Buttons/SaveButton.js';
+
+export * from './Buttons/MaterialButton.js';

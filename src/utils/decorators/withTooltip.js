@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import t from '../../locales.js';
 
 import Tooltip from 'react-bootstrap/lib/Tooltip';

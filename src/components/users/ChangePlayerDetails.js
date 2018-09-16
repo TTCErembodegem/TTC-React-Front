@@ -4,7 +4,7 @@ import PropTypes, {connect} from '../PropTypes.js';
 import * as playerActions from '../../actions/playerActions.js';
 
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import {MaterialButton} from '../controls/Button.js';
 
 @connect(() => ({}), playerActions)
 export default class ChangePlayerDetails extends Component {
@@ -37,31 +37,36 @@ export default class ChangePlayerDetails extends Component {
         <h3>{this.context.t('profile.editDetails')}</h3>
 
         <TextField
-          floatingLabelText={this.context.t('player.email')}
+          label={this.context.t('player.email')}
           defaultValue={player.contact.email}
-          onChange={e => this.setState({email: e.target.value})} />
+          onChange={e => this.setState({email: e.target.value})}
+        />
 
         <TextField
-          floatingLabelText={this.context.t('player.gsm')}
+          label={this.context.t('player.gsm')}
           type="number"
           defaultValue={player.contact.mobile}
-          onChange={e => this.setState({mobile: e.target.value})} />
+          onChange={e => this.setState({mobile: e.target.value})}
+        />
 
         <TextField
-          floatingLabelText={this.context.t('player.address')}
+          label={this.context.t('player.address')}
           defaultValue={player.contact.address}
-          onChange={e => this.setState({address: e.target.value})} />
+          onChange={e => this.setState({address: e.target.value})}
+        />
 
         <TextField
-          floatingLabelText={this.context.t('player.city')}
+          label={this.context.t('player.city')}
           defaultValue={player.contact.city}
-          onChange={e => this.setState({city: e.target.value})} />
+          onChange={e => this.setState({city: e.target.value})}
+        />
 
-        <Button variant="contained"
+        <MaterialButton variant="contained"
           label={this.context.t('profile.editDetails')}
           primary={true}
           style={{marginTop: 15}}
-          onClick={() => this.props.updatePlayer(Object.assign(this.props.player, {contact: this.state}))} />
+          onClick={() => this.props.updatePlayer(Object.assign(this.props.player, {contact: this.state}))}
+        />
 
       </div>
     );

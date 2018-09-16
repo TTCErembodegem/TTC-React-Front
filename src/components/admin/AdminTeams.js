@@ -107,8 +107,9 @@ class AdminTeamPlayers extends Component {
               clearOnSelect
               selectPlayer={::this._onToggleTeamPlayer}
               fullWidth
-              hintText="Selecteer speler"
-              competition={team.competition} />
+              placeholder="Selecteer speler"
+              competition={team.competition}
+            />
           </div>
         </Paper>
       </div>

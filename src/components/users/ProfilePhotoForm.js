@@ -64,7 +64,7 @@ export default class ProfilePhotoForm extends Component {
           {this.props.admin ? (
             <PlayerAutoComplete
               selectPlayer={playerId => this.setState({playerId})}
-              hintText={this.context.t('system.playerSelect')}
+              placeholder={this.context.t('system.playerSelect')}
             />
           ) : null}
 
@@ -95,7 +95,7 @@ export default class ProfilePhotoForm extends Component {
                   label={t('photos.save')}
                   primary={true}
                   style={{marginTop: -40}}
-                  onTouchTap={::this._saveImage} />
+                  onClick={::this._saveImage} />
               </div>
             </div>
           </div>

@@ -1,18 +1,22 @@
 import React, {Component} from 'react';
-import PropTypes, {withViewport, browserHistory} from '../PropTypes.js';
+import {withRouter} from 'react-router-dom';
+import PropTypes, {withViewport} from '../PropTypes.js';
 
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
 import PanelGroup from 'react-bootstrap/lib/PanelGroup';
 import Panel from 'react-bootstrap/lib/Panel';
 
+@withRouter
 @withViewport
 export class TabbedContainer extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     defaultTabKey: PropTypes.string.isRequired,
-    params: PropTypes.shape({
-      tabKey: PropTypes.string
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        tabKey: PropTypes.string
+      }),
     }),
     tabKeys: PropTypes.arrayOf(PropTypes.shape({
       key: PropTypes.string.isRequired,
@@ -30,9 +34,10 @@ export class TabbedContainer extends Component {
       base: PropTypes.string.isRequired,
       subs: PropTypes.string,
       suffix: PropTypes.string,
-    }),
+    }).isRequired,
 
     viewport: PropTypes.viewport,
+    history: PropTypes.any.isRequired,
   }
   static defaultProps = {
     forceTabs: false,
@@ -54,7 +59,7 @@ export class TabbedContainer extends Component {
     if (this._showAccordion()) {
       // Accordion
       return (
-        <PanelGroup activeKey={!this.state.forceClose ? openTabKey : null} style={this.props.style}>
+        <PanelGroup defaultActiveKey={!this.state.forceClose ? openTabKey : null} style={this.props.style} id={openTabKey}>
           {this.props.tabKeys.filter(tab => tab.show !== false).map(tab => this._renderTabHeader(tab))}
         </PanelGroup>
       );
@@ -72,11 +77,17 @@ export class TabbedContainer extends Component {
       </div>
     );
   }
+
   _renderTabHeader(tab) {
     if (!this._showAccordion()) {
       // Tabs
       return (
-        <NavItem eventKey={tab.key} title={tab.label ? tab.title : undefined} key={tab.key}>
+        <NavItem
+          eventKey={tab.key}
+          title={tab.label ? tab.title : undefined}
+          key={tab.key}
+          href={this._getUrl(tab.key)} onClick={e => e.preventDefault()}
+        >
           {tab.label || tab.title} {tab.headerChildren}
         </NavItem>
       );
@@ -91,30 +102,37 @@ export class TabbedContainer extends Component {
 
     const isOpen = this.state.openTabKey === tab.key && !this.state.forceClose;
     return (
-      <Panel collapsible expanded={isOpen}
-        header={header}
+      <Panel
+        defaultExpanded={isOpen}
         eventKey={tab.key}
         className="match-card-panel"
         key={tab.key}
       >
+        <Panel.Heading>
+          {header}
+        </Panel.Heading>
         {isOpen ? this.props.tabRenderer(tab.key) : null}
       </Panel>
     );
   }
 
-  _onTabSelect(eventKey) {
-    if (this.props.route) {
-      var url;
-      if (this.props.route.subs) {
-        url = this.props.route.base + '/' + this.context.t.route(this.props.route.subs + '.' + eventKey);
-      } else {
-        url = this.props.route.base + '/' + eventKey;
-      }
-      if (this.props.route.suffix) {
-        url += '/' + this.props.route.suffix;
-      }
-      browserHistory.push(url);
+  _getUrl(eventKey) {
+    var url;
+    if (this.props.route.subs) {
+      url = this.props.route.base + '/' + this.context.t.route(this.props.route.subs + '.' + eventKey);
+    } else {
+      url = this.props.route.base + '/' + eventKey;
     }
+    if (this.props.route.suffix) {
+      url += '/' + this.props.route.suffix;
+    }
+    return url;
+  }
+
+  _onTabSelect(eventKey) {
+    var url = this._getUrl(eventKey);
+    this.props.history.push(url);
+
     const forceClose = this._showAccordion() && eventKey === this.state.openTabKey && !this.state.forceClose;
     this.setState({openTabKey: eventKey, forceClose});
 
@@ -123,12 +141,8 @@ export class TabbedContainer extends Component {
     }
   }
   _getTabKey() {
-    if (!this.props.route) {
-      return this.state.openTabKey;
-    }
-
     // Translate from route
-    const tabKey = this.props.params ? this.props.params.tabKey : null;
+    const tabKey = this.props.match ? this.props.match.params.tabKey : null;
     if (!tabKey) {
       return this.props.defaultTabKey;
     }

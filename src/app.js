@@ -14,12 +14,6 @@ Promise.config({
   //monitoring: true
 });
 
-//import FastClick from 'fastclick';
-// Make taps on links and buttons work fast on mobiles
-//FastClick.attach(document.body);
-// react-tap-event-plugin incompatible with React 16+
-// import injectTapEventPlugin from 'react-tap-event-plugin';
-// injectTapEventPlugin();
 
 import {showSnackbar} from './actions/configActions.js';
 import http from './utils/httpClient.js';

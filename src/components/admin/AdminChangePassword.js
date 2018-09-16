@@ -4,7 +4,7 @@ import * as userActions from '../../actions/userActions.js';
 
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import {MaterialButton} from '../controls/Button.js';
 
 @connect(() => ({}), userActions)
 export default class AdminChangePassword extends Component {
@@ -33,18 +33,20 @@ export default class AdminChangePassword extends Component {
 
         <PlayerAutoComplete
           selectPlayer={playerId => this.setState({playerId})}
-          hintText={this.context.t('login.loginName')} />
+          placeholder={this.context.t('login.loginName')}
+        />
 
         <br />
 
         <TextField
-          floatingLabelText={this.context.t('password.newPassword')}
+          label={this.context.t('password.newPassword')}
           type="password"
-          onChange={e => this.setState({newPassword: e.target.value})} />
+          onChange={e => this.setState({newPassword: e.target.value})}
+        />
 
         <br />
 
-        <Button variant="contained"
+        <MaterialButton variant="contained"
           label={this.context.t('profile.editPassword')}
           primary={true}
           style={{marginTop: 15}}
@@ -52,7 +54,8 @@ export default class AdminChangePassword extends Component {
             this.props.adminSetNewPassword(this.state);
             this.props.onEnd();
           }}
-          disabled={!this.state.playerId && !this.state.newPassword} />
+          disabled={!this.state.playerId && !this.state.newPassword}
+        />
       </div>
     );
   }

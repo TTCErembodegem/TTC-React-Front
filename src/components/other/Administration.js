@@ -27,13 +27,14 @@ export default class Administration extends Component {
         <div className="row">
           {managers.sort((a, b) => a.sortOrder - b.sortOrder).map(manager => (
             <div className="col-lg-4 col-sm-6" key={manager.playerId} style={{paddingBottom: 10}}>
-              <Panel header={(
-                <span>
-                  <strong>{manager.name}</strong>
-                  <br />
-                  {manager.description === 'Default' ? <br /> : this.context.t('clubs.managerTypes.' + manager.description)}
-                </span>
-              )}>
+              <Panel>
+                <Panel.Heading>
+                  <span>
+                    <strong>{manager.name}</strong>
+                    <br />
+                    {manager.description === 'Default' ? <br /> : this.context.t('clubs.managerTypes.' + manager.description)}
+                  </span>
+                </Panel.Heading>
 
                 <PlayerImage playerId={manager.playerId} center shape="circle" />
                 <br />

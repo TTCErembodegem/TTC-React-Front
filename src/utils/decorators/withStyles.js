@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'; // eslint-disable-line no-unused-vars
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import invariant from 'fbjs/lib/invariant';
 
 let count = 0;

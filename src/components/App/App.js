@@ -3,10 +3,7 @@ import PropTypes, {connect, withViewport, withContext, withStyles} from '../Prop
 
 import Header from '../skeleton/Header';
 import Footer from '../skeleton/Footer';
-import Intro from './Intro.js';
 import Grid from 'react-bootstrap/lib/Grid';
-import {FullScreenSpinner} from '../controls.js';
-
 import Snackbar from '@material-ui/core/Snackbar';
 import * as configActions from '../../actions/configActions.js';
 
@@ -42,10 +39,6 @@ export default class App extends Component {
       containerStyle.width = '100%';
     }
 
-
-    // TODO: put loader back...?
-    //(!this.props.config.get('initialLoadCompleted') ? <FullScreenSpinner /> : this.props.children) :
-
     return (
       <div id="react">
         <MuiThemeProvider theme={createMuiTheme()}>
@@ -62,7 +55,7 @@ export default class App extends Component {
               open={!!this.props.config.get('snackbar')}
               message={this.props.config.get('snackbar') || ''}
               autoHideDuration={4000}
-              onRequestClose={::this._onCloseSnackbar} />
+              onClose={::this._onCloseSnackbar} />
           </div>
         </MuiThemeProvider>
       </div>
