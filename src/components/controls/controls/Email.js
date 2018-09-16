@@ -1,5 +1,5 @@
-import React, {PropTypes, Component} from 'react';
-import {connect} from '../../PropTypes.js';
+import React, {Component} from 'react';
+import PropTypes, {connect} from '../../PropTypes.js';
 
 export class Email extends Component {
   static propTypes = {

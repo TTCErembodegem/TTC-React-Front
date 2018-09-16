@@ -3,8 +3,8 @@ import PropTypes, {connect, storeUtil} from '../../PropTypes.js';
 import * as matchActions from '../../../actions/matchActions.js';
 
 import {Editor, TimeAgo, Button, Icon, EditIcon} from '../../controls.js';
-import RaisedButton from 'material-ui/RaisedButton';
-import Checkbox from 'material-ui/Checkbox';
+import MaterialButton from '@material-ui/core/Button';
+import Checkbox from '@material-ui/core/Checkbox';
 import PlayerAutoComplete from '../../players/PlayerAutoComplete.js';
 import ImageDropzone from '../../controls/image/ImageDropzone.js';
 
@@ -85,7 +85,7 @@ export default class MatchReport extends Component {
                     options={{...editorOptions, disableEditing: !canPostReport}}
                     contentEditable={canPostReport} />
 
-                  <RaisedButton
+                  <MaterialButton variant="contained"
                     label={this.context.t('common.save')}
                     primary={true}
                     style={{float: 'right', marginBottom: 65, marginRight: 15}}

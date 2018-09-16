@@ -4,7 +4,7 @@ import {updatePlayer, frenoySync, deletePlayer} from '../../actions/playerAction
 import moment from 'moment';
 
 import Table from 'react-bootstrap/lib/Table';
-import TextField from 'material-ui/TextField';
+import TextField from '@material-ui/core/TextField';
 
 import {Icon, ButtonStack, EditButton} from '../controls.js';
 import AdminPlayerForm from './AdminPlayerForm.js';

@@ -4,11 +4,11 @@ import {contextTypes} from '../../../utils/decorators/withContext.js';
 import storeUtil from '../../../storeUtil.js';
 
 import enhanceWithClickOutside from 'react-click-outside';
-import Drawer from 'material-ui/Drawer';
-import MenuItem from 'material-ui/MenuItem';
-import Divider from 'material-ui/Divider';
-import Badge from 'material-ui/Badge';
-import AppBar from 'material-ui/AppBar';
+import Drawer from '@material-ui/core/Drawer';
+import MenuItem from '@material-ui/core/MenuItem';
+import Divider from '@material-ui/core/Divider';
+import Badge from '@material-ui/core/Badge';
+import AppBar from '@material-ui/core/AppBar';
 
 //using @connect decorator breaks enhanceWithClickOutside
 class Navigation extends Component {

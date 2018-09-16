@@ -5,7 +5,7 @@ import cn from 'classnames';
 import * as playerActions from '../../actions/playerActions.js';
 import {playerUtils} from '../../models/PlayerModel.js';
 
-import {GridList, GridTile} from 'material-ui/GridList';
+import {GridList, GridTile} from '@material-ui/core/GridList';
 
 import {Telephone, FrenoyLink, PlayerLink} from '../controls.js';
 import {PlayerPlayingStyle, PlayerPlayingStyleForm} from './PlayerPlayingStyle.js';

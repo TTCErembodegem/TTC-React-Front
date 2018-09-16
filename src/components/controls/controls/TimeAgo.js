@@ -9,30 +9,31 @@ const PropTypes = require('prop-types');
 
 const React = require('react');
 
-export const TimeAgo = React.createClass({
-  displayName: 'Time-Ago',
-  timeoutId: 0,
-  getDefaultProps: function() {
-    return {
-      live: true,
-      component: 'span',
-      minPeriod: 0,
-      maxPeriod: Infinity,
-    };
-  },
-  propTypes: {
+export class TimeAgo extends React.Component {
+  timeoutId = 0;
+
+  static defaultProps = {
+    live: true,
+    component: 'span',
+    minPeriod: 0,
+    maxPeriod: Infinity,
+  }
+
+  static propTypes = {
     live: PropTypes.bool.isRequired,
     minPeriod: PropTypes.number.isRequired,
     maxPeriod: PropTypes.number.isRequired,
     component: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
     date: PropTypes.object.isRequired,
-  },
-  componentDidMount: function() {
+  };
+
+  componentDidMount() {
     if (this.props.live) {
       this.tick(true);
     }
-  },
-  componentDidUpdate: function(lastProps) {
+  }
+
+  componentDidUpdate(lastProps) {
     if (this.props.live !== lastProps.live || this.props.date !== lastProps.date) {
       if (!this.props.live && this.timeoutId) {
         clearTimeout(this.timeoutId);
@@ -40,14 +41,16 @@ export const TimeAgo = React.createClass({
       }
       this.tick();
     }
-  },
-  componentWillUnmount: function() {
+  }
+
+  componentWillUnmount() {
     if (this.timeoutId) {
       clearTimeout(this.timeoutId);
       this.timeoutId = undefined;
     }
-  },
-  tick: function(refresh) {
+  }
+
+  tick(refresh) {
     if (!this.isMounted() || !this.props.live) {
       return;
     }
@@ -77,8 +80,9 @@ export const TimeAgo = React.createClass({
     if (!refresh) {
       this.forceUpdate();
     }
-  },
-  render: function() {
+  }
+
+  render() {
     var distanceMillis = new Date().valueOf() - this.props.date.valueOf();
     if (distanceMillis < 0) {
       distanceMillis = 0;
@@ -89,4 +93,4 @@ export const TimeAgo = React.createClass({
 
     return React.createElement(this.props.component, props, timeAgoInWords(distanceMillis));
   }
-});
+}

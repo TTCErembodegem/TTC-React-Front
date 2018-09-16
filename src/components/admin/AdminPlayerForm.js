@@ -5,11 +5,9 @@ import * as playerActions from '../../actions/playerActions.js';
 import {userRoles} from '../../models/UserModel.js';
 import PlayerModel from '../../models/PlayerModel.js';
 
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
-import Paper from 'material-ui/Paper';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
 import Panel from 'react-bootstrap/lib/Panel';
 import PlayerStyleAutocomplete from '../players/PlayerStyleAutocomplete.js';
 
@@ -117,7 +115,7 @@ export default class AdminPlayerForm extends Component {
 
           </Panel>
         </div>
-        <RaisedButton
+        <Button variant="contained"
           label={this.context.t('common.save')}
           primary={true}
           style={{marginTop: 5}}
@@ -127,7 +125,7 @@ export default class AdminPlayerForm extends Component {
           }}
         />
 
-        <RaisedButton
+        <Button variant="contained"
           label={this.context.t('common.cancel')}
           style={{marginTop: 5, marginLeft: 10}}
           onClick={() => this.props.onEnd()}
@@ -147,9 +145,9 @@ class PlayerSecuritySelectField extends React.Component {
 
   render() {
     return (
-      <SelectField style={{width: 100}} value={this.props.value} onChange={this.props.onChange} floatingLabelText="Toegang">
-        {userRoles.map(role => <MenuItem key={role} value={role} primaryText={role} />)}
-      </SelectField>
+      <TextField style={{width: 100}} value={this.props.value} onChange={this.props.onChange} floatingLabelText="Toegang">
+        {userRoles.map(role => <option key={role} value={role}>{role}</option>)}
+      </TextField>
     );
   }
 }

@@ -5,9 +5,9 @@ import {Link} from 'react-router-dom';
 import * as loginActions from '../../actions/userActions.js';
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
-import Paper from 'material-ui/Paper';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
 
 export const paperStyle = {
   width: 290,
@@ -49,7 +49,7 @@ export default class Login extends Component {
           type="password"
           onChange={e => this.setState({password: e.target.value})} />
 
-        <RaisedButton
+        <Button variant="contained"
           label={t('login.loginButton')}
           primary={true}
           style={{marginTop: 15}}

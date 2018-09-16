@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from '../../PropTypes.js';
 import http from '../../../utils/httpClient.js';
-import TextField from 'material-ui/TextField';
+import TextField from '@material-ui/core/TextField';
 import {ExcelButton, SortIconDropDown} from '../../controls.js';
 
 export class PlayersToolbar extends Component {

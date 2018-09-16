@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes, {connect, withContext, storeUtil} from '../PropTypes.js';
 import {uploadPlayer} from '../../actions/userActions.js';
 
-import FlatButton from 'material-ui/FlatButton';
+import Button from '@material-ui/core/Button';
 import ImageEditor from '../controls/image/ImageEditor.js';
 import {playerUtils} from '../../models/PlayerModel.js';
 import ImageDropzone from '../controls/image/ImageDropzone.js';
@@ -91,7 +91,7 @@ export default class ProfilePhotoForm extends Component {
                 height={this.props.size.height} />
 
               <div className="caption" style={{textAlign: 'center', marginTop: 10}}>
-                <FlatButton
+                <Button
                   label={t('photos.save')}
                   primary={true}
                   style={{marginTop: -40}}

@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import Slider from 'material-ui/Slider';
+import Slider from '@material-ui/lab/Slider';
 import AvatarEditor from 'react-avatar-editor';
-import FlatButton from 'material-ui/FlatButton';
+import Button from '@material-ui/core/Button';
 
 // TODO: Check to replace with: http://blog.mmcfarland.net/react-darkroom/
 
-const ImageEditor = React.createClass({
-  propTypes: {
+class ImageEditor extends React.Component {
+  static propTypes = {
     t: PropTypes.func.isRequired,
     image: PropTypes.string.isRequired,
     updateImage: PropTypes.func.isRequired,
@@ -16,15 +16,17 @@ const ImageEditor = React.createClass({
       height: PropTypes.number.isRequired,
     }).isRequired,
     borderRadius: PropTypes.number.isRequired,
-  },
-  getInitialState: function() {
-    return {
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
       scale: 1,
       borderRadius: this.props.borderRadius,
     };
-  },
+  }
 
-  render: function() {
+  render() {
     return (
       <div style={{display: 'inline-block', width: '100%'}}>
         <AvatarEditor
@@ -44,7 +46,7 @@ const ImageEditor = React.createClass({
           onChange={this.handleScale}
         />
 
-        <FlatButton
+        <Button
           label={this.props.t('photos.preview')}
           secondary={true}
           style={{marginTop: -40, marginBottom: 10}}
@@ -52,27 +54,27 @@ const ImageEditor = React.createClass({
         />
       </div>
     );
-  },
+  }
 
-  handleSave: function(/*data*/) {
+  handleSave(/*data*/) {
     const img = this.refs.avatar.getImageScaledToCanvas();
     const rect = this.refs.avatar.getCroppingRect();
     this.props.updateImage(img, rect);
-  },
+  }
 
-  handleScale: function() {
+  handleScale() {
     const scale = parseFloat(this.refs.scale.getValue());
     this.setState({scale: scale});
-  },
+  }
 
-  // handleBorderRadius: function() {
+  // handleBorderRadius() {
   //   var borderRadius = parseInt(this.refs.borderRadius.value, 10);
   //   this.setState({borderRadius: borderRadius});
-  // },
+  // }
 
-  logCallback: function(e) {
+  logCallback(e) {
     console.log('callback', e); //eslint-disable-line
-  },
-});
+  }
+}
 
 export default ImageEditor;

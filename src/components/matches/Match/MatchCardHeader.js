@@ -6,7 +6,8 @@ import MatchScore from '../MatchScore.js';
 import {ThrillerBadge, ThrillerIcon, CommentIcon} from '../../controls/Icon.js';
 import {TheirTeamTitle} from './TheirTeamTitle.js';
 
-import {Card, CardHeader} from 'material-ui/Card';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
 
 const thrillerIconWith = 25;
 const ThrillerIconSpan = <span key="1" style={{width: thrillerIconWith, float: 'left'}}>&nbsp;</span>;

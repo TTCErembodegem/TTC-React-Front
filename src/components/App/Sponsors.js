@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from '../PropTypes.js';
 import {Location} from '../controls.js';
-import Paper from 'material-ui/Paper';
+import Paper from '@material-ui/core/Paper';
 
 const topSponsorPaperStyle = {
   height: 110,
@@ -31,9 +31,9 @@ export class BakkerijVanLierde extends Component {
     };
 
     return (
-      <a href="https://www.facebook.com/BakkerijKarelVanLierde" target="_blank">
+      <a href="https://www.facebook.com/BakkerijKarelVanLierde" target="_blank" className="sponsor-paper">
         <Paper style={this.props.big ? {...topSponsorPaperStyle} : topSponsorsOnBottomPaperStyle}>
-          <Location loc={loc} t={this.context.t} />
+          <Location loc={loc} t={this.context.t} noTelephoneLink={true} />
         </Paper>
       </a>
     );
@@ -57,9 +57,9 @@ export class SlagerijGuy extends Component {
 
     const style = this.props.big ? {...topSponsorPaperStyle, float: 'right'} : topSponsorsOnBottomPaperStyle;
     return (
-      <a href="https://www.facebook.com/Slagerij-Guy-en-Paula-805454896289871" target="_blank">
+      <a href="https://www.facebook.com/Slagerij-Guy-en-Paula-805454896289871" target="_blank" className="sponsor-paper">
         <Paper style={style}>
-          <Location loc={loc} t={this.context.t} />
+          <Location loc={loc} t={this.context.t} noTelephoneLink={true} />
         </Paper>
       </a>
     );

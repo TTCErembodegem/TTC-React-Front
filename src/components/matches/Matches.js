@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import PropTypes, {connect} from '../PropTypes.js';
+import PropTypes, {connect, withContext} from '../PropTypes.js';
 import moment from 'moment';
 
 import {Strike} from '../controls.js';
 import MatchCardHeader from './Match/MatchCardHeader.js';
 
+@withContext
 @connect(state => {
   return {
     config: state.config,

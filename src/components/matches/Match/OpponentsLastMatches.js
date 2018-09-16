@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes, {withViewport} from '../../PropTypes.js';
 
 import Table from 'react-bootstrap/lib/Table';
-import IconButton from 'material-ui/IconButton';
+import IconButton from '@material-ui/core/IconButton';
 import {Spinner} from '../../controls.js';
 import {OtherMatchPlayerResultsTableRow} from './OtherMatchPlayerResults.js';
 import {MatchPlayerRankings} from '../controls/MatchPlayerRankings.js';

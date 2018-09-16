@@ -7,12 +7,10 @@ import Intro from './Intro.js';
 import Grid from 'react-bootstrap/lib/Grid';
 import {FullScreenSpinner} from '../controls.js';
 
-import Snackbar from 'material-ui/Snackbar';
+import Snackbar from '@material-ui/core/Snackbar';
 import * as configActions from '../../actions/configActions.js';
 
-import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 
 @connect(state => {
   return {
@@ -44,17 +42,18 @@ export default class App extends Component {
       containerStyle.width = '100%';
     }
 
+
+    // TODO: put loader back...?
+    //(!this.props.config.get('initialLoadCompleted') ? <FullScreenSpinner /> : this.props.children) :
+
     return (
       <div id="react">
-        <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
+        <MuiThemeProvider theme={createMuiTheme()}>
           <div style={{height: '100%'}}>
             <div className="wrapper">
               <Header user={this.props.user} />
               <Grid style={containerStyle}>
-                {this.props.children ?
-                  (!this.props.config.get('initialLoadCompleted') ? <FullScreenSpinner /> : this.props.children) :
-                  <Intro />
-                }
+                {this.props.children}
               </Grid>
               <div className="push" />
             </div>

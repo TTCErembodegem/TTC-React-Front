@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import {Icon} from '../Icons/Icon.js';
 import {Telephone} from './Telephone.js';
 
-export const Location = ({loc, t}) => (
+export const Location = ({loc, t, noTelephoneLink = false}) => (
   <div>
     <div className="iconize">
       <Icon fa="fa fa-map-marker" style={{verticalAlign: 'top'}} />
@@ -18,7 +18,7 @@ export const Location = ({loc, t}) => (
         <div>{t('match.club.locationUnknown')}</div>
       )}
     </div>
-    <Telephone number={loc.mobile} />
+    <Telephone number={loc.mobile} noLink={noTelephoneLink} />
     {loc.website ? (<Website site={loc.website} description={t('match.club.websiteKnown')} />) : null}
   </div>
 );
@@ -26,6 +26,7 @@ export const Location = ({loc, t}) => (
 Location.propTypes = {
   t: PropTypes.func.isRequired,
   loc: PropTypes.object.isRequired,
+  noTelephoneLink: PropTypes.bool,
 };
 
 

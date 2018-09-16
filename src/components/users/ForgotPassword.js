@@ -6,9 +6,9 @@ import * as loginActions from '../../actions/userActions.js';
 import {paperStyle} from './Login.js';
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
-import Paper from 'material-ui/Paper';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
 
 @connect(() => ({}), loginActions)
 export default class ForgotPassword extends Component {
@@ -38,7 +38,7 @@ export default class ForgotPassword extends Component {
           floatingLabelText={this.context.t('player.email')}
           onChange={e => this.setState({email: e.target.value})} />
 
-        <RaisedButton
+        <Button variant="contained"
           label={t('password.sendNewButton')}
           primary={true}
           style={{marginTop: 15}}
@@ -88,7 +88,7 @@ export class ForgotPasswordReset extends Component {
           onChange={e => this.setState({password: e.target.value})} />
 
         <Route render={({history}) => (
-          <RaisedButton
+          <Button variant="contained"
             label={t('password.changeTitle')}
             primary={true}
             style={{marginTop: 15}}

@@ -3,7 +3,7 @@ import PropTypes, {connect, keyMirror} from '../PropTypes.js';
 
 import * as loginActions from '../../actions/userActions.js';
 
-import RaisedButton from 'material-ui/RaisedButton';
+import Button from '@material-ui/core/Button';
 import {TabbedContainer} from '../controls/TabbedContainer.js';
 
 import ChangePassword from '../users/ChangePassword.js';
@@ -89,7 +89,7 @@ export default class Profile extends Component {
       return (
         <div>
           <h1>SYSTEM USER</h1>
-          <RaisedButton
+          <Button variant="contained"
             label={t('login.logoutButton')}
             secondary={true}
             style={{marginTop: -15}}
@@ -125,7 +125,7 @@ const ProfilePlayerDetails = ({player, t, logout}) => (
       <strong>{t('player.city')}</strong>&nbsp;{player.contact.city}
     </p>
 
-    <RaisedButton
+    <Button variant="contained"
       label={t('login.logoutButton')}
       secondary={true}
       style={{marginTop: 15}}

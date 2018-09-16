@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes, {connect} from '../PropTypes.js';
 
-import AutoComplete from 'material-ui/AutoComplete';
-import MenuItem from 'material-ui/MenuItem';
+// import AutoComplete from '@material-ui/core/AutoComplete';
+import MenuItem from '@material-ui/core/MenuItem';
 
 @connect(state => ({players: state.players}))
 export default class PlayerAutoComplete extends Component {
@@ -53,23 +53,24 @@ export default class PlayerAutoComplete extends Component {
     }
     const playerMenuItems = filteredPlayers.map(ply => ({
       text: ply.name,
-      value: <MenuItem primaryText={ply.name} secondaryText={competition ? ply[competition.toLowerCase()].ranking : undefined} />,
+      value: <MenuItem secondaryText={competition ? ply[competition.toLowerCase()].ranking : undefined}>{ply.name}</MenuItem>,
     }));
     const aliases = filteredPlayers.filter(ply => ply.name.indexOf(ply.alias) === -1).map(ply => ({
       text: ply.alias,
-      value: <MenuItem primaryText={ply.alias} secondaryText={competition ? ply[competition.toLowerCase()].ranking : undefined} />,
+      value: <MenuItem secondaryText={competition ? ply[competition.toLowerCase()].ranking : undefined}>{ply.alias}</MenuItem>,
     }));
 
+    return <span>autocomplete</span>;
 
-    return (
-      <AutoComplete
-        filter={::this._filter}
-        searchText={this.state.searchText}
-        {...props}
-        onNewRequest={this._onPlayerSelected.bind(this)}
-        onUpdateInput={this._onPlayerSelected.bind(this)}
-        dataSource={playerMenuItems.concat(aliases).sort((a, b) => a.text.localeCompare(b.text)).toArray()} />
-    );
+    // return (
+    //   <AutoComplete
+    //     filter={::this._filter}
+    //     searchText={this.state.searchText}
+    //     {...props}
+    //     onNewRequest={this._onPlayerSelected.bind(this)}
+    //     onUpdateInput={this._onPlayerSelected.bind(this)}
+    //     dataSource={playerMenuItems.concat(aliases).sort((a, b) => a.text.localeCompare(b.text)).toArray()} />
+    // );
   }
 
   _filter(searchText, personName) {

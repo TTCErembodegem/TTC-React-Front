@@ -5,9 +5,8 @@ import {toggleTeamPlayer} from '../../actions/playerActions.js';
 import {frenoyTeamSync} from '../../actions/matchActions.js';
 import _ from 'lodash';
 
-import Paper from 'material-ui/Paper';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
+import Paper from '@material-ui/core/Paper';
+import TextField from '@material-ui/core/TextField';
 import Button from 'react-bootstrap/lib/Button';
 
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
@@ -99,9 +98,9 @@ class AdminTeamPlayers extends Component {
 
           <div style={{clear: 'both'}} />
 
-          <SelectField value={this.state.role} onChange={::this._onRoleChange} style={{width: 100, marginRight: 10}}>
-            {_.toArray(teamPlayerType).map(role => <MenuItem key={role} value={role} primaryText={role} />)}
-          </SelectField>
+          <TextField value={this.state.role} onChange={::this._onRoleChange} style={{width: 100, marginRight: 10}}>
+            {_.toArray(teamPlayerType).map(role => <option key={role} value={role}>{role}</option>)}
+          </TextField>
 
           <div style={{width: 200}}>
             <PlayerAutoComplete

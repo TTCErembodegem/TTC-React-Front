@@ -1,6 +1,13 @@
 Front: React-Redux
 ==================
 
+Oh boy:
+- Need to fix all browserHistory for new react-router
+- AutoComplete from '@material-ui/core/AutoComplete' replaced with react-select
+- analytics is down
+- matchcardheader -> cards also have different API now...
+- full page loader is gone now
+
 The port for the backend is atm hardcoded in:  
 `src/utils/httpClient.js`
 

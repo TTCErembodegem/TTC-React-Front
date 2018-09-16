@@ -5,7 +5,7 @@ import * as matchActions from '../../../actions/matchActions.js';
 import {setSetting} from '../../../actions/configActions.js';
 
 import {TabbedContainer, CommentIcon, EditIcon} from '../../controls.js';
-import {CardText} from 'material-ui/Card';
+import {CardText} from '@material-ui/core/Card';
 
 import MatchCardHeader, {BigMatchCardHeader} from './MatchCardHeader.js';
 import MatchPlayerResults from './MatchPlayerResults.js';

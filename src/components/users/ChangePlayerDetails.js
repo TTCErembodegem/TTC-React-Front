@@ -3,8 +3,8 @@ import PropTypes, {connect} from '../PropTypes.js';
 
 import * as playerActions from '../../actions/playerActions.js';
 
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 @connect(() => ({}), playerActions)
 export default class ChangePlayerDetails extends Component {
@@ -57,7 +57,7 @@ export default class ChangePlayerDetails extends Component {
           defaultValue={player.contact.city}
           onChange={e => this.setState({city: e.target.value})} />
 
-        <RaisedButton
+        <Button variant="contained"
           label={this.context.t('profile.editDetails')}
           primary={true}
           style={{marginTop: 15}}

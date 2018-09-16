@@ -13,6 +13,7 @@ export class Telephone extends Component {
     number: PropTypes.string,
     player: PropTypes.object,
     hideIcon: PropTypes.bool,
+    noLink: PropTypes.bool,
   }
   static defaultProps = {
     hideIcon: false
@@ -23,7 +24,7 @@ export class Telephone extends Component {
       return null;
     }
 
-    const {number, hideIcon, player, ...props} = this.props;
+    const {number, hideIcon, player, noLink, ...props} = this.props;
     var nr = player ? player.contact.mobile : number;
     if (!nr) {
       return null;
@@ -35,7 +36,11 @@ export class Telephone extends Component {
     return (
       <div className="iconize" {...props}>
         <Icon fa="fa fa-phone" />
-        <a style={{marginLeft: 7}} href={'tel:' + callFormat(nr)}>{displayMobile(nr)}</a>
+        {noLink ? (
+          <div>{displayMobile(nr)}</div>
+        ) : (
+          <a style={{marginLeft: 7}} href={'tel:' + callFormat(nr)}>{displayMobile(nr)}</a>
+        )}
       </div>
     );
   }

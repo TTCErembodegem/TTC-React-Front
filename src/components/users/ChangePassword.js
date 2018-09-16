@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import PropTypes, {connect} from '../PropTypes.js';
 import * as userActions from '../../actions/userActions.js';
 
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 @connect(state => {
   return {
@@ -49,7 +49,7 @@ export default class ChangePassword extends Component {
 
         <br />
 
-        <RaisedButton
+        <Button variant="contained"
           label={this.context.t('profile.editPassword')}
           primary={true}
           style={{marginTop: 15}}

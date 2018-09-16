@@ -10,26 +10,21 @@ if (typeof document !== 'undefined') {
   var MediumEditor = require('medium-editor');
 }
 
-export const Editor = React.createClass({
-  displayName: 'MediumEditor',
-  propTypes: {
+export class Editor extends React.Component {
+  static propTypes = {
     text: PropTypes.string,
     options: PropTypes.object,
     tag: PropTypes.string,
     onChange: PropTypes.func,
     contentEditable: PropTypes.bool,
-  },
-  getInitialState() {
-    return {
-      text: this.props.text
-    };
-  },
+  }
 
-  getDefaultProps() {
-    return {
-      tag: 'div'
-    };
-  },
+  constructor(props) {
+    super(props);
+    this.state = {text: this.props.text};
+  }
+
+  static defaultProps = {tag: 'div'}
 
   componentDidMount() {
     var dom = ReactDOM.findDOMNode(this);
@@ -38,11 +33,11 @@ export const Editor = React.createClass({
       this._updated = true;
       this.change(dom.innerHTML);
     });
-  },
+  }
 
   componentWillUnmount() {
     this.medium.destroy();
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.text !== this.state.text && !this._updated) {
@@ -52,7 +47,7 @@ export const Editor = React.createClass({
     if (this._updated) {
       this._updated = false;
     }
-  },
+  }
 
   render() {
     var tag = this.props.tag;
@@ -64,11 +59,11 @@ export const Editor = React.createClass({
     });
 
     return React.createElement(tag, props);
-  },
+  }
 
   change(text) {
     if (this.props.onChange) {
       this.props.onChange(text, this.medium);
     }
   }
-});
+}

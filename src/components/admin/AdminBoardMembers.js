@@ -4,7 +4,7 @@ import * as playerActions from '../../actions/playerActions.js';
 
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 import TextField from '@material-ui/core/TextField';
-import RaisedButton from '@material-ui/core/RaisedButton';
+import Button from '@material-ui/core/Button';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 
@@ -88,13 +88,13 @@ export default class AdminBoardMembers extends Component {
 
         <br />
 
-        <RaisedButton
+        <Button variant="contained"
           label={this.context.t('admin.board.save')}
           style={{marginTop: 15, marginRight: 8}}
           onClick={() => this.props.saveBoardMember(this.state)}
           disabled={!this.state.playerId} />
 
-        <RaisedButton
+        <Button variant="contained"
           label={this.context.t('admin.board.del')}
           style={{marginTop: 15}}
           onClick={() => this.props.deleteBoardMember(this.state)}

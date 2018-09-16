@@ -3,9 +3,9 @@ import PropTypes, {connect, withContext, storeUtil} from '../PropTypes.js';
 
 import * as playerActions from '../../actions/playerActions.js';
 
-import Dialog from 'material-ui/Dialog';
-import TextField from 'material-ui/TextField';
-import FlatButton from 'material-ui/FlatButton';
+import Dialog from '@material-ui/core/Dialog';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 import {EditIcon} from '../controls.js';
 import PlayerAutoComplete from './PlayerAutoComplete.js';
@@ -108,11 +108,11 @@ export class PlayerPlayingStyleForm extends Component {
     }
 
     const changeStyleModalActions = [
-      <FlatButton
+      <Button
         label={t('common.cancel')}
         secondary={true}
         onTouchTap={::this._closeStyle} />,
-      <FlatButton
+      <Button
         label={t('common.save')}
         primary={true}
         keyboardFocused={true}

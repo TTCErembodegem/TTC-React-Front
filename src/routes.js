@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter, Route} from 'react-router-dom';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
 // browserHistory.listen(location => {
 //   if (window.ga) {
@@ -25,37 +25,41 @@ import Facts from './components/other/Facts.js';
 import Teams from './components/teams/Teams.js';
 import Admin from './components/admin/Admin.js';
 import {OpponentOverview} from './components/teams/OpponentOverview.js';
+import Intro from './components/App/Intro.js';
 
 import t from './locales.js';
 
+const ComponentWithLayout = ({props, Component}) => { // eslint-disable-line
+  return (
+    <App {...props}>
+      <Component {...props}/>
+    </App>
+  );
+};
+
 const Routes = () => (
   <BrowserRouter>
-    <div>
-      <Route exact path="/" component={App} />
-      <Route path={t.route('login')} component={Login} />
-      <Route path={t.route('forgotPassword') + '/:guid'} component={ForgotPasswordReset} />
-      <Route path={t.route('forgotPassword')} component={ForgotPassword} />
-      <Route path={t.route('profile') + '(/:tabKey)'} component={Profile} />
-
-      <Route path={t.route('players') + '(/:tabKey)'} component={Players} />
-      <Route path={t.route('player')} component={Player} />
-
-      <Route path={t.route('matches')} component={Matches} />
-      <Route path={t.route('matchesToday')} component={MatchesToday} />
-      <Route path={t.route('matchesWeek') + '(/:tabKey)(/:comp)'} component={MatchesWeek} />
-      <Route path={t.route('match') + '(/:tabKey)'} component={RoutedMatchCard}/>
-
-      <Route path={t.route('teams') + '(/:tabKey)(/:view)'} component={Teams}/>
-      <Route path={t.route('opponent')} component={OpponentOverview}/>
-
-      <Route path={t.route('facts')} component={Facts} />
-      <Route path={t.route('links')} component={Links} />
-      <Route path={t.route('administration')} component={Administration}/>
-      <Route path={t.route('generalInfo')} component={GeneralInfo}/>
-
-      <Route path={t.route('admin') + '(/:tabKey)'} component={Admin}/>
-      <Route path="*" component={Matches}/>
-    </div>
+    <Switch>
+      <Route path={t.route('login')} render={props => <ComponentWithLayout Component={Login} {...props} />} />
+      <Route path={t.route('forgotPassword') + '/:guid'} render={props => <ComponentWithLayout Component={ForgotPasswordReset} {...props} />} />
+      <Route path={t.route('forgotPassword')} render={props => <ComponentWithLayout Component={ForgotPassword} {...props} />} />
+      <Route path={t.route('profile') + '/:tabKey?'} render={props => <ComponentWithLayout Component={Profile} {...props} />} />
+      <Route path={t.route('players') + '/:tabKey?'} render={props => <ComponentWithLayout Component={Players} {...props} />} />
+      <Route path={t.route('player')} render={props => <ComponentWithLayout Component={Player} {...props} />} />
+      <Route path={t.route('matches')} render={props => <ComponentWithLayout Component={Matches} {...props} />} />
+      <Route path={t.route('matchesToday')} render={props => <ComponentWithLayout Component={MatchesToday} {...props} />} />
+      <Route path={t.route('matchesWeek') + '/:tabKey?/:comp?'} render={props => <ComponentWithLayout Component={MatchesWeek} {...props} />} />
+      <Route path={t.route('match') + '/:tabKey?)'} render={props => <ComponentWithLayout Component={RoutedMatchCard}{...props} />} />
+      <Route path={t.route('teams') + '/:tabKey?/:view?'} render={props => <ComponentWithLayout Component={Teams}{...props} />} />
+      <Route path={t.route('opponent')} render={props => <ComponentWithLayout Component={OpponentOverview}{...props} />} />
+      <Route path={t.route('facts')} render={props => <ComponentWithLayout Component={Facts} {...props} />} />
+      <Route path={t.route('links')} render={props => <ComponentWithLayout Component={Links} {...props} />} />
+      <Route path={t.route('administration')} render={props => <ComponentWithLayout Component={Administration}{...props} />} />
+      <Route path={t.route('generalInfo')} render={props => <ComponentWithLayout Component={GeneralInfo}{...props} />} />
+      <Route path={t.route('admin') + '/:tabKey?'} render={props => <ComponentWithLayout Component={Admin}{...props} />} />
+      <Route path={t.route('players') + '/:tabKey?'} render={props => <ComponentWithLayout Component={Players} {...props} />} />
+      <Route path="/" render={props => <ComponentWithLayout Component={Intro} {...props} />} />
+    </Switch>
   </BrowserRouter>
 );
 

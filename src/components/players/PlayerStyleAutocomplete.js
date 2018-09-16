@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
-import AutoComplete from 'material-ui/AutoComplete';
+import React, {Component} from 'react';
+// import AutoComplete from '@material-ui/core/AutoComplete';
 
 export default class PlayerStyleAutocomplete extends Component {
   static propTypes = {
@@ -21,16 +21,18 @@ export default class PlayerStyleAutocomplete extends Component {
       this.props.t('player.styles.allRounder'),
     ];
 
-    return (
-      <AutoComplete
-        style={this.props.style}
-        filter={AutoComplete.fuzzyFilter}
-        onNewRequest={::this._onChange}
-        onUpdateInput={::this._onChange}
-        searchText={this.props.value}
-        floatingLabelText={this.props.t('player.editStyle.style')}
-        hintText={playingStyles.join(', ')}
-        dataSource={playingStyles} />
-    );
+    // return (
+    //   <AutoComplete
+    //     style={this.props.style}
+    //     filter={AutoComplete.fuzzyFilter}
+    //     onNewRequest={::this._onChange}
+    //     onUpdateInput={::this._onChange}
+    //     searchText={this.props.value}
+    //     floatingLabelText={this.props.t('player.editStyle.style')}
+    //     hintText={playingStyles.join(', ')}
+    //     dataSource={playingStyles} />
+    // );
+
+    return <span>autocomplete</span>;
   }
 }
