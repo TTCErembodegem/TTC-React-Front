@@ -3,6 +3,7 @@ import PropTypes, {connect, withContext, storeUtil} from '../PropTypes.js';
 
 import * as playerActions from '../../actions/playerActions.js';
 
+import {withStyles} from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -32,7 +33,7 @@ PlayerPlayingStyle.propTypes = {
 };
 
 
-
+@withStyles({dialog: {overflow: 'visible'}})
 @connect(state => ({user: state.user}), playerActions)
 @withContext
 export class PlayerPlayingStyleForm extends Component {
@@ -43,6 +44,7 @@ export class PlayerPlayingStyleForm extends Component {
     updateStyle: PropTypes.func.isRequired,
     iconStyle: PropTypes.oneOf(['avatar', 'edit-icon']).isRequired,
     style: PropTypes.object,
+    classes: PropTypes.any,
   }
 
   constructor(props) {
@@ -130,10 +132,12 @@ export class PlayerPlayingStyleForm extends Component {
       <Dialog
         open={!!this.state.editingPlayer}
         onClose={::this._closeStyle}
+        scroll="body"
+        classes={{paperScrollPaper: this.props.classes.dialog, paperScrollBody: this.props.classes.dialog}}
       >
-        <DialogTitle>{t('player.editStyle.title', this.props.player.alias)}</DialogTitle>
+        <DialogTitle className={this.props.classes.dialog}>{t('player.editStyle.title', this.props.player.alias)}</DialogTitle>
 
-        <DialogContent style={{minWidth: 320}}>
+        <DialogContent className={this.props.classes.dialog}>
           <PlayerStyleAutocomplete t={t}
             value={this.state.newStyle.name || ''}
             onChange={::this._changeStyle}
@@ -142,7 +146,6 @@ export class PlayerPlayingStyleForm extends Component {
           <br />
 
           <TextField
-            style={{marginBottom: -25}}
             fullWidth
             label={t('player.editStyle.bestStroke')}
             type="text"
@@ -150,8 +153,10 @@ export class PlayerPlayingStyleForm extends Component {
             onChange={::this._changeBestStroke}
           />
 
+          <br />
+
           {this.props.user.isSystem() ? (
-            <div>
+            <div style={{marginTop: 50}}>
               <PlayerAutoComplete
                 selectPlayer={::this._changePlayer}
                 label={t('system.playerSelect')}
