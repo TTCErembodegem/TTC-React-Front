@@ -44,8 +44,10 @@ export default class Admin extends Component {
     admin: PropTypes.shape({
       players: PropTypes.object.isRequired, // = gestopte spelers
     }).isRequired,
-    params: PropTypes.shape({
-      tabKey: PropTypes.string
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        tabKey: PropTypes.string
+      }),
     }),
   }
 
@@ -111,7 +113,7 @@ export default class Admin extends Component {
 
     return (
       <TabbedContainer
-        params={this.props.params}
+        match={this.props.match}
         style={{marginTop: 10, marginBottom: 20}}
         defaultTabKey={tabEventKeys.players}
         route={{base: this.context.t.route('admin')}}

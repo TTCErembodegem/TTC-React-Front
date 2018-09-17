@@ -8,6 +8,7 @@ import _ from 'lodash';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Button from 'react-bootstrap/lib/Button';
+import MenuItem from '@material-ui/core/MenuItem';
 
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 import PlayersImageGallery from '../players/PlayersImageGallery.js';
@@ -46,7 +47,8 @@ export default class AdminTeams extends React.Component {
             toggleTeamPlayer={this._toggleTeamPlayer.bind(this, team.id)}
             viewport={this.props.viewport}
             user={this.props.user}
-            onFrenoySync={this.props.frenoyTeamSync} />
+            onFrenoySync={this.props.frenoyTeamSync}
+          />
         ))}
       </div>
     );
@@ -66,8 +68,8 @@ class AdminTeamPlayers extends Component {
     this.state = {role: 'Standard'};
   }
 
-  _onRoleChange(event, index, value) {
-    this.setState({role: value});
+  _onRoleChange(event) {
+    this.setState({role: event.target.value});
   }
   _onToggleTeamPlayer(playerId) {
     this.props.toggleTeamPlayer(playerId, this.state.role);
@@ -98,11 +100,11 @@ class AdminTeamPlayers extends Component {
 
           <div style={{clear: 'both'}} />
 
-          <TextField value={this.state.role} onChange={::this._onRoleChange} style={{width: 100, marginRight: 10}}>
-            {_.toArray(teamPlayerType).map(role => <option key={role} value={role}>{role}</option>)}
+          <TextField select value={this.state.role} onChange={::this._onRoleChange} style={{width: 100, marginRight: 10}}>
+            {_.toArray(teamPlayerType).map(role => <MenuItem key={role} value={role}>{role}</MenuItem>)}
           </TextField>
 
-          <div style={{width: 200}}>
+          <div style={{width: 250}}>
             <PlayerAutoComplete
               clearOnSelect
               selectPlayer={::this._onToggleTeamPlayer}

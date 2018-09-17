@@ -10,6 +10,7 @@ import {MaterialButton} from '../controls/Button.js';
 import Paper from '@material-ui/core/Paper';
 import Panel from 'react-bootstrap/lib/Panel';
 import PlayerStyleAutocomplete from '../players/PlayerStyleAutocomplete.js';
+import MenuItem from '@material-ui/core/MenuItem';
 
 @connect(() => ({}), playerActions)
 export default class AdminPlayerForm extends Component {
@@ -60,12 +61,14 @@ export default class AdminPlayerForm extends Component {
             />
 
             <br />
+            <br />
 
-            <PlayerStyleAutocomplete t={this.context.t}
-              style={{width: 200, marginRight: fieldMargin}}
-              value={player.style.name || ''}
-              onChange={text => this.setState({style: Object.assign({}, player.style, {name: text})})}
-            />
+            <div style={{maxWidth: 250, marginBottom: 7}}>
+              <PlayerStyleAutocomplete t={this.context.t}
+                value={player.style.name || ''}
+                onChange={text => this.setState({style: Object.assign({}, player.style, {name: text})})}
+              />
+            </div>
 
             <TextField
               style={{width: 230}}
@@ -75,8 +78,9 @@ export default class AdminPlayerForm extends Component {
             />
 
             <br />
+            <br />
 
-            <PlayerSecuritySelectField value={player.security} onChange={(event, index, value) => this.setState({security: value})} />
+            <PlayerSecuritySelectField value={player.security} onChange={event => this.setState({security: event.target.value})} />
           </Paper>
 
 
@@ -145,8 +149,8 @@ class PlayerSecuritySelectField extends React.Component {
 
   render() {
     return (
-      <TextField style={{width: 100}} value={this.props.value} onChange={this.props.onChange} label="Toegang">
-        {userRoles.map(role => <option key={role} value={role}>{role}</option>)}
+      <TextField select style={{width: 100}} value={this.props.value} onChange={this.props.onChange} label="Toegang">
+        {userRoles.map(role => <MenuItem key={role} value={role}>{role}</MenuItem>)}
       </TextField>
     );
   }

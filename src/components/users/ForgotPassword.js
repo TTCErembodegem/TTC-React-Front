@@ -7,7 +7,7 @@ import {paperStyle} from './Login.js';
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import {MaterialButton} from '../controls/Button.js';
 import Paper from '@material-ui/core/Paper';
 
 @connect(() => ({}), loginActions)
@@ -28,22 +28,28 @@ export default class ForgotPassword extends Component {
   render() {
     const t = this.context.t;
     return (
-      <Paper zDepth={1} style={{...paperStyle, height: 280}}>
+      <Paper style={{...paperStyle, height: 280}}>
         <h3>{t('password.newPassword')}</h3>
         <PlayerAutoComplete
           selectPlayer={id => this.setState({playerId: id})}
           label={t('login.loginName')}
         />
 
+        <br />
+
         <TextField
           label={this.context.t('player.email')}
           onChange={e => this.setState({email: e.target.value})}
+          fullWidth
         />
 
-        <Button variant="contained"
+        <br />
+        <br />
+
+        <MaterialButton variant="contained"
           label={t('password.sendNewButton')}
           primary={true}
-          style={{marginTop: 15}}
+          style={{marginTop: 15, width: '100%'}}
           onClick={() => this.props.requestResetPasswordLink(this.state)}
           disabled={!this.state.playerId && !this.state.email}
         />
@@ -63,15 +69,17 @@ export class ForgotPasswordReset extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     setNewPasswordFromGuid: PropTypes.func.isRequired,
-    params: PropTypes.shape({
-      guid: PropTypes.string.isRequired
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        guid: PropTypes.string.isRequired
+      }),
     }),
   }
 
   constructor(props) {
     super(props);
     this.state = {
-      guid: props.params.guid,
+      guid: props.match.params.guid,
       playerId: null,
       password: null,
     };
@@ -80,7 +88,8 @@ export class ForgotPasswordReset extends Component {
   render() {
     const t = this.context.t;
     return (
-      <Paper zDepth={1} style={{...paperStyle, height: 210}}>
+      <Paper style={{...paperStyle, height: 210}}>
+        <br />
         <PlayerAutoComplete
           selectPlayer={id => this.setState({playerId: id})}
           label={t('login.loginName')}
@@ -90,10 +99,11 @@ export class ForgotPasswordReset extends Component {
           label={this.context.t('password.newPassword')}
           type="password"
           onChange={e => this.setState({password: e.target.value})}
+          fullWidth
         />
 
         <Route render={({history}) => (
-          <Button variant="contained"
+          <MaterialButton variant="contained"
             label={t('password.changeTitle')}
             primary={true}
             style={{marginTop: 15}}

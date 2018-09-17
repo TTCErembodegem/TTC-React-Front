@@ -92,7 +92,7 @@ export class OpponentMatches extends Component {
                   <OpponentMatchScore readonlyMatch={match} />
                 </td>
               </tr>,
-              <OtherMatchPlayerResultsTableRow show={match.isSyncedWithFrenoy && this.state[match.id]} match={match} colSpan={6} />
+              <OtherMatchPlayerResultsTableRow key="7" show={match.isSyncedWithFrenoy && this.state[match.id]} match={match} colSpan={6} />
             ];
           })}
         </tbody>

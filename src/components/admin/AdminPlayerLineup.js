@@ -22,9 +22,7 @@ export default class AdminPlayerLineup extends React.Component {
     if (this.state.playerId) {
       let team = storeUtil.getPlayer(this.state.playerId).getTeam(this.state.comp);
       playerFormation = (
-        <div>
-          <PlayerLinup playerId={this.state.playerId} teams={[team]} />
-        </div>
+        <PlayerLinup playerId={this.state.playerId} teams={[team]} />
       );
     }
 
@@ -48,14 +46,15 @@ class AdminPlayerLineupToolbar extends Component {
   render() {
     const onFilterChange = this.props.onFilterChange;
     return (
-      <div style={{padding: 10, display: 'inline-block'}}>
+      <div style={{padding: 10, display: 'inline-block', width: 300}}>
         <PlayerAutoComplete
           selectPlayer={playerId => this.setState({playerId})}
           placeholder="Selecteer speler"
-          style={{marginRight: 20}}
         />
-        <Button bsStyle="info" style={{marginRight: 10}} onClick={() => onFilterChange('Vttl', this.state.playerId)}>Vttl</Button>
-        <Button bsStyle="info" onClick={() => onFilterChange('Sporta', this.state.playerId)}>Sporta</Button>
+        <div style={{marginTop: 10}}>
+          <Button bsStyle="info" style={{marginRight: 10}} onClick={() => onFilterChange('Vttl', this.state.playerId)}>Vttl</Button>
+          <Button bsStyle="info" onClick={() => onFilterChange('Sporta', this.state.playerId)}>Sporta</Button>
+        </div>
       </div>
     );
   }

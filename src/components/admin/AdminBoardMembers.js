@@ -79,6 +79,7 @@ export default class AdminBoardMembers extends Component {
         </DropdownButton>
 
         <br />
+        <br />
 
         <TextField
           label={this.context.t('admin.board.sort')}

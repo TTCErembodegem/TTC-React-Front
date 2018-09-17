@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PropTypes, {connect, withViewport, browserHistory} from '../PropTypes.js';
+import PropTypes, {connect, withViewport, withRouter} from '../PropTypes.js';
 import Immutable from 'immutable';
 import http from '../../utils/httpClient.js';
 import _ from 'lodash';
@@ -28,6 +28,7 @@ import {TeamMatchesWeek} from './TeamMatchesWeek.js';
   };
 }, {editMatchPlayers})
 @withViewport
+@withRouter
 export default class Teams extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
@@ -37,11 +38,14 @@ export default class Teams extends Component {
     teams: PropTypes.TeamModelList.isRequired,
     viewport: PropTypes.viewport,
     editMatchPlayers: PropTypes.func.isRequired,
+    history: PropTypes.any.isRequired,
 
-    params: PropTypes.shape({
-      competition: PropTypes.oneOf(['Vttl', 'Sporta']).isRequired,
-      tabKey: PropTypes.string, // tabKey == TeamCode
-      view: PropTypes.oneOf(['main', 'matches', 'ranking', 'players', 'matchesTable', 'week']),
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        competition: PropTypes.oneOf(['Vttl', 'Sporta']).isRequired,
+        tabKey: PropTypes.string, // tabKey == TeamCode
+        view: PropTypes.oneOf(['main', 'matches', 'ranking', 'players', 'matchesTable', 'week']),
+      }).isRequired,
     }).isRequired,
   }
 
@@ -73,7 +77,7 @@ export default class Teams extends Component {
 
   getDefaultTeam() {
     if (this.props.user.playerId) {
-      const yourTeams = this.props.user.getTeams().filter(team => team.competition === this.props.params.competition);
+      const yourTeams = this.props.user.getTeams().filter(team => team.competition === this.props.match.params.competition);
       if (yourTeams.length === 0) {
         return 'A';
       }
@@ -90,17 +94,17 @@ export default class Teams extends Component {
     return this.props.viewport.width < 700;
   }
 
-  openView(view) {
-    var url = this.context.t.route('teams', {competition: this.props.params.competition});
-    url += '/' + (this.props.params.tabKey || this.getDefaultTeam());
+  _getUrl(view) {
+    var url = this.context.t.route('teams', {competition: this.props.match.params.competition});
+    url += '/' + (this.props.match.params.tabKey || this.getDefaultTeam());
     if (view !== 'main') {
       url += '/' + view;
     }
-    browserHistory.push(url);
+    return url;
   }
 
   _renderTabContent(teamCode) {
-    const team = this.props.teams.find(t => t.teamCode === teamCode && t.competition === this.props.params.competition);
+    const team = this.props.teams.find(t => t.teamCode === teamCode && t.competition === this.props.match.params.competition);
     if (!team) {
       return null;
     }
@@ -112,7 +116,7 @@ export default class Teams extends Component {
     }
     viewsConfig = viewsConfig.map(v => ({key: v, text: transView(v)}));
 
-    const view = this.props.params.view || 'main';
+    const view = this.props.match.params.view || 'main';
     const {matches} = getFirstOrLastMatches(team.getMatches(), this.state.matchesFilter);
     return (
       <div>
@@ -121,7 +125,7 @@ export default class Teams extends Component {
             config={viewsConfig}
             small={this._isSmall()}
             activeView={view}
-            onClick={newView => this.openView(newView)}
+            onClick={newView => this.props.history.push(this._getUrl(newView))}
           />
 
           {view.startsWith('matches') && this.props.user.canEditMatchesOrIsCaptain() && matches.some(m => !m.isSyncedWithFrenoy) ? (
@@ -186,7 +190,7 @@ export default class Teams extends Component {
     this.setState({tableMatches: []});
   }
   _renderTabViewContent(team, matches) {
-    switch (this.props.params.view) {
+    switch (this.props.match.params.view) {
     case 'matches':
     case 'matchesTable':
       return (
@@ -197,7 +201,7 @@ export default class Teams extends Component {
             striped
             editMode={this.state.editMode}
 
-            tableForm={this.props.params.view === 'matchesTable'}
+            tableForm={this.props.match.params.view === 'matchesTable'}
             team={team}
             tablePlayers={this.state.tablePlayers}
             onTablePlayerSelect={(plyInfos, match) => {
@@ -226,7 +230,7 @@ export default class Teams extends Component {
 
   render() {
     const t = this.context.t;
-    const tabConfig = this.props.teams.filter(team => team.competition === this.props.params.competition).toArray().map(team => {
+    const tabConfig = this.props.teams.filter(team => team.competition === this.props.match.params.competition).toArray().map(team => {
       return {
         key: team.teamCode,
         title: '',
@@ -237,12 +241,13 @@ export default class Teams extends Component {
     return (
       <div style={{marginTop: 20, marginBottom: 20}}>
         <TabbedContainer
-          params={this.props.params}
+          match={this.props.match}
           defaultTabKey={this.getDefaultTeam()}
           tabKeys={tabConfig}
           tabRenderer={::this._renderTabContent}
-          route={{base: t.route('teams', {competition: this.props.params.competition}), suffix: this.props.params.view}}
-          widthTreshold={750} />
+          route={{base: t.route('teams', {competition: this.props.match.params.competition}), suffix: this.props.match.params.view}}
+          widthTreshold={750}
+        />
       </div>
     );
   }

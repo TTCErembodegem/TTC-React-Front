@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PropTypes, {browserHistory, browseTo} from '../../PropTypes.js';
+import PropTypes, {withRouter, browseTo} from '../../PropTypes.js';
 
 import MatchForm from '../Match/MatchForm.js';
 import MatchScore from '../MatchScore.js';
@@ -50,7 +50,7 @@ export class BigMatchCardHeader extends Component {
 
 
 
-
+@withRouter
 export default class SmallMatchCardHeader extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
@@ -63,6 +63,7 @@ export default class SmallMatchCardHeader extends Component {
     noScoreEdit: PropTypes.bool,
     width: PropTypes.number,
     routed: PropTypes.bool,
+    history: PropTypes.any.isRequired,
   }
 
   render() {
@@ -74,7 +75,7 @@ export default class SmallMatchCardHeader extends Component {
 
   _onOpen(/*isOpen*/) {
     const matchRoute = this.context.t.route('match', {matchId: this.props.match.id});
-    browserHistory.push(matchRoute);
+    this.props.history.push(matchRoute);
   }
 }
 

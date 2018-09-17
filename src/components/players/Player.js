@@ -13,9 +13,11 @@ export class Player extends Component {
     players: PropTypes.PlayerModelList.isRequired,
     viewport: PropTypes.viewport,
 
-    params: PropTypes.shape({
-      playerId: PropTypes.string.isRequired
-    }).isRequired,
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        playerId: PropTypes.string.isRequired
+      }).isRequired,
+    }),
   };
 
   constructor(props) {
@@ -28,7 +30,7 @@ export class Player extends Component {
   }
 
   _getPlayer() {
-    const playerSlug = this.props.params.playerId;
+    const playerSlug = this.props.match.params.playerId;
     const player = this.props.players.find(p => p.slug === playerSlug);
     return player;
   }

@@ -32,9 +32,9 @@ import t from './locales.js';
 const Routes = () => (
   <BrowserRouter>
     <Switch>
-      <Route path={t.route('login')} render={props => <ComponentWithLayout Component={Login} {...props} />} />
       <Route path={t.route('forgotPassword') + '/:guid'} render={props => <ComponentWithLayout Component={ForgotPasswordReset} {...props} />} />
       <Route path={t.route('forgotPassword')} render={props => <ComponentWithLayout Component={ForgotPassword} {...props} />} />
+      <Route path={t.route('login')} render={props => <ComponentWithLayout Component={Login} {...props} />} />
       <Route path={t.route('profile') + '/:tabKey?'} render={props => <ComponentWithLayout Component={Profile} {...props} />} />
       <Route path={t.route('players') + '/:tabKey?'} render={props => <ComponentWithLayout Component={Players} {...props} />} />
       <Route path={t.route('player')} render={props => <ComponentWithLayout Component={Player} {...props} />} />
@@ -69,9 +69,6 @@ export const browseTo = {
       .replace(':clubId', clubId)
       .replace(':teamCode', teamCode);
   },
-  player(player) {
-    return browserHistory.push(t.route('player').replace(':playerId', encodeURI(player.slug)));
-  }
 };
 
 export default Routes;

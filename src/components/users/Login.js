@@ -6,14 +6,16 @@ import * as loginActions from '../../actions/userActions.js';
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
+import {MaterialButton} from '../controls/Button.js';
 
 export const paperStyle = {
   width: 290,
   marginTop: 10,
   marginBottom: 10,
-  textAlign: 'center',
+  // textAlign: 'center',
+  paddingLeft: 10,
+  paddingRight: 10,
   display: 'inline-block',
 };
 
@@ -35,26 +37,38 @@ export default class Login extends Component {
   render() {
     const t = this.context.t;
     return (
-      <Paper zDepth={1} style={{...paperStyle, height: 360}}>
+      <Paper style={{...paperStyle, height: 400}}>
         <h3>{t('login.title')}</h3>
-        <div style={{textAlign: 'left', marginLeft: 15}}>{t('login.introText')}</div>
+        <div>{t('login.introText')}</div>
+
+        <br />
+
         <PlayerAutoComplete
           selectPlayer={id => this.setState({playerId: id})}
-          label={t('login.loginName')} />
+          label={t('login.loginName')}
+          style={{margin: 10}}
+        />
+
+        <br />
 
         <TextField
           label={t('login.password')}
           placeholder={t('login.passwordHint')}
-          hintStyle={{fontSize: 14}}
           type="password"
-          onChange={e => this.setState({password: e.target.value})} />
+          fullWidth
+          onChange={e => this.setState({password: e.target.value})}
+        />
 
-        <Button variant="contained"
+        <br />
+        <br />
+
+        <MaterialButton variant="contained"
           label={t('login.loginButton')}
           primary={true}
-          style={{marginTop: 15}}
+          style={{marginTop: 15, width: '100%'}}
           onClick={() => this.props.login(this.state)}
-          disabled={!this.state.playerId} />
+          disabled={!this.state.playerId}
+        />
 
         <br />
         <br />

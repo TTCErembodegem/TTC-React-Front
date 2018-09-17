@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PropTypes, {connect, browserHistory} from '../PropTypes.js';
+import PropTypes, {connect, withRouter} from '../PropTypes.js';
 
 import {ButtonStack, EditButton} from '../controls.js';
 import MatchesTable from './MatchesTable.js';
@@ -9,16 +9,20 @@ import {WeekCalcer} from './MatchesWeeks/WeekCalcer.js';
 
 
 @connect(state => ({matches: state.matches, user: state.user, freeMatches: state.freeMatches}))
+@withRouter
 export default class MatchesWeek extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     matches: PropTypes.MatchModelList.isRequired,
     freeMatches: PropTypes.MatchModelList.isRequired,
     user: PropTypes.UserModel.isRequired,
-    params: PropTypes.shape({
-      tabKey: PropTypes.string, // : number == current Frenoy week
-      comp: PropTypes.oneOf(['Vttl', 'Sporta']),
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        tabKey: PropTypes.string, // : number == current Frenoy week
+        comp: PropTypes.oneOf(['Vttl', 'Sporta']),
+      }),
     }),
+    history: PropTypes.any.isRequired,
   }
 
   constructor(props) {
@@ -35,8 +39,8 @@ export default class MatchesWeek extends Component {
   }
 
   getCurrentWeek(props) {
-    if (props.params.tabKey && props.matches.size) {
-      return {currentWeek: parseInt(props.params.tabKey, 10)};
+    if (props.match.params.tabKey && props.matches.size) {
+      return {currentWeek: parseInt(props.match.params.tabKey, 10)};
     }
   }
 
@@ -48,12 +52,12 @@ export default class MatchesWeek extends Component {
   }
 
   _onChangeWeek(currentWeek, weekDiff) {
-    const comp = this.props.params.comp;
-    const compFilter = comp && comp !== 'all' ? '/' + this.props.params.comp : '';
-    browserHistory.push(this.context.t.route('matchesWeek') + '/' + (currentWeek + weekDiff) + compFilter);
+    const comp = this.props.match.params.comp;
+    const compFilter = comp && comp !== 'all' ? '/' + this.props.match.params.comp : '';
+    this.props.history.push(this.context.t.route('matchesWeek') + '/' + (currentWeek + weekDiff) + compFilter);
   }
   _onChangeCompetition(currentWeek, comp) {
-    browserHistory.push(this.context.t.route('matchesWeek') + '/' + currentWeek + (comp && comp !== 'all' ? '/' + comp : ''));
+    this.props.history.push(this.context.t.route('matchesWeek') + '/' + currentWeek + (comp && comp !== 'all' ? '/' + comp : ''));
   }
 
   render() {
@@ -78,7 +82,7 @@ export default class MatchesWeek extends Component {
 
     // TODO: MatchesWeekEmail: hier gewoon het icon en verander de route... /mail
 
-    const compFilter = this.props.params.comp || 'all';
+    const compFilter = this.props.match.params.comp || 'all';
     return (
       <div>
         <WeekTitle weekCalcer={weekCalcer} weekChange={this._onChangeWeek.bind(this, weekCalcer.currentWeek)} />

@@ -1,16 +1,15 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import PropTypes, {browserHistory, storeUtil} from '../../PropTypes.js';
+import PropTypes, {withRouter, storeUtil} from '../../PropTypes.js';
 import {OwnClubId} from '../../../models/ClubModel.js';
 import MatchScore from '../MatchScore.js';
 import cn from 'classnames';
-
 
 export class ViewMatchDetailsButton extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     match: PropTypes.MatchModel.isRequired,
-    size: PropTypes.oneOf(['xs'])
+    size: PropTypes.oneOf(['xs']),
   }
   render() {
     const match = this.props.match;
@@ -22,27 +21,28 @@ export class ViewMatchDetailsButton extends Component {
     const size = this.props.size;
     const score = match.renderScore();
     return (
-      <a
+      <Link
         className={cn({'btn btn-default': !score, clickable: !!score, ['btn-' + size]: !!size})}
-        onClick={() => browserHistory.push(t.route('match', {matchId: match.id}))}
+        to={t.route('match', {matchId: match.id})}
       >
         {score ? <MatchScore match={match} style={{fontSize: size === 'xs' ? 12 : 16}} showComments /> : t('match.details')}
-      </a>
+      </Link>
     );
   }
 }
 
 
-
+@withRouter
 export class MatchOtherRoundButton extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     match: PropTypes.MatchModel.isRequired,
+    history: PropTypes.any.isRequired,
   }
 
   _gotoMatchCard(match) {
     const matchRoute = this.context.t.route('match', {matchId: match.id});
-    browserHistory.push(matchRoute);
+    this.props.history.push(matchRoute);
   }
 
   render() {

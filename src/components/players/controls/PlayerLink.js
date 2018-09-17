@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
-import PropTypes, {browseTo} from '../../PropTypes.js';
+import PropTypes, {withRouter} from '../../PropTypes.js';
+import t from '../../../locales.js';
 
+@withRouter
 export class PlayerLink extends Component {
   static propTypes = {
+    history: PropTypes.any.isRequired,
     player: PropTypes.PlayerModel.isRequired,
     alias: PropTypes.bool,
     children: PropTypes.any,
@@ -13,9 +16,11 @@ export class PlayerLink extends Component {
   }
 
   render() {
-    const {player, alias, children, className, ...props} = this.props; // eslint-disable-line
+    const {player, alias, children, className, staticContext, ...props} = this.props; // eslint-disable-line
+
+    const url = t.route('player').replace(':playerId', encodeURI(player.slug));
     return (
-      <a onClick={() => browseTo.player(player)} className={className} {...props}>
+      <a onClick={() => this.props.history.push(url)} className={className} {...props}>
         {this.getContent()}
       </a>
     );

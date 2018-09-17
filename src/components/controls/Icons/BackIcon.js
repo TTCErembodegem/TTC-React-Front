@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import PropTypes, {browserHistory, withViewport} from '../../PropTypes.js';
+import PropTypes, {withViewport, withRouter} from '../../PropTypes.js';
 import {Icon} from './Icon.js';
 
+@withRouter
 @withViewport
 export class BackIcon extends Component {
   static contextTypes = PropTypes.contextTypes;
@@ -11,12 +12,12 @@ export class BackIcon extends Component {
 
   render() {
     const t = this.context.t;
-    const {viewport, ...props} = this.props;
+    const {viewport, staticContext, history, location, match, ...props} = this.props; // eslint-disable-line
     return (
       <Icon
         fa={'fa fa-times-circle ' + (viewport.width > 400 ? 'fa-3x' : 'fa-2x')}
         color="red"
-        onClick={() => browserHistory.goBack()}
+        onClick={() => history.goBack()}
         tooltip={t('common.close')}
         tooltipPlacement="left"
         {...props}

@@ -23,8 +23,10 @@ export default class Players extends Component {
     user: PropTypes.UserModel.isRequired,
     viewport: PropTypes.viewport,
 
-    params: PropTypes.shape({
-      tabKey: PropTypes.string
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        tabKey: PropTypes.string
+      }),
     }),
   };
 
@@ -88,7 +90,7 @@ export default class Players extends Component {
     return (
       <div style={{marginTop: 20, marginBottom: 10}}>
         <TabbedContainer
-          params={this.props.params}
+          match={this.props.match}
           defaultTabKey={this.props.viewport.width < 450 ? 'list' : 'gallery'}
           tabKeys={tabKeysConfig}
           tabRenderer={::this._renderTabContent}

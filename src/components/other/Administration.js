@@ -36,13 +36,15 @@ export default class Administration extends Component {
                   </span>
                 </Panel.Heading>
 
-                <PlayerImage playerId={manager.playerId} center shape="circle" />
-                <br />
-                <Email email={manager.contact.email} showIcon />
-                <br />
-                <Telephone player={manager} style={{marginTop: 5}} />
+                <Panel.Body>
+                  <PlayerImage playerId={manager.playerId} center shape="circle" />
+                  <br />
+                  <Email email={manager.contact.email} showIcon />
+                  <br />
+                  <Telephone player={manager} style={{marginTop: 5}} />
 
-                <PlayerAddress contact={manager.contact} style={{marginTop: 5}} />
+                  <PlayerAddress contact={manager.contact} style={{marginTop: 5}} />
+                </Panel.Body>
               </Panel>
             </div>
           ))}

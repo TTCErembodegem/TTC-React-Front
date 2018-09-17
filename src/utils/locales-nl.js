@@ -208,6 +208,7 @@ export default {
     players: {
       title: 'Spelers overzicht ${a}',
       search: 'Speler zoeken',
+      noFound: 'Geen spelers gevonden',
 
       list: 'Lijst',
       gallery: 'Spelers',

@@ -1,14 +1,18 @@
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import {contextTypes} from '../../../utils/decorators/withContext.js';
+import {Link, withRouter} from 'react-router-dom';
 import storeUtil from '../../../storeUtil.js';
 
 import enhanceWithClickOutside from 'react-click-outside';
+import {withStyles} from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import MenuItem from '@material-ui/core/MenuItem';
 import Divider from '@material-ui/core/Divider';
 import Badge from '@material-ui/core/Badge';
 import AppBar from '@material-ui/core/AppBar';
+import Typography from '@material-ui/core/Typography';
+import Toolbar from '@material-ui/core/Toolbar';
 
 //using @connect decorator breaks enhanceWithClickOutside
 class Navigation extends Component {
@@ -17,6 +21,8 @@ class Navigation extends Component {
     toggleNav: PropTypes.func.isRequired,
     navOpen: PropTypes.bool.isRequired,
     isNavOpening: PropTypes.bool.isRequired,
+    history: PropTypes.any.isRequired,
+    classes: PropTypes.any.isRequired,
   }
 
   todayTimeout = undefined;
@@ -51,7 +57,7 @@ class Navigation extends Component {
 
   _goto(url) {
     this.props.toggleNav(false);
-    //browserHistory.push(url);
+    this.props.history.push(url);
   }
 
   render() {
@@ -59,31 +65,45 @@ class Navigation extends Component {
     const matchesToday = storeUtil.matches.getTodayMatches();
 
     return (
-      <Drawer open={this.props.navOpen} width={200}>
-        <AppBar iconElementLeft={<div />} title={t('clubName')} />
-        <MenuItem onTouchTap={this._goto.bind(this, t.route('matches'))}>{t('nav.matches')}</MenuItem>
-        {matchesToday.size ? (
-          <MenuItem onTouchTap={this._goto.bind(this, t.route('matchesToday'))} style={{}}>
-            {t('nav.matchesToday')}
-            <Badge badgeContent={matchesToday.size} secondary={true} badgeStyle={{padding: 0, top: 5, left: 5}} />
-          </MenuItem>
-        ) : null}
-        <MenuItem onTouchTap={this._goto.bind(this, t.route('matchesWeek'))}>{t('nav.matchesWeek')}</MenuItem>
-        <MenuItem onTouchTap={this._goto.bind(this, t.route('teams', {competition: 'Vttl'}))}>{t('nav.teamsVttl')}</MenuItem>
-        <MenuItem onTouchTap={this._goto.bind(this, t.route('teams', {competition: 'Sporta'}))}>{t('nav.teamsSporta')}</MenuItem>
-        <MenuItem onTouchTap={this._goto.bind(this, t.route('players'))}>{t('nav.players')}</MenuItem>
-        {storeUtil.getUser().isAdmin() ? <MenuItem onTouchTap={this._goto.bind(this, t.route('admin'))}>{t('nav.admin')}</MenuItem> : null}
-        <Divider />
-        <MenuItem onTouchTap={this._goto.bind(this, t.route('generalInfo'))}>{t('nav.generalInfo')}</MenuItem>
-        <MenuItem onTouchTap={this._goto.bind(this, t.route('administration'))}>{t('nav.administration')}</MenuItem>
-        <MenuItem onTouchTap={this._goto.bind(this, t.route('links'))}>{t('nav.links')}</MenuItem>
-        <MenuItem onTouchTap={this._goto.bind(this, t.route('facts'))}>{t('nav.facts')}</MenuItem>
-        <MenuItem onTouchTap={this.handleClickHelpButton}>{t('nav.help')}</MenuItem>
-        <MenuItem onTouchTap={this.handleClickCloseMenuButton}>{t('nav.closeMenu')}</MenuItem>
-        {<Divider />}
+      <Drawer open={this.props.navOpen} className={this.props.classes.root}>
+        <AppBar style={{}}>
+          <Toolbar variant="dense">
+            <Typography variant="title" color="inherit">
+              <Link className="Header-link" to="/">{this.state.navOpen ? null : t('clubName')}</Link>
+            </Typography>
+          </Toolbar>
+        </AppBar>
+
+        <div style={{marginTop: 60}}>
+          <MenuItem onClick={this._goto.bind(this, t.route('matches'))}>{t('nav.matches')}</MenuItem>
+          {matchesToday.size ? (
+            <MenuItem onClick={this._goto.bind(this, t.route('matchesToday'))}>
+              <Badge badgeContent={matchesToday.size} color="secondary" classes={this.props.classes}>
+                {t('nav.matchesToday')}
+              </Badge>
+            </MenuItem>
+          ) : null}
+          <MenuItem onClick={this._goto.bind(this, t.route('matchesWeek'))}>{t('nav.matchesWeek')}</MenuItem>
+          <MenuItem onClick={this._goto.bind(this, t.route('teams', {competition: 'Vttl'}))}>{t('nav.teamsVttl')}</MenuItem>
+          <MenuItem onClick={this._goto.bind(this, t.route('teams', {competition: 'Sporta'}))}>{t('nav.teamsSporta')}</MenuItem>
+          <MenuItem onClick={this._goto.bind(this, t.route('players'))}>{t('nav.players')}</MenuItem>
+          {storeUtil.getUser().isAdmin() ? <MenuItem onClick={this._goto.bind(this, t.route('admin'))}>{t('nav.admin')}</MenuItem> : null}
+          <Divider />
+          <MenuItem onClick={this._goto.bind(this, t.route('generalInfo'))}>{t('nav.generalInfo')}</MenuItem>
+          <MenuItem onClick={this._goto.bind(this, t.route('administration'))}>{t('nav.administration')}</MenuItem>
+          <MenuItem onClick={this._goto.bind(this, t.route('links'))}>{t('nav.links')}</MenuItem>
+          <MenuItem onClick={this._goto.bind(this, t.route('facts'))}>{t('nav.facts')}</MenuItem>
+          <MenuItem onClick={this.handleClickHelpButton}>{t('nav.help')}</MenuItem>
+          <MenuItem onClick={this.handleClickCloseMenuButton}>{t('nav.closeMenu')}</MenuItem>
+          <Divider />
+        </div>
       </Drawer>
     );
   }
 }
 
-export default enhanceWithClickOutside(Navigation);
+const styles = {
+  root: {width: 200},
+  badge: {top: 0, right: 0},
+};
+export default withStyles(styles)(withRouter(enhanceWithClickOutside(Navigation)));

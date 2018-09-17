@@ -20,19 +20,22 @@ export class PlayerCompetition extends Component {
 
     const team = player.getTeam(competition);
     return (
-      <Panel header={(
-        <div style={{fontSize: 22}}>
-          {competition} {team ? team.teamCode : null}
+      <Panel>
+        <Panel.Heading>
+          <div style={{fontSize: 22}}>
+            {competition} {team ? team.teamCode : null}
 
-          {team ? (
-            <span style={{fontSize: 16, marginTop: 5}} className="pull-right">
-              <DivisionHeader team={team} withVictoryBadges={false} />
-            </span>
-          ) : null}
-        </div>
-      )}>
+            {team ? (
+              <span style={{fontSize: 16, marginTop: 5}} className="pull-right">
+                <DivisionHeader team={team} withVictoryBadges={false} />
+              </span>
+            ) : null}
+          </div>
+        </Panel.Heading>
 
-        <PlayerIndividual player={player} competition={competition} />
+        <Panel.Body>
+          <PlayerIndividual player={player} competition={competition} />
+        </Panel.Body>
       </Panel>
     );
   }

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PropTypes, {connect, keyMirror} from '../PropTypes.js';
+import PropTypes, {connect, keyMirror, withRouter} from '../PropTypes.js';
 
 import * as loginActions from '../../actions/userActions.js';
 
@@ -25,25 +25,34 @@ const tabEventKeys = keyMirror({
     user: state.user,
   };
 }, loginActions)
+@withRouter
 export default class Profile extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     user: PropTypes.UserModel.isRequired,
     logout: PropTypes.func.isRequired,
-    params: PropTypes.shape({
-      tabKey: PropTypes.string
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        tabKey: PropTypes.string
+      }),
     }),
+    history: PropTypes.any.isRequired,
   }
 
   constructor(props) {
     super(props);
   }
 
+  _logout() {
+    this.props.logout();
+    this.props.history.push('/');
+  }
+
   _renderTabContent(eventKey) {
     const player = this.props.user.getPlayer();
     switch (eventKey) {
     case tabEventKeys.main:
-      return <ProfilePlayerDetails t={this.context.t} player={player} logout={this.props.logout} />;
+      return <ProfilePlayerDetails t={this.context.t} player={player} logout={::this._logout} />;
     case tabEventKeys.editDetails:
       return <ChangePlayerDetails player={player} />;
     case tabEventKeys.editPicture:
@@ -103,7 +112,7 @@ export default class Profile extends Component {
       <div style={{marginTop: 15, marginBottom: 20}}>
         <TabbedContainer
           widthTreshold={760}
-          params={this.props.params}
+          match={this.props.match}
           defaultTabKey={tabEventKeys.main}
           tabKeys={tabConfig}
           route={{base: this.context.t.route('profile'), subs: 'profileTabs'}}

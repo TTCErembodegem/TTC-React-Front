@@ -22,7 +22,7 @@ export default class PlayerAutoComplete extends Component {
   }
 
   _onPlayerSelected(option) {
-    console.log('uhoh', option);
+    console.log('AutoComplete::_onPlayerSelected', option);
     if (!option.length) {
       // const player = this.props.players.find(ply => ply.id === option.value);
       this.setState({searchText: option});
@@ -53,6 +53,8 @@ export default class PlayerAutoComplete extends Component {
         onChange={this._onPlayerSelected.bind(this)}
         options={playerMenuItems.sort((a, b) => a.label.localeCompare(b.label)).toArray()}
         isClearable={false}
+        maxMenuHeigh={100}
+        noOptionsMessage={() => this.context.t('players.noFound')}
       />
     );
   }

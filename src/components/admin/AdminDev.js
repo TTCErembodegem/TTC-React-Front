@@ -61,7 +61,8 @@ export default class AdminDev extends React.Component {
           config={viewsConfig}
           small={false}
           activeView={this.state.filter}
-          onClick={newFilter => this.setState({filter: newFilter})} />
+          onClick={newFilter => this.setState({filter: newFilter})}
+        />
 
         {this._renderSection(this.state.filter)}
       </div>

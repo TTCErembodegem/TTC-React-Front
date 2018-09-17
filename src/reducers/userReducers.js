@@ -12,10 +12,6 @@ var startState = new UserModel({
 
 // Security: ['CAN_MANAGETEAM']
 
-function gotoDefaultPage() {
-  //browserHistory.push('/');
-}
-
 export default function user(state = startState, action = null) {
   const {type, payload} = action;
   switch (type) {
@@ -30,7 +26,6 @@ export default function user(state = startState, action = null) {
     return startState;
 
   case ActionTypes.LOGIN_LOGOUT:
-    gotoDefaultPage();
     localStorage.removeItem('token');
     return startState;
 

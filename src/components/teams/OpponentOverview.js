@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PropTypes, {connect, storeUtil, browserHistory} from '../PropTypes.js';
+import PropTypes, {connect, storeUtil, withRouter} from '../PropTypes.js';
 
 import {BackIcon} from '../controls.js';
 import {getOpponentMatches} from '../../actions/matchActions.js';
@@ -13,6 +13,7 @@ import {DivisionHeader} from '../teams/controls/DivisionHeader.js';
   readonlyMatches: state.readonlyMatches,
   teams: state.teams,
 }), {getOpponentMatches})
+@withRouter
 export class OpponentOverview extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
@@ -20,10 +21,12 @@ export class OpponentOverview extends Component {
     teams: PropTypes.TeamModelList.isRequired,
     readonlyMatches: PropTypes.MatchModelList.isRequired,
     getOpponentMatches: PropTypes.func.isRequired,
-    params: PropTypes.shape({
-      competition: PropTypes.oneOf(['Vttl', 'Sporta']).isRequired,
-      clubId: PropTypes.string.isRequired,
-      teamCode: PropTypes.string,
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        competition: PropTypes.oneOf(['Vttl', 'Sporta']).isRequired,
+        clubId: PropTypes.string.isRequired,
+        teamCode: PropTypes.string,
+      }).isRequired,
     }).isRequired,
     history: PropTypes.any.isRequired,
   }
@@ -35,8 +38,8 @@ export class OpponentOverview extends Component {
   }
 
   _getQueryStringValues() {
-    const {competition, teamCode} = this.props.params;
-    const clubId = parseInt(this.props.params.clubId, 10);
+    const {competition, teamCode} = this.props.match.params;
+    const clubId = parseInt(this.props.match.params.clubId, 10);
     return {
       competition,
       clubId,
@@ -52,7 +55,7 @@ export class OpponentOverview extends Component {
 
   _escIsBack(event) {
     if (event.keyCode === 27) {
-      browserHistory.goBack();
+      this.props.history.goBack();
     }
   }
 

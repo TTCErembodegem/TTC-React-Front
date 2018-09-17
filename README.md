@@ -2,8 +2,6 @@ Front: React-Redux
 ==================
 
 Oh boy:
-- Need to fix all browserHistory for new react-router
-- AutoComplete from '@material-ui/core/AutoComplete' replaced with react-select
 - analytics is down
 - matchcardheader -> cards also have different API now...
 - replace window.onerror with ErrorBoundary?
@@ -11,7 +9,14 @@ Oh boy:
 - router: match.params
 - profile: wijzig foto 'ImageEditor'
 
-- login: if text matches 1 person: do enable button
+
+
+Download Sporta Scoresheet: always show sheet, add excel button (for sporta) -> stash?
+
+
+Vttl C matches: Fabien heeft forfait gegeven? is "herkend" als dubbel...
+
+
 
 The port for the backend is atm hardcoded in:  
 `src/utils/httpClient.js`

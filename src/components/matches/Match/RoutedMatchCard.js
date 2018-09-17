@@ -9,19 +9,21 @@ import {FullScreenSpinner} from '../../controls.js';
 @connect(state => ({matches: state.matches}), {fetchMatch})
 export default class RoutedMatchCard extends Component {
   static propTypes = {
-    params: PropTypes.shape({
-      matchId: PropTypes.string.isRequired,
-      tabKey: PropTypes.string,
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        matchId: PropTypes.string.isRequired,
+        tabKey: PropTypes.string,
+      }),
     }),
     viewport: PropTypes.viewport,
     fetchMatch: PropTypes.func.isRequired,
   }
 
   _getMatch(props) {
-    const matchId = parseInt(props.params.matchId, 10);
+    const matchId = parseInt(props.match.params.matchId, 10);
     const match = storeUtil.getMatch(matchId);
     if (!match) {
-      this.props.fetchMatch(this.props.params.matchId);
+      this.props.fetchMatch(this.props.match.params.matchId);
     }
     return match;
   }
@@ -47,7 +49,7 @@ export default class RoutedMatchCard extends Component {
           isOpen
           width={this.props.viewport.width}
           routed
-          params={this.props.params}
+          params={this.props.match.params}
         />
       </div>
     );
