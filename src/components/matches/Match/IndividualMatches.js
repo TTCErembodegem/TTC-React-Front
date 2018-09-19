@@ -28,15 +28,15 @@ export default class IndividualMatches extends Component {
       <Table condensed striped className="match-card-tab-table">
         <thead>
           <tr>
-            <th>&nbsp;</th>
             <th colSpan={2}>{t('match.individual.matchTitle')} {this.props.match.frenoyMatchId}</th>
-            <th>{t('match.individual.setsTitle')}</th>
+            <th className="hidden-xs">{t('match.individual.setsTitle')}</th>
             <th>{t('match.individual.resultTitle')}</th>
           </tr>
         </thead>
         <tbody>
           {this.props.match.getGameMatches().sort((a, b) => a.matchNumber - b.matchNumber).map(game => {
             matchResult[game.homeSets > game.outSets ? 'home' : 'out']++;
+            const matchWonTrophy = game.outcome === matchOutcome.Won ? <TrophyIcon style={{marginRight: 6}} /> : null;
             return (
               <tr key={game.matchNumber}
                 className={cn({
@@ -46,14 +46,19 @@ export default class IndividualMatches extends Component {
                 })}
                 onClick={this._onIndividualMatchChange.bind(this, game.ownPlayer.playerId)}
               >
-                <td key="0">{game.outcome === matchOutcome.Won ? <TrophyIcon /> : null}</td>
                 {!game.isDoubles ? ([
-                  <td className={cn({accentuate: game.outcome === matchOutcome.Won})} key="1">{this._getPlayerDesc(game.home)}</td>,
+                  <td className={cn({accentuate: game.outcome === matchOutcome.Won})} key="1">
+                    {matchWonTrophy}
+                    {this._getPlayerDesc(game.home)}
+                  </td>,
                   <td className={cn({accentuate: game.outcome === matchOutcome.Won})} key="2">{this._getPlayerDesc(game.out)}</td>
                 ]) : (
-                  <td className={cn({accentuate: game.outcome === matchOutcome.Won})} key="2" colSpan={2}>{t('match.double')}</td>
+                  <td className={cn({accentuate: game.outcome === matchOutcome.Won})} key="2" colSpan={2}>
+                    {matchWonTrophy}
+                    {t('match.double')}
+                  </td>
                 )}
-                <td key="3">{game.homeSets}-{game.outSets}</td>
+                <td key="3" className="hidden-xs">{game.homeSets}-{game.outSets}</td>
                 <td key="4">{matchResult.home}-{matchResult.out}</td>
               </tr>
             );

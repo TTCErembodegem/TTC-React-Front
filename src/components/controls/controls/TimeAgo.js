@@ -51,7 +51,7 @@ export class TimeAgo extends React.Component {
   }
 
   tick(refresh) {
-    if (!this.isMounted() || !this.props.live) {
+    if (!this.isMounted || !this.props.live) {
       return;
     }
 

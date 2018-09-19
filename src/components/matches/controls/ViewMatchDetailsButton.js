@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import PropTypes, {withRouter, storeUtil} from '../../PropTypes.js';
+import PropTypes, {storeUtil} from '../../PropTypes.js';
 import {OwnClubId} from '../../../models/ClubModel.js';
 import MatchScore from '../MatchScore.js';
 import cn from 'classnames';
@@ -32,17 +32,10 @@ export class ViewMatchDetailsButton extends Component {
 }
 
 
-@withRouter
 export class MatchOtherRoundButton extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     match: PropTypes.MatchModel.isRequired,
-    history: PropTypes.any.isRequired,
-  }
-
-  _gotoMatchCard(match) {
-    const matchRoute = this.context.t.route('match', {matchId: match.id});
-    this.props.history.push(matchRoute);
   }
 
   render() {
@@ -63,9 +56,7 @@ export class MatchOtherRoundButton extends Component {
     const wasPrev = this.props.match.date > firstRoundMatch.date;
     return (
       <Link to={this.context.t.route('match', {matchId: firstRoundMatch.id})}>
-        <button type="button" className="btn btn-default"
-          onClick={this._gotoMatchCard.bind(this, firstRoundMatch)}
-          style={{margin: 7}}>
+        <button type="button" className="btn btn-default" style={{margin: 7}}>
           <div>
             <span style={{marginRight: 6}}>{this.context.t('match.' + (wasPrev ? 'gotoPreviousEncounter' : 'gotoNextEncounter'))}</span>
             <MatchScore match={firstRoundMatch} forceDisplay={true} />

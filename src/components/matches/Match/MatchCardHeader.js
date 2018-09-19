@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PropTypes, {withRouter, browseTo} from '../../PropTypes.js';
+import PropTypes, {browseTo} from '../../PropTypes.js';
 import {Link} from 'react-router-dom';
 
 import MatchForm from '../Match/MatchForm.js';
@@ -51,15 +51,7 @@ export class BigMatchCardHeader extends Component {
   }
 }
 
-// Silly workaround for match being one of the props withRouter injects
-// @withRouter
-// export class SmallMatchCardHeader extends Component {
-//   render() {
-//     const {history, location, match, ...props} = this.props; // eslint-disable-line
-//     console.log('yaye', props);
-//     return <SmallMatchCardHeaderCore {...props} history={history} />;
-//   }
-// }
+
 
 export class SmallMatchCardHeader extends Component {
   static contextTypes = PropTypes.contextTypes;
@@ -149,26 +141,19 @@ class MatchCardHeader extends Component {
     const matchScoreStyle = {position: 'absolute', top: 14, right: 0, marginRight: 7, fontSize: 16, marginLeft: 12, float: 'right'};
 
     return (
-      <Card
-        style={{backgroundColor: iPlay ? '#F0F0F0' : '#fafafa'}}
-        onExpandChange={::this._onExpandChange}
-        initiallyExpanded={this.props.isOpen}
-      >
+      <Card style={{backgroundColor: iPlay ? '#F0F0F0' : '#fafafa'}}>
         <CardHeader
           title={<MatchCardHeaderSmallTitle match={match} t={this.context.t} withLinks={this.props.isOpen} />}
-          subtitle={subtitle}
+          subheader={subtitle}
           style={{height: smallAndScoring ? 100 : undefined, padding: 15}}
-          textStyle={{padding: 0}}
-          showExpandableButton={false}
-          actAsExpander={!this.props.isOpen}
-          subtitleStyle={{marginTop: 4}}
         >
-
           {!scoreFormVisible ? <MatchScore match={match} style={matchScoreStyle} /> : null}
           {scoreFormVisible && scoreFormInHeader ? matchForm : null}
         </CardHeader>
-        {scoreFormVisible && !scoreFormInHeader ? matchForm : null}
-        {this.props.children}
+        <CardContent>
+          {scoreFormVisible && !scoreFormInHeader ? matchForm : null}
+          {this.props.isOpen ? this.props.children : null}
+        </CardContent>
       </Card>
     );
   }

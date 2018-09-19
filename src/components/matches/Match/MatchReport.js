@@ -3,6 +3,7 @@ import PropTypes, {connect, storeUtil} from '../../PropTypes.js';
 import * as matchActions from '../../../actions/matchActions.js';
 
 import {Editor, TimeAgo, Icon, EditIcon, MaterialButton} from '../../controls.js';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import PlayerAutoComplete from '../../players/PlayerAutoComplete.js';
 import ImageDropzone from '../../controls/image/ImageDropzone.js';
@@ -62,7 +63,7 @@ export default class MatchReport extends Component {
       );
     }
 
-    const readonlyReport = this.state.text ? <pre dangerouslySetInnerHTML={{__html: this.state.text}} /> : null;
+    const readonlyReport = this.state.text ? <pre dangerouslySetInnerHTML={{__html: this.state.text}} style={{marginRight: 15}} /> : null;
 
     var reportText;
     const canComment = !!this.props.user.playerId;
@@ -82,13 +83,15 @@ export default class MatchReport extends Component {
                     style={{height: canPostReport ? editorHeight : undefined, marginRight: 15}}
                     onChange={::this._reportTextChange}
                     options={{...editorOptions, disableEditing: !canPostReport}}
-                    contentEditable={canPostReport} />
+                    contentEditable={canPostReport}
+                  />
 
                   <MaterialButton variant="contained"
                     label={this.context.t('common.save')}
                     primary={true}
                     style={{float: 'right', marginBottom: 65, marginRight: 15}}
-                    onClick={::this._onPostReport} />
+                    onClick={::this._onPostReport}
+                  />
                 </div>
               ) : readonlyReport}
             </div>
@@ -145,11 +148,19 @@ export default class MatchReport extends Component {
 
           {this.props.user.playerId ? (
             <div style={{width: '100%'}}>
-              {this.state.commentFormOpen ? (<Checkbox
-                defaultChecked={!this.state.comment.hidden}
-                onCheck={::this._reportHiddenChange}
-                style={width > 450 ? {float: 'right', width: 220, textAlign: 'right'} : {}}
-                label={this.context.t('match.report.commentVisible')} />
+              {this.state.commentFormOpen ? (
+                <FormControlLabel
+                  style={width > 450 ? {float: 'right', textAlign: 'right'} : {}}
+                  control={
+                    <Checkbox
+                      checked={!this.state.comment.hidden}
+                      onChange={::this._reportHiddenChange}
+                      value="hidden"
+                      color="primary"
+                    />
+                  }
+                  label={this.context.t('match.report.commentVisible')}
+                />
               ) : null}
 
               <MaterialButton

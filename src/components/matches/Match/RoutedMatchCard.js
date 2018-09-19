@@ -17,6 +17,7 @@ export default class RoutedMatchCard extends Component {
     }),
     viewport: PropTypes.viewport,
     fetchMatch: PropTypes.func.isRequired,
+    history: PropTypes.any.isRequired,
   }
 
   _getMatch(props) {
@@ -42,8 +43,6 @@ export default class RoutedMatchCard extends Component {
       return <FullScreenSpinner />;
     }
 
-    console.log('uhoh', this.state.match);
-
     return (
       <div style={{marginBottom: 20, marginTop: 20, marginLeft: 5, marginRight: 5}}>
         <MatchCard
@@ -52,6 +51,7 @@ export default class RoutedMatchCard extends Component {
           width={this.props.viewport.width}
           routed
           params={this.props.match.params}
+          history={this.props.history}
         />
       </div>
     );
