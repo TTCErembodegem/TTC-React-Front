@@ -4,6 +4,8 @@ import PropTypes, {connect} from '../../PropTypes.js';
 import Avatar from '@material-ui/core/Avatar';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 
 import Divider from '@material-ui/core/Divider';
 
@@ -50,7 +52,7 @@ export default class SelectPlayersForm extends Component {
         <PlayerAutoComplete
           clearOnSelect
           selectPlayer={this.props.selectPlayer.bind(this, this.props.match.id, this.props.match.block || 'Captain', null)}
-          style={{marginLeft: 10}}
+          style={{marginTop: 15, marginLeft: 15, marginRight: 15}}
           placeholder={this.context.t('match.chooseOtherPlayer')}
           competition={team.competition}
         />
@@ -95,20 +97,9 @@ const SelectableMatchPlayerAvatar = ({match, player, select}) => {
   const matchPlayer = match.plays(player, 'onlyFinal');
   const color = getPlayingStatusColor(matchPlayer);
   if (select) {
-    return (
-      <SelectablePlayerAvatar
-        player={player}
-        select={select}
-        backgroundColor={color}
-      />
-    );
+    return <SelectablePlayerAvatar player={player} select={select} backgroundColor={color} />;
   }
-  return (
-    <PlayerAvatar
-      player={player}
-      backgroundColor={color}
-    />
-  );
+  return <PlayerAvatar player={player} backgroundColor={color} />;
 };
 
 class SelectablePlayerAvatar extends Component {
@@ -121,16 +112,13 @@ class SelectablePlayerAvatar extends Component {
   render() {
     var player = this.props.player;
     return (
-      <ListItem
-        leftAvatar={this._renderAvatar(player)}
-        onTouchTap={this.props.select}
-        primaryText={player.alias}
-        secondaryText={player.contact.getMobile()}
-      />
+      <ListItem button onClick={this.props.select}>
+        <ListItemIcon>
+          <Avatar style={{backgroundColor: this.props.backgroundColor, fontWeight: 'bold', color: 'white'}}>{player.alias[0]}</Avatar>
+        </ListItemIcon>
+        <ListItemText primary={player.alias} secondary={player.contact.getMobile()} />
+      </ListItem>
     );
-  }
-  _renderAvatar(player) {
-    return <Avatar backgroundColor={this.props.backgroundColor}>{player.alias[0]}</Avatar>;
   }
 }
 

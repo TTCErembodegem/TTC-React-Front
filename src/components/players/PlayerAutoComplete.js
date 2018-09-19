@@ -27,7 +27,7 @@ export default class PlayerAutoComplete extends Component {
   }
 
   render() {
-    const {players, selectPlayer, dispatch, clearOnSelect, competition, label, ...props} = this.props; // eslint-disable-line
+    const {players, selectPlayer, dispatch, clearOnSelect, competition, label, style, ...props} = this.props; // eslint-disable-line
     var filteredPlayers = players;
     if (competition) {
       filteredPlayers = players.filter(x => x[competition.toLowerCase()]);
@@ -39,16 +39,20 @@ export default class PlayerAutoComplete extends Component {
     const systemPlayerItem = {value: 'system', label: 'Systeem'};
 
     return (
-      <Select
-        value={this.state.searchText}
-        placeholder={label}
-        {...props}
-        onChange={this._onPlayerSelected.bind(this)}
-        options={playerMenuItems.concat([systemPlayerItem]).sort((a, b) => a.label.localeCompare(b.label)).toArray()}
-        isClearable={false}
-        maxMenuHeigh={100}
-        noOptionsMessage={() => this.context.t('players.noFound')}
-      />
+      <div style={{...style, overflow: 'visible'}}>
+        <Select
+          value={this.state.searchText}
+          placeholder={label}
+          {...props}
+          onChange={this._onPlayerSelected.bind(this)}
+          options={playerMenuItems.concat([systemPlayerItem]).sort((a, b) => a.label.localeCompare(b.label)).toArray()}
+          isClearable={false}
+          maxMenuHeight={200}
+          noOptionsMessage={() => this.context.t('players.noFound')}
+          openMenuOnFocus={false}
+          openMenuOnClick={false}
+        />
+      </div>
     );
   }
 }

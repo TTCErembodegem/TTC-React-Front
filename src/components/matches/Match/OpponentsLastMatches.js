@@ -86,7 +86,7 @@ export default class OpponentsLastMatches extends Component {
 
                 <td key="6">{match.score.home}&nbsp;-&nbsp;{match.score.out}</td>
               </tr>,
-              <OtherMatchPlayerResultsTableRow show={this.state[match.id]} match={match} colSpan={5} />
+              <OtherMatchPlayerResultsTableRow key="8" show={this.state[match.id]} match={match} colSpan={5} />
             ];
           })}
           {!this.state.showAll && this.props.readonlyMatches.size > AmountOfOpponentMatchesToShow ? (

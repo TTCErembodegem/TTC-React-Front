@@ -149,7 +149,7 @@ export class PlayerPlayingStyleForm extends Component {
             fullWidth
             label={t('player.editStyle.bestStroke')}
             type="text"
-            value={this.state.newStyle.bestStroke}
+            value={this.state.newStyle.bestStroke || ''}
             onChange={::this._changeBestStroke}
           />
 

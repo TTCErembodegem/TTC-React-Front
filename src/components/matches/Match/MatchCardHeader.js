@@ -141,7 +141,7 @@ class MatchCardHeader extends Component {
     const matchScoreStyle = {position: 'absolute', top: 14, right: 0, marginRight: 7, fontSize: 16, marginLeft: 12, float: 'right'};
 
     return (
-      <Card style={{backgroundColor: iPlay ? '#F0F0F0' : '#fafafa'}}>
+      <Card style={{backgroundColor: iPlay ? '#F0F0F0' : '#fafafa', overflow: 'visible'}}>
         <CardHeader
           title={<MatchCardHeaderSmallTitle match={match} t={this.context.t} withLinks={this.props.isOpen} />}
           subheader={subtitle}
@@ -158,7 +158,7 @@ class MatchCardHeader extends Component {
     );
   }
 
-  _onExpandChange(isOpen) {
+  _onExpandChange(isOpen) { // TODO: KALENDER: no longer implemented
     if (this.props.onOpen) {
       this.props.onOpen(isOpen);
     }

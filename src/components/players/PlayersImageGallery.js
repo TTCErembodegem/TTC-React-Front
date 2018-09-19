@@ -7,6 +7,7 @@ import {playerUtils} from '../../models/PlayerModel.js';
 
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
 
 import {Telephone, FrenoyLink, PlayerLink} from '../controls.js';
 import {PlayerPlayingStyle, PlayerPlayingStyleForm} from './PlayerPlayingStyle.js';
@@ -72,16 +73,16 @@ export default class PlayersImageGallery extends Component {
             {players.map(ply => {
               const comp = ply.getCompetition(competition);
               return (
-                <GridListTile
-                  key={ply.id}
-                  title={(
-                    <span>
-                      <PlayerLink player={ply} style={{color: 'white'}} />
-                      <small style={{marginLeft: 5}}>{comp ? comp.ranking : '??'}</small>
-                    </span>
-                  )}
-                  subtitle={this.props.subtitle ? this.props.subtitle(ply) : <PlayerPlayingStyle ply={ply} allowEdit={false} />}
-                >
+                <GridListTile key={ply.id}>
+                  <GridListTileBar
+                    title={(
+                      <span>
+                        <PlayerLink player={ply} style={{color: 'white'}} />
+                        <small style={{marginLeft: 5}}>{comp ? comp.ranking : '??'}</small>
+                      </span>
+                    )}
+                    subtitle={this.props.subtitle ? this.props.subtitle(ply) : <PlayerPlayingStyle ply={ply} allowEdit={false} />}
+                  />
                   <PlayerPlayingStyleForm player={ply} iconStyle="edit-icon" style={editStyleIcon} />
                   <PlayerImage playerId={ply.id} />
                 </GridListTile>

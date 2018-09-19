@@ -117,8 +117,6 @@ export default class MatchCard extends Component {
       show: this.props.user.isDev(),
     }];
 
-    console.log('MatchCard', match);
-
     const HeaderComponent = this.props.big ? BigMatchCardHeader : SmallMatchCardHeader;
     return (
       <HeaderComponent
