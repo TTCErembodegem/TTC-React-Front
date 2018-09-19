@@ -1,8 +1,10 @@
 import React from 'react';
-import PropTypes, {connect} from '../PropTypes.js';
+import PropTypes, {connect, withTracker} from '../PropTypes.js';
 import {FullScreenSpinner} from '../controls/controls/Spinner.js';
 import App from './App.js';
 
+// TODO: withTracker makes it hang up? + Memory leak console.error?
+//@withTracker
 @connect(state => ({config: state.config}))
 export class ComponentWithLayout extends React.Component {
   static propTypes ={

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes, {connect, withContext, storeUtil} from '../PropTypes.js';
 import {uploadPlayer} from '../../actions/userActions.js';
 
-import Button from '@material-ui/core/Button';
+import {MaterialButton} from '../controls/Button.js';
 import ImageEditor from '../controls/image/ImageEditor.js';
 import {playerUtils} from '../../models/PlayerModel.js';
 import ImageDropzone from '../controls/image/ImageDropzone.js';
@@ -77,7 +77,8 @@ export default class ProfilePhotoForm extends Component {
                 size={this.props.size}
                 image={tmpFileName}
                 borderRadius={this.props.borderRadius}
-                updateImage={(preview, croppingRect) => this.setState({preview: preview.toDataURL(), croppingRect})} />
+                updateImage={(preview, croppingRect) => this.setState({preview: preview.toDataURL(), croppingRect})}
+              />
             </div>
           ) : null}
         </div>
@@ -88,14 +89,16 @@ export default class ProfilePhotoForm extends Component {
                 src={this.state.preview}
                 style={{marginTop: 7, borderRadius: 19}}
                 width={this.props.size.width}
-                height={this.props.size.height} />
+                height={this.props.size.height}
+              />
 
-              <div className="caption" style={{textAlign: 'center', marginTop: 10}}>
-                <Button
+              <div className="caption" style={{textAlign: 'center', marginTop: 40}}>
+                <MaterialButton
                   label={t('photos.save')}
                   primary={true}
                   style={{marginTop: -40}}
-                  onClick={::this._saveImage} />
+                  onClick={::this._saveImage}
+                />
               </div>
             </div>
           </div>

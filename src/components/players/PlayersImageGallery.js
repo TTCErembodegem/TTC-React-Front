@@ -5,7 +5,8 @@ import cn from 'classnames';
 import * as playerActions from '../../actions/playerActions.js';
 import {playerUtils} from '../../models/PlayerModel.js';
 
-import {GridList, GridTile} from '@material-ui/core/GridList';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
 
 import {Telephone, FrenoyLink, PlayerLink} from '../controls.js';
 import {PlayerPlayingStyle, PlayerPlayingStyleForm} from './PlayerPlayingStyle.js';
@@ -71,7 +72,7 @@ export default class PlayersImageGallery extends Component {
             {players.map(ply => {
               const comp = ply.getCompetition(competition);
               return (
-                <GridTile
+                <GridListTile
                   key={ply.id}
                   title={(
                     <span>
@@ -83,7 +84,7 @@ export default class PlayersImageGallery extends Component {
                 >
                   <PlayerPlayingStyleForm player={ply} iconStyle="edit-icon" style={editStyleIcon} />
                   <PlayerImage playerId={ply.id} />
-                </GridTile>
+                </GridListTile>
               );
             })}
           </GridList>

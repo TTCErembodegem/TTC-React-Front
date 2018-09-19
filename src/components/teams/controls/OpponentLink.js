@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes, {browseTo} from '../../PropTypes.js';
+import {Link} from 'react-router-dom';
 import storeUtil from '../../../storeUtil.js';
 import {DivisionRankingLabel} from '../../matches/controls/DivisionRankingLabel.js';
 import {OwnClubId} from '../../../models/ClubModel.js';
@@ -22,9 +23,9 @@ export class OpponentLink extends Component {
 
     if (opponent.clubId !== OwnClubId && browseTo.getOpponent(team.competition, opponent) !== document.location.pathname) {
       teamTitle = (
-        <a className="link-hover-underline" onClick={() => browseTo.opponent(team.competition, opponent)}>
+        <Link className="link-hover-underline" to={browseTo.getOpponent(team.competition, opponent)}>
           {teamTitle}
-        </a>
+        </Link>
       );
     }
 

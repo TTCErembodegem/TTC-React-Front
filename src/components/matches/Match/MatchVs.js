@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes, {browseTo} from '../../PropTypes.js';
+import {Link} from 'react-router-dom';
 import cn from 'classnames';
 import {Icon} from '../../controls/Icon.js';
 import {DivisionRankingLabel, OurDivisionRankingLabel} from '../controls/DivisionRankingLabel.js';
@@ -31,9 +32,9 @@ export default class MatchVs extends Component {
         {this.props.withPosition ? <DivisionRankingLabel divisionRanking={divisionRanking} /> : null}
 
         {this.props.withLinks ? (
-          <a className="link-hover-underline" onClick={() => browseTo.opponent(match.competition, match.opponent)}>
+          <Link className="link-hover-underline" to={browseTo.getOpponent(match.competition, match.opponent)}>
             {match.renderOpponentTitle()}
-          </a>
+          </Link>
         ) : (
           match.renderOpponentTitle()
         )}
@@ -53,10 +54,10 @@ export default class MatchVs extends Component {
     var us;
     if (this.props.ownTeamLink) {
       us = (
-        <a onClick={() => browseTo.team(team, this.props.ownTeamLink)} className={usClasses}>
+        <Link to={browseTo.getTeam(team, this.props.ownTeamLink)} className={usClasses}>
           <OurDivisionRankingLabel team={team} />
           <span style={{fontSize: 14}}>{team.renderOwnTeamTitle()}</span>
-        </a>
+        </Link>
       );
 
     } else {

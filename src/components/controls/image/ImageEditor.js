@@ -2,11 +2,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Slider from '@material-ui/lab/Slider';
 import AvatarEditor from 'react-avatar-editor';
-import Button from '@material-ui/core/Button';
+import {MaterialButton} from '../../controls/Button.js';
 
 // TODO: Check to replace with: http://blog.mmcfarland.net/react-darkroom/
 
-class ImageEditor extends React.Component {
+export default class ImageEditor extends React.Component {
   static propTypes = {
     t: PropTypes.func.isRequired,
     image: PropTypes.string.isRequired,
@@ -26,55 +26,48 @@ class ImageEditor extends React.Component {
     };
   }
 
+  setEditorRef = editor => {
+    this.editor = editor;
+  };
+
   render() {
     return (
       <div style={{display: 'inline-block', width: '100%'}}>
         <AvatarEditor
-          ref="avatar"
+          ref={this.setEditorRef}
           scale={this.state.scale}
           borderRadius={this.state.borderRadius}
-          onSave={this.handleSave}
-          onLoadFailed={this.logCallback.bind(this, 'onLoadFailed')}
-          onUpload={this.logCallback.bind(this, 'onUpload')}
-          onImageLoad={this.logCallback.bind(this, 'onImageLoad')}
           image={this.props.image}
-          style={{width: this.props.size.width, height: this.props.size.height, cursor: 'hand'}} />
-
-        <Slider defaultValue={1} min={1} max={5} step={0.01}
-          ref="scale"
-          style={{width: 230, marginBottom: 20, marginTop: 20}}
-          onChange={this.handleScale}
+          style={{width: this.props.size.width, height: this.props.size.height, cursor: 'hand'}}
         />
 
-        <Button
+        <Slider value={this.state.scale} min={1} max={5} step={0.01}
+          ref="scale"
+          style={{width: 230, marginBottom: 20, marginTop: 20}}
+          onChange={(event, newScale) => this.setState({scale: newScale})}
+        />
+
+        <br />
+
+        <MaterialButton
           label={this.props.t('photos.preview')}
           secondary={true}
           style={{marginTop: -40, marginBottom: 10}}
-          onClick={this.handleSave}
+          onClick={this.onClickSave}
         />
       </div>
     );
   }
 
-  handleSave(/*data*/) {
-    const img = this.refs.avatar.getImageScaledToCanvas();
-    const rect = this.refs.avatar.getCroppingRect();
-    this.props.updateImage(img, rect);
-  }
+  onClickSave = () => {
+    if (this.editor) {
+      // This returns a HTMLCanvasElement, it can be made into a data URL or a blob,
+      // drawn on another canvas, or added to the DOM.
+      const canvas = this.editor.getImage();
 
-  handleScale() {
-    const scale = parseFloat(this.refs.scale.getValue());
-    this.setState({scale: scale});
-  }
-
-  // handleBorderRadius() {
-  //   var borderRadius = parseInt(this.refs.borderRadius.value, 10);
-  //   this.setState({borderRadius: borderRadius});
-  // }
-
-  logCallback(e) {
-    console.log('callback', e); //eslint-disable-line
+      // If you want the image resized to the canvas size (also a HTMLCanvasElement)
+      // const canvasScaled = this.editor.getImageScaledToCanvas();
+      this.props.updateImage(canvas, {});
+    }
   }
 }
-
-export default ImageEditor;

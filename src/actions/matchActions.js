@@ -25,6 +25,9 @@ function frenoySync(dispatch, m, forceSync = false) {
         dispatch(simpleLoaded(newmatch));
         broadcastReload('match', newmatch.id);
       }, function(err) {
+        if (forceSync) {
+          dispatch(showSnackbar(trans('common.apiFail')));
+        }
         console.error(err); // eslint-disable-line
       });
   }

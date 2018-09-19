@@ -5,9 +5,8 @@ import * as matchActions from '../../../actions/matchActions.js';
 import {setSetting} from '../../../actions/configActions.js';
 
 import {TabbedContainer, CommentIcon, EditIcon} from '../../controls.js';
-import {CardText} from '@material-ui/core/Card';
 
-import MatchCardHeader, {BigMatchCardHeader} from './MatchCardHeader.js';
+import {SmallMatchCardHeader, BigMatchCardHeader} from './MatchCardHeader.js';
 import MatchPlayerResults from './MatchPlayerResults.js';
 import IndividualMatches from './IndividualMatches.js';
 import OpponentClubLocations from './OpponentClubLocations.js';
@@ -79,8 +78,6 @@ export default class MatchCard extends Component {
 
   render() {
     const match = this.props.match;
-    const HeaderComponent = this.props.big ? BigMatchCardHeader : MatchCardHeader;
-
     const tabConfig = [{
       key: tabEventKeys.players,
       title: this.context.t('match.tabs.playersTitle'),
@@ -120,6 +117,9 @@ export default class MatchCard extends Component {
       show: this.props.user.isDev(),
     }];
 
+    console.log('MatchCard', match);
+
+    const HeaderComponent = this.props.big ? BigMatchCardHeader : SmallMatchCardHeader;
     return (
       <HeaderComponent
         {...this.props}
@@ -129,17 +129,15 @@ export default class MatchCard extends Component {
         config={this.props.config}
         forceEdit={this.state.forceEditPlayers}
       >
-        <CardText expandable={true} style={{paddingTop: 0, paddingLeft: 5, paddingRight: 5}}>
-          <TabbedContainer
-            match={{match: this.props.params}}
-            style={{marginBottom: -18}}
-            defaultTabKey={tabEventKeys.players}
-            tabKeys={tabConfig}
-            tabRenderer={::this._renderTabContent}
-            onTabSelect={::this._onTabSelect}
-            route={{base: this.context.t.route('match').replace(':matchId', match.id), subs: 'matchTabs'}}
-          />
-        </CardText>
+        <TabbedContainer
+          match={{match: this.props.params}}
+          style={{marginBottom: -18}}
+          defaultTabKey={tabEventKeys.players}
+          tabKeys={tabConfig}
+          tabRenderer={::this._renderTabContent}
+          onTabSelect={::this._onTabSelect}
+          route={{base: this.context.t.route('match').replace(':matchId', match.id), subs: 'matchTabs'}}
+        />
       </HeaderComponent>
     );
   }

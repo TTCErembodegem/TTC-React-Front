@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import PropTypes, {withViewport} from '../PropTypes.js';
 import PlayerImage from './PlayerImage.js';
 import PlayerCard from './PlayerCard.js';
-import {Card, CardText} from '@material-ui/core/Card';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 import {PlayerLink} from '../controls.js';
 
 @withViewport
@@ -37,7 +38,7 @@ export default class PlayersCardGallery extends Component {
           return (
             <div key={player.id} style={{paddingBottom: 10, textAlign: 'center'}}>
               <Card>
-                <CardText>
+                <CardContent>
                   <h4>
                     <PlayerLink player={player} />
                     <small style={{marginLeft: 6}}>{comp.ranking}</small>
@@ -47,7 +48,7 @@ export default class PlayersCardGallery extends Component {
                     </small>
                   </h4>
                   <PlayerImage playerId={player.id} center shape="thumbnail" />
-                </CardText>
+                </CardContent>
               </Card>
             </div>
           );

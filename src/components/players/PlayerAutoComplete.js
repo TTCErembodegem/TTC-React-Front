@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes, {connect} from '../PropTypes.js';
-
 import Select from 'react-select';
-// import MenuItem from '@material-ui/core/MenuItem';
 
 @connect(state => ({players: state.players}))
 export default class PlayerAutoComplete extends Component {
@@ -22,15 +20,10 @@ export default class PlayerAutoComplete extends Component {
   }
 
   _onPlayerSelected(option) {
-    console.log('AutoComplete::_onPlayerSelected', option);
     if (!option.length) {
-      // const player = this.props.players.find(ply => ply.id === option.value);
       this.setState({searchText: option});
       this.props.selectPlayer(option.value);
     }
-
-    // TODO: how to select system?
-    // this.props.selectPlayer('system');
   }
 
   render() {
@@ -41,9 +34,9 @@ export default class PlayerAutoComplete extends Component {
     }
     const playerMenuItems = filteredPlayers.map(ply => ({
       value: ply.id,
-      label: ply.name,
-      // value: <MenuItem secondaryText={competition ? ply[competition.toLowerCase()].ranking : undefined}>{ply.name}</MenuItem>,
+      label: ply.name + (competition ? ' (' + ply[competition.toLowerCase()].ranking + ')' : ''),
     }));
+    const systemPlayerItem = {value: 'system', label: 'Systeem'};
 
     return (
       <Select
@@ -51,7 +44,7 @@ export default class PlayerAutoComplete extends Component {
         placeholder={label}
         {...props}
         onChange={this._onPlayerSelected.bind(this)}
-        options={playerMenuItems.sort((a, b) => a.label.localeCompare(b.label)).toArray()}
+        options={playerMenuItems.concat([systemPlayerItem]).sort((a, b) => a.label.localeCompare(b.label)).toArray()}
         isClearable={false}
         maxMenuHeigh={100}
         noOptionsMessage={() => this.context.t('players.noFound')}

@@ -3,7 +3,7 @@ import PropTypes, {connect, withContext} from '../PropTypes.js';
 import moment from 'moment';
 
 import {Strike} from '../controls.js';
-import MatchCardHeader from './Match/MatchCardHeader.js';
+import {SmallMatchCardHeader} from './Match/MatchCardHeader.js';
 
 @withContext
 @connect(state => {
@@ -88,7 +88,7 @@ export default class Matches extends Component {
       <div className="row">
         {matches.map(match => (
           <div className="col-lg-4 col-md-6" style={{paddingBottom: 5, paddingTop: 5}} key={match.id}>
-            <MatchCardHeader match={match} user={this.props.user} isOpen={false} config={this.props.config} noScoreEdit />
+            <SmallMatchCardHeader match={match} user={this.props.user} isOpen={false} config={this.props.config} noScoreEdit />
           </div>
         ))}
       </div>

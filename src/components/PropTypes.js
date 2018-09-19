@@ -17,6 +17,7 @@ export withViewport from '../utils/decorators/withViewport.js'; // eslint-disabl
 export withContext from '../utils/decorators/withContext.js'; // eslint-disable-line
 export withStyles from '../utils/decorators/withStyles.js'; // eslint-disable-line
 export {withTooltip} from '../utils/decorators/withTooltip.js';
+export {withTracker} from '../utils/decorators/withTracker.js';
 export {withRouter} from 'react-router-dom';
 
 

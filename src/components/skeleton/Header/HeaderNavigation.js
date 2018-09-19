@@ -65,8 +65,8 @@ class Navigation extends Component {
     const matchesToday = storeUtil.matches.getTodayMatches();
 
     return (
-      <Drawer open={this.props.navOpen} className={this.props.classes.root}>
-        <AppBar style={{}}>
+      <Drawer open={this.props.navOpen}>
+        <AppBar>
           <Toolbar variant="dense">
             <Typography variant="title" color="inherit">
               <Link className="Header-link" to="/">{this.state.navOpen ? null : t('clubName')}</Link>
@@ -74,7 +74,7 @@ class Navigation extends Component {
           </Toolbar>
         </AppBar>
 
-        <div style={{marginTop: 60}}>
+        <div style={{marginTop: 60, width: 250}}>
           <MenuItem onClick={this._goto.bind(this, t.route('matches'))}>{t('nav.matches')}</MenuItem>
           {matchesToday.size ? (
             <MenuItem onClick={this._goto.bind(this, t.route('matchesToday'))}>
@@ -103,7 +103,6 @@ class Navigation extends Component {
 }
 
 const styles = {
-  root: {width: 200},
   badge: {top: 0, right: 0},
 };
 export default withStyles(styles)(withRouter(enhanceWithClickOutside(Navigation)));

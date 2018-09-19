@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes, {withRouter, browseTo} from '../../PropTypes.js';
+import {Link} from 'react-router-dom';
 
 import MatchForm from '../Match/MatchForm.js';
 import MatchScore from '../MatchScore.js';
@@ -8,6 +9,7 @@ import {TheirTeamTitle} from './TheirTeamTitle.js';
 
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
 
 const thrillerIconWith = 25;
 const ThrillerIconSpan = <span key="1" style={{width: thrillerIconWith, float: 'left'}}>&nbsp;</span>;
@@ -30,28 +32,36 @@ export class BigMatchCardHeader extends Component {
     const them = match.renderOpponentTitle();
 
     return (
-      <Card style={{backgroundColor: '#fafafa'}} initiallyExpanded={true}>
+      <Card style={{backgroundColor: '#fafafa'}}>
         <CardHeader
           title={<span style={{fontSize: 34}}>{match.isHomeMatch ? `${us} vs ${them}` : `${them} vs ${us}`}</span>}
           subtitle={undefined}
           style={{height: 95}}
-          showExpandableButton={false}
-          actAsExpander={false}>
+        >
           <div style={{position: 'absolute', top: 23, right: 15}}>
             <MatchForm match={match} t={this.context.t} user={this.props.user} big />
           </div>
           <ThrillerBadge t={this.context.t} match={match} />
         </CardHeader>
-        {this.props.children}
+        <CardContent>
+          {this.props.children}
+        </CardContent>
       </Card>
     );
   }
 }
 
+// Silly workaround for match being one of the props withRouter injects
+// @withRouter
+// export class SmallMatchCardHeader extends Component {
+//   render() {
+//     const {history, location, match, ...props} = this.props; // eslint-disable-line
+//     console.log('yaye', props);
+//     return <SmallMatchCardHeaderCore {...props} history={history} />;
+//   }
+// }
 
-
-@withRouter
-export default class SmallMatchCardHeader extends Component {
+export class SmallMatchCardHeader extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     match: PropTypes.MatchModel.isRequired,
@@ -67,9 +77,7 @@ export default class SmallMatchCardHeader extends Component {
   }
 
   render() {
-    const props = Object.assign({
-      onOpen: ::this._onOpen
-    }, this.props);
+    const props = {onOpen: ::this._onOpen, ...this.props};
     return <MatchCardHeader {...props} />;
   }
 
@@ -214,9 +222,9 @@ const OwnTeamTitle = ({match, withLinks}) => {
   return (
     <span>
       {divisionRanking.position ? <small>{divisionRanking.position + '. '}</small> : ''}
-      <a onClick={() => browseTo.team(team)} className="link-hover-underline">
+      <Link to={browseTo.getTeam(team)} className="link-hover-underline">
         {title}
-      </a>
+      </Link>
     </span>
   );
 };

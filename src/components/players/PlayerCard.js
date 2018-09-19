@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes, {connect, browseTo, withViewport} from '../PropTypes.js';
+import {Link} from 'react-router-dom';
 
 import Panel from 'react-bootstrap/lib/Panel';
 import PlayerImage from './PlayerImage.js';
@@ -120,9 +121,9 @@ export const PlayerCompetitionLabel = ({comp, player, t, withName = false}) => {
       {withName ? (
         <strong><PlayerLink player={player} alias={withName === 'alias'} /></strong>
       ) : (
-        <a onClick={() => browseTo.team(team)} className="link-hover-underline">
-          {comp} {team ? team.teamCode : null}
-        </a>
+        <Link to={browseTo.getTeam(team || {competition: comp})} className="link-hover-underline">
+          {comp}{team ? ' ' + team.teamCode : null}
+        </Link>
       )}
       <small style={{marginLeft: 10}}>{compDetails.ranking} <PlayerFrenoyLink comp={compDetails} /></small>
     </span>

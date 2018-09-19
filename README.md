@@ -1,19 +1,13 @@
 Front: React-Redux
 ==================
 
-Oh boy:
-- analytics is down
 - matchcardheader -> cards also have different API now...
-- replace window.onerror with ErrorBoundary?
-- tooltip is broken in top nav profile icon
-- router: match.params
-- profile: wijzig foto 'ImageEditor'
-
-
+- ComponentWithLayout: @withTracker no worky good
 
 Download Sporta Scoresheet: always show sheet, add excel button (for sporta) -> stash?
 
 
+- MatchModel: FrenoyAPI change: Doubles vs readonlyMatches...
 Vttl C matches: Fabien heeft forfait gegeven? is "herkend" als dubbel...
 
 

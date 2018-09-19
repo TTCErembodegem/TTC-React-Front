@@ -4,7 +4,7 @@ import PropTypes, {connect, withViewport, withContext, withStyles} from '../Prop
 import ClubLocationInstructions from '../other/ClubLocationInstructions.js';
 
 import {Strike} from '../controls.js';
-import MatchCardHeader from '../matches/Match/MatchCardHeader.js';
+import {SmallMatchCardHeader} from '../matches/Match/MatchCardHeader.js';
 
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
@@ -228,16 +228,8 @@ class TodaysEvents extends Component {
     // const t = this.context.t;
     // const today = moment();
 
-
-    // TODO: training weekdays & hour hardcoded (+ duplicated in footer)
-    var trainingEvent = null;
-    // if (today.weekday() === 1 || today.weekday() === 3) {
-    //   trainingEvent = <Strike text={t('intro.trainingToday')} />;
-    // }
-
     return (
       <div>
-        {trainingEvent}
         <Eetfestijn />
         <br />
         <img src="/img/lokaal-instructies/3-voorbij-de-container.jpg" className="img-responsive img-rounded" />
@@ -278,7 +270,7 @@ class TodaysEvents extends Component {
       <div>
         {matches.map(match => (
           <div style={{padding: 5}} key={match.id}>
-            <MatchCardHeader match={match} user={this.props.user} isOpen={false} config={this.props.config} noScoreEdit />
+            <SmallMatchCardHeader match={match} user={this.props.user} isOpen={false} config={this.props.config} noScoreEdit />
           </div>
         ))}
       </div>

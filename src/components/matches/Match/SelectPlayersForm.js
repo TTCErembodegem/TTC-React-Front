@@ -2,7 +2,9 @@ import React, {Component} from 'react';
 import PropTypes, {connect} from '../../PropTypes.js';
 
 import Avatar from '@material-ui/core/Avatar';
-import {List, ListItem} from '@material-ui/core/List';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+
 import Divider from '@material-ui/core/Divider';
 
 import PlayerAutoComplete from '../../players/PlayerAutoComplete.js';
@@ -50,7 +52,8 @@ export default class SelectPlayersForm extends Component {
           selectPlayer={this.props.selectPlayer.bind(this, this.props.match.id, this.props.match.block || 'Captain', null)}
           style={{marginLeft: 10}}
           placeholder={this.context.t('match.chooseOtherPlayer')}
-          competition={team.competition} />
+          competition={team.competition}
+        />
       </div>
     );
   }
@@ -76,7 +79,8 @@ class PlayerAvatarList extends Component {
               player={player}
               select={this._onPlayerSelect.bind(this, player.id)}
               match={this.props.match}
-              key={player.id} />
+              key={player.id}
+            />
           );
         })}
       </List>
@@ -95,13 +99,15 @@ const SelectableMatchPlayerAvatar = ({match, player, select}) => {
       <SelectablePlayerAvatar
         player={player}
         select={select}
-        backgroundColor={color} />
+        backgroundColor={color}
+      />
     );
   }
   return (
     <PlayerAvatar
       player={player}
-      backgroundColor={color} />
+      backgroundColor={color}
+    />
   );
 };
 
@@ -119,7 +125,8 @@ class SelectablePlayerAvatar extends Component {
         leftAvatar={this._renderAvatar(player)}
         onTouchTap={this.props.select}
         primaryText={player.alias}
-        secondaryText={player.contact.getMobile()} />
+        secondaryText={player.contact.getMobile()}
+      />
     );
   }
   _renderAvatar(player) {
