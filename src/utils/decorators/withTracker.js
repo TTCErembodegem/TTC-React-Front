@@ -11,6 +11,7 @@ export const withTracker = (WrappedComponent, options = {}) => { // eslint-disab
     // });
     // GoogleAnalytics.pageview(page);
 
+    //console.log('ga', page);
     if (window.ga) {
       window.ga('set', 'page', page);
       window.ga('send', 'pageview');

@@ -2,13 +2,13 @@ Front: React-Redux
 ==================
 
 - matchcardheader -> cards also have different API now...
-- ComponentWithLayout: @withTracker no worky good
-
-Download Sporta Scoresheet: always show sheet, add excel button (for sporta) -> stash?
 
 
 - MatchModel: FrenoyAPI change: Doubles vs readonlyMatches...
 Vttl C matches: Fabien heeft forfait gegeven? is "herkend" als dubbel...
+
+
+Download Sporta Scoresheet: always show sheet, add excel button (for sporta) -> stash?
 
 
 

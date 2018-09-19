@@ -3,8 +3,10 @@ import PropTypes, {connect, withTracker} from '../PropTypes.js';
 import {FullScreenSpinner} from '../controls/controls/Spinner.js';
 import App from './App.js';
 
-// TODO: withTracker makes it hang up? + Memory leak console.error?
-//@withTracker
+// Just adding a root Route that does the ga would be easier:
+// https://github.com/react-ga/react-ga/issues/122#issuecomment-319546248
+
+@withTracker
 @connect(state => ({config: state.config}))
 export class ComponentWithLayout extends React.Component {
   static propTypes ={
