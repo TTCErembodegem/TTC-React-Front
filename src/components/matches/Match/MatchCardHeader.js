@@ -1,15 +1,12 @@
 import React, {Component} from 'react';
-import PropTypes, {browseTo} from '../../PropTypes.js';
+import PropTypes, {browseTo, withRouter} from '../../PropTypes.js';
 import {Link} from 'react-router-dom';
+import cn from 'classnames';
 
 import MatchForm from '../Match/MatchForm.js';
 import MatchScore from '../MatchScore.js';
 import {ThrillerBadge, ThrillerIcon, CommentIcon} from '../../controls/Icon.js';
 import {TheirTeamTitle} from './TheirTeamTitle.js';
-
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
 
 const thrillerIconWith = 25;
 const ThrillerIconSpan = <span key="1" style={{width: thrillerIconWith, float: 'left'}}>&nbsp;</span>;
@@ -18,7 +15,7 @@ const ThrillerIconSpan = <span key="1" style={{width: thrillerIconWith, float: '
 export class BigMatchCardHeader extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
-    match: PropTypes.MatchModel.isRequired,
+    match2: PropTypes.MatchModel.isRequired,
     children: PropTypes.node,
     user: PropTypes.UserModel.isRequired,
     isOpen: PropTypes.bool.isRequired,
@@ -26,42 +23,41 @@ export class BigMatchCardHeader extends Component {
   }
 
   render() {
-    const match = this.props.match;
+    const match = this.props.match2;
     const team = match.getTeam();
     const us = team.renderOwnTeamTitle();
     const them = match.renderOpponentTitle();
 
     return (
-      <Card style={{backgroundColor: '#fafafa'}}>
-        <CardHeader
-          title={<span style={{fontSize: 34}}>{match.isHomeMatch ? `${us} vs ${them}` : `${them} vs ${us}`}</span>}
-          subtitle={undefined}
-          style={{height: 95}}
-        >
-          <div style={{position: 'absolute', top: 23, right: 15}}>
+      <div className="match-card" style={{backgroundColor: '#fafafa'}}>
+        <div className="match-card-header">
+          <div className="match-card-score">
             <MatchForm match={match} t={this.context.t} user={this.props.user} big />
           </div>
+          <span style={{fontSize: 34}}>{match.isHomeMatch ? `${us} vs ${them}` : `${them} vs ${us}`}</span>
           <ThrillerBadge t={this.context.t} match={match} />
-        </CardHeader>
-        <CardContent>
-          {this.props.children}
-        </CardContent>
-      </Card>
+        </div>
+        {this.props.isOpen ? (
+          <div className="match-card-body">
+            {this.props.children}
+          </div>
+        ) : null}
+      </div>
     );
   }
 }
 
 
 
+@withRouter
 export class SmallMatchCardHeader extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
-    match: PropTypes.MatchModel.isRequired,
+    match2: PropTypes.MatchModel.isRequired, //
     children: PropTypes.node,
     user: PropTypes.UserModel.isRequired,
     isOpen: PropTypes.bool.isRequired,
     forceEdit: PropTypes.bool,
-    onOpen: PropTypes.func,
     noScoreEdit: PropTypes.bool,
     width: PropTypes.number,
     routed: PropTypes.bool,
@@ -69,12 +65,13 @@ export class SmallMatchCardHeader extends Component {
   }
 
   render() {
-    const props = {onOpen: ::this._onOpen, ...this.props};
-    return <MatchCardHeader {...props} />;
+    const {match, match2, history, location, ...props} = this.props; // eslint-disable-line
+    const newProps = {match: match2, onOpen: ::this._onOpen, ...props};
+    return <MatchCardHeader {...newProps} />;
   }
 
   _onOpen(/*isOpen*/) {
-    const matchRoute = this.context.t.route('match', {matchId: this.props.match.id});
+    const matchRoute = this.context.t.route('match', {matchId: this.props.match2.id});
     this.props.history.push(matchRoute);
   }
 }
@@ -104,7 +101,7 @@ class MatchCardHeader extends Component {
       (match.isBeingPlayed() || this.props.forceEdit) &&
       this.props.user.canChangeMatchScore(this.props.match);
 
-    const scoreFormInHeader = !!this.props.routed;
+    // const scoreFormInHeader = !!this.props.routed;
     const smallAndScoring = scoreFormVisible && this.props.width < 480;
 
     var subtitle = [];
@@ -126,41 +123,42 @@ class MatchCardHeader extends Component {
       );
     }
 
-    var matchFormStyle;
-    if (smallAndScoring) {
-      matchFormStyle = {position: 'absolute', top: 50, right: 25};
-    } else {
-      matchFormStyle = {position: 'absolute', top: 17, right: 7};
-    }
     const matchForm = (
-      <div style={matchFormStyle}>
+      <div className={cn({'match-card-score': !smallAndScoring, 'match-card-score-inline': smallAndScoring})}>
         <MatchForm match={match} t={this.context.t} user={this.props.user} />
       </div>
     );
 
-    const matchScoreStyle = {position: 'absolute', top: 14, right: 0, marginRight: 7, fontSize: 16, marginLeft: 12, float: 'right'};
+    const onOpenHandler = this.props.onOpen && !this.props.isOpen ? e => this._onExpandChange(e) : undefined;
 
     return (
-      <Card style={{backgroundColor: iPlay ? '#F0F0F0' : '#fafafa', overflow: 'visible'}}>
-        <CardHeader
-          title={<MatchCardHeaderSmallTitle match={match} t={this.context.t} withLinks={this.props.isOpen} />}
-          subheader={subtitle}
-          style={{height: smallAndScoring ? 100 : undefined, padding: 15}}
-        >
-          {!scoreFormVisible ? <MatchScore match={match} style={matchScoreStyle} /> : null}
-          {scoreFormVisible && scoreFormInHeader ? matchForm : null}
-        </CardHeader>
-        <CardContent>
-          {scoreFormVisible && !scoreFormInHeader ? matchForm : null}
-          {this.props.isOpen ? this.props.children : null}
-        </CardContent>
-      </Card>
+      <div className="match-card" style={{backgroundColor: iPlay ? '#F0F0F0' : '#fafafa'}}>
+        <div className="match-card-header" style={{height: smallAndScoring ? 110 : 60}} onClick={onOpenHandler}>
+          {!scoreFormVisible ? <MatchScore match={match} className="match-card-score" /> : null}
+          {scoreFormVisible && !smallAndScoring ? matchForm : null}
+          <MatchCardHeaderSmallTitle match={match} t={this.context.t} withLinks={this.props.isOpen} />
+          <div className="match-card-header-subtitle">{subtitle}</div>
+          {scoreFormVisible && smallAndScoring ? matchForm : null}
+        </div>
+        {this.props.isOpen ? (
+          <div className="match-card-body">
+            {this.props.children}
+          </div>
+        ) : null}
+      </div>
     );
   }
 
-  _onExpandChange(isOpen) { // TODO: KALENDER: no longer implemented
+  _onExpandChange(event) {
+    // console.log('event', event.target.nodeName, event.target);
+
+    const nodeName = event.target.nodeName;
+    if (nodeName === 'INPUT' || nodeName === 'A' || nodeName === '') {
+      return;
+    }
+
     if (this.props.onOpen) {
-      this.props.onOpen(isOpen);
+      this.props.onOpen(true);
     }
   }
 }

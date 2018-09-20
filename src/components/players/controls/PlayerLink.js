@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
-import PropTypes, {withRouter} from '../../PropTypes.js';
+import PropTypes from '../../PropTypes.js';
+import {Link} from 'react-router-dom';
 import t from '../../../locales.js';
 
-@withRouter
 export class PlayerLink extends Component {
   static propTypes = {
-    history: PropTypes.any.isRequired,
     player: PropTypes.PlayerModel.isRequired,
     alias: PropTypes.bool,
     children: PropTypes.any,
@@ -20,9 +19,9 @@ export class PlayerLink extends Component {
 
     const url = t.route('player').replace(':playerId', encodeURI(player.slug));
     return (
-      <a onClick={() => this.props.history.push(url)} className={className} {...props}>
+      <Link to={url} className={className} {...props}>
         {this.getContent()}
-      </a>
+      </Link>
     );
   }
 

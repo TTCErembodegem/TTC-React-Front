@@ -121,6 +121,7 @@ export default class MatchCard extends Component {
     return (
       <HeaderComponent
         {...this.props}
+        match2={this.props.match}
         backgroundColor="#fafafa"
         isOpen={this.props.isOpen}
         style={{margin: 50}}

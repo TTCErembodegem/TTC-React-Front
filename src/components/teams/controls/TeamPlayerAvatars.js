@@ -27,7 +27,6 @@ export class TeamPlayerAvatars extends Component {
             tooltip += ' (' + comp.ranking + ')';
           }
 
-
           const avatarStyle = {
             marginLeft: 16,
             marginBottom: 10,
@@ -41,6 +40,7 @@ export class TeamPlayerAvatars extends Component {
               player={ply.player}
               style={avatarStyle}
               tooltip={tooltip}
+              tooltipPlacement="bottom"
             />
           );
         })}

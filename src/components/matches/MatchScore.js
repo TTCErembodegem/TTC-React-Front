@@ -28,6 +28,7 @@ export default class MatchScore extends Component {
 
     match: PropTypes.MatchModel.isRequired,
     style: PropTypes.object,
+    className: PropTypes.string,
     forceDisplay: PropTypes.bool.isRequired,
     showComments: PropTypes.bool,
     showThrophy: PropTypes.bool,
@@ -68,7 +69,7 @@ export default class MatchScore extends Component {
           return (
             <Link to={this.context.t.route('match', {matchId: match.id})}>
               <span
-                className={cn('label label-as-badge clickable', classColor2)}
+                className={cn('label label-as-badge clickable', classColor2, this.props.className)}
                 title={this.context.t('match.previousEncounterScore')}
                 style={this.props.style}>
 
@@ -85,8 +86,9 @@ export default class MatchScore extends Component {
     const classColor = match.isDerby ? 'match-won' : getClassName(match.isHomeMatch, score.home, score.out);
     return (
       <span
-        className={cn('label label-as-badge clickable', classColor, {'faa-tada animated': this.state.isUpdated})}
-        style={this.props.style}>
+        className={cn('label label-as-badge clickable', this.props.className, classColor, {'faa-tada animated': this.state.isUpdated})}
+        style={this.props.style}
+      >
 
         <span>
           {classColor === 'match-won' && !match.isDerby && this.props.viewport.width > 350 && this.props.showThrophy ? (

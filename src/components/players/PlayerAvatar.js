@@ -25,7 +25,7 @@ export default class PlayerAvatar extends Component {
   }
 
   render() {
-    const {player, ...props} = this.props;
+    const {player, ...props} = this.props; // eslint-disable-line
     if (!this.state.isLoaded) {
       return (
         <PlayerLink player={player}>

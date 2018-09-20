@@ -41,7 +41,7 @@ export default class MatchForm extends Component {
         <form>
           <div className="form-group">
             <input onChange={e => this.setState({inputScore: e.target.value})} placeholder="xx-xx" style={{width: 70, height: 30}} />
-            <button type="button" className="btn btn-default" onClick={() => this._onInputScoreUpdate()} style={{marginLeft: 7}}>
+            <button type="button" className="btn btn-default" onClick={e => this._onInputScoreUpdate(e)} style={{marginLeft: 7}}>
               <Icon fa="fa fa-floppy-o" />
             </button>
           </div>
@@ -61,7 +61,7 @@ export default class MatchForm extends Component {
           />
         ) : null}
 
-        <div style={{display: 'inline'}} onClick={() => this.setState({useInput: !this.state.useInput})}>
+        <div style={{display: 'inline'}} onClick={::this._onOpenInputScore}>
           <MatchScore match={match} forceDisplay={true} style={{fontSize: this.props.big ? 46 : 24}} showThrophy={false} />
         </div>
 
@@ -78,7 +78,13 @@ export default class MatchForm extends Component {
     );
   }
 
-  _onInputScoreUpdate() {
+  _onOpenInputScore(e) {
+    e.stopPropagation();
+    this.setState({useInput: !this.state.useInput});
+  }
+
+  _onInputScoreUpdate(e) {
+    e.stopPropagation();
     const newScores = this.state.inputScore.split('-');
     if (newScores.length === 2) {
       const [home, out] = newScores.map(n => parseInt(n.trim(), 10));
@@ -104,7 +110,7 @@ const MatchManipulation = ({style, plusClick, minClick, big, isHome}) => (
       <Icon
         fa="fa fa-plus-circle fa-2x"
         onClick={plusClick}
-        translate tooltip={isHome ? 'match.scoreHomeUp' : 'match.scoreOutUp'} tooltipPlacement="top"
+        translate tooltip={isHome ? 'match.scoreHomeUp' : 'match.scoreOutUp'} tooltipPlacement="left"
       />
     </div>
     <div style={{verticalAlign: 'bottom'}}>

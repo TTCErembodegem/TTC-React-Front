@@ -103,6 +103,7 @@ class Navigation extends Component {
 }
 
 const styles = {
+  root: {width: 250},
   badge: {top: 0, right: 0},
 };
 export default withStyles(styles)(withRouter(enhanceWithClickOutside(Navigation)));

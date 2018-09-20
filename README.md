@@ -1,18 +1,17 @@
 Front: React-Redux
 ==================
 
-- matchcardheader -> cards also have different API now...
-
-
 - MatchModel: FrenoyAPI change: Doubles vs readonlyMatches...
 Vttl C matches: Fabien heeft forfait gegeven? is "herkend" als dubbel...
 
-tooltip player avatars in Vttl/Sporta overview flickers
+
+Can't see opponent view for Sporta?
 
 
 Download Sporta Scoresheet: always show sheet, add excel button (for sporta) -> stash?
 
-
+IndividualMatches: our names are full, theirs short??
+--> our names always left? (they are now right...)
 
 The port for the backend is atm hardcoded in:  
 `src/utils/httpClient.js`

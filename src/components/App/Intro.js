@@ -270,7 +270,7 @@ class TodaysEvents extends Component {
       <div>
         {matches.map(match => (
           <div style={{padding: 5}} key={match.id}>
-            <SmallMatchCardHeader match={match} user={this.props.user} isOpen={false} config={this.props.config} noScoreEdit />
+            <SmallMatchCardHeader match2={match} user={this.props.user} isOpen={false} config={this.props.config} noScoreEdit />
           </div>
         ))}
       </div>

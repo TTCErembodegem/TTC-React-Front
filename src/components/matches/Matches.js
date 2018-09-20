@@ -88,7 +88,7 @@ export default class Matches extends Component {
       <div className="row">
         {matches.map(match => (
           <div className="col-lg-4 col-md-6" style={{paddingBottom: 5, paddingTop: 5}} key={match.id}>
-            <SmallMatchCardHeader match={match} user={this.props.user} isOpen={false} config={this.props.config} noScoreEdit />
+            <SmallMatchCardHeader match2={match} user={this.props.user} isOpen={false} config={this.props.config} noScoreEdit />
           </div>
         ))}
       </div>
