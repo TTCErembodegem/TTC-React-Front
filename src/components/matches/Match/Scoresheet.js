@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import PropTypes from '../../PropTypes.js';
 import Table from 'react-bootstrap/lib/Table';
 import {FrenoyWeekLink, PlayerLink} from '../../controls.js';
+import {ExcelButton} from '../../controls/Button.js';
+import http from '../../../utils/httpClient.js';
 
 export default class Scoresheet extends Component {
   static propTypes = {
@@ -15,8 +17,15 @@ export default class Scoresheet extends Component {
     const competition = this.props.match.competition;
 
     if (competition === 'Sporta') {
-      return (
-        <Table condensed className="match-card-tab-table">
+      return [
+        <ExcelButton
+          key="1"
+          onClick={() => http.download.scoresheetExcel(this.props.match)}
+          tooltip={this.props.match.isHomeMatch ? 'Download Scoresheet' : 'Download Scoresheet (UIT match???)'}
+          className={'pull-right ' + (this.props.match.isHomeMatch ? 'btn-success' : 'btn-danger')}
+          style={{margin: 6}}
+        />,
+        <Table key="2" condensed className="match-card-tab-table">
           <thead>
             <tr>
               <th colSpan={2}><FrenoyWeekLink match={this.props.match} /></th>
@@ -52,7 +61,7 @@ export default class Scoresheet extends Component {
             </tr>
           </tbody>
         </Table>
-      );
+      ];
     } else {
       // VTTL Scoresheet
       return (

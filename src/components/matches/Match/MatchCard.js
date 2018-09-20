@@ -78,6 +78,7 @@ export default class MatchCard extends Component {
 
   render() {
     const match = this.props.match;
+
     const tabConfig = [{
       key: tabEventKeys.players,
       title: this.context.t('match.tabs.playersTitle'),
@@ -96,7 +97,7 @@ export default class MatchCard extends Component {
     }, {
       key: tabEventKeys.scoresheet,
       title: this.context.t('match.tabs.scoresheet'),
-      show: match.isBeingPlayed() && !!match.players.size,
+      show: match.isBeingPlayed(),
     }, {
       key: tabEventKeys.opponentClub,
       title: this.context.t('match.tabs.clubTitle'),

@@ -1,9 +1,6 @@
 Front: React-Redux
 ==================
 
-Download Sporta Scoresheet: always show sheet, add excel button (for sporta) -> stash?
-
-
 The port for the backend is atm hardcoded in:  
 `src/utils/httpClient.js`
 
