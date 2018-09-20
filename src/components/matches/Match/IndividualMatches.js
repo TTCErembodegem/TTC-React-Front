@@ -69,8 +69,8 @@ export default class IndividualMatches extends Component {
   }
 
   _getPlayerDesc(player) {
-    if (!player.home) {
-      return <OpponentPlayerLabel player={player} competition={this.props.match.competition} fullName={false} />;
+    if (!player.playerId) {
+      return <OpponentPlayerLabel player={player} competition={this.props.match.competition} fullName={true} />;
     }
 
     const realPlayer = storeUtil.getPlayer(player.playerId);
