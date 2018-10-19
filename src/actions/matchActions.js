@@ -76,14 +76,14 @@ export function readOnlyLoaded(data) {
   };
 }
 
-export function getOpponentMatches(teamId) {
-  const key = 'GetOpponentMatches' + teamId;
+export function getOpponentMatches(match) {
+  const key = 'GetOpponentMatches' + match.teamId + match.opponent.teamCode + match.opponent.clubId;
   if (storeUtil.getConfig().get(key)) {
     return {type: 'empty', payload: ''};
   }
 
   return dispatch => {
-    return http.get('/matches/GetOpponentMatches', {teamId})
+    return http.get('/matches/GetOpponentMatches', {teamId: match.teamId, ...match.opponent})
       .then(function(matches) {
         dispatch(setSetting(key, true));
 
@@ -93,8 +93,8 @@ export function getOpponentMatches(teamId) {
 
         dispatch(readOnlyLoaded(matches));
 
-        matches.forEach(match => {
-          dispatch(frenoyReadOnlyMatchSync(match));
+        matches.forEach(m => {
+          dispatch(frenoyReadOnlyMatchSync(m));
         });
         return null;
 
