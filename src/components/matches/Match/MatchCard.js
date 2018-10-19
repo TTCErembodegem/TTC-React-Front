@@ -73,7 +73,7 @@ export default class MatchCard extends Component {
   }
 
   componentDidMount() {
-    this.props.getOpponentMatches(this.props.match);
+    this.props.getOpponentMatches(this.props.match.teamId, this.props.match.opponent);
   }
 
   render() {

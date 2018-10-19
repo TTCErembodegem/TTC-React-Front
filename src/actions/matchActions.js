@@ -76,14 +76,14 @@ export function readOnlyLoaded(data) {
   };
 }
 
-export function getOpponentMatches(match) {
-  const key = 'GetOpponentMatches' + match.teamId + match.opponent.teamCode + match.opponent.clubId;
+export function getOpponentMatches(teamId, opponent = {}) {
+  const key = 'GetOpponentMatches' + teamId + opponent.teamCode + opponent.clubId;
   if (storeUtil.getConfig().get(key)) {
     return {type: 'empty', payload: ''};
   }
 
   return dispatch => {
-    return http.get('/matches/GetOpponentMatches', {teamId: match.teamId, ...match.opponent})
+    return http.get('/matches/GetOpponentMatches', {teamId, ...opponent})
       .then(function(matches) {
         dispatch(setSetting(key, true));
 

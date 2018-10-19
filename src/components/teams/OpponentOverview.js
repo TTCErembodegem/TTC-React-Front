@@ -61,7 +61,8 @@ export class OpponentOverview extends Component {
 
   componentDidMount() {
     window.scrollTo(0, 0);
-    this.props.getOpponentMatches(this._getTeam().id);
+    const opponent = this._getQueryStringValues(); // do I dare say hack?
+    this.props.getOpponentMatches(this._getTeam().id, opponent);
     document.addEventListener('keydown', this._escIsBack, false);
   }
   componentWillUnmount(){
