@@ -37,7 +37,7 @@ export default class Login extends Component {
   render() {
     const t = this.context.t;
     return (
-      <Paper style={{...paperStyle, height: 400}}>
+      <Paper style={{...paperStyle, height: 425}}>
         <h3>{t('login.title')}</h3>
         <div>{t('login.introText')}</div>
 
