@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes, {connect, withViewport, withContext, withStyles} from '../PropTypes.js';
-// import moment from 'moment';
+import moment from 'moment';
 import ClubLocationInstructions from '../other/ClubLocationInstructions.js';
 
 import {Strike} from '../controls.js';
@@ -10,7 +10,7 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import Typist from 'react-typist';
 import * as Sponsor from './Sponsors.js';
-import {Eetfestijn} from './Eetfestijn.js';
+//import {Eetfestijn} from './Eetfestijn.js';
 
 
 const WeirdLocaleYearInfo = ({params}) => ( // eslint-disable-line
@@ -91,26 +91,6 @@ export default class Intro extends Component {
       );
     }
 
-    // const thnxEetfestijn = (
-    //   <div style={{marginTop: 25}}>
-    //     <Strike text="Vlaamse Kapioenschappen Tafeltennis" />
-
-    //     <strong>Zondag 4 februari 2018</strong>
-    //     <br />
-    //     <a href="https://goo.gl/maps/yC1PJCX1bzC2" target="_blank">
-    //       Sportcentrum Schotte
-    //     </a>
-    //     <br />
-    //     Kapellekensbaan 8
-    //     <br />
-    //     9320 Aalst
-
-    //     <br /><br />
-
-    //     <a href="http://ttc-erembodegem.be/img/VlaamseKampioenschappen2018.jpg" target="_blank">Download brochure</a>
-    //   </div>
-    // );
-
     return (
       <div>
         {topSponsors}
@@ -125,7 +105,14 @@ export default class Intro extends Component {
           <Col sm={6}>
             {!this.props.config.get('initialLoadCompleted') ? (
               <Loading t={this.context.t} bigScreen={this.props.viewport.width > 768} />
-            ) : <TodaysEvents {...this.props} />}
+            ) : (
+              <div>
+                <img src="/img/lokaal-instructies/3-voorbij-de-container.jpg" className="img-responsive img-rounded" />
+                <br />
+                <Strike text="Save the date! Eetfestijn 2019 op zaterdag 28 september" />
+                <TodaysEvents {...this.props} />
+              </div>
+            )}
           </Col>
         </Row>
         {big ? (
@@ -225,44 +212,34 @@ class TodaysEvents extends Component {
   };
 
   render() {
-    // const t = this.context.t;
-    // const today = moment();
+    const t = this.context.t;
+    const today = moment();
+
+    const matchesToday = this.props.matches.filter(cal => cal.date.isSame(today, 'day'));
+    if (matchesToday.size) {
+      return (
+        <div>
+          <Strike text={t('intro.matchesToday')} />
+          {this._renderMatches(matchesToday)}
+        </div>
+      );
+    }
+
+    const lastPlayedMatches = this.props.matches
+      .filter(cal => cal.date.isBefore(today, 'day'))
+      .sort((a, b) => b.date - a.date)
+      .take(2);
 
     return (
       <div>
-        <Eetfestijn />
-        <br />
-        <img src="/img/lokaal-instructies/3-voorbij-de-container.jpg" className="img-responsive img-rounded" />
+        {lastPlayedMatches.size ? (
+          <div>
+            <Strike text={t('intro.playedMatches')} />
+            {this._renderMatches(lastPlayedMatches)}
+          </div>
+        ) : null}
       </div>
     );
-
-
-    // const matchesToday = this.props.matches.filter(cal => cal.date.isSame(today, 'day'));
-    // if (matchesToday.size) {
-    //   return (
-    //     <div>
-    //       <Strike text={t('intro.matchesToday')} />
-    //       {this._renderMatches(matchesToday)}
-    //     </div>
-    //   );
-    // }
-
-    // const lastPlayedMatches = this.props.matches
-    //   .filter(cal => cal.date.isBefore(today, 'day'))
-    //   .sort((a, b) => b.date - a.date)
-    //   .take(2);
-
-    // return (
-    //   <div>
-    //     {trainingEvent}
-    //     {lastPlayedMatches.size ? (
-    //       <div>
-    //         <Strike text={t('intro.playedMatches')} />
-    //         {this._renderMatches(lastPlayedMatches)}
-    //       </div>
-    //     ) : null}
-    //   </div>
-    // );
   }
 
   _renderMatches(matches) {
