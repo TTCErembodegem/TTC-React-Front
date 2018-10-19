@@ -125,7 +125,9 @@ export const PlayerCompetitionLabel = ({comp, player, t, withName = false}) => {
           {comp}{team ? ' ' + team.teamCode : null}
         </Link>
       )}
-      <small style={{marginLeft: 10}}>{compDetails.ranking} <PlayerFrenoyLink comp={compDetails} /></small>
+      <PlayerFrenoyLink comp={compDetails} style={{marginLeft: 10}}>
+        {compDetails.ranking}
+      </PlayerFrenoyLink>
     </span>
   );
 };
@@ -142,10 +144,14 @@ PlayerCompetitionLabel.propTypes = {
 
 
 import {createFrenoyLink} from '../../models/PlayerModel.js';
-export const PlayerFrenoyLink = ({comp}) => (
-  <a href={createFrenoyLink(comp)} target="_blank">
-    <FrenoyPlayerDetailsIcon />
+export const PlayerFrenoyLink = ({comp, style, children}) => (
+  <a href={createFrenoyLink(comp)} target="_blank" className="link-hover-underline" style={style}>
+    {children} <FrenoyPlayerDetailsIcon />
   </a>
 );
 
-PlayerFrenoyLink.propTypes = {comp: PropTypes.object.isRequired};
+PlayerFrenoyLink.propTypes = {
+  comp: PropTypes.object.isRequired,
+  style: PropTypes.object.isRequired,
+  children: PropTypes.any.isRequired,
+};
