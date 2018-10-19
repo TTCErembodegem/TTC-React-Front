@@ -176,10 +176,7 @@ class ReadonlyMatchPlayerLabel extends Component {
           {viewport.width > 800 ? ply.name : ply.alias}
         </span>
         &nbsp;&nbsp;
-        <small>
-          {viewport.width > 400 ? ply.ranking + ' ' : null}
-          {viewport.width > 350 ? <FrenoyLink competition={competition} uniqueIndex={ply.uniqueIndex} /> : null}
-        </small>
+        {viewport.width > 350 ? <FrenoyLink competition={competition} uniqueIndex={ply.uniqueIndex}>{viewport.width > 400 ? ply.ranking + ' ' : null}</FrenoyLink> : null}
       </span>
     );
   }

@@ -94,7 +94,7 @@ export default class PlayersImageGallery extends Component {
     } else {
       // small card gallery
       return (
-        <div style={{cursor: 'default'}}>
+        <div style={gridStyles.root}>
           {this.props.players.map(ply => {
 
             return (
@@ -123,12 +123,11 @@ const SmallPlayerAvatarCard = ({competition, ply}) => { // eslint-disable-line
   const comp = ply.getCompetition(competition);
   return (
     <span>
-      <span className="ellipsis" style={{marginTop: 7}}>{ply.style.name}</span>
+      <span className="ellipsis" style={{marginTop: 7, marginRight: 6}}>{ply.style.name}</span>
       {comp ? (
-        <small>
-          {' ' + comp.ranking + ' '}
-          <FrenoyLink competition={competition} uniqueIndex={comp.uniqueIndex} />
-        </small>
+        <FrenoyLink competition={competition} uniqueIndex={comp.uniqueIndex}>
+          {comp.ranking + ' '}
+        </FrenoyLink>
       ) : null}
       <br />
       <Telephone player={ply} hideIcon />

@@ -7,17 +7,18 @@ import {createFrenoyLinkByUniqueId} from '../../../models/PlayerModel.js';
 export const FrenoyPlayerDetailsIcon = () => <Icon fa="fa fa-search" translate tooltip="teamCalendar.frenoyPlayerResults" />;
 
 
-export const FrenoyLink = ({competition, uniqueIndex}) => {
+export const FrenoyLink = ({competition, uniqueIndex, children}) => {
   const frenoyLink = createFrenoyLinkByUniqueId(competition, uniqueIndex);
   if (!frenoyLink) {
     return null;
   }
-  return <a href={frenoyLink} target="_blank"><FrenoyPlayerDetailsIcon /></a>;
+  return <a href={frenoyLink} target="_blank" className="link-hover-underline">{children}<FrenoyPlayerDetailsIcon /></a>;
 };
 
 FrenoyLink.propTypes = {
   competition: PropTypes.oneOf(['Vttl', 'Sporta']).isRequired,
   uniqueIndex: PropTypes.number.isRequired,
+  children: PropTypes.any.isRequired,
 };
 
 

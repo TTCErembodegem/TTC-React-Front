@@ -17,11 +17,10 @@ export class OpponentPlayerLabel extends Component {
     return (
       <span>
         <span style={{marginRight: 7}}>{fullName ? player.name : player.alias}</span>
-        <small>
+        <FrenoyLink competition={competition} uniqueIndex={player.uniqueIndex}>
           {player.ranking}
           &nbsp;
-          <FrenoyLink competition={competition} uniqueIndex={player.uniqueIndex} />
-        </small>
+        </FrenoyLink>
       </span>
     );
   }
