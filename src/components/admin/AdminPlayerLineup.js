@@ -20,10 +20,17 @@ export default class AdminPlayerLineup extends React.Component {
   render() {
     var playerFormation;
     if (this.state.playerId) {
-      let team = storeUtil.getPlayer(this.state.playerId).getTeam(this.state.comp);
-      playerFormation = (
-        <PlayerLinup playerId={this.state.playerId} teams={[team]} />
-      );
+      const team = storeUtil.getPlayer(this.state.playerId).getTeam(this.state.comp);
+
+      if (!team) {
+        playerFormation = (
+          <div>Heeft geen vaste ploeg ingesteld (Geen Standard/Captain, misschien enkel als Reserve?)</div>
+        );
+      } else {
+        playerFormation = (
+          <PlayerLinup playerId={this.state.playerId} teams={[team]} />
+        );
+      }
     }
 
     return (
