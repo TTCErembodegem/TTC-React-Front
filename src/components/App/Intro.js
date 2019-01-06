@@ -21,29 +21,14 @@ const WeirdLocaleYearInfo = ({params}) => ( // eslint-disable-line
     <b>Opgelet: TTC Erembodegem speelt niet meer op Groeneweg 28</b>
 
     <br />
-    <br />
 
-    Hierna de huidige stand van zaken (verdere communicatie volgt):
-    <br />
-
-    <h3>FASE 2</h3>
+    <h3>Sportzaal Technigo</h3>
     <b>{params.location}</b>
-    <br />
-    Periode september tot eind december
     <br />
     {params.trainingDays}
     <br />
-    <small style={{marginLeft: 16}}>(Dinsdag 18/9 en 25/9 GEEN training!)</small>
-    <br />
     {params.competitionDays}
     <br />
-
-    <h3>FASE 3</h3>
-    Sportzaal TechniGO, eerste verdiep (Cesar Haeltermanstraat 71)
-    <br />
-    Training: maandag en woensdag vanaf 19:30
-    <br />
-    Competitie: maandag, woensdag en vrijdag vanaf 19:30
   </div>
 );
 
@@ -98,7 +83,7 @@ export default class Intro extends Component {
           <Col sm={6} style={{verticalAlign: 'top'}}>
             <h3>{this.context.t('intro.title')}</h3>
             <ClubLocationInstructions />
-            <br />
+
             {this.context.t('intro.text', inClub)}
             <WeirdLocaleYearInfo params={this.props.config.get('params')} />
           </Col>
@@ -107,8 +92,6 @@ export default class Intro extends Component {
               <Loading t={this.context.t} bigScreen={this.props.viewport.width > 768} />
             ) : (
               <div>
-                <img src="/img/lokaal-instructies/3-voorbij-de-container.jpg" className="img-responsive img-rounded" />
-                <br />
                 <Strike text="Save the date! Eetfestijn 2019 op zaterdag 28 september" />
                 <TodaysEvents {...this.props} />
               </div>
