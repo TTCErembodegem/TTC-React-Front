@@ -59,7 +59,10 @@ export default class Links extends Component {
               <td><a href="http://www.ttcdepinte.be/classify" target="_blank">{this.context.t('links.vttlCalculationTwo')}</a></td>
             </tr>
             <tr>
-              <td><a href="http://www.tafeltennisshop.be/" target="_blank">{this.context.t('links.francis')}</a></td>
+              <td><a href="http://www.tafeltennis.be/" target="_blank">{this.context.t('links.killypong')}</a></td>
+            </tr>
+            <tr>
+              <td><a href="http://nl.dandoy-sports.eu/" target="_blank">{this.context.t('links.dandoy')}</a></td>
             </tr>
             <tr>
               <td><a href="https://www.tabletennisdaily.co.uk/" target="_blank">{this.context.t('links.tabletennisDaily')}</a></td>

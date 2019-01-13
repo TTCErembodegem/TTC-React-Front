@@ -358,7 +358,8 @@ export default {
       vttlCalculationOne: 'Klassementsberekening VTTL (TTC Sint-Pauwels)',
       vttlCalculationTwo: 'Klassementsberekening TTC De Pinte',
       sportaCalculation: 'Klassementsberekening Sporta (TTC Sint-Pauwels)',
-      francis: 'Francis tafeltennisshop',
+      dandoy: 'Dandoy (Tafeltenniswinkel)',
+      killypong: 'Killypong (Tafeltenniswinkel)',
       tabletennisDaily: 'TableTennisDaily'
     },
     week: {
