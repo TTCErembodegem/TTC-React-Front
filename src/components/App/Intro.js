@@ -100,16 +100,13 @@ export default class Intro extends Component {
         </Row>
         {big ? (
           <div>
-            <Row style={{marginTop: 25, marginBottom: 15, marginLeft: -65}}>
-              <div style={{width: 650, margin: 'auto'}}>
-                <Sponsor.Symphony big={big} style={{padding: 15}} />
-                <div className="pull-right">
-                  <Sponsor.itenium big={big} style={{paddingRight: 20}} />
-                </div>
+            <Row style={{marginTop: 25, marginBottom: 15}}>
+              <div style={{width: 320, margin: 'auto'}}>
+                <Sponsor.itenium big={big} />
               </div>
             </Row>
             <Row style={{marginBottom: 15}}>
-              <div style={{width: 500, margin: 'auto'}}>
+              <div style={{width: 440, margin: 'auto'}}>
                 <Sponsor.Nostech big={big} />
                 <Sponsor.StoneDesign big={big} style={{marginLeft: 10, height: 110}} />
               </div>
@@ -126,9 +123,6 @@ export default class Intro extends Component {
             </Col>
             <Col style={{marginTop: 20}}>
               <Sponsor.itenium big={big} />
-            </Col>
-            <Col style={{marginTop: 20}}>
-              <Sponsor.Symphony big={big} style={{padding: 5}} />
             </Col>
             <Col style={{marginTop: 20}}>
               <Sponsor.Nostech big={big} />
