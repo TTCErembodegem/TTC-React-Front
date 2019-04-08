@@ -19,15 +19,20 @@ export const TeamOverview = ({team, small, t}) => {
         <TeamOverviewRanking team={team} t={t} small={small} />
       </div>
 
-      <div className="col-md-4">
-        <h3>{t('common.teamFormations')}</h3>
-        <OpponentsTeamFormation matches={team.getMatches()} hideHeader />
+      {false ? (
+        // TODO: EndOfSeason need to enable here!!
+        <div className="col-md-4">
+          <h3>{t('common.teamFormations')}</h3>
+          <OpponentsTeamFormation matches={team.getMatches()} hideHeader />
+        </div>
+      ) : null}
+
+      <div className="col-md-12">
+        <TeamOverviewMatches matches={prevMatches} team={team} title={t('match.playedMatches')} />
+        <TeamOverviewMatches matches={nextMatches} team={team} title={t('match.nextMatches')} />
+
+        <TeamOverviewPlayers team={team} />
       </div>
-
-      <TeamOverviewMatches matches={prevMatches} team={team} title={t('match.playedMatches')} />
-      <TeamOverviewMatches matches={nextMatches} team={team} title={t('match.nextMatches')} />
-
-      <TeamOverviewPlayers team={team} />
     </div>
   );
 };
