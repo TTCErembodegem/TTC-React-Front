@@ -64,20 +64,9 @@ export default class Intro extends Component {
     };
 
     const big = this.props.viewport.width > 800;
-    var topSponsors;
-    if (big) {
-      topSponsors = (
-        <Row style={{marginTop: 10}}>
-          <div style={{width: 480, margin: 'auto'}}>
-            <Sponsor.SlagerijGuy big={big} />
-          </div>
-        </Row>
-      );
-    }
 
     return (
       <div>
-        {topSponsors}
         <Row style={{marginTop: big ? 25 : undefined}}>
           <Col sm={6} style={{verticalAlign: 'top'}}>
             <h3>{this.context.t('intro.title')}</h3>
@@ -91,6 +80,8 @@ export default class Intro extends Component {
               <Loading t={this.context.t} bigScreen={this.props.viewport.width > 768} />
             ) : (
               <div>
+                {big ? <Sponsor.SlagerijGuy big={big} /> : null}
+                <div style={{clear: 'both'}} />
                 <Strike text="Save the date! Eetfestijn 2019 op zaterdag 28 september" />
                 <Strike text="Dubbel toernooi 2019 gaat door op vrijdag 26 april" />
                 <Strike text="Kapioenenhuldiging met drankje en hapje vrijdag 7 juni" />

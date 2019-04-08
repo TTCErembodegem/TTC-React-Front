@@ -7,6 +7,8 @@ const topSponsorPaperStyle = {
   height: 110,
   padding: 15,
   display: 'inline-block',
+  marginBottom: 15,
+  float: 'right'
 };
 
 const topSponsorsOnBottomPaperStyle = {
@@ -31,7 +33,7 @@ export class SlagerijGuy extends Component {
       mobile: '053211359',
     };
 
-    const style = this.props.big ? {...topSponsorPaperStyle, float: 'right'} : topSponsorsOnBottomPaperStyle;
+    const style = this.props.big ? {...topSponsorPaperStyle} : topSponsorsOnBottomPaperStyle;
     return (
       <a href="https://www.facebook.com/Slagerij-Guy-en-Paula-805454896289871" target="_blank" className="sponsor-paper">
         <Paper style={style}>
