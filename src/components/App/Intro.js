@@ -93,6 +93,7 @@ export default class Intro extends Component {
               <div>
                 <Strike text="Save the date! Eetfestijn 2019 op zaterdag 28 september" />
                 <Strike text="Dubbel toernooi 2019 gaat door op vrijdag 26 april" />
+                <Strike text="Kapioenenhuldiging met drankje en hapje vrijdag 7 juni" />
                 <TodaysEvents {...this.props} />
               </div>
             )}
