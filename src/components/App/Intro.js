@@ -69,7 +69,6 @@ export default class Intro extends Component {
       topSponsors = (
         <Row style={{marginTop: 10}}>
           <div style={{width: 480, margin: 'auto'}}>
-            <Sponsor.BakkerijVanLierde big={big} />
             <Sponsor.SlagerijGuy big={big} />
           </div>
         </Row>
@@ -102,23 +101,15 @@ export default class Intro extends Component {
         {big ? (
           <div>
             <Row style={{marginTop: 25, marginBottom: 15}}>
-              <div style={{width: 320, margin: 'auto'}}>
+              <div style={{width: 640, margin: 'auto'}}>
                 <Sponsor.itenium big={big} />
-              </div>
-            </Row>
-            <Row style={{marginBottom: 15}}>
-              <div style={{width: 440, margin: 'auto'}}>
-                <Sponsor.Nostech big={big} />
-                <Sponsor.StoneDesign big={big} style={{marginLeft: 10, height: 110}} />
+                <Sponsor.Nostech big={big} style={{marginLeft: 20}} />
               </div>
             </Row>
           </div>
         ) : (
           <Row style={{margin: 10}}>
             <Strike text={this.context.t('intro.ourSponsors')} style={{marginBottom: 5}} />
-            <Col>
-              <Sponsor.BakkerijVanLierde big={big} />
-            </Col>
             <Col style={{marginTop: 20}}>
               <Sponsor.SlagerijGuy big={big} />
             </Col>
@@ -127,9 +118,6 @@ export default class Intro extends Component {
             </Col>
             <Col style={{marginTop: 20}}>
               <Sponsor.Nostech big={big} />
-            </Col>
-            <Col style={{marginTop: 20}}>
-              <Sponsor.StoneDesign big={big} />
             </Col>
           </Row>
         )}

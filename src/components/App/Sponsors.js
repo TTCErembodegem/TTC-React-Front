@@ -15,30 +15,6 @@ const topSponsorsOnBottomPaperStyle = {
   margin: 'auto',
 };
 
-export class BakkerijVanLierde extends Component {
-  static contextTypes = PropTypes.contextTypes;
-  static propTypes = {
-    big: PropTypes.bool.isRequired,
-  };
-
-  render() {
-    const loc = {
-      description: 'Brood & banket Van Lierde',
-      address: 'Hogeweg 113',
-      postalCode: 9320,
-      city: 'Erembodegem',
-      mobile: '053212720',
-    };
-
-    return (
-      <a href="https://www.facebook.com/BakkerijKarelVanLierde" target="_blank" className="sponsor-paper">
-        <Paper style={this.props.big ? {...topSponsorPaperStyle} : topSponsorsOnBottomPaperStyle}>
-          <Location loc={loc} t={this.context.t} noTelephoneLink={true} />
-        </Paper>
-      </a>
-    );
-  }
-}
 
 export class SlagerijGuy extends Component {
   static contextTypes = PropTypes.contextTypes;
@@ -68,12 +44,10 @@ export class SlagerijGuy extends Component {
 
 
 
-export const StoneDesign = props => <ImageSponsor url="https://www.stonedesign.be" img="stonedesign.png" {...props} />;
 // export const Symphony = props => <ImageSponsor url="http://doopsuikersymphony.be" img="symphony.png" {...props} />;
 // export const pongit = props => <ImageSponsor url="https://pongit.be" img="pongit.jpg" {...props} />;
 export const itenium = props => <ImageSponsor url="https://itenium.be" img="itenium.png" {...props} />;
 export const Nostech = props => <ImageSponsor url="https://www.nostech.be" img="nostech.jpg" {...props} />;
-// export const KachelsTfe = props => <ImageSponsor url="https://www.kachels-tfe.be/" img="kachels-tfe.png" {...props} />;
 
 
 const bottomSponsorsStyleBig = {
