@@ -108,7 +108,7 @@ export function getMostBellesPercentageWon(playerStats) {
       return {
         title: 'Onderste uit de kan',
         desc: 'Meeste belles % gewonnen',
-        throphy: `${getPer(cur)}% gewonnen`,
+        throphy: `${getPer(cur)}% gewonnen belles (${cur.belleGames} belles)`,
         player: cur.ply,
       };
     });
@@ -136,15 +136,42 @@ export function getMostBellesPercentageLost(playerStats) {
       return {
         title: 'Grootste Pechvogel',
         desc: 'Meest verloren belles',
-        throphy: `${getPer(cur)}% gewonnen (${cur.belleGames} gespeeld)`,
+        throphy: `${getPer(cur)}% gewonnen belles (${cur.belleGames} gespeeld)`,
         player: cur.ply,
       };
     });
 }
 
+// Slagerij guy naar beneden
+// laatste matches weg
+
+// Achievements opsplitsen in
+// De Belles
+// Vttl - Team - Individueel
+// Sporta - Teams - Individueel
 
 
 
+
+
+
+export function getMostGamesPlayer(playerStats) {
+  const highest = playerStats.reduce((acc, cur) => {
+    return acc.games > cur.games ? acc : cur;
+  }, playerStats[0]);
+
+  return playerStats.filter(cur => {
+    return cur.games === highest.games;
+  })
+    .map(cur => {
+      return {
+        title: 'Altijd Paraat',
+        desc: 'Meeste aantredingen',
+        throphy: `${cur.games} aantredingen (${Math.floor(cur.victories / cur.games * 100)}% gewonnen)`,
+        player: cur.ply,
+      };
+    });
+}
 
 
 export function getMostNetjesTegen() {
@@ -152,7 +179,7 @@ export function getMostNetjesTegen() {
     title: 'Meeste netjes tegen',
     desc: '',
     throphy: '+Infinity',
-    player: {name: 'Gerdo'},
+    player: {name: 'Gerdo', id: 1},
   };
 }
 
@@ -160,6 +187,7 @@ export function getMostNetjesTegen() {
 export default [
   getMostMatchesWon,
   getMostMatchesPercentageWon,
+  getMostGamesPlayer,
   getMostBellesWon,
   getMostBellesPercentageWon,
   getMostBellesPercentageLost,
