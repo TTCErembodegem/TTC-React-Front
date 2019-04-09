@@ -10,6 +10,7 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import Typist from 'react-typist';
 import * as Sponsor from './Sponsors.js';
+import EndOfSeason from '../other/EndOfSeason/EndOfSeason.js';
 //import {Eetfestijn} from './Eetfestijn.js';
 
 
@@ -70,10 +71,17 @@ export default class Intro extends Component {
         <Row style={{marginTop: big ? 25 : undefined}}>
           <Col sm={6} style={{verticalAlign: 'top'}}>
             <h3>{this.context.t('intro.title')}</h3>
-            <ClubLocationInstructions />
-
             {this.context.t('intro.text', inClub)}
-            <WeirdLocaleYearInfo params={this.props.config.get('params')} />
+
+            {this.props.config.get('endOfSeason') ? (
+              <EndOfSeason />
+            ) : (
+              <div>
+                <WeirdLocaleYearInfo params={this.props.config.get('params')} />
+                <ClubLocationInstructions />
+              </div>
+            )}
+
           </Col>
           <Col sm={6}>
             {!this.props.config.get('initialLoadCompleted') ? (

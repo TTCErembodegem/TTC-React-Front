@@ -1,0 +1,19 @@
+.endofseason dl {
+  font-weight: normal;
+
+  small {
+    color: gray;
+  }
+
+  dt {
+    font-weight: normal;
+  }
+
+  dd {
+    margin-bottom: 10px;
+  }
+
+  a {
+    margin-right: 6px;
+  }
+}
