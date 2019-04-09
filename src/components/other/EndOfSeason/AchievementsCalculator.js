@@ -2,9 +2,10 @@ import {getPlayerStats} from '../../../models/TeamModel.js';
 import PlayerAchievements from './PlayerAchievements.js';
 
 export class AchievementsCalculator {
-  constructor(players, matches) {
+  constructor(players, matches, teams) {
     this.players = players;
     this.matches = matches;
+    this.teams = teams;
     this.playerStats = getPlayerStats(this.matches, true);
 
     const vttlMatches = this.matches.filter(m => m.competition === 'Vttl');
@@ -13,15 +14,18 @@ export class AchievementsCalculator {
     const sportaMatches = this.matches.filter(m => m.competition === 'Sporta');
     this.sportaplayerStats = getPlayerStats(sportaMatches, true).filter(x => !x.isDoubles);
 
-    // console.log('matches', this.matches.first());
-    console.log('yaye', this.sportaplayerStats);
+    this.sportaTeams = this.teams.filter(t => t.competition === 'Sporta');
+    this.vttlTeams = this.teams.filter(t => t.competition === 'Vttl');
+
+    console.log('matches', this.teams);
+    console.log('yaye', this.teams);
   }
 
   getAchievements(type) {
-    const playerStats = this.getPlayerStats(type);
+    const {playerStats, teams} = this.getPlayerStats(type);
     if (playerStats.length !== 0) {
       return PlayerAchievements[type].reduce((acc, achievementGetter) => {
-        acc = acc.concat(achievementGetter(playerStats));
+        acc = acc.concat(achievementGetter(playerStats, teams));
         return acc;
       }, []);
     }
@@ -31,14 +35,14 @@ export class AchievementsCalculator {
   getPlayerStats(type) {
     switch (type) {
     case 'Vttl':
-      return this.vttlPlayerStats;
+      return {playerStats: this.vttlPlayerStats, teams: this.vttlTeams};
 
     case 'Sporta':
-      return this.sportaplayerStats;
+      return {playerStats: this.sportaplayerStats, teams: this.sportaTeams};
 
     case 'belles':
     default:
-      return this.playerStats;
+      return {playerStats: this.playerStats, teams: this.teams};
     }
   }
 }

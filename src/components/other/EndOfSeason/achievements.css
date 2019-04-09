@@ -14,15 +14,17 @@
 
     dt {
       font-weight: normal;
+
+      &:not(:first-child) {
+        margin-top: 10px;
+      }
     }
 
     dd {
-      margin-bottom: 10px;
     }
 
     a {
       margin-right: 6px;
     }
   }
-
 }

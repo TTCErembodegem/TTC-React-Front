@@ -12,6 +12,7 @@ import IntroSponsors from '../../App/IntroSponsors.js';
   players: state.players,
   matches: state.matches,
   clubs: state.clubs,
+  teams: state.teams,
 }))
 @withStyles(require('./achievements.css'))
 export default class EndOfSeason extends Component {
@@ -20,11 +21,12 @@ export default class EndOfSeason extends Component {
     players: PropTypes.PlayerModelList.isRequired,
     matches: PropTypes.MatchModelList.isRequired,
     clubs: PropTypes.ClubModelList.isRequired,
+    teams: PropTypes.TeamModelList.isRequired,
   }
 
   render() {
     const matches = this.props.matches;
-    const calcer = new AchievementsCalculator(this.props.players, matches);
+    const calcer = new AchievementsCalculator(this.props.players, matches, this.props.teams);
     return (
       <div className="endofseason-container">
         <div className="row">
@@ -69,15 +71,30 @@ export default class EndOfSeason extends Component {
 
 
 const Achievement = ({achievement}) => {
+  let nodes = [];
+  if (achievement.players) {
+    nodes = achievement.players.map((player, index) => (
+      <dd key={index}>
+        <PlayerLink player={player.player} />
+        {player.throphy}
+      </dd>
+    ));
+  } else {
+    nodes = achievement.teams.map((team, index) => (
+      <dd key={index}>
+        <span>{team.renderOwnTeamTitle()}</span>
+      </dd>
+    ));
+  }
+
+
   return [
-    <dt key="1">
+    <dt key="-1">
       {achievement.title ? <b>{achievement.title}&nbsp;</b> : null}
       <small> {achievement.desc}</small>
     </dt>,
-    <dd key="2">
-      <PlayerLink player={achievement.player} />
-
-      {achievement.throphy}
-    </dd>
+    ...nodes
   ];
 };
+
+// <TeamLink team={achievement.team} />
