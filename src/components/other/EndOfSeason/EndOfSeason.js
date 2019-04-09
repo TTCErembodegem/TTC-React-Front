@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PropTypes, {connect, storeUtil, withStyles} from '../../PropTypes.js';
+import PropTypes, {connect, storeUtil, withStyles, withContext} from '../../PropTypes.js';
 import Panel from 'react-bootstrap/lib/Panel';
 import {Email, Telephone, PlayerAddress, PlayerLink, Strike} from '../../controls.js';
 import PlayerImage from '../../players/PlayerImage.js';
@@ -17,6 +17,7 @@ import Achievements from './Achievements.js';
   teams: state.teams,
 }))
 @withStyles(require('./achievements.css'))
+@withContext
 export default class EndOfSeason extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
@@ -43,7 +44,7 @@ export default class EndOfSeason extends Component {
           </div>
         </div>
         <h2>Einde Seizoen 2018-2019</h2>
-        <Kampioenen topTeams={calcer.getTopRankedTeams()} />
+        <Kampioenen topTeams={calcer.getTopRankedTeams()} t={this.context.t} />
         <Achievements calcer={calcer} />
         <div className="row">
           <IntroSponsors />

@@ -13,8 +13,6 @@ export class TeamPlayerAvatars extends Component {
     const t = this.context.t;
     const {team} = this.props;
 
-    console.log('wuuk', team);
-
     return (
       <div style={{textAlign: 'center', ...this.props.style}}>
         {team.getPlayers('standard').sort((a, b) => a.position - b.position).map(ply => {
