@@ -1,19 +1,28 @@
-.endofseason dl {
-  font-weight: normal;
+.endofseason-container {
+  margin-top: 10px;
 
-  small {
-    color: gray;
+  h2, h3 {
+    text-align: center;
   }
 
-  dt {
+  .endofseason-listing dl {
     font-weight: normal;
+
+    small {
+      color: gray;
+    }
+
+    dt {
+      font-weight: normal;
+    }
+
+    dd {
+      margin-bottom: 10px;
+    }
+
+    a {
+      margin-right: 6px;
+    }
   }
 
-  dd {
-    margin-bottom: 10px;
-  }
-
-  a {
-    margin-right: 6px;
-  }
 }

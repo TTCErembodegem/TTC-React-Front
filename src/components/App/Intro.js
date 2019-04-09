@@ -9,29 +9,11 @@ import {SmallMatchCardHeader} from '../matches/Match/MatchCardHeader.js';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import Typist from 'react-typist';
-import * as Sponsor from './Sponsors.js';
 import EndOfSeason from '../other/EndOfSeason/EndOfSeason.js';
 //import {Eetfestijn} from './Eetfestijn.js';
-
-
-const WeirdLocaleYearInfo = ({params}) => ( // eslint-disable-line
-  <div>
-    <h2>
-      WIJZIGING ZAAL
-    </h2>
-    <b>Opgelet: TTC Erembodegem speelt niet meer op Groeneweg 28</b>
-
-    <br />
-
-    <h3>Sportzaal Technigo</h3>
-    <b>{params.location}</b>
-    <br />
-    {params.trainingDays}
-    <br />
-    {params.competitionDays}
-    <br />
-  </div>
-);
+import IntroClub from './IntroClub.js';
+import {WeirdLocaleYearInfo} from './WeirdLocaleYearInfo.js';
+import IntroSponsors from './IntroSponsors.js';
 
 
 @connect(state => {
@@ -58,69 +40,31 @@ export default class Intro extends Component {
   };
 
   render() {
-    var inClub = {
-      players: this.props.players.size,
-      teamsSporta: this.props.teams.filter(t => t.competition === 'Sporta').size,
-      teamsVttl: this.props.teams.filter(t => t.competition === 'Vttl').size,
-    };
+    if (this.props.config.get('endOfSeason')) {
+      return <EndOfSeason />;
+    }
 
-    const big = this.props.viewport.width > 800;
-
+    const big = this.props.viewport.width > 830;
     return (
       <div>
         <Row style={{marginTop: big ? 25 : undefined}}>
           <Col sm={6} style={{verticalAlign: 'top'}}>
-            <h3>{this.context.t('intro.title')}</h3>
-            {this.context.t('intro.text', inClub)}
-
-            {this.props.config.get('endOfSeason') ? (
-              <EndOfSeason />
-            ) : (
-              <div>
-                <WeirdLocaleYearInfo params={this.props.config.get('params')} />
-                <ClubLocationInstructions />
-              </div>
-            )}
-
+            <IntroClub />
+            <WeirdLocaleYearInfo params={this.props.config.get('params')} />
+            <ClubLocationInstructions />
           </Col>
           <Col sm={6}>
             {!this.props.config.get('initialLoadCompleted') ? (
               <Loading t={this.context.t} bigScreen={this.props.viewport.width > 768} />
             ) : (
               <div>
-                {big ? <Sponsor.SlagerijGuy big={big} /> : null}
                 <div style={{clear: 'both'}} />
-                <Strike text="Save the date! Eetfestijn 2019 op zaterdag 28 september" />
-                <Strike text="Dubbel toernooi 2019 gaat door op vrijdag 26 april" />
-                <Strike text="Kapioenenhuldiging met drankje en hapje vrijdag 7 juni" />
                 <TodaysEvents {...this.props} />
               </div>
             )}
           </Col>
         </Row>
-        {big ? (
-          <div>
-            <Row style={{marginTop: 25, marginBottom: 15}}>
-              <div style={{width: 640, margin: 'auto'}}>
-                <Sponsor.itenium big={big} />
-                <Sponsor.Nostech big={big} style={{marginLeft: 20}} />
-              </div>
-            </Row>
-          </div>
-        ) : (
-          <Row style={{margin: 10}}>
-            <Strike text={this.context.t('intro.ourSponsors')} style={{marginBottom: 5}} />
-            <Col style={{marginTop: 20}}>
-              <Sponsor.SlagerijGuy big={big} />
-            </Col>
-            <Col style={{marginTop: 20}}>
-              <Sponsor.itenium big={big} />
-            </Col>
-            <Col style={{marginTop: 20}}>
-              <Sponsor.Nostech big={big} />
-            </Col>
-          </Row>
-        )}
+        <IntroSponsors />
       </div>
     );
   }
