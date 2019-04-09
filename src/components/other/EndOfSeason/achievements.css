@@ -28,3 +28,14 @@
     }
   }
 }
+
+
+.kampioen {
+  margin-bottom: 45px;
+
+  .content {
+    border: 1px dotted black;
+    padding: 0 20px 15px 20px;
+    margin-bottom: 20px;
+  }
+}

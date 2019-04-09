@@ -166,27 +166,7 @@ export function getMostNetjesTegen(playerStats) {
 }
 
 
-export function getTopRankedTeams(playerStats, teams) {
-  return teams.reduce((acc, cur) => {
-    const ranking = cur.getDivisionRanking();
-    if (ranking.position === 1) {
-      acc.push(cur);
-    }
-    return acc;
-  }, [])
-    .map(topTeam => {
-      return {
-        title: 'De Kampioenen',
-        desc: 'Eerste in de rangschikking',
-        throphy: '',
-        team: topTeam,
-      };
-    });
-}
-
-
 export default {
-  getTopRankedTeams,
   Vttl: [
     getMostMatchesWon,
     getMostMatchesPercentageWon,

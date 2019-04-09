@@ -17,8 +17,18 @@ export class AchievementsCalculator {
     this.sportaTeams = this.teams.filter(t => t.competition === 'Sporta');
     this.vttlTeams = this.teams.filter(t => t.competition === 'Vttl');
 
-    console.log('matches', this.teams);
-    console.log('yaye', this.teams);
+    // console.log('matches', this.teams);
+    // console.log('yaye', this.teams);
+  }
+
+  getTopRankedTeams() {
+    return this.teams.reduce((acc, cur) => {
+      const ranking = cur.getDivisionRanking();
+      if (ranking.position === 1) {
+        acc.push(cur);
+      }
+      return acc;
+    }, []);
   }
 
   getAchievements(type) {
