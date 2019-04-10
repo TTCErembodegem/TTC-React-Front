@@ -57,7 +57,7 @@ export class AchievementsCalculator {
         return result;
       })
       .filter(x => x.old && x.new && x.old !== x.new)
-      .sort(x => x.oldValue - x.newValue)
+      .sort((a, b) => (a.oldValue - a.newValue) - (b.oldValue - b.newValue))
       .toArray();
 
     return players;
