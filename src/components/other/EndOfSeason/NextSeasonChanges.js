@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes, {connect, storeUtil} from '../../PropTypes.js';
 import {PlayerLink} from '../../controls.js';
+import cn from 'classnames';
 
 export default class NextSeasonChanges extends Component {
   static contextTypes = PropTypes.contextTypes;
@@ -13,7 +14,7 @@ export default class NextSeasonChanges extends Component {
     return (
       <div>
         <h2>Volgend Seizoen</h2>
-        <div className="row">
+        <div className="row next-season">
           <div className="col-md-6">
             <h3>Vttl</h3>
             <NextSeasonRankingChanges rankings={calcer.getNewRanking('Vttl')} />
@@ -34,12 +35,15 @@ const NextSeasonRankingChanges = ({rankings}) => {
     return null;
   }
 
+  const highest = rankings.reduce((acc, cur) => acc.oldValue - acc.newValue > cur.oldValue - cur.newValue ? cur : acc, rankings[0]);
   return (
     <div className="row">
       <h4>Klassementwijzigingen</h4>
-      {rankings.map(ranking => {
+      {rankings.map((ranking, index) => {
+        const rankingDrop = ranking.oldValue > ranking.newValue ? 'ranking-drop' : null;
+        const highestMounter = ranking.oldValue - ranking.newValue === highest.oldValue - highest.newValue;
         return (
-          <div key={ranking.ply.id} className="col-sm-6">
+          <div key={ranking.ply.id} className={cn('col-sm-6', rankingDrop, (highestMounter ? 'highest-mounter' : null))}>
             <PlayerLink player={ranking.ply} style={{marginRight: 12}} />
             {ranking.old}
             <i className="fa fa-long-arrow-right" style={{marginLeft: 8, marginRight: 8}} />

@@ -27,6 +27,20 @@
       margin-right: 6px;
     }
   }
+
+  .next-season {
+    .ranking-drop {
+      color: gray;
+
+      a {
+        color: gray;
+      }
+    }
+
+    .highest-mounter {
+      font-weight: bold;
+    }
+  }
 }
 
 
