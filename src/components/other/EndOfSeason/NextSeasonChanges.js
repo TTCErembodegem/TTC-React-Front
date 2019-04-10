@@ -39,7 +39,7 @@ const NextSeasonRankingChanges = ({rankings}) => {
   return (
     <div className="row">
       <h4>Klassementwijzigingen</h4>
-      {rankings.map((ranking, index) => {
+      {rankings.map(ranking => {
         const rankingDrop = ranking.oldValue > ranking.newValue ? 'ranking-drop' : null;
         const highestMounter = ranking.oldValue - ranking.newValue === highest.oldValue - highest.newValue;
         return (

@@ -244,25 +244,20 @@ export default class MatchModel {
           // readonlyMatch does not have ownPlayer
 
           // TODO: 2018: This is risky stuff. FrenoyApi changed and double matches don't seem to
-          // --> Apparently so ;)
           // be recognized properly anymore. Could use this to improve: it is now possible to fetch
           // who played in the doubles...
           // RISKY: Are readonlyMatches now a problem? (ie all readonlyMatches recognized as doubles match...)
-          // -- We'll see once the next matches are played :)
+          //         --> This didn't seem to be the case
           // console.log('FrenoyAPI change: Doubles vs readonlyMatches?', game, result);
           result.ownPlayer = {};
           result.isDoubles = false;
         }
       } else {
         // TODO: 2017: bug with isDoubles see backend TODO in FrenoyMatchesApi.cs
-
         // uhoh boy... morgen es checken hoe doubles match er in de db uitziet in 2017 en 2018?
 
-        // do first:
-        // Spelers Vttl/Sporta lijst: Klassement is geen link
-        // + warnings in de console
 
-        debugger;
+        // debugger;
         result.ownPlayer = {};
         result.isDoubles = true;
       }

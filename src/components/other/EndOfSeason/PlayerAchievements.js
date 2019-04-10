@@ -1,4 +1,5 @@
 import {getRankingValue} from '../../../models/utils/playerRankingValueMapper';
+import storeUtil from '../../../storeUtil.js';
 
 const getPerGames = cur => Math.floor(cur.victories / cur.games * 1000) / 10;
 
@@ -203,12 +204,59 @@ export function getMostNetjesTegen(playerStats) {
 }
 
 
+export function getMostMatchesAllWon(competition, playerStats, matches) {
+  // const xxx = matches.toArray()[0].getGameMatches();
+  // console.log('getGameMAtches', xxx.toArray());
+  // console.log('getOwnPlayers', matches.toArray()[0].getOwnPlayers().toArray());
+
+  const toWinCount = matches.first().getTeamPlayerCount();
+
+  const playerIds = matches.reduce((acc, cur) => {
+    const fullWin = cur.getOwnPlayers().filter(p => p.won === toWinCount).toArray();
+    if (fullWin.length) {
+      acc = acc.concat(fullWin.map(p => p.playerId));
+    }
+    return acc;
+  }, []);
+
+
+  const playerWins = playerIds.reduce((acc, id) => {
+    let existing = acc.find(x => x.id === id);
+    if (!existing) {
+      existing = {id, ply: storeUtil.getPlayer(id), wins: 0};
+      acc.push(existing);
+    }
+    existing.wins++;
+    return acc;
+  }, []);
+
+
+  playerWins.sort((a, b) => b.wins - a.wins);
+
+
+  const highest = playerWins.reduce((acc, cur) => {
+    return acc.wins > cur.wins ? acc : cur;
+  }, playerWins[0]);
+
+  const players = playerWins.filter(cur => cur.wins === highest.wins);
+  return {
+    title: 'Topdagen',
+    desc: '',
+    players: players.map(cur => ({
+      throphy: `${cur.wins} matchen alle ${toWinCount} gewonnen`,
+      player: cur.ply,
+    }))
+  };
+}
+
+
 export default {
   Vttl: [
     getMostMatchesWon,
     getMostMatchesPercentageWon,
     getMostGamesPlayer,
     getRankingDestroyer.bind(this, 'Vttl'),
+    getMostMatchesAllWon.bind(this, 'Vttl'),
     getMostNetjesTegen,
   ],
   Sporta: [
@@ -216,6 +264,7 @@ export default {
     getMostMatchesPercentageWon,
     getMostGamesPlayer,
     getRankingDestroyer.bind(this, 'Sporta'),
+    getMostMatchesAllWon.bind(this, 'Vttl'),
   ],
   belles: [
     getMostBellesWon,

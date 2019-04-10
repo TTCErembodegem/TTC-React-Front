@@ -5,7 +5,7 @@ import {getRankingValue} from '../../../models/utils/playerRankingValueMapper';
 export class AchievementsCalculator {
   constructor(players, matches, teams) {
     this.players = players;
-    this.matches = matches;
+    this.matches = matches.filter(x => x.isSyncedWithFrenoy).sort((a, b) => a.date.valueOf() - b.date.valueOf());
     this.teams = teams;
     this.playerStats = getPlayerStats(this.matches, true).filter(x => x.ply.id);
 
@@ -15,11 +15,14 @@ export class AchievementsCalculator {
     const sportaMatches = this.matches.filter(m => m.competition === 'Sporta');
     this.sportaplayerStats = getPlayerStats(sportaMatches, true).filter(x => !x.isDoubles).filter(x => x.ply.id);
 
-    this.sportaTeams = this.teams.filter(t => t.competition === 'Sporta');
-    this.vttlTeams = this.teams.filter(t => t.competition === 'Vttl');
+    // this.sportaTeams = this.teams.filter(t => t.competition === 'Sporta');
+    // this.vttlTeams = this.teams.filter(t => t.competition === 'Vttl');
+
+    this.sportaMatches = this.matches.filter(t => t.competition === 'Sporta');
+    this.vttlMatches = this.matches.filter(t => t.competition === 'Vttl');
 
     // console.log('matches', this.teams);
-    console.log('yaye', this.playerStats);
+    console.log('yaye', this.vttlMatches);
   }
 
   getTopRankedTeams() {
@@ -33,10 +36,10 @@ export class AchievementsCalculator {
   }
 
   getAchievements(type) {
-    const {playerStats, teams} = this.getPlayerStats(type);
+    const {playerStats, matches} = this.getPlayerStats(type);
     if (playerStats.length !== 0) {
       return PlayerAchievements[type].reduce((acc, achievementGetter) => {
-        acc = acc.concat(achievementGetter(playerStats, teams));
+        acc = acc.concat(achievementGetter(playerStats, matches));
         return acc;
       }, []);
     }
@@ -66,14 +69,14 @@ export class AchievementsCalculator {
   getPlayerStats(type) {
     switch (type) {
     case 'Vttl':
-      return {playerStats: this.vttlPlayerStats, teams: this.vttlTeams};
+      return {playerStats: this.vttlPlayerStats, matches: this.vttlMatches};
 
     case 'Sporta':
-      return {playerStats: this.sportaplayerStats, teams: this.sportaTeams};
+      return {playerStats: this.sportaplayerStats, matches: this.sportaMatches};
 
     case 'belles':
     default:
-      return {playerStats: this.playerStats, teams: this.teams};
+      return {playerStats: this.playerStats, matches: this.matches};
     }
   }
 }
