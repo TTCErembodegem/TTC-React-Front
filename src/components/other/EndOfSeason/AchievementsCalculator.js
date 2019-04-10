@@ -6,19 +6,19 @@ export class AchievementsCalculator {
     this.players = players;
     this.matches = matches;
     this.teams = teams;
-    this.playerStats = getPlayerStats(this.matches, true);
+    this.playerStats = getPlayerStats(this.matches, true).filter(x => x.ply.id);
 
     const vttlMatches = this.matches.filter(m => m.competition === 'Vttl');
-    this.vttlPlayerStats = getPlayerStats(vttlMatches, true);
+    this.vttlPlayerStats = getPlayerStats(vttlMatches, true).filter(x => x.ply.id);
 
     const sportaMatches = this.matches.filter(m => m.competition === 'Sporta');
-    this.sportaplayerStats = getPlayerStats(sportaMatches, true).filter(x => !x.isDoubles);
+    this.sportaplayerStats = getPlayerStats(sportaMatches, true).filter(x => !x.isDoubles).filter(x => x.ply.id);
 
     this.sportaTeams = this.teams.filter(t => t.competition === 'Sporta');
     this.vttlTeams = this.teams.filter(t => t.competition === 'Vttl');
 
     // console.log('matches', this.teams);
-    // console.log('yaye', this.teams);
+    console.log('yaye', this.playerStats);
   }
 
   getTopRankedTeams() {

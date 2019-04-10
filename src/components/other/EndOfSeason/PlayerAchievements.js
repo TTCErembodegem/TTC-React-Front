@@ -1,3 +1,5 @@
+import {getRankingValue} from '../../../models/utils/playerRankingValueMapper';
+
 const getPerGames = cur => Math.floor(cur.victories / cur.games * 1000) / 10;
 
 
@@ -43,6 +45,41 @@ export function getMostMatchesPercentageWon(playerStats) {
 }
 
 
+
+
+export function getRankingDestroyer(competition, playerStats) {
+  const getValue = r => getRankingValue(competition, r);
+
+  const result = playerStats.map(ps => {
+    const ownRanking = ps.ply.getCompetition(competition).ranking;
+    const ownValue = getValue(ownRanking);
+
+    const highestWon = Object.entries(ps.won).reduce((acc, [ranking]) => {
+      return getValue(acc) > getValue(ranking) ? acc : ranking;
+    }, 'NG');
+
+    return {
+      player: ps.ply,
+      difference: getValue(highestWon) - ownValue,
+      throphy: `${ownRanking} vs ${ps.won[highestWon]}x${highestWon}`
+    };
+  });
+
+  const highest = result.reduce((acc, cur) => {
+    return acc.difference > cur.difference ? acc : cur;
+  }, result[0]);
+
+  const players = result.filter(cur => cur.difference === highest.difference);
+
+  return {
+    title: 'Klassement Vernietiger',
+    desc: 'Grootste klassement verschil',
+    players: players.map(cur => ({
+      throphy: cur.throphy,
+      player: cur.player,
+    }))
+  };
+}
 
 
 
@@ -171,12 +208,14 @@ export default {
     getMostMatchesWon,
     getMostMatchesPercentageWon,
     getMostGamesPlayer,
+    getRankingDestroyer.bind(this, 'Vttl'),
     getMostNetjesTegen,
   ],
   Sporta: [
     getMostMatchesWon,
     getMostMatchesPercentageWon,
     getMostGamesPlayer,
+    getRankingDestroyer.bind(this, 'Sporta'),
   ],
   belles: [
     getMostBellesWon,
