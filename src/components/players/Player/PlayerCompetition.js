@@ -35,6 +35,21 @@ export class PlayerCompetition extends Component {
 
         <Panel.Body>
           <PlayerIndividual player={player} competition={competition} />
+
+          {comp.nextRanking ? (
+            <div>
+              {comp.ranking !== comp.nextRanking ? (
+                <span>
+                  <b>Nieuw klassement</b>:
+                  {comp.ranking}
+                  <i className="fa fa-long-arrow-right" style={{marginLeft: 8, marginRight: 8}} />
+                  {comp.nextRanking}
+                </span>
+              ) : (
+                <span><b>Behoud klassement</b>: {comp.nextRanking}</span>
+              )}
+            </div>
+          ) : null}
         </Panel.Body>
       </Panel>
     );

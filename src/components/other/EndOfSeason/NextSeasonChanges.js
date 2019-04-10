@@ -35,11 +35,11 @@ const NextSeasonRankingChanges = ({rankings}) => {
   }
 
   return (
-    <div>
+    <div className="row">
       <h4>Klassementwijzigingen</h4>
       {rankings.map(ranking => {
         return (
-          <div>
+          <div key={ranking.ply.id} className="col-sm-6">
             <PlayerLink player={ranking.ply} style={{marginRight: 12}} />
             {ranking.old}
             <i className="fa fa-long-arrow-right" style={{marginLeft: 8, marginRight: 8}} />
