@@ -13,7 +13,11 @@ export default class NextSeasonChanges extends Component {
     const calcer = this.props.calcer;
     return (
       <div>
-        <h2>Volgend Seizoen</h2>
+        <h2>
+          <i className="fa fa-line-chart" style={{marginRight: 15, color: 'gray'}} />
+          Volgend Seizoen
+          <i className="fa fa-line-chart" style={{marginLeft: 15, color: 'gray'}} />
+        </h2>
         <div className="row next-season">
           <div className="col-md-6">
             <h3>Vttl</h3>
@@ -38,7 +42,6 @@ const NextSeasonRankingChanges = ({rankings}) => {
   const highest = rankings.reduce((acc, cur) => acc.oldValue - acc.newValue > cur.oldValue - cur.newValue ? cur : acc, rankings[0]);
   return (
     <div className="row">
-      <h4>Klassementwijzigingen</h4>
       {rankings.map(ranking => {
         const rankingDrop = ranking.oldValue > ranking.newValue ? 'ranking-drop' : null;
         const highestMounter = ranking.oldValue - ranking.newValue === highest.oldValue - highest.newValue;

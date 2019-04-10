@@ -12,7 +12,11 @@ export default class Achievements extends Component {
     const calcer = this.props.calcer;
     return (
       <div>
-        <h2>Prijsuitrijkingen</h2>
+        <h2>
+          <i className="fa fa-diamond" style={{marginRight: 15, color: 'indigo'}} />
+          Prijsuitrijkingen
+          <i className="fa fa-gift" style={{marginLeft: 15, color: '#BE2625'}} />
+        </h2>
         <div className="row endofseason-listing">
           <div className="col-md-4">
             <h3>Vttl</h3>

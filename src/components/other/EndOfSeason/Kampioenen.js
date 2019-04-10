@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes, {connect, storeUtil, withStyles} from '../../PropTypes.js';
-import {Email, Telephone, PlayerAddress, PlayerLink, Strike} from '../../controls.js';
+import {TrophyIcon} from '../../controls.js';
 import {TeamRankingBadges} from '../../teams/controls/TeamRankingBadges.js';
 import {TeamPlayerAvatars} from '../../teams/controls/TeamPlayerAvatars.js';
 
@@ -12,7 +12,11 @@ export const Kampioenen = ({topTeams, t}) => {
 
   return (
     <div className="row kampioen">
-      <h2>Onze Kampioenen</h2>
+      <h2>
+        <TrophyIcon style={{marginRight: 15}} />
+        Onze Kampioenen
+        <TrophyIcon style={{marginLeft: 15}} />
+      </h2>
       {topTeams.map(team => (
         <div key={team.id} className="col-md-4 col-sm-6">
           <div className="content">
