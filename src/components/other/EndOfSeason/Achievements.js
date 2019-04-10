@@ -49,6 +49,8 @@ const Achievement = ({achievement}) => {
       </dd>
     ));
   } else {
+    // ATTN: This isn't actually happening anymore:
+    //       All Achievements are PlayerAchievements
     nodes = achievement.teams.map((team, index) => (
       <dd key={index}>
         <span>{team.renderOwnTeamTitle()}</span>

@@ -8,6 +8,7 @@ import IntroClub from '../../App/IntroClub.js';
 import IntroSponsors from '../../App/IntroSponsors.js';
 import {Kampioenen} from './Kampioenen.js';
 import Achievements from './Achievements.js';
+import NextSeasonChanges from './NextSeasonChanges.js';
 
 
 @connect(state => ({
@@ -45,6 +46,7 @@ export default class EndOfSeason extends Component {
         </div>
         <h2>Einde Seizoen 2018-2019</h2>
         <Kampioenen topTeams={calcer.getTopRankedTeams()} t={this.context.t} />
+        <NextSeasonChanges calcer={calcer} />
         <Achievements calcer={calcer} />
         <div className="row">
           <IntroSponsors />

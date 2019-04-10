@@ -1,5 +1,6 @@
 import {getPlayerStats} from '../../../models/TeamModel.js';
 import PlayerAchievements from './PlayerAchievements.js';
+import {getRankingValue} from '../../../models/utils/playerRankingValueMapper';
 
 export class AchievementsCalculator {
   constructor(players, matches, teams) {
@@ -40,6 +41,26 @@ export class AchievementsCalculator {
       }, []);
     }
     return [];
+  }
+
+  getNewRanking(competition) {
+    const players = this.players
+      .filter(player => player.getCompetition(competition))
+      .map(player => {
+        const result = {
+          ply: player,
+          old: player.getCompetition(competition).ranking,
+          new: player.getCompetition(competition).nextRanking
+        };
+        result.oldValue = getRankingValue(competition, result.old);
+        result.newValue = getRankingValue(competition, result.new);
+        return result;
+      })
+      .filter(x => x.old && x.new && x.old !== x.new)
+      .sort(x => x.oldValue - x.newValue)
+      .toArray();
+
+    return players;
   }
 
   getPlayerStats(type) {
