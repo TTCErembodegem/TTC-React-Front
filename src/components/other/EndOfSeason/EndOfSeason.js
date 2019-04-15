@@ -39,8 +39,8 @@ export default class EndOfSeason extends Component {
           </div>
           <div className="col-md-6">
             <h3>Komende Events</h3>
-            <Strike text="Dubbel toernooi 2019 gaat door op vrijdag 26 april" />
-            <Strike text="Kapioenenhuldiging met drankje en hapje vrijdag 7 juni" />
+            <Strike text="Dubbeltornooi 2019 gaat door op vrijdag 26 april" />
+            <Strike text="Kampioenenhuldiging met drankje en hapje vrijdag 7 juni" />
             <Strike text="Save the date! Eetfestijn 2019 op zaterdag 28 september" />
           </div>
         </div>
