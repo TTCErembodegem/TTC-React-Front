@@ -14,7 +14,7 @@ export default class Achievements extends Component {
       <div>
         <h2>
           <i className="fa fa-diamond" style={{marginRight: 15, color: 'indigo'}} />
-          Prijsuitrijkingen
+          Prijsuitreikingen
           <i className="fa fa-gift" style={{marginLeft: 15, color: '#BE2625'}} />
         </h2>
         <div className="row endofseason-listing">
