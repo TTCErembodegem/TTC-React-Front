@@ -13,8 +13,9 @@ var defaultConfigState = {
     email: '', googleMapsUrl: '', location: '', trainingDays: '', competitionDays: '',
     adultMembership: '', youthMembership: '', additionalMembership: '', recreationalMembers: '',
     frenoyClubIdVttl: '', frenoyClubIdSporta: '', compBalls: '', clubBankNr: '', clubOrgNr: '',
+    year: ''
   },
-  endOfSeason: true,
+  endOfSeason: false,
 };
 
 export function config(state = Immutable.Map(defaultConfigState), action = null) {
