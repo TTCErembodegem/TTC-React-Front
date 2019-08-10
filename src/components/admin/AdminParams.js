@@ -24,6 +24,7 @@ export class AdminParams extends Component {
     return (
       <div style={{paddingLeft: 15}}>
         <h3>Beheer Parameters</h3>
+        <span>Nieuw Seizoen? Bewaar de "year" parameter!</span>
         <Table condensed hover width="100%">
           <thead>
             <tr>
