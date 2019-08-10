@@ -11,8 +11,8 @@ const eetfesijnStyle = {
 const eetfestijnGoogleMaps = 'https://maps.google.com/maps?q=Botermelkstraat+63,+9300+Aalst&hl=en&ll=50.953115,4.061058&spn=0.009449,0.023475&sll=50.952442,4.062345&sspn=0.001188,0.002934&t=m&hnear=Botermelkstraat+63,+Aalst+9300+Aalst,+Oost-Vlaanderen,+Vlaams+Gewest,+Belgium&z=16';
 
 const eetfestijnSets = {
-  date: 'Zaterdag 22 september 2018',
-  startHour: '18u00',
+  date: 'Zaterdag 28 september 2019',
+  startHour: '17u30',
   endHour: '22u00',
   meat: {
     price: 17,

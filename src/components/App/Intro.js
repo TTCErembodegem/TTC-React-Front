@@ -10,7 +10,7 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import Typist from 'react-typist';
 import EndOfSeason from '../other/EndOfSeason/EndOfSeason.js';
-//import {Eetfestijn} from './Eetfestijn.js';
+import {Eetfestijn} from './Eetfestijn.js';
 import IntroClub from './IntroClub.js';
 import {WeirdLocaleYearInfo} from './WeirdLocaleYearInfo.js';
 import IntroSponsors from './IntroSponsors.js';
@@ -59,6 +59,7 @@ export default class Intro extends Component {
             ) : (
               <div>
                 <div style={{clear: 'both'}} />
+                <Eetfestijn />
                 <TodaysEvents {...this.props} />
               </div>
             )}
