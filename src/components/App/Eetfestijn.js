@@ -53,7 +53,7 @@ export const Eetfestijn = () => {
               <td width="99%"><b>Varkenshaasje</b> met sla, tomaten<br /> en saus naar keuze</td><td width="1%">&euro;{eetfestijnSets.meat.price}</td>
             </tr>
             <tr>
-              <td><b>Kabeljauw</b> met normandische saus</td><td>&euro;{eetfestijnSets.fish.price}</td>
+              <td><b>Tongrolletjes</b></td><td>&euro;{eetfestijnSets.fish.price}</td>
             </tr>
             <tr>
               <td><b>Kindermenu</b>: kip met appelmoes</td><td><font size="-1">&euro;{eetfestijnSets.child.price}</font></td>
