@@ -4,6 +4,7 @@ import PropTypes, {connect, keyMirror} from '../PropTypes.js';
 import {TabbedContainer} from '../controls/TabbedContainer.js';
 import AdminPlayers from './AdminPlayers.js';
 import AdminTeams from './AdminTeams.js';
+import AdminClubs from './AdminClubs.js';
 import AdminDev from './AdminDev.js';
 import AdminPlayerLineup from './AdminPlayerLineup.js';
 import ProfilePhotoForm, {ProfilePhotoAvatarForm} from '../users/ProfilePhotoForm.js';
@@ -14,6 +15,7 @@ import {AdminParams} from './AdminParams.js';
 const tabEventKeys = keyMirror({
   players: '',
   teams: '',
+  clubs: '',
   formation: '',
   pictures: '',
   emails: '',
@@ -40,6 +42,7 @@ export default class Admin extends Component {
     user: PropTypes.UserModel.isRequired,
     matches: PropTypes.MatchModelList.isRequired,
     teams: PropTypes.TeamModelList.isRequired,
+    clubs: PropTypes.ClubModelList.isRequired,
     players: PropTypes.PlayerModelList.isRequired,
     admin: PropTypes.shape({
       players: PropTypes.object.isRequired, // = gestopte spelers
@@ -57,6 +60,8 @@ export default class Admin extends Component {
       return <AdminTeams teams={this.props.teams} />;
     case tabEventKeys.players:
       return <AdminPlayers players={this.props.players} recreantAndQuitters={this.props.admin.players} />;
+    case tabEventKeys.clubs:
+      return <AdminClubs clubs={this.props.clubs} />;
     case tabEventKeys.formation:
       return <AdminPlayerLineup />;
     case tabEventKeys.pictures:
@@ -91,6 +96,9 @@ export default class Admin extends Component {
     }, {
       key: tabEventKeys.teams,
       title: 'Teams',
+    }, {
+      key: tabEventKeys.clubs,
+      title: 'Clubs',
     }, {
       key: tabEventKeys.formation,
       title: 'Opstellingen',
