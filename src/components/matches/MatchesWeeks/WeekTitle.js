@@ -10,6 +10,7 @@ export class WeekTitle extends Component {
     weekCalcer: PropTypes.instanceOf(WeekCalcer).isRequired,
     weekChange: PropTypes.func,
     viewport: PropTypes.viewport,
+    style: PropTypes.any,
   }
 
   render() {
@@ -33,9 +34,8 @@ export class WeekTitle extends Component {
       );
     }
 
-
     return (
-      <h3 style={{textAlign: 'center'}}>
+      <h3 style={{textAlign: 'center', ...this.props.style}}>
         {this.props.weekChange ? (
           <Icon
             fa="fa fa-arrow-left"

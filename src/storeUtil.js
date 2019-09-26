@@ -1,5 +1,67 @@
 import store from './store.js';
 import {OwnClubId} from './models/ClubModel.js';
+import {getRankingValue} from './models/utils/playerRankingValueMapper.js';
+
+export function getOpponentMatchesForTeam(competition, clubId, teamCode) {
+  return store.getState().readonlyMatches
+    .filter(m => m.competition === competition)
+    .filter(m => m.home && m.away)
+    .filter(m => (m.home.clubId === clubId && m.home.teamCode === teamCode) || (m.away.clubId === clubId && m.away.teamCode === teamCode))
+    .filter(m => m.shouldBePlayed)
+    .sort((a, b) => a.date - b.date);
+}
+
+
+const createKey = form => form.reduce((key, f) => key + f.amount + f.ranking, '');
+
+export function getOpponentFormations(matches, opponent) {
+  return matches.filter(match => match.isSyncedWithFrenoy).reduce((acc, match) => {
+    var isHomeTeam;
+    if (!opponent) {
+      isHomeTeam = true;
+    } else {
+      isHomeTeam = match.home.clubId === opponent.clubId && match.home.teamCode === opponent.teamCode;
+    }
+    const formation = getMatchPlayerRankings(match, isHomeTeam);
+
+    const exists = acc.find(form => form.key === createKey(formation));
+    if (!exists) {
+      acc.push({
+        key: createKey(formation),
+        details: formation,
+        amount: 1,
+        value: formation.reduce((total, {ranking, amount}) => total + (amount * getRankingValue(match.competition, ranking)), 0),
+      });
+
+    } else {
+      exists.amount++;
+    }
+    return acc;
+  }, []);
+}
+
+
+const unique = (value, index, self) => self.indexOf(value) === index;
+
+export function getMatchPlayerRankings(match, homeTeam) {
+  var opponentFormation;
+  if (homeTeam) {
+    opponentFormation = match.players.filter(m => m.home);
+  } else {
+    opponentFormation = match.players.filter(m => !m.home);
+  }
+  const rankings = opponentFormation.map(ply => ply.ranking);
+  const diffs = rankings.toArray().filter(unique);
+  return diffs.map(ranking => {
+    return {
+      ranking,
+      amount: rankings.reduce((prev, cur) => prev + (cur === ranking ? 1 : 0), 0)
+    };
+  });
+}
+
+
+
 
 function getOpponentMatches(match, opponent = undefined) {
   opponent = opponent || match.opponent;

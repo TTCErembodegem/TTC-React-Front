@@ -7,6 +7,7 @@ import {OpponentMatches} from '../matches/Match/OpponentMatches.js';
 import OpponentsFormation from '../matches/Match/OpponentsFormation.js';
 import {OpponentsTeamFormation} from '../matches/Match/OpponentsTeamFormation.js';
 import {DivisionHeader} from '../teams/controls/DivisionHeader.js';
+import {getOpponentMatchesForTeam} from '../../storeUtil';
 
 @connect(state => ({
   matches: state.matches,
@@ -74,19 +75,13 @@ export class OpponentOverview extends Component {
     const team = this._getTeam();
     const {competition, clubId, teamCode} = this._getQueryStringValues();
     const opponentClub = storeUtil.getClub(clubId);
-
-    const opponent = {clubId, teamCode};
-    const otherMatches = this.props.readonlyMatches
-      .filter(m => m.competition === competition)
-      .filter(m => m.home && m.away)
-      .filter(m => (m.home.clubId === clubId && m.home.teamCode === teamCode) || (m.away.clubId === clubId && m.away.teamCode === teamCode))
-      .filter(m => m.shouldBePlayed)
-      .sort((a, b) => a.date - b.date);
+    const otherMatches = getOpponentMatchesForTeam(competition, clubId, teamCode);
 
     if (!team || !opponentClub || otherMatches.size === 0) {
       return null;
     }
 
+    const opponent = {clubId, teamCode};
     return (
       <div style={{marginBottom: 30}}>
         <BackIcon className="pull-right" />

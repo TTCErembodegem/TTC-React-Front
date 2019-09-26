@@ -119,6 +119,7 @@ export default class MatchModel {
     return Math.abs(diff) < 10;
   }
   won(opponent) {
+    // ATTN: This only works for an OpponentMatch?
     if (this.score.home === this.score.out) {
       return false;
     }

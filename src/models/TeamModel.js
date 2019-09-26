@@ -123,6 +123,13 @@ export function getPlayerStats(matches, withBelles = false) {
       const playerId = game.ownPlayer.playerId || 0;
       const isDoubles = !playerId;
 
+      if (playerId === 0) {
+        // TODO: Doubles issues, see MatchModel
+        // console.log('yaye', gameResults.toArray());
+        // console.log('uhoh-', game, playerId, storeUtil.getPlayer(playerId));
+        return;
+      }
+
       if (!result[playerId]) {
         result[playerId] = {
           ply: storeUtil.getPlayer(playerId) || {},

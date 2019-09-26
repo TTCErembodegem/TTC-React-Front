@@ -74,15 +74,35 @@ export default class MatchesWeek extends Component {
       return null;
     }
 
+    const compFilter = this.props.match.params.comp || 'all';
+
+    let matchMailing = null;
+    if (compFilter !== 'all' && this.props.user.isAdmin() && matches.some(m => !m.isSyncedWithFrenoy)) {
+      let prevMatches = [];
+      if (this.state.currentWeek > 1) {
+        let prevWeekCalc = new WeekCalcer(allMatches, this.state.currentWeek - 1, this.state.editMode);
+        prevMatches = prevWeekCalc.getMatches().filter(m => m.competition === compFilter);
+        if (this.state.currentWeek > 2 && prevMatches.size === 0) {
+          prevWeekCalc = new WeekCalcer(allMatches, this.state.currentWeek - 2, this.state.editMode);
+          prevMatches = prevWeekCalc.getMatches();
+        }
+      }
+      matchMailing = (
+        <MatchesWeekEmail
+          weekCalcer={weekCalcer}
+          matches={matches.filter(x => !compFilter || x.competition === compFilter).filter(x => x.shouldBePlayed)}
+          prevMatches={prevMatches.filter(x => !compFilter || x.competition === compFilter).filter(x => x.shouldBePlayed)}
+          compFilter={compFilter}
+        />
+      );
+    }
+
     const viewsConfig = [
       {key: 'all', text: t('common.all')},
       {key: 'Vttl', text: 'Vttl'},
       {key: 'Sporta', text: 'Sporta'}
     ];
 
-    // TODO: MatchesWeekEmail: hier gewoon het icon en verander de route... /mail
-
-    const compFilter = this.props.match.params.comp || 'all';
     return (
       <div>
         <WeekTitle weekCalcer={weekCalcer} weekChange={this._onChangeWeek.bind(this, weekCalcer.currentWeek)} />
@@ -95,15 +115,13 @@ export default class MatchesWeek extends Component {
             onClick={newCompFilter => this._onChangeCompetition(weekCalcer.currentWeek, newCompFilter)}
           />
 
+
           {this.props.user.canManageTeams() && matches.some(m => !m.isSyncedWithFrenoy) ? (
             <EditButton onClick={() => this.setState({editMode: !this.state.editMode})} />
           ) : null}
-          {this.props.user.isAdmin() && matches.some(m => !m.isSyncedWithFrenoy) ? (
-            <MatchesWeekEmail
-              weekCalcer={weekCalcer}
-              matches={matches.filter(x => !this.state.filter || x.competition === this.state.filter).filter(x => x.shouldBePlayed)}
-            />
-          ) : null}
+
+
+          {matchMailing}
         </span>
 
         {compFilter !== 'Sporta' ? <MatchesWeekPerCompetition comp="Vttl" editMode={this.state.editMode} matches={matches} /> : null}

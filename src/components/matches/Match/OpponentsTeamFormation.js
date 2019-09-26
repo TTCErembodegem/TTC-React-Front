@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes, {withViewport} from '../../PropTypes.js';
-import {getRankingValue} from '../../../models/utils/playerRankingValueMapper.js';
-
-//import {Icon} from '../../controls.js';
+import {getOpponentFormations} from '../../../storeUtil';
 import Table from 'react-bootstrap/lib/Table';
-import {PlayerRankings, getMatchPlayerRankings} from '../controls/MatchPlayerRankings.js';
+import {PlayerRankings} from '../controls/MatchPlayerRankings.js';
+
 
 @withViewport
 export class OpponentsTeamFormation extends Component {
@@ -21,32 +20,7 @@ export class OpponentsTeamFormation extends Component {
 
   render() {
     const {matches, opponent} = this.props;
-
-    const createKey = form => form.reduce((key, f) => key + f.amount + f.ranking, '');
-
-    const formations = matches.filter(match => match.isSyncedWithFrenoy).reduce((acc, match) => {
-      var isHomeTeam;
-      if (!opponent) {
-        isHomeTeam = true;
-      } else {
-        isHomeTeam = match.home.clubId === opponent.clubId && match.home.teamCode === opponent.teamCode;
-      }
-      const formation = getMatchPlayerRankings(match, isHomeTeam);
-
-      const exists = acc.find(form => form.key === createKey(formation));
-      if (!exists) {
-        acc.push({
-          key: createKey(formation),
-          details: formation,
-          amount: 1,
-          value: formation.reduce((total, {ranking, amount}) => total + (amount * getRankingValue(match.competition, ranking)), 0),
-        });
-
-      } else {
-        exists.amount++;
-      }
-      return acc;
-    }, []);
+    const formations = getOpponentFormations(matches, opponent);
 
     const t = this.context.t;
     return (

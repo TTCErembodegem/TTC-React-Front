@@ -1,25 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from '../../PropTypes.js';
+import {getMatchPlayerRankings} from '../../../storeUtil';
 
-
-const unique = (value, index, self) => self.indexOf(value) === index;
-
-export function getMatchPlayerRankings(match, homeTeam) {
-  var opponentFormation;
-  if (homeTeam) {
-    opponentFormation = match.players.filter(m => m.home);
-  } else {
-    opponentFormation = match.players.filter(m => !m.home);
-  }
-  const rankings = opponentFormation.map(ply => ply.ranking);
-  const diffs = rankings.toArray().filter(unique);
-  return diffs.map(ranking => {
-    return {
-      ranking,
-      amount: rankings.reduce((prev, cur) => prev + (cur === ranking ? 1 : 0), 0)
-    };
-  });
-}
 
 export class PlayerRankings extends Component {
   static propTypes = {
