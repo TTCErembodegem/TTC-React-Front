@@ -71,9 +71,8 @@ export class MatchesWeekEmail extends Component {
       }
     };
 
-    // TODO: marginTop: 50
     return (
-      <Modal.Dialog style={{}}>
+      <Modal.Dialog style={{marginTop: 50}}>
         <Modal.Header>
           <Modal.Title>{this.props.compFilter} {t('week.emailTitle')}</Modal.Title>
         </Modal.Header>
