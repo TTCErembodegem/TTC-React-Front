@@ -36,7 +36,7 @@ export class PlayerCompetition extends Component {
         <Panel.Body>
           <PlayerIndividual player={player} competition={competition} />
 
-          {comp.nextRanking ? (
+          {(false && comp.nextRanking) ? (
             <div>
               {comp.ranking !== comp.nextRanking ? (
                 <span>
