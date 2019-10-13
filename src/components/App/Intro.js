@@ -59,7 +59,7 @@ export default class Intro extends Component {
             ) : (
               <div>
                 <div style={{clear: 'both'}} />
-                <Eetfestijn />
+                {false && <Eetfestijn />}
                 <TodaysEvents {...this.props} />
               </div>
             )}
