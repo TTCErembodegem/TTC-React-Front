@@ -65,6 +65,9 @@ export default class AdminBoardMembers extends Component {
         />
 
         <br />
+        Moet "Bestuurslid" expliciet kiezen of het werkt niet.
+        <br />(sortering waarschijnlijk ook😃)
+        <br />
 
         <DropdownButton
           title={this.context.t('clubs.managerTypes.' + (clubManagerTypes.find(x => x.text === this.state.boardFunction) || {text: 'Default'}).text)}
