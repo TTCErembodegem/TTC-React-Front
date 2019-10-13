@@ -367,6 +367,7 @@ export default {
       sendEmail: 'Email versturen',
       prevWeek: 'Ga naar de vorige speelweek',
       nextWeek: 'Ga naar de volgende speelweek',
+      formationMailed: 'Speelweek email verstuurd',
     },
     teamCalendar: {
       downloadExcel: 'Excel ploegopstellingen downloaden',

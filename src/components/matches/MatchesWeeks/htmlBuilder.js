@@ -23,12 +23,87 @@ export function buildHtml(user, compFilter, matches, prevMatches) {
   html += 'Veel succes iedereen!';
   // TODO: random pingpong quote
 
+  html += getRandomQuote();
+
   html += '<br>';
   html += '<br>';
   html += 'Mvg,';
   html += '<br>';
   html += user.alias;
 
+  return html;
+}
+
+
+const quotes = [
+  {text: "I am standing when the ball comes, that's why I don't have to move. I can read the game.", author: 'Jan-Ove Waldner'},
+  {text: 'Championships are won at practice.', author: ''},
+  {text: 'Being the best is not good enough. Try harder. Just make sure having fun is a central component of striving for excellence.', author: 'Carl Horowitz'},
+  {text: 'EVERY BALL COUNTS.', author: 'Sir Matt'},
+  {text: 'Table Tennis is like an atom. To the ignorant it is merely microscopic and insignificant in existance, but to the dedicated, it is intricate in design and the building block to everything we know. ', author: 'Matt Hetherington'},
+  {text: "I’m an extra dark black belt in ping pong.", author: 'Judah Friedlander'},
+  {text: "Only passions. great passions can elevate the soul to great things.", author: 'Zhang Jike'},
+  {text: "China needs a table-tennis-like solidity in football.", author: 'Berti Vogts'},
+  {text: "Champions keep playing until they get it right.", author: 'Billie Jean King'},
+  {text: "I love the winning, I can take the losing, but most of all I love to play.", author: 'Boris Becker'},
+  {text: "Happiness is …sometimes no words. just the sound of ball.", author: ''},
+  {text: "I like to play table tennis, spend time with my kids.", author: 'Floyd Mayweather'},
+  {text: "Table Tennis has given me soul.", author: ''},
+  {text: "If you can’t take a punch, you should play table tennis.", author: 'Pierre Berbizier'},
+  {text: "Cheer up,Its only Table Tennis.", author: 'Li Fu Jung'},
+  {text: "I’m a big Ping-Pong addict. I love it.", author: 'Lisa Ling'},
+  {text: "Life is hard, table tennis is harder!", author: 'Azlan'},
+  {text: "When you win say nothing. When you loss say less.", author: ''},
+  {text: "Don’t stop when you are tired.Stop when you are done.", author: ''},
+  {text: "Throwing your racket would not make you any better.", author: ''},
+  {text: "Spectacular performances are preceded by spectacular preparation.", author: 'Frank Giampaolo'},
+  {text: "“If you want to win in Table Tennis you must hit every ball with a purpose.", author: 'Daniel Ives'},
+  {text: "When you do something best in life, you don’t really want to give that up – and for me it’s tennis.", author: 'Roger Federer'},
+  {text: "It’s like ping pong with a ball made out of acid and fire. That’s what’s going on inside our screwed up heads.", author: 'Rebecca O’Donnell'},
+  {text: "“It’s t 0he fate of most Ping-Pong tables in home basements eventually to serve the ends of other, more desperate games.", author: 'Jonathan Franzen'},
+  {text: "All of my activities are so pedestrian. The extreme sport I play is ping pong. And we play it hard. If any of you suckers want to step up to the table, be ready.", author: 'Seth Green'},
+  {text: "I know China are very good in table tennis. Let me see what happens in tennis. I am pretty happy with the way I am playing.", author: 'Anastasia Myskina'},
+  {text: "It was a good performance. A perfect start is always important at the beginning of any tournament and I am pretty pleased with today’s effort. I lost out on the opportunity last year and I am keen to win.", author: 'Timo Boll'},
+  {text: "Keep Calm and Play Ping Pong.", author: ''},
+  {text: "If you want a soft serve, go to Dairy Queen", author: ''},
+  {text: "Live Long – Play Pong", author: ''},
+  {text: "Teamwork makes the dream work.", author: ''},
+  {text: "Table Tennis Anyone?", author: ''},
+  {text: "Spinnen is Winnen!!", author: ''},
+  {text: "It's almost impossible to have fun playing ping pong with someone who doesn't care, won't try or isn't any good.", author: 'Seth Godin'},
+  {text: "Learn from your defeat and you'll be a winner", author: 'Azlan'},
+  {text: "I'm pretty sure 'ping' in Chines means 'table' and 'pong' means 'tennis'", author: 'John Alejandro King'},
+  {text: "Never equate a loser with failure", author: "Timo Boll"},
+  {text: "Shake hands with your opponent before and after playing table tennis. Sometimes when I shake hands, my opponent feels that she has lost!", author: "Zhang Yining"},
+  {text: "The secret of playing table tennis is: hit the ball through the net and on the table", author: "Anonymous"},
+  {text: "The previous point has no meaning, the next point is meaningless as well. The most meaningful is the current point. ", author: "Gold coach Li Wei"},
+  {text: "When teaching beginners, ask them to stare at the opponent’s hand when playing in the game. Repeat this for 30 times in an hour.", author: "A coach from Shichahai Valley"},
+  {text: "Focus on the current point, maybe this is the key point in this game.", author: "Ochalov"},
+  {text: "When the opponent plays the stroke that you are not good at, don't think too much, just hit the ball back.", author: "Li Xiaoxia"},
+  {text: "Great champions also make a lot of mistakes like second-rate players, but the time they make mistakes is very different. Champions rarely make mistakes at the most critical times.", author: "Liu Guoliang"},
+  {text: "Focus and pay full attention to play in a match is the difference between a champion and a person who almost became a champion.", author: "Malong"},
+  {text: "Before you learn the techniques, you must first learn how to control the ball.", author: "Kong Linghui"},
+  {text: "Stress is the best polygraph. How well your playing skill will be revealed when you are under pressure.", author: "Liu Chengmin"},
+  {text: "The desire to win is buried deep inside you. You must dig it out.", author: "Zhang Jike"},
+  {text: "Don't underestimate your opponents, don't overestimate yourself, especially avoid thinking about results in advance.", author: "Wang Liqin"},
+  {text: "When you are in trouble, you can't escape. You have to face it. Otherwise, you will lose.", author: "Ma Lin"},
+  {text: "Most of the players are usually good at thinking, but not good at running!", author: "He Zhiwen"},
+  {text: "The pressure in the table tennis competition is added by yourself.", author: "Dongxie"},
+  {text: "Even if you are in good luck and good condition, you may still be losing in the game, then you just accept the failure.", author: "Persson"},
+  {text: "The most correct reason for playing table tennis is that I love table tennis.", author: "Waldner"},
+  // {text: "", author: ''},
+];
+
+
+function getRandomQuote() {
+  if (Math.random() < 0.8) {
+    return '';
+  }
+
+  let html = '<br><br>Inspirational Quote:<br>';
+  const quote = getRandom(quotes);
+  html += `<i>${quote.text}</i>`
+  html += `<br>- ${quote.author || 'Unknown'}`;
   return html;
 }
 
@@ -194,11 +269,12 @@ function getPrevMatches(matches) {
 
 
   // Players that beat a higher ranked player
-  const beaten = getRankingDestroyer(matches.first().competition, stats);
+  const competition = matches.first().competition;
+  const beaten = getRankingDestroyer(competition, stats);
   if (beaten.players.length) {
     html += '<br>';
     html += 'Mooiste overwinning: ';
-    html += beaten.players.map(ply => `${ply.player.alias} ${ply.throphy}`).join(', ');
+    html += beaten.players.map(ply => `${getPlayerLink(ply.player, competition)} ${ply.throphy.replace(/\w+ (?=vs)/, '')}`).join(', ');
   }
   // console.log('uhoh', beaten);
 
@@ -291,6 +367,8 @@ function getRandom(arr) {
 }
 
 
+// TODO: Forest Gump’s Instructor. ?
+
 const endearments = [
   'Sporstars',
   'Sportars',
@@ -300,6 +378,8 @@ const endearments = [
   'Sportas',
   'undefined', // oh noes, off by one!
   '🐺, 🐯, 🐅, 🐘, 🐻, 🐉 en 🦖',
+  'Ping Pong Ninjas',
+  'Ping Pong Black Belts',
 ];
 
 function getEndearment(compFilter) {

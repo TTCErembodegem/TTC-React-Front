@@ -45,6 +45,13 @@ export class MatchesWeekEmail extends Component {
     }
   }
 
+  emailFormation() {
+    const week = this.props.weekCalcer.getWeek();
+    const title = `${this.props.compFilter} Week ${this.props.weekCalcer.currentWeek}: ${week.start.format('D/M')} - ${week.end.format('D/M')}`;
+    this.props.emailFormation(title, this.state.email);
+    this.setState({mailFormOpen: false});
+  }
+
   render() {
     const t = this.context.t;
 
@@ -91,7 +98,7 @@ export class MatchesWeekEmail extends Component {
 
         <Modal.Footer>
           <Button onClick={() => this.setState({mailFormOpen: false})} style={{marginLeft: 6}}>{t('common.cancel')}</Button>
-          <Button bsStyle="danger" onClick={() => this.props.emailFormation()}>{t('week.sendEmail')}</Button>
+          <Button bsStyle="danger" onClick={() => this.emailFormation()}>{t('week.sendEmail')}</Button>
         </Modal.Footer>
       </Modal.Dialog>
     );
