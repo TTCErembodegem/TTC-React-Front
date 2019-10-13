@@ -19,11 +19,11 @@ export function buildHtml(user, compFilter, matches, prevMatches) {
 
   // Signature
   // console.log('user', user);
-
   html += 'Veel succes iedereen!';
-  // TODO: random pingpong quote
 
-  html += getRandomQuote();
+  if (compFilter === 'Sporta') {
+    html += getRandomQuote();
+  }
 
   html += '<br>';
   html += '<br>';

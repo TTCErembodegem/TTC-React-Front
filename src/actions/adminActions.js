@@ -6,6 +6,7 @@ export function emailFormation(title, email) {
   return dispatch => {
     return http.post('/matches/WeekCompetitionEmail', {title, email})
       .then(function() {
+        console.log('Email formation succesfully sent!'); // eslint-disable-line
         dispatch(showSnackbar(trans('week.formationMailed')));
       }, function(err) {
         console.log('Email formation!', err); // eslint-disable-line
