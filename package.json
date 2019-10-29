@@ -80,7 +80,7 @@
     "husky": "^0.14.3",
     "jasmine": "^2.5.2",
     "jest-cli": "^0.5.10",
-    "lodash.merge": "^3.3.2",
+    "lodash.merge": "^4.6.2",
     "mkdirp": "^0.5.1",
     "ncp": "^2.0.0",
     "nodemon": "^1.12.1",
