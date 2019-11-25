@@ -47,7 +47,9 @@ export class SlagerijGuy extends Component {
 
 
 // export const Symphony = props => <ImageSponsor url="http://doopsuikersymphony.be" img="symphony.png" {...props} />;
-// export const pongit = props => <ImageSponsor url="https://pongit.be" img="pongit.jpg" {...props} />;
+export const RdInterieur = props => <ImageSponsor url="https://www.rd-interieur.be/" img="rd-interieur.png" {...props} />;
+export const BeSure2 = props => <ImageSponsor url="https://www.2besure2.be/" img="2be-sure2.png" {...props} />;
+export const TransformerService = props => <ImageSponsor url="https://www.transformerservice.eu/" img="transformer-service.png" {...props} />;
 export const itenium = props => <ImageSponsor url="https://itenium.be" img="itenium.png" {...props} />;
 export const Nostech = props => <ImageSponsor url="https://www.nostech.be" img="nostech.jpg" {...props} />;
 

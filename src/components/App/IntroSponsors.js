@@ -25,6 +25,11 @@ export default class IntroSponsors extends Component {
             <Sponsor.itenium big={big} />
             <Sponsor.Nostech big={big} style={{marginLeft: 20}} />
           </div>
+          <div style={{width: 770, margin: 'auto', paddingTop: 25}}>
+            <Sponsor.TransformerService big={big} />
+            <Sponsor.RdInterieur big={big} style={{marginLeft: 20}} />
+            <Sponsor.BeSure2 big={big} style={{marginLeft: 20}} />
+          </div>
         </Row>
       );
     }
@@ -40,6 +45,15 @@ export default class IntroSponsors extends Component {
         </Col>
         <Col style={{marginTop: 20}}>
           <Sponsor.Nostech big={big} />
+        </Col>
+        <Col style={{marginTop: 20}}>
+          <Sponsor.TransformerService big={big} />
+        </Col>
+        <Col style={{marginTop: 20}}>
+          <Sponsor.RdInterieur big={big} />
+        </Col>
+        <Col style={{marginTop: 20}}>
+          <Sponsor.BeSure2 big={big} />
         </Col>
       </Row>
     );
