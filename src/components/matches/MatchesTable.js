@@ -293,6 +293,9 @@ export default class MatchesTable extends Component {
               withLinks
               withPosition={viewWidth > 400}
             />
+            {this.props.tableForm && this.props.editMode && match.getPlayerFormation().size < match.getTeamPlayerCount() && (
+              <i className="fa fa-exclamation-circle" style={{color: 'red', float: 'right', fontSize: '1.5em', marginTop: 3}} />
+            )}
           </td>
           {this.props.tableForm ? null : (<td>
             {!this.props.editMode || match.isSyncedWithFrenoy ? (
