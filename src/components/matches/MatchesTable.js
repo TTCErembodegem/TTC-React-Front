@@ -381,7 +381,7 @@ const ReadOnlyMatchPlayers = ({match}) => {
     return (
       <div style={{marginBottom: 4, marginTop: -5}}>
         {match.getOwnPlayers().map(ply => (
-          <div style={{display: 'inline-block', marginRight: 7}} key={ply.uniqueIndex}>
+          <div style={{display: 'inline-block', marginRight: 7}} key={'ply-' + ply.playerId}>
             <OwnPlayer match={match} ply={ply} />
           </div>
         ))}
@@ -397,7 +397,7 @@ const ReadOnlyMatchPlayers = ({match}) => {
           plyInfo={plyInfo}
           competition={match.competition}
           style={{marginBottom: 4, marginRight: 5}}
-          key={plyInfo.player.id}
+          key={'ply-' + plyInfo.player.id}
         />
       ))}
     </div>
