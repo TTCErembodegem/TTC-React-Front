@@ -51,7 +51,8 @@ export default class PlayerLinup extends Component {
     }
 
     var allMatchesToCome = teams.map(team => team.getMatches().toArray());
-    allMatchesToCome = _.uniqBy(_.flatten(allMatchesToCome), value => value.date.format('YYYYMMDD'))
+    // allMatchesToCome = _.uniqBy(_.flatten(allMatchesToCome), value => value.date.format('YYYYMMDD'))
+    allMatchesToCome = _.flatten(allMatchesToCome)
       .filter(match => moment().isBefore(match.date))
       .sort((a, b) => a.date - b.date);
 
