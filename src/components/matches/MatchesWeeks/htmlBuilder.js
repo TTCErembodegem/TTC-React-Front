@@ -217,7 +217,11 @@ function getPrevMatches(matches) {
     let scorePrinted = false;
 
     const ourScore = match.isHomeMatch ? match.score.home : match.score.out;
-    if (ourScore === 0) {
+    if (match.scoreType === 'WalkOver') {
+      html += `${ownTeam} vs ${theirTeam}: FORFAIT`;
+      scorePrinted = true;
+
+    } else if (ourScore === 0) {
       html += `${theirTeam} ${(getRandom(scoreZero) + ' ').repeat(3)} arm ${ownTeam}`;
 
     } else if (ourScore < match.getTeam().getScoreCount() / 2) {
@@ -285,7 +289,7 @@ function getPrevMatches(matches) {
 
 
 /**
- * Eexample:
+ * Example:
  *
  * maa 16/9
  * Sporta A vs St Niklase A (Jorn, Wouter, Arne)
