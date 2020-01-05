@@ -152,6 +152,6 @@ export const PlayerFrenoyLink = ({comp, style, children}) => (
 
 PlayerFrenoyLink.propTypes = {
   comp: PropTypes.object.isRequired,
-  style: PropTypes.object.isRequired,
-  children: PropTypes.any.isRequired,
+  style: PropTypes.object,
+  children: PropTypes.any,
 };
