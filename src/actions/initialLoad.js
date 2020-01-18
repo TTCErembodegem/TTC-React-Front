@@ -117,5 +117,4 @@ export default function () {
     return p;
     }).then(() => console.info('secundary load completed')) // eslint-disable-line
       .catch(err => console.error('initial load failed', err)) // eslint-disable-line
-  ;
 }

@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-operators */
 // Stolen from: https://github.com/rmm5t/jquery-timeago
 
 import t from '../locales.js';

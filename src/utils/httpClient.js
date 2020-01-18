@@ -1,3 +1,4 @@
+/* eslint-disable arrow-body-style */
 import Promise from 'bluebird';
 import request from 'superagent-bluebird-promise';
 import querystring from 'querystring';
@@ -11,6 +12,7 @@ export function getUrl(path, appendApi = true) {
   assert(path[0] === '/', 'HttpClient: path passed should start with a /');
   assert(path.substring(0, 5) !== '/api/', 'HttpClient: path passed should not be prefixed with /api');
   if (appendApi) {
+    // eslint-disable-next-line no-param-reassign
     path = `/api${path}`;
   }
 
@@ -26,7 +28,7 @@ function bearer(req) {
   }
 }
 
-var HttpClient = {
+const HttpClient = {
   download: path => request.get(getUrl(path)).accept('json').use(bearer),
   get: (path, qs) => {
     const fullUrl = `GET ${qs ? `${path}?${querystring.encode(qs)}` : path}`;
@@ -155,7 +157,7 @@ function downloadExcel(respBody, fileName, addTimestampToFileName = false) {
 }
 
 
-HttpClient.download.playersExcel = function (fileName) {
+HttpClient.download.playersExcel = fileName => {
   return HttpClient.download('/players/ExcelExport').then(res => {
     downloadExcel(res.body, fileName, true);
   });
@@ -164,7 +166,7 @@ HttpClient.download.playersExcel = function (fileName) {
 // link.href = 'data:application/octet-stream;base64,' + res.body;
 // --> Does not work in IE
 
-HttpClient.download.scoresheetExcel = function (match) {
+HttpClient.download.scoresheetExcel = match => {
   return HttpClient.download(`/matches/ExcelScoresheet/${match.id}`).then(res => {
     // fileName: '{frenoyId} Sporta {teamCode} vs {theirClub} {theirTeam}.xlsx',
     const fileName = t('comp.scoresheetFileName', {
@@ -178,7 +180,7 @@ HttpClient.download.scoresheetExcel = function (match) {
   });
 };
 
-HttpClient.download.teamsExcel = function (fileName) {
+HttpClient.download.teamsExcel = fileName => {
   return HttpClient.download('/teams/ExcelExport').then(res => {
     downloadExcel(res.body, fileName, true);
   });

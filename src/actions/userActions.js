@@ -72,10 +72,8 @@ export function setNewPasswordFromGuid({guid, playerId, password}) {
 }
 
 export function adminSetNewPassword({playerId, newPassword}) {
-  if (typeof playerId === 'string') {
-    playerId = -1;
-  }
-  return dispatch => http.post('/users/AdminSetNewPassword', {playerId, newPassword})
+  const plyId = typeof playerId === 'string' ? -1 : playerId;
+  return dispatch => http.post('/users/AdminSetNewPassword', {plyId, newPassword})
     .then(() => {
       dispatch(showSnackbar(trans('common.apiSuccess')));
     }, err => {

@@ -1,3 +1,4 @@
+/* eslint-disable prefer-spread, no-prototype-builtins, no-continue, no-restricted-syntax, func-names, prefer-rest-params */
 import $ from 'jquery';
 
 window.jQuery = $;

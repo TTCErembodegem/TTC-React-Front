@@ -45,6 +45,7 @@ module.exports = {
     "arrow-parens": ["error", "as-needed"],
     "react/no-array-index-key": [0],
     "react/jsx-one-expression-per-line": [0],
+    "no-param-reassign": [0],
   },
   "settings": {
     "import/resolver": {

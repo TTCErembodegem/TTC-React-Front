@@ -1,4 +1,6 @@
 /* eslint-disable no-template-curly-in-string */
+import Facts from './locales-nl-facts.js';
+
 export default {
   lang: 'nl',
   routes: {
@@ -403,7 +405,7 @@ export default {
       frenoyweek: 'Ga naar weekoverzicht op Frenoy',
       frenoyPlayerResults: 'Ga naar spelerdetails op Frenoy',
     },
-    facts: require('./locales-nl-facts.js'),
+    facts: Facts,
     admin: {
       board: {
         save: 'Bewaren',

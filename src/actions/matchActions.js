@@ -51,7 +51,8 @@ export function forceFrenoySync(matchId) {
   return dispatch => frenoySync(dispatch, {id: matchId}, true);
 }
 
-export function loaded(data, dispatch) {
+export function loaded(input, dispatch) {
+  let data = input;
   if (!data) {
     return null;
   }
@@ -95,7 +96,6 @@ export function getOpponentMatches(teamId, opponent = {}) {
       matches.forEach(m => {
         dispatch(frenoyReadOnlyMatchSync(m));
       });
-      return null;
 
     }, err => {
         console.log('GetOpponentMatches!', err); // eslint-disable-line
@@ -175,6 +175,7 @@ export function matchUpdated(dataId, updateType) {
       payload: {key: `newMatchComment${dataId}`, value: true},
     };
   }
+  throw Error('Expected updateType score|report');
 }
 
 export function updateScore(matchScore) {
