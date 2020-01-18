@@ -6,9 +6,7 @@ import Col from 'react-bootstrap/lib/Col';
 import * as Sponsor from './Sponsors.js';
 
 
-@withContext
-@withViewport
-export default class IntroSponsors extends Component {
+class IntroSponsors extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     viewport: PropTypes.viewport,
@@ -59,3 +57,5 @@ export default class IntroSponsors extends Component {
     );
   }
 }
+
+export default withViewport(withContext(IntroSponsors));

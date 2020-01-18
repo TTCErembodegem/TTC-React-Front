@@ -1,4 +1,4 @@
-import * as ActionTypes from './ActionTypes.js';
+import ActionTypes from './ActionTypes.js';
 import http from '../utils/httpClient.js';
 import storeUtil from '../storeUtil.js';
 import {showSnackbar} from './configActions.js';

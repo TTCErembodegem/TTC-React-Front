@@ -5,9 +5,9 @@ import {BackIcon} from '../controls.js';
 import PlayerCard from './PlayerCard.js';
 import {PlayerCompetition} from './Player/PlayerCompetition.js';
 
-@withViewport
-@connect(state => ({players: state.players}))
-export class Player extends Component {
+
+
+class PlayerComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     players: PropTypes.PlayerModelList.isRequired,
@@ -57,3 +57,5 @@ export class Player extends Component {
     );
   }
 }
+
+export const Player = withViewport(connect(state => ({players: state.players}))(PlayerComponent));

@@ -8,9 +8,8 @@ import {WeekTitle} from './MatchesWeeks/WeekTitle.js';
 import {WeekCalcer} from './MatchesWeeks/WeekCalcer.js';
 
 
-@connect(state => ({matches: state.matches, user: state.user, freeMatches: state.freeMatches}))
-@withRouter
-export default class MatchesWeek extends Component {
+
+class MatchesWeek extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     matches: PropTypes.MatchModelList.isRequired,
@@ -156,3 +155,5 @@ MatchesWeekPerCompetition.propTypes = {
   editMode: PropTypes.bool.isRequired,
   matches: PropTypes.MatchModelList.isRequired,
 };
+
+export default withRouter(connect(state => ({matches: state.matches, user: state.user, freeMatches: state.freeMatches}))(MatchesWeek));

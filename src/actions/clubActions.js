@@ -1,4 +1,4 @@
-import * as ActionTypes from './ActionTypes.js';
+import ActionTypes from './ActionTypes.js';
 import http from '../utils/httpClient.js';
 import {showSnackbar} from './configActions.js';
 import {broadcastReload} from '../hub.js';

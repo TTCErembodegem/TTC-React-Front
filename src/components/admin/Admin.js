@@ -24,18 +24,8 @@ const tabEventKeys = keyMirror({
   dev: '',
 });
 
-@connect(state => {
-  return {
-    config: state.config,
-    user: state.user,
-    players: state.players,
-    clubs: state.clubs,
-    matches: state.matches,
-    teams: state.teams,
-    admin: state.admin,
-  };
-})
-export default class Admin extends Component {
+
+class Admin extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     config: PropTypes.object.isRequired,
@@ -130,3 +120,15 @@ export default class Admin extends Component {
     );
   }
 }
+
+export default connect(state => {
+  return {
+    config: state.config,
+    user: state.user,
+    players: state.players,
+    clubs: state.clubs,
+    matches: state.matches,
+    teams: state.teams,
+    admin: state.admin,
+  };
+})(Admin)

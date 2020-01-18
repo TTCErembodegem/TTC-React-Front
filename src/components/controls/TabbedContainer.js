@@ -7,9 +7,8 @@ import NavItem from 'react-bootstrap/lib/NavItem';
 import PanelGroup from 'react-bootstrap/lib/PanelGroup';
 import Panel from 'react-bootstrap/lib/Panel';
 
-@withRouter
-@withViewport
-export class TabbedContainer extends Component {
+
+class TabbedContainerComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     defaultTabKey: PropTypes.string.isRequired,
@@ -152,3 +151,5 @@ export class TabbedContainer extends Component {
     return this.context.t.reverseRoute(this.props.route.subs, tabKey);
   }
 }
+
+export const TabbedContainer = withRouter(withViewport()(TabbedContainerComponent));

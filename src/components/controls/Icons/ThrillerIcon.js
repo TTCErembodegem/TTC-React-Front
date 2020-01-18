@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import Tooltip from 'react-bootstrap/lib/Tooltip';
+import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import PropTypes from '../../PropTypes.js';
 import {Icon} from './Icon.js';
 
@@ -14,8 +16,7 @@ ThrillerIcon.propTypes = {
   color: PropTypes.string,
 };
 
-import Tooltip from 'react-bootstrap/lib/Tooltip';
-import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
+
 
 // Badgy because material-ui also defines a Badge
 export class Badgy extends Component {

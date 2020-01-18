@@ -3,8 +3,7 @@ import PropTypes, {connect} from '../../PropTypes.js';
 import cn from 'classnames';
 import {Icon} from '../Icon.js';
 
-@connect(state => ({user: state.user}))
-export class ExcelButton extends Component {
+class ExcelButtonComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     onClick: PropTypes.func.isRequired,
@@ -37,7 +36,7 @@ export class ExcelButton extends Component {
       return <div />;
     }
     return (
-      <button onClick={::this._onDownload} className={cn('btn btn-default', this.props.className)} style={this.props.style}>
+      <button onClick={() => this._onDownload()} className={cn('btn btn-default', this.props.className)} style={this.props.style}>
         <Icon
           fa={cn('fa-2x', this.state.isDownloading ? 'fa fa-spinner fa-pulse' : 'fa fa-file-excel-o')}
           tooltip={this.props.tooltip}
@@ -46,3 +45,5 @@ export class ExcelButton extends Component {
     );
   }
 }
+
+export const ExcelButton = connect(state => ({user: state.user}))(ExcelButtonComponent);

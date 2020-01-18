@@ -1,14 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes, {connect, withContext} from '../PropTypes.js';
 
-@connect(state => {
-  return {
-    players: state.players,
-    teams: state.teams
-  };
-})
-@withContext
-export default class IntroClub extends Component {
+class IntroClub extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     players: PropTypes.PlayerModelList.isRequired,
@@ -30,3 +23,8 @@ export default class IntroClub extends Component {
     );
   }
 }
+
+export default withContext(connect(state => ({
+  players: state.players,
+  teams: state.teams,
+}))(IntroClub));

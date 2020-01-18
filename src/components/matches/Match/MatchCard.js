@@ -30,15 +30,7 @@ const tabEventKeys = keyMirror({
   admin: '',
 });
 
-@withViewport
-@connect(state => {
-  return {
-    config: state.config,
-    user: state.user,
-    readonlyMatches: state.readonlyMatches,
-  };
-}, Object.assign({}, matchActions, {setSetting}))
-export default class MatchCard extends Component {
+class MatchCard extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     config: PropTypes.object.isRequired,
@@ -242,3 +234,11 @@ export default class MatchCard extends Component {
     );
   }
 }
+
+export default withViewport(connect(state => {
+  return {
+    config: state.config,
+    user: state.user,
+    readonlyMatches: state.readonlyMatches,
+  };
+}, Object.assign({}, matchActions, {setSetting}))(MatchCard));

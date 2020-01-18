@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes, {withViewport} from '../../PropTypes.js';
 
-@withViewport
-export class MatchDate extends Component {
+export class MatchDateComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     viewport: PropTypes.viewport,
@@ -35,3 +34,5 @@ export class MatchDate extends Component {
     );
   }
 }
+
+export const MatchDate = withViewport(MatchDateComponent);

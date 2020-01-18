@@ -1,5 +1,5 @@
 import Promise from 'bluebird';
-import * as ActionTypes from './ActionTypes.js';
+import ActionTypes from './ActionTypes.js';
 import http from '../utils/httpClient.js';
 import {simpleLoaded, loaded as matchesLoaded} from './matchActions.js';
 import {loaded as playersLoaded} from './playerActions.js';

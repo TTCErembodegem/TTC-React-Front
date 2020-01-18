@@ -3,8 +3,7 @@ import PropTypes, {withViewport} from '../../PropTypes.js';
 import {WeekCalcer} from './WeekCalcer.js';
 import {Icon} from '../../controls.js';
 
-@withViewport
-export class WeekTitle extends Component {
+class WeekTitleComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     weekCalcer: PropTypes.instanceOf(WeekCalcer).isRequired,
@@ -62,3 +61,5 @@ export class WeekTitle extends Component {
     );
   }
 }
+
+export const WeekTitle = withViewport(WeekTitleComponent);

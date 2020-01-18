@@ -2,9 +2,7 @@ import React, {Component} from 'react';
 import PropTypes, {withViewport, withRouter} from '../../PropTypes.js';
 import {Icon} from './Icon.js';
 
-@withRouter
-@withViewport
-export class BackIcon extends Component {
+class BackIconComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     viewport: PropTypes.viewport,
@@ -25,3 +23,5 @@ export class BackIcon extends Component {
     );
   }
 }
+
+export const BackIcon = withRouter(withViewport(BackIconComponent));

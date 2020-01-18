@@ -9,13 +9,7 @@ import {OpponentsTeamFormation} from '../matches/Match/OpponentsTeamFormation.js
 import {DivisionHeader} from '../teams/controls/DivisionHeader.js';
 import {getOpponentMatchesForTeam} from '../../storeUtil';
 
-@connect(state => ({
-  matches: state.matches,
-  readonlyMatches: state.readonlyMatches,
-  teams: state.teams,
-}), {getOpponentMatches})
-@withRouter
-export class OpponentOverview extends Component {
+class OpponentOverviewComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     matches: PropTypes.MatchModelList.isRequired,
@@ -109,3 +103,9 @@ export class OpponentOverview extends Component {
     );
   }
 }
+
+export const OpponentOverview = withRouter(connect(state => ({
+  matches: state.matches,
+  readonlyMatches: state.readonlyMatches,
+  teams: state.teams,
+}), {getOpponentMatches})(OpponentOverviewComponent));

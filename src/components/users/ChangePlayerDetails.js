@@ -6,8 +6,8 @@ import * as playerActions from '../../actions/playerActions.js';
 import TextField from '@material-ui/core/TextField';
 import {MaterialButton} from '../controls/Button.js';
 
-@connect(() => ({}), playerActions)
-export default class ChangePlayerDetails extends Component {
+
+class ChangePlayerDetails extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     player: PropTypes.PlayerModel.isRequired,
@@ -72,3 +72,5 @@ export default class ChangePlayerDetails extends Component {
     );
   }
 }
+
+export default connect(() => ({}), playerActions)(ChangePlayerDetails);

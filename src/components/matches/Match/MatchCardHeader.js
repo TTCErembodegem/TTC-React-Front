@@ -49,8 +49,7 @@ export class BigMatchCardHeader extends Component {
 
 
 
-@withRouter
-export class SmallMatchCardHeader extends Component {
+export class SmallMatchCardHeaderComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     match2: PropTypes.MatchModel.isRequired, //
@@ -216,3 +215,5 @@ OwnTeamTitle.propTypes = {
   match: PropTypes.MatchModel.isRequired,
   withLinks: PropTypes.bool.isRequired,
 };
+
+export const SmallMatchCardHeader = withRouter(SmallMatchCardHeaderComponent);

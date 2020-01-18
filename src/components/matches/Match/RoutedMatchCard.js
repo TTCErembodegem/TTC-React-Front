@@ -5,9 +5,7 @@ import {fetchMatch} from '../../../actions/initialLoad.js';
 
 import {FullScreenSpinner} from '../../controls.js';
 
-@withViewport
-@connect(state => ({matches: state.matches}), {fetchMatch})
-export default class RoutedMatchCard extends Component {
+class RoutedMatchCard extends Component {
   static propTypes = {
     match: PropTypes.shape({
       params: PropTypes.shape({
@@ -57,3 +55,5 @@ export default class RoutedMatchCard extends Component {
     );
   }
 }
+
+export default withViewport(connect(state => ({matches: state.matches}), {fetchMatch})(RoutedMatchCard));

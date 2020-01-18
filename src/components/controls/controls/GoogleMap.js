@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes, {connect} from '../../PropTypes.js';
 
-@connect(state => ({googleMapsUrl: state.config.get('params').googleMapsUrl}))
-export class GoogleMap extends Component {
+export class GoogleMapComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
 
   static propTypes = {
@@ -20,3 +19,5 @@ export class GoogleMap extends Component {
     );
   }
 }
+
+export const GoogleMap = connect(state => ({googleMapsUrl: state.config.get('params').googleMapsUrl}))(GoogleMapComponent);

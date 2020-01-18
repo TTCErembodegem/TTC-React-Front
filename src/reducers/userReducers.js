@@ -1,6 +1,6 @@
 import Immutable from 'immutable';
 //import * as immutableHelpers from './immutableHelpers.js';
-import * as ActionTypes from '../actions/ActionTypes.js';
+import ActionTypes from '../actions/ActionTypes.js';
 
 import UserModel from '../models/UserModel.js';
 

@@ -6,9 +6,8 @@ import App from './App.js';
 // Just adding a root Route that does the ga would be easier:
 // https://github.com/react-ga/react-ga/issues/122#issuecomment-319546248
 
-@withTracker
-@connect(state => ({config: state.config}))
-export class ComponentWithLayout extends React.Component {
+
+class ComponentWithLayoutComponent extends React.Component {
   static propTypes ={
     Component: PropTypes.any.isRequired,
     config: PropTypes.map.isRequired,
@@ -23,3 +22,5 @@ export class ComponentWithLayout extends React.Component {
     );
   }
 }
+
+export const ComponentWithLayout = withTracker(connect(state => ({config: state.config}))(ComponentWithLayoutComponent));

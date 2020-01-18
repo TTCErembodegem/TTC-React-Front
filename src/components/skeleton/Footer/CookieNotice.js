@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import {contextTypes} from '../../../utils/decorators/withContext.js';
-import styles from './CookieNotice.css';
-import withStyles from '../../../utils/decorators/withStyles.js';
 
-@withStyles(styles)
+import './CookieNotice.css';
+
 export class CookieNotice extends Component {
   static contextTypes = contextTypes;
 

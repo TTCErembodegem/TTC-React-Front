@@ -17,9 +17,7 @@ function getClassName(isHomeMatch, home, out) {
   return won ? 'match-won' : 'match-lost';
 }
 
-@withViewport
-@connect(state => ({config: state.config}), {setSetting})
-export default class MatchScore extends Component {
+class MatchScore extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     config: PropTypes.object.isRequired,
@@ -103,3 +101,5 @@ export default class MatchScore extends Component {
     );
   }
 }
+
+export default withViewport(connect(state => ({config: state.config}), {setSetting})(MatchScore));

@@ -30,8 +30,7 @@ export class Email extends Component {
 }
 
 
-@connect(state => ({email: state.config.get('params').email}))
-export class OwnEmail extends Component {
+class OwnEmailComponent extends Component {
   static propTypes = {
     className: PropTypes.string,
     email: PropTypes.string.isRequired,
@@ -40,3 +39,5 @@ export class OwnEmail extends Component {
     return <Email email={this.props.email} {...this.props} />;
   }
 }
+
+export const OwnEmail = connect(state => ({email: state.config.get('params').email}))(OwnEmailComponent);

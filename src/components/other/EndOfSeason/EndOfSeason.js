@@ -10,16 +10,9 @@ import {Kampioenen} from './Kampioenen.js';
 import Achievements from './Achievements.js';
 import NextSeasonChanges from './NextSeasonChanges.js';
 
+require('./achievements.css');
 
-@connect(state => ({
-  players: state.players,
-  matches: state.matches,
-  clubs: state.clubs,
-  teams: state.teams,
-}))
-@withStyles(require('./achievements.css'))
-@withContext
-export default class EndOfSeason extends Component {
+class EndOfSeason extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     players: PropTypes.PlayerModelList.isRequired,
@@ -54,3 +47,10 @@ export default class EndOfSeason extends Component {
     );
   }
 }
+
+export default withContext(connect(state => ({
+  players: state.players,
+  matches: state.matches,
+  clubs: state.clubs,
+  teams: state.teams,
+}))(EndOfSeason));

@@ -7,10 +7,10 @@ import PlayerImage from './PlayerImage.js';
 import {Icon, FrenoyPlayerDetailsIcon, PlayerLink} from '../controls.js';
 import {PlayerPlayingStyleForm} from './PlayerPlayingStyle.js';
 import {PlayerContact} from './controls/PlayerContact.js';
+import {createFrenoyLink} from '../../models/PlayerModel.js';
 
-@withViewport
-@connect(state => ({user: state.user}))
-export default class PlayerCard extends Component {
+
+class PlayerCard extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     viewport: PropTypes.viewport,
@@ -143,7 +143,7 @@ PlayerCompetitionLabel.propTypes = {
 };
 
 
-import {createFrenoyLink} from '../../models/PlayerModel.js';
+
 export const PlayerFrenoyLink = ({comp, style, children}) => (
   <a href={createFrenoyLink(comp)} target="_blank" className="link-hover-underline" style={style}>
     {children} <FrenoyPlayerDetailsIcon />
@@ -155,3 +155,5 @@ PlayerFrenoyLink.propTypes = {
   style: PropTypes.object,
   children: PropTypes.any,
 };
+
+export default withViewport(connect(state => ({user: state.user}))(PlayerCard));

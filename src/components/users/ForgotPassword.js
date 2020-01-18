@@ -10,8 +10,8 @@ import TextField from '@material-ui/core/TextField';
 import {MaterialButton} from '../controls/Button.js';
 import Paper from '@material-ui/core/Paper';
 
-@connect(() => ({}), loginActions)
-export default class ForgotPassword extends Component {
+
+class ForgotPassword extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     requestResetPasswordLink: PropTypes.func.isRequired,
@@ -59,13 +59,12 @@ export default class ForgotPassword extends Component {
   }
 }
 
+export default connect(() => ({}), loginActions)(ForgotPassword);
 
 
 
 
-
-@connect(() => ({}), loginActions)
-export class ForgotPasswordReset extends Component {
+class ForgotPasswordResetComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     setNewPasswordFromGuid: PropTypes.func.isRequired,
@@ -115,3 +114,5 @@ export class ForgotPasswordReset extends Component {
     );
   }
 }
+
+export const ForgotPasswordReset = connect(() => ({}), loginActions)(ForgotPasswordResetComponent);

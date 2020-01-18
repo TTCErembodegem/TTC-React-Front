@@ -3,9 +3,7 @@ import PropTypes, {connect} from '../PropTypes.js';
 import {OwnEmail, GoogleMap} from '../controls.js';
 import ClubLocationInstructions from './ClubLocationInstructions.js';
 
-
-@connect(state => ({params: state.config.get('params')}))
-export default class GeneralInfo extends Component {
+class GeneralInfo extends Component {
   static contextTypes = PropTypes.contextTypes;
 
   static propTypes = {
@@ -59,3 +57,5 @@ export default class GeneralInfo extends Component {
     );
   }
 }
+
+export default connect(state => ({params: state.config.get('params')}))(GeneralInfo);

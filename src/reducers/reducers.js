@@ -1,13 +1,14 @@
+/* eslint-disable object-property-newline */
 import Immutable from 'immutable';
 import * as immutableHelpers from './immutableHelpers.js';
-import * as ActionTypes from '../actions/ActionTypes.js';
+import ActionTypes from '../actions/ActionTypes.js';
 
 import PlayerModel from '../models/PlayerModel.js';
 import TeamModel from '../models/TeamModel.js';
 import ClubModel from '../models/ClubModel.js';
 import MatchModel from '../models/MatchModel.js';
 
-var defaultConfigState = {
+const defaultConfigState = {
   initialLoadCompleted: false,
   params: {
     email: '', googleMapsUrl: '', location: '', trainingDays: '', competitionDays: '',
@@ -79,7 +80,7 @@ export function admin(state = {players: Immutable.List([])}, action = null) {
   const {type, payload} = action;
   switch (type) {
   case ActionTypes.PLAYERS_LOADED: {
-    let recreantAndQuitters = immutableHelpers.merge(state.players, payload, x => new PlayerModel(x), x => !x.active && x.alias !== 'SYSTEM');
+    const recreantAndQuitters = immutableHelpers.merge(state.players, payload, x => new PlayerModel(x), x => !x.active && x.alias !== 'SYSTEM');
     return {players: recreantAndQuitters};
   }
   case ActionTypes.PLAYER_DELETED:

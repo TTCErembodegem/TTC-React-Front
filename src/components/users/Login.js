@@ -19,8 +19,8 @@ export const paperStyle = {
   display: 'inline-block',
 };
 
-@connect(() => ({}), loginActions)
-export default class Login extends Component {
+
+class Login extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     login: PropTypes.func.isRequired,
@@ -79,3 +79,5 @@ export default class Login extends Component {
     );
   }
 }
+
+export default connect(() => ({}), loginActions)(Login);

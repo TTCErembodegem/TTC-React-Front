@@ -8,10 +8,10 @@ import UserModel from '../models/UserModel.js';
 import PlayerModel from '../models/PlayerModel.js';
 import {contextTypes} from '../utils/decorators/withContext.js';
 
-export storeUtil from '../storeUtil.js'; // eslint-disable-line
+export storeUtil from '../storeUtil.js';
 export {connect} from 'react-redux';
 export {browseTo} from '../routes.js';
-export keyMirror from 'fbjs/lib/keyMirror'; // eslint-disable-line
+export keyMirror from 'fbjs/lib/keyMirror';
 
 export withViewport from '../utils/decorators/withViewport.js'; // eslint-disable-line
 export withContext from '../utils/decorators/withContext.js'; // eslint-disable-line

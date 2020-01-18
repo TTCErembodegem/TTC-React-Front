@@ -5,12 +5,7 @@ import * as userActions from '../../actions/userActions.js';
 import TextField from '@material-ui/core/TextField';
 import {MaterialButton} from '../controls/Button.js';
 
-@connect(state => {
-  return {
-    user: state.user,
-  };
-}, userActions)
-export default class ChangePassword extends Component {
+class ChangePassword extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     user: PropTypes.UserModel.isRequired,
@@ -63,3 +58,5 @@ export default class ChangePassword extends Component {
     );
   }
 }
+
+export default connect(state => ({user: state.user}), userActions)(ChangePassword);

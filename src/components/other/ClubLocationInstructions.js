@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 import PropTypes, {connect} from '../PropTypes.js';
 // import {OwnEmail, GoogleMap} from '../controls.js';
 
-@connect(state => ({params: state.config.get('params')}))
-export default class ClubLocationInstructions extends Component {
+class ClubLocationInstructions extends Component {
   static contextTypes = PropTypes.contextTypes;
 
   static propTypes = {
@@ -59,3 +58,5 @@ export default class ClubLocationInstructions extends Component {
     // );
   }
 }
+
+export default connect(state => ({params: state.config.get('params')}))(ClubLocationInstructions);

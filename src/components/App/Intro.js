@@ -15,20 +15,10 @@ import IntroClub from './IntroClub.js';
 import {WeirdLocaleYearInfo} from './WeirdLocaleYearInfo.js';
 import IntroSponsors from './IntroSponsors.js';
 
+require('./App.css');
 
-@connect(state => {
-  return {
-    config: state.config,
-    user: state.user,
-    players: state.players,
-    matches: state.matches,
-    teams: state.teams
-  };
-})
-@withContext
-@withViewport
-@withStyles(require('./App.css'))
-export default class Intro extends Component {
+
+class Intro extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     config: PropTypes.map.isRequired,
@@ -70,6 +60,16 @@ export default class Intro extends Component {
     );
   }
 }
+
+export default withContext(withViewport(connect(state => {
+  return {
+    config: state.config,
+    user: state.user,
+    players: state.players,
+    matches: state.matches,
+    teams: state.teams
+  };
+})(Intro)));
 
 // TODO: React warning: setState on unmounted component = Typist (loading schlager is gone too fast now...)
 // https://github.com/jstejada/react-typist/issues/6#issuecomment-250910698

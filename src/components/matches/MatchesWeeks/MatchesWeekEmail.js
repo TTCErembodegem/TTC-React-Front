@@ -10,9 +10,8 @@ import {Editor} from '../../controls/Editor';
 import {buildHtml} from './htmlBuilder';
 import {getOpponentMatches} from '../../../actions/matchActions';
 
-@connect(state => ({user: state.user, players: state.players}), {getOpponentMatches, ...adminActions})
 /** EmailButton that turns into a MatchWeekEmailComposeComponent (Modal) */
-export class MatchesWeekEmail extends Component {
+class MatchesWeekEmailComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     players: PropTypes.PlayerModelList.isRequired,
@@ -92,7 +91,7 @@ export class MatchesWeekEmail extends Component {
             style={{height: 300, marginRight: 15}}
             onChange={value => this.setState({email: value})}
             options={editorOptions}
-            contentEditable={true}
+            contentEditable
           />
         </Modal.Body>
 
@@ -104,3 +103,8 @@ export class MatchesWeekEmail extends Component {
     );
   }
 }
+
+export const MatchesWeekEmail = connect(
+  state => ({user: state.user, players: state.players}),
+  {getOpponentMatches, ...adminActions},
+)(MatchesWeekEmailComponent);

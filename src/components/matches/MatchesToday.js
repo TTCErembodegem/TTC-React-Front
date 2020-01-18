@@ -1,20 +1,12 @@
 import React, {Component} from 'react';
-import PropTypes, {connect, withViewport, storeUtil} from '../PropTypes.js';
 import _ from 'lodash';
+import PropTypes, {connect, withViewport, storeUtil} from '../PropTypes.js';
 
 import * as configActions from '../../actions/configActions.js';
 import MatchCard from './Match/MatchCard.js';
 
-@withViewport
-@connect(state => {
-  return {
-    config: state.config,
-    user: state.user,
-    players: state.players,
-    matches: state.matches,
-  };
-}, configActions)
-export default class MatchesToday extends Component {
+
+class MatchesToday extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     config: PropTypes.object.isRequired,
@@ -78,3 +70,12 @@ export default class MatchesToday extends Component {
     );
   }
 }
+
+export default withViewport(connect(state => {
+  return {
+    config: state.config,
+    user: state.user,
+    players: state.players,
+    matches: state.matches,
+  };
+}, configActions)(MatchesToday));

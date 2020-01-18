@@ -1,14 +1,11 @@
 import React, {Component} from 'react';
-import PropTypes, {connect, storeUtil} from '../PropTypes.js';
 import Panel from 'react-bootstrap/lib/Panel';
+import PropTypes, {connect, storeUtil} from '../PropTypes.js';
 import {Email, Telephone, PlayerAddress} from '../controls.js';
 import PlayerImage from '../players/PlayerImage.js';
 
-@connect(state => ({
-  players: state.players,
-  clubs: state.clubs,
-}))
-export default class Administration extends Component {
+
+class Administration extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     players: PropTypes.PlayerModelList.isRequired,
@@ -53,3 +50,8 @@ export default class Administration extends Component {
     );
   }
 }
+
+export default connect(state => ({
+  players: state.players,
+  clubs: state.clubs,
+}))(Administration);

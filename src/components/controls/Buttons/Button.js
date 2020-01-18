@@ -4,8 +4,7 @@ import cn from 'classnames';
 import {Icon} from '../Icon.js';
 
 
-@withTooltip
-export class Button extends Component {
+class ButtonComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     onClick: PropTypes.func.isRequired,
@@ -27,11 +26,10 @@ export class Button extends Component {
   }
 }
 
+export const Button = withTooltip(ButtonComponent);
 
 
-
-@withTooltip
-export class IconButton extends Component {
+class IconButtonComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     onClick: PropTypes.func.isRequired,
@@ -52,3 +50,5 @@ export class IconButton extends Component {
     );
   }
 }
+
+export const IconButton = withTooltip(IconButtonComponent);

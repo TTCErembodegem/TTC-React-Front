@@ -9,16 +9,9 @@ import * as configActions from '../../actions/configActions.js';
 
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 
-@connect(state => {
-  return {
-    config: state.config,
-    user: state.user,
-  };
-}, configActions)
-@withContext
-@withViewport
-@withStyles(require('./App.css'))
-export default class App extends Component {
+import './App.css';
+
+class App extends Component {
   static propTypes = {
     config: PropTypes.map.isRequired,
     user: PropTypes.UserModel,
@@ -51,7 +44,7 @@ export default class App extends Component {
               open={!!this.props.config.get('snackbar')}
               message={this.props.config.get('snackbar') || ''}
               autoHideDuration={4000}
-              onClose={::this._onCloseSnackbar} />
+              onClose={() => this._onCloseSnackbar()} />
           </div>
         </MuiThemeProvider>
       </div>
@@ -61,3 +54,10 @@ export default class App extends Component {
     this.props.clearSnackbar();
   }
 }
+
+export default withViewport(withContext(connect(state => {
+  return {
+    config: state.config,
+    user: state.user,
+  };
+}, configActions)(App)));

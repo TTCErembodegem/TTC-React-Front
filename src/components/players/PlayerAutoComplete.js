@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 import PropTypes, {connect} from '../PropTypes.js';
 import Select from 'react-select';
 
-@connect(state => ({players: state.players}))
-export default class PlayerAutoComplete extends Component {
+class PlayerAutoComplete extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     players: PropTypes.PlayerModelList.isRequired,
@@ -56,3 +55,5 @@ export default class PlayerAutoComplete extends Component {
     );
   }
 }
+
+export default connect(state => ({players: state.players}))(PlayerAutoComplete);

@@ -1,4 +1,6 @@
-import {trans, routes, timeAgo} from './utils/locales-nl.js';
+import LocalesUtils from './utils/locales-nl.js';
+
+const {trans, routes, timeAgo} = LocalesUtils;
 
 var translate = function(key, params) {
   var str;

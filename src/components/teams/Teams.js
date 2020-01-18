@@ -17,19 +17,7 @@ import PlayersCardGallery from '../players/PlayersCardGallery.js';
 import MatchesTable from '../matches/MatchesTable.js';
 import {TeamMatchesWeek} from './TeamMatchesWeek.js';
 
-@connect(state => {
-  return {
-    config: state.config,
-    user: state.user,
-    players: state.players,
-    clubs: state.clubs,
-    matches: state.matches,
-    teams: state.teams,
-  };
-}, {editMatchPlayers})
-@withViewport
-@withRouter
-export default class Teams extends Component {
+class Teams extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     config: PropTypes.object.isRequired,
@@ -252,3 +240,14 @@ export default class Teams extends Component {
     );
   }
 }
+
+export default withViewport(withRouter(connect(state => {
+  return {
+    config: state.config,
+    user: state.user,
+    players: state.players,
+    clubs: state.clubs,
+    matches: state.matches,
+    teams: state.teams,
+  };
+}, {editMatchPlayers})(Teams)));

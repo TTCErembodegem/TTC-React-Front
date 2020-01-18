@@ -18,9 +18,7 @@ export class ProfilePhotoAvatarForm extends Component {
 }
 
 
-@withContext
-@connect(state => ({user: state.user}), {uploadPlayer})
-export default class ProfilePhotoForm extends Component {
+class ProfilePhotoForm extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     admin: PropTypes.bool,
@@ -124,3 +122,5 @@ export default class ProfilePhotoForm extends Component {
     this.props.uploadPlayer(this.state.preview, this.state.playerId || this.props.user.playerId, this.props.type);
   }
 }
+
+export default withContext(connect(state => ({user: state.user}), {uploadPlayer})(ProfilePhotoForm))

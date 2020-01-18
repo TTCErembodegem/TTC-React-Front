@@ -10,13 +10,9 @@ import {PlayersAllNotLoggedIn} from './Players/PlayersAllNotLoggedIn.js';
 import {PlayersAllSmall} from './Players/PlayersAllSmall.js';
 import {PlayersAllBig} from './Players/PlayersAllBig.js';
 
-@connect(state => ({
-  players: state.players,
-  user: state.user,
-}))
-@withViewport
-@withStyles(require('./Players.css'))
-export default class Players extends Component {
+import './Players.css';
+
+class Players extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     players: PropTypes.PlayerModelList.isRequired,
@@ -149,3 +145,8 @@ export default class Players extends Component {
     return players;
   }
 }
+
+export default withViewport(connect(state => ({
+  players: state.players,
+  user: state.user,
+}))(Players));

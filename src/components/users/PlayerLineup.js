@@ -17,8 +17,7 @@ import MatchVs from '../matches/Match/MatchVs.js';
 import {CannotEditMatchIcon} from '../matches/MatchesTable.js';
 import {SwitchBetweenFirstAndLastRoundButton, getFirstOrLastMatches, getFirstOrLast} from '../teams/SwitchBetweenFirstAndLastRoundButton.js';
 
-@connect(state => ({matches: state.matches}), {selectPlayer})
-export default class PlayerLinup extends Component {
+class PlayerLinup extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     matches: PropTypes.MatchModelList.isRequired,
@@ -197,3 +196,5 @@ CommentEditForm.propTypes = {
   value: PropTypes.string.isRequired,
   t: PropTypes.func.isRequired,
 };
+
+export default connect(state => ({matches: state.matches}), {selectPlayer})(PlayerLinup);

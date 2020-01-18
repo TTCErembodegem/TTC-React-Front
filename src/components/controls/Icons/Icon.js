@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
-import PropTypes, {withTooltip} from '../../PropTypes.js';
 import cn from 'classnames';
+import PropTypes, {withTooltip} from '../../PropTypes.js';
 
-@withTooltip
-export class Icon extends Component {
+class IconComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     fa: PropTypes.string.isRequired,
@@ -25,3 +24,5 @@ export class Icon extends Component {
     );
   }
 }
+
+export const Icon = withTooltip(IconComponent);

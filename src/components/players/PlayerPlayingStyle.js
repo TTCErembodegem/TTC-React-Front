@@ -16,7 +16,8 @@ import PlayerAutoComplete from './PlayerAutoComplete.js';
 import PlayerStyleAutocomplete from './PlayerStyleAutocomplete.js';
 import PlayerAvatar from './PlayerAvatar.js';
 
-
+// TODO: need to put this in some css file?
+//@withStyles({dialog: {overflow: 'visible'}})
 
 export const PlayerPlayingStyle = ({ply, allowEdit = true}) => (
   <span>
@@ -33,10 +34,7 @@ PlayerPlayingStyle.propTypes = {
 };
 
 
-@withStyles({dialog: {overflow: 'visible'}})
-@connect(state => ({user: state.user}), playerActions)
-@withContext
-export class PlayerPlayingStyleForm extends Component {
+class PlayerPlayingStyleFormComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     player: PropTypes.PlayerModel.isRequired,
@@ -118,20 +116,20 @@ export class PlayerPlayingStyleForm extends Component {
         key="1"
         label={t('common.cancel')}
         secondary={true}
-        onClick={::this._closeStyle}
+        onClick={() => this._closeStyle()}
       />,
       <MaterialButton
         key="2"
         label={t('common.save')}
         primary={true}
-        onClick={::this._saveStyle}
+        onClick={() => this._saveStyle()}
       />,
     ];
 
     return (
       <Dialog
         open={!!this.state.editingPlayer}
-        onClose={::this._closeStyle}
+        onClose={() => this._closeStyle()}
         scroll="body"
         classes={{paperScrollPaper: this.props.classes.dialog, paperScrollBody: this.props.classes.dialog}}
       >
@@ -150,7 +148,7 @@ export class PlayerPlayingStyleForm extends Component {
             label={t('player.editStyle.bestStroke')}
             type="text"
             value={this.state.newStyle.bestStroke || ''}
-            onChange={::this._changeBestStroke}
+            onChange={e => this._changeBestStroke(e)}
           />
 
           <br />
@@ -171,3 +169,5 @@ export class PlayerPlayingStyleForm extends Component {
     );
   }
 }
+
+export const PlayerPlayingStyleForm = withContext(connect(state => ({user: state.user}), playerActions)(PlayerPlayingStyleFormComponent));

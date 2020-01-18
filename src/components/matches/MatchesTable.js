@@ -20,9 +20,7 @@ function isPickedForMatch(status) {
 }
 
 
-@withViewport
-@connect(state => ({user: state.user}), {editMatchPlayers})
-export default class MatchesTable extends Component {
+class MatchesTable extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     matches: PropTypes.MatchModelList.isRequired,
@@ -436,3 +434,5 @@ CommentForm.propTypes = {
   onUpdate: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
 };
+
+export default withViewport(connect(state => ({user: state.user}), {editMatchPlayers})(MatchesTable));

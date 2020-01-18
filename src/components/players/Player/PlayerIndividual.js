@@ -1,13 +1,11 @@
 import React, {Component} from 'react';
-import PropTypes, {connect, withViewport} from '../../PropTypes.js';
 import Table from 'react-bootstrap/lib/Table';
-
+import PropTypes, {connect, withViewport} from '../../PropTypes.js';
 import {WonLostLabel, PercentageLabel} from '../../controls.js';
 import {getPlayerStats} from '../../../models/TeamModel.js';
 
-@withViewport
-@connect(state => ({matches: state.matches, teams: state.teams}))
-export class PlayerIndividual extends Component {
+
+class PlayerIndividualComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     viewport: PropTypes.viewport,
@@ -85,3 +83,5 @@ export class PlayerIndividual extends Component {
     );
   }
 }
+
+export const PlayerIndividual = withViewport(connect(state => ({matches: state.matches, teams: state.teams}))(PlayerIndividualComponent));

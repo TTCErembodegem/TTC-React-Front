@@ -5,8 +5,7 @@ import {playerUtils} from '../../models/PlayerModel.js';
 import {PlayerLink} from '../controls.js';
 import Avatar from '@material-ui/core/Avatar';
 
-@withTooltip
-export default class PlayerAvatar extends Component {
+class PlayerAvatar extends Component {
   static propTypes = {
     player: PropTypes.PlayerModel.isRequired
   }
@@ -41,3 +40,5 @@ export default class PlayerAvatar extends Component {
     );
   }
 }
+
+export default withTooltip(PlayerAvatar);

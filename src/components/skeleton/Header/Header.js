@@ -18,6 +18,8 @@ import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 
+require('./Header.css');
+
 const styles = {
   root: {
     flexGrow: 1,
@@ -39,9 +41,7 @@ const HeaderButton = ({label, href}) => (
   </Link>
 );
 
-@withViewport
-@withStyles(require('./Header.css'))
-export default withMaterialStyles(styles)(class Header extends Component {
+export default withViewport(withMaterialStyles(styles)(class Header extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     viewport: PropTypes.viewport,
@@ -111,4 +111,4 @@ export default withMaterialStyles(styles)(class Header extends Component {
     // (solution: put some sort of icon at the top of the navigation so its non-clickabel?:)
     setTimeout(() => this.setState({isNavOpening: false}), 1000);
   }
-});
+}));

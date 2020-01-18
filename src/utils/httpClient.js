@@ -14,8 +14,8 @@ export function getUrl(path, appendApi = true) {
     path = '/api' + path;
   }
 
-  return location.hostname !== 'localhost' ?
-    `http://${location.hostname}${path}` :
+  return window.location.hostname !== 'localhost' ?
+    `http://${window.location.hostname}${path}` :
     `http://localhost:49731${path}`;
 }
 

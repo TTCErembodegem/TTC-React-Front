@@ -1,5 +1,5 @@
 import Promise from 'bluebird';
-import * as ActionTypes from './ActionTypes.js';
+import ActionTypes from './ActionTypes.js';
 import http from '../utils/httpClient.js';
 import storeUtil from '../storeUtil.js';
 import {showSnackbar, setSetting} from './configActions.js';

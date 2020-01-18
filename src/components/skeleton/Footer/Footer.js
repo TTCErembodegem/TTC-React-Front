@@ -1,14 +1,12 @@
 import React, {Component} from 'react';
-
 import PropTypes, {connect} from '../../PropTypes.js';
-import styles from './Footer.css';
 import withStyles from '../../../utils/decorators/withStyles.js';
 import {Icon, OwnEmail} from '../../controls.js';
 import {CookieNotice} from './CookieNotice.js';
 
-@withStyles(styles)
-@connect(state => ({params: state.config.get('params')}))
-export default class Footer extends Component {
+import './Footer.css';
+
+class Footer extends Component {
   static contextTypes = PropTypes.contextTypes;
 
   static propTypes = {
@@ -39,6 +37,8 @@ export default class Footer extends Component {
     );
   }
 }
+
+export default connect(state => ({params: state.config.get('params')}))(Footer);
 
 class MadeBy extends Component {
   render() {

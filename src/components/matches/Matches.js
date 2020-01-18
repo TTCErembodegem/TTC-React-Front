@@ -1,19 +1,12 @@
 import React, {Component} from 'react';
-import PropTypes, {connect, withContext} from '../PropTypes.js';
 import moment from 'moment';
+import PropTypes, {connect, withContext} from '../PropTypes.js';
 
 import {Strike} from '../controls.js';
 import {SmallMatchCardHeader} from './Match/MatchCardHeader.js';
 
-@withContext
-@connect(state => {
-  return {
-    config: state.config,
-    user: state.user,
-    matches: state.matches,
-  };
-})
-export default class Matches extends Component {
+
+class Matches extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     config: PropTypes.object.isRequired,
@@ -95,3 +88,9 @@ export default class Matches extends Component {
     );
   }
 }
+
+export default withContext(connect(state => ({
+  config: state.config,
+  user: state.user,
+  matches: state.matches,
+}))(Matches));

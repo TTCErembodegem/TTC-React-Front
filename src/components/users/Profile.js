@@ -20,13 +20,8 @@ const tabEventKeys = keyMirror({
   editHolidays: '',
 });
 
-@connect(state => {
-  return {
-    user: state.user,
-  };
-}, loginActions)
-@withRouter
-export default class Profile extends Component {
+
+class Profile extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     user: PropTypes.UserModel.isRequired,
@@ -52,7 +47,7 @@ export default class Profile extends Component {
     const player = this.props.user.getPlayer();
     switch (eventKey) {
     case tabEventKeys.main:
-      return <ProfilePlayerDetails t={this.context.t} player={player} logout={::this._logout} />;
+      return <ProfilePlayerDetails t={this.context.t} player={player} logout={() => this._logout()} />;
     case tabEventKeys.editDetails:
       return <ChangePlayerDetails player={player} />;
     case tabEventKeys.editPicture:
@@ -65,7 +60,7 @@ export default class Profile extends Component {
       let user = this.props.user;
       return <PlayerLineup teams={user.getTeams()} playerId={user.playerId} />;
     }
-    }
+  }
   }
 
   render() {
@@ -116,7 +111,7 @@ export default class Profile extends Component {
           defaultTabKey={tabEventKeys.main}
           tabKeys={tabConfig}
           route={{base: this.context.t.route('profile'), subs: 'profileTabs'}}
-          tabRenderer={::this._renderTabContent}
+          tabRenderer={eventKey => this._renderTabContent(eventKey)}
         />
       </div>
     );
@@ -150,3 +145,9 @@ ProfilePlayerDetails.propTypes = {
   t: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
 };
+
+export default withRouter(connect(state => {
+  return {
+    user: state.user,
+  };
+}, loginActions)(Profile));
