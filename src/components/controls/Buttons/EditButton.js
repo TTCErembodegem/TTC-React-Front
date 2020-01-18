@@ -3,7 +3,7 @@ import PropTypes from '../../PropTypes.js';
 import {EditIcon} from '../Icon.js';
 
 export const EditButton = ({onClick, title, style, fa}) => (
-  <button className="btn btn-default"onClick={onClick} title={title} style={style}>
+  <button className="btn btn-default" onClick={onClick} title={title} style={style}>
     <EditIcon className={fa} />
   </button>
 );

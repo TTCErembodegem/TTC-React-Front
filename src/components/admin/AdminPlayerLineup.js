@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
+import Button from 'react-bootstrap/lib/Button';
 import PropTypes, {connect, withViewport, storeUtil} from '../PropTypes.js';
 
-import Button from 'react-bootstrap/lib/Button';
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 import PlayerLinup from '../users/PlayerLineup.js';
 
@@ -11,13 +11,14 @@ class AdminPlayerLineup extends React.Component {
     matches: PropTypes.MatchModelList,
     viewport: PropTypes.viewport,
   }
+
   constructor() {
     super();
     this.state = {comp: 'Vttl', playerId: null};
   }
 
   render() {
-    var playerFormation;
+    let playerFormation;
     if (this.state.playerId) {
       const team = storeUtil.getPlayer(this.state.playerId).getTeam(this.state.comp);
 
@@ -45,12 +46,14 @@ class AdminPlayerLineupToolbar extends Component {
   static propTypes = {
     onFilterChange: PropTypes.func.isRequired,
   }
+
   constructor() {
     super();
     this.state = {playerId: null};
   }
+
   render() {
-    const onFilterChange = this.props.onFilterChange;
+    const {onFilterChange} = this.props;
     return (
       <div style={{padding: 10, display: 'inline-block', width: 300}}>
         <PlayerAutoComplete

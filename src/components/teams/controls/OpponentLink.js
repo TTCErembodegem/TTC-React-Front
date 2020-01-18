@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import PropTypes, {browseTo} from '../../PropTypes.js';
 import {Link} from 'react-router-dom';
+import PropTypes, {browseTo} from '../../PropTypes.js';
 import storeUtil from '../../../storeUtil.js';
 import {DivisionRankingLabel} from '../../matches/controls/DivisionRankingLabel.js';
 import {OwnClubId} from '../../../models/ClubModel.js';
@@ -19,7 +19,7 @@ export class OpponentLink extends Component {
 
   render() {
     const {withPosition, team, opponent} = this.props;
-    let teamTitle = storeUtil.getClub(opponent.clubId).name + ' ' + opponent.teamCode;
+    let teamTitle = `${storeUtil.getClub(opponent.clubId).name} ${opponent.teamCode}`;
 
     if (opponent.clubId !== OwnClubId && browseTo.getOpponent(team.competition, opponent) !== document.location.pathname) {
       teamTitle = (

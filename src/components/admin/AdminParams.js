@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
+import Table from 'react-bootstrap/lib/Table';
 import PropTypes, {connect} from '../PropTypes.js';
 import * as configActions from '../../actions/configActions.js';
 
-import Table from 'react-bootstrap/lib/Table';
 
 
 class AdminParamsComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     saveConfigParam: PropTypes.func.isRequired,
     configParams: PropTypes.object.isRequired,

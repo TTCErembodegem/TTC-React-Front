@@ -12,7 +12,7 @@ export const Location = ({loc, t, noTelephoneLink = false}) => (
         <div>
           <strong>{loc.description}</strong><br />
           {loc.address}<br />
-          {loc.postalCode + ' ' + loc.city}
+          {`${loc.postalCode} ${loc.city}`}
         </div>
       ) : (
         <div>{t('match.club.locationUnknown')}</div>
@@ -33,7 +33,7 @@ Location.propTypes = {
 class Website extends Component {
   static propTypes = {
     site: PropTypes.string,
-    description: PropTypes.string
+    description: PropTypes.string,
   }
 
   render() {

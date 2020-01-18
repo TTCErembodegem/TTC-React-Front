@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import PropTypes, {withViewport} from '../../PropTypes.js';
 import cn from 'classnames';
 
 import Table from 'react-bootstrap/lib/Table';
+import PropTypes, {withViewport} from '../../PropTypes.js';
 import {Spinner, TrophyIcon} from '../../controls.js';
 import {OtherMatchPlayerResultsTableRow} from './OtherMatchPlayerResults.js';
 import {MatchPlayerRankings} from '../controls/MatchPlayerRankings.js';
@@ -12,6 +12,7 @@ import {SwitchBetweenFirstAndLastRoundButton, getFirstOrLastMatches, getFirstOrL
 
 class OpponentMatchesComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     readonlyMatches: PropTypes.object.isRequired,
     team: PropTypes.TeamModel.isRequired,
@@ -52,7 +53,7 @@ class OpponentMatchesComponent extends Component {
         </thead>
         <tbody>
           {matches.map(match => {
-            const opponent = this.props.opponent;
+            const {opponent} = this.props;
             const isTheirHomeMatch = opponent && match.home.clubId === opponent.clubId && match.home.teamCode === opponent.teamCode;
             const isTheirOutMatch = opponent && !isTheirHomeMatch;
             return [
@@ -68,11 +69,11 @@ class OpponentMatchesComponent extends Component {
                 ) : null}
 
                 <td key="2">
-                  <OpponentTeamTitle team={this.props.team} readonlyMatch={match} isHome={true} isMarked={isTheirHomeMatch} />
+                  <OpponentTeamTitle team={this.props.team} readonlyMatch={match} isHome isMarked={isTheirHomeMatch} />
                 </td>
                 {widthWithFormation ? (
                   <td key="3" style={{fontWeight: isTheirHomeMatch ? 'bold' : undefined}}>
-                    <MatchPlayerRankings match={match} homeTeam={true} />
+                    <MatchPlayerRankings match={match} homeTeam />
                   </td>
                 ) : null}
 
@@ -91,7 +92,7 @@ class OpponentMatchesComponent extends Component {
                   <OpponentMatchScore readonlyMatch={match} />
                 </td>
               </tr>,
-              <OtherMatchPlayerResultsTableRow key="7" show={match.isSyncedWithFrenoy && this.state[match.id]} match={match} colSpan={6} />
+              <OtherMatchPlayerResultsTableRow key="7" show={match.isSyncedWithFrenoy && this.state[match.id]} match={match} colSpan={6} />,
             ];
           })}
         </tbody>

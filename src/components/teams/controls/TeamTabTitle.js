@@ -5,6 +5,7 @@ import {TeamPosition} from './TeamPosition.js';
 
 export class TeamTabTitle extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     team: PropTypes.TeamModel.isRequired,
     showRanking: PropTypes.bool.isRequired,

@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
-import PropTypes, {connect, withViewport} from '../PropTypes.js';
 import Immutable from 'immutable';
-import {toggleTeamPlayer} from '../../actions/playerActions.js';
-import {frenoyTeamSync} from '../../actions/matchActions.js';
 import _ from 'lodash';
 
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Button from 'react-bootstrap/lib/Button';
 import MenuItem from '@material-ui/core/MenuItem';
+import {frenoyTeamSync} from '../../actions/matchActions.js';
+import {toggleTeamPlayer} from '../../actions/playerActions.js';
+import PropTypes, {connect, withViewport} from '../PropTypes.js';
 
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 import PlayersImageGallery from '../players/PlayersImageGallery.js';
@@ -23,6 +23,7 @@ class AdminTeams extends React.Component {
     viewport: PropTypes.viewport,
     user: PropTypes.object.isRequired,
   }
+
   constructor() {
     super();
     this.state = {filter: 'Vttl'};
@@ -59,6 +60,7 @@ class AdminTeamPlayers extends Component {
     user: PropTypes.object.isRequired,
     onFrenoySync: PropTypes.func.isRequired,
   }
+
   constructor() {
     super();
     this.state = {role: 'Standard'};
@@ -67,6 +69,7 @@ class AdminTeamPlayers extends Component {
   _onRoleChange(event) {
     this.setState({role: event.target.value});
   }
+
   _onToggleTeamPlayer(playerId) {
     this.props.toggleTeamPlayer(playerId, this.state.role);
     this.setState({role: 'Standard'});
@@ -78,7 +81,7 @@ class AdminTeamPlayers extends Component {
   }
 
   render() {
-    const team = this.props.team;
+    const {team} = this.props;
     return (
       <div style={{paddingLeft: 10, paddingRight: 10}}>
         <Paper style={{padding: 20, marginBottom: 20}}>
@@ -126,6 +129,4 @@ AdminTeamsToolbar.propTypes = {
   onFilterChange: PropTypes.func.isRequired,
 };
 
-export default withViewport(connect(state => {
-  return {user: state.user};
-}, {toggleTeamPlayer, frenoyTeamSync})(AdminTeams));
+export default withViewport(connect(state => ({user: state.user}), {toggleTeamPlayer, frenoyTeamSync})(AdminTeams));

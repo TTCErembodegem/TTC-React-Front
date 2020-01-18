@@ -1,20 +1,20 @@
 import {createStore, applyMiddleware, compose} from 'redux';
-//import {devTools} from 'redux-devtools';
-//import createLogger from 'redux-logger';
+// import {devTools} from 'redux-devtools';
+// import createLogger from 'redux-logger';
 import thunk from 'redux-thunk';
 
 import rootReducer from './reducers';
 
-var finalCreateStore;
+let finalCreateStore;
 if (false) { // eslint-disable-line
-  //console.error('finalCreateStore DEBUG');
+  // console.error('finalCreateStore DEBUG');
   finalCreateStore = compose(
-    //applyMiddleware(createLogger({collapsed: true})),
+    // applyMiddleware(createLogger({collapsed: true})),
     applyMiddleware(thunk),
-    //devTools(),
+    // devTools(),
   )(createStore);
 } else {
-  //console.error('finalCreateStore NODEBUG');
+  // console.error('finalCreateStore NODEBUG');
   finalCreateStore = compose(
     applyMiddleware(thunk),
   )(createStore);
@@ -28,7 +28,7 @@ if (false) { // eslint-disable-line
 const store = finalCreateStore(rootReducer);
 
 if (module.hot) {
-  //console.error('finalCreateStore is HOT');
+  // console.error('finalCreateStore is HOT');
   // Enable Webpack hot module replacement for reducers
   module.hot.accept('./reducers', () => {
     const nextRootReducer = require('./reducers');

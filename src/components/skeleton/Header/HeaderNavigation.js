@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
-import {contextTypes} from '../../../utils/decorators/withContext.js';
 import {Link, withRouter} from 'react-router-dom';
-import storeUtil from '../../../storeUtil.js';
 
 import enhanceWithClickOutside from 'react-click-outside';
 import {withStyles} from '@material-ui/core/styles';
@@ -13,10 +11,13 @@ import Badge from '@material-ui/core/Badge';
 import AppBar from '@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
 import Toolbar from '@material-ui/core/Toolbar';
+import storeUtil from '../../../storeUtil.js';
+import {contextTypes} from '../../../utils/decorators/withContext.js';
 
-//using @connect decorator breaks enhanceWithClickOutside
+// using @connect decorator breaks enhanceWithClickOutside
 class Navigation extends Component {
   static contextTypes = contextTypes;
+
   static propTypes = {
     toggleNav: PropTypes.func.isRequired,
     navOpen: PropTypes.bool.isRequired,
@@ -26,6 +27,7 @@ class Navigation extends Component {
   }
 
   todayTimeout = undefined;
+
   constructor() {
     super();
     this.state = {swap: true};
@@ -34,6 +36,7 @@ class Navigation extends Component {
   componentDidMount() {
     this.todayTimeout = setInterval(() => this.setState({swap: !this.state.swap}), 1000 * 60 * 60 * 6);
   }
+
   componentWillUnmount() {
     if (this.todayTimeout) {
       clearInterval(this.todayTimeout);
@@ -61,7 +64,7 @@ class Navigation extends Component {
   }
 
   render() {
-    const t = this.context.t;
+    const {t} = this.context;
     const matchesToday = storeUtil.matches.getTodayMatches();
 
     return (

@@ -14,6 +14,7 @@ import './Players.css';
 
 class Players extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     players: PropTypes.PlayerModelList.isRequired,
     user: PropTypes.UserModel.isRequired,
@@ -21,7 +22,7 @@ class Players extends Component {
 
     match: PropTypes.shape({
       params: PropTypes.shape({
-        tabKey: PropTypes.string
+        tabKey: PropTypes.string,
       }),
     }),
   };
@@ -36,20 +37,20 @@ class Players extends Component {
   }
 
   _renderTabContent(tabKey) {
-    var tabContent;
+    let tabContent;
     switch (tabKey) {
-    case 'list':
-      tabContent = this._renderTabAll();
-      break;
-    case 'vttl':
-      tabContent = <PlayersVttl filter={this.state.filter} />;
-      break;
-    case 'sporta':
-      tabContent = <PlayersSporta filter={this.state.filter} />;
-      break;
-    case 'gallery':
-      tabContent = <PlayersCardGallery players={this._getAllPlayers()} />;
-      break;
+      case 'list':
+        tabContent = this._renderTabAll();
+        break;
+      case 'vttl':
+        tabContent = <PlayersVttl filter={this.state.filter} />;
+        break;
+      case 'sporta':
+        tabContent = <PlayersSporta filter={this.state.filter} />;
+        break;
+      case 'gallery':
+        tabContent = <PlayersCardGallery players={this._getAllPlayers()} />;
+        break;
     }
     return (
       <div>
@@ -91,7 +92,8 @@ class Players extends Component {
           tabKeys={tabKeysConfig}
           tabRenderer={eventKey => this._renderTabContent(eventKey)}
           route={{base: this.context.t.route('players'), subs: 'playersTabs'}}
-          forceTabs />
+          forceTabs
+        />
       </div>
     );
   }
@@ -109,32 +111,32 @@ class Players extends Component {
   }
 
   _getAllPlayers() {
-    let players = this.props.players;
+    let {players} = this.props;
     if (this.state.filter) {
       players = players.filter(x => x.name.toLowerCase().includes(this.state.filter));
     }
 
-    var filter;
+    let filter;
     switch (this.state.sort) {
-    case 'Vttl':
-    case 'Sporta':
-      filter = (plyA, plyB) => {
-        const compA = plyA.getCompetition(this.state.sort);
-        const compB = plyB.getCompetition(this.state.sort);
-        if (!compA.ranking && !compB.ranking) {
-          return 0;
-        }
-        if (!compA.ranking) {
-          return 1;
-        }
-        if (!compB.ranking) {
-          return -1;
-        }
-        return compA.position - compB.position;
-      };
-      break;
-    default:
-      filter = (plyA, plyB) => plyA.name.localeCompare(plyB.name);
+      case 'Vttl':
+      case 'Sporta':
+        filter = (plyA, plyB) => {
+          const compA = plyA.getCompetition(this.state.sort);
+          const compB = plyB.getCompetition(this.state.sort);
+          if (!compA.ranking && !compB.ranking) {
+            return 0;
+          }
+          if (!compA.ranking) {
+            return 1;
+          }
+          if (!compB.ranking) {
+            return -1;
+          }
+          return compA.position - compB.position;
+        };
+        break;
+      default:
+        filter = (plyA, plyB) => plyA.name.localeCompare(plyB.name);
     }
 
     players = players.sort(filter);

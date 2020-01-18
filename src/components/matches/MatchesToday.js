@@ -8,6 +8,7 @@ import MatchCard from './Match/MatchCard.js';
 
 class MatchesToday extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     config: PropTypes.object.isRequired,
     user: PropTypes.UserModel.isRequired,
@@ -20,12 +21,13 @@ class MatchesToday extends Component {
   componentDidMount() {
     this.props.setSetting('container100PerWidth', true);
   }
+
   componentWillUnmount() {
     this.props.setSetting('container100PerWidth', false);
   }
 
   render() {
-    var matchesToday = storeUtil.matches.getTodayMatches();
+    const matchesToday = storeUtil.matches.getTodayMatches();
     if (matchesToday.size === 0) {
       return <div />;
     }
@@ -51,7 +53,8 @@ class MatchesToday extends Component {
               isOpen={false}
               width={this.props.viewport.width}
               viewportWidthContainerCount={this.props.viewport.width > 1200 ? 2 : 1}
-              config={this.props.config} />
+              config={this.props.config}
+            />
           </div>
         ))}
       </div>
@@ -63,7 +66,7 @@ class MatchesToday extends Component {
       <div className="row">
         {matches.map(match => (
           <div className="col-md-6" style={{paddingBottom: 5, paddingTop: 5}} key={match.id}>
-            <MatchCard match={match} user={this.props.user} isOpen={true} viewportWidthContainerCount={2} big config={this.props.config} />
+            <MatchCard match={match} user={this.props.user} isOpen viewportWidthContainerCount={2} big config={this.props.config} />
           </div>
         ))}
       </div>
@@ -71,11 +74,9 @@ class MatchesToday extends Component {
   }
 }
 
-export default withViewport(connect(state => {
-  return {
-    config: state.config,
-    user: state.user,
-    players: state.players,
-    matches: state.matches,
-  };
-}, configActions)(MatchesToday));
+export default withViewport(connect(state => ({
+  config: state.config,
+  user: state.user,
+  players: state.players,
+  matches: state.matches,
+}), configActions)(MatchesToday));

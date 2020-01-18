@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import PropTypes, {connect, withViewport} from '../../PropTypes.js';
 import Table from 'react-bootstrap/lib/Table';
+import PropTypes, {connect, withViewport} from '../../PropTypes.js';
 import {PlayerCompetitionLabel} from '../../controls.js';
 import {TeamOverviewPlayerStats} from './TeamOverviewPlayerStats.js';
 
 class TeamOverviewPlayersComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     viewport: PropTypes.viewport,
     user: PropTypes.UserModel.isRequired,
@@ -13,7 +14,7 @@ class TeamOverviewPlayersComponent extends Component {
   };
 
   render() {
-    const t = this.context.t;
+    const {t} = this.context;
     const {team, user} = this.props;
     const stats = team.getPlayerStats();
     if (stats.length === 0) {

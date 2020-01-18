@@ -4,13 +4,14 @@ import {forceFrenoySync} from '../../../actions/matchActions.js';
 
 class MatchCardAdminComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     forceFrenoySync: PropTypes.func.isRequired,
     match: PropTypes.MatchModel.isRequired,
   }
 
   render() {
-    const match = this.props.match;
+    const {match} = this.props;
     return (
       <div style={{padding: 7}}>
         <button onClick={() => this.props.forceFrenoySync(match.id)} className="btn btn-default pull-right">

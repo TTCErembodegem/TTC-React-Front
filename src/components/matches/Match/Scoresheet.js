@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import PropTypes from '../../PropTypes.js';
 import Table from 'react-bootstrap/lib/Table';
+import PropTypes from '../../PropTypes.js';
 import {FrenoyWeekLink, PlayerLink} from '../../controls.js';
 import {ExcelButton} from '../../controls/Button.js';
 import http from '../../../utils/httpClient.js';
@@ -14,7 +14,7 @@ export default class Scoresheet extends Component {
 
   render() {
     const isSmall = this.props.viewport.width < 550;
-    const competition = this.props.match.competition;
+    const {competition} = this.props.match;
 
     if (competition === 'Sporta') {
       return [
@@ -22,7 +22,7 @@ export default class Scoresheet extends Component {
           key="1"
           onClick={() => http.download.scoresheetExcel(this.props.match)}
           tooltip={this.props.match.isHomeMatch ? 'Download Scoresheet' : 'Download Scoresheet (UIT match???)'}
-          className={'pull-right ' + (this.props.match.isHomeMatch ? 'btn-success' : 'btn-danger')}
+          className={`pull-right ${this.props.match.isHomeMatch ? 'btn-success' : 'btn-danger'}`}
           style={{margin: 6}}
         />,
         <Table key="2" condensed className="match-card-tab-table">
@@ -55,43 +55,42 @@ export default class Scoresheet extends Component {
               <td>
                 {this.props.match.getOwnPlayerModels()
                   .map(player => player.getCompetition(competition).rankingValue)
-                  .reduce((prev, cur) => prev + cur)
-                }
+                  .reduce((prev, cur) => prev + cur)}
               </td>
             </tr>
           </tbody>
-        </Table>
+        </Table>,
       ];
-    } else {
-      // VTTL Scoresheet
-      return (
-        <Table condensed className="match-card-tab-table">
-          <thead>
-            <tr>
-              <th colSpan={2}>{this.props.match.frenoyMatchId}</th>
-              <th>{this.props.t('comp.vttl.uniqueIndex')}</th>
-              <th>{isSmall ? '' : this.props.t('comp.rankingIndex')}</th>
-              <th>{isSmall ? '' : this.props.t('comp.index')}</th>
-              <th>{isSmall ? '' : this.props.t('comp.ranking')}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.props.match.getOwnPlayerModels().map((player, i) => {
-              const comp = player.getCompetition(competition);
-              return (
-                <tr key={player.name}>
-                  <td>{i + 1}</td>
-                  <td>{player.name}</td>
-                  <td>{comp.uniqueIndex}</td>
-                  <td>{comp.position}</td>
-                  <td>{comp.rankingIndex}</td>
-                  <td>{comp.ranking}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </Table>
-      );
     }
+    // VTTL Scoresheet
+    return (
+      <Table condensed className="match-card-tab-table">
+        <thead>
+          <tr>
+            <th colSpan={2}>{this.props.match.frenoyMatchId}</th>
+            <th>{this.props.t('comp.vttl.uniqueIndex')}</th>
+            <th>{isSmall ? '' : this.props.t('comp.rankingIndex')}</th>
+            <th>{isSmall ? '' : this.props.t('comp.index')}</th>
+            <th>{isSmall ? '' : this.props.t('comp.ranking')}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.props.match.getOwnPlayerModels().map((player, i) => {
+            const comp = player.getCompetition(competition);
+            return (
+              <tr key={player.name}>
+                <td>{i + 1}</td>
+                <td>{player.name}</td>
+                <td>{comp.uniqueIndex}</td>
+                <td>{comp.position}</td>
+                <td>{comp.rankingIndex}</td>
+                <td>{comp.ranking}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </Table>
+    );
+
   }
 }

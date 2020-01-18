@@ -52,12 +52,10 @@ export function getMatchPlayerRankings(match, homeTeam) {
   }
   const rankings = opponentFormation.map(ply => ply.ranking);
   const diffs = rankings.toArray().filter(unique);
-  return diffs.map(ranking => {
-    return {
-      ranking,
-      amount: rankings.reduce((prev, cur) => prev + (cur === ranking ? 1 : 0), 0)
-    };
-  });
+  return diffs.map(ranking => ({
+    ranking,
+    amount: rankings.reduce((prev, cur) => prev + (cur === ranking ? 1 : 0), 0),
+  }));
 }
 
 
@@ -70,7 +68,7 @@ function getOpponentMatches(match, opponent = undefined) {
 
   return {
     home: matches.filter(m => m.home.clubId === opponent.clubId && m.home.teamCode === opponent.teamCode),
-    away: matches.filter(m => m.away.clubId === opponent.clubId && m.away.teamCode === opponent.teamCode)
+    away: matches.filter(m => m.away.clubId === opponent.clubId && m.away.teamCode === opponent.teamCode),
   };
 }
 

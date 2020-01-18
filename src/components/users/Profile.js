@@ -6,9 +6,9 @@ import * as loginActions from '../../actions/userActions.js';
 import {MaterialButton} from '../controls/Button.js';
 import {TabbedContainer} from '../controls/TabbedContainer.js';
 
-import ChangePassword from '../users/ChangePassword.js';
-import ChangePlayerDetails from '../users/ChangePlayerDetails.js';
-import ProfilePhotoForm, {ProfilePhotoAvatarForm} from '../users/ProfilePhotoForm.js';
+import ChangePassword from './ChangePassword.js';
+import ChangePlayerDetails from './ChangePlayerDetails.js';
+import ProfilePhotoForm, {ProfilePhotoAvatarForm} from './ProfilePhotoForm.js';
 import PlayerLineup from './PlayerLineup.js';
 
 const tabEventKeys = keyMirror({
@@ -23,12 +23,13 @@ const tabEventKeys = keyMirror({
 
 class Profile extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     user: PropTypes.UserModel.isRequired,
     logout: PropTypes.func.isRequired,
     match: PropTypes.shape({
       params: PropTypes.shape({
-        tabKey: PropTypes.string
+        tabKey: PropTypes.string,
       }),
     }),
     history: PropTypes.any.isRequired,
@@ -46,21 +47,21 @@ class Profile extends Component {
   _renderTabContent(eventKey) {
     const player = this.props.user.getPlayer();
     switch (eventKey) {
-    case tabEventKeys.main:
-      return <ProfilePlayerDetails t={this.context.t} player={player} logout={() => this._logout()} />;
-    case tabEventKeys.editDetails:
-      return <ChangePlayerDetails player={player} />;
-    case tabEventKeys.editPicture:
-      return <ProfilePhotoForm />;
-    case tabEventKeys.editAvatar:
-      return <ProfilePhotoAvatarForm />;
-    case tabEventKeys.editPassword:
-      return <ChangePassword />;
-    case tabEventKeys.editHolidays: {
-      let user = this.props.user;
-      return <PlayerLineup teams={user.getTeams()} playerId={user.playerId} />;
+      case tabEventKeys.main:
+        return <ProfilePlayerDetails t={this.context.t} player={player} logout={() => this._logout()} />;
+      case tabEventKeys.editDetails:
+        return <ChangePlayerDetails player={player} />;
+      case tabEventKeys.editPicture:
+        return <ProfilePhotoForm />;
+      case tabEventKeys.editAvatar:
+        return <ProfilePhotoAvatarForm />;
+      case tabEventKeys.editPassword:
+        return <ChangePassword />;
+      case tabEventKeys.editHolidays: {
+        const {user} = this.props;
+        return <PlayerLineup teams={user.getTeams()} playerId={user.playerId} />;
+      }
     }
-  }
   }
 
   render() {
@@ -68,7 +69,7 @@ class Profile extends Component {
       return <div />;
     }
 
-    const t = this.context.t;
+    const {t} = this.context;
     const tabConfig = [{
       key: tabEventKeys.main,
       title: t('profile.main'),
@@ -93,9 +94,10 @@ class Profile extends Component {
       return (
         <div>
           <h1>SYSTEM USER</h1>
-          <MaterialButton variant="contained"
+          <MaterialButton
+            variant="contained"
             label={t('login.logoutButton')}
-            secondary={true}
+            secondary
             style={{marginTop: -15}}
             onClick={this.props.logout}
           />
@@ -131,9 +133,10 @@ const ProfilePlayerDetails = ({player, t, logout}) => (
       <strong>{t('player.city')}</strong>&nbsp;{player.contact.city}
     </p>
 
-    <MaterialButton variant="contained"
+    <MaterialButton
+      variant="contained"
       label={t('login.logoutButton')}
-      secondary={true}
+      secondary
       style={{marginTop: 15}}
       onClick={() => logout()}
     />
@@ -146,8 +149,6 @@ ProfilePlayerDetails.propTypes = {
   logout: PropTypes.func.isRequired,
 };
 
-export default withRouter(connect(state => {
-  return {
-    user: state.user,
-  };
-}, loginActions)(Profile));
+export default withRouter(connect(state => ({
+  user: state.user,
+}), loginActions)(Profile));

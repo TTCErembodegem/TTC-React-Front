@@ -4,12 +4,13 @@ import {PlayerLink} from '../../controls.js';
 
 export default class Achievements extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     calcer: PropTypes.object,
   }
 
   render() {
-    const calcer = this.props.calcer;
+    const {calcer} = this.props;
     return (
       <div>
         <h2>
@@ -68,6 +69,6 @@ const Achievement = ({achievement}) => {
       {achievement.title ? <b>{achievement.title}&nbsp;</b> : null}
       <small> {achievement.desc}</small>
     </dt>,
-    ...nodes
+    ...nodes,
   ];
 };

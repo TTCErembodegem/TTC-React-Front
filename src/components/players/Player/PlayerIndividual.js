@@ -7,6 +7,7 @@ import {getPlayerStats} from '../../../models/TeamModel.js';
 
 class PlayerIndividualComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     viewport: PropTypes.viewport,
     matches: PropTypes.MatchModelList.isRequired,
@@ -15,7 +16,7 @@ class PlayerIndividualComponent extends Component {
   }
 
   render() {
-    const t = this.context.t;
+    const {t} = this.context;
     const {player, competition} = this.props;
     const comp = player.getCompetition(competition);
     if (!comp.ranking) {

@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
-import PropTypes, {connect} from '../PropTypes.js';
 import TextField from '@material-ui/core/TextField';
-import {MaterialButton} from '../controls/Button.js';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
+import {MaterialButton} from '../controls/Button.js';
+import PropTypes, {connect} from '../PropTypes.js';
 
 export default class AdminClubForm extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     club: PropTypes.ClubModel,
     updateClub: PropTypes.func.isRequired,
@@ -50,9 +51,10 @@ export default class AdminClubForm extends Component {
             {this.context.t('Shower')}
           </Paper>
         </div>
-        <MaterialButton variant="contained"
+        <MaterialButton
+          variant="contained"
           label={this.context.t('common.save')}
-          primary={true}
+          primary
           style={{marginTop: 5}}
           onClick={() => {
             this.props.updateClub(this.state);
@@ -60,7 +62,8 @@ export default class AdminClubForm extends Component {
           }}
         />
 
-        <MaterialButton variant="contained"
+        <MaterialButton
+          variant="contained"
           label={this.context.t('common.cancel')}
           style={{marginTop: 5, marginLeft: 10}}
           onClick={() => this.props.onEnd()}

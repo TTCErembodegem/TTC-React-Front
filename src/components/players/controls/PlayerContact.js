@@ -3,7 +3,7 @@ import PropTypes from '../../PropTypes.js';
 import {Email, Telephone, PlayerAddress} from '../../controls.js';
 
 export class PlayerContact extends Component {
-  //static contextTypes = PropTypes.contextTypes;
+  // static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     player: PropTypes.PlayerModel.isRequired,
   };

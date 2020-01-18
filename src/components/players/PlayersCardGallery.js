@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 import PropTypes, {withViewport} from '../PropTypes.js';
 import PlayerImage from './PlayerImage.js';
 import PlayerCard from './PlayerCard.js';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import {PlayerLink} from '../controls.js';
 
 class PlayersCardGallery extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     players: PropTypes.PlayerModelList.isRequired,
     viewport: PropTypes.viewport,
@@ -15,18 +16,16 @@ class PlayersCardGallery extends Component {
   };
 
   render() {
-    const players = this.props.players;
+    const {players} = this.props;
     const viewWidth = this.props.viewport.width;
     if (viewWidth > 360) {
       return (
         <div style={{marginTop: 15, marginLeft: 0, marginRight: 0, padding: 0}} className="row players-gallery">
-          {players.map(player => {
-            return (
-              <div className="col-lg-4 col-sm-6" key={player.id}>
-                <PlayerCard player={player} showSideBySide={viewWidth < 768 && viewWidth > 550} />
-              </div>
-            );
-          })}
+          {players.map(player => (
+            <div className="col-lg-4 col-sm-6" key={player.id}>
+              <PlayerCard player={player} showSideBySide={viewWidth < 768 && viewWidth > 550} />
+            </div>
+          ))}
         </div>
       );
     }

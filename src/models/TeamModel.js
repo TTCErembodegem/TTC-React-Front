@@ -1,5 +1,5 @@
-import storeUtil from '../storeUtil.js';
 import moment from 'moment';
+import storeUtil from '../storeUtil.js';
 import {TeamFrenoyModel} from './TeamFrenoyModel.js';
 
 export const teamPlayerType = {
@@ -26,12 +26,13 @@ export default class TeamModel {
   getTeamPlayerCount() {
     return this.competition === 'Vttl' ? 4 : 3;
   }
+
   getScoreCount() {
     return this.competition === 'Vttl' ? 16 : 10;
   }
 
   renderOwnTeamTitle() {
-    return this.competition + ' ' + this.teamCode;
+    return `${this.competition} ${this.teamCode}`;
   }
 
   getDivisionDescription() {
@@ -39,8 +40,9 @@ export default class TeamModel {
     if (!this.divisionName) {
       return 'Ere Afdeling';
     }
-    return 'Prov ' + this.divisionName;
+    return `Prov ${this.divisionName}`;
   }
+
   getDivisionRanking(opponent = 'our-ranking') {
     if (opponent === 'our-ranking') {
       return this.getDivisionRanking({clubId: this.clubId, teamCode: this.teamCode});
@@ -48,6 +50,7 @@ export default class TeamModel {
     const result = this.ranking.find(x => x.clubId === opponent.clubId && x.teamCode === opponent.teamCode);
     return result || {empty: true};
   }
+
   getThriller(match) {
     if (match.date.isBefore(moment())) {
       return;
@@ -63,21 +66,22 @@ export default class TeamModel {
 
     if (ourRanking.position <= 3 && theirRankingPosition <= 3) {
       return 'topMatch';
-    } else if (ourRanking.position >= teamsInDivision - 2 && theirRankingPosition >= teamsInDivision - 2) {
+    } if (ourRanking.position >= teamsInDivision - 2 && theirRankingPosition >= teamsInDivision - 2) {
       return 'degradationMatch';
     }
-    return;
+
   }
 
   isCaptain(player) {
     return this.players.find(x => x.type === teamPlayerType.captain && x.playerId === player.id);
   }
+
   getCaptainPlayerIds() {
     return this.players.filter(x => x.type === teamPlayerType.captain).map(x => x.playerId);
   }
 
   getPlayers(type) {
-    var players = this.players;
+    let {players} = this;
     if (type === 'reserve') {
       players = players.filter(ply => ply.type === teamPlayerType.reserve);
     } else if (type === 'standard') {
@@ -86,11 +90,12 @@ export default class TeamModel {
 
     players = players.map(ply => ({
       player: storeUtil.getPlayer(ply.playerId),
-      type: ply.type
+      type: ply.type,
     }));
 
     return players.sort(sortMappedPlayers(this.competition));
   }
+
   plays(playerId) {
     return this.players.find(ply => ply.playerId === playerId);
   }
@@ -99,6 +104,7 @@ export default class TeamModel {
     return storeUtil.matches.getAllMatches()
       .filter(match => match.teamId === this.id);
   }
+
   getPlayerStats() {
     const matches = this.getMatches().filter(m => m.isSyncedWithFrenoy);
     return getPlayerStats(matches);
@@ -107,6 +113,7 @@ export default class TeamModel {
   isTopper(opponent) {
     return this.getDivisionRanking(opponent).position < 3;
   }
+
   isInDegradationZone(opponent) {
     return this.getDivisionRanking(opponent).position >= (this.ranking.length - 2);
   }
@@ -114,10 +121,10 @@ export default class TeamModel {
 
 export function getPlayerStats(matches, withBelles = false) {
   // ATTN: There are tests for this one...
-  var result = {};
+  const result = {};
   matches.forEach(match => {
     const gameResults = match.getGameMatches();
-    //const homeOrOut = match.isHomeMatch ? 'home' : 'out';
+    // const homeOrOut = match.isHomeMatch ? 'home' : 'out';
 
     gameResults.forEach(game => {
       const playerId = game.ownPlayer.playerId || 0;
@@ -137,14 +144,14 @@ export function getPlayerStats(matches, withBelles = false) {
           lost: {},
           games: 0,
           victories: 0,
-          isDoubles: isDoubles,
+          isDoubles,
           belles: {},
           belleVictories: 0,
           belleGames: 0,
         };
       }
 
-      var playerResult = result[playerId];
+      const playerResult = result[playerId];
       playerResult.games++;
       if (game.outcome === 'Won') {
         playerResult.victories++;

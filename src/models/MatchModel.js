@@ -48,7 +48,7 @@ export default class MatchModel {
 
       const comments = json.comments.map(c => ({
         ...c,
-        postedOn: moment(c.postedOn)
+        postedOn: moment(c.postedOn),
       }));
       this.comments = Immutable.List(comments);
 
@@ -80,6 +80,7 @@ export default class MatchModel {
     }
     return this.date.format('ddd D/M HH');
   }
+
   getDisplayTime() {
     if (this.date.minutes()) {
       return this.date.format('HH:mm');
@@ -89,7 +90,7 @@ export default class MatchModel {
 
   renderOpponentTitle() {
     const club = this.getOpponentClub();
-    return club.name + ' ' + this.opponent.teamCode;
+    return `${club.name} ${this.opponent.teamCode}`;
   }
 
   getOpponentClub() {
@@ -98,6 +99,7 @@ export default class MatchModel {
     }
     return storeUtil.getClub(this.opponent.clubId) || {};
   }
+
   getClub(which) {
     if (this.opponent) {
       console.warn('MatchModel.getClub: use getOpponentClub for TTC Erembodegem matches'); // eslint-disable-line
@@ -114,47 +116,52 @@ export default class MatchModel {
   isStandardStartTime() {
     return !this.date.minutes() && this.date.hours() === defaultStartHour;
   }
+
   isBeingPlayed() {
     const diff = moment.duration(moment().diff(this.date)).asHours();
     return Math.abs(diff) < 10;
   }
+
   won(opponent) {
     // ATTN: This only works for an OpponentMatch?
     if (this.score.home === this.score.out) {
       return false;
     }
 
-    var won = this.score.home > this.score.out;
+    let won = this.score.home > this.score.out;
     if (this.away.clubId === opponent.clubId && this.away.teamCode === opponent.teamCode) {
       won = !won;
     }
     return won;
   }
+
   isScoreComplete() {
     const scoreTotal = this.getTeam().getScoreCount();
     return this.score.home + this.score.out === scoreTotal;
   }
+
   renderScore() {
     if (this.score.home === 0 && this.score.out === 0) {
       return '';
-    } else {
-      return this.score.home + ' - ' + this.score.out;
     }
+    return `${this.score.home} - ${this.score.out}`;
+
   }
 
   getTeam() {
     return storeUtil.getTeam(this.teamId);
   }
+
   getTeamPlayerCount() {
     return this.competition === 'Vttl' ? 4 : 3;
   }
 
   getPreviousMatch() {
-    var otherMatch = storeUtil.matches.getAllMatches()
-      .find(m => m.teamId === this.teamId &&
-        m.opponent.clubId === this.opponent.clubId &&
-        m.opponent.teamCode === this.opponent.teamCode &&
-        m.date < this.date);
+    const otherMatch = storeUtil.matches.getAllMatches()
+      .find(m => m.teamId === this.teamId
+        && m.opponent.clubId === this.opponent.clubId
+        && m.opponent.teamCode === this.opponent.teamCode
+        && m.date < this.date);
 
     return otherMatch;
   }
@@ -171,10 +178,10 @@ export default class MatchModel {
     const team = this.getTeam();
     const plys = this.getOwnPlayers();
 
-    var filter;
+    let filter;
     if (!statusFilter || statusFilter === 'onlyFinal') {
       filter = ply => {
-        const status = ply.matchPlayer.status;
+        const {status} = ply.matchPlayer;
         if (this.isSyncedWithFrenoy) {
           return status === 'Major';
         }
@@ -199,7 +206,7 @@ export default class MatchModel {
       .map(ply => ({
         id: ply.playerId,
         player: storeUtil.getPlayer(ply.playerId),
-        matchPlayer: ply
+        matchPlayer: ply,
       }))
       .filter(filter)
       .sort(sortMappedPlayers(team.competition));
@@ -212,6 +219,7 @@ export default class MatchModel {
   getOwnPlayers() {
     return this.players.filter(player => player.home).sort((a, b) => a.position - b.position);
   }
+
   getTheirPlayers() {
     return this.players.filter(player => !player.home).sort((a, b) => a.position - b.position);
   }
@@ -227,9 +235,9 @@ export default class MatchModel {
     }
 
     return this.games.map(game => {
-      var homePlayer = this.getGamePlayer(game.homePlayerUniqueIndex);
-      var outPlayer = this.getGamePlayer(game.outPlayerUniqueIndex);
-      var result = {
+      const homePlayer = this.getGamePlayer(game.homePlayerUniqueIndex);
+      const outPlayer = this.getGamePlayer(game.outPlayerUniqueIndex);
+      const result = {
         matchNumber: game.matchNumber,
         home: homePlayer,
         out: outPlayer,

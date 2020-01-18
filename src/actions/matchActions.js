@@ -1,17 +1,17 @@
 import Promise from 'bluebird';
+import moment from 'moment';
+import _ from 'lodash';
 import ActionTypes from './ActionTypes.js';
 import http from '../utils/httpClient.js';
 import storeUtil from '../storeUtil.js';
 import {showSnackbar, setSetting} from './configActions.js';
 import {broadcastReload} from '../hub.js';
 import trans from '../locales.js';
-import moment from 'moment';
-import _ from 'lodash';
 
 export function simpleLoaded(data) {
   return {
     type: ActionTypes.MATCHES_LOADED,
-    payload: data
+    payload: data,
   };
 }
 
@@ -20,11 +20,11 @@ const shouldSync = match => !match.isSyncedWithFrenoy && moment().isAfter(match.
 function frenoySync(dispatch, m, forceSync = false) {
   if (forceSync || shouldSync(m)) {
     // Non played matches date is 0001-01-01T00:00:00
-    return http.post('/matches/FrenoyMatchSync?forceSync=' + forceSync, {id: m.id})
-      .then(function(newmatch) {
+    return http.post(`/matches/FrenoyMatchSync?forceSync=${forceSync}`, {id: m.id})
+      .then(newmatch => {
         dispatch(simpleLoaded(newmatch));
         broadcastReload('match', newmatch.id);
-      }, function(err) {
+      }, err => {
         if (forceSync) {
           dispatch(showSnackbar(trans('common.apiFail')));
         }
@@ -38,9 +38,9 @@ function frenoyReadOnlyMatchSync(match) {
   return dispatch => {
     if (shouldSync(match)) {
       http.post('/matches/FrenoyOtherMatchSync', {id: match.id})
-        .then(function(newmatch) {
+        .then(newmatch => {
           dispatch(readOnlyLoaded(Object.assign(newmatch, {frenoyDivisionId: match.frenoyDivisionId})));
-        }, function(err) {
+        }, err => {
           console.error(err); // eslint-disable-line
         });
     }
@@ -62,7 +62,7 @@ export function loaded(data, dispatch) {
     data = [data];
   }
 
-  var p = Promise.resolve();
+  let p = Promise.resolve();
   data.forEach(match => {
     p = p.then(() => frenoySync(dispatch, match));
   });
@@ -72,36 +72,34 @@ export function loaded(data, dispatch) {
 export function readOnlyLoaded(data) {
   return {
     type: ActionTypes.READONLY_MATCHES_LOADED,
-    payload: data
+    payload: data,
   };
 }
 
 export function getOpponentMatches(teamId, opponent = {}) {
-  const key = 'GetOpponentMatches' + teamId + opponent.teamCode + opponent.clubId;
+  const key = `GetOpponentMatches${teamId}${opponent.teamCode}${opponent.clubId}`;
   if (storeUtil.getConfig().get(key)) {
     return {type: 'empty', payload: ''};
   }
 
-  return dispatch => {
-    return http.get('/matches/GetOpponentMatches', {teamId, ...opponent})
-      .then(function(matches) {
-        dispatch(setSetting(key, true));
+  return dispatch => http.get('/matches/GetOpponentMatches', {teamId, ...opponent})
+    .then(matches => {
+      dispatch(setSetting(key, true));
 
-        if (!matches || !matches.length) {
-          return;
-        }
+      if (!matches || !matches.length) {
+        return;
+      }
 
-        dispatch(readOnlyLoaded(matches));
+      dispatch(readOnlyLoaded(matches));
 
-        matches.forEach(m => {
-          dispatch(frenoyReadOnlyMatchSync(m));
-        });
-        return null;
-
-      }, function(err) {
-        console.log('GetOpponentMatches!', err); // eslint-disable-line
+      matches.forEach(m => {
+        dispatch(frenoyReadOnlyMatchSync(m));
       });
-  };
+      return null;
+
+    }, err => {
+        console.log('GetOpponentMatches!', err); // eslint-disable-line
+    });
 }
 
 
@@ -111,7 +109,7 @@ export function selectPlayer(matchId, status, statusNote, playerId) {
     const player = storeUtil.getPlayer(playerId);
     const comp = player.getCompetition(match.competition);
 
-    var matchPlayer = match.plays(player);
+    let matchPlayer = match.plays(player);
     if (!matchPlayer) {
       matchPlayer = {
         matchId: match.id,
@@ -122,8 +120,8 @@ export function selectPlayer(matchId, status, statusNote, playerId) {
         name: player.alias,
         alias: player.alias,
         uniqueIndex: comp.uniqueIndex,
-        status: status,
-        statusNote: statusNote,
+        status,
+        statusNote,
       };
     } else {
       matchPlayer.status = status;
@@ -134,86 +132,80 @@ export function selectPlayer(matchId, status, statusNote, playerId) {
       matchPlayer.statusNote = statusNote;
     }
 
-    return http.post('/matches/' + (isMyFormation ? 'SetMyFormation' : 'TogglePlayer'), matchPlayer)
-      .then(function(data) {
+    return http.post(`/matches/${isMyFormation ? 'SetMyFormation' : 'TogglePlayer'}`, matchPlayer)
+      .then(data => {
         if (data) {
           dispatch(simpleLoaded(data));
           broadcastReload('match', data.id);
         }
 
-      }, function(err) {
+      }, err => {
         console.log('TogglePlayer!', err); // eslint-disable-line
       });
   };
 }
 
 export function editMatchPlayers(matchPlayersInfo, doShowSnackbar = true) {
-  return dispatch => {
-    return http.post('/matches/EditMatchPlayers', matchPlayersInfo)
-      .then(function(data) {
-        if (data) {
-          dispatch(simpleLoaded(data));
-          broadcastReload('match', data.id);
+  return dispatch => http.post('/matches/EditMatchPlayers', matchPlayersInfo)
+    .then(data => {
+      if (data) {
+        dispatch(simpleLoaded(data));
+        broadcastReload('match', data.id);
 
-          if (doShowSnackbar) {
-            const msg = !matchPlayersInfo.blockAlso ? 'snackbarSaved' : 'snackbarBlocked';
-            dispatch(showSnackbar(trans('match.plys.' + msg)));
-          }
+        if (doShowSnackbar) {
+          const msg = !matchPlayersInfo.blockAlso ? 'snackbarSaved' : 'snackbarBlocked';
+          dispatch(showSnackbar(trans(`match.plys.${msg}`)));
         }
+      }
 
-      }, function(err) {
+    }, err => {
         console.log('editMatchPlayers!', err); // eslint-disable-line
-      });
-  };
+    });
 }
 
 export function matchUpdated(dataId, updateType) {
   if (updateType === 'score') {
     return {
       type: ActionTypes.SET_SETTING,
-      payload: {key: 'newMatchScore' + dataId, value: true}
+      payload: {key: `newMatchScore${dataId}`, value: true},
     };
-  } else if (updateType === 'report') {
+  } if (updateType === 'report') {
     return {
       type: ActionTypes.SET_SETTING,
-      payload: {key: 'newMatchComment' + dataId, value: true}
+      payload: {key: `newMatchComment${dataId}`, value: true},
     };
   }
 }
 
 export function updateScore(matchScore) {
-  return dispatch => {
-    return http.post('/matches/UpdateScore', matchScore)
-      .then(function(data) {
-        if (!data) {
-          return;
-        }
-        dispatch(simpleLoaded(data));
-        broadcastReload('match', data.id, 'score');
+  return dispatch => http.post('/matches/UpdateScore', matchScore)
+    .then(data => {
+      if (!data) {
+        return;
+      }
+      dispatch(simpleLoaded(data));
+      broadcastReload('match', data.id, 'score');
 
-      }, function(err) {
+    }, err => {
         console.log('UpdateScore!', err); // eslint-disable-line
-      });
-  };
+    });
 }
 
 export function frenoyTeamSync(teamId) {
-  return dispatch => {
-    return http.post('/matches/FrenoyTeamSync', {id: teamId})
-      .then(function() {
-        dispatch(showSnackbar(trans('common.apiSuccess') + ': Duw F5 om de wijzigingen te zien'));
+  return dispatch => http.post('/matches/FrenoyTeamSync', {id: teamId})
+    .then(() => {
+      dispatch(showSnackbar(`${trans('common.apiSuccess')}: Duw F5 om de wijzigingen te zien`));
 
-      }, function(err) {
+    }, err => {
         console.log('frenoyTeamSync!', err); // eslint-disable-line
-      });
-  };
+    });
 }
 
 export function postReport(matchId, reportText) {
   return dispatch => {
-    var user = storeUtil.getUser();
+    const user = storeUtil.getUser();
     return http.post('/matches/Report', {matchId, text: reportText, playerId: user.playerId})
-      .then(function(data) {
+      .then(data => {
         if (!data) {
           return;
         }
@@ -221,42 +213,38 @@ export function postReport(matchId, reportText) {
         broadcastReload('match', data.id, 'report');
         dispatch(showSnackbar(trans('match.report.reportPosted')));
 
-      }, function(err) {
+      }, err => {
         console.log('Report!', err); // eslint-disable-line
       });
   };
 }
 
 export function postComment(comment) {
-  return dispatch => {
-    return http.post('/matches/Comment', comment)
-      .then(function(data) {
-        if (!data) {
-          return;
-        }
-        dispatch(simpleLoaded(data));
-        broadcastReload('match', data.id, 'report');
-        dispatch(showSnackbar(trans('match.report.commentPosted')));
+  return dispatch => http.post('/matches/Comment', comment)
+    .then(data => {
+      if (!data) {
+        return;
+      }
+      dispatch(simpleLoaded(data));
+      broadcastReload('match', data.id, 'report');
+      dispatch(showSnackbar(trans('match.report.commentPosted')));
 
-      }, function(err) {
+    }, err => {
         console.log('Comment!', err); // eslint-disable-line
-      });
-  };
+    });
 }
 
 export function deleteComment(commentId) {
-  return dispatch => {
-    return http.post('/matches/DeleteComment', {id: commentId})
-      .then(function(data) {
-        if (!data) {
-          return;
-        }
-        dispatch(simpleLoaded(data));
-        broadcastReload('match', data.id);
-        dispatch(showSnackbar(trans('match.report.commentDeleted')));
+  return dispatch => http.post('/matches/DeleteComment', {id: commentId})
+    .then(data => {
+      if (!data) {
+        return;
+      }
+      dispatch(simpleLoaded(data));
+      broadcastReload('match', data.id);
+      dispatch(showSnackbar(trans('match.report.commentDeleted')));
 
-      }, function(err) {
+    }, err => {
         console.log('Delete Comment!', err); // eslint-disable-line
-      });
-  };
+    });
 }

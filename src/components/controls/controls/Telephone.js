@@ -5,7 +5,7 @@ import {displayMobile} from '../../../models/PlayerModel.js';
 
 function callFormat(n) {
   return n;
-  //return '+32' + n.substr(1);
+  // return '+32' + n.substr(1);
 }
 
 export class Telephone extends Component {
@@ -15,8 +15,9 @@ export class Telephone extends Component {
     hideIcon: PropTypes.bool,
     noLink: PropTypes.bool,
   }
+
   static defaultProps = {
-    hideIcon: false
+    hideIcon: false,
   }
 
   render() {
@@ -25,12 +26,12 @@ export class Telephone extends Component {
     }
 
     const {number, hideIcon, player, noLink, ...props} = this.props;
-    var nr = player ? player.contact.mobile : number;
+    const nr = player ? player.contact.mobile : number;
     if (!nr) {
       return null;
     }
     if (hideIcon) {
-      return <a href={'tel:' + callFormat(nr)} {...props}>{displayMobile(nr)}</a>;
+      return <a href={`tel:${callFormat(nr)}`} {...props}>{displayMobile(nr)}</a>;
     }
 
     return (
@@ -39,7 +40,7 @@ export class Telephone extends Component {
         {noLink ? (
           <div>{displayMobile(nr)}</div>
         ) : (
-          <a style={{marginLeft: 7}} href={'tel:' + callFormat(nr)}>{displayMobile(nr)}</a>
+          <a style={{marginLeft: 7}} href={`tel:${callFormat(nr)}`}>{displayMobile(nr)}</a>
         )}
       </div>
     );

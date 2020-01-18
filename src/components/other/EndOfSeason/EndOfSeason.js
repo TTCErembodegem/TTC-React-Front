@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import PropTypes, {connect, storeUtil, withStyles, withContext} from '../../PropTypes.js';
 import Panel from 'react-bootstrap/lib/Panel';
+import PropTypes, {connect, storeUtil, withStyles, withContext} from '../../PropTypes.js';
 import {Email, Telephone, PlayerAddress, PlayerLink, Strike} from '../../controls.js';
 import PlayerImage from '../../players/PlayerImage.js';
 import {AchievementsCalculator} from './AchievementsCalculator.js';
@@ -14,6 +14,7 @@ require('./achievements.css');
 
 class EndOfSeason extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     players: PropTypes.PlayerModelList.isRequired,
     matches: PropTypes.MatchModelList.isRequired,
@@ -22,7 +23,7 @@ class EndOfSeason extends Component {
   }
 
   render() {
-    const matches = this.props.matches;
+    const {matches} = this.props;
     const calcer = new AchievementsCalculator(this.props.players, matches, this.props.teams);
     return (
       <div className="endofseason-container">

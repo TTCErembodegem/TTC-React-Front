@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
+import Table from 'react-bootstrap/lib/Table';
 import PropTypes, {withViewport} from '../../PropTypes.js';
 import {getOpponentFormations} from '../../../storeUtil';
-import Table from 'react-bootstrap/lib/Table';
 import {PlayerRankings} from '../controls/MatchPlayerRankings.js';
 
 
 class OpponentsTeamFormationComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     viewport: PropTypes.viewport,
     matches: PropTypes.MatchModelList.isRequired,
@@ -21,7 +22,7 @@ class OpponentsTeamFormationComponent extends Component {
     const {matches, opponent} = this.props;
     const formations = getOpponentFormations(matches, opponent);
 
-    const t = this.context.t;
+    const {t} = this.context;
     return (
       <Table condensed striped style={{maxWidth: 250}}>
         {!this.props.hideHeader ? (

@@ -8,6 +8,7 @@ export default class PlayerImage extends Component {
     center: PropTypes.bool,
     shape: PropTypes.oneOf(['rounded', 'thumbnail', 'circle']),
   }
+
   static defaultProps = {
     center: true,
     shape: 'rounded',
@@ -16,7 +17,7 @@ export default class PlayerImage extends Component {
   constructor(props) {
     super(props);
 
-    var img = new Image();
+    const img = new Image();
     img.onload = () => this.setState({isLoaded: true});
     img.src = playerUtils.getImageUrl(this.props.playerId);
 
@@ -42,7 +43,7 @@ export default class PlayerImage extends Component {
 
     return (
       <div style={{textAlign: align}} {...props}>
-        <img src={this.state.img} className={'img-' + shape} style={{height: 200}} />
+        <img src={this.state.img} className={`img-${shape}`} style={{height: 200}} />
       </div>
     );
   }

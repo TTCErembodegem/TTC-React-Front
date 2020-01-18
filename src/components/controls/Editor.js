@@ -1,10 +1,10 @@
 // TODO: disableEditing doesn't work: https://github.com/wangzuo/react-medium-editor/issues/15
 
-var assign = require('object-assign');
-var blacklist = require('blacklist');
+const assign = require('object-assign');
+const blacklist = require('blacklist');
 const PropTypes = require('prop-types');
-var React = require('react');
-var ReactDOM = require('react-dom');
+const React = require('react');
+const ReactDOM = require('react-dom');
 
 if (typeof document !== 'undefined') {
   var MediumEditor = require('medium-editor');
@@ -27,7 +27,7 @@ export class Editor extends React.Component {
   static defaultProps = {tag: 'div'}
 
   componentDidMount() {
-    var dom = ReactDOM.findDOMNode(this);
+    const dom = ReactDOM.findDOMNode(this);
     this.medium = new MediumEditor(dom, this.props.options);
     this.medium.subscribe('editableInput', () => {
       this._updated = true;
@@ -50,12 +50,12 @@ export class Editor extends React.Component {
   }
 
   render() {
-    var tag = this.props.tag;
-    var props = blacklist(this.props, 'tag', 'dangerouslySetInnerHTML', 'text', 'options');
+    const {tag} = this.props;
+    let props = blacklist(this.props, 'tag', 'dangerouslySetInnerHTML', 'text', 'options');
 
     props = assign({}, props, {
       contentEditable: this.props.contentEditable, // TODO: real fix = !this.props.options.disableEditing?
-      dangerouslySetInnerHTML: {__html: this.state.text}
+      dangerouslySetInnerHTML: {__html: this.state.text},
     });
 
     return React.createElement(tag, props);

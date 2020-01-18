@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import PropTypes, {connect, withViewport} from '../PropTypes.js';
 import cn from 'classnames';
+import PropTypes, {connect, withViewport} from '../PropTypes.js';
 
 import {setSetting} from '../../actions/configActions.js';
 import {Icon, TrophyIcon, CommentIcon} from '../controls/Icon.js';
@@ -10,7 +10,7 @@ function getClassName(isHomeMatch, home, out) {
   if (home === out) {
     return 'match-draw';
   }
-  var won = home > out;
+  let won = home > out;
   if (!isHomeMatch) {
     won = !won;
   }
@@ -19,6 +19,7 @@ function getClassName(isHomeMatch, home, out) {
 
 class MatchScore extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     config: PropTypes.object.isRequired,
     setSetting: PropTypes.func.isRequired,
@@ -31,6 +32,7 @@ class MatchScore extends Component {
     showComments: PropTypes.bool,
     showThrophy: PropTypes.bool,
   }
+
   static defaultProps = {
     forceDisplay: false,
     showThrophy: true,
@@ -39,44 +41,45 @@ class MatchScore extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isUpdated: props.config.get('newMatchScore' + props.match.id)
+      isUpdated: props.config.get(`newMatchScore${props.match.id}`),
     };
   }
 
   componentWillReceiveProps(newProps) {
-    const hasScoreUpdate = newProps.config.get('newMatchScore' + newProps.match.id);
+    const hasScoreUpdate = newProps.config.get(`newMatchScore${newProps.match.id}`);
     if (hasScoreUpdate) {
       this.setState({isUpdated: true});
       setTimeout(() => {
         this.setState({isUpdated: false});
-        this.props.setSetting('newMatchScore' + newProps.match.id, false);
+        this.props.setSetting(`newMatchScore${newProps.match.id}`, false);
       }, 10000);
     }
   }
 
   render() {
-    var match = this.props.match;
+    let {match} = this.props;
     if (!this.props.forceDisplay) {
       if (!match.score || (match.score.home === 0 && match.score.out === 0)) {
         // HACK: remove the getPreviousMatch out of this component
         match = match.getPreviousMatch();
         if (!match || !match.score || (match.score.home === 0 && match.score.out === 0)) {
           return null;
-        } else {
-          const classColor2 = this.props.match.isDerby ? 'match-won' : getClassName(match.isHomeMatch, match.score.home, match.score.out);
-          return (
-            <Link to={this.context.t.route('match', {matchId: match.id})}>
-              <span
-                className={cn('label label-as-badge clickable', classColor2, this.props.className)}
-                title={this.context.t('match.previousEncounterScore')}
-                style={this.props.style}>
-
-                <Icon fa="fa fa-long-arrow-left" style={{marginRight: 7}} />
-                <span>{match.renderScore()}</span>
-              </span>
-            </Link>
-          );
         }
+        const classColor2 = this.props.match.isDerby ? 'match-won' : getClassName(match.isHomeMatch, match.score.home, match.score.out);
+        return (
+          <Link to={this.context.t.route('match', {matchId: match.id})}>
+            <span
+              className={cn('label label-as-badge clickable', classColor2, this.props.className)}
+              title={this.context.t('match.previousEncounterScore')}
+              style={this.props.style}
+            >
+
+              <Icon fa="fa fa-long-arrow-left" style={{marginRight: 7}} />
+              <span>{match.renderScore()}</span>
+            </span>
+          </Link>
+        );
+
       }
     }
 
@@ -92,7 +95,7 @@ class MatchScore extends Component {
           {classColor === 'match-won' && !match.isDerby && this.props.viewport.width > 350 && this.props.showThrophy ? (
             <TrophyIcon style={{marginRight: 7, marginTop: 4, fontWeight: 'normal'}} color="#FFE568" />
           ) : null}
-          {score.home + ' - ' + score.out}
+          {`${score.home} - ${score.out}`}
           {this.props.showComments && (match.comments.size || match.description) ? (
             <CommentIcon style={{marginLeft: 8}} translate tooltip="match.scoreComment" />
           ) : null}

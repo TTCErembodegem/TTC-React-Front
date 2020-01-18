@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import PropTypes from '../../PropTypes.js';
-import {Icon} from './Icon.js';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
+import PropTypes from '../../PropTypes.js';
+import {Icon} from './Icon.js';
 
 
 const SortIcon = ({direction}) => ( // eslint-disable-line
-  <Icon fa={'fa fa-2x fa-sort-alpha-' + direction} translate tooltip="player.sort.tooltip" />
+  <Icon fa={`fa fa-2x fa-sort-alpha-${direction}`} translate tooltip="player.sort.tooltip" />
 );
 
 
@@ -21,8 +21,9 @@ export class SortIconDropDown extends Component {
     onSortChange: PropTypes.func.isRequired,
     onSortDirectionChange: PropTypes.func.isRequired,
   }
+
   static defaultProps = {
-    activeSortDirection: 'asc'
+    activeSortDirection: 'asc',
   }
 
   _onButtonSelect(configKey) {
@@ -46,7 +47,7 @@ export class SortIconDropDown extends Component {
           >
 
             <Icon
-              fa={'fa fa-sort-' + this.props.activeSortDirection}
+              fa={`fa fa-sort-${this.props.activeSortDirection}`}
               style={{visibility: this.props.activeSort !== button.key ? 'hidden' : null}}
             />
 

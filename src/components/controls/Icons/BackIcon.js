@@ -4,16 +4,17 @@ import {Icon} from './Icon.js';
 
 class BackIconComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     viewport: PropTypes.viewport,
   }
 
   render() {
-    const t = this.context.t;
+    const {t} = this.context;
     const {viewport, staticContext, history, location, match, ...props} = this.props; // eslint-disable-line
     return (
       <Icon
-        fa={'fa fa-times-circle ' + (viewport.width > 400 ? 'fa-3x' : 'fa-2x')}
+        fa={`fa fa-times-circle ${viewport.width > 400 ? 'fa-3x' : 'fa-2x'}`}
         color="red"
         onClick={() => history.goBack()}
         tooltip={t('common.close')}

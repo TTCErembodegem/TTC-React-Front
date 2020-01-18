@@ -5,6 +5,7 @@ import {Icon} from '../../controls.js';
 
 class WeekTitleComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     weekCalcer: PropTypes.instanceOf(WeekCalcer).isRequired,
     weekChange: PropTypes.func,
@@ -13,14 +14,14 @@ class WeekTitleComponent extends Component {
   }
 
   render() {
-    const weekCalcer = this.props.weekCalcer;
+    const {weekCalcer} = this.props;
     const week = weekCalcer.getWeek();
 
     if (!week) {
       return null;
     }
 
-    var extraTitle = null;
+    let extraTitle = null;
     if (this.props.viewport.width > 450) {
       extraTitle = (
         <span>
@@ -40,7 +41,9 @@ class WeekTitleComponent extends Component {
             fa="fa fa-arrow-left"
             style={{marginRight: 10, visibility: weekCalcer.currentWeek > weekCalcer.firstWeek ? '' : 'hidden'}}
             onClick={() => this.props.weekChange(-1)}
-            translate tooltip="week.prevWeek" tooltipPlacement="bottom"
+            translate
+            tooltip="week.prevWeek"
+            tooltipPlacement="bottom"
           />
         ) : null}
 
@@ -54,7 +57,9 @@ class WeekTitleComponent extends Component {
             fa="fa fa-arrow-right"
             style={{marginLeft: 10}}
             onClick={() => this.props.weekChange(1)}
-            translate tooltip="week.nextWeek" tooltipPlacement="bottom"
+            translate
+            tooltip="week.nextWeek"
+            tooltipPlacement="bottom"
           />
         ) : null}
       </h3>

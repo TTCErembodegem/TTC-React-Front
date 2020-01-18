@@ -5,9 +5,7 @@ const getPerGames = cur => Math.floor(cur.victories / cur.games * 1000) / 10;
 
 
 export function getMostMatchesWon(playerStats) {
-  const highest = playerStats.reduce((acc, cur) => {
-    return acc.victories > cur.victories ? acc : cur;
-  }, playerStats[0]);
+  const highest = playerStats.reduce((acc, cur) => (acc.victories > cur.victories ? acc : cur), playerStats[0]);
 
   const players = playerStats.filter(cur => cur.victories === highest.victories);
 
@@ -17,7 +15,7 @@ export function getMostMatchesWon(playerStats) {
     players: players.map(cur => ({
       throphy: `${cur.victories} gewonnen matchen`,
       player: cur.ply,
-    }))
+    })),
   };
 }
 
@@ -41,7 +39,7 @@ export function getMostMatchesPercentageWon(playerStats) {
     players: players.map(cur => ({
       throphy: `${getPerGames(cur)}% gewonnen`,
       player: cur.ply,
-    }))
+    })),
   };
 }
 
@@ -55,20 +53,16 @@ export function getRankingDestroyer(competition, playerStats) {
     const ownRanking = ps.ply.getCompetition(competition).ranking;
     const ownValue = getValue(ownRanking);
 
-    const highestWon = Object.entries(ps.won).reduce((acc, [ranking]) => {
-      return getValue(acc) > getValue(ranking) ? acc : ranking;
-    }, 'NG');
+    const highestWon = Object.entries(ps.won).reduce((acc, [ranking]) => (getValue(acc) > getValue(ranking) ? acc : ranking), 'NG');
 
     return {
       player: ps.ply,
       difference: getValue(highestWon) - ownValue,
-      throphy: `${ownRanking} vs ${ps.won[highestWon]}x${highestWon}`
+      throphy: `${ownRanking} vs ${ps.won[highestWon]}x${highestWon}`,
     };
   });
 
-  const highest = result.reduce((acc, cur) => {
-    return acc.difference > cur.difference ? acc : cur;
-  }, result[0]);
+  const highest = result.reduce((acc, cur) => (acc.difference > cur.difference ? acc : cur), result[0]);
 
   const players = result.filter(cur => cur.difference === highest.difference);
 
@@ -78,7 +72,7 @@ export function getRankingDestroyer(competition, playerStats) {
     players: players.map(cur => ({
       throphy: cur.throphy,
       player: cur.player,
-    }))
+    })),
   };
 }
 
@@ -86,9 +80,7 @@ export function getRankingDestroyer(competition, playerStats) {
 
 
 export function getMostBellesPlayed(playerStats) {
-  const highest = playerStats.reduce((acc, cur) => {
-    return acc.belleGames > cur.belleGames ? acc : cur;
-  }, playerStats[0]);
+  const highest = playerStats.reduce((acc, cur) => (acc.belleGames > cur.belleGames ? acc : cur), playerStats[0]);
 
   const players = playerStats.filter(cur => cur.belleGames === highest.belleGames);
   return {
@@ -97,16 +89,14 @@ export function getMostBellesPlayed(playerStats) {
     players: players.map(cur => ({
       throphy: `${cur.belleGames} belles (${Math.floor(cur.belleVictories / cur.belleGames * 100)}% gewonnen)`,
       player: cur.ply,
-    }))
+    })),
   };
 }
 
 
 
 export function getMostBellesWon(playerStats) {
-  const highest = playerStats.reduce((acc, cur) => {
-    return acc.belleVictories > cur.belleVictories ? acc : cur;
-  }, playerStats[0]);
+  const highest = playerStats.reduce((acc, cur) => (acc.belleVictories > cur.belleVictories ? acc : cur), playerStats[0]);
 
   const players = playerStats.filter(cur => cur.belleVictories === highest.belleVictories);
   return {
@@ -115,7 +105,7 @@ export function getMostBellesWon(playerStats) {
     players: players.map(cur => ({
       throphy: `${cur.belleVictories} belles (${Math.floor(cur.belleVictories / cur.belleGames * 100)}% gewonnen)`,
       player: cur.ply,
-    }))
+    })),
   };
 }
 
@@ -140,7 +130,7 @@ export function getMostBellesPercentageWon(playerStats) {
     players: players.map(cur => ({
       throphy: `${getPer(cur)}% gewonnen belles (${cur.belleGames} belles)`,
       player: cur.ply,
-    }))
+    })),
   };
 }
 
@@ -168,16 +158,14 @@ export function getMostBellesPercentageLost(playerStats) {
     players: [{
       throphy: `${getPer(highest)}% gewonnen belles (${highest.belleGames} gespeeld)`,
       player: highest.ply,
-    }]
+    }],
   };
 }
 
 
 
 export function getMostGamesPlayer(playerStats) {
-  const highest = playerStats.reduce((acc, cur) => {
-    return acc.games > cur.games ? acc : cur;
-  }, playerStats[0]);
+  const highest = playerStats.reduce((acc, cur) => (acc.games > cur.games ? acc : cur), playerStats[0]);
 
   const players = playerStats.filter(cur => cur.games === highest.games);
   return {
@@ -186,7 +174,7 @@ export function getMostGamesPlayer(playerStats) {
     players: players.map(cur => ({
       throphy: `${cur.games} aantredingen (${Math.floor(cur.victories / cur.games * 100)}% gewonnen)`,
       player: cur.ply,
-    }))
+    })),
   };
 }
 
@@ -199,7 +187,7 @@ export function getMostNetjesTegen(playerStats) {
     players: [{
       throphy: '+Infinity',
       player: gerdo.ply,
-    }]
+    }],
   };
 }
 
@@ -234,9 +222,7 @@ export function getMostMatchesAllWon(competition, playerStats, matches) {
   playerWins.sort((a, b) => b.wins - a.wins);
 
 
-  const highest = playerWins.reduce((acc, cur) => {
-    return acc.wins > cur.wins ? acc : cur;
-  }, playerWins[0]);
+  const highest = playerWins.reduce((acc, cur) => (acc.wins > cur.wins ? acc : cur), playerWins[0]);
 
   const players = playerWins.filter(cur => cur.wins === highest.wins);
   return {
@@ -245,7 +231,7 @@ export function getMostMatchesAllWon(competition, playerStats, matches) {
     players: players.map(cur => ({
       throphy: `${cur.wins} matchen alle ${toWinCount} gewonnen`,
       player: cur.ply,
-    }))
+    })),
   };
 }
 

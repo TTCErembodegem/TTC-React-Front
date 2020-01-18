@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
+import Grid from 'react-bootstrap/lib/Grid';
+import Snackbar from '@material-ui/core/Snackbar';
+import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import PropTypes, {connect, withViewport, withContext, withStyles} from '../PropTypes.js';
 
 import Header from '../skeleton/Header';
 import Footer from '../skeleton/Footer';
-import Grid from 'react-bootstrap/lib/Grid';
-import Snackbar from '@material-ui/core/Snackbar';
 import * as configActions from '../../actions/configActions.js';
 
-import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 
 import './App.css';
 
@@ -21,7 +21,7 @@ class App extends Component {
   };
 
   render() {
-    var containerStyle = {};
+    const containerStyle = {};
 
     const isBigTodayMatches = this.props.config.get('container100PerWidth');
     if (isBigTodayMatches) {
@@ -44,20 +44,20 @@ class App extends Component {
               open={!!this.props.config.get('snackbar')}
               message={this.props.config.get('snackbar') || ''}
               autoHideDuration={4000}
-              onClose={() => this._onCloseSnackbar()} />
+              onClose={() => this._onCloseSnackbar()}
+            />
           </div>
         </MuiThemeProvider>
       </div>
     );
   }
+
   _onCloseSnackbar() {
     this.props.clearSnackbar();
   }
 }
 
-export default withViewport(withContext(connect(state => {
-  return {
-    config: state.config,
-    user: state.user,
-  };
-}, configActions)(App)));
+export default withViewport(withContext(connect(state => ({
+  config: state.config,
+  user: state.user,
+}), configActions)(App)));

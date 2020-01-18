@@ -1,18 +1,19 @@
 import React, {Component} from 'react';
 import {Route} from 'react-router-dom';
+import TextField from '@material-ui/core/TextField';
+import Paper from '@material-ui/core/Paper';
 import PropTypes, {connect} from '../PropTypes.js';
 
 import * as loginActions from '../../actions/userActions.js';
 import {paperStyle} from './Login.js';
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 
-import TextField from '@material-ui/core/TextField';
 import {MaterialButton} from '../controls/Button.js';
-import Paper from '@material-ui/core/Paper';
 
 
 class ForgotPassword extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     requestResetPasswordLink: PropTypes.func.isRequired,
   }
@@ -26,7 +27,7 @@ class ForgotPassword extends Component {
   }
 
   render() {
-    const t = this.context.t;
+    const {t} = this.context;
     return (
       <Paper style={{...paperStyle, height: 280}}>
         <h3>{t('password.newPassword')}</h3>
@@ -46,9 +47,10 @@ class ForgotPassword extends Component {
         <br />
         <br />
 
-        <MaterialButton variant="contained"
+        <MaterialButton
+          variant="contained"
           label={t('password.sendNewButton')}
-          primary={true}
+          primary
           style={{marginTop: 15, width: '100%'}}
           onClick={() => this.props.requestResetPasswordLink(this.state)}
           disabled={!this.state.playerId && !this.state.email}
@@ -66,11 +68,12 @@ export default connect(() => ({}), loginActions)(ForgotPassword);
 
 class ForgotPasswordResetComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     setNewPasswordFromGuid: PropTypes.func.isRequired,
     match: PropTypes.shape({
       params: PropTypes.shape({
-        guid: PropTypes.string.isRequired
+        guid: PropTypes.string.isRequired,
       }),
     }),
   }
@@ -85,7 +88,7 @@ class ForgotPasswordResetComponent extends Component {
   }
 
   render() {
-    const t = this.context.t;
+    const {t} = this.context;
     return (
       <Paper style={{...paperStyle, height: 210}}>
         <br />
@@ -102,14 +105,16 @@ class ForgotPasswordResetComponent extends Component {
         />
 
         <Route render={({history}) => (
-          <MaterialButton variant="contained"
+          <MaterialButton
+            variant="contained"
             label={t('password.changeTitle')}
-            primary={true}
+            primary
             style={{marginTop: 15}}
             onClick={() => this.props.setNewPasswordFromGuid(this.state).then(() => history.push('/'))}
             disabled={!this.state.playerId && !this.state.password}
           />
-        )} />
+        )}
+        />
       </Paper>
     );
   }

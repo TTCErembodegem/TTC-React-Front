@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
+import _ from 'lodash';
 import PropTypes, {connect} from '../../PropTypes.js';
 import * as matchActions from '../../../actions/matchActions.js';
-import _ from 'lodash';
 
 import MatchScore from '../MatchScore.js';
 import {Icon} from '../../controls/Icon.js';
@@ -10,6 +10,7 @@ const scoreOrDefault = match => match.score || {home: 0, out: 0};
 
 class MatchForm extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     user: PropTypes.UserModel.isRequired,
     match: PropTypes.MatchModel.isRequired,
@@ -17,21 +18,23 @@ class MatchForm extends Component {
     updateScore: PropTypes.func.isRequired,
     big: PropTypes.bool,
   }
+
   constructor(props) {
     super(props);
     this.state = {
       useInput: false,
       inputScore: '',
-      currentScore: scoreOrDefault(props.match)
+      currentScore: scoreOrDefault(props.match),
     };
     this._onUpdateScoreDebounced = _.debounce(this._onUpdateScoreDebounced, 1000);
   }
+
   componentWillReceiveProps(nextProps) {
     this.setState({currentScore: scoreOrDefault(nextProps.match)});
   }
 
   render() {
-    const match = this.props.match;
+    const {match} = this.props;
     const score = this.state.currentScore;
     const isEditable = this.props.user.canChangeMatchScore(match);
 
@@ -61,7 +64,7 @@ class MatchForm extends Component {
         ) : null}
 
         <div style={{display: 'inline'}} onClick={e => this._onOpenInputScore(e)}>
-          <MatchScore match={match} forceDisplay={true} style={{fontSize: this.props.big ? 46 : 24}} showThrophy={false} />
+          <MatchScore match={match} forceDisplay style={{fontSize: this.props.big ? 46 : 24}} showThrophy={false} />
         </div>
 
         {isEditable ? (
@@ -98,6 +101,7 @@ class MatchForm extends Component {
     this.setState({currentScore: matchScore});
     this._onUpdateScoreDebounced(matchScore);
   }
+
   _onUpdateScoreDebounced(matchScore) {
     this.props.updateScore(matchScore).then(() => this.setState({currentScore: scoreOrDefault(this.props.match)}));
   }
@@ -109,14 +113,18 @@ const MatchManipulation = ({style, plusClick, minClick, big, isHome}) => (
       <Icon
         fa="fa fa-plus-circle fa-2x"
         onClick={plusClick}
-        translate tooltip={isHome ? 'match.scoreHomeUp' : 'match.scoreOutUp'} tooltipPlacement="left"
+        translate
+        tooltip={isHome ? 'match.scoreHomeUp' : 'match.scoreOutUp'}
+        tooltipPlacement="left"
       />
     </div>
     <div style={{verticalAlign: 'bottom'}}>
       <Icon
         fa="fa fa-minus-circle fa-2x"
         onClick={minClick}
-        translate tooltip={isHome ? 'match.scoreHomeDown' : 'match.scoreOutDown'} tooltipPlacement="bottom"
+        translate
+        tooltip={isHome ? 'match.scoreHomeDown' : 'match.scoreOutDown'}
+        tooltipPlacement="bottom"
       />
     </div>
   </div>

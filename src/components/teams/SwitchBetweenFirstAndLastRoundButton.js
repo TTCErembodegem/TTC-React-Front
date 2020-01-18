@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from '../PropTypes.js';
 import moment from 'moment';
+import PropTypes from '../PropTypes.js';
 import {ButtonStack} from '../controls.js';
 
 export const SwitchBetweenFirstAndLastRoundButton = ({t, setState, matchesFilter}) => (
@@ -9,7 +9,7 @@ export const SwitchBetweenFirstAndLastRoundButton = ({t, setState, matchesFilter
       config={[
         {key: 'all', text: t('common.all')},
         {key: 'first', text: t('comp.roundFirst')},
-        {key: 'last', text: t('comp.roundBack')}
+        {key: 'last', text: t('comp.roundBack')},
       ]}
       small={false}
       activeView={matchesFilter}
@@ -35,7 +35,7 @@ export function getFirstOrLastMatches(allMatchesToCome, filter) {
   if (filter === 'all') {
     return {
       matches: allMatchesToCome,
-      hasMore: false
+      hasMore: false,
     };
   }
 
@@ -44,12 +44,12 @@ export function getFirstOrLastMatches(allMatchesToCome, filter) {
   if (filter === 'first' && firstMatches.length !== 0) {
     return {
       matches: firstMatches,
-      hasMore: lastMatches.length !== 0
+      hasMore: lastMatches.length !== 0,
     };
   }
   return {
     matches: lastMatches,
-    hasMore: firstMatches.length !== 0
+    hasMore: firstMatches.length !== 0,
   };
 }
 

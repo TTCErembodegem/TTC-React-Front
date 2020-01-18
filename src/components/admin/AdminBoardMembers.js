@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
+import TextField from '@material-ui/core/TextField';
+import MenuItem from 'react-bootstrap/lib/MenuItem';
+import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import PropTypes, {connect, storeUtil} from '../PropTypes.js';
 import * as playerActions from '../../actions/playerActions.js';
 
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
-import TextField from '@material-ui/core/TextField';
 import {MaterialButton} from '../controls/Button.js';
-import MenuItem from 'react-bootstrap/lib/MenuItem';
-import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 
 // ATTN: This corresponds to an enum in the backend: ClubManagerType
 const clubManagerTypes = [
@@ -20,6 +20,7 @@ const clubManagerTypes = [
 
 class AdminBoardMembers extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     saveBoardMember: PropTypes.func.isRequired,
     deleteBoardMember: PropTypes.func.isRequired,
@@ -69,13 +70,13 @@ class AdminBoardMembers extends Component {
         <br />
 
         <DropdownButton
-          title={this.context.t('clubs.managerTypes.' + (clubManagerTypes.find(x => x.text === this.state.boardFunction) || {text: 'Default'}).text)}
+          title={this.context.t(`clubs.managerTypes.${(clubManagerTypes.find(x => x.text === this.state.boardFunction) || {text: 'Default'}).text}`)}
           id="boardFunction"
           bsSize="large"
         >
           {clubManagerTypes.map(button => (
             <MenuItem eventKey={button.key} key={button.key} onSelect={() => this.setState({boardFunction: button.text})}>
-              {this.context.t('clubs.managerTypes.' + button.text)}
+              {this.context.t(`clubs.managerTypes.${button.text}`)}
             </MenuItem>
           ))}
         </DropdownButton>
@@ -92,14 +93,16 @@ class AdminBoardMembers extends Component {
 
         <br />
 
-        <MaterialButton variant="contained"
+        <MaterialButton
+          variant="contained"
           label={this.context.t('admin.board.save')}
           style={{marginTop: 15, marginRight: 8}}
           onClick={() => this.props.saveBoardMember(this.state)}
           disabled={!this.state.playerId}
         />
 
-        <MaterialButton variant="contained"
+        <MaterialButton
+          variant="contained"
           label={this.context.t('admin.board.del')}
           style={{marginTop: 15}}
           onClick={() => this.props.deleteBoardMember(this.state)}

@@ -5,30 +5,30 @@ import {showSnackbar} from './actions/configActions.js';
 import * as loader from './actions/initialLoad.js';
 import {matchUpdated} from './actions/matchActions.js';
 
-var hubReady = false;
+let hubReady = false;
 
 const serverMethods = ['broadcastSnackbar', 'broadcastReload'];
 setHubPrototype(serverMethods);
 
-var signalR = $.signalR;
+const {signalR} = $;
 signalR.hub = $.hubConnection(getUrl('/signalr', false), {useDefaultPath: false});
 $.extend(signalR, signalR.hub.createHubProxies());
 
 $.connection.hub.logging = false;
-$.connection.hub.start().done(function() {
+$.connection.hub.start().done(() => {
   hubReady = true;
 });
 
-$.connection.hub.disconnected(function() {
+$.connection.hub.disconnected(() => {
   hubReady = false;
 });
-$.connection.hub.reconnected(function() {
+$.connection.hub.reconnected(() => {
   hubReady = true;
 });
 
-var ttcHub = $.connection.ttcHub;
+const {ttcHub} = $.connection;
 
-ttcHub.client.broadcastSnackbar = function(message) {
+ttcHub.client.broadcastSnackbar = function (message) {
   store.dispatch(showSnackbar(message));
 };
 export function broadcastSnackbar(message) {
@@ -37,23 +37,23 @@ export function broadcastSnackbar(message) {
   }
 }
 
-ttcHub.client.broadcastReload = function(dataType, dataId, updateType) {
+ttcHub.client.broadcastReload = function (dataType, dataId, updateType) {
   switch (dataType) {
-  case 'player':
-    store.dispatch(loader.fetchPlayer(dataId));
-    break;
-  case 'match':
-    store.dispatch(loader.fetchMatch(dataId));
-    if (dataId && updateType) {
-      store.dispatch(matchUpdated(dataId, updateType));
-    }
-    break;
-  case 'team':
-    store.dispatch(loader.fetchTeam(dataId));
-    break;
-  case 'club':
-    store.dispatch(loader.fetchClub(dataId));
-    break;
+    case 'player':
+      store.dispatch(loader.fetchPlayer(dataId));
+      break;
+    case 'match':
+      store.dispatch(loader.fetchMatch(dataId));
+      if (dataId && updateType) {
+        store.dispatch(matchUpdated(dataId, updateType));
+      }
+      break;
+    case 'team':
+      store.dispatch(loader.fetchTeam(dataId));
+      break;
+    case 'club':
+      store.dispatch(loader.fetchClub(dataId));
+      break;
   }
 };
 export function broadcastReload(dataType, dataId, updateType) {

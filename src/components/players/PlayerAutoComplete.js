@@ -1,18 +1,21 @@
 import React, {Component} from 'react';
-import PropTypes, {connect} from '../PropTypes.js';
 import Select from 'react-select';
+import PropTypes, {connect} from '../PropTypes.js';
 
 class PlayerAutoComplete extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     players: PropTypes.PlayerModelList.isRequired,
     selectPlayer: PropTypes.func.isRequired,
     clearOnSelect: PropTypes.bool,
     competition: PropTypes.oneOf(['Vttl', 'Sporta']),
   }
+
   static defaultProps = {
-    clearOnSelect: false
+    clearOnSelect: false,
   }
+
   constructor() {
     super();
     this.state = {searchText: null};
@@ -27,13 +30,13 @@ class PlayerAutoComplete extends Component {
 
   render() {
     const {players, selectPlayer, dispatch, clearOnSelect, competition, label, style, ...props} = this.props; // eslint-disable-line
-    var filteredPlayers = players;
+    let filteredPlayers = players;
     if (competition) {
       filteredPlayers = players.filter(x => x[competition.toLowerCase()]);
     }
     const playerMenuItems = filteredPlayers.map(ply => ({
       value: ply.id,
-      label: ply.name + (competition ? ' (' + ply[competition.toLowerCase()].ranking + ')' : ''),
+      label: ply.name + (competition ? ` (${ply[competition.toLowerCase()].ranking})` : ''),
     }));
     const systemPlayerItem = {value: 'system', label: 'Systeem'};
 

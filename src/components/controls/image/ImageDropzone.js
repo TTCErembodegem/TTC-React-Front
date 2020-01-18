@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
-import http from '../../../utils/httpClient.js';
 import Dropzone from 'react-dropzone';
+import http from '../../../utils/httpClient.js';
 
 export default class ImageDropzone extends Component {
   static propTypes = {
@@ -13,11 +13,11 @@ export default class ImageDropzone extends Component {
   _onDrop(files) {
     const self = this;
     http.upload(files, this.props.type)
-      .then(function(data) {
+      .then(data => {
         if (data && data.fileName) {
           self.props.fileUploaded(data.fileName);
         }
-      }, function(err) {
+      }, err => {
         console.error('upload fail!', err); // eslint-disable-line
       });
   }

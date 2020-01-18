@@ -1,12 +1,12 @@
 import Immutable from 'immutable';
 
 function replaceModel(state, model, classify) {
-  var toReplaceIndex = state.findIndex(m => m.id === model.id);
+  const toReplaceIndex = state.findIndex(m => m.id === model.id);
   if (toReplaceIndex === -1) {
     return state.push(classify(model));
-  } else {
-    return state.update(toReplaceIndex, () => classify(model));
   }
+  return state.update(toReplaceIndex, () => classify(model));
+
 }
 
 export function merge(state, payload, classify, filter) {
@@ -26,7 +26,7 @@ export function merge(state, payload, classify, filter) {
     }
     return Immutable.List(result.map(classify));
 
-  } else if (payload instanceof Array) {
+  } if (payload instanceof Array) {
     let newState = state;
     for (let i = 0; i < payload.length; i++) {
       if (!filter || filter(payload[i])) {
@@ -35,8 +35,8 @@ export function merge(state, payload, classify, filter) {
     }
     return newState;
 
-  } else if (!filter || filter(payload)) {
-    let model = payload;
+  } if (!filter || filter(payload)) {
+    const model = payload;
     return replaceModel(state, model, classify);
   }
   return state;

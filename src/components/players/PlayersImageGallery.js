@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
-import PropTypes, {connect, withContext, withViewport} from '../PropTypes.js';
 import cn from 'classnames';
 
-import * as playerActions from '../../actions/playerActions.js';
-import {playerUtils} from '../../models/PlayerModel.js';
 
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
+import {playerUtils} from '../../models/PlayerModel.js';
+import * as playerActions from '../../actions/playerActions.js';
+import PropTypes, {connect, withContext, withViewport} from '../PropTypes.js';
 
 import {Telephone, FrenoyLink, PlayerLink} from '../controls.js';
 import {PlayerPlayingStyle, PlayerPlayingStyleForm} from './PlayerPlayingStyle.js';
@@ -26,7 +26,7 @@ const gridStyles = {
     width: '100%',
     height: '100%',
     overflowY: 'auto',
-    marginBottom: -8
+    marginBottom: -8,
   },
 };
 
@@ -39,6 +39,7 @@ const editStyleIcon = {
 
 class PlayersImageGallery extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     players: PropTypes.oneOfType([
       PropTypes.PlayerModelList.isRequired,
@@ -50,6 +51,7 @@ class PlayersImageGallery extends Component {
     subtitle: PropTypes.func,
     forceSmall: PropTypes.bool,
   }
+
   static defaultProps = {
     viewportWidthContainerCount: 1, // The amount of containers next to eachother that display a PlayersImageGallery
   }
@@ -66,7 +68,8 @@ class PlayersImageGallery extends Component {
           <GridList
             cellHeight={PlayersImageHeight}
             cols={Math.min(5, Math.floor((viewport.width / this.props.viewportWidthContainerCount) / PlayersImageWidth))}
-            style={gridStyles.gridList}>
+            style={gridStyles.gridList}
+          >
             {players.map(ply => {
               const comp = ply.getCompetition(competition);
               return (
@@ -88,31 +91,28 @@ class PlayersImageGallery extends Component {
           </GridList>
         </div>
       );
-    } else {
-      // small card gallery
-      return (
-        <div style={gridStyles.root}>
-          {this.props.players.map(ply => {
-
-            return (
-              <div key={ply.id} className={cn({'col-xs-6': viewport.width > 420})} style={{padding: 8}}>
-                <div className="media">
-                  <div className="media-left">
-                    <PlayerPlayingStyleForm player={ply} iconStyle="avatar" />
-                  </div>
-                  <div className="media-body">
-                    <strong>{ply.name}</strong>
-                    <br />
-
-                    {this.props.subtitle ? this.props.subtitle(ply) : <SmallPlayerAvatarCard competition={competition} ply={ply} />}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      );
     }
+    // small card gallery
+    return (
+      <div style={gridStyles.root}>
+        {this.props.players.map(ply => (
+          <div key={ply.id} className={cn({'col-xs-6': viewport.width > 420})} style={{padding: 8}}>
+            <div className="media">
+              <div className="media-left">
+                <PlayerPlayingStyleForm player={ply} iconStyle="avatar" />
+              </div>
+              <div className="media-body">
+                <strong>{ply.name}</strong>
+                <br />
+
+                {this.props.subtitle ? this.props.subtitle(ply) : <SmallPlayerAvatarCard competition={competition} ply={ply} />}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+
   }
 }
 
@@ -123,7 +123,7 @@ const SmallPlayerAvatarCard = ({competition, ply}) => { // eslint-disable-line
       <span className="ellipsis" style={{marginTop: 7, marginRight: 6}}>{ply.style.name}</span>
       {comp ? (
         <FrenoyLink competition={competition} uniqueIndex={comp.uniqueIndex}>
-          {comp.ranking + ' '}
+          {`${comp.ranking} `}
         </FrenoyLink>
       ) : null}
       <br />

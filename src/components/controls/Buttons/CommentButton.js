@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from '../../PropTypes.js';
 import Button from 'react-bootstrap/lib/Button';
+import PropTypes from '../../PropTypes.js';
 import {CommentIcon} from '../Icon.js';
 
 export const CommentButton = ({onClick, className, style}) => (

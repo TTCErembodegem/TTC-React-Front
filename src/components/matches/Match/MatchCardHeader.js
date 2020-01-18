@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import PropTypes, {browseTo, withRouter} from '../../PropTypes.js';
 import {Link} from 'react-router-dom';
 import cn from 'classnames';
+import PropTypes, {browseTo, withRouter} from '../../PropTypes.js';
 
-import MatchForm from '../Match/MatchForm.js';
+import MatchForm from './MatchForm.js';
 import MatchScore from '../MatchScore.js';
 import {ThrillerBadge, ThrillerIcon, CommentIcon} from '../../controls/Icon.js';
 import {TheirTeamTitle} from './TheirTeamTitle.js';
@@ -14,6 +14,7 @@ const ThrillerIconSpan = <span key="1" style={{width: thrillerIconWith, float: '
 // BigMatchCardHeader == MatchesToday on Club monitor
 export class BigMatchCardHeader extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     match2: PropTypes.MatchModel.isRequired,
     children: PropTypes.node,
@@ -51,6 +52,7 @@ export class BigMatchCardHeader extends Component {
 
 export class SmallMatchCardHeaderComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     match2: PropTypes.MatchModel.isRequired, //
     children: PropTypes.node,
@@ -69,7 +71,7 @@ export class SmallMatchCardHeaderComponent extends Component {
     return <MatchCardHeader {...newProps} />;
   }
 
-  _onOpen(/*isOpen*/) {
+  _onOpen(/* isOpen */) {
     const matchRoute = this.context.t.route('match', {matchId: this.props.match2.id});
     this.props.history.push(matchRoute);
   }
@@ -79,6 +81,7 @@ export class SmallMatchCardHeaderComponent extends Component {
 
 class MatchCardHeader extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     config: PropTypes.object.isRequired,
     match: PropTypes.MatchModel.isRequired,
@@ -93,17 +96,17 @@ class MatchCardHeader extends Component {
   }
 
   render() {
-    const match = this.props.match;
+    const {match} = this.props;
     const iPlay = this.props.user.playsIn(match.teamId);
 
-    const scoreFormVisible = !this.props.noScoreEdit &&
-      (match.isBeingPlayed() || this.props.forceEdit) &&
-      this.props.user.canChangeMatchScore(this.props.match);
+    const scoreFormVisible = !this.props.noScoreEdit
+      && (match.isBeingPlayed() || this.props.forceEdit)
+      && this.props.user.canChangeMatchScore(this.props.match);
 
     // const scoreFormInHeader = !!this.props.routed;
     const smallAndScoring = scoreFormVisible && this.props.width < 480;
 
-    var subtitle = [];
+    const subtitle = [];
     subtitle.push(ThrillerIconSpan);
 
     if (!smallAndScoring) {
@@ -113,12 +116,12 @@ class MatchCardHeader extends Component {
     }
 
     if (match.comments.size || match.description) {
-      const hasNewComment = this.props.config.get('newMatchComment' + match.id);
+      const hasNewComment = this.props.config.get(`newMatchComment${match.id}`);
       subtitle.push(
         <span key="3" style={{marginLeft: 9, color: hasNewComment ? '#E3170D' : '#d3d3d3'}}>
           {match.comments.size ? <small>{match.comments.size}</small> : null}
           <CommentIcon translate tooltip={hasNewComment ? 'match.hasNewComments' : undefined} />
-        </span>
+        </span>,
       );
     }
 
@@ -151,7 +154,7 @@ class MatchCardHeader extends Component {
   _onExpandChange(event) {
     // console.log('event', event.target.nodeName, event.target);
 
-    const nodeName = event.target.nodeName;
+    const {nodeName} = event.target;
     if (nodeName === 'INPUT' || nodeName === 'A' || nodeName === '') {
       return;
     }
@@ -203,7 +206,7 @@ const OwnTeamTitle = ({match, withLinks}) => {
 
   return (
     <span>
-      {divisionRanking.position ? <small>{divisionRanking.position + '. '}</small> : ''}
+      {divisionRanking.position ? <small>{`${divisionRanking.position}. `}</small> : ''}
       <Link to={browseTo.getTeam(team)} className="link-hover-underline">
         {title}
       </Link>

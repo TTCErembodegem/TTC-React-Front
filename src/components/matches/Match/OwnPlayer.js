@@ -16,7 +16,7 @@ const OwnPlayer = ({match, ply, playerAsBadge = false}) => {
   const winNode = renderWinsNode(result, teamPlayerCount);
   const plyInfo = {
     player: storeUtil.getPlayer(ply.playerId),
-    matchPlayer: {status: ply.status}
+    matchPlayer: {status: ply.status},
   };
 
   return (
@@ -44,11 +44,11 @@ OwnPlayer.propTypes = {
 
 
 function renderWinsNode(result, teamPlayerCount) {
-  var winNode = '';
+  let winNode = '';
   if (result.win.size > 0) {
-    let wins = {};
+    const wins = {};
     for (let i = 0; i < result.win.size; i++) {
-      let curWin = result.win.get(i);
+      const curWin = result.win.get(i);
       if (!wins[curWin]) {
         wins[curWin] = 1;
       } else {
@@ -58,7 +58,7 @@ function renderWinsNode(result, teamPlayerCount) {
 
     Object.keys(wins).forEach(key => {
       if (wins[key] === 1) {
-        winNode += ', ' + key;
+        winNode += `, ${key}`;
       } else {
         winNode += `, ${wins[key]}x${key}`;
       }
@@ -69,14 +69,14 @@ function renderWinsNode(result, teamPlayerCount) {
 }
 
 function getRankingResults(match, ply) {
-  const getAdversaryRanking = game => game.home.uniqueIndex === ply.uniqueIndex ? game.out.ranking : game.home.ranking;
+  const getAdversaryRanking = game => (game.home.uniqueIndex === ply.uniqueIndex ? game.out.ranking : game.home.ranking);
 
   const plyMatches = match.getGameMatches().filter(game => game.ownPlayer === ply);
   if (plyMatches.every(game => game.outcome === 'WalkOver')) {
     return {
       win: [],
       lost: [],
-      wo: true
+      wo: true,
     };
   }
   const win = plyMatches.filter(game => game.outcome === matchOutcome.Won);
@@ -84,7 +84,7 @@ function getRankingResults(match, ply) {
   return {
     win: win.map(getAdversaryRanking).sort(rankingSorter),
     lost: lost.map(getAdversaryRanking).sort(rankingSorter),
-    wo: false
+    wo: false,
   };
 }
 

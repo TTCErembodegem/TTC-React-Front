@@ -4,6 +4,7 @@ import {Badgy} from '../../controls.js';
 
 export class TeamPosition extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     team: PropTypes.TeamModel.isRequired,
     opponent: PropTypes.shape({
@@ -12,8 +13,9 @@ export class TeamPosition extends Component {
     }),
     style: PropTypes.object,
   }
+
   static defaultProps = {
-    style: {marginRight: 8, marginTop: -5}
+    style: {marginRight: 8, marginTop: -5},
   }
 
   render() {
@@ -23,7 +25,7 @@ export class TeamPosition extends Component {
       return null;
     }
 
-    var positionClassName;
+    let positionClassName;
     if (team.isTopper(opponent)) {
       positionClassName = 'match-won';
     } else if (team.isInDegradationZone(opponent)) {

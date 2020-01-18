@@ -9,7 +9,7 @@ const MatchPlayerResults = ({match, t}) => (
     <div>
       <h3>{t('match.playersVictoryTitle')}</h3>
       {match.getOwnPlayers().map(ply => (
-        <OwnPlayer match={match} ply={ply} key={ply.position} playerAsBadge={true} />
+        <OwnPlayer match={match} ply={ply} key={ply.position} playerAsBadge />
       ))}
     </div>
     <div>

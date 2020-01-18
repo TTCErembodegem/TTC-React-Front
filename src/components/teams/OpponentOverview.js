@@ -6,11 +6,12 @@ import {getOpponentMatches} from '../../actions/matchActions.js';
 import {OpponentMatches} from '../matches/Match/OpponentMatches.js';
 import OpponentsFormation from '../matches/Match/OpponentsFormation.js';
 import {OpponentsTeamFormation} from '../matches/Match/OpponentsTeamFormation.js';
-import {DivisionHeader} from '../teams/controls/DivisionHeader.js';
+import {DivisionHeader} from './controls/DivisionHeader.js';
 import {getOpponentMatchesForTeam} from '../../storeUtil';
 
 class OpponentOverviewComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     matches: PropTypes.MatchModelList.isRequired,
     teams: PropTypes.TeamModelList.isRequired,
@@ -60,12 +61,13 @@ class OpponentOverviewComponent extends Component {
     this.props.getOpponentMatches(this._getTeam().id, opponent);
     document.addEventListener('keydown', this._escIsBack, false);
   }
-  componentWillUnmount(){
+
+  componentWillUnmount() {
     document.removeEventListener('keydown', this._escIsBack, false);
   }
 
   render() {
-    const t = this.context.t;
+    const {t} = this.context;
     const team = this._getTeam();
     const {competition, clubId, teamCode} = this._getQueryStringValues();
     const opponentClub = storeUtil.getClub(clubId);

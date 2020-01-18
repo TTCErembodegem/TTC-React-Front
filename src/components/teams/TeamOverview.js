@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from '../PropTypes.js';
 import moment from 'moment';
+import PropTypes from '../PropTypes.js';
 import MatchesTable from '../matches/MatchesTable.js';
 import {TeamPlayerAvatars} from './controls/TeamPlayerAvatars.js';
 import {TeamOverviewPlayers} from './controls/TeamOverviewPlayers.js';

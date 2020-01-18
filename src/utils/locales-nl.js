@@ -1,3 +1,4 @@
+/* eslint-disable no-template-curly-in-string */
 export default {
   lang: 'nl',
   routes: {
@@ -113,11 +114,11 @@ export default {
     },
     intro: {
       title: 'Tafeltennisclub TTC Erembodegem',
-      text: 'Een kleine, toffe club met ${players} leden. Ondanks onze beperkte kern, ' +
-        'slagen we er toch in om met ${teamsVttl} ploegen VTTL en ${teamsSporta} Sporta in competitie te treden. ' +
-        'Fairplay en gezelligheid staan centraal bij al onze tafeltennis-activiteiten!',
+      text: 'Een kleine, toffe club met ${players} leden. Ondanks onze beperkte kern, '
+        + 'slagen we er toch in om met ${teamsVttl} ploegen VTTL en ${teamsSporta} Sporta in competitie te treden. '
+        + 'Fairplay en gezelligheid staan centraal bij al onze tafeltennis-activiteiten!',
       matchesToday: 'matchen vandaag',
-      //trainingToday: 'vandaag training vanaf 19u30',
+      // trainingToday: 'vandaag training vanaf 19u30',
       playedMatches: 'laatst gespeelde matchen',
       loading: 'Laden...',
       ourSponsors: 'onze sponsers',
@@ -141,7 +142,7 @@ export default {
       fogotMailSent: 'Een email met een paswoord reset link is verzonden',
       sendNewButton: 'Nieuw paswoord sturen',
       passwordChangedSuccess: 'Paswoord succesvol gewijzigd',
-      passwordChangedFail: 'Paswoord wijzigen is mislukt'
+      passwordChangedFail: 'Paswoord wijzigen is mislukt',
     },
     photos: {
       existingTitle: 'Huidige foto',
@@ -240,7 +241,7 @@ export default {
         Treasurer: 'Penningmeester',
         Vttl: 'Competitie Vttl',
         Sporta: 'Competitie Sporta',
-      }
+      },
     },
     match: {
       scoreHomeUp: 'Score thuisploeg verhogen',
@@ -250,7 +251,7 @@ export default {
       scoreComment: 'Match met wedstrijdverslag',
       block: {
         Captain: 'Geblokkeerd door de kapitein',
-        Major: 'Geblokkeerd door Jelle'
+        Major: 'Geblokkeerd door Jelle',
       },
       plys: {
         saveAndBlockAll: 'Bewaren en Blokkeren',
@@ -337,9 +338,9 @@ export default {
       club: {
         locationTitle: 'Clublokaal',
         locationUnknown: 'Niet gekend',
-        websiteKnown: 'Ga naar website'
+        websiteKnown: 'Ga naar website',
       },
-      chooseOtherPlayer: 'Andere speler opstellen'
+      chooseOtherPlayer: 'Andere speler opstellen',
     },
     footer: {
       cookieNotice: 'We gebruiken cookies om je de best mogelijke ervaring te bieden. Door verder te surfen op onze site gaat u akkoord met ons gebruik van cookies.', // eslint-disable-line
@@ -360,7 +361,7 @@ export default {
       sportaCalculation: 'Klassementsberekening Sporta (TTC Sint-Pauwels)',
       dandoy: 'Dandoy (Tafeltenniswinkel)',
       killypong: 'Killypong (Tafeltenniswinkel)',
-      tabletennisDaily: 'TableTennisDaily'
+      tabletennisDaily: 'TableTennisDaily',
     },
     week: {
       emailTitle: 'Opstelling mailen',
@@ -408,9 +409,9 @@ export default {
         save: 'Bewaren',
         del: 'Verwijderen',
         boardFunction: 'Functie',
-        sort: 'Sortering'
-      }
-    }
+        sort: 'Sortering',
+      },
+    },
   },
   timeAgo: {
     prefixAgo: null,
@@ -429,6 +430,6 @@ export default {
     year: 'ongeveer een jaar',
     years: '%d jaar',
     wordSeparator: ' ',
-    numbers: []
-  }
+    numbers: [],
+  },
 };

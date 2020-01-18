@@ -1,19 +1,20 @@
 import React, {Component} from 'react';
+import TextField from '@material-ui/core/TextField';
+import Paper from '@material-ui/core/Paper';
+import Panel from 'react-bootstrap/lib/Panel';
+import MenuItem from '@material-ui/core/MenuItem';
 import PropTypes, {connect} from '../PropTypes.js';
 
 import * as playerActions from '../../actions/playerActions.js';
 import {userRoles} from '../../models/UserModel.js';
 import PlayerModel from '../../models/PlayerModel.js';
 
-import TextField from '@material-ui/core/TextField';
 import {MaterialButton} from '../controls/Button.js';
-import Paper from '@material-ui/core/Paper';
-import Panel from 'react-bootstrap/lib/Panel';
 import PlayerStyleAutocomplete from '../players/PlayerStyleAutocomplete.js';
-import MenuItem from '@material-ui/core/MenuItem';
 
 class AdminPlayerForm extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     player: PropTypes.PlayerModel,
     updatePlayer: PropTypes.func.isRequired,
@@ -34,7 +35,7 @@ class AdminPlayerForm extends Component {
     const fieldMargin = 30;
     return (
       <div style={{marginLeft: 10, marginRight: 10}}>
-        <h3>{!player.firstName && !player.lastName ? 'Nieuw lid' : (player.firstName + ' ' + player.lastName)}</h3>
+        <h3>{!player.firstName && !player.lastName ? 'Nieuw lid' : (`${player.firstName} ${player.lastName}`)}</h3>
         <div>
           <Paper style={{padding: 15}}>
             <h4>Persoonlijk</h4>
@@ -63,9 +64,10 @@ class AdminPlayerForm extends Component {
             <br />
 
             <div style={{maxWidth: 250, marginBottom: 7}}>
-              <PlayerStyleAutocomplete t={this.context.t}
+              <PlayerStyleAutocomplete
+                t={this.context.t}
                 value={player.style.name || ''}
-                onChange={text => this.setState({style: Object.assign({}, player.style, {name: text})})}
+                onChange={text => this.setState({style: {...player.style, name: text}})}
               />
             </div>
 
@@ -73,7 +75,7 @@ class AdminPlayerForm extends Component {
               style={{width: 230}}
               label={this.context.t('player.editStyle.bestStroke')}
               defaultValue={player.style.bestStroke}
-              onChange={e => this.setState({style: Object.assign({}, player.style, {bestStroke: e.target.value})})}
+              onChange={e => this.setState({style: {...player.style, bestStroke: e.target.value}})}
             />
 
             <br />
@@ -89,7 +91,7 @@ class AdminPlayerForm extends Component {
               style={{width: 200, marginRight: fieldMargin}}
               label={this.context.t('player.email')}
               defaultValue={player.contact.email}
-              onChange={e => this.setState({contact: Object.assign({}, player.contact, {email: e.target.value})})}
+              onChange={e => this.setState({contact: {...player.contact, email: e.target.value}})}
             />
 
             <TextField
@@ -97,7 +99,7 @@ class AdminPlayerForm extends Component {
               type="number"
               label={this.context.t('player.gsm')}
               defaultValue={player.contact.mobile}
-              onChange={e => this.setState({contact: Object.assign({}, player.contact, {mobile: e.target.value})})}
+              onChange={e => this.setState({contact: {...player.contact, mobile: e.target.value}})}
             />
 
             <br />
@@ -106,21 +108,22 @@ class AdminPlayerForm extends Component {
               style={{width: 200, marginRight: fieldMargin}}
               label={this.context.t('player.address')}
               defaultValue={player.contact.address}
-              onChange={e => this.setState({contact: Object.assign({}, player.contact, {address: e.target.value})})}
+              onChange={e => this.setState({contact: {...player.contact, address: e.target.value}})}
             />
 
             <TextField
               style={{width: 200}}
               label={this.context.t('player.city')}
               defaultValue={player.contact.city}
-              onChange={e => this.setState({contact: Object.assign({}, player.contact, {city: e.target.value})})}
+              onChange={e => this.setState({contact: {...player.contact, city: e.target.value}})}
             />
 
           </Panel>
         </div>
-        <MaterialButton variant="contained"
+        <MaterialButton
+          variant="contained"
           label={this.context.t('common.save')}
-          primary={true}
+          primary
           style={{marginTop: 5}}
           onClick={() => {
             this.props.updatePlayer(this.state);
@@ -128,7 +131,8 @@ class AdminPlayerForm extends Component {
           }}
         />
 
-        <MaterialButton variant="contained"
+        <MaterialButton
+          variant="contained"
           label={this.context.t('common.cancel')}
           style={{marginTop: 5, marginLeft: 10}}
           onClick={() => this.props.onEnd()}

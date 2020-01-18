@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import PropTypes, {connect, withViewport, withRouter} from '../PropTypes.js';
 import Immutable from 'immutable';
-import http from '../../utils/httpClient.js';
 import _ from 'lodash';
+import PropTypes, {connect, withViewport, withRouter} from '../PropTypes.js';
+import http from '../../utils/httpClient.js';
 
 import {TabbedContainer} from '../controls/TabbedContainer.js';
 import {editMatchPlayers} from '../../actions/matchActions.js';
@@ -19,6 +19,7 @@ import {TeamMatchesWeek} from './TeamMatchesWeek.js';
 
 class Teams extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     config: PropTypes.object.isRequired,
     user: PropTypes.UserModel.isRequired,
@@ -46,16 +47,18 @@ class Teams extends Component {
       tableMatches: [],
     };
   }
+
   componentWillReceiveProps(nextProps) {
     // TODO: BUG: if you resize the screen (or something else happens like a broadcast), already picked players are lost
     this.setState({tablePlayers: this._getAlreadyPicked(nextProps)});
   }
+
   _getAlreadyPicked(props) {
     if (props.user.canEditMatchesOrIsCaptain()) {
-      var alreadyPicked = [];
+      const alreadyPicked = [];
       props.matches.forEach(match => {
         const formation = match.getPlayerFormation(this._getPlayerStatus());
-        const matchPicked = formation.map(frm => Object.assign({}, frm, {matchId: match.id})).toArray();
+        const matchPicked = formation.map(frm => ({...frm, matchId: match.id})).toArray();
         Array.prototype.push.apply(alreadyPicked, matchPicked);
       });
       return alreadyPicked;
@@ -83,10 +86,10 @@ class Teams extends Component {
   }
 
   _getUrl(view) {
-    var url = this.context.t.route('teams', {competition: this.props.match.params.competition});
-    url += '/' + (this.props.match.params.tabKey || this.getDefaultTeam());
+    let url = this.context.t.route('teams', {competition: this.props.match.params.competition});
+    url += `/${this.props.match.params.tabKey || this.getDefaultTeam()}`;
     if (view !== 'main') {
-      url += '/' + view;
+      url += `/${view}`;
     }
     return url;
   }
@@ -97,8 +100,8 @@ class Teams extends Component {
       return null;
     }
 
-    const transView = key => this.context.t('teamCalendar.view.' + key);
-    var viewsConfig = ['main', 'week', 'matches', 'ranking', 'players'];
+    const transView = key => this.context.t(`teamCalendar.view.${key}`);
+    let viewsConfig = ['main', 'week', 'matches', 'ranking', 'players'];
     if (this.props.user.playerId && this.props.viewport.width > 1000) {
       viewsConfig.splice(3, 0, 'matchesTable');
     }
@@ -158,6 +161,7 @@ class Teams extends Component {
   _getPlayerStatus() {
     return this.props.user.canManageTeams() ? 'Major' : 'Captain';
   }
+
   _saveAndBlockAll(majorBlock) {
     if (!this.state.tableMatches.length) {
       return;
@@ -168,63 +172,62 @@ class Teams extends Component {
       .groupBy('matchId')
       .forOwn((plyInfos, matchId) => {
         this.props.editMatchPlayers({
-          matchId: matchId,
+          matchId,
           playerIds: plyInfos.map(x => x.id),
           blockAlso: true,
-          newStatus: !majorBlock ? 'Captain' : this._getPlayerStatus()
+          newStatus: !majorBlock ? 'Captain' : this._getPlayerStatus(),
         }, false)
         .catch(e => console.error('saveAndBlockAll', e)); // eslint-disable-line
       });
     this.setState({tableMatches: []});
   }
+
   _renderTabViewContent(team, matches) {
     switch (this.props.match.params.view) {
-    case 'matches':
-    case 'matchesTable':
-      return (
-        <div>
-          <MatchesTable
-            matches={matches}
-            allowOpponentOnly
-            striped
-            editMode={this.state.editMode}
+      case 'matches':
+      case 'matchesTable':
+        return (
+          <div>
+            <MatchesTable
+              matches={matches}
+              allowOpponentOnly
+              striped
+              editMode={this.state.editMode}
 
-            tableForm={this.props.match.params.view === 'matchesTable'}
-            team={team}
-            tablePlayers={this.state.tablePlayers}
-            onTablePlayerSelect={(plyInfos, match) => {
-              this.setState({tablePlayers: plyInfos, tableMatches: this.state.tableMatches.concat([match.id])});
-            }}
-          />
+              tableForm={this.props.match.params.view === 'matchesTable'}
+              team={team}
+              tablePlayers={this.state.tablePlayers}
+              onTablePlayerSelect={(plyInfos, match) => {
+                this.setState({tablePlayers: plyInfos, tableMatches: this.state.tableMatches.concat([match.id])});
+              }}
+            />
 
-          <SwitchBetweenFirstAndLastRoundButton setState={this.setState.bind(this)} matchesFilter={this.state.matchesFilter} t={this.context.t} />
-        </div>
-      );
+            <SwitchBetweenFirstAndLastRoundButton setState={this.setState.bind(this)} matchesFilter={this.state.matchesFilter} t={this.context.t} />
+          </div>
+        );
 
-    case 'ranking':
-      return <DivisionRanking team={team} t={this.context.t} />;
+      case 'ranking':
+        return <DivisionRanking team={team} t={this.context.t} />;
 
-    case 'players':
-      return <PlayersCardGallery players={Immutable.List(team.getPlayers().map(x => x.player))} competition={team.competition} />;
+      case 'players':
+        return <PlayersCardGallery players={Immutable.List(team.getPlayers().map(x => x.player))} competition={team.competition} />;
 
-    case 'week':
-      return <TeamMatchesWeek team={team} />;
+      case 'week':
+        return <TeamMatchesWeek team={team} />;
 
-    case 'main':
-    default:
-      return <TeamOverview team={team} t={this.context.t} small={this._isSmall()} />;
+      case 'main':
+      default:
+        return <TeamOverview team={team} t={this.context.t} small={this._isSmall()} />;
     }
   }
 
   render() {
-    const t = this.context.t;
-    const tabConfig = this.props.teams.filter(team => team.competition === this.props.match.params.competition).toArray().map(team => {
-      return {
-        key: team.teamCode,
-        title: '',
-        headerChildren: <TeamTabTitle team={team} showRanking={this._isSmall()} />,
-      };
-    });
+    const {t} = this.context;
+    const tabConfig = this.props.teams.filter(team => team.competition === this.props.match.params.competition).toArray().map(team => ({
+      key: team.teamCode,
+      title: '',
+      headerChildren: <TeamTabTitle team={team} showRanking={this._isSmall()} />,
+    }));
 
     return (
       <div style={{marginTop: 20, marginBottom: 20}}>
@@ -241,13 +244,11 @@ class Teams extends Component {
   }
 }
 
-export default withViewport(withRouter(connect(state => {
-  return {
-    config: state.config,
-    user: state.user,
-    players: state.players,
-    clubs: state.clubs,
-    matches: state.matches,
-    teams: state.teams,
-  };
-}, {editMatchPlayers})(Teams)));
+export default withViewport(withRouter(connect(state => ({
+  config: state.config,
+  user: state.user,
+  players: state.players,
+  clubs: state.clubs,
+  matches: state.matches,
+  teams: state.teams,
+}), {editMatchPlayers})(Teams)));

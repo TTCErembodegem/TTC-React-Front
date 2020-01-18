@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
+import TextField from '@material-ui/core/TextField';
 import PropTypes, {connect} from '../PropTypes.js';
 import * as userActions from '../../actions/userActions.js';
 
-import TextField from '@material-ui/core/TextField';
 import {MaterialButton} from '../controls/Button.js';
 
 class ChangePassword extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     user: PropTypes.UserModel.isRequired,
     changePassword: PropTypes.func.isRequired,
@@ -46,9 +47,10 @@ class ChangePassword extends Component {
 
         <br />
 
-        <MaterialButton variant="contained"
+        <MaterialButton
+          variant="contained"
           label={this.context.t('profile.editPassword')}
-          primary={true}
+          primary
           style={{marginTop: 15}}
           onClick={() => this.props.changePassword(this.props.user.playerId, this.state)}
           disabled={!this.state.oldpassword && !this.state.newpassword}

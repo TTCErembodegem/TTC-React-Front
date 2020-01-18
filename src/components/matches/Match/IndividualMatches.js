@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
-import PropTypes, {connect, withViewport, storeUtil} from '../../PropTypes.js';
 import cn from 'classnames';
+import Table from 'react-bootstrap/lib/Table';
+import PropTypes, {connect, withViewport, storeUtil} from '../../PropTypes.js';
 import {matchOutcome} from '../../../models/MatchModel.js';
 
 import {TrophyIcon, FrenoyLink, PlayerLink} from '../../controls.js';
-import Table from 'react-bootstrap/lib/Table';
 import {OpponentPlayerLabel} from './OpponentPlayer.js';
 
 class IndividualMatches extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     match: PropTypes.MatchModel.isRequired,
     ownPlayerId: PropTypes.number.isRequired,
@@ -20,8 +21,8 @@ class IndividualMatches extends Component {
   }
 
   render() {
-    const t = this.context.t;
-    var matchResult = {home: 0, out: 0};
+    const {t} = this.context;
+    const matchResult = {home: 0, out: 0};
 
     return (
       <Table condensed striped className="match-card-tab-table">
@@ -37,7 +38,8 @@ class IndividualMatches extends Component {
             matchResult[game.homeSets > game.outSets ? 'home' : 'out']++;
             const matchWonTrophy = game.outcome === matchOutcome.Won ? <TrophyIcon style={{marginRight: 6}} /> : null;
             return (
-              <tr key={game.matchNumber}
+              <tr
+                key={game.matchNumber}
                 className={cn({
                   success: game.ownPlayer.playerId === this.state.pinnedPlayerId && game.outcome === matchOutcome.Won,
                   danger: game.ownPlayer.playerId === this.state.pinnedPlayerId && game.outcome !== matchOutcome.Won,
@@ -50,7 +52,7 @@ class IndividualMatches extends Component {
                     {matchWonTrophy}
                     {this._getPlayerDesc(game.home)}
                   </td>,
-                  <td className={cn({accentuate: game.outcome === matchOutcome.Won})} key="2">{this._getPlayerDesc(game.out)}</td>
+                  <td className={cn({accentuate: game.outcome === matchOutcome.Won})} key="2">{this._getPlayerDesc(game.out)}</td>,
                 ]) : (
                   <td className={cn({accentuate: game.outcome === matchOutcome.Won})} key="2" colSpan={2}>
                     {matchWonTrophy}
@@ -69,7 +71,7 @@ class IndividualMatches extends Component {
 
   _getPlayerDesc(player) {
     if (!player.playerId) {
-      return <OpponentPlayerLabel player={player} competition={this.props.match.competition} fullName={true} />;
+      return <OpponentPlayerLabel player={player} competition={this.props.match.competition} fullName />;
     }
 
     const realPlayer = storeUtil.getPlayer(player.playerId);
@@ -90,9 +92,9 @@ class IndividualMatches extends Component {
 
 
 
-
 export class ReadonlyIndividualMatches extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     match: PropTypes.MatchModel.isRequired,
   }
@@ -103,8 +105,8 @@ export class ReadonlyIndividualMatches extends Component {
   }
 
   render() {
-    const t = this.context.t;
-    var matchResult = {home: 0, out: 0};
+    const {t} = this.context;
+    const matchResult = {home: 0, out: 0};
 
     return (
       <Table striped condensed className="match-card-tab-table">
@@ -126,7 +128,7 @@ export class ReadonlyIndividualMatches extends Component {
                     <ReadonlyMatchPlayerLabel
                       competition={this.props.match.competition}
                       game={game}
-                      homePlayer={true}
+                      homePlayer
                       onClick={() => this.setState({pinnedPlayerIndex: game.home.uniqueIndex})}
                     />
                   </td>,
@@ -137,7 +139,7 @@ export class ReadonlyIndividualMatches extends Component {
                       homePlayer={false}
                       onClick={() => this.setState({pinnedPlayerIndex: game.out.uniqueIndex})}
                     />
-                  </td>
+                  </td>,
                 ]) : (
                   <td key="2" colSpan={2}>{t('match.double')}</td>
                 )}
@@ -155,6 +157,7 @@ export class ReadonlyIndividualMatches extends Component {
 
 class ReadonlyMatchPlayerLabelComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     game: PropTypes.object,
     homePlayer: PropTypes.bool.isRequired,
@@ -174,7 +177,7 @@ class ReadonlyMatchPlayerLabelComponent extends Component {
           {viewport.width > 800 ? ply.name : ply.alias}
         </span>
         &nbsp;&nbsp;
-        {viewport.width > 350 ? <FrenoyLink competition={competition} uniqueIndex={ply.uniqueIndex}>{viewport.width > 400 ? ply.ranking + ' ' : null}</FrenoyLink> : null}
+        {viewport.width > 350 ? <FrenoyLink competition={competition} uniqueIndex={ply.uniqueIndex}>{viewport.width > 400 ? `${ply.ranking} ` : null}</FrenoyLink> : null}
       </span>
     );
   }

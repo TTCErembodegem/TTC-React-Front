@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import PropTypes from '../../PropTypes.js';
 import cn from 'classnames';
+import PropTypes from '../../PropTypes.js';
 import {Icon} from '../Icon.js';
 import {createFrenoyLinkByUniqueId} from '../../../models/PlayerModel.js';
 
@@ -25,21 +25,22 @@ FrenoyLink.propTypes = {
 
 export class FrenoyButton extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     team: PropTypes.TeamModel.isRequired,
     linkTo: PropTypes.oneOf(['results', 'ranking']).isRequired,
-    className: PropTypes.string
+    className: PropTypes.string,
   }
 
   render() {
-    const linkTo = this.props.linkTo;
+    const {linkTo} = this.props;
 
     return (
       <a href={this.props.team.frenoy.getUrl(linkTo)} target="_blank" className={this.props.className} style={{display: 'inline-block'}}>
-        <button className={'btn btn-' + this.props.team.competition}>
+        <button className={`btn btn-${this.props.team.competition}`}>
           <Icon
             fa={cn('fa fa-2x', {'fa-list-ol': linkTo === 'ranking', 'fa-dashboard': linkTo === 'results'})}
-            tooltip={this.context.t('teamCalendar.frenoy' + linkTo)}
+            tooltip={this.context.t(`teamCalendar.frenoy${linkTo}`)}
           />
         </button>
       </a>
@@ -51,6 +52,7 @@ export class FrenoyButton extends Component {
 
 export class FrenoyWeekButton extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     team: PropTypes.TeamModel.isRequired,
     week: PropTypes.number.isRequired,
@@ -64,9 +66,9 @@ export class FrenoyWeekButton extends Component {
         href={this.props.team.frenoy.getWeekUrl(this.props.week)}
         target="_blank"
         className={this.props.className}
-        style={Object.assign({display: 'inline-block'}, this.props.style)}
+        style={({display: 'inline-block', ...this.props.style})}
       >
-        <button className={'btn btn-' + this.props.team.competition}>
+        <button className={`btn btn-${this.props.team.competition}`}>
           <Icon
             fa="fa fa-2x fa-calendar"
             tooltip={this.context.t('teamCalendar.frenoyweek')}
@@ -82,12 +84,13 @@ export class FrenoyWeekButton extends Component {
 
 export class FrenoyWeekLink extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     match: PropTypes.MatchModel.isRequired,
   }
 
   render() {
-    const match = this.props.match;
+    const {match} = this.props;
     const team = match.getTeam();
     return (
       <a href={team.frenoy.getWeekUrl(match.week)} target="_blank" className="link-hover-underline">

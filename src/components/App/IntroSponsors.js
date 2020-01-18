@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
-import PropTypes, {connect, withViewport, withContext} from '../PropTypes.js';
-import {Strike} from '../controls.js';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
+import PropTypes, {connect, withViewport, withContext} from '../PropTypes.js';
+import {Strike} from '../controls.js';
 import * as Sponsor from './Sponsors.js';
 
 
 class IntroSponsors extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     viewport: PropTypes.viewport,
   };

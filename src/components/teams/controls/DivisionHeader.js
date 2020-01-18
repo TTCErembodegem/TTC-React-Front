@@ -7,6 +7,7 @@ import {TeamPosition} from './TeamPosition.js';
 
 export class DivisionHeader extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     team: PropTypes.TeamModel.isRequired,
     opponent: PropTypes.shape({
@@ -26,7 +27,7 @@ export class DivisionHeader extends Component {
       <div>
         <TeamPosition team={team} opponent={opponent} />
         {team.getDivisionDescription()}
-        {withVictoryBadges ? <TeamRankingBadges team={team} opponent={opponent} style={{/*reset fontSize*/}} /> : null}
+        {withVictoryBadges ? <TeamRankingBadges team={team} opponent={opponent} style={{/* reset fontSize */}} /> : null}
       </div>
     );
   }

@@ -1,8 +1,8 @@
 import React from 'react';
-import PropTypes from '../../PropTypes.js';
 import cn from 'classnames';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
+import PropTypes from '../../PropTypes.js';
 
 export const ButtonStack = ({small, config, activeView, onClick, id = 'team-view'}) => {
   if (small) {

@@ -1,20 +1,21 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
-import PropTypes, {withViewport} from '../PropTypes.js';
 
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
 import PanelGroup from 'react-bootstrap/lib/PanelGroup';
 import Panel from 'react-bootstrap/lib/Panel';
+import PropTypes, {withViewport} from '../PropTypes.js';
 
 
 class TabbedContainerComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     defaultTabKey: PropTypes.string.isRequired,
     match: PropTypes.shape({
       params: PropTypes.shape({
-        tabKey: PropTypes.string
+        tabKey: PropTypes.string,
       }),
     }),
     tabKeys: PropTypes.arrayOf(PropTypes.shape({
@@ -38,9 +39,10 @@ class TabbedContainerComponent extends Component {
     viewport: PropTypes.viewport,
     history: PropTypes.any.isRequired,
   }
+
   static defaultProps = {
     forceTabs: false,
-    widthTreshold: 700
+    widthTreshold: 700,
   }
 
   constructor(props) {
@@ -85,7 +87,8 @@ class TabbedContainerComponent extends Component {
           eventKey={tab.key}
           title={tab.label ? tab.title : undefined}
           key={tab.key}
-          href={this._getUrl(tab.key)} onClick={e => e.preventDefault()}
+          href={this._getUrl(tab.key)}
+          onClick={e => e.preventDefault()}
         >
           {tab.label || tab.title} {tab.headerChildren}
         </NavItem>
@@ -116,20 +119,20 @@ class TabbedContainerComponent extends Component {
   }
 
   _getUrl(eventKey) {
-    var url;
+    let url;
     if (this.props.route.subs) {
-      url = this.props.route.base + '/' + this.context.t.route(this.props.route.subs + '.' + eventKey);
+      url = `${this.props.route.base}/${this.context.t.route(`${this.props.route.subs}.${eventKey}`)}`;
     } else {
-      url = this.props.route.base + '/' + eventKey;
+      url = `${this.props.route.base}/${eventKey}`;
     }
     if (this.props.route.suffix) {
-      url += '/' + this.props.route.suffix;
+      url += `/${this.props.route.suffix}`;
     }
     return url;
   }
 
   _onTabSelect(eventKey) {
-    var url = this._getUrl(eventKey);
+    const url = this._getUrl(eventKey);
     this.props.history.push(url);
 
     const forceClose = this._showAccordion() && eventKey === this.state.openTabKey && !this.state.forceClose;
@@ -139,6 +142,7 @@ class TabbedContainerComponent extends Component {
       this.props.onTabSelect(eventKey);
     }
   }
+
   _getTabKey() {
     // Translate from route
     const tabKey = this.props.match ? this.props.match.params.tabKey : null;

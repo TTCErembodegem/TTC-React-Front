@@ -3,36 +3,36 @@ import 'babel-core/polyfill';
 import React from 'react';
 import {render} from 'react-dom';
 import {Provider} from 'react-redux';
+import Promise from 'bluebird';
+import moment from 'moment';
 import Routes from './routes.js';
 import store from './store.js';
-import Promise from 'bluebird';
+
+
+import {showSnackbar} from './actions/configActions.js';
+import http from './utils/httpClient.js';
+
+
+import {validateToken} from './actions/userActions.js';
+
+import initialLoad from './actions/initialLoad.js';
 
 Promise.config({
   warnings: true,
   longStackTraces: true,
   cancellation: true,
-  //monitoring: true
+  // monitoring: true
 });
-
-
-import {showSnackbar} from './actions/configActions.js';
-import http from './utils/httpClient.js';
 window.onerror = function(message, source, lineno, colno, error) { // eslint-disable-line
   console.log('oh noes!', arguments); // eslint-disable-line
   http.post('/config/Log', {args: arguments});
-  store.dispatch(showSnackbar('Something went wrong: ' + message));
+  store.dispatch(showSnackbar(`Something went wrong: ${message}`));
 };
-
-import moment from 'moment';
 moment.locale('nl');
-
-import {validateToken} from './actions/userActions.js';
-var token = localStorage.getItem('token');
+const token = localStorage.getItem('token');
 if (token) {
   store.dispatch(validateToken(token));
 }
-
-import initialLoad from './actions/initialLoad.js';
 store.dispatch(initialLoad());
 
 const enableDevTools = false;
@@ -56,6 +56,6 @@ if (enableDevTools) {
     <Provider store={store}>
       <Routes />
     </Provider>,
-    document.getElementById('app')
+    document.getElementById('app'),
   );
 }

@@ -9,6 +9,7 @@ import {FrenoyWeekButton} from '../controls.js';
 
 class TeamMatchesWeekComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     matches: PropTypes.MatchModelList.isRequired,
     readonlyMatches: PropTypes.MatchModelList.isRequired,
@@ -26,6 +27,7 @@ class TeamMatchesWeekComponent extends Component {
   componentDidMount() {
     this.props.getOpponentMatches(this.props.team.id);
   }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.team !== this.props.team) {
       this.props.getOpponentMatches(nextProps.team.id);
@@ -40,7 +42,7 @@ class TeamMatchesWeekComponent extends Component {
 
     const weekCalcer = new WeekCalcer(otherMatches, this.state.currentWeek);
 
-    var prevWeekMatches = null;
+    let prevWeekMatches = null;
     if (!this.state.currentWeek && weekCalcer.currentWeek > weekCalcer.firstWeek) {
       // TODO: Should calculate NEXT and PREVIOUS matches
       // --> At this point in the week, the match can already be played

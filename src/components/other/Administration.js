@@ -7,6 +7,7 @@ import PlayerImage from '../players/PlayerImage.js';
 
 class Administration extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     players: PropTypes.PlayerModelList.isRequired,
     clubs: PropTypes.ClubModelList.isRequired,
@@ -17,7 +18,7 @@ class Administration extends Component {
     if (!club) {
       return <div />;
     }
-    const managers = club.managers;
+    const {managers} = club;
     return (
       <div style={{marginTop: 10}}>
         <h1>{this.context.t('clubs.managementTitle')}</h1>
@@ -29,7 +30,7 @@ class Administration extends Component {
                   <span>
                     <strong>{manager.name}</strong>
                     <br />
-                    {manager.description === 'Default' ? <br /> : this.context.t('clubs.managerTypes.' + manager.description)}
+                    {manager.description === 'Default' ? <br /> : this.context.t(`clubs.managerTypes.${manager.description}`)}
                   </span>
                 </Panel.Heading>
 

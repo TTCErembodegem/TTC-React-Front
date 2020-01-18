@@ -3,6 +3,7 @@ import PropTypes, {connect, withContext} from '../PropTypes.js';
 
 class IntroClub extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     players: PropTypes.PlayerModelList.isRequired,
     teams: PropTypes.TeamModelList.isRequired,

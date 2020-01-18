@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import PropTypes, {connect} from '../PropTypes.js';
 import {List, Map} from 'immutable';
 import _ from 'lodash';
+import PropTypes, {connect} from '../PropTypes.js';
 
 import {ButtonStack, Icon} from '../controls.js';
 
@@ -23,26 +23,26 @@ class AdminDev extends React.Component {
   }
 
   _renderSection(eventKey) {
-    var data = this.props[eventKey];
+    let data = this.props[eventKey];
     if (eventKey === 'admin') {
       data = data.players; // admin.players === inactive players
     }
     if (List.isList(data)) {
       return <AdminStateDisplayer data={data.toArray()} />;
-    } else if (Map.isMap(data)) {
+    } if (Map.isMap(data)) {
       return <AdminStateDisplayer data={data.toJSON()} />;
-    } else {
-      return <AdminStateDisplayer data={data} />;
     }
+    return <AdminStateDisplayer data={data} />;
+
   }
 
   render() {
-    var viewsConfig = [];
+    const viewsConfig = [];
     _.forOwn(this.props, (value, key) => {
       if (key !== 'dispatch') {
         viewsConfig.push({
-          key: key,
-          text: key
+          key,
+          text: key,
         });
       }
     });
@@ -73,17 +73,18 @@ class AdminStateDisplayer extends Component {
   static propTypes = {
     data: PropTypes.any.isRequired,
   }
+
   constructor(props) {
     super(props);
     this.state = {filter: ''};
   }
 
   render() {
-    var data = this.props.data;
+    let {data} = this.props;
     if (this.state.filter) {
       if (_.isArray(data)) {
         data = data.filter(entry => {
-          for (let key in entry) {
+          for (const key in entry) {
             if (typeof entry[key] === 'string') {
               if (entry[key].toLowerCase().indexOf(this.state.filter) !== -1) {
                 return true;

@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
+import Table from 'react-bootstrap/lib/Table';
 import PropTypes, {withViewport, storeUtil} from '../../PropTypes.js';
 
 import {ThumbsDownIcon, Spinner, ThumbsUpIcon} from '../../controls.js';
 import {OpponentPlayerLabel} from './OpponentPlayer.js';
-import Table from 'react-bootstrap/lib/Table';
 
 class OpponentsFormation extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     viewport: PropTypes.viewport,
     match: PropTypes.MatchModel.isRequired,
@@ -19,7 +20,7 @@ class OpponentsFormation extends Component {
   render() {
     const formations = storeUtil.matches
       .getFormation(this.props.match, this.props.opponent)
-      .sort((a, b) => a.count < b.count ? 1 : -1);
+      .sort((a, b) => (a.count < b.count ? 1 : -1));
 
     if (formations.length === 0) {
       return <div className="match-card-tab-content"><h3><Spinner /></h3></div>;
@@ -37,8 +38,8 @@ class OpponentsFormation extends Component {
           </tr>
         </thead>
         <tbody>
-          {formations.map(f => {
-            return (<tr key={f.player.uniqueIndex}>
+          {formations.map(f => (
+            <tr key={f.player.uniqueIndex}>
               <td>
                 <OpponentPlayerLabel player={f.player} competition={this.props.match.competition} />
               </td>
@@ -50,9 +51,9 @@ class OpponentsFormation extends Component {
                 <ThumbsDownIcon style={{marginLeft: 8}} />
                 {f.lost}
               </td>
-              <td>{(f.won / (f.lost + f.won) * 100).toFixed(0) + '%'}</td>
-            </tr>);
-          })}
+              <td>{`${(f.won / (f.lost + f.won) * 100).toFixed(0)}%`}</td>
+            </tr>
+          ))}
         </tbody>
       </Table>
     );

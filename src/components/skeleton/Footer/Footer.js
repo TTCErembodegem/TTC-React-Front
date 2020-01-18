@@ -26,7 +26,7 @@ class Footer extends Component {
             <div className="col-xs-13 col-sm-5 Footer-text">{this.props.params.trainingDays}</div>
             <div className="col-xs-2 col-sm-1">&nbsp;</div>
             <div className="col-xs-13 col-sm-5 Footer-text">{this.props.params.competitionDays}</div>
-            <div className="col-xs-2 col-sm-1" ><Icon fa="fa fa-envelope-o" /></div>
+            <div className="col-xs-2 col-sm-1"><Icon fa="fa fa-envelope-o" /></div>
             <div className="col-xs-13 col-sm-5 Footer-text">
               <OwnEmail className="Footer-link" />
             </div>
@@ -44,7 +44,7 @@ class MadeBy extends Component {
   render() {
     const style = {
       float: 'right',
-      marginRight: 20
+      marginRight: 20,
     };
     return (
       <div>

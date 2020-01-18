@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import PropTypes, {connect} from '../../PropTypes.js';
-import * as adminActions from '../../../actions/adminActions.js';
 import Button from 'react-bootstrap/lib/Button';
 import {Modal} from 'react-bootstrap';
+import PropTypes, {connect} from '../../PropTypes.js';
+import * as adminActions from '../../../actions/adminActions.js';
 import {EmailButton} from '../../controls.js';
 import {WeekTitle} from './WeekTitle.js';
 import {WeekCalcer} from './WeekCalcer.js';
@@ -13,6 +13,7 @@ import {getOpponentMatches} from '../../../actions/matchActions';
 /** EmailButton that turns into a MatchWeekEmailComposeComponent (Modal) */
 class MatchesWeekEmailComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     players: PropTypes.PlayerModelList.isRequired,
     emailFormation: PropTypes.func.isRequired,
@@ -38,6 +39,7 @@ class MatchesWeekEmailComponent extends Component {
       this.props.getOpponentMatches(match.teamId, match.opponent);
     });
   }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.matches !== this.props.matches) {
       this.componentDidMount();
@@ -52,7 +54,7 @@ class MatchesWeekEmailComponent extends Component {
   }
 
   render() {
-    const t = this.context.t;
+    const {t} = this.context;
 
     if (!this.state.mailFormOpen) {
       const user = this.props.players.find(p => p.id === this.props.user.playerId);
@@ -60,7 +62,7 @@ class MatchesWeekEmailComponent extends Component {
         <EmailButton
           onClick={() => this.setState({
             mailFormOpen: !this.state.mailFormOpen,
-            email: buildHtml(user, this.props.compFilter, this.props.matches, this.props.prevMatches)
+            email: buildHtml(user, this.props.compFilter, this.props.matches, this.props.prevMatches),
           })}
           tooltip={t('week.emailTitle')}
         />
@@ -70,11 +72,11 @@ class MatchesWeekEmailComponent extends Component {
     const editorOptions = {
       buttonLabels: 'fontawesome',
       placeholder: {
-        text: ''
+        text: '',
       },
       toolbar: {
-        buttons: ['bold', 'italic', 'underline', 'h2', 'h3', 'anchor']
-      }
+        buttons: ['bold', 'italic', 'underline', 'h2', 'h3', 'anchor'],
+      },
     };
 
     return (

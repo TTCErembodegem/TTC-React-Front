@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
+import TextField from '@material-ui/core/TextField';
 import PropTypes from '../../PropTypes.js';
 import http from '../../../utils/httpClient.js';
-import TextField from '@material-ui/core/TextField';
 import {ExcelButton, SortIconDropDown} from '../../controls.js';
 
 export class PlayersToolbar extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     marginLeft: PropTypes.number.isRequired,
     onFilterChange: PropTypes.func.isRequired,
@@ -18,7 +19,7 @@ export class PlayersToolbar extends Component {
   };
 
   render() {
-    const t= this.context.t;
+    const {t} = this.context;
     const {marginLeft, onFilterChange} = this.props;
 
     const sortConfig = [
@@ -28,7 +29,7 @@ export class PlayersToolbar extends Component {
     ];
 
     return (
-      <div style={{marginRight: 5, marginLeft: marginLeft, marginBottom: 5}}>
+      <div style={{marginRight: 5, marginLeft, marginBottom: 5}}>
         <TextField
           placeholder={this.context.t('players.search')}
           onChange={e => onFilterChange(e.target.value.toLowerCase())}

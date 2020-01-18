@@ -4,6 +4,7 @@ import PropTypes, {withTooltip} from '../../PropTypes.js';
 
 class IconComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     fa: PropTypes.string.isRequired,
     color: PropTypes.string,
@@ -19,7 +20,7 @@ class IconComponent extends Component {
         {...props}
         className={cn(fa, className, {clickable: !!onClick})}
         onClick={onClick}
-        style={{color: color, ...style}}
+        style={{color, ...style}}
       />
     );
   }

@@ -17,7 +17,7 @@ class ComponentWithLayoutComponent extends React.Component {
     const {Component, config, ...props} = this.props;
     return (
       <App {...props}>
-        {config.get('initialLoadCompleted') ? <Component {...props}/> : <FullScreenSpinner />}
+        {config.get('initialLoadCompleted') ? <Component {...props} /> : <FullScreenSpinner />}
       </App>
     );
   }

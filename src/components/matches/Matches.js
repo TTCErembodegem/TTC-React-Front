@@ -8,6 +8,7 @@ import {SmallMatchCardHeader} from './Match/MatchCardHeader.js';
 
 class Matches extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     config: PropTypes.object.isRequired,
     user: PropTypes.UserModel.isRequired,
@@ -43,19 +44,19 @@ class Matches extends Component {
   render() {
     // TODO: put in some global config (or perhaps server config?)
     const matchesToShow = 10;
-    //const showFutureMatchesDays = 7;
-    //const showPlayedMatchesDays = 20;
+    // const showFutureMatchesDays = 7;
+    // const showPlayedMatchesDays = 20;
 
     const today = moment();
-    //const yesterday = moment().subtract(1, 'days');  || cal.date.isSame(yesterday, 'day')
+    // const yesterday = moment().subtract(1, 'days');  || cal.date.isSame(yesterday, 'day')
     const ownMatches = this.props.matches;
 
-    var matchesToday = ownMatches.filter(cal => cal.date.isSame(today, 'day'));
-    var matchesNext = ownMatches
+    const matchesToday = ownMatches.filter(cal => cal.date.isSame(today, 'day'));
+    const matchesNext = ownMatches
       .filter(cal => cal.date.isAfter(today, 'day')) // && cal.date.diff(today, 'days') <= showFutureMatchesDays)
       .sort((a, b) => a.date - b.date)
       .take(matchesToShow);
-    var matchesPlayed = ownMatches
+    const matchesPlayed = ownMatches
       .filter(cal => cal.date.isBefore(today, 'day')) // && cal.date.diff(today, 'days') >= -showPlayedMatchesDays)
       .sort((a, b) => b.date - a.date)
       .take(matchesToShow);

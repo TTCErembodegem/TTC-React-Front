@@ -5,6 +5,7 @@ import {ReadonlyIndividualMatches} from './IndividualMatches.js';
 
 export class OtherMatchPlayerResults extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     match: PropTypes.MatchModel.isRequired,
   }
@@ -15,8 +16,8 @@ export class OtherMatchPlayerResults extends Component {
   }
 
   render() {
-    const t = this.context.t;
-    const match = this.props.match;
+    const {t} = this.context;
+    const {match} = this.props;
 
     const SwitchButton = () => (
       <div className="row text-center">
@@ -58,7 +59,7 @@ export const OtherMatchPlayerResultsTableRow = ({match, show, colSpan = 5}) => {
   }
 
   return (
-    <tr key={match.id + '_details'}>
+    <tr key={`${match.id}_details`}>
       <td colSpan={colSpan}>
         <OtherMatchPlayerResults match={match} />
       </td>

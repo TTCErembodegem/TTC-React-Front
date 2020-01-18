@@ -32,6 +32,7 @@ const tabEventKeys = keyMirror({
 
 class MatchCard extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     config: PropTypes.object.isRequired,
     user: PropTypes.UserModel.isRequired,
@@ -47,11 +48,12 @@ class MatchCard extends Component {
     isOpen: PropTypes.bool,
 
     params: PropTypes.shape({
-      tabKey: PropTypes.string
+      tabKey: PropTypes.string,
     }),
   }
+
   static defaultProps = {
-    viewportWidthContainerCount: 1 // The amount of containers next to eachother that display a PlayersImageGallery
+    viewportWidthContainerCount: 1, // The amount of containers next to eachother that display a PlayersImageGallery
   }
 
   constructor(props) {
@@ -60,7 +62,7 @@ class MatchCard extends Component {
     }
     super(props);
     this.state = {
-      forceEditPlayers: false
+      forceEditPlayers: false,
     };
   }
 
@@ -69,7 +71,7 @@ class MatchCard extends Component {
   }
 
   render() {
-    const match = this.props.match;
+    const {match} = this.props;
 
     const tabConfig = [{
       key: tabEventKeys.players,
@@ -133,53 +135,58 @@ class MatchCard extends Component {
       </HeaderComponent>
     );
   }
+
   _getCommentsIcon() {
-    const hasNewComment = this.props.config.get('newMatchComment' + this.props.match.id);
+    const hasNewComment = this.props.config.get(`newMatchComment${this.props.match.id}`);
     if (!hasNewComment) {
       return;
     }
     return <CommentIcon className="match-card-tab-icon" />;
   }
+
   _getPlayersEditIcon() {
-    const match = this.props.match;
+    const {match} = this.props;
     const isAllowedToEdit = this.props.user.canEditPlayersOnMatchDay(match);
     return isAllowedToEdit && !match.isSyncedWithFrenoy ? <EditIcon onClick={e => this._onStartEditPlayers(e)} className="match-card-tab-icon" /> : null;
   }
+
   _onStartEditPlayers(event) {
     event.stopPropagation();
     event.preventDefault();
     this.setState({forceEditPlayers: !this.state.forceEditPlayers});
   }
+
   _onTabSelect(eventKey) {
     if (eventKey === tabEventKeys.report) {
-      this.props.setSetting('newMatchComment' + this.props.match.id, false);
+      this.props.setSetting(`newMatchComment${this.props.match.id}`, false);
     }
   }
+
   _renderTabContent(eventKey) {
     switch (eventKey) {
-    case tabEventKeys.players:
-      return this._renderPlayers();
+      case tabEventKeys.players:
+        return this._renderPlayers();
 
-    case tabEventKeys.individualMatches:
-      return <IndividualMatches match={this.props.match} />;
+      case tabEventKeys.individualMatches:
+        return <IndividualMatches match={this.props.match} />;
 
-    case tabEventKeys.report:
-      return <MatchReport match={this.props.match} t={this.context.t} user={this.props.user} viewport={this.props.viewport} />;
+      case tabEventKeys.report:
+        return <MatchReport match={this.props.match} t={this.context.t} user={this.props.user} viewport={this.props.viewport} />;
 
-    case tabEventKeys.opponentClub:
-      return <OpponentClubLocations club={this.props.match.getOpponentClub()} t={this.context.t} />;
+      case tabEventKeys.opponentClub:
+        return <OpponentClubLocations club={this.props.match.getOpponentClub()} t={this.context.t} />;
 
-    case tabEventKeys.scoresheet:
-      return <Scoresheet match={this.props.match} t={this.context.t} viewport={this.props.viewport} />;
+      case tabEventKeys.scoresheet:
+        return <Scoresheet match={this.props.match} t={this.context.t} viewport={this.props.viewport} />;
 
-    case tabEventKeys.opponentsRanking:
-      return this._renderOpponentsRanking();
+      case tabEventKeys.opponentsRanking:
+        return this._renderOpponentsRanking();
 
-    case tabEventKeys.opponentsFormation:
-      return <OpponentsFormation match={this.props.match} opponent={this.props.match.opponent} />;
+      case tabEventKeys.opponentsFormation:
+        return <OpponentsFormation match={this.props.match} opponent={this.props.match.opponent} />;
 
-    case tabEventKeys.admin:
-      return <MatchCardAdmin match={this.props.match} />;
+      case tabEventKeys.admin:
+        return <MatchCardAdmin match={this.props.match} />;
     }
     return 'Unknown';
   }
@@ -191,7 +198,7 @@ class MatchCard extends Component {
 
     const theirOtherMatches = matches
       .filter(match => match.score && (match.score.home || match.score.out))
-      .sort((a, b) => a.date.isBefore(b.date) ? 1 : -1);
+      .sort((a, b) => (a.date.isBefore(b.date) ? 1 : -1));
 
     return (
       <div>
@@ -202,7 +209,7 @@ class MatchCard extends Component {
   }
 
   _renderPlayers() {
-    const match = this.props.match;
+    const {match} = this.props;
     const team = match.getTeam();
 
     if (match.isSyncedWithFrenoy) {
@@ -235,10 +242,8 @@ class MatchCard extends Component {
   }
 }
 
-export default withViewport(connect(state => {
-  return {
-    config: state.config,
-    user: state.user,
-    readonlyMatches: state.readonlyMatches,
-  };
-}, Object.assign({}, matchActions, {setSetting}))(MatchCard));
+export default withViewport(connect(state => ({
+  config: state.config,
+  user: state.user,
+  readonlyMatches: state.readonlyMatches,
+}), {...matchActions, setSetting})(MatchCard));

@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
+import Table from 'react-bootstrap/lib/Table';
+import TextField from '@material-ui/core/TextField';
 import PropTypes, {connect, withViewport} from '../PropTypes.js';
 import {updateClub} from '../../actions/clubActions.js';
 
-import Table from 'react-bootstrap/lib/Table';
-import TextField from '@material-ui/core/TextField';
 
 import {EditButton} from '../controls.js';
 import AdminClubForm from './AdminClubForm.js';
@@ -14,6 +14,7 @@ class AdminClubs extends Component {
     updateClub: PropTypes.func.isRequired,
     viewport: PropTypes.viewport,
   }
+
   constructor() {
     super();
     this.state = {clubFilter: '', editClub: null};
@@ -31,7 +32,7 @@ class AdminClubs extends Component {
     }
 
 
-    let clubs = this.props.clubs;
+    let {clubs} = this.props;
     if (this.state.clubFilter) {
       clubs = clubs.filter(x => x.name.toLowerCase().includes(this.state.clubFilter));
     }

@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import PropTypes, {withViewport} from '../../PropTypes.js';
 
 import Table from 'react-bootstrap/lib/Table';
 import IconButton from '@material-ui/core/IconButton';
+import PropTypes, {withViewport} from '../../PropTypes.js';
 import {Spinner} from '../../controls.js';
 import {OtherMatchPlayerResultsTableRow} from './OtherMatchPlayerResults.js';
 import {MatchPlayerRankings} from '../controls/MatchPlayerRankings.js';
@@ -11,6 +11,7 @@ const AmountOfOpponentMatchesToShow = 5;
 
 class OpponentsLastMatches extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     opponent: PropTypes.shape({
       clubId: PropTypes.number.isRequired,
@@ -30,7 +31,7 @@ class OpponentsLastMatches extends Component {
   render() {
     const widthRemoveColumn = 500; // combine Home&Away columns to just one Opponent column on small devices
 
-    var matches = this.props.readonlyMatches;
+    let matches = this.props.readonlyMatches;
     if (!this.state.showAll) {
       matches = matches.take(AmountOfOpponentMatchesToShow);
     }
@@ -47,7 +48,7 @@ class OpponentsLastMatches extends Component {
             <th key="7" className="hidden-xs">{this.context.t('common.frenoy')}</th>
             {this.props.viewport.width > widthRemoveColumn ? [
               <th key="2">{this.context.t('match.opponents.homeTeam')}</th>,
-              <th key="3">{this.context.t('match.opponents.awayTeam')}</th>
+              <th key="3">{this.context.t('match.opponents.awayTeam')}</th>,
             ] : (
               <th key="4">{this.context.t('match.opponents.vsTeam')}</th>
             )}
@@ -57,12 +58,12 @@ class OpponentsLastMatches extends Component {
         </thead>
         <tbody>
           {matches.map(match => {
-            const opponent = this.props.opponent;
+            const {opponent} = this.props;
             const isHomeMatch = match.home.clubId === opponent.clubId && match.home.teamCode === opponent.teamCode;
             return [
               <tr
                 key={match.id}
-                className={'clickable ' + (match.won(opponent) ? 'accentuate success' : '')}
+                className={`clickable ${match.won(opponent) ? 'accentuate success' : ''}`}
                 onClick={() => this.setState({[match.id]: !this.state[match.id]})}
               >
 
@@ -70,13 +71,13 @@ class OpponentsLastMatches extends Component {
                 <td key="7" className="hidden-xs">{match.frenoyMatchId}</td>
                 {this.props.viewport.width > widthRemoveColumn ? [
                   <td key="2">{match.getClub('home').name} {match.home.teamCode}</td>,
-                  <td key="3">{match.getClub('away').name} {match.away.teamCode}</td>
+                  <td key="3">{match.getClub('away').name} {match.away.teamCode}</td>,
                 ] : (
                   <td key="4">
                     {isHomeMatch ? (
-                      match.getClub('away').name + ' ' + match.away.teamCode
+                      `${match.getClub('away').name} ${match.away.teamCode}`
                     ) : (
-                      match.getClub('home').name + ' ' + match.home.teamCode
+                      `${match.getClub('home').name} ${match.home.teamCode}`
                     )}
                   </td>
                 )}
@@ -85,7 +86,7 @@ class OpponentsLastMatches extends Component {
 
                 <td key="6">{match.score.home}&nbsp;-&nbsp;{match.score.out}</td>
               </tr>,
-              <OtherMatchPlayerResultsTableRow key="8" show={this.state[match.id]} match={match} colSpan={5} />
+              <OtherMatchPlayerResultsTableRow key="8" show={this.state[match.id]} match={match} colSpan={5} />,
             ];
           })}
           {!this.state.showAll && this.props.readonlyMatches.size > AmountOfOpponentMatchesToShow ? (

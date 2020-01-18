@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
+import TextField from '@material-ui/core/TextField';
 import PropTypes, {connect} from '../PropTypes.js';
 import * as userActions from '../../actions/userActions.js';
 
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
-import TextField from '@material-ui/core/TextField';
 import {MaterialButton} from '../controls/Button.js';
 
 class AdminChangePassword extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     adminSetNewPassword: PropTypes.func.isRequired,
     onEnd: PropTypes.func.isRequired,
@@ -20,6 +21,7 @@ class AdminChangePassword extends Component {
       newPassword: null,
     };
   }
+
   render() {
     const paperStyle = {
       marginLeft: 20,
@@ -45,9 +47,10 @@ class AdminChangePassword extends Component {
 
         <br />
 
-        <MaterialButton variant="contained"
+        <MaterialButton
+          variant="contained"
           label={this.context.t('profile.editPassword')}
-          primary={true}
+          primary
           style={{marginTop: 15}}
           onClick={() => {
             this.props.adminSetNewPassword(this.state);

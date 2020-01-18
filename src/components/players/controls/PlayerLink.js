@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import PropTypes from '../../PropTypes.js';
 import {Link} from 'react-router-dom';
+import PropTypes from '../../PropTypes.js';
 import t from '../../../locales.js';
 
 export class PlayerLink extends Component {
@@ -10,6 +10,7 @@ export class PlayerLink extends Component {
     children: PropTypes.any,
     className: PropTypes.string,
   }
+
   static defaultProps = {
     className: 'link-hover-underline',
   }

@@ -2,8 +2,8 @@ import LocalesUtils from './utils/locales-nl.js';
 
 const {trans, routes, timeAgo} = LocalesUtils;
 
-var translate = function(key, params) {
-  var str;
+const translate = function (key, params) {
+  let str;
   if (key.indexOf('.') === -1) {
     str = trans[key];
   } else {
@@ -17,17 +17,17 @@ var translate = function(key, params) {
   if (str.indexOf('${}') !== -1) {
     return str.replace('${}', params);
 
-  } else if (typeof params === 'object') {
-    Object.keys(params).forEach(function(paramKey) {
-      str = str.replace('${' + paramKey + '}', params[paramKey]);
+  } if (typeof params === 'object') {
+    Object.keys(params).forEach(paramKey => {
+      str = str.replace(`\${${paramKey}}`, params[paramKey]);
     });
   }
 
   return str;
 };
 
-translate.reverseRoute = function(baseRoute, translatedRoute) {
-  var result;
+translate.reverseRoute = function (baseRoute, translatedRoute) {
+  let result;
   Object.keys(routes[baseRoute]).forEach(key => {
     const value = routes[baseRoute][key];
     if (value === translatedRoute) {
@@ -37,8 +37,8 @@ translate.reverseRoute = function(baseRoute, translatedRoute) {
   return result;
 };
 
-translate.route = function(routeName, params) {
-  var route;
+translate.route = function (routeName, params) {
+  let route;
   if (routeName.indexOf('.') === -1) {
     route = routes[routeName];
   } else {
@@ -49,13 +49,13 @@ translate.route = function(routeName, params) {
     return route;
   }
 
-  Object.keys(params).forEach(function(paramKey) {
-    route = route.replace(':' + paramKey, params[paramKey]);
+  Object.keys(params).forEach(paramKey => {
+    route = route.replace(`:${paramKey}`, params[paramKey]);
   });
   return route;
 };
 
-translate.timeAgo = function() {
+translate.timeAgo = function () {
   return timeAgo;
 };
 

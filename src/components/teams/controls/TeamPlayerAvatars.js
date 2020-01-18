@@ -4,13 +4,14 @@ import PlayerAvatar from '../../players/PlayerAvatar.js';
 
 export class TeamPlayerAvatars extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     team: PropTypes.TeamModel.isRequired,
     style: PropTypes.object,
   }
 
   render() {
-    const t = this.context.t;
+    const {t} = this.context;
     const {team} = this.props;
 
     return (
@@ -20,18 +21,18 @@ export class TeamPlayerAvatars extends Component {
 
           const isCaptain = team.isCaptain(ply.player);
           if (isCaptain) {
-            tooltip = t('player.teamCaptain') + ': ' + tooltip;
+            tooltip = `${t('player.teamCaptain')}: ${tooltip}`;
           }
 
           const comp = ply.player.getCompetition(team.competition);
           if (comp.ranking) {
-            tooltip += ' (' + comp.ranking + ')';
+            tooltip += ` (${comp.ranking})`;
           }
 
           const avatarStyle = {
             marginLeft: 16,
             marginBottom: 10,
-            boxShadow: '3px 3px 3px ' + (isCaptain ? '#CD7F32' : '#888888'),
+            boxShadow: `3px 3px 3px ${isCaptain ? '#CD7F32' : '#888888'}`,
             display: 'inline-block',
           };
 

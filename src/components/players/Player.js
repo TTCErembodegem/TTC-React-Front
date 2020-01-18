@@ -9,13 +9,14 @@ import {PlayerCompetition} from './Player/PlayerCompetition.js';
 
 class PlayerComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     players: PropTypes.PlayerModelList.isRequired,
     viewport: PropTypes.viewport,
 
     match: PropTypes.shape({
       params: PropTypes.shape({
-        playerId: PropTypes.string.isRequired
+        playerId: PropTypes.string.isRequired,
       }).isRequired,
     }),
   };
@@ -48,7 +49,7 @@ class PlayerComponent extends Component {
           <div className="col-sm-6">
             <PlayerCompetition player={player} competition="Vttl" />
           </div>
-          {this.props.viewport.width > 992 ?<div style={{clear: 'both'}} /> : null}
+          {this.props.viewport.width > 992 ? <div style={{clear: 'both'}} /> : null}
           <div className="col-sm-6">
             <PlayerCompetition player={player} competition="Sporta" />
           </div>

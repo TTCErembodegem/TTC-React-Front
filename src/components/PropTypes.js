@@ -21,7 +21,7 @@ export {withTracker} from '../utils/decorators/withTracker.js';
 export {withRouter} from 'react-router-dom';
 
 
-export default Object.assign({}, ReactPropTypes, {
+export default ({...ReactPropTypes,
   contextTypes,
 
   MatchModel: ReactPropTypes.instanceOf(MatchModel),
@@ -39,8 +39,7 @@ export default Object.assign({}, ReactPropTypes, {
 
   viewport: ReactPropTypes.shape({
     width: ReactPropTypes.number.isRequired,
-    height: ReactPropTypes.number.isRequired
+    height: ReactPropTypes.number.isRequired,
   }).isRequired,
 
-  map: ImmutablePropTypes.map,
-});
+  map: ImmutablePropTypes.map});

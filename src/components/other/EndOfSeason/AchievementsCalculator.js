@@ -53,7 +53,7 @@ export class AchievementsCalculator {
         const result = {
           ply: player,
           old: player.getCompetition(competition).ranking,
-          new: player.getCompetition(competition).nextRanking
+          new: player.getCompetition(competition).nextRanking,
         };
         result.oldValue = getRankingValue(competition, result.old);
         result.newValue = getRankingValue(competition, result.new);
@@ -68,15 +68,15 @@ export class AchievementsCalculator {
 
   getPlayerStats(type) {
     switch (type) {
-    case 'Vttl':
-      return {playerStats: this.vttlPlayerStats, matches: this.vttlMatches};
+      case 'Vttl':
+        return {playerStats: this.vttlPlayerStats, matches: this.vttlMatches};
 
-    case 'Sporta':
-      return {playerStats: this.sportaplayerStats, matches: this.sportaMatches};
+      case 'Sporta':
+        return {playerStats: this.sportaplayerStats, matches: this.sportaMatches};
 
-    case 'belles':
-    default:
-      return {playerStats: this.playerStats, matches: this.matches};
+      case 'belles':
+      default:
+        return {playerStats: this.playerStats, matches: this.matches};
     }
   }
 }

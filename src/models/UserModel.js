@@ -1,6 +1,6 @@
-import storeUtil from '../storeUtil.js';
 import keyMirror from 'fbjs/lib/keyMirror';
 import moment from 'moment';
+import storeUtil from '../storeUtil.js';
 
 export const userRoles = ['Player', 'Board', 'Dev', 'System'];
 
@@ -26,6 +26,7 @@ export default class UserModel {
   getPlayer() {
     return storeUtil.getPlayer(this.playerId);
   }
+
   getTeams() {
     return this.teams.map(storeUtil.getTeam);
   }
@@ -37,6 +38,7 @@ export default class UserModel {
   canManageTeams() {
     return this.can(security.CAN_MANAGETEAM);
   }
+
   canEditMatchesOrIsCaptain() {
     if (this.can(security.CAN_MANAGETEAM)) {
       return true;
@@ -45,6 +47,7 @@ export default class UserModel {
     const captains = [].concat.apply([], this.getTeams().map(team => team.getCaptainPlayerIds()));
     return captains.indexOf(this.playerId) !== -1;
   }
+
   canEditMatchPlayers(match) {
     if (match.isSyncedWithFrenoy) {
       return false;
@@ -65,12 +68,15 @@ export default class UserModel {
 
     return true;
   }
+
   canEditPlayersOnMatchDay(match) {
     return this.isAdmin() || this.playerId && match.date.isSame(moment(), 'day');
   }
+
   canPostReport(teamId) {
     return this.playsIn(teamId) || this.can(security.CAN_EDITALLREPORTS);
   }
+
   canChangeMatchScore(match) {
     if (match.isSyncedWithFrenoy) {
       return false;
@@ -81,9 +87,11 @@ export default class UserModel {
   isAdmin() {
     return this.can(security.IS_ADMIN);
   }
+
   isDev() {
     return this.can(security.IS_DEV);
   }
+
   isSystem() {
     return this.can(security.IS_SYSTEM);
   }

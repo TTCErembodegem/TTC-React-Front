@@ -15,7 +15,7 @@ export class Spinner extends Component {
   render() {
     return (
       <div>
-        <Icon fa={'fa fa-spinner fa-pulse fa-' + this.props.size + 'x'} />
+        <Icon fa={`fa fa-spinner fa-pulse fa-${this.props.size}x`} />
       </div>
     );
   }

@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-import PropTypes, {connect, withContext, storeUtil} from '../PropTypes.js';
 
-import * as playerActions from '../../actions/playerActions.js';
 
 import {withStyles} from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
@@ -9,6 +7,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import TextField from '@material-ui/core/TextField';
+import * as playerActions from '../../actions/playerActions.js';
+import PropTypes, {connect, withContext, storeUtil} from '../PropTypes.js';
 import {MaterialButton} from '../controls/Button.js';
 
 import {EditIcon} from '../controls.js';
@@ -17,7 +17,7 @@ import PlayerStyleAutocomplete from './PlayerStyleAutocomplete.js';
 import PlayerAvatar from './PlayerAvatar.js';
 
 // TODO: need to put this in some css file?
-//@withStyles({dialog: {overflow: 'visible'}})
+// @withStyles({dialog: {overflow: 'visible'}})
 
 export const PlayerPlayingStyle = ({ply, allowEdit = true}) => (
   <span>
@@ -36,6 +36,7 @@ PlayerPlayingStyle.propTypes = {
 
 class PlayerPlayingStyleFormComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     player: PropTypes.PlayerModel.isRequired,
     user: PropTypes.UserModel.isRequired,
@@ -55,28 +56,32 @@ class PlayerPlayingStyleFormComponent extends Component {
   }
 
   _openStyle(ply) {
-    this.setState({editingPlayer: ply, newStyle: Object.assign({}, ply.style), editingBy: storeUtil.getUser().playerId});
+    this.setState({editingPlayer: ply, newStyle: {...ply.style}, editingBy: storeUtil.getUser().playerId});
   }
+
   _closeStyle() {
     this.setState({editingPlayer: null, newStyle: {name: '', bestStroke: ''}});
   }
+
   _saveStyle() {
     this.props.updateStyle(this.state.editingPlayer, this.state.newStyle, this.state.editingBy);
     this._closeStyle();
   }
 
   _changeStyle(text) {
-    this.setState({newStyle: Object.assign({}, this.state.newStyle, {name: text})});
+    this.setState({newStyle: {...this.state.newStyle, name: text}});
   }
+
   _changeBestStroke(e) {
-    this.setState({newStyle: Object.assign({}, this.state.newStyle, {bestStroke: e.target.value})});
+    this.setState({newStyle: {...this.state.newStyle, bestStroke: e.target.value}});
   }
+
   _changePlayer(playerId) {
     this.setState({editingBy: playerId});
   }
 
   render() {
-    const t = this.context.t;
+    const {t} = this.context;
     const ply = this.props.player;
 
     const canChangeStyle = this.props.user.playerId && this.props.user.playerId !== ply.id;
@@ -84,13 +89,14 @@ class PlayerPlayingStyleFormComponent extends Component {
       return <div />;
     }
 
-    var openFormIcon;
+    let openFormIcon;
     if (this.props.iconStyle === 'avatar') {
       openFormIcon = (
         <div
           className="clickable"
           onClick={canChangeStyle ? this._openStyle.bind(this, ply) : undefined}
-          style={{display: 'inline-block'}} title={t('player.editStyle.tooltip', ply.alias)}
+          style={{display: 'inline-block'}}
+          title={t('player.editStyle.tooltip', ply.alias)}
         >
           <PlayerAvatar player={ply} style={{backgroundColor: 'gold', margin: 0}} />
         </div>
@@ -99,7 +105,8 @@ class PlayerPlayingStyleFormComponent extends Component {
     } else {
       openFormIcon = (
         <EditIcon
-          tooltip={t('player.editStyle.tooltip', ply.alias)} tooltipPlacement="left"
+          tooltip={t('player.editStyle.tooltip', ply.alias)}
+          tooltipPlacement="left"
           style={this.props.style}
           onClick={this._openStyle.bind(this, ply)}
         />
@@ -115,13 +122,13 @@ class PlayerPlayingStyleFormComponent extends Component {
       <MaterialButton
         key="1"
         label={t('common.cancel')}
-        secondary={true}
+        secondary
         onClick={() => this._closeStyle()}
       />,
       <MaterialButton
         key="2"
         label={t('common.save')}
-        primary={true}
+        primary
         onClick={() => this._saveStyle()}
       />,
     ];
@@ -136,7 +143,8 @@ class PlayerPlayingStyleFormComponent extends Component {
         <DialogTitle className={this.props.classes.dialog}>{t('player.editStyle.title', this.props.player.alias)}</DialogTitle>
 
         <DialogContent className={this.props.classes.dialog}>
-          <PlayerStyleAutocomplete t={t}
+          <PlayerStyleAutocomplete
+            t={t}
             value={this.state.newStyle.name || ''}
             onChange={text => this._changeStyle(text)}
           />

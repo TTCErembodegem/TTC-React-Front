@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import PropTypes, {connect} from '../PropTypes.js';
 import {Link} from 'react-router-dom';
+import TextField from '@material-ui/core/TextField';
+import Paper from '@material-ui/core/Paper';
+import PropTypes, {connect} from '../PropTypes.js';
 
 import * as loginActions from '../../actions/userActions.js';
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 
-import TextField from '@material-ui/core/TextField';
-import Paper from '@material-ui/core/Paper';
 import {MaterialButton} from '../controls/Button.js';
 
 export const paperStyle = {
@@ -22,6 +22,7 @@ export const paperStyle = {
 
 class Login extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     login: PropTypes.func.isRequired,
   }
@@ -35,7 +36,7 @@ class Login extends Component {
   }
 
   render() {
-    const t = this.context.t;
+    const {t} = this.context;
     return (
       <Paper style={{...paperStyle, height: 425}}>
         <h3>{t('login.title')}</h3>
@@ -62,9 +63,10 @@ class Login extends Component {
         <br />
         <br />
 
-        <MaterialButton variant="contained"
+        <MaterialButton
+          variant="contained"
           label={t('login.loginButton')}
-          primary={true}
+          primary
           style={{marginTop: 15, width: '100%'}}
           onClick={() => this.props.login(this.state)}
           disabled={!this.state.playerId}

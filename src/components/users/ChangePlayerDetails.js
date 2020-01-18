@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
+import TextField from '@material-ui/core/TextField';
 import PropTypes, {connect} from '../PropTypes.js';
 
 import * as playerActions from '../../actions/playerActions.js';
 
-import TextField from '@material-ui/core/TextField';
 import {MaterialButton} from '../controls/Button.js';
 
 
 class ChangePlayerDetails extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     player: PropTypes.PlayerModel.isRequired,
     updatePlayer: PropTypes.func.isRequired,
@@ -25,7 +26,7 @@ class ChangePlayerDetails extends Component {
   }
 
   render() {
-    const player = this.props.player;
+    const {player} = this.props;
     const paperStyle = {
       width: 290,
       margin: 0,
@@ -61,9 +62,10 @@ class ChangePlayerDetails extends Component {
           onChange={e => this.setState({city: e.target.value})}
         />
 
-        <MaterialButton variant="contained"
+        <MaterialButton
+          variant="contained"
           label={this.context.t('profile.editDetails')}
-          primary={true}
+          primary
           style={{marginTop: 15}}
           onClick={() => this.props.updatePlayer(Object.assign(this.props.player, {contact: this.state}))}
         />

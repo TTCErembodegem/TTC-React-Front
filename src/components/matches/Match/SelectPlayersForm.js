@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import PropTypes, {connect} from '../../PropTypes.js';
 
 import Avatar from '@material-ui/core/Avatar';
 import List from '@material-ui/core/List';
@@ -8,6 +7,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import Divider from '@material-ui/core/Divider';
+import PropTypes, {connect} from '../../PropTypes.js';
 
 import PlayerAutoComplete from '../../players/PlayerAutoComplete.js';
 import PlayerAvatar from '../../players/PlayerAvatar.js';
@@ -17,6 +17,7 @@ import {getPlayingStatusColor} from '../../../models/PlayerModel.js';
 
 class SelectPlayersForm extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     players: PropTypes.PlayerModelList.isRequired,
     match: PropTypes.MatchModel.isRequired,
@@ -26,7 +27,7 @@ class SelectPlayersForm extends Component {
 
   render() {
     const team = this.props.match.getTeam();
-    var reservePlayers = team.getPlayers('reserve');
+    let reservePlayers = team.getPlayers('reserve');
 
     // Add one time team players
     const selectedFromTeam = team.getPlayers().map(ply => ply.player.id);
@@ -34,7 +35,7 @@ class SelectPlayersForm extends Component {
       .filter(ply => selectedFromTeam.indexOf(ply.id) === -1)
       .map(ply => ({
         player: ply,
-        type: 'Invaller'
+        type: 'Invaller',
       }));
     reservePlayers = reservePlayers.concat(otherSelectedPlayers.toArray());
 
@@ -64,25 +65,24 @@ class PlayerAvatarList extends Component {
       type: PropTypes.oneOf(['Standard', 'Captain', 'Reserve', 'Invaller']).isRequired,
     })),
     match: PropTypes.MatchModel.isRequired,
-    selectPlayer: PropTypes.func.isRequired
+    selectPlayer: PropTypes.func.isRequired,
   }
 
   render() {
     return (
       <List>
-        {this.props.players.map(({player/*, type*/}) => {
-          return (
-            <SelectableMatchPlayerAvatar
-              player={player}
-              select={this._onPlayerSelect.bind(this, player.id)}
-              match={this.props.match}
-              key={player.id}
-            />
-          );
-        })}
+        {this.props.players.map(({player/* , type */}) => (
+          <SelectableMatchPlayerAvatar
+            player={player}
+            select={this._onPlayerSelect.bind(this, player.id)}
+            match={this.props.match}
+            key={player.id}
+          />
+        ))}
       </List>
     );
   }
+
   _onPlayerSelect(playerId) {
     this.props.selectPlayer(this.props.match.id, this.props.match.block || 'Captain', null, playerId);
   }
@@ -105,7 +105,7 @@ class SelectablePlayerAvatar extends Component {
   }
 
   render() {
-    var player = this.props.player;
+    const {player} = this.props;
     return (
       <ListItem button onClick={this.props.select}>
         <ListItemIcon>
@@ -123,8 +123,6 @@ SelectableMatchPlayerAvatar.propTypes = {
   select: PropTypes.func.isRequired,
 };
 
-export default connect(state => {
-  return {
-    players: state.players,
-  };
-}, matchActions)(SelectPlayersForm);
+export default connect(state => ({
+  players: state.players,
+}), matchActions)(SelectPlayersForm);

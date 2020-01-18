@@ -1,19 +1,19 @@
 import React, {Component} from 'react';
+import Avatar from '@material-ui/core/Avatar';
 import PropTypes, {withTooltip} from '../PropTypes.js';
 
 import {playerUtils} from '../../models/PlayerModel.js';
 import {PlayerLink} from '../controls.js';
-import Avatar from '@material-ui/core/Avatar';
 
 class PlayerAvatar extends Component {
   static propTypes = {
-    player: PropTypes.PlayerModel.isRequired
+    player: PropTypes.PlayerModel.isRequired,
   }
 
   constructor(props) {
     super(props);
 
-    var img = new Image();
+    const img = new Image();
     img.onload = () => this.setState({isLoaded: true});
     img.src = playerUtils.getAvatarImageUrl(this.props.player.id);
 

@@ -1,23 +1,26 @@
 import React, {Component} from 'react';
+import cn from 'classnames';
 import PropTypes, {storeUtil} from '../../PropTypes.js';
 import {OwnClubId} from '../../../models/ClubModel.js';
-import cn from 'classnames';
 import {OpponentLink} from './OpponentLink.js';
 
 
 export class TeamOverviewRanking extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     team: PropTypes.TeamModel.isRequired,
     small: PropTypes.bool.isRequired,
   }
+
   constructor(props) {
     super(props);
     this.state = {showAll: !props.small};
   }
+
   render() {
     const {team, small} = this.props;
-    var ranking = team.ranking;
+    let {ranking} = team;
 
     if (ranking.length === 0) {
       return <div />;

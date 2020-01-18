@@ -21,7 +21,7 @@ export const Kampioenen = ({topTeams, t}) => {
         <div key={team.id} className="col-md-4 col-sm-6">
           <div className="content">
             <h3>
-              <Link to={t.route('teams').replace(':competition', team.competition) + '/' + team.teamCode} className="link-hover-underline">
+              <Link to={`${t.route('teams').replace(':competition', team.competition)}/${team.teamCode}`} className="link-hover-underline">
                 {team.renderOwnTeamTitle()}
               </Link>
             </h3>

@@ -4,6 +4,7 @@ import {forceFrenoySync} from '../../actions/matchActions.js';
 
 class AdminMatchesComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     matches: PropTypes.MatchModelList.isRequired,
     forceFrenoySync: PropTypes.func.isRequired,

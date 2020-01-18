@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import PropTypes, {connect} from '../../PropTypes.js';
 import cn from 'classnames';
+import PropTypes, {connect} from '../../PropTypes.js';
 import {Icon} from '../Icon.js';
 
 class ExcelButtonComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     onClick: PropTypes.func.isRequired,
     tooltip: PropTypes.string,

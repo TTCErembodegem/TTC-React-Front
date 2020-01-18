@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import PropTypes, {connect, withViewport} from '../PropTypes.js';
-import {updatePlayer, frenoySync, deletePlayer} from '../../actions/playerActions.js';
 import moment from 'moment';
 
 import Table from 'react-bootstrap/lib/Table';
 import TextField from '@material-ui/core/TextField';
+import {updatePlayer, frenoySync, deletePlayer} from '../../actions/playerActions.js';
+import PropTypes, {connect, withViewport} from '../PropTypes.js';
 
 import {Icon, ButtonStack, EditButton} from '../controls.js';
 import AdminPlayerForm from './AdminPlayerForm.js';
@@ -22,6 +22,7 @@ class AdminPlayers extends Component {
     viewport: PropTypes.viewport,
     frenoySync: PropTypes.func.isRequired,
   }
+
   constructor() {
     super();
     this.state = {filter: 'active', playerFilter: ''};
@@ -32,64 +33,65 @@ class AdminPlayers extends Component {
   }
 
   render() {
-    var players;
-    var playersContent;
-    var otherContent = null;
+    let players;
+    let playersContent;
+    let otherContent = null;
     switch (this.state.filter) {
-    case 'new-player':
-      otherContent = <AdminPlayerForm onEnd={() => this._setDefaultForm()} />;
-      break;
+      case 'new-player':
+        otherContent = <AdminPlayerForm onEnd={() => this._setDefaultForm()} />;
+        break;
 
-    case 'Speler editeren':
-      otherContent = <AdminPlayerForm player={this.state.selectedPlayer} onEnd={() => this._setDefaultForm()} />;
-      break;
+      case 'Speler editeren':
+        otherContent = <AdminPlayerForm player={this.state.selectedPlayer} onEnd={() => this._setDefaultForm()} />;
+        break;
 
-    case 'set-password':
-      otherContent = <AdminChangePassword onEnd={() => this._setDefaultForm()} />;
-      break;
+      case 'set-password':
+        otherContent = <AdminChangePassword onEnd={() => this._setDefaultForm()} />;
+        break;
 
-    case 'bestuur':
-      otherContent = <AdminBoardMembers onEnd={() => this._setDefaultForm()} />;
-      break;
+      case 'bestuur':
+        otherContent = <AdminBoardMembers onEnd={() => this._setDefaultForm()} />;
+        break;
 
-    case 'inactive':
-      players = this.props.recreantAndQuitters;
-      if (this.state.filter) {
-        players = players.filter(x => x.name.toLowerCase().includes(this.state.playerFilter));
-      }
-      playersContent = <InactivesTable players={players} onUpdatePlayer={this.props.updatePlayer} onDeletePlayer={this.props.deletePlayer} />;
-      break;
+      case 'inactive':
+        players = this.props.recreantAndQuitters;
+        if (this.state.filter) {
+          players = players.filter(x => x.name.toLowerCase().includes(this.state.playerFilter));
+        }
+        playersContent = <InactivesTable players={players} onUpdatePlayer={this.props.updatePlayer} onDeletePlayer={this.props.deletePlayer} />;
+        break;
 
-    case 'active':
-    default:
-      players = this.props.players;
-      if (this.state.playerFilter) {
-        players = players.filter(x => x.name.toLowerCase().includes(this.state.playerFilter));
-      }
-      playersContent = (
-        <ActivesTable
-          players={players}
-          onEditPlayer={ply => this.setState({filter: 'Speler editeren', selectedPlayer: ply})}
-          onUpdatePlayer={this.props.updatePlayer} />
-      );
-      break;
+      case 'active':
+      default:
+        players = this.props.players;
+        if (this.state.playerFilter) {
+          players = players.filter(x => x.name.toLowerCase().includes(this.state.playerFilter));
+        }
+        playersContent = (
+          <ActivesTable
+            players={players}
+            onEditPlayer={ply => this.setState({filter: 'Speler editeren', selectedPlayer: ply})}
+            onUpdatePlayer={this.props.updatePlayer}
+          />
+        );
+        break;
     }
 
     const viewsConfig = [{
       key: 'active',
-      text: 'Spelers beheren'
+      text: 'Spelers beheren',
     }, {
       key: 'inactive',
-      text: 'Activeren / Verwijderen'
+      text: 'Activeren / Verwijderen',
     }, {
       key: 'new-player',
-      text: 'Nieuw lid'
+      text: 'Nieuw lid',
     }, {
       key: 'set-password',
-      text: 'Paswoord reset'
+      text: 'Paswoord reset',
     }, {
       key: 'bestuur',
-      text: 'Bestuur'
+      text: 'Bestuur',
     }];
     return (
       <div>
@@ -114,7 +116,8 @@ class AdminPlayers extends Component {
             <button
               className="btn btn-default pull-right"
               style={{marginRight: 15}}
-              onClick={() => this.props.frenoySync()}>
+              onClick={() => this.props.frenoySync()}
+            >
               Frenoy Sync
             </button>
 
@@ -127,7 +130,7 @@ class AdminPlayers extends Component {
 }
 
 function concatCompetitions(vttl, sporta) {
-  var comps = [];
+  const comps = [];
   if (vttl) {
     comps.push('Vttl');
   }
@@ -154,8 +157,8 @@ const ActivesTable = ({players, onEditPlayer, onUpdatePlayer}) => (
             <strong>{ply.name}</strong> <small className="hidden-xs">({ply.alias})</small>
             <br />
             <small>
-              <a href={'mailto:' + ply.contact.email}>{ply.contact.email}</a>
-              <span style={{marginLeft: 20, marginRight: 20}} className="hidden-sm hidden-xs">{ply.contact.address + ', ' + ply.contact.city}</span>
+              <a href={`mailto:${ply.contact.email}`}>{ply.contact.email}</a>
+              <span style={{marginLeft: 20, marginRight: 20}} className="hidden-sm hidden-xs">{`${ply.contact.address}, ${ply.contact.city}`}</span>
               <br className="visible-sm visible-xs" />
               <span>{ply.contact.getMobile()}</span>
             </small>
@@ -166,22 +169,29 @@ const ActivesTable = ({players, onEditPlayer, onUpdatePlayer}) => (
             <EditButton onClick={() => onEditPlayer(ply)} style={{fontSize: 26}} />
 
             {keepTrackOfPlayerKeys ? (
-              <button className="btn btn-default" style={{marginLeft: 5}} onClick={() => {
-                ply.hasKey = ply.hasKey === false ? null : !ply.hasKey;
-                onUpdatePlayer(ply, {activeChanged: true});
-              }}
+              <button
+                className="btn btn-default"
+                style={{marginLeft: 5}}
+                onClick={() => {
+                  ply.hasKey = ply.hasKey === false ? null : !ply.hasKey;
+                  onUpdatePlayer(ply, {activeChanged: true});
+                }}
               >
                 <Icon fa="fa fa-key fa-2x" color={ply.hasKey ? 'green' : (ply.hasKey === false ? 'red' : undefined)} />
               </button>
             ) : null}
 
             {!ply.vttl && !ply.sporta ? (
-              <button className="btn btn-default" style={{marginLeft: 10}} onClick={() => {
-                ply.active = false;
-                ply.quitYear = moment().year();
-                ply.security = 'Player';
-                onUpdatePlayer(ply, {activeChanged: true});
-              }}>
+              <button
+                className="btn btn-default"
+                style={{marginLeft: 10}}
+                onClick={() => {
+                  ply.active = false;
+                  ply.quitYear = moment().year();
+                  ply.security = 'Player';
+                  onUpdatePlayer(ply, {activeChanged: true});
+                }}
+              >
                 <span className="hidden-xs">Recreant deactiveren</span>
                 <span className="visible-xs">X</span>
               </button>

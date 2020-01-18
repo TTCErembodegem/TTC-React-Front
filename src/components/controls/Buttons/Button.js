@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import PropTypes, {withTooltip} from '../../PropTypes.js';
 import cn from 'classnames';
+import PropTypes, {withTooltip} from '../../PropTypes.js';
 import {Icon} from '../Icon.js';
 
 
 class ButtonComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     onClick: PropTypes.func.isRequired,
     label: PropTypes.string,
@@ -31,6 +32,7 @@ export const Button = withTooltip(ButtonComponent);
 
 class IconButtonComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     onClick: PropTypes.func.isRequired,
     fa: PropTypes.string.isRequired,

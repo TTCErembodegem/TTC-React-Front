@@ -7,20 +7,19 @@ export class PlayerRankings extends Component {
   static propTypes = {
     formation: PropTypes.array.isRequired,
   }
+
   render() {
     const {formation, ...props} = this.props;
 
     return (
       <span {...props}>
-        {formation.map(({ranking, amount}, index) => {
-          return (
-            <span key={ranking}>
-              {amount > 1 ? <small>{amount}x</small> : null}
-              {ranking}
-              {index < formation.length - 1 ? ', ' : null}
-            </span>
-          );
-        })}
+        {formation.map(({ranking, amount}, index) => (
+          <span key={ranking}>
+            {amount > 1 ? <small>{amount}x</small> : null}
+            {ranking}
+            {index < formation.length - 1 ? ', ' : null}
+          </span>
+        ))}
       </span>
     );
   }
@@ -29,6 +28,7 @@ export class PlayerRankings extends Component {
 
 export class MatchPlayerRankings extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     homeTeam: PropTypes.bool.isRequired,
     match: PropTypes.MatchModel.isRequired,

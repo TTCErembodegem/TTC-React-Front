@@ -1,17 +1,17 @@
 import React, {Component} from 'react';
-import PropTypes, {connect} from '../PropTypes.js';
 import _ from 'lodash';
 import moment from 'moment';
 import cn from 'classnames';
 
-import {selectPlayer} from '../../actions/matchActions.js';
-import {getPlayingStatusClass} from '../../models/PlayerModel.js';
 
 import Table from 'react-bootstrap/lib/Table';
 import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
 import Button from 'react-bootstrap/lib/Button';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import FormControl from 'react-bootstrap/lib/FormControl';
+import {getPlayingStatusClass} from '../../models/PlayerModel.js';
+import {selectPlayer} from '../../actions/matchActions.js';
+import PropTypes, {connect} from '../PropTypes.js';
 import {CommentButton} from '../controls.js';
 import MatchVs from '../matches/Match/MatchVs.js';
 import {CannotEditMatchIcon} from '../matches/controls/CannotEditMatchIcon';
@@ -19,6 +19,7 @@ import {SwitchBetweenFirstAndLastRoundButton, getFirstOrLastMatches, getFirstOrL
 
 class PlayerLinup extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     matches: PropTypes.MatchModelList.isRequired,
     selectPlayer: PropTypes.func.isRequired,
@@ -43,13 +44,13 @@ class PlayerLinup extends Component {
   }
 
   render() {
-    const t = this.context.t;
-    var teams = this.props.teams;
+    const {t} = this.context;
+    let {teams} = this.props;
     if (this.state.filter) {
       teams = teams.filter(x => x.competition === this.state.filter);
     }
 
-    var allMatchesToCome = teams.map(team => team.getMatches().toArray());
+    let allMatchesToCome = teams.map(team => team.getMatches().toArray());
     // allMatchesToCome = _.uniqBy(_.flatten(allMatchesToCome), value => value.date.format('YYYYMMDD'))
     allMatchesToCome = _.flatten(allMatchesToCome)
       .filter(match => moment().isBefore(match.date))
@@ -67,7 +68,8 @@ class PlayerLinup extends Component {
               <button
                 className={cn('btn', button === activeFilter ? 'btn-info' : 'btn-default')}
                 key={button}
-                onClick={() => this.setState({filter: button === allText ? null : button})}>
+                onClick={() => this.setState({filter: button === allText ? null : button})}
+              >
                 {button}
               </button>
             ))}
@@ -89,7 +91,7 @@ class PlayerLinup extends Component {
               const statusNote = matchPlayer ? matchPlayer.statusNote : '';
 
               const getOnChangePlaying = status => this._onChangePlaying.bind(this, match, status, statusNote);
-              var buttons;
+              let buttons;
               if (match.block) {
                 buttons = CannotEditMatchIcon;
               } else {
@@ -187,7 +189,8 @@ const CommentEditForm = ({onChange, value, t}) => (
       type="text"
       value={value}
       placeholder={t('profile.play.extraComment')}
-      onChange={onChange} />
+      onChange={onChange}
+    />
   </div>
 );
 

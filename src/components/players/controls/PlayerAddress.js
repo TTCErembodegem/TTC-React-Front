@@ -3,6 +3,7 @@ import PropTypes from '../../PropTypes.js';
 
 export class PlayerAddress extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     contact: PropTypes.shape({
       address: PropTypes.string,

@@ -1,12 +1,9 @@
 import React, {Component} from 'react';
-import PropTypes, {withStyles, withViewport} from '../../PropTypes.js';
 import {Link} from 'react-router-dom';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
-import {Icon} from '../../controls/Icon.js';
-import Navigation from './HeaderNavigation.js';
 
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
@@ -17,6 +14,9 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import Navigation from './HeaderNavigation.js';
+import {Icon} from '../../controls/Icon.js';
+import PropTypes, {withStyles, withViewport} from '../../PropTypes.js';
 
 require('./Header.css');
 
@@ -43,6 +43,7 @@ const HeaderButton = ({label, href}) => (
 
 export default withViewport(withMaterialStyles(styles)(class Header extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     viewport: PropTypes.viewport,
     user: PropTypes.UserModel.isRequired,
@@ -54,7 +55,7 @@ export default withViewport(withMaterialStyles(styles)(class Header extends Comp
   }
 
   render() {
-    const t = this.context.t;
+    const {t} = this.context;
     const showExtraNavigationButtons = this.props.viewport.width > 700;
     const {classes} = this.props;
 

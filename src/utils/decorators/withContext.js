@@ -11,7 +11,7 @@ function withContext(ComposedComponent) {
         setTitle: (value, params) => {
           document.title = value ? t(value, params) : t('fullClubName');
         },
-        t: t
+        t,
       };
     }
 

@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
+import Paper from '@material-ui/core/Paper';
 import PropTypes from '../PropTypes.js';
 import {Location} from '../controls.js';
-import Paper from '@material-ui/core/Paper';
 
 const topSponsorPaperStyle = {
   height: 110,
   padding: 15,
   display: 'inline-block',
   marginBottom: 15,
-  float: 'right'
+  float: 'right',
 };
 
 const topSponsorsOnBottomPaperStyle = {
@@ -20,6 +20,7 @@ const topSponsorsOnBottomPaperStyle = {
 
 export class SlagerijGuy extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     big: PropTypes.bool.isRequired,
   };
@@ -37,7 +38,7 @@ export class SlagerijGuy extends Component {
     return (
       <a href="https://www.facebook.com/Slagerij-Guy-en-Paula-805454896289871" target="_blank" className="sponsor-paper">
         <Paper style={style}>
-          <Location loc={loc} t={this.context.t} noTelephoneLink={true} />
+          <Location loc={loc} t={this.context.t} noTelephoneLink />
         </Paper>
       </a>
     );
@@ -57,7 +58,7 @@ export const Nostech = props => <ImageSponsor url="https://www.nostech.be" img="
 const bottomSponsorsStyleBig = {
   padding: 5,
   textAlign: 'center',
-  display: 'inline-block'
+  display: 'inline-block',
 };
 
 const bottomSponsorsStyleSmall = {
@@ -75,13 +76,14 @@ class ImageSponsor extends Component {
     img: PropTypes.string.isRequired,
     style: PropTypes.object,
   };
+
   static defaultProps = {
     style: {},
   };
 
   render() {
     const style = this.props.big ? bottomSponsorsStyleBig : bottomSponsorsStyleSmall;
-    const img = <img src={'/img/sponsors/' + this.props.img} />;
+    const img = <img src={`/img/sponsors/${this.props.img}`} />;
     return (
       <Paper style={{...style, ...this.props.style}}>
         {this.props.url ? <a href={this.props.url} target="_blank">{img}</a> : img}

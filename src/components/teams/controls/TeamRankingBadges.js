@@ -4,6 +4,7 @@ import {Icon, Badgy} from '../../controls.js';
 
 export class TeamRankingBadges extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     team: PropTypes.TeamModel.isRequired,
     opponent: PropTypes.shape({
@@ -25,6 +26,7 @@ export class TeamRankingBadges extends Component {
 
 class TeamRankingBadgesCore extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     ranking: PropTypes.shape({
       gamesWon: PropTypes.number.isRequired,
@@ -33,11 +35,12 @@ class TeamRankingBadgesCore extends Component {
     }).isRequired,
     style: PropTypes.object,
   }
+
   render() {
-    const t = this.context.t;
-    const ranking = this.props.ranking;
+    const {t} = this.context;
+    const {ranking} = this.props;
     return (
-      <div style={Object.assign({display: 'inline'}, (this.props.style || {fontSize: 14, marginTop: -10}))}>
+      <div style={({display: 'inline', ...(this.props.style || {fontSize: 14, marginTop: -10})})}>
         <TeamOverviewBadge amount={ranking.gamesWon} colorClass="match-won" fa="fa-thumbs-up" tooltip={t('teamCalendar.matchesWonBadge')} />
         <TeamOverviewBadge amount={ranking.gamesDraw} colorClass="match-draw" fa="fa-meh-o" tooltip={t('teamCalendar.matchesDrawBadge')} />
         <TeamOverviewBadge amount={ranking.gamesLost} colorClass="match-lost" fa="fa-thumbs-down" tooltip={t('teamCalendar.matchesLostBadge')} />
@@ -49,14 +52,12 @@ class TeamRankingBadgesCore extends Component {
 
 
 
-const TeamOverviewBadge = ({amount, colorClass, fa, tooltip}) => {
-  return (
-    <Badgy type={colorClass} style={{marginLeft: 12}} tooltip={tooltip}>
-      <Icon fa={'fa ' + fa} style={{marginRight: 6}} />
-      {amount}
-    </Badgy>
-  );
-};
+const TeamOverviewBadge = ({amount, colorClass, fa, tooltip}) => (
+  <Badgy type={colorClass} style={{marginLeft: 12}} tooltip={tooltip}>
+    <Icon fa={`fa ${fa}`} style={{marginRight: 6}} />
+    {amount}
+  </Badgy>
+);
 
 TeamOverviewBadge.propTypes = {
   amount: PropTypes.number.isRequired,

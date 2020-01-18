@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes, {connect} from '../PropTypes.js';
-//import {PlayerCompetitionBadge} from '../players/PlayerBadges.js';
+// import {PlayerCompetitionBadge} from '../players/PlayerBadges.js';
 import {ButtonStack} from '../controls.js';
 
 class AdminEmailComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     players: PropTypes.PlayerModelList.isRequired,
     inactivePlayers: PropTypes.PlayerModelList.isRequired,
@@ -17,7 +18,7 @@ class AdminEmailComponent extends Component {
   }
 
   _filterPlayers() {
-    const filter = this.state.filter;
+    const {filter} = this.state;
     if (filter === 'inactive') {
       return this.props.inactivePlayers.filter(p => !p.active);
     }
@@ -25,12 +26,12 @@ class AdminEmailComponent extends Component {
     const allPlayers = this.props.players;
     const players = allPlayers.filter(p => p.active);
     switch (filter) {
-    case 'comp':
-      return players.filter(p => p.vttl || p.sporta);
-    case 'vttl':
-      return players.filter(p => p.vttl);
-    case 'sporta':
-      return players.filter(p => p.sporta);
+      case 'comp':
+        return players.filter(p => p.vttl || p.sporta);
+      case 'vttl':
+        return players.filter(p => p.vttl);
+      case 'sporta':
+        return players.filter(p => p.sporta);
     }
     return players;
   }
@@ -46,7 +47,7 @@ class AdminEmailComponent extends Component {
 
     // if (this.state.filter === 'vttl' || this.state.filter === 'sporta')
     // --> also allow filtering on Sporta A, Sporta B etc
-    //console.log('teams', this.props.teams.toArray());
+    // console.log('teams', this.props.teams.toArray());
 
     // --> if vttl|sporta: display ranking in badge
     // --> group players per team
@@ -60,7 +61,7 @@ class AdminEmailComponent extends Component {
     const emails = selectedPlayers.filter(p => p.contact && p.contact.email).map(p => `"${p.name}" <${p.contact.email.trim()}>`);
     const emailsWithoutName = selectedPlayers.filter(p => p.contact && p.contact.email).map(p => p.contact.email.trim());
 
-    //"John Smith" <johnsemail@hisserver.com>
+    // "John Smith" <johnsemail@hisserver.com>
 
     return (
       <div style={{paddingLeft: 15}}>
@@ -101,16 +102,14 @@ class AdminEmailComponent extends Component {
   }
 }
 
-const PlayerEmail = ({player}) => {
-  return (
-    <span style={{whiteSpace: 'normal', marginRight: 7, paddingTop: 15}}>
-      <span className="label label-as-badge label-success" key={player.id} style={{fontSize: 12, fontWeight: 'normal'}}>
-        {player.name}
-      </span>
-      {' '}
+const PlayerEmail = ({player}) => (
+  <span style={{whiteSpace: 'normal', marginRight: 7, paddingTop: 15}}>
+    <span className="label label-as-badge label-success" key={player.id} style={{fontSize: 12, fontWeight: 'normal'}}>
+      {player.name}
     </span>
-  );
-};
+    {' '}
+  </span>
+);
 
 PlayerEmail.propTypes = {
   player: PropTypes.PlayerModel.isRequired,

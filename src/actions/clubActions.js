@@ -8,24 +8,22 @@ import trans from '../locales.js';
 export function loaded(data) {
   return {
     type: ActionTypes.CLUBS_LOADED,
-    payload: data
+    payload: data,
   };
 }
 
 
 export function updateClub(club) {
-  return dispatch => {
-    return http.post('/clubs/UpdateClub', club)
-      .then(function(data) {
-        if (data) {
-          dispatch(showSnackbar(trans('common.apiSuccess')));
-          dispatch(loaded(data));
-          broadcastReload('club', data.id);
-        }
+  return dispatch => http.post('/clubs/UpdateClub', club)
+    .then(data => {
+      if (data) {
+        dispatch(showSnackbar(trans('common.apiSuccess')));
+        dispatch(loaded(data));
+        broadcastReload('club', data.id);
+      }
 
-      }, function(err) {
-        dispatch(showSnackbar(trans('common.apiFail')));
+    }, err => {
+      dispatch(showSnackbar(trans('common.apiFail')));
         console.log('UpdateClub!', err); // eslint-disable-line
-      });
-  };
+    });
 }

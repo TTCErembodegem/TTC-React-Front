@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
+import Panel from 'react-bootstrap/lib/Panel';
 import PropTypes from '../../PropTypes.js';
 
-import Panel from 'react-bootstrap/lib/Panel';
 import {DivisionHeader} from '../../teams/controls/DivisionHeader.js';
 import {PlayerIndividual} from './PlayerIndividual.js';
 

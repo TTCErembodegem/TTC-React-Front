@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import PropTypes, {connect, browseTo, withViewport} from '../PropTypes.js';
 import {Link} from 'react-router-dom';
 
 import Panel from 'react-bootstrap/lib/Panel';
+import PropTypes, {connect, browseTo, withViewport} from '../PropTypes.js';
 import PlayerImage from './PlayerImage.js';
 import {Icon, FrenoyPlayerDetailsIcon, PlayerLink} from '../controls.js';
 import {PlayerPlayingStyleForm} from './PlayerPlayingStyle.js';
@@ -12,12 +12,14 @@ import {createFrenoyLink} from '../../models/PlayerModel.js';
 
 class PlayerCard extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     viewport: PropTypes.viewport,
     user: PropTypes.UserModel.isRequired,
     player: PropTypes.PlayerModel.isRequired,
     showSideBySide: PropTypes.bool,
   }
+
   static defaultProps = {
     showSideBySide: false,
   }
@@ -122,7 +124,7 @@ export const PlayerCompetitionLabel = ({comp, player, t, withName = false}) => {
         <strong><PlayerLink player={player} alias={withName === 'alias'} /></strong>
       ) : (
         <Link to={browseTo.getTeam(team || {competition: comp})} className="link-hover-underline">
-          {comp}{team ? ' ' + team.teamCode : null}
+          {comp}{team ? ` ${team.teamCode}` : null}
         </Link>
       )}
       <PlayerFrenoyLink comp={compDetails} style={{marginLeft: 10}}>

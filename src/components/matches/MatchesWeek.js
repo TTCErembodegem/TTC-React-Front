@@ -11,6 +11,7 @@ import {WeekCalcer} from './MatchesWeeks/WeekCalcer.js';
 
 class MatchesWeek extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     matches: PropTypes.MatchModelList.isRequired,
     freeMatches: PropTypes.MatchModelList.isRequired,
@@ -51,18 +52,19 @@ class MatchesWeek extends Component {
   }
 
   _onChangeWeek(currentWeek, weekDiff) {
-    const comp = this.props.match.params.comp;
-    const compFilter = comp && comp !== 'all' ? '/' + this.props.match.params.comp : '';
-    this.props.history.push(this.context.t.route('matchesWeek') + '/' + (currentWeek + weekDiff) + compFilter);
+    const {comp} = this.props.match.params;
+    const compFilter = comp && comp !== 'all' ? `/${this.props.match.params.comp}` : '';
+    this.props.history.push(`${this.context.t.route('matchesWeek')}/${currentWeek + weekDiff}${compFilter}`);
   }
+
   _onChangeCompetition(currentWeek, comp) {
-    this.props.history.push(this.context.t.route('matchesWeek') + '/' + currentWeek + (comp && comp !== 'all' ? '/' + comp : ''));
+    this.props.history.push(`${this.context.t.route('matchesWeek')}/${currentWeek}${comp && comp !== 'all' ? `/${comp}` : ''}`);
   }
 
   render() {
-    const t = this.context.t;
+    const {t} = this.context;
 
-    var allMatches = this.props.matches;
+    let allMatches = this.props.matches;
     if (this.state.editMode) {
       allMatches = allMatches.concat(this.props.freeMatches);
     }
@@ -99,7 +101,7 @@ class MatchesWeek extends Component {
     const viewsConfig = [
       {key: 'all', text: t('common.all')},
       {key: 'Vttl', text: 'Vttl'},
-      {key: 'Sporta', text: 'Sporta'}
+      {key: 'Sporta', text: 'Sporta'},
     ];
 
     return (
@@ -134,7 +136,7 @@ class MatchesWeek extends Component {
 
 const MatchesWeekPerCompetition = ({comp, editMode, matches}) => {
   // TODO: fixed sort by team now... adding sorting should only be done after serious refactoring of MatchesTable
-  //const matchSorter = (a, b) => a.date - b.date;
+  // const matchSorter = (a, b) => a.date - b.date;
   const matchSorter = (a, b) => a.getTeam().teamCode.localeCompare(b.getTeam().teamCode);
 
   matches = matches.filter(x => x.competition === comp);

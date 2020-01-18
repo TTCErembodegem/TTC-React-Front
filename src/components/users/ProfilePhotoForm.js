@@ -20,6 +20,7 @@ export class ProfilePhotoAvatarForm extends Component {
 
 class ProfilePhotoForm extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     admin: PropTypes.bool,
     user: PropTypes.UserModel.isRequired,
@@ -31,6 +32,7 @@ class ProfilePhotoForm extends Component {
     uploadPlayer: PropTypes.func.isRequired,
     borderRadius: PropTypes.number.isRequired,
   }
+
   static defaultProps = {
     size: playerUtils.getPlayerImageSize(),
     type: 'player-photo',
@@ -49,7 +51,7 @@ class ProfilePhotoForm extends Component {
   }
 
   render() {
-    const t = this.context.t;
+    const {t} = this.context;
     const tmpFileName = this.state.fileName;
     return (
       <div style={{marginBottom: 10, paddingLeft: 10}} className="row">
@@ -93,7 +95,7 @@ class ProfilePhotoForm extends Component {
               <div className="caption" style={{textAlign: 'center', marginTop: 40}}>
                 <MaterialButton
                   label={t('photos.save')}
-                  primary={true}
+                  primary
                   style={{marginTop: -40}}
                   onClick={() => this._saveImage()}
                 />
@@ -118,9 +120,10 @@ class ProfilePhotoForm extends Component {
   _updateImage(preview, croppingRect) {
     this.setState({preview, croppingRect});
   }
+
   _saveImage() {
     this.props.uploadPlayer(this.state.preview, this.state.playerId || this.props.user.playerId, this.props.type);
   }
 }
 
-export default withContext(connect(state => ({user: state.user}), {uploadPlayer})(ProfilePhotoForm))
+export default withContext(connect(state => ({user: state.user}), {uploadPlayer})(ProfilePhotoForm));

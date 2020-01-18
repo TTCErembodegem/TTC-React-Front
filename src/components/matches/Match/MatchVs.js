@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
-import PropTypes, {browseTo} from '../../PropTypes.js';
 import {Link} from 'react-router-dom';
 import cn from 'classnames';
+import PropTypes, {browseTo} from '../../PropTypes.js';
 import {Icon} from '../../controls/Icon.js';
 import {DivisionRankingLabel, OurDivisionRankingLabel} from '../controls/DivisionRankingLabel.js';
 
 export default class MatchVs extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     match: PropTypes.MatchModel.isRequired,
     opponentOnly: PropTypes.bool.isRequired,
@@ -23,11 +24,11 @@ export default class MatchVs extends Component {
   };
 
   render() {
-    const t = this.context.t;
+    const {t} = this.context;
     const {match, opponentOnly, themOnly} = this.props;
     const team = match.getTeam();
     const divisionRanking = team.getDivisionRanking(match.opponent);
-    var them = (
+    let them = (
       <span>
         {this.props.withPosition ? <DivisionRankingLabel divisionRanking={divisionRanking} /> : null}
 
@@ -51,7 +52,7 @@ export default class MatchVs extends Component {
 
 
     const usClasses = cn('label label-as-badge label-info', {clickable: this.props.ownTeamLink});
-    var us;
+    let us;
     if (this.props.ownTeamLink) {
       us = (
         <Link to={browseTo.getTeam(team, this.props.ownTeamLink)} className={usClasses}>

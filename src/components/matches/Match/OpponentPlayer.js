@@ -8,6 +8,7 @@ export class OpponentPlayerLabel extends Component {
     competition: PropTypes.oneOf(['Vttl', 'Sporta']).isRequired,
     fullName: PropTypes.bool,
   }
+
   static defaultProps = {
     fullName: true,
   }

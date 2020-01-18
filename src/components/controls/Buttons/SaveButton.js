@@ -3,7 +3,7 @@ import PropTypes from '../../PropTypes.js';
 import {Icon} from '../Icon.js';
 
 export const SaveButton = ({onClick, title, style}) => (
-  <button className="btn btn-default"onClick={onClick} title={title} style={style}>
+  <button className="btn btn-default" onClick={onClick} title={title} style={style}>
     <Icon fa="fa fa-floppy-o" />
   </button>
 );

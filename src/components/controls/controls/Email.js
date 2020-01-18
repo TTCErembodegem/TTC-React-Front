@@ -9,7 +9,7 @@ export class Email extends Component {
   };
 
   render() {
-    const email = this.props.email;
+    const {email} = this.props;
     if (!email) {
       return null;
     }
@@ -18,13 +18,13 @@ export class Email extends Component {
       return (
         <span>
           <i className="fa fa-envelope-o" style={{marginRight: 8}} />
-          <a href={'mailto:' + email} className={this.props.className}>{email}</a>
+          <a href={`mailto:${email}`} className={this.props.className}>{email}</a>
         </span>
       );
     }
 
     return (
-      <a href={'mailto:' + email} className={this.props.className}>{email}</a>
+      <a href={`mailto:${email}`} className={this.props.className}>{email}</a>
     );
   }
 }
@@ -35,6 +35,7 @@ class OwnEmailComponent extends Component {
     className: PropTypes.string,
     email: PropTypes.string.isRequired,
   };
+
   render() {
     return <Email email={this.props.email} {...this.props} />;
   }

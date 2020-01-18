@@ -1,16 +1,17 @@
 import React, {Component} from 'react';
+import cn from 'classnames';
 import PropTypes, {connect, storeUtil} from '../../PropTypes.js';
 import {PlayerLink} from '../../controls.js';
-import cn from 'classnames';
 
 export default class NextSeasonChanges extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     calcer: PropTypes.object,
   }
 
   render() {
-    const calcer = this.props.calcer;
+    const {calcer} = this.props;
     return (
       <div>
         <h2>
@@ -39,7 +40,7 @@ const NextSeasonRankingChanges = ({rankings}) => {
     return null;
   }
 
-  const highest = rankings.reduce((acc, cur) => acc.oldValue - acc.newValue > cur.oldValue - cur.newValue ? cur : acc, rankings[0]);
+  const highest = rankings.reduce((acc, cur) => (acc.oldValue - acc.newValue > cur.oldValue - cur.newValue ? cur : acc), rankings[0]);
   return (
     <div className="row">
       {rankings.map(ranking => {

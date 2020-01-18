@@ -21,49 +21,47 @@ const eetfestijnSets = {
     price: 17,
   },
   child: {
-    price: '8,50'
+    price: '8,50',
   },
   support: {
-    price: '2,50'
-  }
+    price: '2,50',
+  },
 };
 
-export const Eetfestijn = () => {
-  return (
-    <Paper style={eetfesijnStyle}>
-      <div id="eetfestijn">
-        <h1 style={{fontSize: 26}}>
+export const Eetfestijn = () => (
+  <Paper style={eetfesijnStyle}>
+    <div id="eetfestijn">
+      <h1 style={{fontSize: 26}}>
           Eetfestijn TTC Erembodegem
-          <br />
-          {eetfestijnSets.date}
-        </h1>
+        <br />
+        {eetfestijnSets.date}
+      </h1>
 
         Van {eetfestijnSets.startHour} tot {eetfestijnSets.endHour} in zaal
         &nbsp;
-        <a className="eetfestijn" href={eetfestijnGoogleMaps} target="_blank">Sint-Paulus</a>
-        <br />
+      <a className="eetfestijn" href={eetfestijnGoogleMaps} target="_blank">Sint-Paulus</a>
+      <br />
         Botermelkstraat 63, 9300 Aalst
 
-        <br /><br />
+      <br /><br />
 
-        <table width="100%">
-          <tbody>
-            <tr><th colSpan={2} style={{textAlign: 'center'}}><font size="+1">Menu</font></th></tr>
-            <tr>
-              <td width="99%"><b>Varkenshaasje</b> met sla, tomaten<br /> en saus naar keuze</td><td width="1%">&euro;{eetfestijnSets.meat.price}</td>
-            </tr>
-            <tr>
-              <td><b>Tongrolletjes</b></td><td>&euro;{eetfestijnSets.fish.price}</td>
-            </tr>
-            <tr>
-              <td><b>Kindermenu</b>: kip met appelmoes</td><td><font size="-1">&euro;{eetfestijnSets.child.price}</font></td>
-            </tr>
-          </tbody>
-        </table>
+      <table width="100%">
+        <tbody>
+          <tr><th colSpan={2} style={{textAlign: 'center'}}><font size="+1">Menu</font></th></tr>
+          <tr>
+            <td width="99%"><b>Varkenshaasje</b> met sla, tomaten<br /> en saus naar keuze</td><td width="1%">&euro;{eetfestijnSets.meat.price}</td>
+          </tr>
+          <tr>
+            <td><b>Tongrolletjes</b></td><td>&euro;{eetfestijnSets.fish.price}</td>
+          </tr>
+          <tr>
+            <td><b>Kindermenu</b>: kip met appelmoes</td><td><font size="-1">&euro;{eetfestijnSets.child.price}</font></td>
+          </tr>
+        </tbody>
+      </table>
 
-        <br />
-        <span>Steunkaarten ook beschikbaar voor &euro;{eetfestijnSets.support.price}</span>
-      </div>
-    </Paper>
-  );
-};
+      <br />
+      <span>Steunkaarten ook beschikbaar voor &euro;{eetfestijnSets.support.price}</span>
+    </div>
+  </Paper>
+);

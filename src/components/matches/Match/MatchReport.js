@@ -1,17 +1,17 @@
 import React, {Component} from 'react';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 import PropTypes, {connect, storeUtil} from '../../PropTypes.js';
 import * as matchActions from '../../../actions/matchActions.js';
 
 import {Editor, TimeAgo, Icon, EditIcon, MaterialButton} from '../../controls.js';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import PlayerAutoComplete from '../../players/PlayerAutoComplete.js';
 import ImageDropzone from '../../controls/image/ImageDropzone.js';
 
 function getEmptyComment(matchId, playerId) {
   return {
-    matchId: matchId,
-    playerId: playerId,
+    matchId,
+    playerId,
     text: '',
     hidden: false,
   };
@@ -19,6 +19,7 @@ function getEmptyComment(matchId, playerId) {
 
 class MatchReport extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     user: PropTypes.UserModel.isRequired,
     match: PropTypes.MatchModel.isRequired,
@@ -45,14 +46,14 @@ class MatchReport extends Component {
     const editorOptions = {
       buttonLabels: 'fontawesome',
       placeholder: {
-        text: this.context.t('match.report.placeHolder')
+        text: this.context.t('match.report.placeHolder'),
       },
       toolbar: {
-        buttons: ['bold', 'italic', 'underline', 'h2', 'h3', 'anchor']
-      }
+        buttons: ['bold', 'italic', 'underline', 'h2', 'h3', 'anchor'],
+      },
     };
 
-    var reportWriterText;
+    let reportWriterText;
     const reportWriter = storeUtil.getPlayer(this.props.match.reportPlayerId);
     if (reportWriter) {
       reportWriterText = (
@@ -64,7 +65,7 @@ class MatchReport extends Component {
 
     const readonlyReport = this.state.text ? <pre dangerouslySetInnerHTML={{__html: this.state.text}} style={{marginRight: 15}} /> : null;
 
-    var reportText;
+    let reportText;
     const canComment = !!this.props.user.playerId;
     const showComments = canComment || this.props.match.comments.size;
     const canPostReport = this.props.user.canPostReport(this.props.match.teamId) && this.props.match.isScoreComplete();
@@ -85,9 +86,10 @@ class MatchReport extends Component {
                     contentEditable={canPostReport}
                   />
 
-                  <MaterialButton variant="contained"
+                  <MaterialButton
+                    variant="contained"
                     label={this.context.t('common.save')}
-                    primary={true}
+                    primary
                     style={{float: 'right', marginBottom: 65, marginRight: 15}}
                     onClick={() => this._onPostReport()}
                   />
@@ -105,10 +107,10 @@ class MatchReport extends Component {
       reportText = this.context.t('match.report.noReport');
     }
 
-    const width = this.props.viewport.width;
+    const {width} = this.props.viewport;
     const canDeleteComment = this.props.user.isAdmin();
 
-    var comments;
+    let comments;
     if (showComments) {
       comments = (
         <div>
@@ -150,20 +152,20 @@ class MatchReport extends Component {
               {this.state.commentFormOpen ? (
                 <FormControlLabel
                   style={width > 450 ? {float: 'right', textAlign: 'right'} : {}}
-                  control={
+                  control={(
                     <Checkbox
                       checked={!this.state.comment.hidden}
                       onChange={() => this._reportHiddenChange()}
                       value="hidden"
                       color="primary"
                     />
-                  }
+                  )}
                   label={this.context.t('match.report.commentVisible')}
                 />
               ) : null}
 
               <MaterialButton
-                label={this.context.t('match.report.commentsOpenForm' + (this.state.commentFormOpen ? 'Confirm' : ''))}
+                label={this.context.t(`match.report.commentsOpenForm${this.state.commentFormOpen ? 'Confirm' : ''}`)}
                 onClick={() => this._onCommentForm()}
               />
 
@@ -172,7 +174,9 @@ class MatchReport extends Component {
                 fa="fa fa-picture-o btn btn-default"
                 onClick={() => this.setState({commentImageFormOpen: !this.state.commentImageFormOpen, commentFormOpen: false})}
                 style={{marginLeft: 15}}
-                translate tooltip="match.report.commentsPhotoTooltip" tooltipPlacement="right"
+                translate
+                tooltip="match.report.commentsPhotoTooltip"
+                tooltipPlacement="right"
               />
 
             </div>
@@ -204,15 +208,17 @@ class MatchReport extends Component {
 
   _onCommentImageUploaded(fileName) {
     this.setState({commentImageFormOpen: false});
-    this.props.postComment(Object.assign({}, getEmptyComment(this.props.match.id, this.props.user.playerId), {imageUrl: fileName}));
+    this.props.postComment({...getEmptyComment(this.props.match.id, this.props.user.playerId), imageUrl: fileName});
   }
 
   _reportTextChange(text) {
     this.setState({text});
   }
+
   _onPostReport() {
     this.props.postReport(this.props.match.id, this.state.text);
   }
+
   _onReportFormOpen() {
     this.setState({reportFormOpen: !this.state.reportFormOpen});
   }
@@ -227,14 +233,17 @@ class MatchReport extends Component {
       this.setState({commentFormOpen: true});
     }
   }
-  _reportCommentChange(text/*, medium*/) {
-    this.setState({comment: Object.assign({}, this.state.comment, {text})});
+
+  _reportCommentChange(text/* , medium */) {
+    this.setState({comment: {...this.state.comment, text}});
   }
+
   _reportHiddenChange() {
-    this.setState({comment: Object.assign({}, this.state.comment, {hidden: !this.state.comment.hidden})});
+    this.setState({comment: {...this.state.comment, hidden: !this.state.comment.hidden}});
   }
+
   _reportCommentPlayerChange(playerId) {
-    this.setState({comment: Object.assign({}, this.state.comment, {playerId})});
+    this.setState({comment: {...this.state.comment, playerId}});
   }
 }
 
@@ -257,8 +266,9 @@ class Comment extends Component {
       hover: false,
     };
   }
+
   render() {
-    const comment = this.props.comment;
+    const {comment} = this.props;
     const poster = storeUtil.getPlayer(comment.playerId) || {alias: 'SYSTEM'};
     const canDeleteComment = !!this.props.deleteComment;
 
@@ -266,7 +276,7 @@ class Comment extends Component {
       <div
         onMouseEnter={() => this.setState({hover: true})}
         onMouseLeave={() => this.setState({hover: false})}
-        style={Object.assign({padding: 6, marginRight: 10}, this.state.hover ? {backgroundColor: '#EEE9E9'} : {})}
+        style={({padding: 6, marginRight: 10, ...(this.state.hover ? {backgroundColor: '#EEE9E9'} : {})})}
       >
 
         <div style={{display: 'inline-block', width: '100%'}}>

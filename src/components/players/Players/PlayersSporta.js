@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import PropTypes, {connect} from '../../PropTypes.js';
 import cn from 'classnames';
 import Table from 'react-bootstrap/lib/Table';
+import PropTypes, {connect} from '../../PropTypes.js';
 
 import {PlayerFrenoyLink} from '../PlayerCard.js';
 import {PlayerPlayingStyleForm} from '../PlayerPlayingStyle.js';
@@ -9,20 +9,21 @@ import {PlayerLink} from '../../controls.js';
 
 class PlayersSportaComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     players: PropTypes.PlayerModelList.isRequired,
     filter: PropTypes.string,
   };
 
   render() {
-    var players = this.props.players.filter(x => x.sporta);
+    let players = this.props.players.filter(x => x.sporta);
     if (this.props.filter) {
       players = players.filter(x => x.name.toLowerCase().includes(this.props.filter));
     }
     players = players.sort((a, b) => a.sporta.position - b.sporta.position);
 
     // Sorting as required by the Sporta scoresheet Excel
-    //players = players.sort((a, b) => a.name.localeCompare(b.name));
+    // players = players.sort((a, b) => a.name.localeCompare(b.name));
     return (
       <Table condensed hover>
         <thead>

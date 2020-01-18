@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
-import PropTypes, {connect, withViewport, withContext, withStyles} from '../PropTypes.js';
 import moment from 'moment';
+import Row from 'react-bootstrap/lib/Row';
+import Col from 'react-bootstrap/lib/Col';
+import Typist from 'react-typist';
+import PropTypes, {connect, withViewport, withContext, withStyles} from '../PropTypes.js';
 import ClubLocationInstructions from '../other/ClubLocationInstructions.js';
 
 import {Strike} from '../controls.js';
 import {SmallMatchCardHeader} from '../matches/Match/MatchCardHeader.js';
 
-import Row from 'react-bootstrap/lib/Row';
-import Col from 'react-bootstrap/lib/Col';
-import Typist from 'react-typist';
 import EndOfSeason from '../other/EndOfSeason/EndOfSeason.js';
 import {Eetfestijn} from './Eetfestijn.js';
 import IntroClub from './IntroClub.js';
@@ -20,6 +20,7 @@ require('./App.css');
 
 class Intro extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     config: PropTypes.map.isRequired,
     user: PropTypes.UserModel,
@@ -61,15 +62,13 @@ class Intro extends Component {
   }
 }
 
-export default withContext(withViewport(connect(state => {
-  return {
-    config: state.config,
-    user: state.user,
-    players: state.players,
-    matches: state.matches,
-    teams: state.teams
-  };
-})(Intro)));
+export default withContext(withViewport(connect(state => ({
+  config: state.config,
+  user: state.user,
+  players: state.players,
+  matches: state.matches,
+  teams: state.teams,
+}))(Intro)));
 
 // TODO: React warning: setState on unmounted component = Typist (loading schlager is gone too fast now...)
 // https://github.com/jstejada/react-typist/issues/6#issuecomment-250910698
@@ -78,12 +77,15 @@ class RestartingTypist extends Component {
     timeout: PropTypes.number,
     children: PropTypes.node,
   }
+
   state = {typing: true}
+
   done = () => {
     this.setState({typing: false}, () => {
       setTimeout(() => this.setState({typing: true}), this.props.timeout || 1200);
     });
   }
+
   render() {
     const {children, timeout, ...props} = this.props; // eslint-disable-line
     return this.state.typing ? <Typist {...props} onTypingDone={this.done}>{children}</Typist> : <span>{children}</span>;
@@ -96,7 +98,8 @@ const Loading = ({t, bigScreen}) => (
     <img
       src="/img/schlager.gif"
       style={{borderRadius: 25}}
-      title={t('intro.loading')} />
+      title={t('intro.loading')}
+    />
 
     <div style={{position: 'absolute', top: 5, width: 310, margin: 'auto'}}>
       <div style={{width: 310, textAlign: 'center', color: 'white'}}>
@@ -114,6 +117,7 @@ Loading.propTypes = {
 
 class TodaysEvents extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     config: PropTypes.map.isRequired,
     user: PropTypes.UserModel,
@@ -123,7 +127,7 @@ class TodaysEvents extends Component {
   };
 
   render() {
-    const t = this.context.t;
+    const {t} = this.context;
     const today = moment();
 
     const matchesToday = this.props.matches.filter(cal => cal.date.isSame(today, 'day'));

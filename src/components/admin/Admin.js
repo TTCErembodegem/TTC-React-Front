@@ -27,6 +27,7 @@ const tabEventKeys = keyMirror({
 
 class Admin extends Component {
   static contextTypes = PropTypes.contextTypes;
+
   static propTypes = {
     config: PropTypes.object.isRequired,
     user: PropTypes.UserModel.isRequired,
@@ -39,39 +40,39 @@ class Admin extends Component {
     }).isRequired,
     match: PropTypes.shape({
       params: PropTypes.shape({
-        tabKey: PropTypes.string
+        tabKey: PropTypes.string,
       }),
     }),
   }
 
   _renderSection(eventKey) {
     switch (eventKey) {
-    case tabEventKeys.teams:
-      return <AdminTeams teams={this.props.teams} />;
-    case tabEventKeys.players:
-      return <AdminPlayers players={this.props.players} recreantAndQuitters={this.props.admin.players} />;
-    case tabEventKeys.clubs:
-      return <AdminClubs clubs={this.props.clubs} />;
-    case tabEventKeys.formation:
-      return <AdminPlayerLineup />;
-    case tabEventKeys.pictures:
-      return (
-        <div>
-          <h1 style={{marginLeft: 25}}>Foto</h1>
-          <ProfilePhotoForm admin={true} />
-          <hr style={{marginTop: 50}} />
-          <h1 style={{marginLeft: 25}}>Avatar</h1>
-          <ProfilePhotoAvatarForm admin={true} />
-        </div>
-      );
-    case tabEventKeys.emails:
-      return <AdminEmail />;
-    case tabEventKeys.dev:
-      return <AdminDev />;
-    case tabEventKeys.matches:
-      return <AdminMatches />;
-    case tabEventKeys.configParams:
-      return <AdminParams />;
+      case tabEventKeys.teams:
+        return <AdminTeams teams={this.props.teams} />;
+      case tabEventKeys.players:
+        return <AdminPlayers players={this.props.players} recreantAndQuitters={this.props.admin.players} />;
+      case tabEventKeys.clubs:
+        return <AdminClubs clubs={this.props.clubs} />;
+      case tabEventKeys.formation:
+        return <AdminPlayerLineup />;
+      case tabEventKeys.pictures:
+        return (
+          <div>
+            <h1 style={{marginLeft: 25}}>Foto</h1>
+            <ProfilePhotoForm admin />
+            <hr style={{marginTop: 50}} />
+            <h1 style={{marginLeft: 25}}>Avatar</h1>
+            <ProfilePhotoAvatarForm admin />
+          </div>
+        );
+      case tabEventKeys.emails:
+        return <AdminEmail />;
+      case tabEventKeys.dev:
+        return <AdminDev />;
+      case tabEventKeys.matches:
+        return <AdminMatches />;
+      case tabEventKeys.configParams:
+        return <AdminParams />;
     }
   }
 
@@ -122,14 +123,12 @@ class Admin extends Component {
   }
 }
 
-export default connect(state => {
-  return {
-    config: state.config,
-    user: state.user,
-    players: state.players,
-    clubs: state.clubs,
-    matches: state.matches,
-    teams: state.teams,
-    admin: state.admin,
-  };
-})(Admin)
+export default connect(state => ({
+  config: state.config,
+  user: state.user,
+  players: state.players,
+  clubs: state.clubs,
+  matches: state.matches,
+  teams: state.teams,
+  admin: state.admin,
+}))(Admin);

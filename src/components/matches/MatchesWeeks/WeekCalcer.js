@@ -30,13 +30,13 @@ export class WeekCalcer {
     }
     this.weeks = this.matches.reduce((acc, next) => {
       const date = next.date.clone().startOf('week');
-      if (!acc.length || !acc[acc.length -1].start.isSame(date, 'day')) {
+      if (!acc.length || !acc[acc.length - 1].start.isSame(date, 'day')) {
         acc.push({start: date, end: next.date.clone().endOf('week')});
       }
       return acc;
     }, []);
 
-    //console.log('weekz', this.weeks.map(x => x.start.toString() + " -> " + x.end.toString()));
+    // console.log('weekz', this.weeks.map(x => x.start.toString() + " -> " + x.end.toString()));
 
     this.firstWeek = 1;
     this.lastWeek = this.weeks.length;
