@@ -6,8 +6,7 @@ import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 import TextField from '@material-ui/core/TextField';
 import {MaterialButton} from '../controls/Button.js';
 
-@connect(() => ({}), userActions)
-export default class AdminChangePassword extends Component {
+class AdminChangePassword extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     adminSetNewPassword: PropTypes.func.isRequired,
@@ -60,3 +59,5 @@ export default class AdminChangePassword extends Component {
     );
   }
 }
+
+export default connect(() => ({}), userActions)(AdminChangePassword);

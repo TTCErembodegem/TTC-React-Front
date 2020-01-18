@@ -7,8 +7,7 @@ import {TrophyIcon, FrenoyLink, PlayerLink} from '../../controls.js';
 import Table from 'react-bootstrap/lib/Table';
 import {OpponentPlayerLabel} from './OpponentPlayer.js';
 
-@connect(state => ({ownPlayerId: state.user.playerId}))
-export default class IndividualMatches extends Component {
+class IndividualMatches extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     match: PropTypes.MatchModel.isRequired,
@@ -154,8 +153,7 @@ export class ReadonlyIndividualMatches extends Component {
 }
 
 
-@withViewport
-class ReadonlyMatchPlayerLabel extends Component {
+class ReadonlyMatchPlayerLabelComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     game: PropTypes.object,
@@ -181,3 +179,7 @@ class ReadonlyMatchPlayerLabel extends Component {
     );
   }
 }
+
+const ReadonlyMatchPlayerLabel = withViewport(ReadonlyMatchPlayerLabelComponent);
+
+export default connect(state => ({ownPlayerId: state.user.playerId}))(IndividualMatches);

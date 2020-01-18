@@ -8,14 +8,14 @@ import UserModel from '../models/UserModel.js';
 import PlayerModel from '../models/PlayerModel.js';
 import {contextTypes} from '../utils/decorators/withContext.js';
 
-export storeUtil from '../storeUtil.js';
+export {default as storeUtil} from '../storeUtil.js';
 export {connect} from 'react-redux';
 export {browseTo} from '../routes.js';
-export keyMirror from 'fbjs/lib/keyMirror';
+export {default as keyMirror} from 'fbjs/lib/keyMirror';
 
-export withViewport from '../utils/decorators/withViewport.js'; // eslint-disable-line
-export withContext from '../utils/decorators/withContext.js'; // eslint-disable-line
-export withStyles from '../utils/decorators/withStyles.js'; // eslint-disable-line
+export {default as withViewport} from '../utils/decorators/withViewport.js'; // eslint-disable-line
+export {default as withContext} from '../utils/decorators/withContext.js'; // eslint-disable-line
+export {default as withStyles} from '../utils/decorators/withStyles.js'; // eslint-disable-line
 export {withTooltip} from '../utils/decorators/withTooltip.js';
 export {withTracker} from '../utils/decorators/withTracker.js';
 export {withRouter} from 'react-router-dom';

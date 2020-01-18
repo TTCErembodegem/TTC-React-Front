@@ -197,7 +197,7 @@ class Teams extends Component {
             }}
           />
 
-          <SwitchBetweenFirstAndLastRoundButton setState={::this.setState} matchesFilter={this.state.matchesFilter} t={this.context.t} />
+          <SwitchBetweenFirstAndLastRoundButton setState={this.setState.bind(this)} matchesFilter={this.state.matchesFilter} t={this.context.t} />
         </div>
       );
 
@@ -232,7 +232,7 @@ class Teams extends Component {
           match={this.props.match}
           defaultTabKey={this.getDefaultTeam()}
           tabKeys={tabConfig}
-          tabRenderer={::this._renderTabContent}
+          tabRenderer={eventKey => this._renderTabContent(eventKey)}
           route={{base: t.route('teams', {competition: this.props.match.params.competition}), suffix: this.props.match.params.view}}
           widthTreshold={750}
         />

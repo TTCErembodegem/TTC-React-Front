@@ -67,7 +67,7 @@ class TabbedContainerComponent extends Component {
     // Tabs
     return (
       <div style={this.props.style}>
-        <Nav bsStyle="tabs" activeKey={openTabKey} onSelect={::this._onTabSelect}>
+        <Nav bsStyle="tabs" activeKey={openTabKey} onSelect={evenyKey => this._onTabSelect(evenyKey)}>
           {this.props.tabKeys.filter(tab => tab.show !== false).map(tab => this._renderTabHeader(tab))}
         </Nav>
         <div className="match-card-tab">

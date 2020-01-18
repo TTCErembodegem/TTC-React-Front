@@ -5,8 +5,7 @@ import Table from 'react-bootstrap/lib/Table';
 import {PlayerRankings} from '../controls/MatchPlayerRankings.js';
 
 
-@withViewport
-export class OpponentsTeamFormation extends Component {
+class OpponentsTeamFormationComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     viewport: PropTypes.viewport,
@@ -50,3 +49,5 @@ export class OpponentsTeamFormation extends Component {
     );
   }
 }
+
+export const OpponentsTeamFormation = withViewport(OpponentsTeamFormationComponent);

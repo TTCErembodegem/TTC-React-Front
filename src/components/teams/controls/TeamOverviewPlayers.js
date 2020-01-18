@@ -4,9 +4,7 @@ import Table from 'react-bootstrap/lib/Table';
 import {PlayerCompetitionLabel} from '../../controls.js';
 import {TeamOverviewPlayerStats} from './TeamOverviewPlayerStats.js';
 
-@withViewport
-@connect(state => ({user: state.user}))
-export class TeamOverviewPlayers extends Component {
+class TeamOverviewPlayersComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     viewport: PropTypes.viewport,
@@ -60,3 +58,5 @@ export class TeamOverviewPlayers extends Component {
     );
   }
 }
+
+export const TeamOverviewPlayers = withViewport(connect(state => ({user: state.user}))(TeamOverviewPlayersComponent));

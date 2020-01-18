@@ -126,8 +126,8 @@ class MatchCard extends Component {
           style={{marginBottom: -18}}
           defaultTabKey={tabEventKeys.players}
           tabKeys={tabConfig}
-          tabRenderer={::this._renderTabContent}
-          onTabSelect={::this._onTabSelect}
+          tabRenderer={evenyKey => this._renderTabContent(evenyKey)}
+          onTabSelect={evenyKey => this._onTabSelect(evenyKey)}
           route={{base: this.context.t.route('match').replace(':matchId', match.id), subs: 'matchTabs'}}
         />
       </HeaderComponent>
@@ -143,7 +143,7 @@ class MatchCard extends Component {
   _getPlayersEditIcon() {
     const match = this.props.match;
     const isAllowedToEdit = this.props.user.canEditPlayersOnMatchDay(match);
-    return isAllowedToEdit && !match.isSyncedWithFrenoy ? <EditIcon onClick={::this._onStartEditPlayers} className="match-card-tab-icon" /> : null;
+    return isAllowedToEdit && !match.isSyncedWithFrenoy ? <EditIcon onClick={e => this._onStartEditPlayers(e)} className="match-card-tab-icon" /> : null;
   }
   _onStartEditPlayers(event) {
     event.stopPropagation();

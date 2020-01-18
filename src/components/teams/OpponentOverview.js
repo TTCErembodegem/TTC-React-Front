@@ -29,7 +29,7 @@ class OpponentOverviewComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this._escIsBack = ::this._escIsBack;
+    this._escIsBack = this._escIsBack.bind(this);
   }
 
   _getQueryStringValues() {

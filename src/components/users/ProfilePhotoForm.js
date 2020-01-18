@@ -95,7 +95,7 @@ class ProfilePhotoForm extends Component {
                   label={t('photos.save')}
                   primary={true}
                   style={{marginTop: -40}}
-                  onClick={::this._saveImage}
+                  onClick={() => this._saveImage()}
                 />
               </div>
             </div>

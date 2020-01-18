@@ -15,12 +15,7 @@ import PlayerAvatar from '../../players/PlayerAvatar.js';
 import * as matchActions from '../../../actions/matchActions.js';
 import {getPlayingStatusColor} from '../../../models/PlayerModel.js';
 
-@connect(state => {
-  return {
-    players: state.players,
-  };
-}, matchActions)
-export default class SelectPlayersForm extends Component {
+class SelectPlayersForm extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     players: PropTypes.PlayerModelList.isRequired,
@@ -127,3 +122,9 @@ SelectableMatchPlayerAvatar.propTypes = {
   player: PropTypes.PlayerModel.isRequired,
   select: PropTypes.func.isRequired,
 };
+
+export default connect(state => {
+  return {
+    players: state.players,
+  };
+}, matchActions)(SelectPlayersForm);

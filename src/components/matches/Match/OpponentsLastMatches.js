@@ -9,8 +9,7 @@ import {MatchPlayerRankings} from '../controls/MatchPlayerRankings.js';
 
 const AmountOfOpponentMatchesToShow = 5;
 
-@withViewport
-export default class OpponentsLastMatches extends Component {
+class OpponentsLastMatches extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     opponent: PropTypes.shape({
@@ -103,3 +102,5 @@ export default class OpponentsLastMatches extends Component {
     );
   }
 }
+
+export default withViewport(OpponentsLastMatches);

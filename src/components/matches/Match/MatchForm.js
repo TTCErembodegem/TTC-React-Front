@@ -8,8 +8,7 @@ import {Icon} from '../../controls/Icon.js';
 
 const scoreOrDefault = match => match.score || {home: 0, out: 0};
 
-@connect(() => ({}), matchActions)
-export default class MatchForm extends Component {
+class MatchForm extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     user: PropTypes.UserModel.isRequired,
@@ -61,7 +60,7 @@ export default class MatchForm extends Component {
           />
         ) : null}
 
-        <div style={{display: 'inline'}} onClick={::this._onOpenInputScore}>
+        <div style={{display: 'inline'}} onClick={e => this._onOpenInputScore(e)}>
           <MatchScore match={match} forceDisplay={true} style={{fontSize: this.props.big ? 46 : 24}} showThrophy={false} />
         </div>
 
@@ -130,3 +129,5 @@ MatchManipulation.propTypes = {
   big: PropTypes.bool,
   isHome: PropTypes.bool,
 };
+
+export default connect(() => ({}), matchActions)(MatchForm);

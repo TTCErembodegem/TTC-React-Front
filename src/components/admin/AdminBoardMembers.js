@@ -18,8 +18,7 @@ const clubManagerTypes = [
   {key: 5, text: 'Sporta'},
 ];
 
-@connect(state => ({clubs: state.clubs}), playerActions)
-export default class AdminBoardMembers extends Component {
+class AdminBoardMembers extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     saveBoardMember: PropTypes.func.isRequired,
@@ -60,7 +59,7 @@ export default class AdminBoardMembers extends Component {
       <div style={paperStyle}>
         <h3>{this.context.t('clubs.managementTitle')}</h3>
         <PlayerAutoComplete
-          selectPlayer={::this.playerSelected}
+          selectPlayer={playerId => this.playerSelected(playerId)}
           placeholder={this.context.t('login.loginName')}
         />
 
@@ -110,3 +109,5 @@ export default class AdminBoardMembers extends Component {
     );
   }
 }
+
+export default connect(state => ({clubs: state.clubs}), playerActions)(AdminBoardMembers);

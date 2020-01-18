@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 import PropTypes, {connect} from '../../PropTypes.js';
 import {forceFrenoySync} from '../../../actions/matchActions.js';
 
-@connect(null, {forceFrenoySync})
-export class MatchCardAdmin extends Component {
+class MatchCardAdminComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     forceFrenoySync: PropTypes.func.isRequired,
@@ -29,3 +28,5 @@ export class MatchCardAdmin extends Component {
     );
   }
 }
+
+export const MatchCardAdmin = connect(null, {forceFrenoySync})(MatchCardAdminComponent);

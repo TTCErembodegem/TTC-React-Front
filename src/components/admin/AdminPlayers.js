@@ -13,9 +13,7 @@ import AdminBoardMembers from './AdminBoardMembers.js';
 
 const keepTrackOfPlayerKeys = false;
 
-@withViewport
-@connect(() => ({}), {updatePlayer, frenoySync, deletePlayer})
-export default class AdminPlayers extends Component {
+class AdminPlayers extends Component {
   static propTypes = {
     players: PropTypes.object,
     recreantAndQuitters: PropTypes.object,
@@ -39,19 +37,19 @@ export default class AdminPlayers extends Component {
     var otherContent = null;
     switch (this.state.filter) {
     case 'new-player':
-      otherContent = <AdminPlayerForm onEnd={::this._setDefaultForm} />;
+      otherContent = <AdminPlayerForm onEnd={() => this._setDefaultForm()} />;
       break;
 
     case 'Speler editeren':
-      otherContent = <AdminPlayerForm player={this.state.selectedPlayer} onEnd={::this._setDefaultForm} />;
+      otherContent = <AdminPlayerForm player={this.state.selectedPlayer} onEnd={() => this._setDefaultForm()} />;
       break;
 
     case 'set-password':
-      otherContent = <AdminChangePassword onEnd={::this._setDefaultForm} />;
+      otherContent = <AdminChangePassword onEnd={() => this._setDefaultForm()} />;
       break;
 
     case 'bestuur':
-      otherContent = <AdminBoardMembers onEnd={::this._setDefaultForm} />;
+      otherContent = <AdminBoardMembers onEnd={() => this._setDefaultForm()} />;
       break;
 
     case 'inactive':
@@ -251,3 +249,5 @@ InactivesTable.propTypes = {
   onUpdatePlayer: PropTypes.func.isRequired,
   onDeletePlayer: PropTypes.func.isRequired,
 };
+
+export default withViewport(connect(() => ({}), {updatePlayer, frenoySync, deletePlayer})(AdminPlayers));

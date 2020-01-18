@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 import PropTypes, {connect} from '../PropTypes.js';
 import {forceFrenoySync} from '../../actions/matchActions.js';
 
-@connect(state => ({matches: state.matches}), {forceFrenoySync})
-export class AdminMatches extends Component {
+class AdminMatchesComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     matches: PropTypes.MatchModelList.isRequired,
@@ -28,3 +27,5 @@ export class AdminMatches extends Component {
     );
   }
 }
+
+export const AdminMatches = connect(state => ({matches: state.matches}), {forceFrenoySync})(AdminMatchesComponent);

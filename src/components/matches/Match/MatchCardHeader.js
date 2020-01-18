@@ -65,7 +65,7 @@ export class SmallMatchCardHeaderComponent extends Component {
 
   render() {
     const {match, match2, history, location, ...props} = this.props; // eslint-disable-line
-    const newProps = {match: match2, onOpen: ::this._onOpen, ...props};
+    const newProps = {match: match2, onOpen: () => this._onOpen(), ...props};
     return <MatchCardHeader {...newProps} />;
   }
 

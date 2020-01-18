@@ -15,11 +15,7 @@ import PlayersImageGallery from '../players/PlayersImageGallery.js';
 
 import {teamPlayerType} from '../../models/TeamModel.js';
 
-@connect(state => {
-  return {user: state.user};
-}, {toggleTeamPlayer, frenoyTeamSync})
-@withViewport
-export default class AdminTeams extends React.Component {
+class AdminTeams extends React.Component {
   static propTypes = {
     teams: PropTypes.TeamModelList,
     toggleTeamPlayer: PropTypes.func.isRequired,
@@ -100,14 +96,14 @@ class AdminTeamPlayers extends Component {
 
           <div style={{clear: 'both'}} />
 
-          <TextField select value={this.state.role} onChange={::this._onRoleChange} style={{width: 100, marginRight: 10}}>
+          <TextField select value={this.state.role} onChange={e => this._onRoleChange(e)} style={{width: 100, marginRight: 10}}>
             {_.toArray(teamPlayerType).map(role => <MenuItem key={role} value={role}>{role}</MenuItem>)}
           </TextField>
 
           <div style={{width: 250}}>
             <PlayerAutoComplete
               clearOnSelect
-              selectPlayer={::this._onToggleTeamPlayer}
+              selectPlayer={playerId => this._onToggleTeamPlayer(playerId)}
               fullWidth
               placeholder="Selecteer speler"
               competition={team.competition}
@@ -129,3 +125,7 @@ const AdminTeamsToolbar = ({onFilterChange}) => (
 AdminTeamsToolbar.propTypes = {
   onFilterChange: PropTypes.func.isRequired,
 };
+
+export default withViewport(connect(state => {
+  return {user: state.user};
+}, {toggleTeamPlayer, frenoyTeamSync})(AdminTeams));

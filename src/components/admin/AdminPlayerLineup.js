@@ -5,9 +5,8 @@ import Button from 'react-bootstrap/lib/Button';
 import PlayerAutoComplete from '../players/PlayerAutoComplete.js';
 import PlayerLinup from '../users/PlayerLineup.js';
 
-@connect(state => ({matches: state.matches}))
-@withViewport
-export default class AdminPlayerLineup extends React.Component {
+
+class AdminPlayerLineup extends React.Component {
   static propTypes = {
     matches: PropTypes.MatchModelList,
     viewport: PropTypes.viewport,
@@ -66,3 +65,5 @@ class AdminPlayerLineupToolbar extends Component {
     );
   }
 }
+
+export default withViewport(connect(state => ({matches: state.matches}))(AdminPlayerLineup));

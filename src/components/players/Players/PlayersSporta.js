@@ -7,8 +7,7 @@ import {PlayerFrenoyLink} from '../PlayerCard.js';
 import {PlayerPlayingStyleForm} from '../PlayerPlayingStyle.js';
 import {PlayerLink} from '../../controls.js';
 
-@connect(state => ({players: state.players}))
-export class PlayersSporta extends Component {
+class PlayersSportaComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     players: PropTypes.PlayerModelList.isRequired,
@@ -58,3 +57,5 @@ export class PlayersSporta extends Component {
     );
   }
 }
+
+export const PlayersSporta = connect(state => ({players: state.players}))(PlayersSportaComponent);

@@ -3,8 +3,7 @@ import PropTypes, {connect} from '../PropTypes.js';
 //import {PlayerCompetitionBadge} from '../players/PlayerBadges.js';
 import {ButtonStack} from '../controls.js';
 
-@connect(state => ({players: state.players, inactivePlayers: state.admin.players, teams: state.teams}))
-export class AdminEmail extends Component {
+class AdminEmailComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     players: PropTypes.PlayerModelList.isRequired,
@@ -116,3 +115,7 @@ const PlayerEmail = ({player}) => {
 PlayerEmail.propTypes = {
   player: PropTypes.PlayerModel.isRequired,
 };
+
+export const AdminEmail = connect(
+  state => ({players: state.players, inactivePlayers: state.admin.players, teams: state.teams}),
+)(AdminEmailComponent);

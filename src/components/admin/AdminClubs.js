@@ -8,9 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import {EditButton} from '../controls.js';
 import AdminClubForm from './AdminClubForm.js';
 
-@withViewport
-@connect(() => ({}), {updateClub})
-export default class AdminClubs extends Component {
+class AdminClubs extends Component {
   static propTypes = {
     clubs: PropTypes.object,
     updateClub: PropTypes.func.isRequired,
@@ -84,6 +82,8 @@ const ClubsTable = ({clubs, onEditClub}) => (
     </tbody>
   </Table>
 );
+
+export default withViewport(connect(() => ({}), {updateClub})(AdminClubs));
 
 
 const ClubLocation = ({location}) => (

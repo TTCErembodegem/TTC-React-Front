@@ -25,7 +25,7 @@ export default class PlayerStyleAutocomplete extends Component {
       <Select
         isSearchable
         style={this.props.style}
-        onChange={::this._onChange}
+        onChange={option => this._onChange(option)}
         value={({value: this.props.value, label: this.props.value})}
         placeholder={this.props.t('player.editStyle.style')}
         options={playingStyles.map(style => ({label: style, value: style}))}

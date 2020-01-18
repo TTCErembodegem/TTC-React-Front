@@ -5,8 +5,7 @@ import {ThumbsDownIcon, Spinner, ThumbsUpIcon} from '../../controls.js';
 import {OpponentPlayerLabel} from './OpponentPlayer.js';
 import Table from 'react-bootstrap/lib/Table';
 
-@withViewport
-export default class OpponentsFormation extends Component {
+class OpponentsFormation extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     viewport: PropTypes.viewport,
@@ -59,3 +58,5 @@ export default class OpponentsFormation extends Component {
     );
   }
 }
+
+export default withViewport(OpponentsFormation);

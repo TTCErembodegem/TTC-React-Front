@@ -6,8 +6,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import {PlayerLink} from '../controls.js';
 
-@withViewport
-export default class PlayersCardGallery extends Component {
+class PlayersCardGallery extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     players: PropTypes.PlayerModelList.isRequired,
@@ -57,3 +56,5 @@ export default class PlayersCardGallery extends Component {
     );
   }
 }
+
+export default withViewport(PlayersCardGallery);

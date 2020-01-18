@@ -7,11 +7,7 @@ import {getOpponentMatches} from '../../actions/matchActions.js';
 import {OpponentMatches} from '../matches/Match/OpponentMatches.js';
 import {FrenoyWeekButton} from '../controls.js';
 
-@connect(state => ({
-  matches: state.matches,
-  readonlyMatches: state.readonlyMatches,
-}), {getOpponentMatches})
-export class TeamMatchesWeek extends Component {
+class TeamMatchesWeekComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     matches: PropTypes.MatchModelList.isRequired,
@@ -68,3 +64,8 @@ export class TeamMatchesWeek extends Component {
     );
   }
 }
+
+export const TeamMatchesWeek = connect(state => ({
+  matches: state.matches,
+  readonlyMatches: state.readonlyMatches,
+}), {getOpponentMatches})(TeamMatchesWeekComponent);

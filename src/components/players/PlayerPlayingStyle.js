@@ -138,7 +138,7 @@ class PlayerPlayingStyleFormComponent extends Component {
         <DialogContent className={this.props.classes.dialog}>
           <PlayerStyleAutocomplete t={t}
             value={this.state.newStyle.name || ''}
-            onChange={::this._changeStyle}
+            onChange={text => this._changeStyle(text)}
           />
 
           <br />
@@ -156,7 +156,7 @@ class PlayerPlayingStyleFormComponent extends Component {
           {this.props.user.isSystem() ? (
             <div style={{marginTop: 50}}>
               <PlayerAutoComplete
-                selectPlayer={::this._changePlayer}
+                selectPlayer={playerId => this._changePlayer(playerId)}
                 label={t('system.playerSelect')}
               />
             </div>

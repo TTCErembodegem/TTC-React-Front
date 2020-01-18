@@ -30,12 +30,12 @@ export default class ImageDropzone extends Component {
       borderColor: '#666',
       borderStyle: 'dashed',
       borderRadius: 5,
-      padding: 5
+      padding: 5,
     };
 
     return (
       <div>
-        <Dropzone ref="dropzone" onDrop={::this._onDrop} style={style} multiple={false}>
+        <Dropzone ref="dropzone" onDrop={files => this._onDrop(files)} style={style} multiple={false}>
           <div>{this.props.t('photos.uploadNewInstructions')}</div>
         </Dropzone>
       </div>

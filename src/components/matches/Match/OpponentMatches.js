@@ -10,8 +10,7 @@ import {OtherMatchTeamTitle} from './OtherMatchTeamTitle.js';
 import {OpponentMatchScore} from './OpponentMatchScore.js';
 import {SwitchBetweenFirstAndLastRoundButton, getFirstOrLastMatches, getFirstOrLast} from '../../teams/SwitchBetweenFirstAndLastRoundButton.js';
 
-@withViewport
-export class OpponentMatches extends Component {
+class OpponentMatchesComponent extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     readonlyMatches: PropTypes.object.isRequired,
@@ -101,7 +100,7 @@ export class OpponentMatches extends Component {
             <tr>
               <td colSpan={6}>
                 <SwitchBetweenFirstAndLastRoundButton
-                  setState={::this.setState}
+                  setState={this.setState.bind(this)}
                   matchesFilter={this.state.matchesFilter}
                   t={this.context.t}
                 />
@@ -114,10 +113,11 @@ export class OpponentMatches extends Component {
   }
 }
 
+export const OpponentMatches = withViewport(OpponentMatchesComponent);
 
 
-@withViewport
-class OpponentTeamTitle extends Component {
+
+class OpponentTeamTitleComponent extends Component {
   static propTypes = {
     viewport: PropTypes.viewport,
     team: PropTypes.TeamModel.isRequired,
@@ -151,3 +151,5 @@ class OpponentTeamTitle extends Component {
     );
   }
 }
+
+const OpponentTeamTitle = withViewport(OpponentTeamTitleComponent);

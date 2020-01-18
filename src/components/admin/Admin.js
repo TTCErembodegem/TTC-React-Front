@@ -116,7 +116,8 @@ class Admin extends Component {
         defaultTabKey={tabEventKeys.players}
         route={{base: this.context.t.route('admin')}}
         tabKeys={tabConfig}
-        tabRenderer={::this._renderSection} />
+        tabRenderer={eventKey => this._renderSection(eventKey)}
+      />
     );
   }
 }

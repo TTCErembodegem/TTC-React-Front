@@ -17,8 +17,7 @@ function getEmptyComment(matchId, playerId) {
   };
 }
 
-@connect(() => ({}), matchActions)
-export default class MatchReport extends Component {
+class MatchReport extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     user: PropTypes.UserModel.isRequired,
@@ -81,7 +80,7 @@ export default class MatchReport extends Component {
                     tag="pre"
                     text={this.state.text}
                     style={{height: canPostReport ? editorHeight : undefined, marginRight: 15}}
-                    onChange={::this._reportTextChange}
+                    onChange={text => this._reportTextChange(text)}
                     options={{...editorOptions, disableEditing: !canPostReport}}
                     contentEditable={canPostReport}
                   />
@@ -90,7 +89,7 @@ export default class MatchReport extends Component {
                     label={this.context.t('common.save')}
                     primary={true}
                     style={{float: 'right', marginBottom: 65, marginRight: 15}}
-                    onClick={::this._onPostReport}
+                    onClick={() => this._onPostReport()}
                   />
                 </div>
               ) : readonlyReport}
@@ -129,7 +128,7 @@ export default class MatchReport extends Component {
             <div>
               {this.props.user.isSystem() ? (
                 <PlayerAutoComplete
-                  selectPlayer={::this._reportCommentPlayerChange}
+                  selectPlayer={playerId => this._reportCommentPlayerChange(playerId)}
                   placeholder={this.context.t('system.playerSelect')}
                 />
               ) : null}
@@ -137,13 +136,13 @@ export default class MatchReport extends Component {
                 tag="pre"
                 text={this.state.comment.text}
                 style={{height: 55, marginRight: 15}}
-                onChange={::this._reportCommentChange}
+                onChange={text => this._reportCommentChange(text)}
                 options={{...editorOptions, disableEditing: !canComment}}
                 contentEditable={canComment}
               />
             </div>
           ) : this.state.commentImageFormOpen ? (
-            <ImageDropzone t={this.context.t} fileUploaded={::this._onCommentImageUploaded} type="match" />
+            <ImageDropzone t={this.context.t} fileUploaded={fileName => this._onCommentImageUploaded(fileName)} type="match" />
           ) : null}
 
           {this.props.user.playerId ? (
@@ -154,7 +153,7 @@ export default class MatchReport extends Component {
                   control={
                     <Checkbox
                       checked={!this.state.comment.hidden}
-                      onChange={::this._reportHiddenChange}
+                      onChange={() => this._reportHiddenChange()}
                       value="hidden"
                       color="primary"
                     />
@@ -165,7 +164,7 @@ export default class MatchReport extends Component {
 
               <MaterialButton
                 label={this.context.t('match.report.commentsOpenForm' + (this.state.commentFormOpen ? 'Confirm' : ''))}
-                onClick={::this._onCommentForm}
+                onClick={() => this._onCommentForm()}
               />
 
 
@@ -191,7 +190,7 @@ export default class MatchReport extends Component {
             <small>
               <EditIcon
                 tooltip={this.context.t('match.report.editTooltip')}
-                onClick={::this._onReportFormOpen}
+                onClick={() => this._onReportFormOpen()}
                 style={{marginLeft: 5, color: '#D3D3D3'}}
               />
             </small>
@@ -290,3 +289,5 @@ class Comment extends Component {
     );
   }
 }
+
+export default connect(() => ({}), matchActions)(MatchReport);

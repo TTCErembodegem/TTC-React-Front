@@ -5,8 +5,7 @@ import _ from 'lodash';
 
 import {ButtonStack, Icon} from '../controls.js';
 
-@connect(state => state)
-export default class AdminDev extends React.Component {
+class AdminDev extends React.Component {
   static propTypes = {
     matches: PropTypes.MatchModelList.isRequired,
     teams: PropTypes.TeamModelList.isRequired,
@@ -111,3 +110,5 @@ class AdminStateDisplayer extends Component {
     );
   }
 }
+
+export default connect(state => state)(AdminDev);

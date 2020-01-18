@@ -16,7 +16,7 @@ const createKey = form => form.reduce((key, f) => key + f.amount + f.ranking, ''
 
 export function getOpponentFormations(matches, opponent) {
   return matches.filter(match => match.isSyncedWithFrenoy).reduce((acc, match) => {
-    var isHomeTeam;
+    let isHomeTeam;
     if (!opponent) {
       isHomeTeam = true;
     } else {
@@ -44,7 +44,7 @@ export function getOpponentFormations(matches, opponent) {
 const unique = (value, index, self) => self.indexOf(value) === index;
 
 export function getMatchPlayerRankings(match, homeTeam) {
-  var opponentFormation;
+  let opponentFormation;
   if (homeTeam) {
     opponentFormation = match.players.filter(m => m.home);
   } else {
@@ -86,7 +86,7 @@ const util = {
   },
 
   getTeam(teamId) {
-    const teams = store.getState().teams;
+    const {teams} = store.getState();
     return teams.find(team => team.id === teamId);
   },
   getTeams() {
@@ -94,7 +94,7 @@ const util = {
   },
 
   getClub(clubId) {
-    const clubs = store.getState().clubs;
+    const {clubs} = store.getState();
     return clubs.find(club => club.id === clubId);
   },
   getOwnClub() {
@@ -102,12 +102,12 @@ const util = {
   },
 
   getPlayer(playerId) {
-    const players = store.getState().players;
+    const {players} = store.getState();
     return players.find(ply => ply.id === playerId);
   },
 
   getMatch(matchId) {
-    const matches = store.getState().matches;
+    const {matches} = store.getState();
     return matches.find(match => match.id === matchId);
   },
   getMatches() {
@@ -129,13 +129,13 @@ const util = {
 
     getFormation(match, opponent = undefined) {
       const matches = getOpponentMatches(match, opponent);
-      var opponentPlayers = matches.home.map(m => m.players).flatten().filter(m => m.home);
+      let opponentPlayers = matches.home.map(m => m.players).flatten().filter(m => m.home);
       opponentPlayers = opponentPlayers.concat(matches.away.map(m => m.players).flatten().filter(m => !m.home));
 
       // TODO: this assumes that if you forfeited, you lost that match (ply has won but not lost property)
       // could be calculated more correctly by looking at the individual match results
       // --> Now it looks like Aaigem A (Sporta A) won those 9 matches (Guido, Ivo, Paul) +3 matches each that do not show up on Frenoy
-      var result = {};
+      const result = {};
       opponentPlayers.forEach(ply => {
         if (result[ply.uniqueIndex]) {
           result[ply.uniqueIndex].count++;
@@ -152,7 +152,7 @@ const util = {
 
       const matchesPerPlayer = match.getTeamPlayerCount();
       return Object.values(result).map(ply => Object.assign(ply, {lost: (matchesPerPlayer * ply.count) - ply.won}));
-    }
+    },
   },
 };
 

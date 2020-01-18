@@ -14,7 +14,7 @@ import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import {CommentButton} from '../controls.js';
 import MatchVs from '../matches/Match/MatchVs.js';
-import {CannotEditMatchIcon} from '../matches/MatchesTable.js';
+import {CannotEditMatchIcon} from '../matches/controls/CannotEditMatchIcon';
 import {SwitchBetweenFirstAndLastRoundButton, getFirstOrLastMatches, getFirstOrLast} from '../teams/SwitchBetweenFirstAndLastRoundButton.js';
 
 class PlayerLinup extends Component {
@@ -160,7 +160,7 @@ class PlayerLinup extends Component {
         </Table>
 
         {hasMore ? (
-          <SwitchBetweenFirstAndLastRoundButton setState={::this.setState} matchesFilter={this.state.matchesFilter} t={t} />
+          <SwitchBetweenFirstAndLastRoundButton setState={this.setState.bind(this)} matchesFilter={this.state.matchesFilter} t={t} />
         ) : null}
       </div>
     );

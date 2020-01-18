@@ -37,10 +37,7 @@ const editStyleIcon = {
   color: '#d3d3d3',
 };
 
-@withContext
-@withViewport
-@connect(() => ({}), playerActions)
-export default class PlayersImageGallery extends Component {
+class PlayersImageGallery extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     players: PropTypes.oneOfType([
@@ -134,3 +131,5 @@ const SmallPlayerAvatarCard = ({competition, ply}) => { // eslint-disable-line
     </span>
   );
 };
+
+export default withContext(withViewport(connect(() => ({}), playerActions)(PlayersImageGallery)));

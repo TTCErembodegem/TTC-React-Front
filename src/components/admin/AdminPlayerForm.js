@@ -12,8 +12,7 @@ import Panel from 'react-bootstrap/lib/Panel';
 import PlayerStyleAutocomplete from '../players/PlayerStyleAutocomplete.js';
 import MenuItem from '@material-ui/core/MenuItem';
 
-@connect(() => ({}), playerActions)
-export default class AdminPlayerForm extends Component {
+class AdminPlayerForm extends Component {
   static contextTypes = PropTypes.contextTypes;
   static propTypes = {
     player: PropTypes.PlayerModel,
@@ -155,3 +154,5 @@ class PlayerSecuritySelectField extends React.Component {
     );
   }
 }
+
+export default connect(() => ({}), playerActions)(AdminPlayerForm);
