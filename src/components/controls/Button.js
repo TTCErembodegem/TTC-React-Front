@@ -1,11 +1,11 @@
-export * from './Buttons/Button.js';
-export * from './Buttons/ButtonStack.js';
+export * from './Buttons/Button';
+export * from './Buttons/ButtonStack';
 
-export * from './Buttons/CommentButton.js';
-export * from './Buttons/EditButton.js';
-export * from './Buttons/EmailButton.js';
-export * from './Buttons/ExcelButton.js';
-export * from './Buttons/FrenoyButton.js';
-export * from './Buttons/SaveButton.js';
+export * from './Buttons/CommentButton';
+export * from './Buttons/EditButton';
+export * from './Buttons/EmailButton';
+export * from './Buttons/ExcelButton';
+export * from './Buttons/FrenoyButton';
+export * from './Buttons/SaveButton';
 
-export * from './Buttons/MaterialButton.js';
+export * from './Buttons/MaterialButton';

@@ -5,17 +5,17 @@ import {render} from 'react-dom';
 import {Provider} from 'react-redux';
 import Promise from 'bluebird';
 import moment from 'moment';
-import Routes from './routes.js';
-import store from './store.js';
+import Routes from './routes';
+import store from './store';
 
 
-import {showSnackbar} from './actions/configActions.js';
-import http from './utils/httpClient.js';
+import {showSnackbar} from './actions/configActions';
+import http from './utils/httpClient';
 
 
-import {validateToken} from './actions/userActions.js';
+import {validateToken} from './actions/userActions';
 
-import initialLoad from './actions/initialLoad.js';
+import initialLoad from './actions/initialLoad';
 
 Promise.config({
   warnings: true,

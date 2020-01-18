@@ -5,8 +5,8 @@ import React from 'react';
 import {render} from 'react-dom';
 import {Provider} from 'react-redux';
 import Promise from 'bluebird';
-import Routes from './routes.js';
-import store from './store.js';
+import Routes from './routes';
+import store from './store';
 
 Promise.config({
   warnings: true,
@@ -16,8 +16,8 @@ Promise.config({
 });
 
 
-import {showSnackbar} from './actions/configActions.js';
-import http from './utils/httpClient.js';
+import {showSnackbar} from './actions/configActions';
+import http from './utils/httpClient';
 window.onerror = function(message, source, lineno, colno, error) { // eslint-disable-line
   // eslint-disable-next-line prefer-rest-params, no-console
   console.log('oh noes!', arguments);
@@ -29,13 +29,13 @@ window.onerror = function(message, source, lineno, colno, error) { // eslint-dis
 import moment from 'moment';
 moment.locale('nl');
 
-import {validateToken} from './actions/userActions.js';
+import {validateToken} from './actions/userActions';
 const token = localStorage.getItem('token');
 if (token) {
   store.dispatch(validateToken(token));
 }
 
-import initialLoad from './actions/initialLoad.js';
+import initialLoad from './actions/initialLoad';
 store.dispatch(initialLoad());
 
 const enableDevTools = false;

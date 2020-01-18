@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import cn from 'classnames';
-import PropTypes, {withTooltip} from '../../PropTypes.js';
+import PropTypes, {withTooltip} from '../../PropTypes';
 
 class IconComponent extends Component {
   static contextTypes = PropTypes.contextTypes;

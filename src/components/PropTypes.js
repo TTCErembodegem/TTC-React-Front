@@ -1,23 +1,23 @@
 import ReactPropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
-import MatchModel from '../models/MatchModel.js';
-import TeamModel from '../models/TeamModel.js';
-import ClubModel from '../models/ClubModel.js';
-import UserModel from '../models/UserModel.js';
-import PlayerModel from '../models/PlayerModel.js';
-import {contextTypes} from '../utils/decorators/withContext.js';
+import MatchModel from '../models/MatchModel';
+import TeamModel from '../models/TeamModel';
+import ClubModel from '../models/ClubModel';
+import UserModel from '../models/UserModel';
+import PlayerModel from '../models/PlayerModel';
+import {contextTypes} from '../utils/decorators/withContext';
 
-export {default as storeUtil} from '../storeUtil.js';
+export {default as storeUtil} from '../storeUtil';
 export {connect} from 'react-redux';
-export {browseTo} from '../routes.js';
+export {browseTo} from '../routes';
 export {default as keyMirror} from 'fbjs/lib/keyMirror';
 
-export {default as withViewport} from '../utils/decorators/withViewport.js'; // eslint-disable-line
-export {default as withContext} from '../utils/decorators/withContext.js'; // eslint-disable-line
-export {default as withStyles} from '../utils/decorators/withStyles.js'; // eslint-disable-line
-export {withTooltip} from '../utils/decorators/withTooltip.js';
-export {withTracker} from '../utils/decorators/withTracker.js';
+export {default as withViewport} from '../utils/decorators/withViewport'; // eslint-disable-line
+export {default as withContext} from '../utils/decorators/withContext'; // eslint-disable-line
+export {default as withStyles} from '../utils/decorators/withStyles'; // eslint-disable-line
+export {withTooltip} from '../utils/decorators/withTooltip';
+export {withTracker} from '../utils/decorators/withTracker';
 export {withRouter} from 'react-router-dom';
 
 

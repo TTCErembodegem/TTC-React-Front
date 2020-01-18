@@ -1,19 +1,19 @@
-export * from './controls/Editor.js';
-export * from './controls/TabbedContainer.js';
+export * from './controls/Editor';
+export * from './controls/TabbedContainer';
 
-export * from './controls/Icon.js';
-export * from './controls/Button.js';
+export * from './controls/Icon';
+export * from './controls/Button';
 
-export * from './controls/controls/Email.js';
-export * from './controls/controls/GoogleMap.js';
-export * from './controls/controls/Location.js';
-export * from './controls/controls/PercentageLabel.js';
-export * from './controls/controls/Spinner.js';
-export * from './controls/controls/Strike.js';
-export * from './controls/controls/Telephone.js';
-export * from './controls/controls/TimeAgo.js';
-export * from './controls/controls/WonLostLabel.js';
+export * from './controls/controls/Email';
+export * from './controls/controls/GoogleMap';
+export * from './controls/controls/Location';
+export * from './controls/controls/PercentageLabel';
+export * from './controls/controls/Spinner';
+export * from './controls/controls/Strike';
+export * from './controls/controls/Telephone';
+export * from './controls/controls/TimeAgo';
+export * from './controls/controls/WonLostLabel';
 
-export * from './players/PlayerCard.js';
-export * from './players/controls/PlayerAddress.js';
-export * from './players/controls/PlayerLink.js';
+export * from './players/PlayerCard';
+export * from './players/controls/PlayerAddress';
+export * from './players/controls/PlayerLink';

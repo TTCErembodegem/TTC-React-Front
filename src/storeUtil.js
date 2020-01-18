@@ -1,6 +1,6 @@
-import store from './store.js';
-import {OwnClubId} from './models/ClubModel.js';
-import {getRankingValue} from './models/utils/playerRankingValueMapper.js';
+import store from './store';
+import {OwnClubId} from './models/ClubModel';
+import {getRankingValue} from './models/utils/playerRankingValueMapper';
 
 export function getOpponentMatchesForTeam(competition, clubId, teamCode) {
   return store.getState().readonlyMatches

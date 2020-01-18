@@ -1,25 +1,25 @@
 import React from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import {ComponentWithLayout} from './components/App/ComponentWithLayout.js';
-import Players from './components/players/Players.js';
-import {Player} from './components/players/Player.js';
-import Login from './components/users/Login.js';
-import ForgotPassword, {ForgotPasswordReset} from './components/users/ForgotPassword.js';
-import Profile from './components/users/Profile.js';
-import Links from './components/other/Links.js';
-import Administration from './components/other/Administration.js';
-import GeneralInfo from './components/other/GeneralInfo.js';
-import Matches from './components/matches/Matches.js';
-import MatchesToday from './components/matches/MatchesToday.js';
-import MatchesWeek from './components/matches/MatchesWeek.js';
-import RoutedMatchCard from './components/matches/Match/RoutedMatchCard.js';
-import Facts from './components/other/Facts.js';
-import Teams from './components/teams/Teams.js';
-import Admin from './components/admin/Admin.js';
-import {OpponentOverview} from './components/teams/OpponentOverview.js';
-import Intro from './components/App/Intro.js';
+import {ComponentWithLayout} from './components/App/ComponentWithLayout';
+import Players from './components/players/Players';
+import {Player} from './components/players/Player';
+import Login from './components/users/Login';
+import ForgotPassword, {ForgotPasswordReset} from './components/users/ForgotPassword';
+import Profile from './components/users/Profile';
+import Links from './components/other/Links';
+import Administration from './components/other/Administration';
+import GeneralInfo from './components/other/GeneralInfo';
+import Matches from './components/matches/Matches';
+import MatchesToday from './components/matches/MatchesToday';
+import MatchesWeek from './components/matches/MatchesWeek';
+import RoutedMatchCard from './components/matches/Match/RoutedMatchCard';
+import Facts from './components/other/Facts';
+import Teams from './components/teams/Teams';
+import Admin from './components/admin/Admin';
+import {OpponentOverview} from './components/teams/OpponentOverview';
+import Intro from './components/App/Intro';
 
-import t from './locales.js';
+import t from './locales';
 
 const Routes = () => (
   <BrowserRouter>

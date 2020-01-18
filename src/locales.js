@@ -1,4 +1,4 @@
-import LocalesUtils from './utils/locales-nl.js';
+import LocalesUtils from './utils/locales-nl';
 
 const {trans, routes, timeAgo} = LocalesUtils;
 

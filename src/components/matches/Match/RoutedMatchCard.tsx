@@ -1,0 +1,59 @@
+import React, {Component} from 'react';
+import PropTypes, {connect, withViewport, storeUtil} from '../../PropTypes';
+import MatchCard from './MatchCard';
+import {fetchMatch} from '../../../actions/initialLoad';
+
+import {FullScreenSpinner} from '../../controls';
+
+class RoutedMatchCard extends Component {
+  static propTypes = {
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        matchId: PropTypes.string.isRequired,
+        tabKey: PropTypes.string,
+      }),
+    }),
+    viewport: PropTypes.viewport,
+    fetchMatch: PropTypes.func.isRequired,
+    history: PropTypes.any.isRequired,
+  }
+
+  _getMatch(props) {
+    const matchId = parseInt(props.match.params.matchId, 10);
+    const match = storeUtil.getMatch(matchId);
+    if (!match) {
+      this.props.fetchMatch(this.props.match.params.matchId);
+    }
+    return match;
+  }
+
+  componentWillReceiveProps(props) {
+    this.setState({match: this._getMatch(props)});
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {match: this._getMatch(props)};
+  }
+
+  render() {
+    if (!this.state.match) {
+      return <FullScreenSpinner />;
+    }
+
+    return (
+      <div style={{marginBottom: 20, marginTop: 20, marginLeft: 5, marginRight: 5}}>
+        <MatchCard
+          match={this.state.match}
+          isOpen
+          width={this.props.viewport.width}
+          routed
+          params={this.props.match.params}
+          history={this.props.history}
+        />
+      </div>
+    );
+  }
+}
+
+export default withViewport(connect(state => ({matches: state.matches}), {fetchMatch})(RoutedMatchCard));
