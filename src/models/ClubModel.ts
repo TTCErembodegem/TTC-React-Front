@@ -1,7 +1,20 @@
+import {IClub, IClubManager, IClubLocation} from './model-interfaces';
+
 export const OwnClubId = 1;
 
-export default class ClubModel {
-  constructor(json) {
+export default class ClubModel implements IClub {
+  active: boolean;
+  alternativeLocations: any[];
+  codeSporta: string;
+  codeVttl: string;
+  id: number;
+  name: string;
+  shower: boolean;
+  website: string;
+  managers: IClubManager[];
+  mainLocation: IClubLocation;
+
+  constructor(json: ClubModel) {
     this.active = json.active;
     this.alternativeLocations = json.alternativeLocations;
     this.codeSporta = json.codeSporta;

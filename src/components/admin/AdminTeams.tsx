@@ -12,8 +12,7 @@ import PropTypes, {connect, withViewport} from '../PropTypes';
 
 import PlayerAutoComplete from '../players/PlayerAutoComplete';
 import PlayersImageGallery from '../players/PlayersImageGallery';
-
-import {teamPlayerType} from '../../models/TeamModel';
+import {teamPlayerType} from '../../models/model-interfaces';
 
 class AdminTeams extends React.Component {
   static propTypes = {

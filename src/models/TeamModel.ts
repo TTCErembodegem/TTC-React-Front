@@ -1,16 +1,22 @@
 import moment from 'moment';
 import storeUtil from '../storeUtil';
 import {TeamFrenoyModel} from './TeamFrenoyModel';
+import {ITeam, Competition, ITeamOpponent, ITeamPlayer, ITeamRanking, ITeamFrenoy, teamPlayerType, TeamPlayerType,
+  IPlayer, IMatch, ITeamPlayerInfo, IPlayerCompetition, IMatchPlayer} from './model-interfaces';
 
-export const teamPlayerType = {
-  standard: 'Standard',
-  captain: 'Captain',
-  reserve: 'Reserve',
-};
+export default class TeamModel implements ITeam {
+  competition: Competition;
+  divisionName: string;
+  id: number;
+  teamCode: string;
+  clubId: number;
+  year: number;
+  opponents: ITeamOpponent[];
+  players: ITeamPlayer[];
+  ranking: ITeamRanking[];
+  frenoy: ITeamFrenoy;
 
-
-export default class TeamModel {
-  constructor(json) {
+  constructor(json: TeamModel) {
     this.competition = json.competition; // 'Sporta' or 'Vttl'
     this.divisionName = json.divisionName;
     this.id = json.id;
@@ -23,19 +29,19 @@ export default class TeamModel {
     this.frenoy = new TeamFrenoyModel(json.frenoy, this);
   }
 
-  getTeamPlayerCount() {
+  getTeamPlayerCount(): 3 | 4 {
     return this.competition === 'Vttl' ? 4 : 3;
   }
 
-  getScoreCount() {
+  getScoreCount(): 16 | 10 {
     return this.competition === 'Vttl' ? 16 : 10;
   }
 
-  renderOwnTeamTitle() {
+  renderOwnTeamTitle(): string {
     return `${this.competition} ${this.teamCode}`;
   }
 
-  getDivisionDescription() {
+  getDivisionDescription(): string {
     // TODO: put in translations
     if (!this.divisionName) {
       return 'Ere Afdeling';
@@ -43,7 +49,7 @@ export default class TeamModel {
     return `Prov ${this.divisionName}`;
   }
 
-  getDivisionRanking(opponent = 'our-ranking') {
+  getDivisionRanking(opponent: 'our-ranking' | ITeamOpponent = 'our-ranking') {
     if (opponent === 'our-ranking') {
       return this.getDivisionRanking({clubId: this.clubId, teamCode: this.teamCode});
     }
@@ -51,9 +57,9 @@ export default class TeamModel {
     return result || {empty: true};
   }
 
-  getThriller(match) {
+  getThriller(match: IMatch): undefined | 'topMatch' | 'degradationMatch' {
     if (match.date.isBefore(moment())) {
-      return;
+      return undefined;
     }
     const ourRanking = this.getDivisionRanking();
     const theirRankingPosition = this.getDivisionRanking(match.opponent).position;
@@ -61,7 +67,7 @@ export default class TeamModel {
 
     const gamesPlayed = ourRanking.gamesWon + ourRanking.gamesLost + ourRanking.gamesDraw;
     if (gamesPlayed < 5) {
-      return;
+      return undefined;
     }
 
     if (ourRanking.position <= 3 && theirRankingPosition <= 3) {
@@ -69,18 +75,18 @@ export default class TeamModel {
     } if (ourRanking.position >= teamsInDivision - 2 && theirRankingPosition >= teamsInDivision - 2) {
       return 'degradationMatch';
     }
-
+    return undefined;
   }
 
-  isCaptain(player) {
-    return this.players.find(x => x.type === teamPlayerType.captain && x.playerId === player.id);
+  isCaptain(player: IPlayer): boolean {
+    return !!this.players.find(x => x.type === teamPlayerType.captain && x.playerId === player.id);
   }
 
-  getCaptainPlayerIds() {
+  getCaptainPlayerIds(): number[] {
     return this.players.filter(x => x.type === teamPlayerType.captain).map(x => x.playerId);
   }
 
-  getPlayers(type) {
+  getPlayers(type?: 'reserve' | 'standard'): ITeamPlayerInfo[] {
     let {players} = this;
     if (type === 'reserve') {
       players = players.filter(ply => ply.type === teamPlayerType.reserve);
@@ -88,19 +94,19 @@ export default class TeamModel {
       players = players.filter(ply => ply.type !== teamPlayerType.reserve);
     }
 
-    players = players.map(ply => ({
+    const plys = players.map(ply => ({
       player: storeUtil.getPlayer(ply.playerId),
       type: ply.type,
     }));
 
-    return players.sort(sortMappedPlayers(this.competition));
+    return plys.sort(sortMappedPlayers(this.competition));
   }
 
-  plays(playerId) {
-    return this.players.find(ply => ply.playerId === playerId);
+  plays(playerId: number): boolean {
+    return !!this.players.find(ply => ply.playerId === playerId);
   }
 
-  getMatches() {
+  getMatches(): IMatch[] {
     return storeUtil.matches.getAllMatches()
       .filter(match => match.teamId === this.id);
   }
@@ -110,16 +116,16 @@ export default class TeamModel {
     return getPlayerStats(matches);
   }
 
-  isTopper(opponent) {
+  isTopper(opponent: ITeamOpponent): boolean {
     return this.getDivisionRanking(opponent).position < 3;
   }
 
-  isInDegradationZone(opponent) {
+  isInDegradationZone(opponent: ITeamOpponent): boolean {
     return this.getDivisionRanking(opponent).position >= (this.ranking.length - 2);
   }
 }
 
-export function getPlayerStats(matches, withBelles = false) {
+export function getPlayerStats(matches: IMatch[], withBelles = false) {
   // ATTN: There are tests for this one...
   const result = {};
   matches.forEach(match => {
@@ -195,15 +201,14 @@ export function getPlayerStats(matches, withBelles = false) {
 }
 
 
-
-export function sortMappedPlayers(competition) {
+export function sortMappedPlayers(competition: Competition): (plyA: ITeamPlayerInfo, plyB: ITeamPlayerInfo) => number {
   return (plyA, plyB) => {
     const aComp = plyA.player.getCompetition(competition);
     const bComp = plyB.player.getCompetition(competition);
-    if (!aComp) {
+    if (!aComp || !aComp.position) {
       return -1;
     }
-    if (!bComp) {
+    if (!bComp || bComp.position) {
       return 1;
     }
 

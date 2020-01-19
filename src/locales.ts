@@ -2,7 +2,7 @@ import LocalesUtils from './utils/locales-nl';
 
 const {trans, routes, timeAgo} = LocalesUtils;
 
-const translate = function (key, params) {
+const translate = (key: string, params): string => {
   let str;
   if (key.indexOf('.') === -1) {
     str = trans[key];
@@ -26,7 +26,7 @@ const translate = function (key, params) {
   return str;
 };
 
-translate.reverseRoute = function (baseRoute, translatedRoute) {
+translate.reverseRoute = (baseRoute, translatedRoute) => {
   let result;
   Object.keys(routes[baseRoute]).forEach(key => {
     const value = routes[baseRoute][key];
@@ -37,7 +37,7 @@ translate.reverseRoute = function (baseRoute, translatedRoute) {
   return result;
 };
 
-translate.route = function (routeName, params) {
+translate.route = (routeName: string, params) => {
   let route;
   if (routeName.indexOf('.') === -1) {
     route = routes[routeName];
@@ -55,8 +55,6 @@ translate.route = function (routeName, params) {
   return route;
 };
 
-translate.timeAgo = function () {
-  return timeAgo;
-};
+translate.timeAgo = () => timeAgo;
 
 export default translate;

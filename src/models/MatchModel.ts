@@ -1,16 +1,16 @@
 import Immutable from 'immutable';
 import keyMirror from 'fbjs/lib/keyMirror';
-import moment from 'moment';
-
+import moment, {Moment} from 'moment';
 import storeUtil from '../storeUtil';
 import PlayerModel from './PlayerModel';
 import {OwnClubId} from './ClubModel';
 import {sortMappedPlayers} from './TeamModel';
+import {IMatch, ITeam, Competition, IMatchScore, MatchScoreType, IMatchPlayer, IMatchGame, IMatchOwn, IMatchOther, ITeamOpponent, IClub} from './model-interfaces';
 
 // TODO: Duplicted in backend. Should be in db.
 const defaultStartHour = 20;
 
-export var matchOutcome = keyMirror({
+export const matchOutcome = keyMirror({
   NotYetPlayed: '',
   Won: '',
   Lost: '',
@@ -19,7 +19,45 @@ export var matchOutcome = keyMirror({
 });
 
 
-export default class MatchModel {
+// Reality:
+// type MatchModelType = IMatch & (IMatchOwn | IMatchOther);
+
+
+export default class MatchModel implements IMatch, IMatchOwn, IMatchOther {
+  // IMatch
+  id: number;
+  frenoyMatchId: string;
+  shouldBePlayed: boolean;
+  isSyncedWithFrenoy: boolean;
+  week: number;
+  competition: Competition;
+  frenoyDivisionId: number;
+  date: Moment;
+  score: IMatchScore;
+  scoreType: MatchScoreType;
+  isPlayed: boolean;
+  players: IMatchPlayer[];
+  formationComment: string;
+  games: IMatchGame[];
+
+  // IMatchOwn
+  isHomeMatch = false;
+  teamId = 0;
+  description = '';
+  reportPlayerId = 0;
+  block = '';
+  comments: any[] = [];
+  opponent: ITeamOpponent;
+  isDerby = false;
+
+  // IMatchOther
+  home: ITeamOpponent;
+  away: ITeamOpponent;
+  /** Is TTC Erembodegem home or away team? */
+  isOurMatch = false;
+  /** If isOurMatch, get the IMatchOwn MatchModel */
+  getOurMatch: () => IMatch;
+
   constructor(json) {
     this.id = json.id;
     this.frenoyMatchId = json.frenoyMatchId;
@@ -38,6 +76,7 @@ export default class MatchModel {
     this.games = Immutable.List(json.games);
 
     // TODO: probably better to split MatchModel and ReadOnlyMatchModel/OtherMatchModel
+    // this.opponent = null;
     if (json.opponent) {
       // TTC Erembodegem Match
       this.isHomeMatch = json.isHomeMatch;
@@ -66,7 +105,7 @@ export default class MatchModel {
     }
   }
 
-  getDisplayDate(format) {
+  getDisplayDate(format?: 's' | 'd'): string {
     // Usage: this.context.t('match.date', match.getDisplayDate())
     if (format === 's') {
       return this.date.format('D/M');
@@ -81,14 +120,14 @@ export default class MatchModel {
     return this.date.format('ddd D/M HH');
   }
 
-  getDisplayTime() {
+  getDisplayTime(): string {
     if (this.date.minutes()) {
       return this.date.format('HH:mm');
     }
     return this.date.format('HH');
   }
 
-  renderOpponentTitle() {
+  renderOpponentTitle(): string {
     const club = this.getOpponentClub();
     return `${club.name} ${this.opponent.teamCode}`;
   }
@@ -100,7 +139,7 @@ export default class MatchModel {
     return storeUtil.getClub(this.opponent.clubId) || {};
   }
 
-  getClub(which) {
+  getClub(which: 'home' | 'away'): IClub | undefined {
     if (this.opponent) {
       console.warn('MatchModel.getClub: use getOpponentClub for TTC Erembodegem matches'); // eslint-disable-line
     }
@@ -111,18 +150,19 @@ export default class MatchModel {
       return storeUtil.getClub(this.away.clubId);
     }
     console.error('MatchModel.getClub passed ' + which, 'expected home or away.'); // eslint-disable-line
+    return undefined;
   }
 
-  isStandardStartTime() {
+  isStandardStartTime(): boolean {
     return !this.date.minutes() && this.date.hours() === defaultStartHour;
   }
 
-  isBeingPlayed() {
+  isBeingPlayed(): boolean {
     const diff = moment.duration(moment().diff(this.date)).asHours();
     return Math.abs(diff) < 10;
   }
 
-  won(opponent) {
+  won(opponent): boolean {
     // ATTN: This only works for an OpponentMatch?
     if (this.score.home === this.score.out) {
       return false;
@@ -135,12 +175,12 @@ export default class MatchModel {
     return won;
   }
 
-  isScoreComplete() {
+  isScoreComplete(): boolean {
     const scoreTotal = this.getTeam().getScoreCount();
     return this.score.home + this.score.out === scoreTotal;
   }
 
-  renderScore() {
+  renderScore(): string {
     if (this.score.home === 0 && this.score.out === 0) {
       return '';
     }
@@ -148,15 +188,15 @@ export default class MatchModel {
 
   }
 
-  getTeam() {
+  getTeam(): ITeam {
     return storeUtil.getTeam(this.teamId);
   }
 
-  getTeamPlayerCount() {
+  getTeamPlayerCount(): 4 | 3 {
     return this.competition === 'Vttl' ? 4 : 3;
   }
 
-  getPreviousMatch() {
+  getPreviousMatch(): IMatch | undefined {
     const otherMatch = storeUtil.matches.getAllMatches()
       .find(m => m.teamId === this.teamId
         && m.opponent.clubId === this.opponent.clubId
@@ -216,15 +256,15 @@ export default class MatchModel {
     return this.getPlayerFormation(statusFilter).map(x => x.player);
   }
 
-  getOwnPlayers() {
+  getOwnPlayers(): IMatchPlayer[] {
     return this.players.filter(player => player.home).sort((a, b) => a.position - b.position);
   }
 
-  getTheirPlayers() {
+  getTheirPlayers(): IMatchPlayer[] {
     return this.players.filter(player => !player.home).sort((a, b) => a.position - b.position);
   }
 
-  getGamePlayer(uniqueIndex) {
+  getGamePlayer(uniqueIndex: number): IMatchPlayer | {} {
     return this.players.find(ply => ply.uniqueIndex === uniqueIndex) || {};
   }
 

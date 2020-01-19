@@ -31,7 +31,7 @@ if (module.hot) {
   // console.error('finalCreateStore is HOT');
   // Enable Webpack hot module replacement for reducers
   module.hot.accept('./reducers', () => {
-    const nextRootReducer = require('./reducers');
+    const nextRootReducer = rootReducer;
     store.replaceReducer(nextRootReducer);
   });
 }

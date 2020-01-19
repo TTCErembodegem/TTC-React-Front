@@ -1,7 +1,4 @@
 import React, {Component} from 'react';
-
-
-import {withStyles} from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -15,11 +12,17 @@ import {EditIcon} from '../controls';
 import PlayerAutoComplete from './PlayerAutoComplete';
 import PlayerStyleAutocomplete from './PlayerStyleAutocomplete';
 import PlayerAvatar from './PlayerAvatar';
+import {IPlayer} from '../../models/model-interfaces';
 
 // TODO: need to put this in some css file?
 // @withStyles({dialog: {overflow: 'visible'}})
 
-export const PlayerPlayingStyle = ({ply, allowEdit = true}) => (
+type PlayerPlayingStyleProps = {
+  ply: IPlayer;
+  allowEdit?: boolean;
+}
+
+export const PlayerPlayingStyle = ({ply, allowEdit = true}: PlayerPlayingStyleProps) => (
   <span>
     {allowEdit ? <PlayerPlayingStyleForm player={ply} iconStyle="edit-icon" style={{color: '#d3d3d3', float: 'right'}} /> : null}
     {ply.style.name}

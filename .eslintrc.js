@@ -34,7 +34,7 @@ module.exports = {
     "no-shadow": [1],
     "no-multiple-empty-lines": ["error", { max: 7 }],
     "linebreak-style": [0],
-    "max-len": ["error", { "code": 140 }],
+    "max-len": ["error", { "code": 160 }],
     "dot-notation": [1],
     "padded-blocks": [0],
     "object-curly-newline": ["error", { "ImportDeclaration": "never" }],
@@ -47,6 +47,10 @@ module.exports = {
     "react/jsx-one-expression-per-line": [0],
     "no-param-reassign": [0],
     "jsx-a11y/alt-text": [0],
+    "max-classes-per-file": [0],
+    "react/static-property-placement": [0],
+    "lines-between-class-members": [0],
+    // "typescript/no-non-null-assertion": [0],
   },
   "settings": {
     "import/resolver": {

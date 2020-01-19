@@ -1,7 +1,12 @@
+/* eslint-disable dot-notation */
 import React from 'react';
 // import GoogleAnalytics from 'react-ga';
 
 // GoogleAnalytics.initialize('UA-0000000-0');
+
+type HOCProps = {
+  location: {pathname: string}
+}
 
 export const withTracker = (WrappedComponent, options = {}) => { // eslint-disable-line
   const trackPage = page => {
@@ -12,13 +17,13 @@ export const withTracker = (WrappedComponent, options = {}) => { // eslint-disab
     // GoogleAnalytics.pageview(page);
 
     // console.log('ga', page);
-    if (window.ga) {
-      window.ga('set', 'page', page);
-      window.ga('send', 'pageview');
+    if (window['ga']) {
+      window['ga']('set', 'page', page);
+      window['ga']('send', 'pageview');
     }
   };
 
-  const HOC = class extends React.Component {
+  const HOC = class extends React.Component<HOCProps> {
     componentDidMount() {
       const page = this.props.location.pathname; // eslint-disable-line
       trackPage(page);

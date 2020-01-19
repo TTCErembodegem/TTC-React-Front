@@ -1,8 +1,10 @@
 import store from './store';
 import {OwnClubId} from './models/ClubModel';
 import {getRankingValue} from './models/utils/playerRankingValueMapper';
+import {ITeam, IClub, IPlayer, IMatch, IMatchPlayer, ITeamOpponent, Competition, IMatchCommon, IMatchOther} from './models/model-interfaces';
+import {IUser} from './models/UserModel';
 
-export function getOpponentMatchesForTeam(competition, clubId, teamCode) {
+export function getOpponentMatchesForTeam(competition: Competition, clubId: number, teamCode: string): (IMatchCommon & IMatchOther)[] {
   return store.getState().readonlyMatches
     .filter(m => m.competition === competition)
     .filter(m => m.home && m.away)
@@ -12,11 +14,24 @@ export function getOpponentMatchesForTeam(competition, clubId, teamCode) {
 }
 
 
-const createKey = form => form.reduce((key, f) => key + f.amount + f.ranking, '');
+const createKey = (form: IOpponentFormationRankingInfo[]): string => form.reduce((key, f) => key + f.amount + f.ranking, '');
 
-export function getOpponentFormations(matches, opponent) {
-  return matches.filter(match => match.isSyncedWithFrenoy).reduce((acc, match) => {
-    let isHomeTeam;
+export interface IOponnentFormation {
+  key: string;
+  details: IOpponentFormationRankingInfo[];
+  amount: number;
+  value: number;
+}
+
+/** How many players of a ranking beat */
+export interface IOpponentFormationRankingInfo {
+  ranking: string;
+  amount: number;
+}
+
+export function getOpponentFormations(matches: IMatch[], opponent: ITeamOpponent): IOponnentFormation[] {
+  return matches.filter(match => match.isSyncedWithFrenoy).reduce((acc: IOponnentFormation[], match) => {
+    let isHomeTeam: boolean;
     if (!opponent) {
       isHomeTeam = true;
     } else {
@@ -41,10 +56,10 @@ export function getOpponentFormations(matches, opponent) {
 }
 
 
-const unique = (value, index, self) => self.indexOf(value) === index;
+const unique = (value: any, index: number, self: any[]): boolean => self.indexOf(value) === index;
 
-export function getMatchPlayerRankings(match, homeTeam) {
-  let opponentFormation;
+export function getMatchPlayerRankings(match: IMatch, homeTeam: boolean): IOpponentFormationRankingInfo[] {
+  let opponentFormation: IMatchPlayer[];
   if (homeTeam) {
     opponentFormation = match.players.filter(m => m.home);
   } else {
@@ -52,7 +67,7 @@ export function getMatchPlayerRankings(match, homeTeam) {
   }
   const rankings = opponentFormation.map(ply => ply.ranking);
   const diffs = rankings.toArray().filter(unique);
-  return diffs.map(ranking => ({
+  return diffs.map((ranking: string) => ({
     ranking,
     amount: rankings.reduce((prev, cur) => prev + (cur === ranking ? 1 : 0), 0),
   }));
@@ -61,8 +76,8 @@ export function getMatchPlayerRankings(match, homeTeam) {
 
 
 
-function getOpponentMatches(match, opponent = undefined) {
-  opponent = opponent || match.opponent;
+function getOpponentMatches(match: IMatch, opponentIn?: ITeamOpponent): {home: IMatch[], away: IMatch[]} {
+  const opponent = opponentIn || match.opponent;
   const matches = store.getState().readonlyMatches
     .filter(x => x.competition === match.competition && x.frenoyDivisionId === match.frenoyDivisionId);
 
@@ -76,58 +91,58 @@ const util = {
   getConfig() {
     return store.getState().config;
   },
-  getUser() {
+  getUser(): IUser {
     return store.getState().user;
   },
-  getUserPlayer() {
+  getUserPlayer(): IPlayer {
     return util.getPlayer(util.getUser().playerId);
   },
 
-  getTeam(teamId) {
+  getTeam(teamId: number): ITeam {
     const {teams} = store.getState();
     return teams.find(team => team.id === teamId);
   },
-  getTeams() {
+  getTeams(): ITeam[] {
     return store.getState().teams;
   },
 
-  getClub(clubId) {
+  getClub(clubId: number): IClub {
     const {clubs} = store.getState();
     return clubs.find(club => club.id === clubId);
   },
-  getOwnClub() {
+  getOwnClub(): IClub {
     return util.getClub(OwnClubId);
   },
 
-  getPlayer(playerId) {
+  getPlayer(playerId: number): IPlayer {
     const {players} = store.getState();
     return players.find(ply => ply.id === playerId);
   },
 
-  getMatch(matchId) {
+  getMatch(matchId: number): IMatch {
     const {matches} = store.getState();
     return matches.find(match => match.id === matchId);
   },
-  getMatches() {
+  getMatches(): IMatch[] {
     return store.getState().matches;
   },
 
   matches: {
-    getTodayMatches() {
+    getTodayMatches(): IMatch[] {
       return util.getMatches().filter(cal => cal.isBeingPlayed());
     },
-    getFromOpponent(match) {
+    getFromOpponent(match: IMatch) {
       const result = getOpponentMatches(match);
       return result.away.concat(result.home);
     },
 
-    getAllMatches() {
+    getAllMatches(): IMatch[] {
       return util.getMatches();
     },
 
-    getFormation(match, opponent = undefined) {
+    getFormation(match: IMatch, opponent?: ITeamOpponent) {
       const matches = getOpponentMatches(match, opponent);
-      let opponentPlayers = matches.home.map(m => m.players).flatten().filter(m => m.home);
+      let opponentPlayers: IMatchPlayer[] = matches.home.map(m => m.players).flatten().filter(m => m.home);
       opponentPlayers = opponentPlayers.concat(matches.away.map(m => m.players).flatten().filter(m => !m.home));
 
       // TODO: this assumes that if you forfeited, you lost that match (ply has won but not lost property)
@@ -153,5 +168,12 @@ const util = {
     },
   },
 };
+
+// TODO: getFormation --> make strongly typed
+// export interface IMatchFormation {
+//   player: IPlayer;
+//   count: number;
+//   won: number;
+// }
 
 export default util;

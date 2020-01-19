@@ -1,6 +1,7 @@
 import keyMirror from 'fbjs/lib/keyMirror';
 import moment from 'moment';
 import storeUtil from '../storeUtil';
+import {IPlayer, ITeam, IMatch} from './model-interfaces';
 
 export const userRoles = ['Player', 'Board', 'Dev', 'System'];
 
@@ -12,43 +13,54 @@ const security = keyMirror({
   IS_SYSTEM: '',
 });
 
-export default class UserModel {
+export interface IUser {
+  playerId: number;
+  teams: number[];
+  _security: string[];
+}
+
+export default class UserModel implements IUser {
+  playerId: number;
+  teams: number[];
+  _security: string[];
+
   constructor(json) {
     this.playerId = json.playerId;
     this.teams = json.teams; // : number[]
     this._security = json.security;
   }
 
-  playsIn(teamId) {
+  playsIn(teamId: number): boolean {
     return this.teams.indexOf(teamId) !== -1;
   }
 
-  getPlayer() {
+  getPlayer(): IPlayer {
     return storeUtil.getPlayer(this.playerId);
   }
 
-  getTeams() {
+  getTeams(): ITeam[] {
     return this.teams.map(storeUtil.getTeam);
   }
 
-  can(what) {
+  can(what: string): boolean {
     return this._security.indexOf(what) !== -1;
   }
 
-  canManageTeams() {
+  canManageTeams(): boolean {
     return this.can(security.CAN_MANAGETEAM);
   }
 
-  canEditMatchesOrIsCaptain() {
+  canEditMatchesOrIsCaptain(): boolean {
     if (this.can(security.CAN_MANAGETEAM)) {
       return true;
     }
 
-    const captains = [].concat.apply([], this.getTeams().map(team => team.getCaptainPlayerIds()));
+    // eslint-disable-next-line prefer-spread
+    const captains: number[] = [].concat.apply([], this.getTeams().map(team => team.getCaptainPlayerIds()));
     return captains.indexOf(this.playerId) !== -1;
   }
 
-  canEditMatchPlayers(match) {
+  canEditMatchPlayers(match: IMatch): boolean {
     if (match.isSyncedWithFrenoy) {
       return false;
     }
@@ -69,30 +81,34 @@ export default class UserModel {
     return true;
   }
 
-  canEditPlayersOnMatchDay(match) {
-    return this.isAdmin() || this.playerId && match.date.isSame(moment(), 'day');
+  canEditPlayersOnMatchDay(match: IMatch) {
+    if (this.isAdmin()) {
+      return true;
+    }
+
+    return this.playerId && match.date.isSame(moment(), 'day');
   }
 
-  canPostReport(teamId) {
+  canPostReport(teamId: number): boolean {
     return this.playsIn(teamId) || this.can(security.CAN_EDITALLREPORTS);
   }
 
-  canChangeMatchScore(match) {
+  canChangeMatchScore(match: IMatch): boolean {
     if (match.isSyncedWithFrenoy) {
       return false;
     }
-    return this.playsIn(match.teamId) || this.isAdmin() || match.players.find(p => p.playerId === this.playerId);
+    return this.playsIn(match.teamId) || this.isAdmin() || !!match.players.find(p => p.playerId === this.playerId);
   }
 
-  isAdmin() {
+  isAdmin(): boolean {
     return this.can(security.IS_ADMIN);
   }
 
-  isDev() {
+  isDev(): boolean {
     return this.can(security.IS_DEV);
   }
 
-  isSystem() {
+  isSystem(): boolean {
     return this.can(security.IS_SYSTEM);
   }
 }

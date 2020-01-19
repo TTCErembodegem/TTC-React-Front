@@ -156,4 +156,4 @@ class TabbedContainerComponent extends Component {
   }
 }
 
-export const TabbedContainer = withRouter(withViewport()(TabbedContainerComponent));
+export const TabbedContainer = withRouter(withViewport(TabbedContainerComponent));

@@ -3,7 +3,7 @@ import moment from 'moment';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import Typist from 'react-typist';
-import PropTypes, {connect, withViewport, withContext, withStyles} from '../PropTypes';
+import PropTypes, {connect, withViewport, withContext} from '../PropTypes';
 import ClubLocationInstructions from '../other/ClubLocationInstructions';
 
 import {Strike} from '../controls';

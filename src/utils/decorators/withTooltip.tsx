@@ -1,3 +1,4 @@
+/* eslint-disable react/prefer-stateless-function */
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 
@@ -5,16 +6,17 @@ import Tooltip from 'react-bootstrap/lib/Tooltip';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import t from '../../locales';
 
-export function withTooltip(ComposedComponent) {
-  return class WithTooltip extends Component {
-    static contextTypes = PropTypes.contextTypes;
+type WithTooltipProps = {
+  tooltip: string;
+  title: string;
+  translate: boolean;
+  tooltipPlacement: string;
+}
 
-    static propTypes = {
-      tooltip: PropTypes.string,
-      title: PropTypes.string,
-      translate: PropTypes.bool,
-      tooltipPlacement: PropTypes.string,
-    }
+export function withTooltip(ComposedComponent) {
+  return class WithTooltip extends Component<WithTooltipProps> {
+    // TODO: Tslint: this wasnt doing anything?
+    // static contextTypes = PropTypes.contextTypes;
 
     static defaultProps = {
       tooltipPlacement: 'top',
