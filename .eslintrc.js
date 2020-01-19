@@ -50,6 +50,8 @@ module.exports = {
     "max-classes-per-file": [0],
     "react/static-property-placement": [0],
     "lines-between-class-members": [0],
+    "react/prefer-stateless-function": [0],
+    "react/sort-comp": [0],
     // "typescript/no-non-null-assertion": [0],
   },
   "settings": {
