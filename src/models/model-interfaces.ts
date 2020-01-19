@@ -1,4 +1,18 @@
+/* eslint-disable no-use-before-define */
 import {Moment} from 'moment';
+
+export type Viewport = {
+  width: number;
+  height: number;
+}
+
+export type TabbedContainerEventKeyRouteProps = {
+  match: {
+    params: {
+      tabKey: string,
+    }
+  }
+}
 
 /* ****************************************************
 *                       MATCHES
@@ -58,6 +72,7 @@ export interface IMatchOwn {
   isBeingPlayed: () => boolean;
   getTeamPlayerCount: () => 4 | 3;
   getTeam: () => ITeam;
+  plays: (playerId: number | IPlayer, statusFilter?: 'onlyFinal') => IMatchPlayer | undefined;
 }
 
 /**
@@ -197,11 +212,11 @@ export interface ITeamPlayerInfo {
   type: TeamPlayerType;
 }
 
-// export interface IMatchPlayerInfo {
-//   id: number;
-//   player: IPlayer,
-//   matchPlayer: IMatchPlayer,
-// }
+export interface IMatchPlayerInfo {
+  id: number;
+  player: IPlayer,
+  matchPlayer: IMatchPlayer,
+}
 
 export interface ITeamRanking {
   position: number;

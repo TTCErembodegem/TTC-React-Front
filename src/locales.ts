@@ -2,7 +2,7 @@ import LocalesUtils from './utils/locales-nl';
 
 const {trans, routes, timeAgo} = LocalesUtils;
 
-const translate = (key: string, params): string => {
+const translate = (key: string, params: any = {}): string => {
   let str;
   if (key.indexOf('.') === -1) {
     str = trans[key];

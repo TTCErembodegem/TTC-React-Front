@@ -17,6 +17,8 @@ export interface IUser {
   playerId: number;
   teams: number[];
   _security: string[];
+
+  isAdmin: () => boolean;
 }
 
 export default class UserModel implements IUser {

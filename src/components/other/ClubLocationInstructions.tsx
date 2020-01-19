@@ -2,21 +2,26 @@ import React, {Component} from 'react';
 import PropTypes, {connect} from '../PropTypes';
 // import {OwnEmail, GoogleMap} from '../controls';
 
-class ClubLocationInstructions extends Component {
+type ClubLocationInstructionsProps = {
+  params: any;
+}
+
+type ClubLocationInstructionsState = {
+  isOpen: boolean;
+}
+
+class ClubLocationInstructions extends Component<ClubLocationInstructionsProps, ClubLocationInstructionsState> {
   static contextTypes = PropTypes.contextTypes;
 
-  static propTypes = {
-    params: PropTypes.any.isRequired,
-  };
-
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    // eslint-disable-next-line react/no-unused-state
     this.state = {isOpen: false};
   }
 
   render() {
     // TODO: need to update this for Technigo!
-    return null;
+    return <div />;
 
     // const {params} = this.props;
 

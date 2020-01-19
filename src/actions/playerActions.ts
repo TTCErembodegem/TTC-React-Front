@@ -2,7 +2,7 @@ import ActionTypes from './ActionTypes';
 import http from '../utils/httpClient';
 import storeUtil from '../storeUtil';
 import {showSnackbar} from './configActions';
-import {broadcastSnackbar, broadcastReload} from '../hub';
+import {broadcastSnackbar, broadcastReload} from './otherActions';
 import {teamsLoaded} from './initialLoad';
 
 import trans from '../locales';

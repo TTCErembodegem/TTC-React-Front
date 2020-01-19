@@ -1,26 +1,26 @@
 import React, {Component} from 'react';
-import Panel from 'react-bootstrap/lib/Panel';
-import PropTypes, {connect, storeUtil, withStyles, withContext} from '../../PropTypes';
-import {Email, Telephone, PlayerAddress, PlayerLink, Strike} from '../../controls';
-import PlayerImage from '../../players/PlayerImage';
-import {AchievementsCalculator} from './AchievementsCalculator';
+import PropTypes, {connect, withContext} from '../../PropTypes';
 import IntroClub from '../../App/IntroClub';
 import IntroSponsors from '../../App/IntroSponsors';
 import {Kampioenen} from './Kampioenen';
 import Achievements from './Achievements';
 import NextSeasonChanges from './NextSeasonChanges';
+import {IPlayer, ITeam, IMatch, IClub} from '../../../models/model-interfaces';
+import {AchievementsCalculator} from './AchievementsCalculator';
+import {Strike} from '../../controls/controls/Strike';
 
 require('./achievements.css');
 
-class EndOfSeason extends Component {
-  static contextTypes = PropTypes.contextTypes;
+type EndOfSeasonProps = {
+  players: IPlayer[];
+  matches: IMatch[];
+  clubs: IClub[];
+  teams: ITeam[];
+}
 
-  static propTypes = {
-    players: PropTypes.PlayerModelList.isRequired,
-    matches: PropTypes.MatchModelList.isRequired,
-    clubs: PropTypes.ClubModelList.isRequired,
-    teams: PropTypes.TeamModelList.isRequired,
-  }
+// eslint-disable-next-line react/prefer-stateless-function
+class EndOfSeason extends Component<EndOfSeasonProps> {
+  static contextTypes = PropTypes.contextTypes;
 
   render() {
     const {matches} = this.props;

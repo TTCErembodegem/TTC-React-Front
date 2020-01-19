@@ -5,7 +5,7 @@ import storeUtil from '../storeUtil';
 import PlayerModel from './PlayerModel';
 import {OwnClubId} from './ClubModel';
 import {sortMappedPlayers} from './TeamModel';
-import {IMatch, ITeam, Competition, IMatchScore, MatchScoreType, IMatchPlayer, IMatchGame, IMatchOwn, IMatchOther, ITeamOpponent, IClub} from './model-interfaces';
+import {IMatch, ITeam, Competition, IMatchScore, MatchScoreType, IMatchPlayer, IMatchGame, IMatchOwn, IMatchOther, ITeamOpponent, IClub, IMatchPlayerInfo, IPlayer} from './model-interfaces';
 
 // TODO: Duplicted in backend. Should be in db.
 const defaultStartHour = 20;
@@ -206,7 +206,7 @@ export default class MatchModel implements IMatch, IMatchOwn, IMatchOther {
     return otherMatch;
   }
 
-  plays(playerId, statusFilter) {
+  plays(playerId: number | IPlayer, statusFilter?: 'onlyFinal'): IMatchPlayer | undefined {
     if (playerId instanceof PlayerModel) {
       playerId = playerId.id;
     }
@@ -214,13 +214,13 @@ export default class MatchModel implements IMatch, IMatchOwn, IMatchOther {
     return playerInfo ? playerInfo.matchPlayer : undefined;
   }
 
-  getPlayerFormation(statusFilter) {
+  getPlayerFormation(statusFilter: undefined | 'onlyFinal' | 'Play' | 'Captain'): IMatchPlayerInfo[] {
     const team = this.getTeam();
     const plys = this.getOwnPlayers();
 
-    let filter;
+    let filter: (ply: IMatchPlayerInfo) => boolean;
     if (!statusFilter || statusFilter === 'onlyFinal') {
-      filter = ply => {
+      filter = (ply: IMatchPlayerInfo): boolean => {
         const {status} = ply.matchPlayer;
         if (this.isSyncedWithFrenoy) {
           return status === 'Major';

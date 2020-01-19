@@ -11,6 +11,8 @@ import ProfilePhotoForm, {ProfilePhotoAvatarForm} from '../users/ProfilePhotoFor
 import {AdminEmail} from './AdminEmail';
 import {AdminMatches} from './AdminMatches';
 import {AdminParams} from './AdminParams';
+import {IUser} from '../../models/UserModel';
+import {IMatch, ITeam, IClub, IPlayer, TabbedContainerEventKeyRouteProps} from '../../models/model-interfaces';
 
 const tabEventKeys = keyMirror({
   players: '',
@@ -24,26 +26,23 @@ const tabEventKeys = keyMirror({
   dev: '',
 });
 
+type AdminProps = {
+  config: any;
+  user: IUser;
+  matches: IMatch[];
+  teams: ITeam[];
+  clubs: IClub[];
+  players: IPlayer[];
+  admin: {
+    /** Retired players */
+    players: IPlayer[];
+  },
+  match: TabbedContainerEventKeyRouteProps,
+}
 
-class Admin extends Component {
+
+class Admin extends Component<AdminProps> {
   static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    config: PropTypes.object.isRequired,
-    user: PropTypes.UserModel.isRequired,
-    matches: PropTypes.MatchModelList.isRequired,
-    teams: PropTypes.TeamModelList.isRequired,
-    clubs: PropTypes.ClubModelList.isRequired,
-    players: PropTypes.PlayerModelList.isRequired,
-    admin: PropTypes.shape({
-      players: PropTypes.object.isRequired, // = gestopte spelers
-    }).isRequired,
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        tabKey: PropTypes.string,
-      }),
-    }),
-  }
 
   _renderSection(eventKey) {
     switch (eventKey) {

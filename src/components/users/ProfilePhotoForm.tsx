@@ -13,13 +13,10 @@ import {IUser} from '../../models/UserModel';
 
 type ProfilePhotoAvatarFormProps = {
   admin?: boolean;
-  user: IUser;
-  uploadPlayer: Function,
-  borderRadius: number;
 }
 
-export const ProfilePhotoAvatarForm = ({...props}: ProfilePhotoAvatarFormProps) => (
-  <ProfilePhotoForm {...props} size={playerUtils.getPlayerAvatarImageSize()} type="player-avatar" borderRadius={19} />
+export const ProfilePhotoAvatarForm = ({admin, ...props}: ProfilePhotoAvatarFormProps) => (
+  <ProfilePhotoForm {...props} admin={admin} size={playerUtils.getPlayerAvatarImageSize()} type="player-avatar" borderRadius={19} />
 );
 
 
@@ -27,6 +24,9 @@ export const ProfilePhotoAvatarForm = ({...props}: ProfilePhotoAvatarFormProps) 
 type ProfilePhotoFormProps = ProfilePhotoAvatarFormProps & {
   size: {width: number, height: number},
   type: 'player-photo' | 'player-avatar',
+  user: IUser;
+  uploadPlayer: Function,
+  borderRadius: number;
 }
 
 type ProfilePhotoFormState = {

@@ -9,14 +9,14 @@ export function clearSnackbar() {
   };
 }
 
-export function showSnackbar(msg) {
+export function showSnackbar(msg: string) {
   return {
     type: ActionTypes.SHOW_SNACKBAR,
     payload: msg,
   };
 }
 
-export function setSetting(key, value) {
+export function setSetting(key: string, value: string) {
   return {
     type: ActionTypes.SET_SETTING,
     payload: {key, value},
@@ -24,7 +24,7 @@ export function setSetting(key, value) {
 }
 
 
-export function saveConfigParam(key, value) {
+export function saveConfigParam(key: string, value: string) {
   return dispatch => http.post('/config', {key, value})
     .then(() => {
       dispatch(updateConfigParam(key, value));
@@ -36,7 +36,7 @@ export function saveConfigParam(key, value) {
 }
 
 
-export function updateConfigParam(key, value) {
+export function updateConfigParam(key: string, value: string) {
   return {
     type: ActionTypes.UPDATE_CONFIG_PARAM,
     payload: {key, value},

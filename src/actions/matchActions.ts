@@ -5,8 +5,9 @@ import ActionTypes from './ActionTypes';
 import http from '../utils/httpClient';
 import storeUtil from '../storeUtil';
 import {showSnackbar, setSetting} from './configActions';
-import {broadcastReload} from '../hub';
 import trans from '../locales';
+import {IMatch} from '../models/model-interfaces';
+import {broadcastReload} from './otherActions';
 
 export function simpleLoaded(data) {
   return {
@@ -15,9 +16,9 @@ export function simpleLoaded(data) {
   };
 }
 
-const shouldSync = match => !match.isSyncedWithFrenoy && moment().isAfter(match.date) && match.shouldBePlayed;
+const shouldSync = (match: IMatch) => !match.isSyncedWithFrenoy && moment().isAfter(match.date) && match.shouldBePlayed;
 
-function frenoySync(dispatch, m, forceSync = false) {
+function frenoySync(dispatch, m: IMatch, forceSync = false) {
   if (forceSync || shouldSync(m)) {
     // Non played matches date is 0001-01-01T00:00:00
     return http.post(`/matches/FrenoyMatchSync?forceSync=${forceSync}`, {id: m.id})
@@ -47,7 +48,7 @@ function frenoyReadOnlyMatchSync(match) {
   };
 }
 
-export function forceFrenoySync(matchId) {
+export function forceFrenoySync(matchId: number) {
   return dispatch => frenoySync(dispatch, {id: matchId}, true);
 }
 
@@ -103,7 +104,7 @@ export function getOpponentMatches(teamId, opponent = {}) {
 }
 
 
-export function selectPlayer(matchId, status, statusNote, playerId) {
+export function selectPlayer(matchId: number, status, statusNote: string, playerId: number) {
   return dispatch => {
     const match = storeUtil.getMatch(matchId);
     const player = storeUtil.getPlayer(playerId);
@@ -192,7 +193,7 @@ export function updateScore(matchScore) {
     });
 }
 
-export function frenoyTeamSync(teamId) {
+export function frenoyTeamSync(teamId: number) {
   return dispatch => http.post('/matches/FrenoyTeamSync', {id: teamId})
     .then(() => {
       dispatch(showSnackbar(`${trans('common.apiSuccess')}: Duw F5 om de wijzigingen te zien`));
@@ -202,7 +203,7 @@ export function frenoyTeamSync(teamId) {
     });
 }
 
-export function postReport(matchId, reportText) {
+export function postReport(matchId: number, reportText: string) {
   return dispatch => {
     const user = storeUtil.getUser();
     return http.post('/matches/Report', {matchId, text: reportText, playerId: user.playerId})

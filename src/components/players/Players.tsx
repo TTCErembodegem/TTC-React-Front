@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PropTypes, {connect, withViewport, withStyles} from '../PropTypes';
+import PropTypes, {connect, withViewport} from '../PropTypes';
 
 import {TabbedContainer} from '../controls/TabbedContainer';
 import PlayersCardGallery from './PlayersCardGallery';
@@ -9,23 +9,26 @@ import {PlayersSporta} from './Players/PlayersSporta';
 import {PlayersAllNotLoggedIn} from './Players/PlayersAllNotLoggedIn';
 import {PlayersAllSmall} from './Players/PlayersAllSmall';
 import {PlayersAllBig} from './Players/PlayersAllBig';
+import {Viewport, TabbedContainerEventKeyRouteProps, IPlayer, Competition} from '../../models/model-interfaces';
+import {IUser} from '../../models/UserModel';
 
 import './Players.css';
 
-class Players extends Component {
+type PlayersProps = {
+  players: IPlayer[];
+  user: IUser;
+  viewport: Viewport;
+  match: TabbedContainerEventKeyRouteProps;
+}
+
+type PlayersState = {
+  filter: string;
+  sort: Competition;
+  sortDir: 'asc' | 'desc';
+}
+
+class Players extends Component<PlayersProps, PlayersState> {
   static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    players: PropTypes.PlayerModelList.isRequired,
-    user: PropTypes.UserModel.isRequired,
-    viewport: PropTypes.viewport,
-
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        tabKey: PropTypes.string,
-      }),
-    }),
-  };
 
   constructor(props) {
     super(props);
@@ -34,68 +37,6 @@ class Players extends Component {
       sort: 'Vttl',
       sortDir: 'asc',
     };
-  }
-
-  _renderTabContent(tabKey) {
-    let tabContent;
-    switch (tabKey) {
-      case 'list':
-        tabContent = this._renderTabAll();
-        break;
-      case 'vttl':
-        tabContent = <PlayersVttl filter={this.state.filter} />;
-        break;
-      case 'sporta':
-        tabContent = <PlayersSporta filter={this.state.filter} />;
-        break;
-      case 'gallery':
-        tabContent = <PlayersCardGallery players={this._getAllPlayers()} />;
-        break;
-    }
-    return (
-      <div>
-        <PlayersToolbar
-          marginLeft={15}
-          onFilterChange={text => this.setState({filter: text})}
-
-          canSort={tabKey !== 'vttl' && tabKey !== 'sporta'}
-          onSortChange={key => this.setState({sort: key})}
-          onSortDirectionChange={key => this.setState({sortDir: key})}
-          activeSort={this.state.sort}
-          activeSortDirection={this.state.sortDir}
-        />
-        {tabContent}
-      </div>
-    );
-  }
-
-  render() {
-    const tabKeysConfig = [{
-      key: 'gallery',
-      title: this.context.t('players.gallery'),
-    }, {
-      key: 'vttl',
-      title: 'Vttl',
-    }, {
-      key: 'sporta',
-      title: 'Sporta',
-    }, {
-      key: 'list',
-      title: this.context.t('players.list'),
-    }];
-
-    return (
-      <div style={{marginTop: 20, marginBottom: 10}}>
-        <TabbedContainer
-          match={this.props.match}
-          defaultTabKey={this.props.viewport.width < 450 ? 'list' : 'gallery'}
-          tabKeys={tabKeysConfig}
-          tabRenderer={eventKey => this._renderTabContent(eventKey)}
-          route={{base: this.context.t.route('players'), subs: 'playersTabs'}}
-          forceTabs
-        />
-      </div>
-    );
   }
 
   _renderTabAll() {
@@ -145,6 +86,70 @@ class Players extends Component {
     }
 
     return players;
+  }
+
+  _renderTabContent(tabKey) {
+    let tabContent;
+    switch (tabKey) {
+      case 'list':
+        tabContent = this._renderTabAll();
+        break;
+      case 'vttl':
+        tabContent = <PlayersVttl filter={this.state.filter} />;
+        break;
+      case 'sporta':
+        tabContent = <PlayersSporta filter={this.state.filter} />;
+        break;
+      case 'gallery':
+        tabContent = <PlayersCardGallery players={this._getAllPlayers()} />;
+        break;
+      default:
+        tabContent = '';
+    }
+    return (
+      <div>
+        <PlayersToolbar
+          marginLeft={15}
+          onFilterChange={text => this.setState({filter: text})}
+
+          canSort={tabKey !== 'vttl' && tabKey !== 'sporta'}
+          onSortChange={key => this.setState({sort: key})}
+          onSortDirectionChange={key => this.setState({sortDir: key})}
+          activeSort={this.state.sort}
+          activeSortDirection={this.state.sortDir}
+        />
+        {tabContent}
+      </div>
+    );
+  }
+
+  render() {
+    const tabKeysConfig = [{
+      key: 'gallery',
+      title: this.context.t('players.gallery'),
+    }, {
+      key: 'vttl',
+      title: 'Vttl',
+    }, {
+      key: 'sporta',
+      title: 'Sporta',
+    }, {
+      key: 'list',
+      title: this.context.t('players.list'),
+    }];
+
+    return (
+      <div style={{marginTop: 20, marginBottom: 10}}>
+        <TabbedContainer
+          match={this.props.match}
+          defaultTabKey={this.props.viewport.width < 450 ? 'list' : 'gallery'}
+          tabKeys={tabKeysConfig}
+          tabRenderer={eventKey => this._renderTabContent(eventKey)}
+          route={{base: this.context.t.route('players'), subs: 'playersTabs'}}
+          forceTabs
+        />
+      </div>
+    );
   }
 }
 

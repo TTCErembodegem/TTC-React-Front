@@ -1,7 +1,7 @@
 import ActionTypes from './ActionTypes';
 import http from '../utils/httpClient';
 import {showSnackbar} from './configActions';
-import {broadcastReload} from '../hub';
+import {broadcastReload} from './otherActions';
 
 import trans from '../locales';
 

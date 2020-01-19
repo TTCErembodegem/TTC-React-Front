@@ -32,7 +32,7 @@ function initialLoadCompleted() {
   };
 }
 
-function fetchData(url, loadedAction) {
+function fetchData(url: string, loadedAction: Function) {
   return dispatch => {
     http.get(url)
       .then(data => {
@@ -44,16 +44,16 @@ function fetchData(url, loadedAction) {
       });
   };
 }
-export function fetchPlayer(playerId) {
+export function fetchPlayer(playerId: number) {
   return fetchData(`/players/${playerId}`, playersLoaded);
 }
-export function fetchMatch(matchId) {
+export function fetchMatch(matchId: number) {
   return fetchData(`/matches/${matchId}`, simpleLoaded);
 }
-export function fetchTeam(teamId) {
+export function fetchTeam(teamId: number) {
   return fetchData(`/teams/${teamId}`, teamsLoaded);
 }
-export function fetchClub(clubId) {
+export function fetchClub(clubId: number) {
   return fetchData(`/clubs/${clubId}`, clubsLoaded); // TODO: not implemented on backend (required by SignalR once we update a club)
 }
 

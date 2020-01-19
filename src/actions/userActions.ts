@@ -3,7 +3,7 @@ import http from '../utils/httpClient';
 import storeUtil from '../storeUtil';
 import initialLoad from './initialLoad';
 import {showSnackbar} from './configActions';
-import {broadcastSnackbar} from '../hub';
+import {broadcastSnackbar} from './otherActions';
 
 import trans from '../locales';
 

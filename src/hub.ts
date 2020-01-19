@@ -5,8 +5,6 @@ import {showSnackbar} from './actions/configActions';
 import * as loader from './actions/initialLoad';
 import {matchUpdated} from './actions/matchActions';
 
-let hubReady = false;
-
 const serverMethods = ['broadcastSnackbar', 'broadcastReload'];
 setHubPrototype(serverMethods);
 
@@ -16,28 +14,30 @@ $.extend(signalR, signalR.hub.createHubProxies());
 
 $.connection.hub.logging = false;
 $.connection.hub.start().done(() => {
-  hubReady = true;
+  ttcHub.ready = true;
 });
 
 $.connection.hub.disconnected(() => {
-  hubReady = false;
+  ttcHub.ready = false;
 });
 $.connection.hub.reconnected(() => {
-  hubReady = true;
+  ttcHub.ready = true;
 });
 
-const {ttcHub} = $.connection;
 
-ttcHub.client.broadcastSnackbar = function (message) {
+export const ttcHub = {
+  ready: false,
+  hub: $.connection.ttcHub,
+};
+
+
+
+ttcHub.hub.client.broadcastSnackbar = (message: string): void => {
   store.dispatch(showSnackbar(message));
 };
-export function broadcastSnackbar(message) {
-  if (hubReady) {
-    ttcHub.server.broadcastSnackbar(message);
-  }
-}
 
-ttcHub.client.broadcastReload = function (dataType, dataId, updateType) {
+
+ttcHub.hub.client.broadcastReload = (dataType: 'player' | 'match' | 'team' | 'club', dataId: number, updateType?: 'score' | 'report') => {
   switch (dataType) {
     case 'player':
       store.dispatch(loader.fetchPlayer(dataId));
@@ -54,10 +54,6 @@ ttcHub.client.broadcastReload = function (dataType, dataId, updateType) {
     case 'club':
       store.dispatch(loader.fetchClub(dataId));
       break;
+    default:
   }
 };
-export function broadcastReload(dataType, dataId, updateType) {
-  if (hubReady) {
-    ttcHub.server.broadcastReload(dataType, dataId, updateType);
-  }
-}

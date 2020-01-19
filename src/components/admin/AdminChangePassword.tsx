@@ -4,18 +4,23 @@ import PropTypes, {connect} from '../PropTypes';
 import * as userActions from '../../actions/userActions';
 
 import PlayerAutoComplete from '../players/PlayerAutoComplete';
-import {MaterialButton} from '../controls/Button';
+import {MaterialButton} from '../controls/Buttons/MaterialButton';
 
-class AdminChangePassword extends Component {
+type AdminChangePasswordProps = {
+  adminSetNewPassword: Function;
+  onEnd: Function;
+}
+
+type AdminChangePasswordState = {
+  playerId: null | number;
+  newPassword: null | string;
+}
+
+class AdminChangePassword extends Component<AdminChangePasswordProps, AdminChangePasswordState> {
   static contextTypes = PropTypes.contextTypes;
 
-  static propTypes = {
-    adminSetNewPassword: PropTypes.func.isRequired,
-    onEnd: PropTypes.func.isRequired,
-  }
-
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       playerId: null,
       newPassword: null,
@@ -23,7 +28,7 @@ class AdminChangePassword extends Component {
   }
 
   render() {
-    const paperStyle = {
+    const paperStyle: React.CSSProperties = {
       marginLeft: 20,
       textAlign: 'center',
       display: 'inline-block',
