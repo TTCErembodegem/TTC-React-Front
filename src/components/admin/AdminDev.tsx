@@ -2,23 +2,25 @@ import React, {Component} from 'react';
 import {List, Map} from 'immutable';
 import _ from 'lodash';
 import PropTypes, {connect} from '../PropTypes';
-
 import {ButtonStack, Icon} from '../controls';
+import {IMatchCommon, IMatchOwn, ITeam, IClub, IMatchOther, IPlayer} from '../../models/model-interfaces';
+import {IUser} from '../../models/UserModel';
 
-class AdminDev extends React.Component {
-  static propTypes = {
-    matches: PropTypes.MatchModelList.isRequired,
-    teams: PropTypes.TeamModelList.isRequired,
-    clubs: PropTypes.ClubModelList.isRequired,
-    config: PropTypes.object.isRequired,
-    user: PropTypes.UserModel.isRequired,
-    readonlyMatches: PropTypes.MatchModelList.isRequired,
-    players: PropTypes.PlayerModelList.isRequired,
-    admin: PropTypes.object.isRequired,
-  }
 
-  constructor() {
-    super();
+type AdminDevProps = {
+  matches: (IMatchCommon & IMatchOwn)[];
+  teams: ITeam[];
+  clubs: IClub[];
+  config: any;
+  user: IUser;
+  readonlyMatches: (IMatchCommon & IMatchOther)[];
+  players: IPlayer[];
+  admin: any;
+}
+
+class AdminDev extends React.Component<AdminDevProps> {
+  constructor(props) {
+    super(props);
     this.state = {filter: 'matches'};
   }
 

@@ -2,7 +2,7 @@ import moment from 'moment';
 import storeUtil from '../storeUtil';
 import {TeamFrenoyModel} from './TeamFrenoyModel';
 import {ITeam, Competition, ITeamOpponent, ITeamPlayer, ITeamRanking, ITeamFrenoy, teamPlayerType, TeamPlayerType,
-  IPlayer, IMatch, ITeamPlayerInfo, IPlayerCompetition, IMatchPlayer} from './model-interfaces';
+  IPlayer, IMatch, ITeamPlayerInfo} from './model-interfaces';
 
 export default class TeamModel implements ITeam {
   competition: Competition;

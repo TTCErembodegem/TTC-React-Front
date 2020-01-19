@@ -9,29 +9,36 @@ import ImageDropzone from '../controls/image/ImageDropzone';
 import PlayerAutoComplete from '../players/PlayerAutoComplete';
 import PlayerImage from '../players/PlayerImage';
 import PlayerAvatar from '../players/PlayerAvatar';
+import {IUser} from '../../models/UserModel';
+
+type ProfilePhotoAvatarFormProps = {
+  admin?: boolean;
+  user: IUser;
+  uploadPlayer: Function,
+  borderRadius: number;
+}
+
+export const ProfilePhotoAvatarForm = ({...props}: ProfilePhotoAvatarFormProps) => (
+  <ProfilePhotoForm {...props} size={playerUtils.getPlayerAvatarImageSize()} type="player-avatar" borderRadius={19} />
+);
 
 
-export class ProfilePhotoAvatarForm extends Component {
-  render() {
-    return <ProfilePhotoForm {...this.props} size={playerUtils.getPlayerAvatarImageSize()} type="player-avatar" borderRadius={19} />;
-  }
+
+type ProfilePhotoFormProps = ProfilePhotoAvatarFormProps & {
+  size: {width: number, height: number},
+  type: 'player-photo' | 'player-avatar',
+}
+
+type ProfilePhotoFormState = {
+  fileName: null | string;
+  preview: null | string;
+  croppingRect: null | string;
+  playerId: null | number;
 }
 
 
-class ProfilePhotoForm extends Component {
+class ProfilePhotoForm extends Component<ProfilePhotoFormProps, ProfilePhotoFormState> {
   static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    admin: PropTypes.bool,
-    user: PropTypes.UserModel.isRequired,
-    size: PropTypes.shape({
-      width: PropTypes.number.isRequired,
-      height: PropTypes.number.isRequired,
-    }).isRequired,
-    type: PropTypes.oneOf(['player-photo', 'player-avatar']).isRequired,
-    uploadPlayer: PropTypes.func.isRequired,
-    borderRadius: PropTypes.number.isRequired,
-  }
 
   static defaultProps = {
     size: playerUtils.getPlayerImageSize(),
@@ -40,14 +47,22 @@ class ProfilePhotoForm extends Component {
     admin: false,
   }
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       fileName: null,
       preview: null,
       croppingRect: null,
       playerId: null,
     };
+  }
+
+  _updateImage(preview, croppingRect) {
+    this.setState({preview, croppingRect});
+  }
+
+  _saveImage() {
+    this.props.uploadPlayer(this.state.preview, this.state.playerId || this.props.user.playerId, this.props.type);
   }
 
   render() {
@@ -115,14 +130,6 @@ class ProfilePhotoForm extends Component {
         ) : null}
       </div>
     );
-  }
-
-  _updateImage(preview, croppingRect) {
-    this.setState({preview, croppingRect});
-  }
-
-  _saveImage() {
-    this.props.uploadPlayer(this.state.preview, this.state.playerId || this.props.user.playerId, this.props.type);
   }
 }
 

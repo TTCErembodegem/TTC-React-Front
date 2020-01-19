@@ -1,5 +1,4 @@
 /* eslint-disable react/prefer-stateless-function */
-import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 
 import Tooltip from 'react-bootstrap/lib/Tooltip';

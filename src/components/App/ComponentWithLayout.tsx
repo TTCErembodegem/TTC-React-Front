@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes, {connect, withTracker} from '../PropTypes';
+import {connect, withTracker} from '../PropTypes';
 import {FullScreenSpinner} from '../controls/controls/Spinner';
 import App from './App';
 

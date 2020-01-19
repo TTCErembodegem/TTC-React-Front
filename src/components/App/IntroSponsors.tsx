@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
-import PropTypes, {connect, withViewport, withContext} from '../PropTypes';
+import PropTypes, {withViewport, withContext} from '../PropTypes';
 import {Strike} from '../controls';
 import * as Sponsor from './Sponsors';
 
