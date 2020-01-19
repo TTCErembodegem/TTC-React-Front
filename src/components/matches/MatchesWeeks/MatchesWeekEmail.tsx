@@ -3,12 +3,12 @@ import Button from 'react-bootstrap/lib/Button';
 import {Modal} from 'react-bootstrap';
 import PropTypes, {connect} from '../../PropTypes';
 import * as adminActions from '../../../actions/adminActions';
-import {EmailButton} from '../../controls';
 import {WeekTitle} from './WeekTitle';
 import {WeekCalcer} from './WeekCalcer';
 import {Editor} from '../../controls/Editor';
 import {buildHtml} from './htmlBuilder';
 import {getOpponentMatches} from '../../../actions/matchActions';
+import { EmailButton } from '../../controls/Buttons/EmailButton';
 
 /** EmailButton that turns into a MatchWeekEmailComposeComponent (Modal) */
 class MatchesWeekEmailComponent extends Component {

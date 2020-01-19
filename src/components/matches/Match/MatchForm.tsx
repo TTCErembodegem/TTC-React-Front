@@ -4,7 +4,7 @@ import PropTypes, {connect} from '../../PropTypes';
 import * as matchActions from '../../../actions/matchActions';
 
 import MatchScore from '../MatchScore';
-import {Icon} from '../../controls/Icon';
+import {Icon} from '../../controls/Icons/Icon';
 
 const scoreOrDefault = match => match.score || {home: 0, out: 0};
 

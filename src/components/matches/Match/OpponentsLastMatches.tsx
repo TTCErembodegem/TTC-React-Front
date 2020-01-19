@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
-
 import Table from 'react-bootstrap/lib/Table';
 import IconButton from '@material-ui/core/IconButton';
 import PropTypes, {withViewport} from '../../PropTypes';
-import {Spinner} from '../../controls';
 import {OtherMatchPlayerResultsTableRow} from './OtherMatchPlayerResults';
 import {MatchPlayerRankings} from '../controls/MatchPlayerRankings';
+import { Spinner } from '../../controls/controls/Spinner';
 
 const AmountOfOpponentMatchesToShow = 5;
 

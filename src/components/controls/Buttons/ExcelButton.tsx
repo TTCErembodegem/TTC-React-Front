@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import cn from 'classnames';
 import PropTypes, {connect} from '../../PropTypes';
-import {Icon} from '../Icon';
+import {Icon} from '../Icons/Icon';
 
 class ExcelButtonComponent extends Component {
   static contextTypes = PropTypes.contextTypes;

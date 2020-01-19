@@ -3,19 +3,21 @@ import Immutable from 'immutable';
 import _ from 'lodash';
 import PropTypes, {connect, withViewport, withRouter} from '../PropTypes';
 import http from '../../utils/httpClient';
-
 import {TabbedContainer} from '../controls/TabbedContainer';
 import {editMatchPlayers} from '../../actions/matchActions';
-
 import {DivisionRanking} from './DivisionRanking';
 import {TeamOverview} from './TeamOverview';
 import {TeamHeader} from './controls/TeamHeader';
 import {TeamTabTitle} from './controls/TeamTabTitle';
-import {SaveButton, FrenoyButton, ExcelButton, ButtonStack, EditButton} from '../controls';
 import {SwitchBetweenFirstAndLastRoundButton, getFirstOrLastMatches, getFirstOrLast} from './SwitchBetweenFirstAndLastRoundButton';
 import PlayersCardGallery from '../players/PlayersCardGallery';
 import MatchesTable from '../matches/MatchesTable';
 import {TeamMatchesWeek} from './TeamMatchesWeek';
+import { ButtonStack } from '../controls/Buttons/ButtonStack';
+import { SaveButton } from '../controls/Buttons/SaveButton';
+import { EditButton } from '../controls/Buttons/EditButton';
+import { ExcelButton } from '../controls/Buttons/ExcelButton';
+import { FrenoyButton } from '../controls/Buttons/FrenoyButton';
 
 class Teams extends Component {
   static contextTypes = PropTypes.contextTypes;

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes, {connect, storeUtil} from '../../PropTypes';
-import {PlayerLink} from '../../controls';
+import { PlayerLink } from '../../players/controls/PlayerLink';
 
 export default class Achievements extends Component {
   static contextTypes = PropTypes.contextTypes;

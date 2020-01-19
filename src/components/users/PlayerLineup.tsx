@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import _ from 'lodash';
 import moment from 'moment';
 import cn from 'classnames';
-
-
 import Table from 'react-bootstrap/lib/Table';
 import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
 import Button from 'react-bootstrap/lib/Button';
@@ -12,7 +10,7 @@ import FormControl from 'react-bootstrap/lib/FormControl';
 import {getPlayingStatusClass} from '../../models/PlayerModel';
 import {selectPlayer} from '../../actions/matchActions';
 import PropTypes, {connect} from '../PropTypes';
-import {CommentButton} from '../controls';
+import {CommentButton} from '../controls/Buttons/CommentButton';
 import MatchVs from '../matches/Match/MatchVs';
 import {CannotEditMatchIcon} from '../matches/controls/CannotEditMatchIcon';
 import {SwitchBetweenFirstAndLastRoundButton, getFirstOrLastMatches, getFirstOrLast} from '../teams/SwitchBetweenFirstAndLastRoundButton';

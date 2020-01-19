@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from '../../PropTypes';
-import {Email, Telephone, PlayerAddress} from '../../controls';
+import { Email } from '../../controls/controls/Email';
+import { Telephone } from '../../controls/controls/Telephone';
+import { PlayerAddress } from './PlayerAddress';
 
 export class PlayerContact extends Component {
   // static contextTypes = PropTypes.contextTypes;

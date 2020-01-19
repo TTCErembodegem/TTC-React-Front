@@ -3,11 +3,9 @@ import {Link} from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import PropTypes, {connect} from '../PropTypes';
-
 import * as loginActions from '../../actions/userActions';
 import PlayerAutoComplete from '../players/PlayerAutoComplete';
-
-import {MaterialButton} from '../controls/Button';
+import {MaterialButton} from '../controls/Buttons/MaterialButton';
 
 export const paperStyle = {
   width: 290,

@@ -1,22 +1,15 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
-
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import {withStyles as withMaterialStyles} from '@material-ui/core/styles';
-import Switch from '@material-ui/core/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
 import Navigation from './HeaderNavigation';
-import {Icon} from '../../controls/Icon';
-import PropTypes, {withStyles, withViewport} from '../../PropTypes';
+import {Icon} from '../../controls/Icons/Icon';
+import PropTypes, {withViewport} from '../../PropTypes';
 
 require('./Header.css');
 
@@ -33,7 +26,7 @@ const styles = {
   },
 };
 
-const HeaderButton = ({label, href}) => (
+const HeaderButton = ({label, href}: {label: string, href: string}) => (
   <Link to={href}>
     <Button style={{color: 'white'}}>
       {label}

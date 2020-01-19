@@ -3,10 +3,13 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import PropTypes, {connect, storeUtil} from '../../PropTypes';
 import * as matchActions from '../../../actions/matchActions';
-
-import {Editor, TimeAgo, Icon, EditIcon, MaterialButton} from '../../controls';
 import PlayerAutoComplete from '../../players/PlayerAutoComplete';
 import ImageDropzone from '../../controls/image/ImageDropzone';
+import { Editor } from '../../controls/Editor';
+import { MaterialButton } from '../../controls/Buttons/MaterialButton';
+import { Icon } from '../../controls/Icons/Icon';
+import { EditIcon } from '../../controls/Icons/EditIcon';
+import { TimeAgo } from '../../controls/controls/TimeAgo';
 
 function getEmptyComment(matchId, playerId) {
   return {

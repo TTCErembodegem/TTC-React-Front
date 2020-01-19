@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from '../../PropTypes';
-import {Icon, EditIcon} from '../../controls';
+import { EditIcon } from '../../controls/Icons/EditIcon';
+import { Icon } from '../../controls/Icons/Icon';
 
 export const OpenMatchForEditButton = ({onClick, match, t}) => (
   <button

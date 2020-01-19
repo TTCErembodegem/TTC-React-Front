@@ -5,7 +5,7 @@ import PropTypes, {connect} from '../../PropTypes';
 
 import {PlayerFrenoyLink} from '../PlayerCard';
 import {PlayerPlayingStyleForm} from '../PlayerPlayingStyle';
-import {PlayerLink} from '../../controls';
+import {PlayerLink} from '../controls/PlayerLink';
 
 class PlayersSportaComponent extends Component {
   static contextTypes = PropTypes.contextTypes;

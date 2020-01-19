@@ -3,10 +3,8 @@ import Table from 'react-bootstrap/lib/Table';
 import TextField from '@material-ui/core/TextField';
 import PropTypes, {connect, withViewport} from '../PropTypes';
 import {updateClub} from '../../actions/clubActions';
-
-
-import {EditButton} from '../controls';
 import AdminClubForm from './AdminClubForm';
+import { EditButton } from '../controls/Buttons/EditButton';
 
 class AdminClubs extends Component {
   static propTypes = {

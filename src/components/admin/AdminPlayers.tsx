@@ -5,11 +5,12 @@ import Table from 'react-bootstrap/lib/Table';
 import TextField from '@material-ui/core/TextField';
 import {updatePlayer, frenoySync, deletePlayer} from '../../actions/playerActions';
 import PropTypes, {connect, withViewport} from '../PropTypes';
-
-import {Icon, ButtonStack, EditButton} from '../controls';
 import AdminPlayerForm from './AdminPlayerForm';
 import AdminChangePassword from './AdminChangePassword';
 import AdminBoardMembers from './AdminBoardMembers';
+import { ButtonStack } from '../controls/Buttons/ButtonStack';
+import { EditButton } from '../controls/Buttons/EditButton';
+import { Icon } from '../controls/Icons/Icon';
 
 const keepTrackOfPlayerKeys = false;
 

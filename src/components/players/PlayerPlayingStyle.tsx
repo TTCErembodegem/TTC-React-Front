@@ -6,9 +6,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import TextField from '@material-ui/core/TextField';
 import * as playerActions from '../../actions/playerActions';
 import PropTypes, {connect, withContext, storeUtil} from '../PropTypes';
-import {MaterialButton} from '../controls/Button';
-
-import {EditIcon} from '../controls';
+import {MaterialButton} from '../controls/Buttons/MaterialButton';
+import {EditIcon} from '../controls/Icons/EditIcon';
 import PlayerAutoComplete from './PlayerAutoComplete';
 import PlayerStyleAutocomplete from './PlayerStyleAutocomplete';
 import PlayerAvatar from './PlayerAvatar';

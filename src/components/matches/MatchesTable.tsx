@@ -6,14 +6,18 @@ import PropTypes, {connect, withViewport, storeUtil} from '../PropTypes';
 import {getPlayingStatusClass} from '../../models/PlayerModel';
 
 import {editMatchPlayers} from '../../actions/matchActions';
-
-import {ThrillerIcon, FrenoyWeekLink} from '../controls';
 import MatchVs from './Match/MatchVs';
 import PlayerAutoComplete from '../players/PlayerAutoComplete';
 import {TeamCaptainIcon} from '../players/PlayerCard';
 import {PlayerCompetitionBadge, PlayerCompetitionButton} from '../players/PlayerBadges';
 import OwnPlayer from './Match/OwnPlayer';
-import {CannotEditMatchIcon, SaveMatchButtons, ViewMatchDetailsButton, MatchDate, OpenMatchForEditButton} from './controls/index';
+import { ThrillerIcon } from '../controls/Icons/ThrillerIcon';
+import { MatchDate } from './controls/MatchDate';
+import { FrenoyWeekLink } from '../controls/Buttons/FrenoyButton';
+import { ViewMatchDetailsButton } from './controls/ViewMatchDetailsButton';
+import { CannotEditMatchIcon } from './controls/CannotEditMatchIcon';
+import { OpenMatchForEditButton } from './controls/OpenMatchForEditButton';
+import { SaveMatchButtons } from './controls/SaveMatchButtons';
 
 function isPickedForMatch(status) {
   return status === 'Play' || status === 'Captain' || status === 'Major';
@@ -265,7 +269,7 @@ class MatchesTable extends Component {
 
   render() {
     const {t} = this.context;
-    const matchRows = [];
+    const matchRows: any[] = [];
 
     const viewWidth = this.props.viewport.width;
     const showDate = viewWidth > 350 || this.props.matches.some(match => !match.isSyncedWithFrenoy);

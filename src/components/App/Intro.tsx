@@ -5,8 +5,7 @@ import Col from 'react-bootstrap/lib/Col';
 import Typist from 'react-typist';
 import PropTypes, {connect, withViewport, withContext} from '../PropTypes';
 import ClubLocationInstructions from '../other/ClubLocationInstructions';
-
-import {Strike} from '../controls';
+import {Strike} from '../controls/controls/Strike';
 import {SmallMatchCardHeader} from '../matches/Match/MatchCardHeader';
 
 import EndOfSeason from '../other/EndOfSeason/EndOfSeason';

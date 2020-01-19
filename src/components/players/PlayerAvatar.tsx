@@ -3,7 +3,7 @@ import Avatar from '@material-ui/core/Avatar';
 import PropTypes, {withTooltip} from '../PropTypes';
 
 import {playerUtils} from '../../models/PlayerModel';
-import {PlayerLink} from '../controls';
+import {PlayerLink} from './controls/PlayerLink';
 
 class PlayerAvatar extends Component {
   static propTypes = {

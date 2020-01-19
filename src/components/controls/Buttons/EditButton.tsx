@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from '../../PropTypes';
-import {EditIcon} from '../Icon';
+import {EditIcon} from '../Icons/EditIcon';
 
 export const EditButton = ({onClick, title, style, fa}) => (
   <button className="btn btn-default" onClick={onClick} title={title} style={style}>

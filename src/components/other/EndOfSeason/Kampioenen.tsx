@@ -1,11 +1,16 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {Link} from 'react-router-dom';
-import PropTypes, {connect, storeUtil, withStyles} from '../../PropTypes';
-import {TrophyIcon} from '../../controls';
+import {TrophyIcon} from '../../controls/Icons/TrophyIcon';
 import {TeamRankingBadges} from '../../teams/controls/TeamRankingBadges';
 import {TeamPlayerAvatars} from '../../teams/controls/TeamPlayerAvatars';
+import { ITeam, Translator } from '../../../models/model-interfaces';
 
-export const Kampioenen = ({topTeams, t}) => {
+type KampioenenProps = {
+  topTeams: ITeam[];
+  t: Translator;
+}
+
+export const Kampioenen = ({topTeams, t}: KampioenenProps) => {
   if (!topTeams.length) {
     return null;
   }

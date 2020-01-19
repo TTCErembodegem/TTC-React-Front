@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from '../../PropTypes';
-import {Icon} from '../Icon';
+import {Icon} from '../Icons/Icon';
 
 export const SaveButton = ({onClick, title, style}) => (
   <button className="btn btn-default" onClick={onClick} title={title} style={style}>

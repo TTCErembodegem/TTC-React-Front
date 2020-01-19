@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import cn from 'classnames';
 import PropTypes, {connect, storeUtil} from '../../PropTypes';
-import {PlayerLink} from '../../controls';
+import {PlayerLink} from '../../players/controls/PlayerLink';
 
 export default class NextSeasonChanges extends Component {
   static contextTypes = PropTypes.contextTypes;

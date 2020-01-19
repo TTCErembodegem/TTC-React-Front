@@ -3,9 +3,10 @@ import cn from 'classnames';
 import Table from 'react-bootstrap/lib/Table';
 import PropTypes, {connect, withViewport, storeUtil} from '../../PropTypes';
 import {matchOutcome} from '../../../models/MatchModel';
-
-import {TrophyIcon, FrenoyLink, PlayerLink} from '../../controls';
 import {OpponentPlayerLabel} from './OpponentPlayer';
+import { TrophyIcon } from '../../controls/Icons/TrophyIcon';
+import { PlayerLink } from '../../players/controls/PlayerLink';
+import { FrenoyLink } from '../../controls/Buttons/FrenoyButton';
 
 class IndividualMatches extends Component {
   static contextTypes = PropTypes.contextTypes;

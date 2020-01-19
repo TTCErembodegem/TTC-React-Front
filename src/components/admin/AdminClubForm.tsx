@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
-import {MaterialButton} from '../controls/Button';
+import {MaterialButton} from '../controls/Buttons/MaterialButton';
 import PropTypes from '../PropTypes';
 
 export default class AdminClubForm extends Component {

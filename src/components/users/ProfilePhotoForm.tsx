@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes, {connect, withContext, storeUtil} from '../PropTypes';
 import {uploadPlayer} from '../../actions/userActions';
-
-import {MaterialButton} from '../controls/Button';
+import {MaterialButton} from '../controls/Buttons/MaterialButton';
 import ImageEditor from '../controls/image/ImageEditor';
 import {playerUtils} from '../../models/PlayerModel';
 import ImageDropzone from '../controls/image/ImageDropzone';

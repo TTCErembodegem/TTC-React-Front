@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes, {connect, storeUtil, withRouter} from '../PropTypes';
-
-import {BackIcon} from '../controls';
+import {BackIcon} from '../controls/Icons/BackIcon';
 import {getOpponentMatches} from '../../actions/matchActions';
 import {OpponentMatches} from '../matches/Match/OpponentMatches';
 import OpponentsFormation from '../matches/Match/OpponentsFormation';

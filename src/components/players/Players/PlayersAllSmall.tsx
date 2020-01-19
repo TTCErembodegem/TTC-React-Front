@@ -2,7 +2,9 @@ import React from 'react';
 import Table from 'react-bootstrap/lib/Table';
 import cn from 'classnames';
 import PropTypes from '../../PropTypes';
-import {Telephone, Email, PlayerLink} from '../../controls';
+import { PlayerLink } from '../controls/PlayerLink';
+import { Email } from '../../controls/controls/Email';
+import { Telephone } from '../../controls/controls/Telephone';
 
 export const PlayersAllSmall = ({players, t}) => (
   <Table condensed hover className="players row-by-two">

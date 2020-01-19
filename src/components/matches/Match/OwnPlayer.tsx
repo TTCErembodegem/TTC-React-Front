@@ -4,7 +4,8 @@ import PropTypes, {storeUtil} from '../../PropTypes';
 import {matchOutcome} from '../../../models/MatchModel';
 import rankingSorter from '../../../models/utils/rankingSorter';
 import {PlayerCompetitionBadge} from '../../players/PlayerBadges';
-import {ThumbsUpIcon, ThumbsGreatIcon, PlayerLink} from '../../controls';
+import { PlayerLink } from '../../players/controls/PlayerLink';
+import { ThumbsUpIcon, ThumbsGreatIcon } from '../../controls/Icons/ThumbsIcons';
 
 const OwnPlayer = ({match, ply, playerAsBadge = false}) => {
   const result = getRankingResults(match, ply);

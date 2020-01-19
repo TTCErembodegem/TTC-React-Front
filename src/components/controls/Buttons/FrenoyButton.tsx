@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import cn from 'classnames';
 import PropTypes from '../../PropTypes';
-import {Icon} from '../Icon';
+import {Icon} from '../Icons/Icon';
 import {createFrenoyLinkByUniqueId} from '../../../models/PlayerModel';
 
 export const FrenoyPlayerDetailsIcon = () => <Icon fa="fa fa-search" translate tooltip="teamCalendar.frenoyPlayerResults" />;

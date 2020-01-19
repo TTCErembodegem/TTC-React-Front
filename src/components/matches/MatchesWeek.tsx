@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes, {connect, withRouter} from '../PropTypes';
-
-import {ButtonStack, EditButton} from '../controls';
 import MatchesTable from './MatchesTable';
 import {MatchesWeekEmail} from './MatchesWeeks/MatchesWeekEmail';
 import {WeekTitle} from './MatchesWeeks/WeekTitle';
 import {WeekCalcer} from './MatchesWeeks/WeekCalcer';
+import { ButtonStack } from '../controls/Buttons/ButtonStack';
+import { EditButton } from '../controls/Buttons/EditButton';
 
 
 

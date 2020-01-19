@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Slider from '@material-ui/lab/Slider';
 import AvatarEditor from 'react-avatar-editor';
-import {MaterialButton} from '../Button';
+import {MaterialButton} from '../Buttons/MaterialButton';
 
 // TODO: Check to replace with: http://blog.mmcfarland.net/react-darkroom/
 

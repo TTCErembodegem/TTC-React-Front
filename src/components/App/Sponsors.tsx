@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Paper from '@material-ui/core/Paper';
 import PropTypes from '../PropTypes';
-import {Location} from '../controls';
+import {Location} from '../controls/controls/Location';
 
 const topSponsorPaperStyle = {
   height: 110,

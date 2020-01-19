@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 import TextField from '@material-ui/core/TextField';
 import PropTypes, {connect} from '../PropTypes';
 import * as userActions from '../../actions/userActions';
-
-import {MaterialButton} from '../controls/Button';
+import {MaterialButton} from '../controls/Buttons/MaterialButton';
 
 class ChangePassword extends Component {
   static contextTypes = PropTypes.contextTypes;

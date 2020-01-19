@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import moment from 'moment';
 import PropTypes, {connect, withContext} from '../PropTypes';
 
-import {Strike} from '../controls';
+import {Strike} from '../controls/controls/Strike';
 import {SmallMatchCardHeader} from './Match/MatchCardHeader';
 
 

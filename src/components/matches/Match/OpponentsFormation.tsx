@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import Table from 'react-bootstrap/lib/Table';
 import PropTypes, {withViewport, storeUtil} from '../../PropTypes';
-
-import {ThumbsDownIcon, Spinner, ThumbsUpIcon} from '../../controls';
 import {OpponentPlayerLabel} from './OpponentPlayer';
+import { Spinner } from '../../controls/controls/Spinner';
+import { ThumbsUpIcon, ThumbsDownIcon } from '../../controls/Icons/ThumbsIcons';
 
 class OpponentsFormation extends Component {
   static contextTypes = PropTypes.contextTypes;

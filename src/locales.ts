@@ -1,8 +1,9 @@
 import LocalesUtils from './utils/locales-nl';
+import {Translator} from './models/model-interfaces';
 
 const {trans, routes, timeAgo} = LocalesUtils;
 
-const translate = (key: string, params: any = {}): string => {
+const translate: Translator = (key: string, params: any = {}): string => {
   let str;
   if (key.indexOf('.') === -1) {
     str = trans[key];

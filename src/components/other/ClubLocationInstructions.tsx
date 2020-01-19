@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import PropTypes, {connect} from '../PropTypes';
-// import {OwnEmail, GoogleMap} from '../controls';
 
 type ClubLocationInstructionsProps = {
   params: any;

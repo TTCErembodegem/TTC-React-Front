@@ -2,9 +2,10 @@ import React, {Component} from 'react';
 import {List, Map} from 'immutable';
 import _ from 'lodash';
 import PropTypes, {connect} from '../PropTypes';
-import {ButtonStack, Icon} from '../controls';
 import {IMatchCommon, IMatchOwn, ITeam, IClub, IMatchOther, IPlayer} from '../../models/model-interfaces';
 import {IUser} from '../../models/UserModel';
+import { ButtonStack } from '../controls/Buttons/ButtonStack';
+import { Icon } from '../controls/Icons/Icon';
 
 
 type AdminDevProps = {

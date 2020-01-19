@@ -1,11 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes, {connect, keyMirror, withRouter} from '../PropTypes';
-
 import * as loginActions from '../../actions/userActions';
-
-import {MaterialButton} from '../controls/Button';
+import {MaterialButton} from '../controls/Buttons/MaterialButton';
 import {TabbedContainer} from '../controls/TabbedContainer';
-
 import ChangePassword from './ChangePassword';
 import ChangePlayerDetails from './ChangePlayerDetails';
 import ProfilePhotoForm, {ProfilePhotoAvatarForm} from './ProfilePhotoForm';

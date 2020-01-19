@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from '../PropTypes';
 import {getPlayingStatusClass} from '../../models/PlayerModel';
-
-import {Icon, CommentIcon, PlayerLink} from '../controls';
+import { PlayerLink } from './controls/PlayerLink';
+import { CommentIcon } from '../controls/Icons/CommentIcon';
+import { Icon } from '../controls/Icons/Icon';
 
 export class PlayerCompetitionBadge extends Component {
   static propTypes = {

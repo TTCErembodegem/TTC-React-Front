@@ -6,7 +6,7 @@ import PropTypes, {connect, storeUtil} from '../PropTypes';
 import * as playerActions from '../../actions/playerActions';
 
 import PlayerAutoComplete from '../players/PlayerAutoComplete';
-import {MaterialButton} from '../controls/Button';
+import {MaterialButton} from '../controls/Buttons/MaterialButton';
 
 // ATTN: This corresponds to an enum in the backend: ClubManagerType
 const clubManagerTypes = [

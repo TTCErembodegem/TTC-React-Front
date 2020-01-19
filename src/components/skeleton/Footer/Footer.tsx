@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import PropTypes, {connect} from '../../PropTypes';
-import withStyles from '../../../utils/decorators/withStyles';
-import {Icon, OwnEmail} from '../../controls';
 import {CookieNotice} from './CookieNotice';
 
 import './Footer.css';
+import { Icon } from '../../controls/Icons/Icon';
+import { OwnEmail } from '../../controls/controls/Email';
 
 class Footer extends Component {
   static contextTypes = PropTypes.contextTypes;

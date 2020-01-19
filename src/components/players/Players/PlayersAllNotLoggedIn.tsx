@@ -3,7 +3,7 @@ import Table from 'react-bootstrap/lib/Table';
 import PropTypes from '../../PropTypes';
 import {PlayerAllCompetitions} from '../PlayerCard';
 import {PlayerPlayingStyle} from '../PlayerPlayingStyle';
-import {PlayerLink} from '../../controls';
+import {PlayerLink} from '../controls/PlayerLink';
 
 export const PlayersAllNotLoggedIn = ({players, t}) => (
   <Table condensed hover className="players">

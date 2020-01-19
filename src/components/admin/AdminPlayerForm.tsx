@@ -4,12 +4,10 @@ import Paper from '@material-ui/core/Paper';
 import Panel from 'react-bootstrap/lib/Panel';
 import MenuItem from '@material-ui/core/MenuItem';
 import PropTypes, {connect} from '../PropTypes';
-
 import * as playerActions from '../../actions/playerActions';
 import {userRoles} from '../../models/UserModel';
 import PlayerModel from '../../models/PlayerModel';
-
-import {MaterialButton} from '../controls/Button';
+import {MaterialButton} from '../controls/Buttons/MaterialButton';
 import PlayerStyleAutocomplete from '../players/PlayerStyleAutocomplete';
 
 class AdminPlayerForm extends Component {

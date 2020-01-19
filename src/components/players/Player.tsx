@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes, {connect, withViewport} from '../PropTypes';
-
-import {BackIcon} from '../controls';
+import {BackIcon} from '../controls/Icons/BackIcon';
 import PlayerCard from './PlayerCard';
 import {PlayerCompetition} from './Player/PlayerCompetition';
 

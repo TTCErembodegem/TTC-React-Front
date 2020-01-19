@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes, {connect} from '../PropTypes';
-// import {PlayerCompetitionBadge} from '../players/PlayerBadges';
-import {ButtonStack} from '../controls';
+import { ButtonStack } from '../controls/Buttons/ButtonStack';
 
 class AdminEmailComponent extends Component {
   static contextTypes = PropTypes.contextTypes;

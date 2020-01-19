@@ -4,7 +4,9 @@ import cn from 'classnames';
 import PropTypes from '../../PropTypes';
 import {PlayerAllCompetitions} from '../PlayerCard';
 import {PlayerPlayingStyle} from '../PlayerPlayingStyle';
-import {Telephone, Email, PlayerLink} from '../../controls';
+import { PlayerLink } from '../controls/PlayerLink';
+import { Email } from '../../controls/controls/Email';
+import { Telephone } from '../../controls/controls/Telephone';
 
 export const PlayersAllBig = ({players, t}) => (
   <Table condensed hover className="players">

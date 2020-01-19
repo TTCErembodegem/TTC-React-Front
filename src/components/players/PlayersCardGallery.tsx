@@ -4,7 +4,7 @@ import CardContent from '@material-ui/core/CardContent';
 import PropTypes, {withViewport} from '../PropTypes';
 import PlayerImage from './PlayerImage';
 import PlayerCard from './PlayerCard';
-import {PlayerLink} from '../controls';
+import {PlayerLink} from './controls/PlayerLink';
 
 class PlayersCardGallery extends Component {
   static contextTypes = PropTypes.contextTypes;

@@ -5,8 +5,9 @@ import PropTypes, {browseTo, withRouter} from '../../PropTypes';
 
 import MatchForm from './MatchForm';
 import MatchScore from '../MatchScore';
-import {ThrillerBadge, ThrillerIcon, CommentIcon} from '../../controls/Icon';
 import {TheirTeamTitle} from './TheirTeamTitle';
+import {ThrillerBadge, ThrillerIcon} from '../../controls/Icons/ThrillerIcon';
+import {CommentIcon} from '../../controls/Icons/CommentIcon';
 
 const thrillerIconWith = 25;
 const ThrillerIconSpan = <span key="1" style={{width: thrillerIconWith, float: 'left'}}>&nbsp;</span>;

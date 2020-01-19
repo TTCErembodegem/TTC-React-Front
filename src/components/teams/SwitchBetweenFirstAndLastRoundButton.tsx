@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import PropTypes from '../PropTypes';
-import {ButtonStack} from '../controls';
+import {ButtonStack} from '../controls/Buttons/ButtonStack';
 
 export const SwitchBetweenFirstAndLastRoundButton = ({t, setState, matchesFilter}) => (
   <div style={{textAlign: 'center'}}>

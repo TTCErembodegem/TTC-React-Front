@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from '../../PropTypes';
-import {FrenoyLink} from '../../controls';
+import { FrenoyLink } from '../../controls/Buttons/FrenoyButton';
 
 export class OpponentPlayerLabel extends Component {
   static propTypes = {

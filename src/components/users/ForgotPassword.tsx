@@ -3,12 +3,10 @@ import {Route} from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import PropTypes, {connect} from '../PropTypes';
-
 import * as loginActions from '../../actions/userActions';
 import {paperStyle} from './Login';
 import PlayerAutoComplete from '../players/PlayerAutoComplete';
-
-import {MaterialButton} from '../controls/Button';
+import {MaterialButton} from '../controls/Buttons/MaterialButton';
 
 
 class ForgotPassword extends Component {

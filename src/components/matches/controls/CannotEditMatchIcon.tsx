@@ -1,5 +1,6 @@
 import React from 'react';
-import {Icon, EditIcon} from '../../controls';
+import { EditIcon } from '../../controls/Icons/EditIcon';
+import { Icon } from '../../controls/Icons/Icon';
 
 export const CannotEditMatchIcon = () => (
   <span className="fa-stack fa-sm pull-right" style={{marginRight: 8, marginTop: 5}}>

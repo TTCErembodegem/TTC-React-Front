@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import Table from 'react-bootstrap/lib/Table';
 import PropTypes from '../../PropTypes';
-import {FrenoyWeekLink, PlayerLink} from '../../controls';
-import {ExcelButton} from '../../controls/Button';
 import http from '../../../utils/httpClient';
+import { ExcelButton } from '../../controls/Buttons/ExcelButton';
+import { FrenoyWeekLink } from '../../controls/Buttons/FrenoyButton';
+import { PlayerLink } from '../../players/controls/PlayerLink';
 
 export default class Scoresheet extends Component {
   static propTypes = {

@@ -14,6 +14,8 @@ export type TabbedContainerEventKeyRouteProps = {
   }
 }
 
+export type Translator = (key: string, params?: any) => string;
+
 /* ****************************************************
 *                       MATCHES
 **************************************************** */
@@ -194,6 +196,8 @@ export interface ITeam {
 
   getCaptainPlayerIds: () => number[];
   isCaptain: (player: IPlayer) => boolean;
+  renderOwnTeamTitle(): string;
+  getDivisionDescription(): string;
 }
 
 export interface ITeamOpponent {

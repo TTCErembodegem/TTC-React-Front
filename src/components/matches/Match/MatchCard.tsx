@@ -1,11 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes, {connect, withViewport, keyMirror, storeUtil} from '../../PropTypes';
-
 import * as matchActions from '../../../actions/matchActions';
 import {setSetting} from '../../../actions/configActions';
-
-import {TabbedContainer, CommentIcon, EditIcon} from '../../controls';
-
 import {SmallMatchCardHeader, BigMatchCardHeader} from './MatchCardHeader';
 import MatchPlayerResults from './MatchPlayerResults';
 import IndividualMatches from './IndividualMatches';
@@ -18,6 +14,9 @@ import Scoresheet from './Scoresheet';
 import PlayersImageGallery from '../../players/PlayersImageGallery';
 import {MatchOtherRoundButton} from '../controls/ViewMatchDetailsButton';
 import {MatchCardAdmin} from './MatchCardAdmin';
+import { TabbedContainer } from '../../controls/TabbedContainer';
+import { CommentIcon } from '../../controls/Icons/CommentIcon';
+import { EditIcon } from '../../controls/Icons/EditIcon';
 
 const tabEventKeys = keyMirror({
   players: '',

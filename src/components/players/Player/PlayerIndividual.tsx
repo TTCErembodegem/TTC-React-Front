@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import Table from 'react-bootstrap/lib/Table';
 import PropTypes, {connect, withViewport} from '../../PropTypes';
-import {WonLostLabel, PercentageLabel} from '../../controls';
 import {getPlayerStats} from '../../../models/TeamModel';
+import { WonLostLabel } from '../../controls/controls/WonLostLabel';
+import { PercentageLabel } from '../../controls/controls/PercentageLabel';
 
 
 class PlayerIndividualComponent extends Component {
