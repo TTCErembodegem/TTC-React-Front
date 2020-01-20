@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import Panel from 'react-bootstrap/lib/Panel';
 import PropTypes, {connect, storeUtil} from '../PropTypes';
 import PlayerImage from '../players/PlayerImage';
-import { Email } from '../controls/controls/Email';
-import { Telephone } from '../controls/controls/Telephone';
-import { PlayerAddress } from '../players/controls/PlayerAddress';
+import {Email} from '../controls/controls/Email';
+import {Telephone} from '../controls/controls/Telephone';
+import {PlayerAddress} from '../players/controls/PlayerAddress';
 
 
 class Administration extends Component {

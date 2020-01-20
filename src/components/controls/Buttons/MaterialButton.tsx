@@ -1,18 +1,21 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import PropTypes from '../../PropTypes';
 
 // This transforms the material-ui Button from v0.x to the new API
 
-export class MaterialButton extends React.Component {
-  static propTypes = {
-    label: PropTypes.string.isRequired,
-    primary: PropTypes.bool,
-    secondary: PropTypes.bool,
-    color: PropTypes.string,
-  }
+type MaterialButtonProps = {
+  label: string;
+  primary?: boolean;
+  secondary?: boolean;
+  color?: string;
+  onClick: Function;
 
-  getColor(primary, secondary, color) {
+  style?: React.CSSProperties;
+  variant: string; // TODO: is primary/secondary/color actually doing something?
+}
+
+export class MaterialButton extends React.Component<MaterialButtonProps> {
+  getColor(primary: boolean, secondary: boolean, color: string): string {
     if (primary) {
       return 'primary';
     }

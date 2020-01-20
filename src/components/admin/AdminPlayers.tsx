@@ -8,9 +8,9 @@ import PropTypes, {connect, withViewport} from '../PropTypes';
 import AdminPlayerForm from './AdminPlayerForm';
 import AdminChangePassword from './AdminChangePassword';
 import AdminBoardMembers from './AdminBoardMembers';
-import { ButtonStack } from '../controls/Buttons/ButtonStack';
-import { EditButton } from '../controls/Buttons/EditButton';
-import { Icon } from '../controls/Icons/Icon';
+import {ButtonStack} from '../controls/Buttons/ButtonStack';
+import {EditButton} from '../controls/Buttons/EditButton';
+import {Icon} from '../controls/Icons/Icon';
 
 const keepTrackOfPlayerKeys = false;
 

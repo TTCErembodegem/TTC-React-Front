@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import {TrophyIcon} from '../../controls/Icons/TrophyIcon';
 import {TeamRankingBadges} from '../../teams/controls/TeamRankingBadges';
 import {TeamPlayerAvatars} from '../../teams/controls/TeamPlayerAvatars';
-import { ITeam, Translator } from '../../../models/model-interfaces';
+import {ITeam, Translator} from '../../../models/model-interfaces';
 
 type KampioenenProps = {
   topTeams: ITeam[];

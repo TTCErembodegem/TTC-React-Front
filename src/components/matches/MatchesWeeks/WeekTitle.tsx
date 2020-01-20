@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes, {withViewport} from '../../PropTypes';
 import {WeekCalcer} from './WeekCalcer';
-import { Icon } from '../../controls/Icons/Icon';
+import {Icon} from '../../controls/Icons/Icon';
 
 class WeekTitleComponent extends Component {
   static contextTypes = PropTypes.contextTypes;

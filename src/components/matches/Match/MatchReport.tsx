@@ -5,11 +5,11 @@ import PropTypes, {connect, storeUtil} from '../../PropTypes';
 import * as matchActions from '../../../actions/matchActions';
 import PlayerAutoComplete from '../../players/PlayerAutoComplete';
 import ImageDropzone from '../../controls/image/ImageDropzone';
-import { Editor } from '../../controls/Editor';
-import { MaterialButton } from '../../controls/Buttons/MaterialButton';
-import { Icon } from '../../controls/Icons/Icon';
-import { EditIcon } from '../../controls/Icons/EditIcon';
-import { TimeAgo } from '../../controls/controls/TimeAgo';
+import {Editor} from '../../controls/Editor';
+import {MaterialButton} from '../../controls/Buttons/MaterialButton';
+import {Icon} from '../../controls/Icons/Icon';
+import {EditIcon} from '../../controls/Icons/EditIcon';
+import {TimeAgo} from '../../controls/controls/TimeAgo';
 
 function getEmptyComment(matchId, playerId) {
   return {

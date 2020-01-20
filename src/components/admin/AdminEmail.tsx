@@ -1,15 +1,20 @@
 import React, {Component} from 'react';
 import PropTypes, {connect} from '../PropTypes';
-import { ButtonStack } from '../controls/Buttons/ButtonStack';
+import {ButtonStack} from '../controls/Buttons/ButtonStack';
+import {IPlayer, ITeam} from '../../models/model-interfaces';
 
-class AdminEmailComponent extends Component {
+type AdminEmailComponentProps = {
+  players: IPlayer[];
+  inactivePlayers: IPlayer[];
+  teams: ITeam[];
+}
+
+type AdminEmailComponentState = {
+  filter: 'all' | 'inactive' | 'comp' | 'vttl' | 'sporta';
+}
+
+class AdminEmailComponent extends Component<AdminEmailComponentProps, AdminEmailComponentState> {
   static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    players: PropTypes.PlayerModelList.isRequired,
-    inactivePlayers: PropTypes.PlayerModelList.isRequired,
-    teams: PropTypes.TeamModelList.isRequired,
-  }
 
   constructor(props) {
     super(props);
@@ -31,8 +36,9 @@ class AdminEmailComponent extends Component {
         return players.filter(p => p.vttl);
       case 'sporta':
         return players.filter(p => p.sporta);
+      default:
+        return players;
     }
-    return players;
   }
 
   render() {
@@ -101,7 +107,7 @@ class AdminEmailComponent extends Component {
   }
 }
 
-const PlayerEmail = ({player}) => (
+const PlayerEmail = ({player}: {player: IPlayer}) => (
   <span style={{whiteSpace: 'normal', marginRight: 7, paddingTop: 15}}>
     <span className="label label-as-badge label-success" key={player.id} style={{fontSize: 12, fontWeight: 'normal'}}>
       {player.name}

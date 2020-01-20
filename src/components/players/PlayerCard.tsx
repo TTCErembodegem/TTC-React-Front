@@ -7,9 +7,9 @@ import PlayerImage from './PlayerImage';
 import {PlayerPlayingStyleForm} from './PlayerPlayingStyle';
 import {PlayerContact} from './controls/PlayerContact';
 import {createFrenoyLink} from '../../models/PlayerModel';
-import { PlayerLink } from './controls/PlayerLink';
-import { Icon } from '../controls/Icons/Icon';
-import { FrenoyPlayerDetailsIcon } from '../controls/Buttons/FrenoyButton';
+import {PlayerLink} from './controls/PlayerLink';
+import {Icon} from '../controls/Icons/Icon';
+import {FrenoyPlayerDetailsIcon} from '../controls/Buttons/FrenoyButton';
 
 
 class PlayerCard extends Component {

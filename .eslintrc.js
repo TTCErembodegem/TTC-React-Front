@@ -52,6 +52,7 @@ module.exports = {
     "lines-between-class-members": [0],
     "react/prefer-stateless-function": [0],
     "react/sort-comp": [0],
+    "jsx-a11y/click-events-have-key-events": [0],
     // "typescript/no-non-null-assertion": [0],
   },
   "settings": {

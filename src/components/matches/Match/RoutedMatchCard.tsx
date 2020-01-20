@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes, {connect, withViewport, storeUtil} from '../../PropTypes';
 import MatchCard from './MatchCard';
 import {fetchMatch} from '../../../actions/initialLoad';
-import { FullScreenSpinner } from '../../controls/controls/Spinner';
+import {FullScreenSpinner} from '../../controls/controls/Spinner';
 
 class RoutedMatchCard extends Component {
   static propTypes = {

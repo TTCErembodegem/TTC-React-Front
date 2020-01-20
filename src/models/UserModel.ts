@@ -18,7 +18,19 @@ export interface IUser {
   teams: number[];
   _security: string[];
 
+  playsIn(teamId: number): boolean;
+  getPlayer(): IPlayer;
+  getTeams(): ITeam[];
+  can(what: string): boolean;
+  canManageTeams(): boolean;
+  canEditMatchesOrIsCaptain(): boolean;
+  canEditMatchPlayers(match: IMatch): boolean;
+  canEditPlayersOnMatchDay(match: IMatch): boolean;
+  canPostReport(teamId: number): boolean;
+  canChangeMatchScore(match: IMatch): boolean;
   isAdmin: () => boolean;
+  isDev(): boolean;
+  isSystem(): boolean;
 }
 
 export default class UserModel implements IUser {

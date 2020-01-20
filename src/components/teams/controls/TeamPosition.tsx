@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from '../../PropTypes';
-import { Badgy } from '../../controls/Icons/ThrillerIcon';
+import {Badgy} from '../../controls/Icons/ThrillerIcon';
 
 export class TeamPosition extends Component {
   static contextTypes = PropTypes.contextTypes;

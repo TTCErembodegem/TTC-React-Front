@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from '../../PropTypes';
-import { ThumbsUpIcon, ThumbsDownIcon } from '../../controls/Icons/ThumbsIcons';
-import { PercentageLabel } from '../../controls/controls/PercentageLabel';
+import {ThumbsUpIcon, ThumbsDownIcon} from '../../controls/Icons/ThumbsIcons';
+import {PercentageLabel} from '../../controls/controls/PercentageLabel';
 
 export const TeamOverviewPlayerStats = ({stat}) => (
   <span>

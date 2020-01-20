@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from '../../PropTypes';
-import { Badgy } from '../../controls/Icons/ThrillerIcon';
-import { Icon } from '../../controls/Icons/Icon';
+import {Badgy} from '../../controls/Icons/ThrillerIcon';
+import {Icon} from '../../controls/Icons/Icon';
 
 export class TeamRankingBadges extends Component {
   static contextTypes = PropTypes.contextTypes;

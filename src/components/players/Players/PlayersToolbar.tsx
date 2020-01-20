@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import TextField from '@material-ui/core/TextField';
 import PropTypes from '../../PropTypes';
 import http from '../../../utils/httpClient';
-import { SortIconDropDown } from '../../controls/Icons/SortIconDropDown';
-import { ExcelButton } from '../../controls/Buttons/ExcelButton';
+import {SortIconDropDown} from '../../controls/Icons/SortIconDropDown';
+import {ExcelButton} from '../../controls/Buttons/ExcelButton';
 
 export class PlayersToolbar extends Component {
   static contextTypes = PropTypes.contextTypes;

@@ -13,11 +13,11 @@ import {SwitchBetweenFirstAndLastRoundButton, getFirstOrLastMatches, getFirstOrL
 import PlayersCardGallery from '../players/PlayersCardGallery';
 import MatchesTable from '../matches/MatchesTable';
 import {TeamMatchesWeek} from './TeamMatchesWeek';
-import { ButtonStack } from '../controls/Buttons/ButtonStack';
-import { SaveButton } from '../controls/Buttons/SaveButton';
-import { EditButton } from '../controls/Buttons/EditButton';
-import { ExcelButton } from '../controls/Buttons/ExcelButton';
-import { FrenoyButton } from '../controls/Buttons/FrenoyButton';
+import {ButtonStack} from '../controls/Buttons/ButtonStack';
+import {SaveButton} from '../controls/Buttons/SaveButton';
+import {EditButton} from '../controls/Buttons/EditButton';
+import {ExcelButton} from '../controls/Buttons/ExcelButton';
+import {FrenoyButton} from '../controls/Buttons/FrenoyButton';
 
 class Teams extends Component {
   static contextTypes = PropTypes.contextTypes;

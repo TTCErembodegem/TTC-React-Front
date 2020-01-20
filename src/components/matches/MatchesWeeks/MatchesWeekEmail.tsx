@@ -8,7 +8,7 @@ import {WeekCalcer} from './WeekCalcer';
 import {Editor} from '../../controls/Editor';
 import {buildHtml} from './htmlBuilder';
 import {getOpponentMatches} from '../../../actions/matchActions';
-import { EmailButton } from '../../controls/Buttons/EmailButton';
+import {EmailButton} from '../../controls/Buttons/EmailButton';
 
 /** EmailButton that turns into a MatchWeekEmailComposeComponent (Modal) */
 class MatchesWeekEmailComponent extends Component {

@@ -4,15 +4,16 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import {MaterialButton} from '../controls/Buttons/MaterialButton';
 import PropTypes from '../PropTypes';
+import {IClub} from '../../models/model-interfaces';
 
-export default class AdminClubForm extends Component {
+type AdminClubFormProps = {
+  club: IClub;
+  updateClub: Function;
+  onEnd: Function;
+}
+
+export default class AdminClubForm extends Component<AdminClubFormProps, IClub> {
   static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    club: PropTypes.ClubModel,
-    updateClub: PropTypes.func.isRequired,
-    onEnd: PropTypes.func.isRequired,
-  }
 
   constructor(props) {
     super(props);
@@ -45,7 +46,7 @@ export default class AdminClubForm extends Component {
 
             <Checkbox
               checked={club.shower}
-              onChange={() => this.setState({shower: !this.state.shower})}
+              onChange={() => this.setState(prevState => ({shower: !prevState.shower}))}
               value="hasShower"
             />
             {this.context.t('Shower')}

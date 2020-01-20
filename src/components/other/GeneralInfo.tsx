@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes, {connect} from '../PropTypes';
 import ClubLocationInstructions from './ClubLocationInstructions';
-import { OwnEmail } from '../controls/controls/Email';
-import { GoogleMap } from '../controls/controls/GoogleMap';
+import {OwnEmail} from '../controls/controls/Email';
+import {GoogleMap} from '../controls/controls/GoogleMap';
 
 class GeneralInfo extends Component {
   static contextTypes = PropTypes.contextTypes;

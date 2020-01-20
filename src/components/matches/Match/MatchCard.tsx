@@ -14,9 +14,9 @@ import Scoresheet from './Scoresheet';
 import PlayersImageGallery from '../../players/PlayersImageGallery';
 import {MatchOtherRoundButton} from '../controls/ViewMatchDetailsButton';
 import {MatchCardAdmin} from './MatchCardAdmin';
-import { TabbedContainer } from '../../controls/TabbedContainer';
-import { CommentIcon } from '../../controls/Icons/CommentIcon';
-import { EditIcon } from '../../controls/Icons/EditIcon';
+import {TabbedContainer} from '../../controls/TabbedContainer';
+import {CommentIcon} from '../../controls/Icons/CommentIcon';
+import {EditIcon} from '../../controls/Icons/EditIcon';
 
 const tabEventKeys = keyMirror({
   players: '',

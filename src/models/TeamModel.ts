@@ -49,7 +49,7 @@ export default class TeamModel implements ITeam {
     return `Prov ${this.divisionName}`;
   }
 
-  getDivisionRanking(opponent: 'our-ranking' | ITeamOpponent = 'our-ranking') {
+  getDivisionRanking(opponent: 'our-ranking' | ITeamOpponent = 'our-ranking'): ITeamRanking | {empty: true} {
     if (opponent === 'our-ranking') {
       return this.getDivisionRanking({clubId: this.clubId, teamCode: this.teamCode});
     }
@@ -62,7 +62,10 @@ export default class TeamModel implements ITeam {
       return undefined;
     }
     const ourRanking = this.getDivisionRanking();
-    const theirRankingPosition = this.getDivisionRanking(match.opponent).position;
+    const theirRanking = this.getDivisionRanking(match.opponent);
+    if (ourRanking.empty || theirRanking.empty) {
+      return undefined;
+    }
     const teamsInDivision = this.ranking.length;
 
     const gamesPlayed = ourRanking.gamesWon + ourRanking.gamesLost + ourRanking.gamesDraw;
@@ -70,9 +73,9 @@ export default class TeamModel implements ITeam {
       return undefined;
     }
 
-    if (ourRanking.position <= 3 && theirRankingPosition <= 3) {
+    if (ourRanking.position <= 3 && theirRanking.position <= 3) {
       return 'topMatch';
-    } if (ourRanking.position >= teamsInDivision - 2 && theirRankingPosition >= teamsInDivision - 2) {
+    } if (ourRanking.position >= teamsInDivision - 2 && theirRanking.position >= teamsInDivision - 2) {
       return 'degradationMatch';
     }
     return undefined;

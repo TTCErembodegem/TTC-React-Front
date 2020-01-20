@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Table from 'react-bootstrap/lib/Table';
 import PropTypes, {connect, withViewport} from '../../PropTypes';
 import {TeamOverviewPlayerStats} from './TeamOverviewPlayerStats';
-import { PlayerCompetitionLabel } from '../../players/PlayerCard';
+import {PlayerCompetitionLabel} from '../../players/PlayerCard';
 
 class TeamOverviewPlayersComponent extends Component {
   static contextTypes = PropTypes.contextTypes;

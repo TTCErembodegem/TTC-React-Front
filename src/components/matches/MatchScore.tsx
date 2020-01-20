@@ -3,9 +3,9 @@ import {Link} from 'react-router-dom';
 import cn from 'classnames';
 import PropTypes, {connect, withViewport} from '../PropTypes';
 import {setSetting} from '../../actions/configActions';
-import { Icon } from '../controls/Icons/Icon';
-import { TrophyIcon } from '../controls/Icons/TrophyIcon';
-import { CommentIcon } from '../controls/Icons/CommentIcon';
+import {Icon} from '../controls/Icons/Icon';
+import {TrophyIcon} from '../controls/Icons/TrophyIcon';
+import {CommentIcon} from '../controls/Icons/CommentIcon';
 
 function getClassName(isHomeMatch, home, out) {
   if (home === out) {

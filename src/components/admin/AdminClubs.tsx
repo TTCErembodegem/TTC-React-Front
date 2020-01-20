@@ -4,17 +4,23 @@ import TextField from '@material-ui/core/TextField';
 import PropTypes, {connect, withViewport} from '../PropTypes';
 import {updateClub} from '../../actions/clubActions';
 import AdminClubForm from './AdminClubForm';
-import { EditButton } from '../controls/Buttons/EditButton';
+import {EditButton} from '../controls/Buttons/EditButton';
+import {IClub, Viewport, IClubLocation} from '../../models/model-interfaces';
 
-class AdminClubs extends Component {
-  static propTypes = {
-    clubs: PropTypes.object,
-    updateClub: PropTypes.func.isRequired,
-    viewport: PropTypes.viewport,
-  }
+type AdminClubsProps = {
+  clubs: IClub[];
+  updateClub: Function;
+  viewport: Viewport;
+}
 
-  constructor() {
-    super();
+type AdminClubsState = {
+  clubFilter: string;
+  editClub: null | IClub;
+}
+
+class AdminClubs extends Component<AdminClubsProps, AdminClubsState> {
+  constructor(props) {
+    super(props);
     this.state = {clubFilter: '', editClub: null};
   }
 
@@ -53,7 +59,7 @@ class AdminClubs extends Component {
 }
 
 
-const ClubsTable = ({clubs, onEditClub}) => (
+const ClubsTable = ({clubs, onEditClub}: {clubs: IClub[], onEditClub: (club: IClub) => void}) => (
   <Table condensed hover>
     <thead>
       <tr>
@@ -85,7 +91,7 @@ const ClubsTable = ({clubs, onEditClub}) => (
 export default withViewport(connect(() => ({}), {updateClub})(AdminClubs));
 
 
-const ClubLocation = ({location}) => (
+const ClubLocation = ({location}: {location: IClubLocation}) => (
   <small>
     {location.description}
     <span style={{marginLeft: 20, marginRight: 20}}>

@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {List, Map} from 'immutable';
 import _ from 'lodash';
-import PropTypes, {connect} from '../PropTypes';
+import {connect} from '../PropTypes';
 import {IMatchCommon, IMatchOwn, ITeam, IClub, IMatchOther, IPlayer} from '../../models/model-interfaces';
 import {IUser} from '../../models/UserModel';
-import { ButtonStack } from '../controls/Buttons/ButtonStack';
-import { Icon } from '../controls/Icons/Icon';
+import {ButtonStack} from '../controls/Buttons/ButtonStack';
+import {Icon} from '../controls/Icons/Icon';
 
 
 type AdminDevProps = {
@@ -19,13 +19,17 @@ type AdminDevProps = {
   admin: any;
 }
 
-class AdminDev extends React.Component<AdminDevProps> {
+type AdminDevState = {
+  filter: string;
+}
+
+class AdminDev extends React.Component<AdminDevProps, AdminDevState> {
   constructor(props) {
     super(props);
     this.state = {filter: 'matches'};
   }
 
-  _renderSection(eventKey) {
+  _renderSection(eventKey: string) {
     let data = this.props[eventKey];
     if (eventKey === 'admin') {
       data = data.players; // admin.players === inactive players
@@ -40,8 +44,8 @@ class AdminDev extends React.Component<AdminDevProps> {
   }
 
   render() {
-    const viewsConfig = [];
-    _.forOwn(this.props, (value, key) => {
+    const viewsConfig: {key: string, text: string}[] = [];
+    _.forOwn(this.props, (value, key: string) => {
       if (key !== 'dispatch') {
         viewsConfig.push({
           key,
@@ -55,9 +59,9 @@ class AdminDev extends React.Component<AdminDevProps> {
         <div className="pull-right">
           <a href="http://ttc-tst-webapp.azurewebsites.net/">Goto test site</a>
           <br />
-          <a href="http://ttc-erembodegem.be/tabtapi-test/" target="_blank">Goto TabT test site</a>
+          <a href="http://ttc-erembodegem.be/tabtapi-test/" target="_blank" rel="noopener noreferrer">Goto TabT test site</a>
           <br />
-          <a href="http://ttc-erembodegem.be/api/config/log/Get" target="_blank">Goto log dump</a>
+          <a href="http://ttc-erembodegem.be/api/config/log/Get" target="_blank" rel="noopener noreferrer">Goto log dump</a>
         </div>
         <ButtonStack
           config={viewsConfig}
@@ -72,11 +76,16 @@ class AdminDev extends React.Component<AdminDevProps> {
   }
 }
 
-class AdminStateDisplayer extends Component {
-  static propTypes = {
-    data: PropTypes.any.isRequired,
-  }
 
+type AdminStateDisplayerProps = {
+  data: any[];
+}
+
+type AdminStateDisplayerState = {
+  filter: string;
+}
+
+class AdminStateDisplayer extends Component<AdminStateDisplayerProps, AdminStateDisplayerState> {
   constructor(props) {
     super(props);
     this.state = {filter: ''};
@@ -87,6 +96,7 @@ class AdminStateDisplayer extends Component {
     if (this.state.filter) {
       if (_.isArray(data)) {
         data = data.filter(entry => {
+          // eslint-disable-next-line no-restricted-syntax, guard-for-in
           for (const key in entry) {
             if (typeof entry[key] === 'string') {
               if (entry[key].toLowerCase().indexOf(this.state.filter) !== -1) {
@@ -97,6 +107,7 @@ class AdminStateDisplayer extends Component {
               return true;
             }
           }
+          return false;
         });
       }
     }

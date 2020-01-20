@@ -4,7 +4,7 @@ import {WeekCalcer} from '../matches/MatchesWeeks/WeekCalcer';
 import {WeekTitle} from '../matches/MatchesWeeks/WeekTitle';
 import {getOpponentMatches} from '../../actions/matchActions';
 import {OpponentMatches} from '../matches/Match/OpponentMatches';
-import { FrenoyWeekButton } from '../controls/Buttons/FrenoyButton';
+import {FrenoyWeekButton} from '../controls/Buttons/FrenoyButton';
 
 class TeamMatchesWeekComponent extends Component {
   static contextTypes = PropTypes.contextTypes;

@@ -3,8 +3,8 @@ import PropTypes, {connect} from '../../PropTypes';
 import {CookieNotice} from './CookieNotice';
 
 import './Footer.css';
-import { Icon } from '../../controls/Icons/Icon';
-import { OwnEmail } from '../../controls/controls/Email';
+import {Icon} from '../../controls/Icons/Icon';
+import {OwnEmail} from '../../controls/controls/Email';
 
 class Footer extends Component {
   static contextTypes = PropTypes.contextTypes;

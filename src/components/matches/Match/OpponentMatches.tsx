@@ -8,8 +8,8 @@ import {MatchPlayerRankings} from '../controls/MatchPlayerRankings';
 import {OtherMatchTeamTitle} from './OtherMatchTeamTitle';
 import {OpponentMatchScore} from './OpponentMatchScore';
 import {SwitchBetweenFirstAndLastRoundButton, getFirstOrLastMatches, getFirstOrLast} from '../../teams/SwitchBetweenFirstAndLastRoundButton';
-import { Spinner } from '../../controls/controls/Spinner';
-import { TrophyIcon } from '../../controls/Icons/TrophyIcon';
+import {Spinner} from '../../controls/controls/Spinner';
+import {TrophyIcon} from '../../controls/Icons/TrophyIcon';
 
 class OpponentMatchesComponent extends Component {
   static contextTypes = PropTypes.contextTypes;

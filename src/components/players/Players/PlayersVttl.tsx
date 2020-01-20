@@ -4,7 +4,7 @@ import Table from 'react-bootstrap/lib/Table';
 import PropTypes, {connect} from '../../PropTypes';
 import {PlayerFrenoyLink} from '../PlayerCard';
 import {PlayerPlayingStyleForm} from '../PlayerPlayingStyle';
-import {PlayerLink} from '../../players/controls/PlayerLink';
+import {PlayerLink} from '../controls/PlayerLink';
 
 class PlayersVttlComponent extends Component {
   static contextTypes = PropTypes.contextTypes;

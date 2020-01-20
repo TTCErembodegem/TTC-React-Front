@@ -139,7 +139,11 @@ export interface IPlayer {
   security: string | 'Player';
   hasKey: boolean;
 
+  name: string;
+  slug: string;
   getCompetition: (competition: Competition) => IPlayerCompetition | {};
+  isMe(): boolean;
+  getTeam(comp: Competition): ITeam;
 }
 
 export interface IPlayerContact {
@@ -194,10 +198,20 @@ export interface ITeam {
   ranking: ITeamRanking[];
   frenoy: ITeamFrenoy;
 
-  getCaptainPlayerIds: () => number[];
-  isCaptain: (player: IPlayer) => boolean;
+  getTeamPlayerCount(): 3 | 4;
+  getScoreCount(): 16 | 10;
   renderOwnTeamTitle(): string;
   getDivisionDescription(): string;
+  getDivisionRanking(opponent: 'our-ranking' | ITeamOpponent): ITeamRanking | {empty: true};
+  getThriller(match: IMatch): undefined | 'topMatch' | 'degradationMatch';
+  isCaptain: (player: IPlayer) => boolean;
+  getCaptainPlayerIds: () => number[];
+  getPlayers(type?: 'reserve' | 'standard'): ITeamPlayerInfo[];
+  plays(playerId: number): boolean;
+  getMatches(): IMatch[];
+  getPlayerStats(): any[]; // TODO: still need strong typing
+  isInDegradationZone(opponent: ITeamOpponent): boolean;
+  isTopper(opponent: ITeamOpponent): boolean;
 }
 
 export interface ITeamOpponent {
@@ -273,5 +287,6 @@ export interface IClubManager {
   playerId: number;
   description: string;
   name: string;
-  contact: IPlayerContact
+  contact: IPlayerContact;
+  sortOrder: number;
 }

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from '../../PropTypes';
-import { CommentButton } from '../../controls/Buttons/CommentButton';
-import { Icon } from '../../controls/Icons/Icon';
-import { SaveButton } from '../../controls/Buttons/SaveButton';
+import {CommentButton} from '../../controls/Buttons/CommentButton';
+import {Icon} from '../../controls/Icons/Icon';
+import {SaveButton} from '../../controls/Buttons/SaveButton';
 
 export const SaveMatchButtons = ({onSave, onBlock, onCommentsToggle, t}) => (
   <div className="pull-right" style={{whiteSpace: 'nowrap'}}>

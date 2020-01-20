@@ -8,9 +8,9 @@ import * as playerActions from '../../actions/playerActions';
 import PropTypes, {connect, withContext, withViewport} from '../PropTypes';
 import {PlayerPlayingStyle, PlayerPlayingStyleForm} from './PlayerPlayingStyle';
 import PlayerImage from './PlayerImage';
-import { PlayerLink } from './controls/PlayerLink';
-import { FrenoyLink } from '../controls/Buttons/FrenoyButton';
-import { Telephone } from '../controls/controls/Telephone';
+import {PlayerLink} from './controls/PlayerLink';
+import {FrenoyLink} from '../controls/Buttons/FrenoyButton';
+import {Telephone} from '../controls/controls/Telephone';
 
 const PlayersImageWidth = playerUtils.getPlayerImageSize().width + 30;
 const PlayersImageHeight = playerUtils.getPlayerImageSize().height;

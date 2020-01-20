@@ -1,5 +1,5 @@
 import React from 'react';
-import { ThumbsUpIcon, ThumbsDownIcon } from '../Icons/ThumbsIcons';
+import {ThumbsUpIcon, ThumbsDownIcon} from '../Icons/ThumbsIcons';
 
 export const WonLostLabel = ({won, lost}: {won: number, lost: number}) => (
   <div>

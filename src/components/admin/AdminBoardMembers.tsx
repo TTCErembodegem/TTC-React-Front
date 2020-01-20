@@ -18,28 +18,34 @@ const clubManagerTypes = [
   {key: 5, text: 'Sporta'},
 ];
 
-class AdminBoardMembers extends Component {
+type AdminBoardMembersProps = {
+  saveBoardMember: Function;
+  deleteBoardMember: Function;
+  onEnd: Function;
+}
+
+type AdminBoardMembersState = {
+  playerId: null | number;
+  boardFunction: string;
+  sort: number;
+}
+
+class AdminBoardMembers extends Component<AdminBoardMembersProps, AdminBoardMembersState> {
   static contextTypes = PropTypes.contextTypes;
 
-  static propTypes = {
-    saveBoardMember: PropTypes.func.isRequired,
-    deleteBoardMember: PropTypes.func.isRequired,
-    onEnd: PropTypes.func.isRequired,
-  }
-
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       playerId: null,
-      boardFunction: 0,
+      boardFunction: '',
       sort: 10,
     };
   }
 
-  playerSelected(playerId) {
+  playerSelected(playerId: number) {
     const club = storeUtil.getOwnClub();
     let boardFunction = '';
-    let sort = '';
+    let sort = 0;
     if (club) {
       const manager = club.managers.find(x => x.playerId === playerId);
       if (manager) {
@@ -51,7 +57,7 @@ class AdminBoardMembers extends Component {
   }
 
   render() {
-    const paperStyle = {
+    const paperStyle: React.CSSProperties = {
       marginLeft: 20,
       textAlign: 'center',
       display: 'inline-block',
@@ -65,7 +71,7 @@ class AdminBoardMembers extends Component {
         />
 
         <br />
-        Moet "Bestuurslid" expliciet kiezen of het werkt niet.
+        Moet &quot;Bestuurslid&quot; expliciet kiezen of het werkt niet.
         <br />(sortering waarschijnlijk ook😃)
         <br />
 
@@ -87,7 +93,7 @@ class AdminBoardMembers extends Component {
         <TextField
           label={this.context.t('admin.board.sort')}
           type="number"
-          onChange={e => this.setState({sort: e.target.value})}
+          onChange={e => this.setState({sort: parseInt(e.target.value, 0)})}
           value={this.state.sort}
         />
 
