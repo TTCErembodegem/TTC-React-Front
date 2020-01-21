@@ -3,15 +3,19 @@ import Table from 'react-bootstrap/lib/Table';
 import PropTypes, {connect} from '../PropTypes';
 import * as configActions from '../../actions/configActions';
 
+type AdminParamsComponentProps = {
+  propTypes: Function;
+  configParams: any;
+  saveConfigParam: Function;
+}
+
+type AdminParamsComponentState = {
+  [key: string]: string;
+}
 
 
-class AdminParamsComponent extends Component {
+class AdminParamsComponent extends Component<AdminParamsComponentProps, AdminParamsComponentState> {
   static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    saveConfigParam: PropTypes.func.isRequired,
-    configParams: PropTypes.object.isRequired,
-  }
 
   constructor(props) {
     super(props);
@@ -24,7 +28,7 @@ class AdminParamsComponent extends Component {
     return (
       <div style={{paddingLeft: 15}}>
         <h3>Beheer Parameters</h3>
-        <span>Nieuw Seizoen? Bewaar de "year" parameter!</span>
+        <span>Nieuw Seizoen? Bewaar de &quot;year&quot; parameter!</span>
         <Table condensed hover width="100%">
           <thead>
             <tr>
@@ -38,8 +42,8 @@ class AdminParamsComponent extends Component {
                 key={key}
                 propName={key}
                 value={this.state[key]}
-                onChange={value => this.setState({...this.state, [key]: value})}
-                onSave={onSave.bind(this, key, this.state[key])}
+                onChange={value => this.setState(prevState => ({...prevState, [key]: value}))}
+                onSave={() => onSave(key, this.state[key])}
               />
             ))}
           </tbody>
@@ -56,7 +60,7 @@ const AdminParamRow = ({propName, value, onChange, onSave}) => { // eslint-disab
       <td>{propName}:</td>
       <td>
         <input type="text" value={value} onChange={e => onChange(e.target.value)} style={{width: '90%', marginRight: 6}} />
-        <button className="btn btn-default btn-sm" onClick={onSave}><i className="fa fa-floppy-o" /></button>
+        <button type="button" aria-label="Save" className="btn btn-default btn-sm" onClick={onSave}><i className="fa fa-floppy-o" /></button>
       </td>
     </tr>
   );

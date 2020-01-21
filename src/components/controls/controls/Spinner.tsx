@@ -1,15 +1,14 @@
-import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {Icon} from '../Icons/Icon';
 
-export class Spinner extends Component {
+type SpinnerProps = {
+  size: number;
+}
+
+export class Spinner extends Component<SpinnerProps> {
   static defaultProps = {
     size: 1,
-  };
-
-  static propTypes = {
-    size: PropTypes.number,
   };
 
   render() {

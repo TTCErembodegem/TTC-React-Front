@@ -1,7 +1,5 @@
 import Immutable from 'immutable';
-// import * as immutableHelpers from './immutableHelpers';
 import ActionTypes from '../actions/ActionTypes';
-
 import UserModel from '../models/UserModel';
 
 const startState = new UserModel({

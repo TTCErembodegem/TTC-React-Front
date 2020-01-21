@@ -4,18 +4,6 @@ import {getRankingValue} from './models/utils/playerRankingValueMapper';
 import {ITeam, IClub, IPlayer, IMatch, IMatchPlayer, ITeamOpponent, Competition, IMatchCommon, IMatchOther} from './models/model-interfaces';
 import {IUser} from './models/UserModel';
 
-export function getOpponentMatchesForTeam(competition: Competition, clubId: number, teamCode: string): (IMatchCommon & IMatchOther)[] {
-  return store.getState().readonlyMatches
-    .filter(m => m.competition === competition)
-    .filter(m => m.home && m.away)
-    .filter(m => (m.home.clubId === clubId && m.home.teamCode === teamCode) || (m.away.clubId === clubId && m.away.teamCode === teamCode))
-    .filter(m => m.shouldBePlayed)
-    .sort((a, b) => a.date - b.date);
-}
-
-
-const createKey = (form: IOpponentFormationRankingInfo[]): string => form.reduce((key, f) => key + f.amount + f.ranking, '');
-
 export interface IOponnentFormation {
   key: string;
   details: IOpponentFormationRankingInfo[];
@@ -28,6 +16,19 @@ export interface IOpponentFormationRankingInfo {
   ranking: string;
   amount: number;
 }
+
+
+export function getOpponentMatchesForTeam(competition: Competition, clubId: number, teamCode: string): (IMatchCommon & IMatchOther)[] {
+  return store.getState().readonlyMatches
+    .filter(m => m.competition === competition)
+    .filter(m => m.home && m.away)
+    .filter(m => (m.home.clubId === clubId && m.home.teamCode === teamCode) || (m.away.clubId === clubId && m.away.teamCode === teamCode))
+    .filter(m => m.shouldBePlayed)
+    .sort((a, b) => a.date - b.date);
+}
+
+
+const createKey = (form: IOpponentFormationRankingInfo[]): string => form.reduce((key, f) => key + f.amount + f.ranking, '');
 
 export function getOpponentFormations(matches: IMatch[], opponent: ITeamOpponent): IOponnentFormation[] {
   return matches.filter(match => match.isSyncedWithFrenoy).reduce((acc: IOponnentFormation[], match) => {

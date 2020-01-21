@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
-import PropTypes, {connect, storeUtil} from '../../PropTypes';
+import PropTypes from '../../PropTypes';
 import {PlayerLink} from '../../players/controls/PlayerLink';
+import {AchievementsCalculator} from './AchievementsCalculator';
 
-export default class Achievements extends Component {
+type AchievementsProps = {
+  calcer: AchievementsCalculator;
+}
+
+export default class Achievements extends Component<AchievementsProps> {
   static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    calcer: PropTypes.object,
-  }
 
   render() {
     const {calcer} = this.props;

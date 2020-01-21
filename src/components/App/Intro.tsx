@@ -7,27 +7,28 @@ import PropTypes, {connect, withViewport, withContext} from '../PropTypes';
 import ClubLocationInstructions from '../other/ClubLocationInstructions';
 import {Strike} from '../controls/controls/Strike';
 import {SmallMatchCardHeader} from '../matches/Match/MatchCardHeader';
-
 import EndOfSeason from '../other/EndOfSeason/EndOfSeason';
 import {Eetfestijn} from './Eetfestijn';
 import IntroClub from './IntroClub';
 import {WeirdLocaleYearInfo} from './WeirdLocaleYearInfo';
 import IntroSponsors from './IntroSponsors';
+import {IMatch, IConfig, IPlayer, ITeam, Viewport} from '../../models/model-interfaces';
+import {IUser} from '../../models/UserModel';
+
 
 require('./App.css');
 
+type IntroProps = {
+  config: IConfig;
+  user: IUser;
+  players: IPlayer[];
+  matches: IMatch[];
+  teams: ITeam[];
+  viewport: Viewport;
+}
 
-class Intro extends Component {
+class Intro extends Component<IntroProps> {
   static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    config: PropTypes.map.isRequired,
-    user: PropTypes.UserModel,
-    players: PropTypes.PlayerModelList.isRequired,
-    matches: PropTypes.MatchModelList.isRequired,
-    teams: PropTypes.TeamModelList.isRequired,
-    viewport: PropTypes.viewport,
-  };
 
   render() {
     if (this.props.config.get('endOfSeason')) {
@@ -71,13 +72,15 @@ export default withContext(withViewport(connect(state => ({
 
 // TODO: React warning: setState on unmounted component = Typist (loading schlager is gone too fast now...)
 // https://github.com/jstejada/react-typist/issues/6#issuecomment-250910698
-class RestartingTypist extends Component {
-  static propTypes = {
-    timeout: PropTypes.number,
-    children: PropTypes.node,
-  }
 
-  state = {typing: true}
+type RestartingTypistProps = {timeout: number, children: any}
+type RestartingTypistState = {typing: boolean}
+
+class RestartingTypist extends Component<RestartingTypistProps, RestartingTypistState> {
+  constructor(props) {
+    super(props);
+    this.state = {typing: true};
+  }
 
   done = () => {
     this.setState({typing: false}, () => {
@@ -114,16 +117,16 @@ Loading.propTypes = {
 };
 
 
-class TodaysEvents extends Component {
-  static contextTypes = PropTypes.contextTypes;
+type TodaysEventsProps = {
+  config: IConfig;
+  user: IUser;
+  players: IPlayer[];
+  matches: IMatch[];
+  teams: ITeam[];
+}
 
-  static propTypes = {
-    config: PropTypes.map.isRequired,
-    user: PropTypes.UserModel,
-    players: PropTypes.PlayerModelList.isRequired,
-    matches: PropTypes.MatchModelList.isRequired,
-    teams: PropTypes.TeamModelList.isRequired,
-  };
+class TodaysEvents extends Component<TodaysEventsProps> {
+  static contextTypes = PropTypes.contextTypes;
 
   render() {
     const {t} = this.context;
@@ -156,7 +159,7 @@ class TodaysEvents extends Component {
     );
   }
 
-  _renderMatches(matches) {
+  _renderMatches(matches: IMatch[]) {
     return (
       <div>
         {matches.map(match => (

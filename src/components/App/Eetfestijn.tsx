@@ -39,7 +39,7 @@ export const Eetfestijn = () => (
 
         Van {eetfestijnSets.startHour} tot {eetfestijnSets.endHour} in zaal
         &nbsp;
-      <a className="eetfestijn" href={eetfestijnGoogleMaps} target="_blank">Sint-Paulus</a>
+      <a className="eetfestijn" href={eetfestijnGoogleMaps} target="_blank" rel="noopener noreferrer">Sint-Paulus</a>
       <br />
         Botermelkstraat 63, 9300 Aalst
 

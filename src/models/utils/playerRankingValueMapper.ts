@@ -1,3 +1,5 @@
+import {Competition} from '../model-interfaces';
+
 const vttlRankingValues = {
   A: 18,
   B0: 17,
@@ -41,7 +43,7 @@ const sportaRankingValues = {
   NG: 1,
 };
 
-export const getRankingValue = (competition, ranking) => {
+export const getRankingValue = (competition: Competition, ranking: string): number => {
   if (competition === 'Vttl') {
     return vttlRankingValues[ranking];
   }

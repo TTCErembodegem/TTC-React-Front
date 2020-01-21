@@ -1,15 +1,9 @@
 import React from 'react';
-import PropTypes from '../../PropTypes';
 import {Icon} from '../Icons/Icon';
+import {ButtonComponentProps} from './Button';
 
-export const SaveButton = ({onClick, title, style}) => (
-  <button className="btn btn-default" onClick={onClick} title={title} style={style}>
+export const SaveButton = ({title, ...props}: ButtonComponentProps & {title: string}) => (
+  <button type="button" className="btn btn-default" title={title} {...props}>
     <Icon fa="fa fa-floppy-o" />
   </button>
 );
-
-SaveButton.propTypes = {
-  onClick: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired,
-  style: PropTypes.object,
-};

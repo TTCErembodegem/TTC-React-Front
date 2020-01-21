@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const WeirdLocaleYearInfo = ({params}) => ( // eslint-disable-line
+export const WeirdLocaleYearInfo = ({params}: any) => ( // eslint-disable-line
   <div>
     <h2>
       WIJZIGING ZAAL

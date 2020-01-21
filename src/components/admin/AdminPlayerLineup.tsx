@@ -1,19 +1,26 @@
 import React, {Component} from 'react';
 import Button from 'react-bootstrap/lib/Button';
-import PropTypes, {connect, withViewport, storeUtil} from '../PropTypes';
+import {connect, withViewport, storeUtil} from '../PropTypes';
 
 import PlayerAutoComplete from '../players/PlayerAutoComplete';
 import PlayerLinup from '../users/PlayerLineup';
+import {IMatch, Viewport, Competition} from '../../models/model-interfaces';
 
 
-class AdminPlayerLineup extends React.Component {
-  static propTypes = {
-    matches: PropTypes.MatchModelList,
-    viewport: PropTypes.viewport,
-  }
+type AdminPlayerLineupProps = {
+  matches: IMatch[];
+  viewport: Viewport;
+}
 
-  constructor() {
-    super();
+type AdminPlayerLineupState = {
+  comp: Competition;
+  playerId: null | number;
+}
+
+
+class AdminPlayerLineup extends React.Component<AdminPlayerLineupProps, AdminPlayerLineupState> {
+  constructor(props) {
+    super(props);
     this.state = {comp: 'Vttl', playerId: null};
   }
 
@@ -42,13 +49,17 @@ class AdminPlayerLineup extends React.Component {
   }
 }
 
-class AdminPlayerLineupToolbar extends Component {
-  static propTypes = {
-    onFilterChange: PropTypes.func.isRequired,
-  }
+type AdminPlayerLineupToolbarProps = {
+  onFilterChange: Function;
+}
 
-  constructor() {
-    super();
+type AdminPlayerLineupToolbarState = {
+  playerId: null | number;
+}
+
+class AdminPlayerLineupToolbar extends Component<AdminPlayerLineupToolbarProps, AdminPlayerLineupToolbarState> {
+  constructor(props) {
+    super(props);
     this.state = {playerId: null};
   }
 

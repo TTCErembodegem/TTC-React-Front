@@ -1,18 +1,18 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, {Component} from 'react';
 import cn from 'classnames';
 import PropTypes, {withTooltip} from '../../PropTypes';
-import {Icon} from '../Icon';
+import {Icon} from '../Icons/Icon';
 
+export type ButtonComponentProps = {
+  onClick: () => void;
+  label: string;
+  className?: string;
+  style?: React.CSSProperties;
+}
 
-class ButtonComponent extends Component {
+class ButtonComponent extends Component<ButtonComponentProps> {
   static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    onClick: PropTypes.func.isRequired,
-    label: PropTypes.string,
-    className: PropTypes.string,
-    style: PropTypes.object,
-  }
 
   render() {
     return (
@@ -20,6 +20,8 @@ class ButtonComponent extends Component {
         onClick={this.props.onClick}
         className={cn(this.props.className, 'btn btn-default')}
         style={this.props.style}
+        role="button"
+        tabIndex={0}
       >
         {this.props.label}
       </a>
@@ -30,15 +32,15 @@ class ButtonComponent extends Component {
 export const Button = withTooltip(ButtonComponent);
 
 
-class IconButtonComponent extends Component {
-  static contextTypes = PropTypes.contextTypes;
+export type IconButtonComponentProps = {
+  onClick: () => void;
+  fa: string;
+  className: string;
+  style?: React.CSSProperties;
+}
 
-  static propTypes = {
-    onClick: PropTypes.func.isRequired,
-    fa: PropTypes.string.isRequired,
-    className: PropTypes.string,
-    style: PropTypes.object,
-  }
+class IconButtonComponent extends Component<IconButtonComponentProps> {
+  static contextTypes = PropTypes.contextTypes;
 
   render() {
     return (
@@ -46,6 +48,8 @@ class IconButtonComponent extends Component {
         onClick={this.props.onClick}
         className={cn(this.props.className, 'btn btn-default')}
         style={this.props.style}
+        role="button"
+        tabIndex={0}
       >
         <Icon fa={this.props.fa} />
       </a>

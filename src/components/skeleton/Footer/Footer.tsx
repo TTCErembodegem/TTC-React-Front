@@ -42,13 +42,13 @@ export default connect(state => ({params: state.config.get('params')}))(Footer);
 
 class MadeBy extends Component {
   render() {
-    const style = {
+    const style: React.CSSProperties = {
       float: 'right',
       marginRight: 20,
     };
     return (
       <div>
-        <div style={style}>by <a href="https://itenium.be" target="_blank">itenium</a></div>
+        <div style={style}>by <a href="https://itenium.be" target="_blank" rel="noopener noreferrer">itenium</a></div>
         <div style={{clear: 'both'}} />
       </div>
     );

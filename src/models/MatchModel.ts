@@ -5,7 +5,8 @@ import storeUtil from '../storeUtil';
 import PlayerModel from './PlayerModel';
 import {OwnClubId} from './ClubModel';
 import {sortMappedPlayers} from './TeamModel';
-import {IMatch, ITeam, Competition, IMatchScore, MatchScoreType, IMatchPlayer, IMatchGame, IMatchOwn, IMatchOther, ITeamOpponent, IClub, IMatchPlayerInfo, IPlayer} from './model-interfaces';
+import {IMatch, ITeam, Competition, IMatchScore, MatchScoreType, IMatchPlayer, IMatchGame,
+  IMatchOwn, IMatchOther, ITeamOpponent, IClub, IMatchPlayerInfo, IPlayer, IGetGameMatches} from './model-interfaces';
 
 // TODO: Duplicted in backend. Should be in db.
 const defaultStartHour = 20;
@@ -132,7 +133,7 @@ export default class MatchModel implements IMatch, IMatchOwn, IMatchOther {
     return `${club.name} ${this.opponent.teamCode}`;
   }
 
-  getOpponentClub() {
+  getOpponentClub(): IClub | {} {
     if (this.home) {
       console.error('called getOpponentClub on OtherMatch'); // eslint-disable-line
     }
@@ -162,7 +163,7 @@ export default class MatchModel implements IMatch, IMatchOwn, IMatchOther {
     return Math.abs(diff) < 10;
   }
 
-  won(opponent): boolean {
+  won(opponent: ITeamOpponent): boolean {
     // ATTN: This only works for an OpponentMatch?
     if (this.score.home === this.score.out) {
       return false;
@@ -252,7 +253,7 @@ export default class MatchModel implements IMatch, IMatchOwn, IMatchOther {
       .sort(sortMappedPlayers(team.competition));
   }
 
-  getOwnPlayerModels(statusFilter) {
+  getOwnPlayerModels(statusFilter: undefined | 'onlyFinal' | 'Play' | 'Captain'): IPlayer[] {
     return this.getPlayerFormation(statusFilter).map(x => x.player);
   }
 
@@ -268,7 +269,7 @@ export default class MatchModel implements IMatch, IMatchOwn, IMatchOther {
     return this.players.find(ply => ply.uniqueIndex === uniqueIndex) || {};
   }
 
-  getGameMatches() {
+  getGameMatches(): IGetGameMatches[] {
     // result.ownPlayer = {} == double game
     if (!this.games.size) {
       return [];
@@ -277,7 +278,7 @@ export default class MatchModel implements IMatch, IMatchOwn, IMatchOther {
     return this.games.map(game => {
       const homePlayer = this.getGamePlayer(game.homePlayerUniqueIndex);
       const outPlayer = this.getGamePlayer(game.outPlayerUniqueIndex);
-      const result = {
+      const result: IGetGameMatches = {
         matchNumber: game.matchNumber,
         home: homePlayer,
         out: outPlayer,

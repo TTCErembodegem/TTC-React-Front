@@ -1,31 +1,38 @@
+/* eslint-disable no-nested-ternary */
 import React, {Component} from 'react';
 import moment from 'moment';
-
 import Table from 'react-bootstrap/lib/Table';
 import TextField from '@material-ui/core/TextField';
 import {updatePlayer, frenoySync, deletePlayer} from '../../actions/playerActions';
-import PropTypes, {connect, withViewport} from '../PropTypes';
+import {connect, withViewport} from '../PropTypes';
 import AdminPlayerForm from './AdminPlayerForm';
 import AdminChangePassword from './AdminChangePassword';
 import AdminBoardMembers from './AdminBoardMembers';
 import {ButtonStack} from '../controls/Buttons/ButtonStack';
 import {EditButton} from '../controls/Buttons/EditButton';
 import {Icon} from '../controls/Icons/Icon';
+import {IPlayer, Viewport, Competition} from '../../models/model-interfaces';
 
 const keepTrackOfPlayerKeys = false;
 
-class AdminPlayers extends Component {
-  static propTypes = {
-    players: PropTypes.object,
-    recreantAndQuitters: PropTypes.object,
-    updatePlayer: PropTypes.func.isRequired,
-    deletePlayer: PropTypes.func.isRequired,
-    viewport: PropTypes.viewport,
-    frenoySync: PropTypes.func.isRequired,
-  }
+type AdminPlayersProps = {
+  players: IPlayer[];
+  recreantAndQuitters: any;
+  updatePlayer: Function;
+  deletePlayer: Function;
+  viewport: Viewport;
+  frenoySync: Function;
+}
 
-  constructor() {
-    super();
+type AdminPlayersState = {
+  filter: 'active' | 'new-player' | 'Speler editeren' | 'set-password' | 'inactive' | 'bestuur';
+  playerFilter: string;
+  selectedPlayer: IPlayer;
+}
+
+class AdminPlayers extends Component<AdminPlayersProps, AdminPlayersState> {
+  constructor(props) {
+    super(props);
     this.state = {filter: 'active', playerFilter: ''};
   }
 
@@ -115,6 +122,7 @@ class AdminPlayers extends Component {
             />
 
             <button
+              type="button"
               className="btn btn-default pull-right"
               style={{marginRight: 15}}
               onClick={() => this.props.frenoySync()}
@@ -130,8 +138,8 @@ class AdminPlayers extends Component {
   }
 }
 
-function concatCompetitions(vttl, sporta) {
-  const comps = [];
+function concatCompetitions(vttl: boolean, sporta: boolean): string {
+  const comps: Competition[] = [];
   if (vttl) {
     comps.push('Vttl');
   }
@@ -141,7 +149,14 @@ function concatCompetitions(vttl, sporta) {
   return comps.join(', ');
 }
 
-const ActivesTable = ({players, onEditPlayer, onUpdatePlayer}) => (
+
+type ActivesTableProps = {
+  players: IPlayer[];
+  onEditPlayer: Function;
+  onUpdatePlayer: Function;
+};
+
+const ActivesTable = ({players, onEditPlayer, onUpdatePlayer}: ActivesTableProps) => (
   <Table condensed hover>
     <thead>
       <tr>
@@ -171,6 +186,7 @@ const ActivesTable = ({players, onEditPlayer, onUpdatePlayer}) => (
 
             {keepTrackOfPlayerKeys ? (
               <button
+                type="button"
                 className="btn btn-default"
                 style={{marginLeft: 5}}
                 onClick={() => {
@@ -184,6 +200,7 @@ const ActivesTable = ({players, onEditPlayer, onUpdatePlayer}) => (
 
             {!ply.vttl && !ply.sporta ? (
               <button
+                type="button"
                 className="btn btn-default"
                 style={{marginLeft: 10}}
                 onClick={() => {
@@ -204,14 +221,15 @@ const ActivesTable = ({players, onEditPlayer, onUpdatePlayer}) => (
   </Table>
 );
 
-ActivesTable.propTypes = {
-  players: PropTypes.PlayerModelList.isRequired,
-  onEditPlayer: PropTypes.func.isRequired,
-  onUpdatePlayer: PropTypes.func.isRequired,
+
+type InactivesTableProps = {
+  players: IPlayer[];
+  onUpdatePlayer: Function;
+  onDeletePlayer: Function;
 };
 
 
-const InactivesTable = ({players, onUpdatePlayer, onDeletePlayer}) => (
+const InactivesTable = ({players, onUpdatePlayer, onDeletePlayer}: InactivesTableProps) => (
   <Table condensed hover>
     <thead>
       <tr>
@@ -229,6 +247,7 @@ const InactivesTable = ({players, onUpdatePlayer, onDeletePlayer}) => (
           <td className="hidden-xs">{ply.quitYear}</td>
           <td>
             <button
+              type="button"
               className="btn btn-default"
               onClick={() => {
                 ply.active = true;
@@ -241,6 +260,7 @@ const InactivesTable = ({players, onUpdatePlayer, onDeletePlayer}) => (
             </button>
 
             <button
+              type="button"
               style={{marginLeft: 8}}
               className="btn btn-default"
               onClick={() => onDeletePlayer(ply)}
@@ -254,11 +274,5 @@ const InactivesTable = ({players, onUpdatePlayer, onDeletePlayer}) => (
   </Table>
 );
 
-
-InactivesTable.propTypes = {
-  players: PropTypes.PlayerModelList.isRequired,
-  onUpdatePlayer: PropTypes.func.isRequired,
-  onDeletePlayer: PropTypes.func.isRequired,
-};
 
 export default withViewport(connect(() => ({}), {updatePlayer, frenoySync, deletePlayer})(AdminPlayers));

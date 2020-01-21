@@ -9,15 +9,16 @@ import {userRoles} from '../../models/UserModel';
 import PlayerModel from '../../models/PlayerModel';
 import {MaterialButton} from '../controls/Buttons/MaterialButton';
 import PlayerStyleAutocomplete from '../players/PlayerStyleAutocomplete';
+import {IPlayer} from '../../models/model-interfaces';
 
-class AdminPlayerForm extends Component {
+type AdminPlayerFormProps = {
+  player: IPlayer;
+  updatePlayer: Function;
+  onEnd: Function;
+}
+
+class AdminPlayerForm extends Component<AdminPlayerFormProps, IPlayer> {
   static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    player: PropTypes.PlayerModel,
-    updatePlayer: PropTypes.func.isRequired,
-    onEnd: PropTypes.func.isRequired,
-  }
 
   constructor(props) {
     super(props);
@@ -141,16 +142,15 @@ class AdminPlayerForm extends Component {
 }
 
 
+type PlayerSecuritySelectFieldProps = {
+  value: string;
+  onChange: Function;
+}
 
-class PlayerSecuritySelectField extends React.Component {
-  static propTypes = {
-    value: PropTypes.string,
-    onChange: PropTypes.func.isRequired,
-  }
-
+class PlayerSecuritySelectField extends React.Component<PlayerSecuritySelectFieldProps> {
   render() {
     return (
-      <TextField select style={{width: 100}} value={this.props.value} onChange={this.props.onChange} label="Toegang">
+      <TextField select style={{width: 100}} value={this.props.value} onChange={e => this.props.onChange(e)} label="Toegang">
         {userRoles.map(role => <MenuItem key={role} value={role}>{role}</MenuItem>)}
       </TextField>
     );

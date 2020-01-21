@@ -4,14 +4,14 @@ import Col from 'react-bootstrap/lib/Col';
 import PropTypes, {withViewport, withContext} from '../PropTypes';
 import {Strike} from '../controls/controls/Strike';
 import * as Sponsor from './Sponsors';
+import {Viewport} from '../../models/model-interfaces';
 
+type IntroSponsorsProps = {
+  viewport: Viewport;
+}
 
-class IntroSponsors extends Component {
+class IntroSponsors extends Component<IntroSponsorsProps> {
   static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    viewport: PropTypes.viewport,
-  };
 
   render() {
     const big = this.props.viewport.width > 830;

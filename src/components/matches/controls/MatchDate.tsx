@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import PropTypes, {withViewport} from '../../PropTypes';
+import {IMatch, Viewport} from '../../../models/model-interfaces';
 
-export class MatchDateComponent extends Component {
+type MatchDateComponentProps = {
+  viewport: Viewport;
+  match: IMatch;
+}
+
+export class MatchDateComponent extends Component<MatchDateComponentProps> {
   static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    viewport: PropTypes.viewport,
-    match: PropTypes.MatchModel.isRequired,
-  }
 
   render() {
     const {t} = this.context;

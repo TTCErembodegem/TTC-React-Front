@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, {Component} from 'react';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -10,8 +11,10 @@ import {MaterialButton} from '../../controls/Buttons/MaterialButton';
 import {Icon} from '../../controls/Icons/Icon';
 import {EditIcon} from '../../controls/Icons/EditIcon';
 import {TimeAgo} from '../../controls/controls/TimeAgo';
+import {IUser} from '../../../models/UserModel';
+import {IMatch, Translator, Viewport} from '../../../models/model-interfaces';
 
-function getEmptyComment(matchId, playerId) {
+function getEmptyComment(matchId: number, playerId: number) {
   return {
     matchId,
     playerId,
@@ -20,18 +23,34 @@ function getEmptyComment(matchId, playerId) {
   };
 }
 
-class MatchReport extends Component {
-  static contextTypes = PropTypes.contextTypes;
+type MatchReportProps = {
+  user: IUser;
+  match: IMatch;
+  t: Translator;
+  viewport: Viewport;
+  postReport: Function;
+  postComment: Function;
+  deleteComment: Function;
+}
 
-  static propTypes = {
-    user: PropTypes.UserModel.isRequired,
-    match: PropTypes.MatchModel.isRequired,
-    t: PropTypes.func.isRequired,
-    viewport: PropTypes.viewport,
-    postReport: PropTypes.func.isRequired,
-    postComment: PropTypes.func.isRequired,
-    deleteComment: PropTypes.func.isRequired,
-  }
+export interface IMatchComment {
+  matchId: number;
+  playerId: number;
+  text: string;
+  /** Hidden is only visible for TTC Erembodegem players */
+  hidden: boolean;
+}
+
+type MatchReportState = {
+  text: string;
+  commentImageFormOpen: boolean;
+  commentFormOpen: boolean;
+  comment: IMatchComment;
+  reportFormOpen: boolean;
+}
+
+class MatchReport extends Component<MatchReportProps, MatchReportState> {
+  static contextTypes = PropTypes.contextTypes;
 
   constructor(props) {
     super(props);
@@ -263,8 +282,8 @@ class Comment extends Component {
     deleteComment: PropTypes.func,
   }
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       hover: false,
     };
@@ -294,7 +313,7 @@ class Comment extends Component {
         </div>
 
         {comment.imageUrl ? (
-          <div><img src={comment.imageUrl} style={{maxWidth: '95%'}} /></div>
+          <div><img src={comment.imageUrl} style={{maxWidth: '95%'}} alt="Door de speler opgeladen" /></div>
         ) : (
           <div dangerouslySetInnerHTML={{__html: comment.text}} />
         )}

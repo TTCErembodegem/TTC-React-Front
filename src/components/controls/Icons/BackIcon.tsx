@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import PropTypes, {withViewport, withRouter} from '../../PropTypes';
 import {Icon} from './Icon';
+import {Viewport} from '../../../models/model-interfaces';
 
-class BackIconComponent extends Component {
+type BackIconProps = {
+  viewport: Viewport;
+}
+
+class BackIconComponent extends Component<BackIconProps> {
   static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    viewport: PropTypes.viewport,
-  }
 
   render() {
     const {t} = this.context;

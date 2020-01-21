@@ -4,18 +4,16 @@ import PropTypes, {withViewport, storeUtil} from '../../PropTypes';
 import {OpponentPlayerLabel} from './OpponentPlayer';
 import {Spinner} from '../../controls/controls/Spinner';
 import {ThumbsUpIcon, ThumbsDownIcon} from '../../controls/Icons/ThumbsIcons';
+import {ITeamOpponent, Viewport, IMatch} from '../../../models/model-interfaces';
 
-class OpponentsFormation extends Component {
+type OpponentsFormationProps = {
+  viewport: Viewport,
+  match: IMatch,
+  opponent: ITeamOpponent,
+}
+
+class OpponentsFormation extends Component<OpponentsFormationProps> {
   static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    viewport: PropTypes.viewport,
-    match: PropTypes.MatchModel.isRequired,
-    opponent: PropTypes.shape({
-      clubId: PropTypes.number.isRequired,
-      teamCode: PropTypes.string,
-    }),
-  }
 
   render() {
     const formations = storeUtil.matches

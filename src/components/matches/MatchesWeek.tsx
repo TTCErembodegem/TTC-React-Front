@@ -6,24 +6,29 @@ import {WeekTitle} from './MatchesWeeks/WeekTitle';
 import {WeekCalcer} from './MatchesWeeks/WeekCalcer';
 import {ButtonStack} from '../controls/Buttons/ButtonStack';
 import {EditButton} from '../controls/Buttons/EditButton';
+import {Competition, IMatch} from '../../models/model-interfaces';
+import {IUser} from '../../models/UserModel';
 
+type MatchesWeekProps = {
+  matches: IMatch[],
+  freeMatches: IMatch[],
+  user: IUser,
+  match: {
+    params: {
+      tabKey: string; // : number == current Frenoy week
+      comp: 'all' | Competition;
+    }
+  };
+  history: any;
+}
 
+type MatchesWeekState = {
+  currentWeek: undefined | number;
+  editMode: boolean;
+}
 
-class MatchesWeek extends Component {
+class MatchesWeek extends Component<MatchesWeekProps, MatchesWeekState> {
   static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    matches: PropTypes.MatchModelList.isRequired,
-    freeMatches: PropTypes.MatchModelList.isRequired,
-    user: PropTypes.UserModel.isRequired,
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        tabKey: PropTypes.string, // : number == current Frenoy week
-        comp: PropTypes.oneOf(['Vttl', 'Sporta']),
-      }),
-    }),
-    history: PropTypes.any.isRequired,
-  }
 
   constructor(props) {
     super(props);
@@ -42,6 +47,7 @@ class MatchesWeek extends Component {
     if (props.match.params.tabKey && props.matches.size) {
       return {currentWeek: parseInt(props.match.params.tabKey, 10)};
     }
+    return undefined;
   }
 
   componentWillReceiveProps(props) {
@@ -77,7 +83,7 @@ class MatchesWeek extends Component {
 
     const compFilter = this.props.match.params.comp || 'all';
 
-    let matchMailing = null;
+    let matchMailing: React.ReactNode = null;
     if (compFilter !== 'all' && this.props.user.isAdmin() && matches.some(m => !m.isSyncedWithFrenoy)) {
       let prevMatches = [];
       if (this.state.currentWeek > 1) {
@@ -118,7 +124,7 @@ class MatchesWeek extends Component {
 
 
           {this.props.user.canManageTeams() && matches.some(m => !m.isSyncedWithFrenoy) ? (
-            <EditButton onClick={() => this.setState({editMode: !this.state.editMode})} />
+            <EditButton onClick={() => this.setState(prevState => ({editMode: !prevState.editMode}))} />
           ) : null}
 
 
@@ -134,7 +140,13 @@ class MatchesWeek extends Component {
 }
 
 
-const MatchesWeekPerCompetition = ({comp, editMode, matches}) => {
+type MatchesWeekPerCompetitionProps = {
+  comp: Competition;
+  editMode: boolean;
+  matches: IMatch[];
+};
+
+const MatchesWeekPerCompetition = ({comp, editMode, matches}: MatchesWeekPerCompetitionProps) => {
   // TODO: fixed sort by team now... adding sorting should only be done after serious refactoring of MatchesTable
   // const matchSorter = (a, b) => a.date - b.date;
   const matchSorter = (a, b) => a.getTeam().teamCode.localeCompare(b.getTeam().teamCode);
@@ -150,12 +162,6 @@ const MatchesWeekPerCompetition = ({comp, editMode, matches}) => {
       <MatchesTable editMode={editMode} matches={matches.sort(matchSorter)} ownTeamLink="week" />
     </div>
   );
-};
-
-MatchesWeekPerCompetition.propTypes = {
-  comp: PropTypes.oneOf(['Vttl', 'Sporta']).isRequired,
-  editMode: PropTypes.bool.isRequired,
-  matches: PropTypes.MatchModelList.isRequired,
 };
 
 export default withRouter(connect(state => ({matches: state.matches, user: state.user, freeMatches: state.freeMatches}))(MatchesWeek));

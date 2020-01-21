@@ -6,8 +6,9 @@ import {setSetting} from '../../actions/configActions';
 import {Icon} from '../controls/Icons/Icon';
 import {TrophyIcon} from '../controls/Icons/TrophyIcon';
 import {CommentIcon} from '../controls/Icons/CommentIcon';
+import {Viewport, IMatch} from '../../models/model-interfaces';
 
-function getClassName(isHomeMatch, home, out) {
+function getClassName(isHomeMatch: boolean, home: number, out: number): 'match-won' | 'match-lost' | 'match-draw' {
   if (home === out) {
     return 'match-draw';
   }
@@ -18,21 +19,24 @@ function getClassName(isHomeMatch, home, out) {
   return won ? 'match-won' : 'match-lost';
 }
 
-class MatchScore extends Component {
+type MatchScoreProps = {
+  config: any;
+  setSetting: Function;
+  viewport: Viewport;
+  match: IMatch;
+  style?: any;
+  className?: string,
+  forceDisplay: boolean,
+  showComments?: boolean,
+  showThrophy?: boolean,
+}
+
+type MatchScoreState = {
+  isUpdated: boolean;
+}
+
+class MatchScore extends Component<MatchScoreProps, MatchScoreState> {
   static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    config: PropTypes.object.isRequired,
-    setSetting: PropTypes.func.isRequired,
-    viewport: PropTypes.viewport,
-
-    match: PropTypes.MatchModel.isRequired,
-    style: PropTypes.object,
-    className: PropTypes.string,
-    forceDisplay: PropTypes.bool.isRequired,
-    showComments: PropTypes.bool,
-    showThrophy: PropTypes.bool,
-  }
 
   static defaultProps = {
     forceDisplay: false,

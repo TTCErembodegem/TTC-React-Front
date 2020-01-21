@@ -3,41 +3,57 @@ import cn from 'classnames';
 import PropTypes from '../../PropTypes';
 import {Icon} from '../Icons/Icon';
 import {createFrenoyLinkByUniqueId} from '../../../models/PlayerModel';
+import {Competition, ITeam, IMatch} from '../../../models/model-interfaces';
 
 export const FrenoyPlayerDetailsIcon = () => <Icon fa="fa fa-search" translate tooltip="teamCalendar.frenoyPlayerResults" />;
 
 
-export const FrenoyLink = ({competition, uniqueIndex, children}) => {
+type FrenoyLinkProps = {
+  competition: Competition;
+  uniqueIndex: number;
+  children: any;
+};
+
+export const FrenoyLink = ({competition, uniqueIndex, children}: FrenoyLinkProps) => {
   const frenoyLink = createFrenoyLinkByUniqueId(competition, uniqueIndex);
   if (!frenoyLink) {
     return null;
   }
-  return <a href={frenoyLink} target="_blank" className="link-hover-underline">{children}<FrenoyPlayerDetailsIcon /></a>;
+  return (
+    <a
+      href={frenoyLink}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="link-hover-underline"
+    >
+      {children}
+      <FrenoyPlayerDetailsIcon />
+    </a>
+  );
 };
 
-FrenoyLink.propTypes = {
-  competition: PropTypes.oneOf(['Vttl', 'Sporta']).isRequired,
-  uniqueIndex: PropTypes.number.isRequired,
-  children: PropTypes.any.isRequired,
-};
 
 
+type FrenoyButtonProps = {
+  team: ITeam;
+  linkTo: 'results' | 'ranking';
+  className?: string;
+}
 
-export class FrenoyButton extends Component {
+export class FrenoyButton extends Component<FrenoyButtonProps> {
   static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    team: PropTypes.TeamModel.isRequired,
-    linkTo: PropTypes.oneOf(['results', 'ranking']).isRequired,
-    className: PropTypes.string,
-  }
 
   render() {
     const {linkTo} = this.props;
-
     return (
-      <a href={this.props.team.frenoy.getUrl(linkTo)} target="_blank" className={this.props.className} style={{display: 'inline-block'}}>
-        <button className={`btn btn-${this.props.team.competition}`}>
+      <a
+        href={this.props.team.frenoy.getUrl(linkTo)}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={this.props.className}
+        style={{display: 'inline-block'}}
+      >
+        <button type="button" className={`btn btn-${this.props.team.competition}`}>
           <Icon
             fa={cn('fa fa-2x', {'fa-list-ol': linkTo === 'ranking', 'fa-dashboard': linkTo === 'results'})}
             tooltip={this.context.t(`teamCalendar.frenoy${linkTo}`)}
@@ -50,25 +66,26 @@ export class FrenoyButton extends Component {
 
 
 
-export class FrenoyWeekButton extends Component {
-  static contextTypes = PropTypes.contextTypes;
+type FrenoyWeekButtonProps = {
+  team: ITeam;
+  week: number;
+  className?: string;
+  style?: React.CSSProperties;
+}
 
-  static propTypes = {
-    team: PropTypes.TeamModel.isRequired,
-    week: PropTypes.number.isRequired,
-    className: PropTypes.string,
-    style: PropTypes.object,
-  }
+export class FrenoyWeekButton extends Component<FrenoyWeekButtonProps> {
+  static contextTypes = PropTypes.contextTypes;
 
   render() {
     return (
       <a
         href={this.props.team.frenoy.getWeekUrl(this.props.week)}
         target="_blank"
+        rel="noopener noreferrer"
         className={this.props.className}
         style={({display: 'inline-block', ...this.props.style})}
       >
-        <button className={`btn btn-${this.props.team.competition}`}>
+        <button type="button" className={`btn btn-${this.props.team.competition}`}>
           <Icon
             fa="fa fa-2x fa-calendar"
             tooltip={this.context.t('teamCalendar.frenoyweek')}
@@ -81,19 +98,14 @@ export class FrenoyWeekButton extends Component {
 
 
 
-
-export class FrenoyWeekLink extends Component {
+export class FrenoyWeekLink extends Component<{match: IMatch}> {
   static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    match: PropTypes.MatchModel.isRequired,
-  }
 
   render() {
     const {match} = this.props;
     const team = match.getTeam();
     return (
-      <a href={team.frenoy.getWeekUrl(match.week)} target="_blank" className="link-hover-underline">
+      <a href={team.frenoy.getWeekUrl(match.week)} target="_blank" rel="noopener noreferrer" className="link-hover-underline">
         {match.frenoyMatchId}
       </a>
     );

@@ -2,7 +2,7 @@ import moment from 'moment';
 import storeUtil from '../storeUtil';
 import {TeamFrenoyModel} from './TeamFrenoyModel';
 import {ITeam, Competition, ITeamOpponent, ITeamPlayer, ITeamRanking, ITeamFrenoy, teamPlayerType, TeamPlayerType,
-  IPlayer, IMatch, ITeamPlayerInfo} from './model-interfaces';
+  IPlayer, IMatch, ITeamPlayerInfo, ITeamPlayerStats} from './model-interfaces';
 
 export default class TeamModel implements ITeam {
   competition: Competition;
@@ -49,7 +49,7 @@ export default class TeamModel implements ITeam {
     return `Prov ${this.divisionName}`;
   }
 
-  getDivisionRanking(opponent: 'our-ranking' | ITeamOpponent = 'our-ranking'): ITeamRanking | {empty: true} {
+  getDivisionRanking(opponent: 'our-ranking' | ITeamOpponent | undefined = 'our-ranking'): ITeamRanking | {empty: true} {
     if (opponent === 'our-ranking') {
       return this.getDivisionRanking({clubId: this.clubId, teamCode: this.teamCode});
     }
@@ -128,7 +128,7 @@ export default class TeamModel implements ITeam {
   }
 }
 
-export function getPlayerStats(matches: IMatch[], withBelles = false) {
+export function getPlayerStats(matches: IMatch[], withBelles = false): ITeamPlayerStats[] {
   // ATTN: There are tests for this one...
   const result = {};
   matches.forEach(match => {

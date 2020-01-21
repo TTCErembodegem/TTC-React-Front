@@ -10,6 +10,8 @@ import {withStyles as withMaterialStyles} from '@material-ui/core/styles';
 import Navigation from './HeaderNavigation';
 import {Icon} from '../../controls/Icons/Icon';
 import PropTypes, {withViewport} from '../../PropTypes';
+import {Viewport} from '../../../models/model-interfaces';
+import {IUser} from '../../../models/UserModel';
 
 require('./Header.css');
 
@@ -34,13 +36,21 @@ const HeaderButton = ({label, href}: {label: string, href: string}) => (
   </Link>
 );
 
-export default withViewport(withMaterialStyles(styles)(class Header extends Component {
-  static contextTypes = PropTypes.contextTypes;
 
-  static propTypes = {
-    viewport: PropTypes.viewport,
-    user: PropTypes.UserModel.isRequired,
-  }
+type HeaderProps = {
+  viewport: Viewport;
+  user: IUser;
+  classes: any;
+}
+
+type HeaderState = {
+  navOpen: boolean;
+  isNavOpening: boolean;
+}
+
+
+export default withViewport(withMaterialStyles(styles)(class Header extends Component<HeaderProps, HeaderState> {
+  static contextTypes = PropTypes.contextTypes;
 
   constructor(props) {
     super(props);
@@ -56,7 +66,12 @@ export default withViewport(withMaterialStyles(styles)(class Header extends Comp
       <div className={classes.root}>
         <AppBar position="sticky">
           <Toolbar variant="dense">
-            <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={() => this.setState({navOpen: !this.state.navOpen})}>
+            <IconButton
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="Menu"
+              onClick={() => this.setState(prevState => ({navOpen: !prevState.navOpen}))}
+            >
               <MenuIcon />
             </IconButton>
 

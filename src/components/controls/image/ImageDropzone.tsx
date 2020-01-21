@@ -1,15 +1,16 @@
-import PropTypes from 'prop-types';
+/* eslint-disable react/no-string-refs */
 import React, {Component} from 'react';
 import Dropzone from 'react-dropzone';
 import http from '../../../utils/httpClient';
+import {Translator} from '../../../models/model-interfaces';
 
-export default class ImageDropzone extends Component {
-  static propTypes = {
-    t: PropTypes.func.isRequired,
-    fileUploaded: PropTypes.func.isRequired,
-    type: PropTypes.string,
-  }
+type ImageDropzoneProps = {
+  t: Translator;
+  fileUploaded: Function;
+  type?: string;
+}
 
+export default class ImageDropzone extends Component<ImageDropzoneProps> {
   _onDrop(files) {
     const self = this;
     http.upload(files, this.props.type)

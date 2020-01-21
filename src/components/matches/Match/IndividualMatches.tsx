@@ -7,14 +7,19 @@ import {OpponentPlayerLabel} from './OpponentPlayer';
 import {TrophyIcon} from '../../controls/Icons/TrophyIcon';
 import {PlayerLink} from '../../players/controls/PlayerLink';
 import {FrenoyLink} from '../../controls/Buttons/FrenoyButton';
+import {IMatch, Competition, Viewport} from '../../../models/model-interfaces';
 
-class IndividualMatches extends Component {
+type IndividualMatchesProps = {
+  match: IMatch;
+  ownPlayerId: number;
+}
+
+type IndividualMatchesState = {
+  pinnedPlayerId: number;
+}
+
+class IndividualMatches extends Component<IndividualMatchesProps, IndividualMatchesState> {
   static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    match: PropTypes.MatchModel.isRequired,
-    ownPlayerId: PropTypes.number.isRequired,
-  }
 
   constructor(props) {
     super(props);
@@ -83,7 +88,7 @@ class IndividualMatches extends Component {
   }
 
   _onIndividualMatchChange(selectedPlayerId) {
-    this.setState({pinnedPlayerId: this.state.pinnedPlayerId === selectedPlayerId ? null : selectedPlayerId});
+    this.setState(prevState => ({pinnedPlayerId: prevState.pinnedPlayerId === selectedPlayerId ? null : selectedPlayerId}));
   }
 }
 
@@ -93,12 +98,8 @@ class IndividualMatches extends Component {
 
 
 
-export class ReadonlyIndividualMatches extends Component {
+export class ReadonlyIndividualMatches extends Component<{match: IMatch}> {
   static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    match: PropTypes.MatchModel.isRequired,
-  }
 
   constructor(props) {
     super(props);
@@ -155,17 +156,17 @@ export class ReadonlyIndividualMatches extends Component {
   }
 }
 
+type ReadonlyMatchPlayerLabelComponentProps = {
+  game?: any;
+  homePlayer: boolean;
+  competition: Competition;
+  viewport: Viewport;
+  onClick: Function;
+}
 
-class ReadonlyMatchPlayerLabelComponent extends Component {
+
+class ReadonlyMatchPlayerLabelComponent extends Component<ReadonlyMatchPlayerLabelComponentProps> {
   static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    game: PropTypes.object,
-    homePlayer: PropTypes.bool.isRequired,
-    competition: PropTypes.string.isRequired,
-    viewport: PropTypes.viewport,
-    onClick: PropTypes.func.isRequired,
-  };
 
   render() {
     const {game, homePlayer, competition, viewport, onClick} = this.props;
@@ -174,11 +175,15 @@ class ReadonlyMatchPlayerLabelComponent extends Component {
     return (
       <span className={cn({accentuate: won})} style={{display: 'inline-block'}}>
         {won && viewport.width > 500 ? <TrophyIcon style={{marginRight: 8}} /> : null}
-        <span onClick={onClick} className="clickable">
+        <span role="button" onClick={onClick} className="clickable" tabIndex={0}>
           {viewport.width > 800 ? ply.name : ply.alias}
         </span>
         &nbsp;&nbsp;
-        {viewport.width > 350 ? <FrenoyLink competition={competition} uniqueIndex={ply.uniqueIndex}>{viewport.width > 400 ? `${ply.ranking} ` : null}</FrenoyLink> : null}
+        {viewport.width > 350 && (
+          <FrenoyLink competition={competition} uniqueIndex={ply.uniqueIndex}>
+            {viewport.width > 400 ? `${ply.ranking} ` : null}
+          </FrenoyLink>
+        )}
       </span>
     );
   }

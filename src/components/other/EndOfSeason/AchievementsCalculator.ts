@@ -1,9 +1,27 @@
 import {getPlayerStats} from '../../../models/TeamModel';
 import PlayerAchievements from './PlayerAchievements';
 import {getRankingValue} from '../../../models/utils/playerRankingValueMapper';
+import {IPlayer, IMatch, ITeam, Competition, ITeamPlayerStats} from '../../../models/model-interfaces';
+
+export type NewPlayerRanking = {
+  ply: IPlayer;
+  old: string;
+  oldValue: number;
+  new: string;
+  newValue: number;
+}
 
 export class AchievementsCalculator {
-  constructor(players, matches, teams) {
+  players: IPlayer[];
+  matches: IMatch[];
+  teams: ITeam[];
+  playerStats: ITeamPlayerStats[];
+  vttlPlayerStats: ITeamPlayerStats[];
+  sportaplayerStats: ITeamPlayerStats[];
+  sportaMatches: IMatch[];
+  vttlMatches: IMatch[];
+
+  constructor(players: IPlayer[], matches: IMatch[], teams: ITeam[]) {
     this.players = players;
     this.matches = matches.filter(x => x.isSyncedWithFrenoy).sort((a, b) => a.date.valueOf() - b.date.valueOf());
     this.teams = teams;
@@ -46,11 +64,11 @@ export class AchievementsCalculator {
     return [];
   }
 
-  getNewRanking(competition) {
+  getNewRanking(competition: Competition): NewPlayerRanking[] {
     const players = this.players
       .filter(player => player.getCompetition(competition))
       .map(player => {
-        const result = {
+        const result: NewPlayerRanking = {
           ply: player,
           old: player.getCompetition(competition).ranking,
           new: player.getCompetition(competition).nextRanking,
@@ -66,7 +84,7 @@ export class AchievementsCalculator {
     return players;
   }
 
-  getPlayerStats(type) {
+  getPlayerStats(type: Competition | 'belles'): {playerStats: ITeamPlayerStats[], matches: IMatch[]} {
     switch (type) {
       case 'Vttl':
         return {playerStats: this.vttlPlayerStats, matches: this.vttlMatches};

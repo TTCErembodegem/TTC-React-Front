@@ -3,8 +3,9 @@ import Tooltip from 'react-bootstrap/lib/Tooltip';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import PropTypes from '../../PropTypes';
 import {Icon} from './Icon';
+import {IMatch, Translator} from '../../../models/model-interfaces';
 
-export const ThrillerIcon = ({color = undefined}) => (
+export const ThrillerIcon = ({color = undefined}: {color?: string}) => (
   <Icon
     fa="fa fa-heartbeat faa-pulse animated"
     style={{marginLeft: 3, marginRight: 7, marginTop: 3, color}}
@@ -13,22 +14,18 @@ export const ThrillerIcon = ({color = undefined}) => (
   />
 );
 
-ThrillerIcon.propTypes = {
-  color: PropTypes.string,
-};
 
+export type BadgyProps = {
+  type: string,
+  style?: React.CSSProperties,
+  children?: any,
+  tooltip?: string,
+}
 
 
 // Badgy because material-ui also defines a Badge
-export class Badgy extends Component {
+export class Badgy extends Component<BadgyProps> {
   static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    type: PropTypes.string.isRequired,
-    style: PropTypes.object,
-    children: PropTypes.any,
-    tooltip: PropTypes.string,
-  };
 
   render() {
     const {t} = this.context;
@@ -47,11 +44,11 @@ export class Badgy extends Component {
 
 
 
-export const ThrillerBadge = ({t, match}) => {
+export const ThrillerBadge = ({t, match}: {t: Translator, match: IMatch}) => {
   const team = match.getTeam();
   const thrillerType = team.getThriller(match);
   if (thrillerType) {
-    const thrillerStyle = {
+    const thrillerStyle: React.CSSProperties = {
       position: 'absolute',
       top: 60,
       left: 15,
@@ -66,9 +63,4 @@ export const ThrillerBadge = ({t, match}) => {
     );
   }
   return <div />;
-};
-
-ThrillerBadge.propTypes = {
-  t: PropTypes.func.isRequired,
-  match: PropTypes.MatchModel.isRequired,
 };

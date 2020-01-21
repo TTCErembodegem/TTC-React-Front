@@ -5,20 +5,22 @@ import PropTypes, {withViewport} from '../../PropTypes';
 import {OtherMatchPlayerResultsTableRow} from './OtherMatchPlayerResults';
 import {MatchPlayerRankings} from '../controls/MatchPlayerRankings';
 import {Spinner} from '../../controls/controls/Spinner';
+import { IMatchCommon, IMatchOther, Viewport, ITeamOpponent } from '../../../models/model-interfaces';
 
 const AmountOfOpponentMatchesToShow = 5;
 
-class OpponentsLastMatches extends Component {
-  static contextTypes = PropTypes.contextTypes;
+type OpponentsLastMatchesProps = {
+  opponent: ITeamOpponent;
+  readonlyMatches: (IMatchCommon & IMatchOther)[];
+  viewport: Viewport;
+}
 
-  static propTypes = {
-    opponent: PropTypes.shape({
-      clubId: PropTypes.number.isRequired,
-      teamCode: PropTypes.string.isRequired,
-    }),
-    readonlyMatches: PropTypes.object.isRequired,
-    viewport: PropTypes.viewport,
-  }
+type OpponentsLastMatchesState = {
+  showAll: boolean;
+}
+
+class OpponentsLastMatches extends Component<OpponentsLastMatchesProps, OpponentsLastMatchesState> {
+  static contextTypes = PropTypes.contextTypes;
 
   constructor(props) {
     super(props);

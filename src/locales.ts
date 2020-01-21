@@ -27,7 +27,7 @@ const translate: Translator = (key: string, params: any = {}): string => {
   return str;
 };
 
-translate.reverseRoute = (baseRoute, translatedRoute) => {
+translate.reverseRoute = (baseRoute: string, translatedRoute: string): string => {
   let result;
   Object.keys(routes[baseRoute]).forEach(key => {
     const value = routes[baseRoute][key];
@@ -38,7 +38,7 @@ translate.reverseRoute = (baseRoute, translatedRoute) => {
   return result;
 };
 
-translate.route = (routeName: string, params) => {
+translate.route = (routeName: string, params: any): string => {
   let route;
   if (routeName.indexOf('.') === -1) {
     route = routes[routeName];

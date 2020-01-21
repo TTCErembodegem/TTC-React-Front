@@ -1,10 +1,18 @@
 import React from 'react';
-import PropTypes from '../../PropTypes';
 import {EditIcon} from '../../controls/Icons/EditIcon';
 import {Icon} from '../../controls/Icons/Icon';
+import {IMatch, Translator} from '../../../models/model-interfaces';
 
-export const OpenMatchForEditButton = ({onClick, match, t}) => (
+type OpenMatchForEditButtonProps = {
+  onClick: Function;
+  match: IMatch;
+  t: Translator;
+}
+
+export const OpenMatchForEditButton = ({onClick, match, t}: OpenMatchForEditButtonProps) => (
   <button
+    type="button"
+    tabIndex={0}
     onClick={onClick}
     className="btn btn-default pull-right"
     style={{marginRight: 5}}
@@ -22,9 +30,3 @@ export const OpenMatchForEditButton = ({onClick, match, t}) => (
     </span>
   </button>
 );
-
-OpenMatchForEditButton.propTypes = {
-  onClick: PropTypes.func.isRequired,
-  match: PropTypes.MatchModel.isRequired,
-  t: PropTypes.func.isRequired,
-};

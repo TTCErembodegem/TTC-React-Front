@@ -1,23 +1,28 @@
 import React, {Component} from 'react';
 import Select from 'react-select';
 import PropTypes, {connect} from '../PropTypes';
+import {IPlayer, Competition} from '../../models/model-interfaces';
 
-class PlayerAutoComplete extends Component {
+type PlayerAutoCompleteProps = {
+  players: IPlayer[];
+  selectPlayer: (playerId: number) => void;
+  clearOnSelect: Function;
+  competition: Competition;
+}
+
+type PlayerAutoCompleteState = {
+  searchText: null | string;
+}
+
+class PlayerAutoComplete extends Component<PlayerAutoCompleteProps, PlayerAutoCompleteState> {
   static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    players: PropTypes.PlayerModelList.isRequired,
-    selectPlayer: PropTypes.func.isRequired,
-    clearOnSelect: PropTypes.bool,
-    competition: PropTypes.oneOf(['Vttl', 'Sporta']),
-  }
 
   static defaultProps = {
     clearOnSelect: false,
   }
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {searchText: null};
   }
 

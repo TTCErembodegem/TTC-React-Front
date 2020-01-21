@@ -1,21 +1,21 @@
-import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import {Icon} from '../Icons/Icon';
 import {displayMobile} from '../../../models/PlayerModel';
+import {IPlayer} from '../../../models/model-interfaces';
 
 function callFormat(n) {
   return n;
   // return '+32' + n.substr(1);
 }
 
-export class Telephone extends Component {
-  static propTypes = {
-    number: PropTypes.string,
-    player: PropTypes.object,
-    hideIcon: PropTypes.bool,
-    noLink: PropTypes.bool,
-  }
+type TelephoneProps = {
+  number: string,
+  player: IPlayer,
+  hideIcon: boolean,
+  noLink: boolean,
+}
 
+export class Telephone extends Component<TelephoneProps> {
   static defaultProps = {
     hideIcon: false,
   }

@@ -1,17 +1,20 @@
 // Copy from: https://github.com/nmn/react-timeago
 // But translated with jquery-timeago inWords
-
-
-
 import _ from 'lodash';
 import timeAgoInWords from '../../../utils/timeAgoInWords';
 
-const PropTypes = require('prop-types');
-
 const React = require('react');
 
-export class TimeAgo extends React.Component {
-  timeoutId = 0;
+type TimeAgoProps = {
+  live: boolean,
+  component: 'span' | string | Function,
+  minPeriod: number,
+  maxPeriod: number,
+  date: any;
+}
+
+export class TimeAgo extends React.Component<TimeAgoProps> {
+  timeoutId: undefined | number = 0;
 
   static defaultProps = {
     live: true,
@@ -19,14 +22,6 @@ export class TimeAgo extends React.Component {
     minPeriod: 0,
     maxPeriod: Infinity,
   }
-
-  static propTypes = {
-    live: PropTypes.bool.isRequired,
-    minPeriod: PropTypes.number.isRequired,
-    maxPeriod: PropTypes.number.isRequired,
-    component: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
-    date: PropTypes.object.isRequired,
-  };
 
   componentDidMount() {
     if (this.props.live) {
@@ -40,7 +35,7 @@ export class TimeAgo extends React.Component {
         clearTimeout(this.timeoutId);
         this.timeoutId = undefined;
       }
-      this.tick();
+      this.tick(false);
     }
   }
 
@@ -51,7 +46,7 @@ export class TimeAgo extends React.Component {
     }
   }
 
-  tick(refresh) {
+  tick(refresh: boolean) {
     if (!this.isMounted || !this.props.live) {
       return;
     }

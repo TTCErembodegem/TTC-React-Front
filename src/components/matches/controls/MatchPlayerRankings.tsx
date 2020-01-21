@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import PropTypes from '../../PropTypes';
 import {getMatchPlayerRankings} from '../../../storeUtil';
+import {IMatch} from '../../../models/model-interfaces';
 
+type PlayerRankingsProps = {
+  formation: any[];
+}
 
-export class PlayerRankings extends Component {
-  static propTypes = {
-    formation: PropTypes.array.isRequired,
-  }
-
+export class PlayerRankings extends Component<PlayerRankingsProps> {
   render() {
     const {formation, ...props} = this.props;
 
@@ -26,13 +26,13 @@ export class PlayerRankings extends Component {
 }
 
 
-export class MatchPlayerRankings extends Component {
-  static contextTypes = PropTypes.contextTypes;
+type MatchPlayerRankingsProps = {
+  homeTeam: boolean;
+  match: IMatch;
+}
 
-  static propTypes = {
-    homeTeam: PropTypes.bool.isRequired,
-    match: PropTypes.MatchModel.isRequired,
-  }
+export class MatchPlayerRankings extends Component<MatchPlayerRankingsProps> {
+  static contextTypes = PropTypes.contextTypes;
 
   render() {
     const formation = getMatchPlayerRankings(this.props.match, this.props.homeTeam);

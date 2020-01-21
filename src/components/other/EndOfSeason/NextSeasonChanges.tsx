@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
 import cn from 'classnames';
-import PropTypes, {connect, storeUtil} from '../../PropTypes';
+import PropTypes from '../../PropTypes';
 import {PlayerLink} from '../../players/controls/PlayerLink';
+import {AchievementsCalculator, NewPlayerRanking} from './AchievementsCalculator';
 
-export default class NextSeasonChanges extends Component {
+type NextSeasonChangesProps = {
+  calcer: AchievementsCalculator;
+}
+
+export default class NextSeasonChanges extends Component<NextSeasonChangesProps> {
   static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    calcer: PropTypes.object,
-  }
 
   render() {
     const {calcer} = this.props;
@@ -35,7 +36,7 @@ export default class NextSeasonChanges extends Component {
 }
 
 
-const NextSeasonRankingChanges = ({rankings}) => {
+const NextSeasonRankingChanges = ({rankings}: {rankings: NewPlayerRanking[]}) => {
   if (!rankings.length) {
     return null;
   }

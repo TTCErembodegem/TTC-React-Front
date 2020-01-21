@@ -6,10 +6,10 @@ import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import t from '../../locales';
 
 type WithTooltipProps = {
-  tooltip: string;
-  title: string;
-  translate: boolean;
-  tooltipPlacement: string;
+  tooltip?: string;
+  title?: string;
+  translate?: boolean;
+  tooltipPlacement?: string;
 }
 
 export function withTooltip(ComposedComponent) {

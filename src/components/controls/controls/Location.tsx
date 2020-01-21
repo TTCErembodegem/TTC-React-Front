@@ -1,10 +1,15 @@
-import PropTypes from 'prop-types';
 import React, {Component} from 'react';
-
 import {Icon} from '../Icons/Icon';
 import {Telephone} from './Telephone';
+import {Translator} from '../../../models/model-interfaces';
 
-export const Location = ({loc, t, noTelephoneLink = false}) => (
+type LocationProps = {
+  t: Translator;
+  loc: any;
+  noTelephoneLink: boolean;
+};
+
+export const Location = ({loc, t, noTelephoneLink = false}: LocationProps) => (
   <div>
     <div className="iconize">
       <Icon fa="fa fa-map-marker" style={{verticalAlign: 'top'}} />
@@ -23,19 +28,14 @@ export const Location = ({loc, t, noTelephoneLink = false}) => (
   </div>
 );
 
-Location.propTypes = {
-  t: PropTypes.func.isRequired,
-  loc: PropTypes.object.isRequired,
-  noTelephoneLink: PropTypes.bool,
-};
 
 
-class Website extends Component {
-  static propTypes = {
-    site: PropTypes.string,
-    description: PropTypes.string,
-  }
+type WebsiteProps = {
+  site: string;
+  description: string;
+}
 
+class Website extends Component<WebsiteProps> {
   render() {
     if (!this.props.site) {
       return null;
@@ -44,7 +44,9 @@ class Website extends Component {
     return (
       <div className="iconize">
         <Icon fa="fa fa-external-link" />
-        <span style={{marginLeft: 7}}><a href={this.props.site} target="_blank">{this.props.description}</a></span>
+        <span style={{marginLeft: 7}}>
+          <a href={this.props.site} target="_blank" rel="noopener noreferrer">{this.props.description}</a>
+        </span>
       </div>
     );
   }

@@ -4,9 +4,9 @@ import PropTypes, {withTooltip} from '../../PropTypes';
 
 export type IconProps = {
   fa: string;
-  color?: string;
+  color?: string | undefined;
   style?: React.CSSProperties;
-  onClick: () => void;
+  onClick?: () => void;
   className?: string;
 }
 
@@ -31,7 +31,7 @@ class IconComponent extends Component<IconProps> {
         onClick={onClick}
         style={{color, ...style}}
         role="button"
-        tabIndex={ 0}
+        tabIndex={0}
       />
     );
   }

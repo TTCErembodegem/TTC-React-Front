@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
-import PropTypes, {connect} from '../../PropTypes';
+import {connect} from '../../PropTypes';
 
-export class Email extends Component {
-  static propTypes = {
-    email: PropTypes.string,
-    className: PropTypes.string,
-    showIcon: PropTypes.bool,
-  };
+type EmailProps = {
+  email: string;
+  className: string;
+  showIcon?: boolean;
+}
 
+export class Email extends Component<EmailProps> {
   render() {
     const {email} = this.props;
     if (!email) {
@@ -30,12 +30,12 @@ export class Email extends Component {
 }
 
 
-class OwnEmailComponent extends Component {
-  static propTypes = {
-    className: PropTypes.string,
-    email: PropTypes.string.isRequired,
-  };
+type OwnEmailProps = {
+  email: string;
+  className: string;
+}
 
+class OwnEmailComponent extends Component<OwnEmailProps> {
   render() {
     return <Email email={this.props.email} {...this.props} />;
   }

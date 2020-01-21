@@ -17,6 +17,8 @@ import {MatchCardAdmin} from './MatchCardAdmin';
 import {TabbedContainer} from '../../controls/TabbedContainer';
 import {CommentIcon} from '../../controls/Icons/CommentIcon';
 import {EditIcon} from '../../controls/Icons/EditIcon';
+import {IConfig, IMatch, Viewport} from '../../../models/model-interfaces';
+import {IUser} from '../../../models/UserModel';
 
 const tabEventKeys = keyMirror({
   players: '',
@@ -29,27 +31,28 @@ const tabEventKeys = keyMirror({
   admin: '',
 });
 
-class MatchCard extends Component {
+type MatchCardProps = {
+  config: IConfig;
+  user: IUser;
+  readonlyMatches: IMatch[];
+  viewport: Viewport;
+  getOpponentMatches: Function;
+  setSetting: Function;
+  match: IMatch;
+  viewportWidthContainerCount: number;
+  big?: boolean;
+  small?: boolean;
+  isOpen?: boolean;
+  params?: {tabKey?: string};
+}
+
+type MatchCardState = {
+  forceEditPlayers: boolean;
+}
+
+
+class MatchCard extends Component<MatchCardProps, MatchCardState> {
   static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    config: PropTypes.object.isRequired,
-    user: PropTypes.UserModel.isRequired,
-    readonlyMatches: PropTypes.object.isRequired,
-    viewport: PropTypes.viewport,
-    getOpponentMatches: PropTypes.func.isRequired,
-    setSetting: PropTypes.func.isRequired,
-
-    match: PropTypes.MatchModel.isRequired,
-    viewportWidthContainerCount: PropTypes.number.isRequired,
-    big: PropTypes.bool,
-    small: PropTypes.bool,
-    isOpen: PropTypes.bool,
-
-    params: PropTypes.shape({
-      tabKey: PropTypes.string,
-    }),
-  }
 
   static defaultProps = {
     viewportWidthContainerCount: 1, // The amount of containers next to eachother that display a PlayersImageGallery
@@ -135,10 +138,10 @@ class MatchCard extends Component {
     );
   }
 
-  _getCommentsIcon() {
+  _getCommentsIcon(): React.ReactNode {
     const hasNewComment = this.props.config.get(`newMatchComment${this.props.match.id}`);
     if (!hasNewComment) {
-      return;
+      return null;
     }
     return <CommentIcon className="match-card-tab-icon" />;
   }
@@ -152,16 +155,16 @@ class MatchCard extends Component {
   _onStartEditPlayers(event) {
     event.stopPropagation();
     event.preventDefault();
-    this.setState({forceEditPlayers: !this.state.forceEditPlayers});
+    this.setState(prevState => ({forceEditPlayers: !prevState.forceEditPlayers}));
   }
 
-  _onTabSelect(eventKey) {
+  _onTabSelect(eventKey: string) {
     if (eventKey === tabEventKeys.report) {
       this.props.setSetting(`newMatchComment${this.props.match.id}`, false);
     }
   }
 
-  _renderTabContent(eventKey) {
+  _renderTabContent(eventKey: string) {
     switch (eventKey) {
       case tabEventKeys.players:
         return this._renderPlayers();
@@ -186,8 +189,10 @@ class MatchCard extends Component {
 
       case tabEventKeys.admin:
         return <MatchCardAdmin match={this.props.match} />;
+
+      default:
+        return 'Unknown';
     }
-    return 'Unknown';
   }
 
   _renderOpponentsRanking() {

@@ -2,22 +2,29 @@ import React, {Component} from 'react';
 import _ from 'lodash';
 import PropTypes, {connect} from '../../PropTypes';
 import * as matchActions from '../../../actions/matchActions';
-
 import MatchScore from '../MatchScore';
 import {Icon} from '../../controls/Icons/Icon';
+import {IUser} from '../../../models/UserModel';
+import {IMatch, Translator, IMatchScore} from '../../../models/model-interfaces';
 
-const scoreOrDefault = match => match.score || {home: 0, out: 0};
+const scoreOrDefault = (match: IMatch): IMatchScore => match.score || {home: 0, out: 0};
 
-class MatchForm extends Component {
+type MatchFormProps = {
+  user: IUser;
+  match: IMatch;
+  t: Translator;
+  updateScore: Function;
+  big?: boolean;
+}
+
+type MatchFormState = {
+  useInput: boolean;
+  inputScore: string;
+  currentScore: IMatchScore;
+}
+
+class MatchForm extends Component<MatchFormProps, MatchFormState> {
   static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    user: PropTypes.UserModel.isRequired,
-    match: PropTypes.MatchModel.isRequired,
-    t: PropTypes.func.isRequired,
-    updateScore: PropTypes.func.isRequired,
-    big: PropTypes.bool,
-  }
 
   constructor(props) {
     super(props);
@@ -63,7 +70,7 @@ class MatchForm extends Component {
           />
         ) : null}
 
-        <div style={{display: 'inline'}} onClick={e => this._onOpenInputScore(e)}>
+        <div style={{display: 'inline'}} onClick={e => this._onOpenInputScore(e)} role="button" tabIndex={0}>
           <MatchScore match={match} forceDisplay style={{fontSize: this.props.big ? 46 : 24}} showThrophy={false} />
         </div>
 
@@ -82,7 +89,7 @@ class MatchForm extends Component {
 
   _onOpenInputScore(e) {
     e.stopPropagation();
-    this.setState({useInput: !this.state.useInput});
+    this.setState(prevState => ({useInput: !prevState.useInput}));
   }
 
   _onInputScoreUpdate(e) {
@@ -107,7 +114,16 @@ class MatchForm extends Component {
   }
 }
 
-const MatchManipulation = ({style, plusClick, minClick, big, isHome}) => (
+
+type MatchManipulationProps = {
+  style?: React.CSSProperties;
+  plusClick: Function;
+  minClick: Function;
+  big?: boolean;
+  isHome?: boolean;
+};
+
+const MatchManipulation = ({style, plusClick, minClick, big, isHome}: MatchManipulationProps) => (
   <div style={{color: '#d3d3d3', marginTop: big ? 0 : -10, ...style}}>
     <div style={{verticalAlign: 'top'}}>
       <Icon
@@ -129,13 +145,5 @@ const MatchManipulation = ({style, plusClick, minClick, big, isHome}) => (
     </div>
   </div>
 );
-
-MatchManipulation.propTypes = {
-  style: PropTypes.object,
-  plusClick: PropTypes.func.isRequired,
-  minClick: PropTypes.func.isRequired,
-  big: PropTypes.bool,
-  isHome: PropTypes.bool,
-};
 
 export default connect(() => ({}), matchActions)(MatchForm);

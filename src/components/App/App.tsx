@@ -2,26 +2,28 @@ import React, {Component} from 'react';
 import Grid from 'react-bootstrap/lib/Grid';
 import Snackbar from '@material-ui/core/Snackbar';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
-import PropTypes, {connect, withViewport, withContext} from '../PropTypes';
-
+import {connect, withViewport, withContext} from '../PropTypes';
 import Header from '../skeleton/Header/Header';
 import Footer from '../skeleton/Footer/Footer';
 import * as configActions from '../../actions/configActions';
+import {IConfig, Viewport} from '../../models/model-interfaces';
+import {IUser} from '../../models/UserModel';
 
 
 import './App.css';
 
-class App extends Component {
-  static propTypes = {
-    config: PropTypes.map.isRequired,
-    user: PropTypes.UserModel,
-    children: PropTypes.element,
-    clearSnackbar: PropTypes.func.isRequired,
-    viewport: PropTypes.viewport,
-  };
 
+type AppProps = {
+  config: IConfig;
+  user: IUser;
+  children: any;
+  clearSnackbar: Function;
+  viewport: Viewport;
+}
+
+class App extends Component<AppProps> {
   render() {
-    const containerStyle = {};
+    const containerStyle: React.CSSProperties = {width: undefined};
 
     const isBigTodayMatches = this.props.config.get('container100PerWidth');
     if (isBigTodayMatches) {

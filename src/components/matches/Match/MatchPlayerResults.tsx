@@ -1,10 +1,14 @@
 import React from 'react';
-import PropTypes from '../../PropTypes';
-
 import OpponentPlayer from './OpponentPlayer';
 import OwnPlayer from './OwnPlayer';
+import {IMatch, Translator} from '../../../models/model-interfaces';
 
-const MatchPlayerResults = ({match, t}) => (
+type MatchPlayerResultsProps = {
+  match: IMatch;
+  t: Translator;
+}
+
+const MatchPlayerResults = ({match, t}: MatchPlayerResultsProps) => (
   <div className="match-card-tab-content">
     <div>
       <h3>{t('match.playersVictoryTitle')}</h3>
@@ -18,10 +22,5 @@ const MatchPlayerResults = ({match, t}) => (
     </div>
   </div>
 );
-
-MatchPlayerResults.propTypes = {
-  match: PropTypes.MatchModel.isRequired,
-  t: PropTypes.func.isRequired,
-};
 
 export default MatchPlayerResults;

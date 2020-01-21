@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Table from 'react-bootstrap/lib/Table';
 import TextField from '@material-ui/core/TextField';
-import PropTypes, {connect, withViewport} from '../PropTypes';
+import {connect, withViewport} from '../PropTypes';
 import {updateClub} from '../../actions/clubActions';
 import AdminClubForm from './AdminClubForm';
 import {EditButton} from '../controls/Buttons/EditButton';

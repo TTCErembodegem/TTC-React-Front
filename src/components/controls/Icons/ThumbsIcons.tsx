@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from '../../PropTypes';
-import {Icon} from './Icon';
+import {Icon, IconProps} from './Icon';
 
 
-export const ThumbsUpIcon = ({style, ...props}) => (
+export const ThumbsUpIcon = ({style, ...props}: IconProps) => (
   <Icon
     fa="fa fa-thumbs-o-up"
     color="#D3D3D3"
@@ -14,7 +14,7 @@ export const ThumbsUpIcon = ({style, ...props}) => (
   />
 );
 
-export const ThumbsDownIcon = ({style, ...props}) => (
+export const ThumbsDownIcon = ({style, ...props}: IconProps) => (
   <Icon
     fa="fa fa-thumbs-o-down"
     color="#D3D3D3"
@@ -25,25 +25,18 @@ export const ThumbsDownIcon = ({style, ...props}) => (
   />
 );
 
-ThumbsUpIcon.propTypes = {style: PropTypes.object};
-ThumbsDownIcon.propTypes = {style: PropTypes.object};
 
 
-
-export class ThumbsGreatIcon extends Component {
+export class ThumbsGreatIcon extends Component<IconProps> {
   static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    style: PropTypes.object,
-  }
 
   render() {
     const {t} = this.context;
     return (
       <Icon
         fa="fa fa-thumbs-up"
-        style={this.props.style}
         tooltip={t('teamCalendar.matchesWonAllBadge')}
+        {...this.props}
       />
     );
   }

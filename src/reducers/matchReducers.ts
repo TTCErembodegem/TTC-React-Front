@@ -1,6 +1,5 @@
 import Immutable from 'immutable';
 import * as immutableHelpers from './immutableHelpers';
-
 import ActionTypes from '../actions/ActionTypes';
 import MatchModel from '../models/MatchModel';
 

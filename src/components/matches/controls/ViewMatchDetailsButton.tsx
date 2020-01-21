@@ -4,14 +4,15 @@ import cn from 'classnames';
 import PropTypes, {storeUtil} from '../../PropTypes';
 import {OwnClubId} from '../../../models/ClubModel';
 import MatchScore from '../MatchScore';
+import {IMatch} from '../../../models/model-interfaces';
 
-export class ViewMatchDetailsButton extends Component {
+type ViewMatchDetailsButtonProps = {
+  match: IMatch;
+  size: 'xs';
+}
+
+export class ViewMatchDetailsButton extends Component<ViewMatchDetailsButtonProps> {
   static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    match: PropTypes.MatchModel.isRequired,
-    size: PropTypes.oneOf(['xs']),
-  }
 
   render() {
     const {match} = this.props;
@@ -34,12 +35,12 @@ export class ViewMatchDetailsButton extends Component {
 }
 
 
-export class MatchOtherRoundButton extends Component {
-  static contextTypes = PropTypes.contextTypes;
+type MatchOtherRoundButtonProps = {
+  match: IMatch;
+}
 
-  static propTypes = {
-    match: PropTypes.MatchModel.isRequired,
-  }
+export class MatchOtherRoundButton extends Component<MatchOtherRoundButtonProps> {
+  static contextTypes = PropTypes.contextTypes;
 
   render() {
     const matches = storeUtil.matches

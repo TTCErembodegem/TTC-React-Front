@@ -2,20 +2,22 @@ import React, {Component} from 'react';
 import cn from 'classnames';
 import PropTypes, {connect} from '../../PropTypes';
 import {Icon} from '../Icons/Icon';
+import {ButtonComponentProps} from './Button';
+import {IUser} from '../../../models/UserModel';
 
-class ExcelButtonComponent extends Component {
+type ExcelButtonComponentProps = ButtonComponentProps & {
+  user: IUser;
+}
+
+type ExcelButtonComponentState = {
+  isDownloading: boolean;
+}
+
+class ExcelButtonComponent extends Component<ExcelButtonComponentProps, ExcelButtonComponentState> {
   static contextTypes = PropTypes.contextTypes;
 
-  static propTypes = {
-    onClick: PropTypes.func.isRequired,
-    tooltip: PropTypes.string,
-    className: PropTypes.string,
-    style: PropTypes.any,
-    user: PropTypes.UserModel.isRequired,
-  }
-
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {isDownloading: false};
   }
 
@@ -37,7 +39,7 @@ class ExcelButtonComponent extends Component {
       return <div />;
     }
     return (
-      <button onClick={() => this._onDownload()} className={cn('btn btn-default', this.props.className)} style={this.props.style}>
+      <button type="button" onClick={() => this._onDownload()} className={cn('btn btn-default', this.props.className)} style={this.props.style}>
         <Icon
           fa={cn('fa-2x', this.state.isDownloading ? 'fa fa-spinner fa-pulse' : 'fa fa-file-excel-o')}
           tooltip={this.props.tooltip}

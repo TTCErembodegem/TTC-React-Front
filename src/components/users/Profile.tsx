@@ -7,6 +7,8 @@ import ChangePassword from './ChangePassword';
 import ChangePlayerDetails from './ChangePlayerDetails';
 import ProfilePhotoForm, {ProfilePhotoAvatarForm} from './ProfilePhotoForm';
 import PlayerLineup from './PlayerLineup';
+import {IUser} from '../../models/UserModel';
+import {TabbedContainerEventKeyRouteProps, Historian, IPlayer, Translator} from '../../models/model-interfaces';
 
 const tabEventKeys = keyMirror({
   main: '',
@@ -18,30 +20,22 @@ const tabEventKeys = keyMirror({
 });
 
 
-class Profile extends Component {
+type ProfileProps = {
+  user: IUser;
+  logout: Function;
+  match: TabbedContainerEventKeyRouteProps;
+  history: Historian;
+}
+
+class Profile extends Component<ProfileProps> {
   static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    user: PropTypes.UserModel.isRequired,
-    logout: PropTypes.func.isRequired,
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        tabKey: PropTypes.string,
-      }),
-    }),
-    history: PropTypes.any.isRequired,
-  }
-
-  constructor(props) {
-    super(props);
-  }
 
   _logout() {
     this.props.logout();
     this.props.history.push('/');
   }
 
-  _renderTabContent(eventKey) {
+  _renderTabContent(eventKey: string) {
     const player = this.props.user.getPlayer();
     switch (eventKey) {
       case tabEventKeys.main:
@@ -58,6 +52,8 @@ class Profile extends Component {
         const {user} = this.props;
         return <PlayerLineup teams={user.getTeams()} playerId={user.playerId} />;
       }
+      default:
+        return null;
     }
   }
 
@@ -117,7 +113,13 @@ class Profile extends Component {
   }
 }
 
-const ProfilePlayerDetails = ({player, t, logout}) => (
+type ProfilePlayerDetailsProps = {
+  player: IPlayer,
+  t: Translator,
+  logout: Function,
+};
+
+const ProfilePlayerDetails = ({player, t, logout}: ProfilePlayerDetailsProps) => (
   <div style={{padding: 10}}>
     <h3>{player.name}</h3>
     <p>
@@ -140,12 +142,4 @@ const ProfilePlayerDetails = ({player, t, logout}) => (
   </div>
 );
 
-ProfilePlayerDetails.propTypes = {
-  player: PropTypes.PlayerModel.isRequired,
-  t: PropTypes.func.isRequired,
-  logout: PropTypes.func.isRequired,
-};
-
-export default withRouter(connect(state => ({
-  user: state.user,
-}), loginActions)(Profile));
+export default withRouter(connect(state => ({user: state.user}), loginActions)(Profile));

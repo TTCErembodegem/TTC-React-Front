@@ -1,14 +1,18 @@
-import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import {playerUtils} from '../../models/PlayerModel';
 
-export default class PlayerImage extends Component {
-  static propTypes = {
-    playerId: PropTypes.number.isRequired,
-    center: PropTypes.bool,
-    shape: PropTypes.oneOf(['rounded', 'thumbnail', 'circle']),
-  }
+type PlayerImageProps = {
+  playerId: number;
+  center?: boolean;
+  shape?: 'rounded' | 'thumbnail' | 'circle';
+}
 
+type PlayerImageState = {
+  isLoaded: boolean;
+  img: string;
+}
+
+export default class PlayerImage extends Component<PlayerImageProps, PlayerImageState> {
   static defaultProps = {
     center: true,
     shape: 'rounded',
@@ -43,7 +47,7 @@ export default class PlayerImage extends Component {
 
     return (
       <div style={{textAlign: align}} {...props}>
-        <img src={this.state.img} className={`img-${shape}`} style={{height: 200}} />
+        <img src={this.state.img} className={`img-${shape}`} style={{height: 200}} alt="Speler" />
       </div>
     );
   }

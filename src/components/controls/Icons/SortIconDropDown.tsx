@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
-import PropTypes from '../../PropTypes';
 import {Icon} from './Icon';
 
 
@@ -9,19 +8,18 @@ const SortIcon = ({direction}) => ( // eslint-disable-line
   <Icon fa={`fa fa-2x fa-sort-alpha-${direction}`} translate tooltip="player.sort.tooltip" />
 );
 
+type SortIconDropDownProps = {
+  config: {
+    key: string,
+    text: string,
+  }[],
+  activeSort?: string,
+  activeSortDirection?: 'asc' | 'desc',
+  onSortChange: Function,
+  onSortDirectionChange: Function,
+}
 
-export class SortIconDropDown extends Component {
-  static propTypes = {
-    config: PropTypes.arrayOf(PropTypes.shape({
-      key: PropTypes.string.isRequired,
-      text: PropTypes.string.isRequired,
-    })).isRequired,
-    activeSort: PropTypes.string,
-    activeSortDirection: PropTypes.oneOf(['asc', 'desc']),
-    onSortChange: PropTypes.func.isRequired,
-    onSortDirectionChange: PropTypes.func.isRequired,
-  }
-
+export class SortIconDropDown extends Component<SortIconDropDownProps> {
   static defaultProps = {
     activeSortDirection: 'asc',
   }

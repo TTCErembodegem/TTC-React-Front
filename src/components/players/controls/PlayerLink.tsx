@@ -1,16 +1,17 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import PropTypes from '../../PropTypes';
 import t from '../../../locales';
+import {IPlayer} from '../../../models/model-interfaces';
 
-export class PlayerLink extends Component {
-  static propTypes = {
-    player: PropTypes.PlayerModel.isRequired,
-    alias: PropTypes.bool,
-    children: PropTypes.any,
-    className: PropTypes.string,
-  }
+type PlayerLinkProps = {
+  player: IPlayer;
+  alias?: boolean;
+  children?: any;
+  className?: string;
+  style?: React.CSSProperties;
+}
 
+export class PlayerLink extends Component<PlayerLinkProps> {
   static defaultProps = {
     className: 'link-hover-underline',
   }

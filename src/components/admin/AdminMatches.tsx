@@ -1,14 +1,19 @@
 import React, {Component} from 'react';
 import PropTypes, {connect} from '../PropTypes';
 import {forceFrenoySync} from '../../actions/matchActions';
+import {IMatch} from '../../models/model-interfaces';
 
-class AdminMatchesComponent extends Component {
+type AdminMatchesComponentProps = {
+  matches: IMatch[];
+  forceFrenoySync: Function;
+}
+
+type AdminMatchesComponentState = {
+  matchId: null | number;
+}
+
+class AdminMatchesComponent extends Component<AdminMatchesComponentProps, AdminMatchesComponentState> {
   static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    matches: PropTypes.MatchModelList.isRequired,
-    forceFrenoySync: PropTypes.func.isRequired,
-  }
 
   constructor(props) {
     super(props);
@@ -21,7 +26,7 @@ class AdminMatchesComponent extends Component {
         <h1>Force Frenoy Sync</h1>
         MatchId:
         <input type="text" onChange={e => this.setState({matchId: e.target.value})} style={{marginRight: 7, height: 32}} />
-        <button onClick={() => this.props.forceFrenoySync(this.state.matchId)} className="btn btn-default">
+        <button type="button" onClick={() => this.props.forceFrenoySync(this.state.matchId)} className="btn btn-default">
           Force Sync
         </button>
       </div>

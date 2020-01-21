@@ -1,6 +1,26 @@
 /* eslint-disable no-use-before-define */
 import {Moment} from 'moment';
 
+export interface ITeamPlayerStats {
+  // TODO interface ITeamPlayerStats
+}
+
+
+export interface IConfig {
+  // TODO: interface IConfig
+  [key: string]: any;
+}
+
+export type Historian = {
+  push: Function;
+}
+
+
+
+/* ****************************************************
+*                       UTILITY
+**************************************************** */
+
 export type Viewport = {
   width: number;
   height: number;
@@ -14,16 +34,17 @@ export type TabbedContainerEventKeyRouteProps = {
   }
 }
 
-export type Translator = (key: string, params?: any) => string;
+type TranslatorFn = (key: string, params?: any) => string;
+
+export type Translator = TranslatorFn & {
+  reverseRoute: (baseRoute: string, translatedRoute: string) => string;
+  route: (routeName: string, params?: any) => string;
+  timeAgo(): () => any;
+};
 
 /* ****************************************************
 *                       MATCHES
 **************************************************** */
-
-//  const plys = players.map(ply => ({
-//       player: storeUtil.getPlayer(ply.playerId),
-//       type: ply.type,
-//     }));
 
 export type Competition = 'Vttl' | 'Sporta';
 
@@ -53,9 +74,26 @@ export interface IMatchCommon {
   players: IMatchPlayer[];
   formationComment: string;
   games: IMatchGame[];
+
+  getDisplayDate(format?: 's' | 'd'): string;
+  getDisplayTime(): string;
+  isStandardStartTime(): boolean;
+  isBeingPlayed: () => boolean;
+  getOwnPlayers(): IMatchPlayer[];
+  getTheirPlayers(): IMatchPlayer[];
+  renderScore(): string;
+  getTeamPlayerCount: () => 4 | 3;
+  getGamePlayer(uniqueIndex: number): IMatchPlayer | {};
 }
 
+/** If you are unsure what kind of match it is */
 export interface IMatch extends IMatchCommon, IMatchOwn, IMatchOther {}
+
+/** If you know it needs a TTC Erembodegem match, use this one */
+export interface IFullMatchOwn extends IMatchCommon, IMatchOwn {}
+
+/** If you know it needs a ReadonlyMatch, use this one */
+export interface IFullMatcOther extends IMatchCommon, IMatchOther {}
 
 /**
  * This interface applies only to MatchModels in which
@@ -67,14 +105,19 @@ export interface IMatchOwn {
   description: string;
   reportPlayerId: 0 | number;
   block: 'Major' | string;
-  comments: any[];
+  comments: IMatchComment[];
   opponent: ITeamOpponent;
   isDerby: boolean;
 
-  isBeingPlayed: () => boolean;
-  getTeamPlayerCount: () => 4 | 3;
+  renderOpponentTitle(): string;
+  getOpponentClub(): IClub | {};
+  isScoreComplete(): boolean;
   getTeam: () => ITeam;
+  getPreviousMatch(): IMatch | undefined;
   plays: (playerId: number | IPlayer, statusFilter?: 'onlyFinal') => IMatchPlayer | undefined;
+  getPlayerFormation(statusFilter: undefined | 'onlyFinal' | 'Play' | 'Captain'): IMatchPlayerInfo[];
+  getOwnPlayerModels(statusFilter: undefined | 'onlyFinal' | 'Play' | 'Captain'): IPlayer[];
+  getGameMatches(): IGetGameMatches[];
 }
 
 /**
@@ -89,6 +132,9 @@ export interface IMatchOther {
   isOurMatch: boolean;
   /** If isOurMatch, get the IMatchOwn MatchModel */
   getOurMatch: () => IMatch;
+
+  getClub(which: 'home' | 'away'): IClub | undefined;
+  won(opponent: ITeamOpponent): boolean;
 }
 
 
@@ -119,6 +165,18 @@ export interface IMatchGame {
   outcome: MatchGameOutcome;
 }
 
+
+export interface IGetGameMatches {
+  matchNumber: number;
+  home: {} | IMatchPlayer;
+  out: {} | IMatchPlayer;
+  homeSets: number;
+  outSets: number;
+  outcome: MatchGameOutcome;
+
+  isDoubles: boolean;
+  ownPlayer: {} | IPlayer;
+}
 
 
 /* ****************************************************
@@ -202,7 +260,7 @@ export interface ITeam {
   getScoreCount(): 16 | 10;
   renderOwnTeamTitle(): string;
   getDivisionDescription(): string;
-  getDivisionRanking(opponent: 'our-ranking' | ITeamOpponent): ITeamRanking | {empty: true};
+  getDivisionRanking(opponent?: 'our-ranking' | ITeamOpponent): ITeamRanking | {empty: true};
   getThriller(match: IMatch): undefined | 'topMatch' | 'degradationMatch';
   isCaptain: (player: IPlayer) => boolean;
   getCaptainPlayerIds: () => number[];

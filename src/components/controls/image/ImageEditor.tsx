@@ -1,22 +1,30 @@
-import PropTypes from 'prop-types';
+/* eslint-disable react/no-string-refs */
 import React from 'react';
 import Slider from '@material-ui/lab/Slider';
 import AvatarEditor from 'react-avatar-editor';
 import {MaterialButton} from '../Buttons/MaterialButton';
+import {Translator} from '../../../models/model-interfaces';
 
 // TODO: Check to replace with: http://blog.mmcfarland.net/react-darkroom/
 
-export default class ImageEditor extends React.Component {
-  static propTypes = {
-    t: PropTypes.func.isRequired,
-    image: PropTypes.string.isRequired,
-    updateImage: PropTypes.func.isRequired,
-    size: PropTypes.shape({
-      width: PropTypes.number.isRequired,
-      height: PropTypes.number.isRequired,
-    }).isRequired,
-    borderRadius: PropTypes.number.isRequired,
-  }
+type ImageEditorProps = {
+  t: Translator,
+  image: string,
+  updateImage: Function,
+  size: {
+    width: number,
+    height: number,
+  },
+  borderRadius: number,
+}
+
+type ImageEditorState = {
+  scale: number;
+  borderRadius: number;
+}
+
+export default class ImageEditor extends React.Component<ImageEditorProps, ImageEditorState> {
+  editor: any;
 
   constructor(props) {
     super(props);

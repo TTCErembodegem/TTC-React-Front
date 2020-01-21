@@ -8,21 +8,23 @@ import MatchScore from '../MatchScore';
 import {TheirTeamTitle} from './TheirTeamTitle';
 import {ThrillerBadge, ThrillerIcon} from '../../controls/Icons/ThrillerIcon';
 import {CommentIcon} from '../../controls/Icons/CommentIcon';
+import {IMatch, Translator, IConfig} from '../../../models/model-interfaces';
+import {IUser} from '../../../models/UserModel';
 
 const thrillerIconWith = 25;
 const ThrillerIconSpan = <span key="1" style={{width: thrillerIconWith, float: 'left'}}>&nbsp;</span>;
 
-// BigMatchCardHeader == MatchesToday on Club monitor
-export class BigMatchCardHeader extends Component {
-  static contextTypes = PropTypes.contextTypes;
+type BigMatchCardHeaderProps = {
+  match2: IMatch;
+  children?: any;
+  user: IUser;
+  isOpen: boolean;
+  forceEdit?: boolean;
+}
 
-  static propTypes = {
-    match2: PropTypes.MatchModel.isRequired,
-    children: PropTypes.node,
-    user: PropTypes.UserModel.isRequired,
-    isOpen: PropTypes.bool.isRequired,
-    forceEdit: PropTypes.bool,
-  }
+/** BigMatchCardHeader == MatchesToday on Club monitor */
+export class BigMatchCardHeader extends Component<BigMatchCardHeaderProps> {
+  static contextTypes = PropTypes.contextTypes;
 
   render() {
     const match = this.props.match2;
@@ -50,21 +52,16 @@ export class BigMatchCardHeader extends Component {
 }
 
 
+type SmallMatchCardHeaderComponentProps = BigMatchCardHeaderProps & {
+  noScoreEdit?: boolean;
+  width?: number;
+  routed?: boolean;
+  history: any;
+}
 
-export class SmallMatchCardHeaderComponent extends Component {
+
+export class SmallMatchCardHeaderComponent extends Component<SmallMatchCardHeaderComponentProps> {
   static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    match2: PropTypes.MatchModel.isRequired, //
-    children: PropTypes.node,
-    user: PropTypes.UserModel.isRequired,
-    isOpen: PropTypes.bool.isRequired,
-    forceEdit: PropTypes.bool,
-    noScoreEdit: PropTypes.bool,
-    width: PropTypes.number,
-    routed: PropTypes.bool,
-    history: PropTypes.any.isRequired,
-  }
 
   render() {
     const {match, match2, history, location, ...props} = this.props; // eslint-disable-line
@@ -79,22 +76,21 @@ export class SmallMatchCardHeaderComponent extends Component {
 }
 
 
+type MatchCardHeaderProps = {
+  config: IConfig;
+  match: IMatch;
+  children?: any;
+  user: IUser;
+  isOpen: boolean;
+  forceEdit?: boolean;
+  onOpen: Function;
+  noScoreEdit?: boolean;
+  width?: number;
+  routed?: boolean;
+}
 
-class MatchCardHeader extends Component {
+class MatchCardHeader extends Component<MatchCardHeaderProps> {
   static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    config: PropTypes.object.isRequired,
-    match: PropTypes.MatchModel.isRequired,
-    children: PropTypes.node,
-    user: PropTypes.UserModel.isRequired,
-    isOpen: PropTypes.bool.isRequired,
-    forceEdit: PropTypes.bool,
-    onOpen: PropTypes.func.isRequired,
-    noScoreEdit: PropTypes.bool,
-    width: PropTypes.number,
-    routed: PropTypes.bool,
-  }
 
   render() {
     const {match} = this.props;
@@ -107,7 +103,7 @@ class MatchCardHeader extends Component {
     // const scoreFormInHeader = !!this.props.routed;
     const smallAndScoring = scoreFormVisible && this.props.width < 480;
 
-    const subtitle = [];
+    const subtitle: React.ReactNode[] = [];
     subtitle.push(ThrillerIconSpan);
 
     if (!smallAndScoring) {
@@ -167,8 +163,13 @@ class MatchCardHeader extends Component {
 }
 
 
+type MatchCardHeaderSmallTitleProps = {
+  match: IMatch;
+  withLinks: boolean;
+  t: Translator;
+};
 
-const MatchCardHeaderSmallTitle = ({match, withLinks, t}) => {
+const MatchCardHeaderSmallTitle = ({match, withLinks, t}: MatchCardHeaderSmallTitleProps) => {
   const team = match.getTeam();
 
   const ourTitle = <OwnTeamTitle match={match} withLinks={withLinks} />;
@@ -189,14 +190,13 @@ const MatchCardHeaderSmallTitle = ({match, withLinks, t}) => {
   );
 };
 
-MatchCardHeaderSmallTitle.propTypes = {
-  match: PropTypes.MatchModel.isRequired,
-  withLinks: PropTypes.bool.isRequired,
-  t: PropTypes.func.isRequired,
-};
 
+type OwnTeamTitleProps = {
+  match: IMatch;
+  withLinks: boolean;
+}
 
-const OwnTeamTitle = ({match, withLinks}) => {
+const OwnTeamTitle = ({match, withLinks}: OwnTeamTitleProps) => {
   const team = match.getTeam();
   const divisionRanking = team.getDivisionRanking();
 
@@ -213,11 +213,6 @@ const OwnTeamTitle = ({match, withLinks}) => {
       </Link>
     </span>
   );
-};
-
-OwnTeamTitle.propTypes = {
-  match: PropTypes.MatchModel.isRequired,
-  withLinks: PropTypes.bool.isRequired,
 };
 
 export const SmallMatchCardHeader = withRouter(SmallMatchCardHeaderComponent);

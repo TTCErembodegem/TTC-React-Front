@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import Immutable from 'immutable';
 import _ from 'lodash';
-
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Button from 'react-bootstrap/lib/Button';
@@ -9,26 +8,32 @@ import MenuItem from '@material-ui/core/MenuItem';
 import {frenoyTeamSync} from '../../actions/matchActions';
 import {toggleTeamPlayer} from '../../actions/playerActions';
 import PropTypes, {connect, withViewport} from '../PropTypes';
-
 import PlayerAutoComplete from '../players/PlayerAutoComplete';
 import PlayersImageGallery from '../players/PlayersImageGallery';
-import {teamPlayerType} from '../../models/model-interfaces';
+import {teamPlayerType, ITeam, Viewport, Competition} from '../../models/model-interfaces';
+import {IUser} from '../../models/UserModel';
 
-class AdminTeams extends React.Component {
-  static propTypes = {
-    teams: PropTypes.TeamModelList,
-    toggleTeamPlayer: PropTypes.func.isRequired,
-    frenoyTeamSync: PropTypes.func.isRequired,
-    viewport: PropTypes.viewport,
-    user: PropTypes.object.isRequired,
-  }
 
-  constructor() {
-    super();
+type AdminTeamsProps = {
+  teams: ITeam[];
+  toggleTeamPlayer: Function;
+  frenoyTeamSync: Function;
+  viewport: Viewport;
+  user: IUser;
+}
+
+type AdminTeamsState = {
+  filter: Competition;
+}
+
+
+class AdminTeams extends React.Component<AdminTeamsProps, AdminTeamsState> {
+  constructor(props) {
+    super(props);
     this.state = {filter: 'Vttl'};
   }
 
-  _toggleTeamPlayer(teamId, playerId, role) {
+  _toggleTeamPlayer(teamId: number, playerId: number, role) {
     this.props.toggleTeamPlayer(teamId, playerId, role);
   }
 
@@ -51,17 +56,17 @@ class AdminTeams extends React.Component {
   }
 }
 
-class AdminTeamPlayers extends Component {
-  static propTypes = {
-    team: PropTypes.object.isRequired,
-    toggleTeamPlayer: PropTypes.func.isRequired,
-    viewport: PropTypes.object.isRequired,
-    user: PropTypes.object.isRequired,
-    onFrenoySync: PropTypes.func.isRequired,
-  }
+type AdminTeamPlayersProps = {
+  team: ITeam;
+  toggleTeamPlayer: Function;
+  viewport: Viewport;
+  user: IUser;
+  onFrenoySync: Function;
+}
 
-  constructor() {
-    super();
+class AdminTeamPlayers extends Component<AdminTeamPlayersProps> {
+  constructor(props) {
+    super(props);
     this.state = {role: 'Standard'};
   }
 
