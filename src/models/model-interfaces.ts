@@ -179,6 +179,18 @@ export interface IGetGameMatches {
 }
 
 
+export interface IMatchComment {
+  id: number;
+  matchId: number;
+  playerId: number;
+  text: string;
+  /** Hidden is only visible for TTC Erembodegem players */
+  hidden: boolean;
+  postedOn: any;
+  imageUrl: string;
+}
+
+
 /* ****************************************************
 *                       PLAYERS
 **************************************************** */

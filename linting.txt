@@ -1,0 +1,349 @@
+
+> confac-front@0.1.0 lint C:\code\ttc\react-redux\erembodegem-front
+> eslint --ext js,ts,tsx src
+
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\controls\TabbedContainer.tsx
+   16:5   error  propType "match" is not required, but has no corresponding defaultProps declaration        react/require-default-props
+   21:5   error  propType "tabKeys" is not required, but has no corresponding defaultProps declaration      react/require-default-props
+   29:5   error  propType "onTabSelect" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+   32:5   error  Prop type `object` is forbidden                                                            react/forbid-prop-types
+   32:5   error  propType "style" is not required, but has no corresponding defaultProps declaration        react/require-default-props
+   39:5   error  propType "viewport" is not required, but has no corresponding defaultProps declaration     react/require-default-props
+   40:5   error  Prop type `any` is forbidden                                                               react/forbid-prop-types
+  100:7   error  Static HTML elements with event handlers require a role                                    jsx-a11y/no-static-element-interactions
+  138:62  error  Use callback in setState when referencing the previous state                               react/no-access-state-in-setstate
+  138:88  error  Use callback in setState when referencing the previous state                               react/no-access-state-in-setstate
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\matches\Match\MatchCardHeader.tsx
+  135:9  error  Static HTML elements with event handlers require a role  jsx-a11y/no-static-element-interactions
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\matches\Match\MatchReport.tsx
+   88:51  warning  Dangerous property 'dangerouslySetInnerHTML' found                                           react/no-danger
+  197:70  error    Use callback in setState when referencing the previous state                                 react/no-access-state-in-setstate
+  245:37  error    Use callback in setState when referencing the previous state                                 react/no-access-state-in-setstate
+  260:33  error    Use callback in setState when referencing the previous state                                 react/no-access-state-in-setstate
+  264:33  error    Use callback in setState when referencing the previous state                                 react/no-access-state-in-setstate
+  264:62  error    Use callback in setState when referencing the previous state                                 react/no-access-state-in-setstate
+  268:33  error    Use callback in setState when referencing the previous state                                 react/no-access-state-in-setstate
+  282:5   error    propType "deleteComment" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  315:18  error    'comment.imageUrl' is missing in props validation                                            react/prop-types
+  316:34  error    'comment.imageUrl' is missing in props validation                                            react/prop-types
+  318:16  warning  Dangerous property 'dangerouslySetInnerHTML' found                                           react/no-danger
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\matches\Match\MatchVs.tsx
+  13:5  error  propType "opponentOnly" is required and should not have a defaultProps declaration         react/require-default-props
+  15:5  error  propType "ownTeamLink" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  16:5  error  propType "withLinks" is not required, but has no corresponding defaultProps declaration    react/require-default-props
+  22:5  error  defaultProp "opponentOnly" defined for isRequired propType                                 react/default-props-match-prop-types
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\matches\Match\OpponentMatches.tsx
+   18:5   error  Prop type `object` is forbidden                                                                  react/forbid-prop-types
+   20:5   error  propType "viewport" is not required, but has no corresponding defaultProps declaration           react/require-default-props
+   21:5   error  propType "roundSwitchButton" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+   22:5   error  propType "opponent" is not required, but has no corresponding defaultProps declaration           react/require-default-props
+   64:60  error  Use callback in setState when referencing the previous state                                     react/no-access-state-in-setstate
+  124:5   error  propType "viewport" is not required, but has no corresponding defaultProps declaration           react/require-default-props
+  128:5   error  propType "isMarked" is not required, but has no corresponding defaultProps declaration           react/require-default-props
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\matches\Match\OpponentsFormation.tsx
+  52:30  error  Unexpected mix of '/' and '*'  no-mixed-operators
+  52:49  error  Unexpected mix of '/' and '*'  no-mixed-operators
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\matches\Match\OpponentsLastMatches.tsx
+   8:9   error  There should be no space after '{'                            object-curly-spacing
+   8:60  error  There should be no space before '}'                           object-curly-spacing
+  68:60  error  Use callback in setState when referencing the previous state  react/no-access-state-in-setstate
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\matches\Match\OpponentsTeamFormation.tsx
+  12:5   error  propType "viewport" is not required, but has no corresponding defaultProps declaration    react/require-default-props
+  12:15  error  'viewport' PropType is defined but prop is never used                                     react/no-unused-prop-types
+  14:5   error  propType "opponent" is not required, but has no corresponding defaultProps declaration    react/require-default-props
+  18:5   error  propType "hideHeader" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\matches\Match\OtherMatchPlayerResults.tsx
+  24:9    error  Missing an explicit type attribute for button                                          react/button-has-type
+  24:110  error  Use callback in setState when referencing the previous state                           react/no-access-state-in-setstate
+  73:3    error  propType "show" is not required, but has no corresponding defaultProps declaration     react/require-default-props
+  74:3    error  propType "colSpan" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\matches\Match\OwnPlayer.tsx
+  41:3  error  Prop type `object` is forbidden                                                              react/forbid-prop-types
+  42:3  error  propType "playerAsBadge" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\matches\Match\RoutedMatchCard.tsx
+   9:5  error  propType "match" is not required, but has no corresponding defaultProps declaration     react/require-default-props
+  15:5  error  propType "viewport" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  17:5  error  Prop type `any` is forbidden                                                            react/forbid-prop-types
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\matches\Match\Scoresheet.tsx
+  11:5   error  propType "match" is not required, but has no corresponding defaultProps declaration     react/require-default-props
+  13:5   error  propType "viewport" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  32:15  error  A control must be associated with a text label                                          jsx-a11y/control-has-associated-label
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\matches\Match\SelectPlayersForm.tsx
+   22:14  error  'players' PropType is defined but prop is never used                                           react/no-unused-prop-types
+   24:11  error  'user' PropType is defined but prop is never used                                              react/no-unused-prop-types
+   63:5   error  propType "players" is not required, but has no corresponding defaultProps declaration          react/require-default-props
+  104:5   error  propType "backgroundColor" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\matches\Matches.tsx
+  13:5  error  Prop type `object` is forbidden  react/forbid-prop-types
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\matches\MatchesTable.tsx
+   33:5   error  propType "viewport" is not required, but has no corresponding defaultProps declaration             react/require-default-props
+   39:5   error  propType "team" is not required, but has no corresponding defaultProps declaration                 react/require-default-props
+   40:5   error  propType "onTablePlayerSelect" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+   41:5   error  Prop type `array` is forbidden                                                                     react/forbid-prop-types
+   41:5   error  propType "tablePlayers" is not required, but has no corresponding defaultProps declaration         react/require-default-props
+   43:5   error  propType "ownTeamLink" is not required, but has no corresponding defaultProps declaration          react/require-default-props
+  217:7   error  Unused state field: 'edit'                                                                         react/no-unused-state
+  240:35  error  Use callback in setState when referencing the previous state                                       react/no-access-state-in-setstate
+  248:35  error  Use callback in setState when referencing the previous state                                       react/no-access-state-in-setstate
+  315:16  error  Do not nest ternary expressions                                                                    no-nested-ternary
+  318:19  error  Do not nest ternary expressions                                                                    no-nested-ternary
+  328:71  error  Use callback in setState when referencing the previous state                                       react/no-access-state-in-setstate
+  328:98  error  Use callback in setState when referencing the previous state                                       react/no-access-state-in-setstate
+  448:3   error  Prop type `any` is forbidden                                                                       react/forbid-prop-types
+  448:3   error  propType "model" is not required, but has no corresponding defaultProps declaration                react/require-default-props
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\matches\MatchesToday.tsx
+  13:5   error  Prop type `object` is forbidden                                                         react/forbid-prop-types
+  15:14  error  'players' PropType is defined but prop is never used                                    react/no-unused-prop-types
+  16:14  error  'matches' PropType is defined but prop is never used                                    react/no-unused-prop-types
+  18:5   error  propType "viewport" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\matches\MatchesWeeks\htmlBuilder.js
+   41:1  error  This line has a length of 161. Maximum allowed is 160  max-len
+   43:1  error  This line has a length of 239. Maximum allowed is 160  max-len
+   63:1  error  This line has a length of 161. Maximum allowed is 160  max-len
+   64:1  error  This line has a length of 196. Maximum allowed is 160  max-len
+   65:1  error  This line has a length of 165. Maximum allowed is 160  max-len
+   66:1  error  This line has a length of 238. Maximum allowed is 160  max-len
+   77:1  error  This line has a length of 173. Maximum allowed is 160  max-len
+   80:1  error  This line has a length of 182. Maximum allowed is 160  max-len
+   83:1  error  This line has a length of 216. Maximum allowed is 160  max-len
+  244:9  error  Use array destructuring                                prefer-destructuring
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\matches\MatchesWeeks\MatchesWeekEmail.tsx
+  22:5   error  Prop type `any` is forbidden                                                              react/forbid-prop-types
+  23:5   error  Prop type `any` is forbidden                                                              react/forbid-prop-types
+  24:5   error  propType "compFilter" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  64:28  error  Use callback in setState when referencing the previous state                              react/no-access-state-in-setstate
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\matches\MatchesWeeks\WeekTitle.tsx
+  11:5  error  propType "weekChange" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  12:5  error  propType "viewport" is not required, but has no corresponding defaultProps declaration    react/require-default-props
+  13:5  error  Prop type `any` is forbidden                                                              react/forbid-prop-types
+  13:5  error  propType "style" is not required, but has no corresponding defaultProps declaration       react/require-default-props
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\other\Administration.tsx
+  14:14  error  'players' PropType is defined but prop is never used  react/no-unused-prop-types
+  15:12  error  'clubs' PropType is defined but prop is never used    react/no-unused-prop-types
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\other\EndOfSeason\PlayerAchievements.ts
+    4:53  error  Unexpected mix of '/' and '*'  no-mixed-operators
+    4:65  error  Unexpected mix of '/' and '*'  no-mixed-operators
+   90:75  error  Unexpected mix of '/' and '*'  no-mixed-operators
+   90:92  error  Unexpected mix of '/' and '*'  no-mixed-operators
+  106:79  error  Unexpected mix of '/' and '*'  no-mixed-operators
+  106:96  error  Unexpected mix of '/' and '*'  no-mixed-operators
+  114:55  error  Unexpected mix of '/' and '*'  no-mixed-operators
+  114:72  error  Unexpected mix of '/' and '*'  no-mixed-operators
+  140:55  error  Unexpected mix of '/' and '*'  no-mixed-operators
+  140:72  error  Unexpected mix of '/' and '*'  no-mixed-operators
+  175:71  error  Unexpected mix of '/' and '*'  no-mixed-operators
+  175:83  error  Unexpected mix of '/' and '*'  no-mixed-operators
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\other\GeneralInfo.tsx
+  11:5  error  Prop type `object` is forbidden  react/forbid-prop-types
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\other\Links.tsx
+  16:49  error  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
+  19:53  error  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
+  22:71  error  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
+  25:51  error  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
+  28:51  error  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
+  31:73  error  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
+  34:77  error  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
+  46:92  error  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
+  53:94  error  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
+  59:63  error  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
+  62:56  error  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
+  65:57  error  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
+  68:65  error  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\players\controls\PlayerAddress.tsx
+   8:5  error  propType "contact" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  12:5  error  Prop type `object` is forbidden                                                        react/forbid-prop-types
+  12:5  error  propType "style" is not required, but has no corresponding defaultProps declaration    react/require-default-props
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\players\Player\PlayerCompetition.tsx
+  39:13  warning  Unexpected constant condition  no-constant-condition
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\players\Player\PlayerIndividual.tsx
+  13:5   error  propType "viewport" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  13:15  error  'viewport' PropType is defined but prop is never used                                   react/no-unused-prop-types
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\players\Player.tsx
+  14:5  error  propType "viewport" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  16:5  error  propType "match" is not required, but has no corresponding defaultProps declaration     react/require-default-props
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\players\PlayerAvatar.tsx
+  22:7  error  Unused state field: 'img'  react/no-unused-state
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\players\PlayerBadges.tsx
+  10:5  error  Prop type `object` is forbidden                                                                react/forbid-prop-types
+  15:5  error  propType "competition" is not required, but has no corresponding defaultProps declaration      react/require-default-props
+  48:5  error  propType "actionIconClass" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  49:5  error  Prop type `object` is forbidden                                                                react/forbid-prop-types
+  49:5  error  propType "style" is not required, but has no corresponding defaultProps declaration            react/require-default-props
+  50:5  error  propType "competition" is not required, but has no corresponding defaultProps declaration      react/require-default-props
+  58:7  error  Missing an explicit type attribute for button                                                  react/button-has-type
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\players\PlayerCard.tsx
+   19:5   error  propType "viewport" is not required, but has no corresponding defaultProps declaration                                        react/require-default-props
+   19:15  error  'viewport' PropType is defined but prop is never used                                                                         react/no-unused-prop-types
+  143:3   error  propType "withName" is not required, but has no corresponding defaultProps declaration                                        react/require-default-props
+  152:36  error  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
+  158:3   error  Prop type `object` is forbidden                                                                                               react/forbid-prop-types
+  159:3   error  Prop type `object` is forbidden                                                                                               react/forbid-prop-types
+  159:3   error  propType "style" is not required, but has no corresponding defaultProps declaration                                           react/require-default-props
+  160:3   error  Prop type `any` is forbidden                                                                                                  react/forbid-prop-types
+  160:3   error  propType "children" is not required, but has no corresponding defaultProps declaration                                        react/require-default-props
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\players\PlayerPlayingStyle.tsx
+  34:3   error  Prop type `object` is forbidden                                                          react/forbid-prop-types
+  35:3   error  propType "allowEdit" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  47:5   error  Prop type `object` is forbidden                                                          react/forbid-prop-types
+  47:5   error  propType "style" is not required, but has no corresponding defaultProps declaration      react/require-default-props
+  48:5   error  Prop type `any` is forbidden                                                             react/forbid-prop-types
+  48:5   error  propType "classes" is not required, but has no corresponding defaultProps declaration    react/require-default-props
+  74:34  error  Use callback in setState when referencing the previous state                             react/no-access-state-in-setstate
+  78:34  error  Use callback in setState when referencing the previous state                             react/no-access-state-in-setstate
+  97:9   error  Static HTML elements with event handlers require a role                                  jsx-a11y/no-static-element-interactions
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\players\Players\PlayersSporta.tsx
+  15:5  error  propType "filter" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\players\Players\PlayersToolbar.tsx
+  15:5  error  propType "canSort" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\players\Players\PlayersVttl.tsx
+  14:5  error  propType "filter" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\players\PlayersCardGallery.tsx
+  14:5  error  propType "viewport" is not required, but has no corresponding defaultProps declaration     react/require-default-props
+  15:5  error  propType "competition" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\players\PlayersImageGallery.tsx
+   43:5   error  propType "players" is not required, but has no corresponding defaultProps declaration              react/require-default-props
+   48:5   error  propType "viewport" is not required, but has no corresponding defaultProps declaration             react/require-default-props
+   49:5   error  propType "viewportWidthContainerCount" is required and should not have a defaultProps declaration  react/require-default-props
+   50:5   error  propType "subtitle" is not required, but has no corresponding defaultProps declaration             react/require-default-props
+   51:5   error  propType "forceSmall" is not required, but has no corresponding defaultProps declaration           react/require-default-props
+   55:5   error  defaultProp "viewportWidthContainerCount" defined for isRequired propType                          react/default-props-match-prop-types
+  119:20  error  'ply.getCompetition' is missing in props validation                                                react/prop-types
+  122:78  error  'ply.style' is missing in props validation                                                         react/prop-types
+  122:84  error  'ply.style.name' is missing in props validation                                                    react/prop-types
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\players\PlayerStyleAutocomplete.tsx
+   8:5  error  Prop type `object` is forbidden                                                      react/forbid-prop-types
+   8:5  error  propType "style" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  10:5  error  propType "value" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\skeleton\Footer\CookieNotice.tsx
+  18:9  error  Static HTML elements with event handlers require a role  jsx-a11y/no-static-element-interactions
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\skeleton\Footer\Footer.tsx
+  13:5  error  Prop type `object` is forbidden  react/forbid-prop-types
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\skeleton\Header\HeaderNavigation.tsx
+  25:5   error  Prop type `any` is forbidden                                  react/forbid-prop-types
+  26:5   error  Prop type `any` is forbidden                                  react/forbid-prop-types
+  37:65  error  Use callback in setState when referencing the previous state  react/no-access-state-in-setstate
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\teams\controls\DivisionHeader.tsx
+  13:5  error  propType "opponent" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\teams\controls\OpponentLink.tsx
+  11:5  error  propType "opponent" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\teams\controls\TeamOverviewPlayers.tsx
+  11:5  error  propType "viewport" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\teams\controls\TeamOverviewRanking.tsx
+  18:19  error  Unused state field: 'showAll'  react/no-unused-state
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\teams\controls\TeamPlayerAvatars.tsx
+  10:5  error  Prop type `object` is forbidden                                                      react/forbid-prop-types
+  10:5  error  propType "style" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\teams\controls\TeamPosition.tsx
+  10:5  error  propType "opponent" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  14:5  error  Prop type `object` is forbidden                                                         react/forbid-prop-types
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\teams\controls\TeamRankingBadges.tsx
+  11:5  error  propType "opponent" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  37:5  error  Prop type `object` is forbidden                                                         react/forbid-prop-types
+  37:5  error  propType "style" is not required, but has no corresponding defaultProps declaration     react/require-default-props
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\teams\controls\TeamTabTitle.tsx
+  12:5  error  propType "opponent" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\teams\OpponentOverview.tsx
+  15:14  error  'matches' PropType is defined but prop is never used          react/no-unused-prop-types
+  17:22  error  'readonlyMatches' PropType is defined but prop is never used  react/no-unused-prop-types
+  26:5   error  Prop type `any` is forbidden                                  react/forbid-prop-types
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\teams\TeamMatchesWeek.tsx
+  13:14  error  'matches' PropType is defined but prop is never used  react/no-unused-prop-types
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\teams\Teams.tsx
+   26:5   error  Prop type `object` is forbidden                                                         react/forbid-prop-types
+   26:13  error  'config' PropType is defined but prop is never used                                     react/no-unused-prop-types
+   28:14  error  'matches' PropType is defined but prop is never used                                    react/no-unused-prop-types
+   30:5   error  propType "viewport" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+   32:5   error  Prop type `any` is forbidden                                                            react/forbid-prop-types
+  128:19  error  Missing an explicit type attribute for button                                           react/button-has-type
+  141:58  error  Use callback in setState when referencing the previous state                            react/no-access-state-in-setstate
+  203:70  error  Use callback in setState when referencing the previous state                            react/no-access-state-in-setstate
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\users\ChangePlayerDetails.tsx
+  19:7   error  Unused state field: 'email'    react/no-unused-state
+  20:7   error  Unused state field: 'mobile'   react/no-unused-state
+  21:7   error  Unused state field: 'address'  react/no-unused-state
+  22:7   error  Unused state field: 'city'     react/no-unused-state
+  41:41  error  Unused state field: 'email'    react/no-unused-state
+  48:41  error  Unused state field: 'mobile'   react/no-unused-state
+  54:41  error  Unused state field: 'address'  react/no-unused-state
+  60:41  error  Unused state field: 'city'     react/no-unused-state
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\users\ForgotPassword.tsx
+  72:5  error  propType "match" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\users\PlayerLineup.tsx
+   22:14  error  'matches' PropType is defined but prop is never used  react/no-unused-prop-types
+   66:15  error  Missing an explicit type attribute for button         react/button-has-type
+  135:22  error  Do not nest ternary expressions                       no-nested-ternary
+  150:22  error  Do not nest ternary expressions                       no-nested-ternary
+  179:3   error  Prop type `object` is forbidden                       react/forbid-prop-types
+
+C:\code\ttc\react-redux\erembodegem-front\src\components\users\ProfilePhotoForm.tsx
+  54:7    error  Unused state field: 'croppingRect'  react/no-unused-state
+  60:29   error  Unused state field: 'croppingRect'  react/no-unused-state
+  94:102  error  Unused state field: 'croppingRect'  react/no-unused-state
+
+C:\code\ttc\react-redux\erembodegem-front\src\models\spec\TeamModelSpec.js
+   19:16  warning  Unexpected unnamed function  func-names
+   71:66  warning  Unexpected unnamed function  func-names
+   80:50  warning  Unexpected unnamed function  func-names
+   86:41  warning  Unexpected unnamed function  func-names
+   93:50  warning  Unexpected unnamed function  func-names
+   98:44  warning  Unexpected unnamed function  func-names
+  103:52  warning  Unexpected unnamed function  func-names
+  109:44  warning  Unexpected unnamed function  func-names
+
+✖ 229 problems (218 errors, 11 warnings)
+  2 errors and 0 warnings potentially fixable with the `--fix` option.
+

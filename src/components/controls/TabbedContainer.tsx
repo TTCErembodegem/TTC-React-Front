@@ -1,44 +1,47 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
-
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
 import PanelGroup from 'react-bootstrap/lib/PanelGroup';
 import Panel from 'react-bootstrap/lib/Panel';
 import PropTypes, {withViewport} from '../PropTypes';
+import {TabbedContainerEventKeyRouteProps, Viewport, Historian} from '../../models/model-interfaces';
+
+type TabbedContainerComponentProps = {
+  defaultTabKey: string;
+  match: TabbedContainerEventKeyRouteProps;
+  tabKeys: {
+    key: string;
+    title: string;
+    label?: string;
+    show?: boolean;
+    headerChildren?: any;
+  }[];
+  tabRenderer: Function;
+  onTabSelect?: Function;
+  forceTabs?: boolean;
+  widthTreshold?: number;
+  style?: React.CSSProperties;
+  route: {
+    base: string;
+    subs?: string;
+    suffix?: string;
+  };
+
+  viewport: Viewport;
+  history: Historian;
+}
+
+type TabbedContainerComponentState = {
+  openTabKey: string;
+  forceClose: boolean;
+  forceTabs: boolean;
+  // widthTreshold: number;
+}
 
 
-class TabbedContainerComponent extends Component {
+class TabbedContainerComponent extends Component<TabbedContainerComponentProps, TabbedContainerComponentState> {
   static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    defaultTabKey: PropTypes.string.isRequired,
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        tabKey: PropTypes.string,
-      }),
-    }),
-    tabKeys: PropTypes.arrayOf(PropTypes.shape({
-      key: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      label: PropTypes.string,
-      show: PropTypes.bool,
-      headerChildren: PropTypes.node,
-    }).isRequired),
-    tabRenderer: PropTypes.func.isRequired,
-    onTabSelect: PropTypes.func,
-    forceTabs: PropTypes.bool,
-    widthTreshold: PropTypes.number,
-    style: PropTypes.object,
-    route: PropTypes.shape({
-      base: PropTypes.string.isRequired,
-      subs: PropTypes.string,
-      suffix: PropTypes.string,
-    }).isRequired,
-
-    viewport: PropTypes.viewport,
-    history: PropTypes.any.isRequired,
-  }
 
   static defaultProps = {
     forceTabs: false,
@@ -47,7 +50,11 @@ class TabbedContainerComponent extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {openTabKey: props.defaultTabKey, forceClose: false};
+    this.state = {
+      openTabKey: props.defaultTabKey,
+      forceClose: false,
+      forceTabs: false,
+    };
   }
 
   _showAccordion() {
@@ -69,7 +76,7 @@ class TabbedContainerComponent extends Component {
     // Tabs
     return (
       <div style={this.props.style}>
-        <Nav bsStyle="tabs" activeKey={openTabKey} onSelect={evenyKey => this._onTabSelect(evenyKey)}>
+        <Nav bsStyle="tabs" activeKey={openTabKey} onSelect={eventKey => this._onTabSelect(eventKey)}>
           {this.props.tabKeys.filter(tab => tab.show !== false).map(tab => this._renderTabHeader(tab))}
         </Nav>
         <div className="match-card-tab">
@@ -97,7 +104,7 @@ class TabbedContainerComponent extends Component {
 
     // Accordion
     const header = (
-      <div className="clickable" onClick={this._onTabSelect.bind(this, tab.key)}>
+      <div className="clickable" onClick={this._onTabSelect.bind(this, tab.key)} role="button" tabIndex={0}>
         {tab.title} {tab.headerChildren}
       </div>
     );
@@ -118,8 +125,8 @@ class TabbedContainerComponent extends Component {
     );
   }
 
-  _getUrl(eventKey) {
-    let url;
+  _getUrl(eventKey: string): string {
+    let url: string;
     if (this.props.route.subs) {
       url = `${this.props.route.base}/${this.context.t.route(`${this.props.route.subs}.${eventKey}`)}`;
     } else {
@@ -131,7 +138,7 @@ class TabbedContainerComponent extends Component {
     return url;
   }
 
-  _onTabSelect(eventKey) {
+  _onTabSelect(eventKey: string) {
     const url = this._getUrl(eventKey);
     this.props.history.push(url);
 

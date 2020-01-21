@@ -132,7 +132,7 @@ class MatchCardHeader extends Component<MatchCardHeaderProps> {
 
     return (
       <div className="match-card" style={{backgroundColor: iPlay ? '#F0F0F0' : '#fafafa'}}>
-        <div className="match-card-header" style={{height: smallAndScoring ? 110 : 60}} onClick={onOpenHandler}>
+        <div className="match-card-header" style={{height: smallAndScoring ? 110 : 60}} onClick={onOpenHandler} role="button" tabIndex={0}>
           {!scoreFormVisible ? <MatchScore match={match} className="match-card-score" /> : null}
           {scoreFormVisible && !smallAndScoring ? matchForm : null}
           <MatchCardHeaderSmallTitle match={match} t={this.context.t} withLinks={this.props.isOpen} />

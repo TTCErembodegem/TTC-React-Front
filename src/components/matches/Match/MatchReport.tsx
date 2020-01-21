@@ -12,9 +12,9 @@ import {Icon} from '../../controls/Icons/Icon';
 import {EditIcon} from '../../controls/Icons/EditIcon';
 import {TimeAgo} from '../../controls/controls/TimeAgo';
 import {IUser} from '../../../models/UserModel';
-import {IMatch, Translator, Viewport} from '../../../models/model-interfaces';
+import {IMatch, Translator, Viewport, IMatchComment} from '../../../models/model-interfaces';
 
-function getEmptyComment(matchId: number, playerId: number) {
+function getEmptyComment(matchId: number, playerId: number): IMatchComment {
   return {
     matchId,
     playerId,
@@ -33,13 +33,7 @@ type MatchReportProps = {
   deleteComment: Function;
 }
 
-export interface IMatchComment {
-  matchId: number;
-  playerId: number;
-  text: string;
-  /** Hidden is only visible for TTC Erembodegem players */
-  hidden: boolean;
-}
+
 
 type MatchReportState = {
   text: string;
@@ -75,7 +69,7 @@ class MatchReport extends Component<MatchReportProps, MatchReportState> {
       },
     };
 
-    let reportWriterText;
+    let reportWriterText: React.ReactNode;
     const reportWriter = storeUtil.getPlayer(this.props.match.reportPlayerId);
     if (reportWriter) {
       reportWriterText = (
@@ -194,7 +188,7 @@ class MatchReport extends Component<MatchReportProps, MatchReportState> {
 
               <Icon
                 fa="fa fa-picture-o btn btn-default"
-                onClick={() => this.setState({commentImageFormOpen: !this.state.commentImageFormOpen, commentFormOpen: false})}
+                onClick={() => this.setState(prevState => ({commentImageFormOpen: !prevState.commentImageFormOpen, commentFormOpen: false}))}
                 style={{marginLeft: 15}}
                 translate
                 tooltip="match.report.commentsPhotoTooltip"
@@ -242,7 +236,7 @@ class MatchReport extends Component<MatchReportProps, MatchReportState> {
   }
 
   _onReportFormOpen() {
-    this.setState({reportFormOpen: !this.state.reportFormOpen});
+    this.setState(prevState => ({reportFormOpen: !prevState.reportFormOpen}));
   }
 
   _onCommentForm() {
@@ -257,31 +251,29 @@ class MatchReport extends Component<MatchReportProps, MatchReportState> {
   }
 
   _reportCommentChange(text/* , medium */) {
-    this.setState({comment: {...this.state.comment, text}});
+    this.setState(prevState => ({comment: {...prevState.comment, text}}));
   }
 
   _reportHiddenChange() {
-    this.setState({comment: {...this.state.comment, hidden: !this.state.comment.hidden}});
+    this.setState(prevState => ({comment: {...prevState.comment, hidden: !prevState.comment.hidden}}));
   }
 
   _reportCommentPlayerChange(playerId) {
-    this.setState({comment: {...this.state.comment, playerId}});
+    this.setState(prevState => ({comment: {...prevState.comment, playerId}}));
   }
 }
 
 
-class Comment extends Component {
-  static propTypes = {
-    comment: PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      playerId: PropTypes.number.isRequired,
-      hidden: PropTypes.bool.isRequired,
-      postedOn: PropTypes.object.isRequired,
-      text: PropTypes.string.isRequired,
-    }).isRequired,
-    deleteComment: PropTypes.func,
-  }
+type CommentProps = {
+  comment: IMatchComment;
+  deleteComment: Function;
+}
 
+type CommentState = {
+  hover: boolean;
+}
+
+class Comment extends Component<CommentProps, CommentState> {
   constructor(props) {
     super(props);
     this.state = {

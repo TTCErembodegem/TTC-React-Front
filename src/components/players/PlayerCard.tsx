@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-
 import Panel from 'react-bootstrap/lib/Panel';
 import PropTypes, {connect, browseTo, withViewport} from '../PropTypes';
 import PlayerImage from './PlayerImage';
@@ -10,17 +9,18 @@ import {createFrenoyLink} from '../../models/PlayerModel';
 import {PlayerLink} from './controls/PlayerLink';
 import {Icon} from '../controls/Icons/Icon';
 import {FrenoyPlayerDetailsIcon} from '../controls/Buttons/FrenoyButton';
+import {Viewport, IPlayer, Translator, IPlayerCompetition, Competition} from '../../models/model-interfaces';
+import {IUser} from '../../models/UserModel';
 
+type PlayerCardProps = {
+  viewport: Viewport;
+  user: IUser;
+  player: IPlayer;
+  showSideBySide?: boolean;
+}
 
-class PlayerCard extends Component {
+class PlayerCard extends Component<PlayerCardProps> {
   static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    viewport: PropTypes.viewport,
-    user: PropTypes.UserModel.isRequired,
-    player: PropTypes.PlayerModel.isRequired,
-    showSideBySide: PropTypes.bool,
-  }
 
   static defaultProps = {
     showSideBySide: false,
@@ -72,7 +72,12 @@ class PlayerCard extends Component {
 }
 
 
-PlayerCard.Competition = ({player, t}) => (
+type PlayerCardCompetitionProps = {
+  player: IPlayer;
+  t: Translator;
+}
+
+PlayerCard.Competition = ({player, t}: PlayerCardCompetitionProps) => (
   <div style={{marginTop: 5}}>
     <strong>{t('common.competition')}</strong>
     <br />
@@ -80,14 +85,13 @@ PlayerCard.Competition = ({player, t}) => (
   </div>
 );
 
-PlayerCard.Competition.propTypes = {
-  player: PropTypes.PlayerModel.isRequired,
-  t: PropTypes.func.isRequired,
+
+type PlayerAllCompetitionsProps = {
+  player: IPlayer;
+  t: Translator;
 };
 
-
-
-export const PlayerAllCompetitions = ({player, t}) => (
+export const PlayerAllCompetitions = ({player, t}: PlayerAllCompetitionsProps) => (
   <div>
     <PlayerCompetitionLabel comp="Vttl" player={player} t={t} />
     {player.vttl && player.sporta ? <br /> : null}
@@ -95,21 +99,23 @@ export const PlayerAllCompetitions = ({player, t}) => (
   </div>
 );
 
-PlayerAllCompetitions.propTypes = {
-  player: PropTypes.PlayerModel.isRequired,
-  t: PropTypes.func.isRequired,
-};
 
 
-export const TeamCaptainIcon = ({t}) => (
+export const TeamCaptainIcon = ({t}: {t: Translator}) => (
   <Icon fa="fa fa-star" color="#FFB00F" style={{marginRight: 5}} tooltip={t('player.teamCaptain')} />
 );
 
-TeamCaptainIcon.propTypes = {t: PropTypes.func.isRequired};
 
 
+type PlayerCompetitionLabelProps = {
+  comp: Competition;
+  player: IPlayer;
+  t: Translator;
+  withName: boolean | 'alias';
+};
 
-export const PlayerCompetitionLabel = ({comp, player, t, withName = false}) => {
+
+export const PlayerCompetitionLabel = ({comp, player, t, withName = false}: PlayerCompetitionLabelProps) => {
   // withName = Jorn C2 (frenoylink)
   // !withName = Sporta (ploeg) C2 (frenoylink)
   const compDetails = player.getCompetition(comp);
@@ -136,28 +142,17 @@ export const PlayerCompetitionLabel = ({comp, player, t, withName = false}) => {
   );
 };
 
-PlayerCompetitionLabel.propTypes = {
-  comp: PropTypes.oneOf(['Vttl', 'Sporta']).isRequired,
-  player: PropTypes.PlayerModel.isRequired,
-  t: PropTypes.func.isRequired,
-  withName: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.oneOf(['alias']),
-  ]),
+
+type PlayerFrenoyLinkProps = {
+  comp: IPlayerCompetition;
+  style?: React.CSSProperties;
+  children?: any;
 };
 
-
-
-export const PlayerFrenoyLink = ({comp, style, children}) => (
-  <a href={createFrenoyLink(comp)} target="_blank" className="link-hover-underline" style={style}>
+export const PlayerFrenoyLink = ({comp, style, children}: PlayerFrenoyLinkProps) => (
+  <a href={createFrenoyLink(comp)} target="_blank" className="link-hover-underline" style={style} rel="noopener noreferrer">
     {children} <FrenoyPlayerDetailsIcon />
   </a>
 );
-
-PlayerFrenoyLink.propTypes = {
-  comp: PropTypes.object.isRequired,
-  style: PropTypes.object,
-  children: PropTypes.any,
-};
 
 export default withViewport(connect(state => ({user: state.user}))(PlayerCard));

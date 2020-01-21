@@ -4,18 +4,25 @@ import cn from 'classnames';
 import PropTypes, {browseTo} from '../../PropTypes';
 import {Icon} from '../../controls/Icons/Icon';
 import {DivisionRankingLabel, OurDivisionRankingLabel} from '../controls/DivisionRankingLabel';
+import {IMatch} from '../../../models/model-interfaces';
 
-export default class MatchVs extends Component {
+type MatchVsProps = {
+  match: IMatch;
+  opponentOnly: boolean;
+  themOnly?: boolean;
+  ownTeamLink: 'main' | 'matches' | 'ranking' | 'players' | 'matchesTable' | 'week';
+  withLinks?: boolean;
+  withPosition?: boolean;
+}
+
+type MatchVsState = {
+  themOnly: boolean;
+  opponentOnly: boolean;
+  withPosition: boolean;
+}
+
+export default class MatchVs extends Component<MatchVsProps, MatchVsState> {
   static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    match: PropTypes.MatchModel.isRequired,
-    opponentOnly: PropTypes.bool.isRequired,
-    themOnly: PropTypes.bool,
-    ownTeamLink: PropTypes.oneOf(['main', 'matches', 'ranking', 'players', 'matchesTable', 'week']),
-    withLinks: PropTypes.bool,
-    withPosition: PropTypes.bool,
-  }
 
   static defaultProps = {
     themOnly: false,

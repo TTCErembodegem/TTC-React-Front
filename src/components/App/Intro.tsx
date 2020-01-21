@@ -101,6 +101,7 @@ const Loading = ({t, bigScreen}) => (
       src="/img/schlager.gif"
       style={{borderRadius: 25}}
       title={t('intro.loading')}
+      alt="Busy TT player spinner"
     />
 
     <div style={{position: 'absolute', top: 5, width: 310, margin: 'auto'}}>

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {FrenoyLink} from '../../controls/Buttons/FrenoyButton';
-import {Competition, IMatchPlayer, IMatch, Translator} from '../../../models/model-interfaces';
+import {Competition, IMatchPlayer, Translator} from '../../../models/model-interfaces';
 
 type OpponentPlayerLabelProps = {
   player: IMatchPlayer;

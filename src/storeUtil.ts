@@ -4,19 +4,18 @@ import {getRankingValue} from './models/utils/playerRankingValueMapper';
 import {ITeam, IClub, IPlayer, IMatch, IMatchPlayer, ITeamOpponent, Competition, IMatchCommon, IMatchOther} from './models/model-interfaces';
 import {IUser} from './models/UserModel';
 
-export interface IOponnentFormation {
-  key: string;
-  details: IOpponentFormationRankingInfo[];
-  amount: number;
-  value: number;
-}
-
 /** How many players of a ranking beat */
 export interface IOpponentFormationRankingInfo {
   ranking: string;
   amount: number;
 }
 
+export interface IOponnentFormation {
+  key: string;
+  details: IOpponentFormationRankingInfo[];
+  amount: number;
+  value: number;
+}
 
 export function getOpponentMatchesForTeam(competition: Competition, clubId: number, teamCode: string): (IMatchCommon & IMatchOther)[] {
   return store.getState().readonlyMatches

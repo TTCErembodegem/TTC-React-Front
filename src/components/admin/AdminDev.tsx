@@ -95,20 +95,17 @@ class AdminStateDisplayer extends Component<AdminStateDisplayerProps, AdminState
     let {data} = this.props;
     if (this.state.filter) {
       if (_.isArray(data)) {
-        data = data.filter(entry => {
-          // eslint-disable-next-line no-restricted-syntax, guard-for-in
-          for (const key in entry) {
-            if (typeof entry[key] === 'string') {
-              if (entry[key].toLowerCase().indexOf(this.state.filter) !== -1) {
-                return true;
-              }
-            }
-            if (entry[key] === this.state.filter) {
+        data = data.filter(entry => Object.keys(entry).some(key => {
+          if (typeof entry[key] === 'string') {
+            if (entry[key].toLowerCase().indexOf(this.state.filter) !== -1) {
               return true;
             }
           }
+          if (entry[key] === this.state.filter) {
+            return true;
+          }
           return false;
-        });
+        }));
       }
     }
 

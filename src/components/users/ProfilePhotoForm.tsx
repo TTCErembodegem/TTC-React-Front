@@ -104,6 +104,7 @@ class ProfilePhotoForm extends Component<ProfilePhotoFormProps, ProfilePhotoForm
                 style={{marginTop: 7, borderRadius: 19}}
                 width={this.props.size.width}
                 height={this.props.size.height}
+                alt="Preview"
               />
 
               <div className="caption" style={{textAlign: 'center', marginTop: 40}}>
