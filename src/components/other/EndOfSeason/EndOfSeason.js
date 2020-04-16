@@ -43,7 +43,7 @@ export default class EndOfSeason extends Component {
             <Strike text="Save the date! Eetfestijn 2019 op zaterdag 28 september" />
           </div> */}
         </div>
-        <h2>Einde Seizoen 2018-2019</h2>
+        <h2>Einde Seizoen {new Date().getFullYear()-1}-{new Date().getFullYear()}</h2>
         <Kampioenen topTeams={calcer.getTopRankedTeams()} t={this.context.t} />
         <NextSeasonChanges calcer={calcer} />
         <Achievements calcer={calcer} />
