@@ -15,7 +15,7 @@ var defaultConfigState = {
     frenoyClubIdVttl: '', frenoyClubIdSporta: '', compBalls: '', clubBankNr: '', clubOrgNr: '',
     year: ''
   },
-  endOfSeason: false,
+  endOfSeason: true,
 };
 
 export function config(state = Immutable.Map(defaultConfigState), action = null) {
