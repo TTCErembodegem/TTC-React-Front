@@ -13,9 +13,8 @@ var defaultConfigState = {
     email: '', googleMapsUrl: '', location: '', trainingDays: '', competitionDays: '',
     adultMembership: '', youthMembership: '', additionalMembership: '', recreationalMembers: '',
     frenoyClubIdVttl: '', frenoyClubIdSporta: '', compBalls: '', clubBankNr: '', clubOrgNr: '',
-    year: ''
+    year: '', endOfSeason: false,
   },
-  endOfSeason: true,
 };
 
 export function config(state = Immutable.Map(defaultConfigState), action = null) {
@@ -31,6 +30,7 @@ export function config(state = Immutable.Map(defaultConfigState), action = null)
   case ActionTypes.SET_SETTING:
     return state.set(payload.key, payload.value);
   case ActionTypes.CONFIG_LOADED:
+    payload.endOfSeason = payload.endOfSeason !== 'false';
     return state.set('params', payload);
   case ActionTypes.UPDATE_CONFIG_PARAM:
     return state.set('params', {...state.get('params'), [payload.key]: payload.value});

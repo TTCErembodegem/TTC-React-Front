@@ -4,6 +4,24 @@ import Panel from 'react-bootstrap/lib/Panel';
 import {Email, Telephone, PlayerAddress} from '../controls.js';
 import PlayerImage from '../players/PlayerImage.js';
 
+/**
+ * manager.description is either:
+ * - The string value of one of the constants as defined in AdminBoardMembers::clubManagerTypes
+ * - A custom text
+ * */
+function getManagerDescription(manager, t) {
+  if (manager.description === 'Default' || !manager.description) {
+    return <br />;
+  }
+
+  const transKey = 'clubs.managerTypes.' + manager.description;
+  const translation = t(transKey);
+  if (transKey === translation) {
+    return manager.description;
+  }
+  return translation;
+}
+
 @connect(state => ({
   players: state.players,
   clubs: state.clubs,
@@ -32,7 +50,7 @@ export default class Administration extends Component {
                   <span>
                     <strong>{manager.name}</strong>
                     <br />
-                    {manager.description === 'Default' ? <br /> : this.context.t('clubs.managerTypes.' + manager.description)}
+                    {getManagerDescription(manager, this.context.t)}
                   </span>
                 </Panel.Heading>
 

@@ -101,7 +101,7 @@ export default class AdminPlayerForm extends Component {
               onChange={e => this.setState({contact: Object.assign({}, player.contact, {mobile: e.target.value})})}
             />
 
-            <br />
+            <div style={{marginBottom: 16}} />
 
             <TextField
               style={{width: 200, marginRight: fieldMargin}}
@@ -118,7 +118,28 @@ export default class AdminPlayerForm extends Component {
             />
 
           </Panel>
+
+          <Panel style={{marginTop: 20, padding: 15}}>
+            <h4>Einde Seizoen</h4>
+            <TextField
+              style={{width: 200, marginRight: fieldMargin}}
+              label="Volgend Klassement VTTL"
+              defaultValue={player.vttl.nextRanking}
+              onChange={e => this.setState({vttl: Object.assign({}, player.vttl, {nextRanking: e.target.value})})}
+              placeholder={'Huidig: ' + player.vttl.ranking}
+            />
+            <TextField
+              style={{width: 200, marginRight: fieldMargin}}
+              label="Volgend Klassement Sporta"
+              defaultValue={player.sporta.nextRanking}
+              onChange={e => this.setState({sporta: Object.assign({}, player.sporta, {nextRanking: e.target.value})})}
+              placeholder={'Huidig: ' + player.sporta.ranking}
+            />
+          </Panel>
         </div>
+
+        player={JSON.stringify(this.state)}
+
         <MaterialButton variant="contained"
           label={this.context.t('common.save')}
           primary={true}

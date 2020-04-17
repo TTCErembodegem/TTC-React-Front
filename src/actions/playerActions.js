@@ -111,7 +111,8 @@ function deleted(data) {
 
 
 
-export function saveBoardMember({playerId, boardFunction, sort}) {
+export function saveBoardMember({playerId, boardFunction, boardFunctionCustom, sort}) {
+  boardFunction = boardFunctionCustom || boardFunction;
   return dispatch => {
     return http.post('/clubs/Board', {playerId, boardFunction, sort})
       .then(function() {

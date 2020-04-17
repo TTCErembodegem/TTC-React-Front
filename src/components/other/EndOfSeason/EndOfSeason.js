@@ -34,14 +34,13 @@ export default class EndOfSeason extends Component {
     return (
       <div className="endofseason-container">
         <div className="row">
-          <div className="col-md-12">
+          <div className="col-md-6">
             <IntroClub />
           </div>
-          {/* <div className="col-md-6">
-            <h3>Komende Events</h3>
-            <Strike text="Kampioenenhuldiging met drankje en hapje vrijdag 7 juni" />
-            <Strike text="Save the date! Eetfestijn 2019 op zaterdag 28 september" />
-          </div> */}
+          <div className="col-md-6">
+            <h3>Nieuw Bestuur</h3>
+            <Strike text="Nieuw bestuur TTC Erembodegem! Check it out!" />
+          </div>
         </div>
         <h2>Einde Seizoen {new Date().getFullYear()-1}-{new Date().getFullYear()}</h2>
         <Kampioenen topTeams={calcer.getTopRankedTeams()} t={this.context.t} />

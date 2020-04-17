@@ -1,14 +1,16 @@
 import React, {Component} from 'react';
-import PropTypes from '../../PropTypes.js';
+import PropTypes, {connect} from '../../PropTypes.js';
 
 import Panel from 'react-bootstrap/lib/Panel';
 import {DivisionHeader} from '../../teams/controls/DivisionHeader.js';
 import {PlayerIndividual} from './PlayerIndividual.js';
 
+@connect(state => ({endOfSeason: state.config.get('params').endOfSeason}))
 export class PlayerCompetition extends Component {
   static propTypes = {
     player: PropTypes.PlayerModel.isRequired,
     competition: PropTypes.oneOf(['Vttl', 'Sporta']).isRequired,
+    endOfSeason: PropTypes.bool.isRequired,
   }
 
   render() {
@@ -36,9 +38,9 @@ export class PlayerCompetition extends Component {
         <Panel.Body>
           <PlayerIndividual player={player} competition={competition} />
 
-          {(false && comp.nextRanking) ? (
+          {this.props.endOfSeason && (
             <div>
-              {comp.ranking !== comp.nextRanking ? (
+              {comp.nextRanking && comp.ranking !== comp.nextRanking ? (
                 <span>
                   <b>Nieuw klassement</b>:
                   {comp.ranking}
@@ -46,10 +48,10 @@ export class PlayerCompetition extends Component {
                   {comp.nextRanking}
                 </span>
               ) : (
-                <span><b>Behoud klassement</b>: {comp.nextRanking}</span>
+                <span><b>Behoud klassement</b>: {comp.ranking}</span>
               )}
             </div>
-          ) : null}
+          )}
         </Panel.Body>
       </Panel>
     );

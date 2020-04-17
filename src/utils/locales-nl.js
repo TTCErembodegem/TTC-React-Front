@@ -240,6 +240,7 @@ export default {
         Treasurer: 'Penningmeester',
         Vttl: 'Competitie Vttl',
         Sporta: 'Competitie Sporta',
+        Other: 'Ander',
       }
     },
     match: {

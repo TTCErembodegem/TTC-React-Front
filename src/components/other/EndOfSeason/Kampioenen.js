@@ -10,6 +10,8 @@ export const Kampioenen = ({topTeams, t}) => {
     return null;
   }
 
+  // TODO: endOfSeason: the col-sm-offset-3 only works when there is one winning team
+  // (might have to adjust this next year)
   return (
     <div className="row kampioen">
       <h2>
@@ -18,7 +20,7 @@ export const Kampioenen = ({topTeams, t}) => {
         <TrophyIcon style={{marginLeft: 15}} />
       </h2>
       {topTeams.map(team => (
-        <div key={team.id} className="col-md-4 col-sm-6">
+        <div key={team.id} className="col-sm-offset-3 col-sm-6">
           <div className="content">
             <h3>
               <Link to={t.route('teams').replace(':competition', team.competition) + '/' + team.teamCode} className="link-hover-underline">

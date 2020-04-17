@@ -40,7 +40,7 @@ export default class Intro extends Component {
   };
 
   render() {
-    if (this.props.config.get('endOfSeason')) {
+    if (this.props.config.get('params').endOfSeason) {
       return <EndOfSeason />;
     }
 

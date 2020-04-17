@@ -8,7 +8,8 @@ import {MaterialButton} from '../controls/Button.js';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 
-// ATTN: This corresponds to an enum in the backend: ClubManagerType
+
+const ManagerTypeOther = 'Other';
 const clubManagerTypes = [
   {key: 0, text: 'Default'},
   {key: 1, text: 'Chairman'},
@@ -16,6 +17,7 @@ const clubManagerTypes = [
   {key: 3, text: 'Treasurer'},
   {key: 4, text: 'Vttl'},
   {key: 5, text: 'Sporta'},
+  {key: 6, text: ManagerTypeOther},
 ];
 
 @connect(state => ({clubs: state.clubs}), playerActions)
@@ -32,6 +34,7 @@ export default class AdminBoardMembers extends Component {
     this.state = {
       playerId: null,
       boardFunction: 0,
+      boardFunctionCustom: '',
       sort: 10,
     };
   }
@@ -39,15 +42,18 @@ export default class AdminBoardMembers extends Component {
   playerSelected(playerId) {
     const club = storeUtil.getOwnClub();
     let boardFunction = '';
+    let boardFunctionCustom = '';
     let sort = '';
     if (club) {
       const manager = club.managers.find(x => x.playerId === playerId);
       if (manager) {
-        boardFunction = manager.description;
+        const isPredefinedFunction = clubManagerTypes.map(x => x.text).includes(manager.description);
+        boardFunction = isPredefinedFunction ? manager.description : ManagerTypeOther;
+        boardFunctionCustom = isPredefinedFunction ? '' : manager.description;
         sort = manager.sortOrder;
       }
     }
-    this.setState({playerId, boardFunction, sort});
+    this.setState({playerId, boardFunction, boardFunctionCustom, sort});
   }
 
   render() {
@@ -55,6 +61,7 @@ export default class AdminBoardMembers extends Component {
       marginLeft: 20,
       textAlign: 'center',
       display: 'inline-block',
+      width: 500
     };
     return (
       <div style={paperStyle}>
@@ -65,8 +72,6 @@ export default class AdminBoardMembers extends Component {
         />
 
         <br />
-        Moet "Bestuurslid" expliciet kiezen of het werkt niet.
-        <br />(sortering waarschijnlijk ook😃)
         <br />
 
         <DropdownButton
@@ -80,6 +85,15 @@ export default class AdminBoardMembers extends Component {
             </MenuItem>
           ))}
         </DropdownButton>
+
+        <div>
+          <br />
+          <TextField
+            label="Specifieke functie omschrijving"
+            onChange={e => this.setState({boardFunctionCustom: e.target.value})}
+            value={this.state.boardFunctionCustom}
+          />
+        </div>
 
         <br />
         <br />
