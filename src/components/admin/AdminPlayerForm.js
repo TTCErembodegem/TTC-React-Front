@@ -124,14 +124,14 @@ export default class AdminPlayerForm extends Component {
             <TextField
               style={{width: 200, marginRight: fieldMargin}}
               label="Volgend Klassement VTTL"
-              defaultValue={player.vttl.nextRanking}
+              defaultValue={player.vttl && player.vttl.nextRanking}
               onChange={e => this.setState({vttl: Object.assign({}, player.vttl, {nextRanking: e.target.value})})}
               placeholder={'Huidig: ' + player.vttl.ranking}
             />
             <TextField
               style={{width: 200, marginRight: fieldMargin}}
               label="Volgend Klassement Sporta"
-              defaultValue={player.sporta.nextRanking}
+              defaultValue={player.sporta && player.sporta.nextRanking}
               onChange={e => this.setState({sporta: Object.assign({}, player.sporta, {nextRanking: e.target.value})})}
               placeholder={'Huidig: ' + player.sporta.ranking}
             />
