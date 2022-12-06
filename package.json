@@ -72,7 +72,7 @@
     "eslint": "^4.9.0",
     "eslint-plugin-react": "^7.4.0",
     "esprima-harmony-jscs": "^1.1.0-bin",
-    "express": "4.13.3",
+    "express": "4.17.3",
     "file-loader": "^0.8.4",
     "gaze": "^0.5.2",
     "git-repository": "^0.1.1",
