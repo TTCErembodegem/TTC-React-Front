@@ -340,7 +340,7 @@ function getMatches(matches, compFilter) {
 }
 
 function getFullUrl(pathname) {
-  return 'http://ttc-erembodegem.be' + pathname;
+  return 'http://ttc-aalst.be' + pathname;
 }
 
 function getLink(url, label) {

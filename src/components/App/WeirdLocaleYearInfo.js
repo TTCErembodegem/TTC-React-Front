@@ -1,4 +1,5 @@
 import React from 'react';
+import t from '../../locales';
 
 export const WeirdLocaleYearInfo = ({params}) => ( // eslint-disable-line
   <div>
@@ -12,9 +13,11 @@ export const WeirdLocaleYearInfo = ({params}) => ( // eslint-disable-line
     <h3>Sportzaal Technigo</h3>
     <b>{params.location}</b>
     <br />
-    {params.trainingDays}
-    <br />
     {params.competitionDays}
+    <br />{params.trainingDays}
+    <br />{t('clubs.training.trainingDays2')}
+    <br />{t('clubs.training.trainingDays3')}
     <br />
+    Jeugdwerking vanaf 8 jaar
   </div>
 );

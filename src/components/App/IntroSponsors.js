@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PropTypes, {connect, withViewport, withContext} from '../PropTypes.js';
+import PropTypes, {withViewport, withContext} from '../PropTypes.js';
 import {Strike} from '../controls.js';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
@@ -52,22 +52,37 @@ export default class IntroSponsors extends Component {
       <Row style={{margin: 10}}>
         <Strike text={this.context.t('intro.ourSponsors')} style={{marginBottom: 5}} />
         <Col style={{marginTop: 20}}>
-          <Sponsor.SlagerijGuy big={big} />
+          <Sponsor.AcademicSoftware big={big} />
         </Col>
         <Col style={{marginTop: 20}}>
           <Sponsor.itenium big={big} />
-        </Col>
-        <Col style={{marginTop: 20}}>
-          <Sponsor.Nostech big={big} />
-        </Col>
-        <Col style={{marginTop: 20}}>
-          <Sponsor.TransformerService big={big} />
         </Col>
         <Col style={{marginTop: 20}}>
           <Sponsor.RdInterieur big={big} />
         </Col>
         <Col style={{marginTop: 20}}>
           <Sponsor.BeSure2 big={big} />
+        </Col>
+        <Col style={{marginTop: 20}}>
+          <Sponsor.Woodchuck big={big} />
+        </Col>
+        <Col style={{marginTop: 20}}>
+          <Sponsor.Bordman big={big} />
+        </Col>
+        <Col style={{marginTop: 20}}>
+          <Sponsor.RJConstruct big={big} />
+        </Col>
+        <Col style={{marginTop: 20}}>
+          <Sponsor.EcoProject big={big} />
+        </Col>
+        <Col style={{marginTop: 20}}>
+          <Sponsor.COOLDown big={big} />
+        </Col>
+        <Col style={{marginTop: 20}}>
+          <Sponsor.Geniaal big={big} />
+        </Col>
+        <Col style={{marginTop: 20}}>
+          <Sponsor.TuinenRottiers big={big} />
         </Col>
       </Row>
     );

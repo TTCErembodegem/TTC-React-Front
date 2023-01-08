@@ -113,8 +113,8 @@ export default {
     },
     intro: {
       title: 'Tafeltennisclub TTC Aalst',
-      text: 'Een toffe club met ${players} leden. Ondanks onze beperkte kern, ' +
-        'slagen we er toch in om met ${teamsVttl} ploegen VTTL en ${teamsSporta} Sporta in competitie te treden. ' +
+      text: 'Een toffe club met ${players} leden. ' +
+        'We zijn een groeiende club en spelen met ${teamsVttl} ploegen VTTL & ${teamsSporta} Sporta in competitie verband. ' +
         'Fairplay en gezelligheid staan centraal bij al onze tafeltennis-activiteiten!',
       matchesToday: 'matchen vandaag',
       //trainingToday: 'vandaag training vanaf 19u30',
@@ -228,6 +228,11 @@ export default {
         bankNr: 'Bankrekeningnummer',
         orgNr: 'BTW nummer vzw',
         balls: 'Wij spelen met',
+      },
+      training: {
+        trainingDays2: 'Geleide Training: 2 wekelijks woensdag 20u30 tot 22u',
+        trainingDays3: 'Jeugd Training: Elke woensdag 19u30 tot 20u30',
+        extra: 'We beschikken over interne en externe (TT Progress) gediplomeerde trainers'
       },
       location: {
         title: 'Instructies naar ons lokaal',
@@ -357,11 +362,9 @@ export default {
       sportaResults: 'Resultaten Sporta',
       varia: 'Varia',
       vttlCalculationOne: 'Klassementsberekening VTTL (TTC Sint-Pauwels)',
-      vttlCalculationTwo: 'Klassementsberekening TTC De Pinte',
       sportaCalculation: 'Klassementsberekening Sporta (TTC Sint-Pauwels)',
-      dandoy: 'Dandoy (Tafeltenniswinkel)',
-      killypong: 'Killypong (Tafeltenniswinkel)',
-      tabletennisDaily: 'TableTennisDaily'
+      tabletennisDaily: 'TableTennisDaily',
+      besttts: 'Best Table Tennis Shop',
     },
     week: {
       emailTitle: 'Opstelling mailen',

@@ -37,10 +37,6 @@ export default class EndOfSeason extends Component {
           <div className="col-md-6">
             <IntroClub />
           </div>
-          <div className="col-md-6">
-            <h3>Nieuw Bestuur</h3>
-            <Strike text="Nieuw bestuur TTC Erembodegem! Check it out!" />
-          </div>
         </div>
         <h2>Einde Seizoen {new Date().getFullYear()-1}-{new Date().getFullYear()}</h2>
         <Kampioenen topTeams={calcer.getTopRankedTeams()} t={this.context.t} />
