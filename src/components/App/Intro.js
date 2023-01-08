@@ -48,19 +48,20 @@ export default class Intro extends Component {
     return (
       <div>
         <Row style={{marginTop: big ? 25 : undefined}}>
-          <Col sm={6} style={{verticalAlign: 'top'}}>
+          <Col lg={6} md={12} style={{verticalAlign: 'top'}}>
             <IntroClub />
             <WeirdLocaleYearInfo params={this.props.config.get('params')} />
             <ClubLocationInstructions />
           </Col>
-          <Col sm={6}>
+          <Col lg={6} md={12}>
             {!this.props.config.get('initialLoadCompleted') ? (
               <Loading t={this.context.t} bigScreen={this.props.viewport.width > 768} />
             ) : (
               <div>
                 <div style={{clear: 'both'}} />
                 {false && <Eetfestijn />}
-                <TodaysEvents {...this.props} />
+                {false && <TodaysEvents {...this.props} />}
+                <Plandisc />
               </div>
             )}
           </Col>
@@ -70,6 +71,21 @@ export default class Intro extends Component {
     );
   }
 }
+
+const Plandisc = () => (
+  <div style={{maxWidth: 1000, width: '50%', margin: 'auto', marginTop: 20}}>
+    <div style={{position: 'relative', paddingBottom: '117%', paddingTop: 35, height: 0, overflow: 'hidden'}}>
+      <iframe
+        src="https://create.plandisc.com/wheel/embed/CKKWdyW"
+        scrolling="no"
+        frameBorder="0"
+        title="TTC Aalst"
+        style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}
+      />
+    </div>
+  </div>
+);
+
 
 // TODO: React warning: setState on unmounted component = Typist (loading schlager is gone too fast now...)
 // https://github.com/jstejada/react-typist/issues/6#issuecomment-250910698
