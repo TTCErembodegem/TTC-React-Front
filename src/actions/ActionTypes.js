@@ -17,7 +17,7 @@ export default keyMirror({
   SET_SETTING: '',
   UPDATE_CONFIG_PARAM: '',
 
-  MATCHES_LOADED: '', // TTC Erembodegem match
+  MATCHES_LOADED: '', // TTC Aalst match
   READONLY_MATCHES_LOADED: '', // ReadOnly other match
 
   PLAYER_ACTIVE_CHANGED: '',

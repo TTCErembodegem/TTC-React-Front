@@ -2,10 +2,10 @@ import React from 'react';
 
 export const WeirdLocaleYearInfo = ({params}) => ( // eslint-disable-line
   <div>
-    <h2>
-      WIJZIGING ZAAL
-    </h2>
-    <b>Opgelet: TTC Erembodegem speelt niet meer op Groeneweg 28</b>
+    <h4>
+      WIJZIGING NAAM
+    </h4>
+    <b>Opgelet: TTC Erembodegem heet vanaf heden TTC Aalst</b>
 
     <br />
 

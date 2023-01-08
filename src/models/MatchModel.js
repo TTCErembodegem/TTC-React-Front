@@ -39,7 +39,7 @@ export default class MatchModel {
 
     // TODO: probably better to split MatchModel and ReadOnlyMatchModel/OtherMatchModel
     if (json.opponent) {
-      // TTC Erembodegem Match
+      // TTC Aalst Match
       this.isHomeMatch = json.isHomeMatch;
       this.teamId = json.teamId;
       this.description = json.description;
@@ -100,7 +100,7 @@ export default class MatchModel {
   }
   getClub(which) {
     if (this.opponent) {
-      console.warn('MatchModel.getClub: use getOpponentClub for TTC Erembodegem matches'); // eslint-disable-line
+      console.warn('MatchModel.getClub: use getOpponentClub for TTC Aalst matches'); // eslint-disable-line
     }
     if (which === 'home') {
       return storeUtil.getClub(this.home.clubId);

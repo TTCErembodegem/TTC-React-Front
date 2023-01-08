@@ -33,7 +33,7 @@ export const Eetfestijn = () => {
     <Paper style={eetfesijnStyle}>
       <div id="eetfestijn">
         <h1 style={{fontSize: 26}}>
-          Eetfestijn TTC Erembodegem
+          Eetfestijn TTC Aalst
           <br />
           {eetfestijnSets.date}
         </h1>

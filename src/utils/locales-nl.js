@@ -47,8 +47,8 @@ export default {
     generalInfo: '/club-info',
   },
   trans: {
-    fullClubName: 'TTC Erembodegem',
-    clubName: 'Erembodegem',
+    fullClubName: 'TTC Aalst',
+    clubName: 'Aalst',
     systemUserAlias: 'Clublokaal',
 
 
@@ -112,8 +112,8 @@ export default {
       },
     },
     intro: {
-      title: 'Tafeltennisclub TTC Erembodegem',
-      text: 'Een kleine, toffe club met ${players} leden. Ondanks onze beperkte kern, ' +
+      title: 'Tafeltennisclub TTC Aalst',
+      text: 'Een toffe club met ${players} leden. Ondanks onze beperkte kern, ' +
         'slagen we er toch in om met ${teamsVttl} ploegen VTTL en ${teamsSporta} Sporta in competitie te treden. ' +
         'Fairplay en gezelligheid staan centraal bij al onze tafeltennis-activiteiten!',
       matchesToday: 'matchen vandaag',
@@ -312,7 +312,7 @@ export default {
         commentPosted: 'Verklarende aantekening toegevoegd',
         commentDeleted: 'Verklarende aantekening verwijderd',
         commentVisible: 'Voor iedereen zichtbaar',
-        commentHidden: 'Enkel zichtbaar voor leden van TTC Erembodegem',
+        commentHidden: 'Enkel zichtbaar voor leden van TTC Aalst',
       },
       hasNewComments: 'Het wedstrijdverslag is gewijzigd!',
       playersVictoryTitle: 'Overwinningen',
