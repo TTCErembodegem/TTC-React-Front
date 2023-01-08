@@ -21,14 +21,28 @@ export default class IntroSponsors extends Component {
         <Row style={{marginTop: 25, marginBottom: 15}}>
           <div style={{width: 770, margin: 'auto'}}>
             <Strike text={this.context.t('intro.ourSponsors')} style={{marginBottom: 5}} />
-            <Sponsor.SlagerijGuy big={big} />
-            <Sponsor.itenium big={big} />
-            <Sponsor.Nostech big={big} style={{marginLeft: 20}} />
+            <Sponsor.AcademicSoftware big={big} />
+            <Sponsor.itenium big={big}style={{marginLeft: 20}} />
           </div>
           <div style={{width: 770, margin: 'auto', paddingTop: 25}}>
-            <Sponsor.TransformerService big={big} />
-            <Sponsor.RdInterieur big={big} style={{marginLeft: 20}} />
+            <Sponsor.RdInterieur big={big} />
             <Sponsor.BeSure2 big={big} style={{marginLeft: 20}} />
+          </div>
+          <div style={{width: 770, margin: 'auto', paddingTop: 25, display: 'flex'}}>
+            <div>
+              <Sponsor.Woodchuck big={big} />
+            </div>
+            <div style={{marginLeft: 20}}>
+              <Sponsor.Bordman big={big} style={{marginBottom: 15}} />
+              <Sponsor.RJConstruct big={big} style={{marginBottom: 20}} />
+              <Sponsor.EcoProject big={big} />
+            </div>
+
+          </div>
+          <div style={{width: 770, margin: 'auto', paddingTop: 25}}>
+            <Sponsor.COOLDown big={big} />
+            <Sponsor.Geniaal big={big} style={{marginLeft: 20}} />
+            <Sponsor.TuinenRottiers big={big} style={{marginLeft: 20}} />
           </div>
         </Row>
       );
