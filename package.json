@@ -84,7 +84,7 @@
     "mkdirp": "^0.5.1",
     "ncp": "^2.0.0",
     "nodemon": "^1.12.1",
-    "postcss": "^5.0.10",
+    "postcss": "^8.4.31",
     "postcss-calc": "^5.2.0",
     "postcss-cssnext": "^2.1.0",
     "postcss-import": "^7.0.0",
