@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Table from 'react-bootstrap/lib/Table';
+import Table from 'react-bootstrap/Table';
 import PropTypes, {withViewport, storeUtil} from '../../PropTypes';
 import {OpponentPlayerLabel} from './OpponentPlayer';
 import {Spinner} from '../../controls/controls/Spinner';

@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import moment from 'moment';
-import Row from 'react-bootstrap/lib/Row';
-import Col from 'react-bootstrap/lib/Col';
-import Typist from 'react-typist';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import PropTypes, {connect, withViewport, withContext} from '../PropTypes';
 import ClubLocationInstructions from '../other/ClubLocationInstructions';
 import {Strike} from '../controls/controls/Strike';
@@ -70,30 +69,6 @@ export default withContext(withViewport(connect(state => ({
   teams: state.teams,
 }))(Intro)));
 
-// TODO: React warning: setState on unmounted component = Typist (loading schlager is gone too fast now...)
-// https://github.com/jstejada/react-typist/issues/6#issuecomment-250910698
-
-type RestartingTypistProps = {timeout: number, children: any}
-type RestartingTypistState = {typing: boolean}
-
-class RestartingTypist extends Component<RestartingTypistProps, RestartingTypistState> {
-  constructor(props) {
-    super(props);
-    this.state = {typing: true};
-  }
-
-  done = () => {
-    this.setState({typing: false}, () => {
-      setTimeout(() => this.setState({typing: true}), this.props.timeout || 1200);
-    });
-  }
-
-  render() {
-    const {children, timeout, ...props} = this.props; // eslint-disable-line
-    return this.state.typing ? <Typist {...props} onTypingDone={this.done}>{children}</Typist> : <span>{children}</span>;
-  }
-}
-
 
 const Loading = ({t, bigScreen}) => (
   <div style={bigScreen ? undefined : {width: 310, margin: 'auto', marginBottom: 15, marginTop: 15}}>
@@ -106,7 +81,7 @@ const Loading = ({t, bigScreen}) => (
 
     <div style={{position: 'absolute', top: 5, width: 310, margin: 'auto'}}>
       <div style={{width: 310, textAlign: 'center', color: 'white'}}>
-        <RestartingTypist cursor={{show: false}} startDelay={500}>{t('intro.loading')}</RestartingTypist>
+        {t('intro.loading')}
       </div>
     </div>
   </div>

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Table from 'react-bootstrap/lib/Table';
+import Table from 'react-bootstrap/Table';
 import PropTypes, {connect, withViewport} from '../../PropTypes';
 import {getPlayerStats} from '../../../models/TeamModel';
 import {WonLostLabel} from '../../controls/controls/WonLostLabel';

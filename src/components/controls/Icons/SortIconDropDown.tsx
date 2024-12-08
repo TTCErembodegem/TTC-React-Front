@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import MenuItem from 'react-bootstrap/lib/MenuItem';
-import DropdownButton from 'react-bootstrap/lib/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 import {Icon} from './Icon';
 
 
@@ -38,7 +38,7 @@ export class SortIconDropDown extends Component<SortIconDropDownProps> {
     return (
       <DropdownButton title={<SortIcon direction={this.props.activeSortDirection} />} id="sort-dropdown" noCaret pullRight>
         {config.map(button => (
-          <MenuItem
+          <Dropdown.Item
             eventKey={button.key}
             key={button.key}
             onSelect={() => this._onButtonSelect(button.key)}
@@ -50,7 +50,7 @@ export class SortIconDropDown extends Component<SortIconDropDownProps> {
             />
 
             <span style={{marginLeft: 12}}>{button.text}</span>
-          </MenuItem>
+          </Dropdown.Item>
         ))}
       </DropdownButton>
     );

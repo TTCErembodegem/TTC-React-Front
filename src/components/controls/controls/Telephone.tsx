@@ -9,10 +9,10 @@ function callFormat(n) {
 }
 
 type TelephoneProps = {
-  number: string,
-  player: IPlayer,
+  number?: string,
+  player?: IPlayer,
   hideIcon: boolean,
-  noLink: boolean,
+  noLink?: boolean,
 }
 
 export class Telephone extends Component<TelephoneProps> {

@@ -2,20 +2,20 @@
 import React, {Component} from 'react';
 import {contextTypes} from '../../utils/decorators/withContext';
 
-import PanelGroup from 'react-bootstrap/lib/PanelGroup';
-import Panel from 'react-bootstrap/lib/Panel';
+import CardGroup from 'react-bootstrap/CardGroup';
+import Card from 'react-bootstrap/Card';
 
 export default class Facts extends Component {
   static contextTypes = contextTypes;
 
   render() {
     return (
-       <PanelGroup accordion style={{marginTop: 10}} id="navigation">
-          <Panel eventKey="1">
-            <Panel.Heading>
-              <Panel.Title toggle><b>{this.context.t('facts.service')}</b></Panel.Title>
-            </Panel.Heading>
-            <Panel.Body collapsible>
+       <CardGroup accordion style={{marginTop: 10}} id="navigation">
+          <Card eventKey="1">
+            <Card.Header>
+              <Card.Title toggle><b>{this.context.t('facts.service')}</b></Card.Title>
+            </Card.Header>
+            <Card.Body collapsible>
               <h1>{this.context.t('facts.serviceHeaderOne')}</h1>
               <p>
                 {this.context.t('facts.serviceSectionOneComponentOne')}
@@ -78,15 +78,15 @@ export default class Facts extends Component {
                 <br />
                 {this.context.t('facts.serviceSectionOneComponentTwentyNine')}
               </p>
-            </Panel.Body>
-          </Panel>
+            </Card.Body>
+          </Card>
 
 
-          <Panel eventKey="2">
-          <Panel.Heading>
-            <Panel.Title toggle><b>{this.context.t('facts.longpimples')}</b></Panel.Title>
-          </Panel.Heading>
-          <Panel.Body collapsible>
+          <Card eventKey="2">
+          <Card.Header>
+            <Card.Title toggle><b>{this.context.t('facts.longpimples')}</b></Card.Title>
+          </Card.Header>
+          <Card.Body collapsible>
             <p>
                 {this.context.t('facts.serviceSectionTwoComponentOne')}
                 <br /><br />
@@ -113,15 +113,15 @@ export default class Facts extends Component {
               <br /><br />
               {this.context.t('facts.serviceSectionTwoComponentTen')}
             </p>
-          </Panel.Body>
-          </Panel>
+          </Card.Body>
+          </Card>
 
 
-          <Panel eventKey="3">
-            <Panel.Heading>
-              <Panel.Title toggle><b>{this.context.t('facts.speed')}</b></Panel.Title>
-            </Panel.Heading>
-            <Panel.Body collapsible>
+          <Card eventKey="3">
+            <Card.Header>
+              <Card.Title toggle><b>{this.context.t('facts.speed')}</b></Card.Title>
+            </Card.Header>
+            <Card.Body collapsible>
               <p>
                 {this.context.t('facts.serviceSectionThreeComponentOne')}
               </p>
@@ -153,15 +153,15 @@ export default class Facts extends Component {
               <p>
                 {this.context.t('facts.serviceSectionThreeComponentEightteen')}
               </p>
-            </Panel.Body>
-          </Panel>
+            </Card.Body>
+          </Card>
 
 
-          <Panel eventKey="4">
-            <Panel.Heading>
-              <Panel.Title toggle><b>{this.context.t('facts.astrology')}</b></Panel.Title>
-            </Panel.Heading>
-            <Panel.Body collapsible>
+          <Card eventKey="4">
+            <Card.Header>
+              <Card.Title toggle><b>{this.context.t('facts.astrology')}</b></Card.Title>
+            </Card.Header>
+            <Card.Body collapsible>
               <h1>{this.context.t('facts.serviceSectionFourComponentOne')}</h1>
               <p>
                 {this.context.t('facts.serviceSectionFourComponentTwo')}
@@ -183,15 +183,15 @@ export default class Facts extends Component {
                 <li><strong>{this.context.t('facts.serviceSectionFourComponentTwentyFour')}</strong> {this.context.t('facts.serviceSectionFourComponentTwentyFive')}</li>
                 <li><strong>{this.context.t('facts.serviceSectionFourComponentTwentySix')}</strong> {this.context.t('facts.serviceSectionFourComponentTwentySeven')}</li>
               </ul>
-            </Panel.Body>
-          </Panel>
+            </Card.Body>
+          </Card>
 
 
-          <Panel eventKey="5">
-            <Panel.Heading>
-              <Panel.Title toggle><b>{this.context.t('facts.history')}</b></Panel.Title>
-            </Panel.Heading>
-            <Panel.Body collapsible>
+          <Card eventKey="5">
+            <Card.Header>
+              <Card.Title toggle><b>{this.context.t('facts.history')}</b></Card.Title>
+            </Card.Header>
+            <Card.Body collapsible>
               <h1>{this.context.t('facts.serviceSectionFiveComponentOne')}</h1>
               <p>
               {this.context.t('facts.serviceSectionFiveComponentTwo')}
@@ -204,9 +204,9 @@ export default class Facts extends Component {
               <p>
               {this.context.t('facts.serviceSectionFiveComponentSix')}
               </p>
-            </Panel.Body>
-          </Panel>
-       </PanelGroup>
+            </Card.Body>
+          </Card>
+       </CardGroup>
     );
   }
 }

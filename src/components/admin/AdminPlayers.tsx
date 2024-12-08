@@ -1,8 +1,8 @@
 /* eslint-disable no-nested-ternary */
 import React, {Component} from 'react';
 import moment from 'moment';
-import Table from 'react-bootstrap/lib/Table';
-import TextField from '@material-ui/core/TextField';
+import Table from 'react-bootstrap/Table';
+import TextField from '@mui/material/TextField';
 import {updatePlayer, frenoySync, deletePlayer} from '../../actions/playerActions';
 import {connect, withViewport} from '../PropTypes';
 import AdminPlayerForm from './AdminPlayerForm';

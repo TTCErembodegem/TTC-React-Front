@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PropTypes, {connect, keyMirror} from '../PropTypes';
+import {connect, keyMirror} from '../PropTypes';
 
 import {TabbedContainer} from '../controls/TabbedContainer';
 import AdminPlayers from './AdminPlayers';

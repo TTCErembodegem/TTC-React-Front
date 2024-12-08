@@ -1,20 +1,9 @@
 /* eslint-disable import/first, import/order, import/newline-after-import */
-import 'babel-core/polyfill';
-
 import React from 'react';
 import {render} from 'react-dom';
 import {Provider} from 'react-redux';
-import Promise from 'bluebird';
 import Routes from './routes';
 import store from './store';
-
-Promise.config({
-  warnings: true,
-  longStackTraces: true,
-  cancellation: true,
-  // monitoring: true
-});
-
 
 import {showSnackbar} from './actions/configActions';
 import http from './utils/httpClient';
@@ -25,9 +14,6 @@ window.onerror = function(message, source, lineno, colno, error) { // eslint-dis
   http.post('/config/Log', {args: arguments});
   store.dispatch(showSnackbar(`Something went wrong: ${message}`));
 };
-
-import moment from 'moment';
-moment.locale('nl');
 
 import {validateToken} from './actions/userActions';
 const token = localStorage.getItem('token');
@@ -65,24 +51,13 @@ if (enableDevTools) {
 
 
 
-// import 'react-app-polyfill/ie11';
-// import 'react-app-polyfill/stable';
-
 // import React from 'react';
 // import ReactDOM from 'react-dom';
 
 
-// // TODO: need to fetch this from the backend
-// if (process.env.NODE_ENV !== 'production') {
-//   document.title += ` - ${process.env.NODE_ENV || '???'}`;
-// }
-
-
-
-// import moment from 'moment';
-// import 'moment/locale/nl-be';
-
-// moment.locale('nl-be');
+import moment from 'moment';
+import 'moment/locale/nl-be';
+moment.locale('nl-be');
 
 
 // // import {registerLocale, setDefaultLocale} from 'react-datepicker';

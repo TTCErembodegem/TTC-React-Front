@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import TextField from '@material-ui/core/TextField';
-import Paper from '@material-ui/core/Paper';
-import Panel from 'react-bootstrap/lib/Panel';
-import MenuItem from '@material-ui/core/MenuItem';
+import TextField from '@mui/material/TextField';
+import Paper from '@mui/material/Paper';
+import Card from 'react-bootstrap/Card';
+import Dropdown from 'react-bootstrap/Dropdown';
 import PropTypes, {connect} from '../PropTypes';
 import * as playerActions from '../../actions/playerActions';
 import {userRoles} from '../../models/UserModel';
@@ -84,7 +84,7 @@ class AdminPlayerForm extends Component<AdminPlayerFormProps, IPlayer> {
           </Paper>
 
 
-          <Panel style={{marginTop: 20, padding: 15}}>
+          <Card style={{marginTop: 20, padding: 15}}>
             <h4>Contact</h4>
             <TextField
               style={{width: 200, marginRight: fieldMargin}}
@@ -117,7 +117,7 @@ class AdminPlayerForm extends Component<AdminPlayerFormProps, IPlayer> {
               onChange={e => this.setState({contact: {...player.contact, city: e.target.value}})}
             />
 
-          </Panel>
+          </Card>
         </div>
         <MaterialButton
           variant="contained"
@@ -151,7 +151,7 @@ class PlayerSecuritySelectField extends React.Component<PlayerSecuritySelectFiel
   render() {
     return (
       <TextField select style={{width: 100}} value={this.props.value} onChange={e => this.props.onChange(e)} label="Toegang">
-        {userRoles.map(role => <MenuItem key={role} value={role}>{role}</MenuItem>)}
+        {userRoles.map(role => <Dropdown.Item key={role} value={role}>{role}</Dropdown.Item>)}
       </TextField>
     );
   }

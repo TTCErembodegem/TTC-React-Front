@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import TextField from '@material-ui/core/TextField';
-import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
+import TextField from '@mui/material/TextField';
+import Paper from '@mui/material/Paper';
+import Checkbox from '@mui/material/Checkbox';
 import {MaterialButton} from '../controls/Buttons/MaterialButton';
 import PropTypes from '../PropTypes';
 import {IClub} from '../../models/model-interfaces';

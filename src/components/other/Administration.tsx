@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Panel from 'react-bootstrap/lib/Panel';
+import Card from 'react-bootstrap/Card';
 import PropTypes, {connect, storeUtil} from '../PropTypes';
 import PlayerImage from '../players/PlayerImage';
 import {Email} from '../controls/controls/Email';
@@ -27,16 +27,16 @@ class Administration extends Component {
         <div className="row">
           {managers.sort((a, b) => a.sortOrder - b.sortOrder).map(manager => (
             <div className="col-lg-4 col-sm-6" key={manager.playerId} style={{paddingBottom: 10}}>
-              <Panel>
-                <Panel.Heading>
+              <Card>
+                <Card.Header>
                   <span>
                     <strong>{manager.name}</strong>
                     <br />
                     {manager.description === 'Default' ? <br /> : this.context.t(`clubs.managerTypes.${manager.description}`)}
                   </span>
-                </Panel.Heading>
+                </Card.Header>
 
-                <Panel.Body>
+                <Card.Body>
                   <PlayerImage playerId={manager.playerId} center shape="circle" />
                   <br />
                   <Email email={manager.contact.email} showIcon />
@@ -44,8 +44,8 @@ class Administration extends Component {
                   <Telephone player={manager} style={{marginTop: 5}} />
 
                   <PlayerAddress contact={manager.contact} style={{marginTop: 5}} />
-                </Panel.Body>
-              </Panel>
+                </Card.Body>
+              </Card>
             </div>
           ))}
         </div>

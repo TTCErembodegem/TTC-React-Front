@@ -1,4 +1,3 @@
-import Promise from 'bluebird';
 import moment from 'moment';
 import _ from 'lodash';
 import ActionTypes from './ActionTypes';

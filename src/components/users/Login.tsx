@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
-import TextField from '@material-ui/core/TextField';
-import Paper from '@material-ui/core/Paper';
+import {Link} from 'react-router';
+import TextField from '@mui/material/TextField';
+import Paper from '@mui/material/Paper';
 import PropTypes, {connect} from '../PropTypes';
 import * as loginActions from '../../actions/userActions';
 import PlayerAutoComplete from '../players/PlayerAutoComplete';

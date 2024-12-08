@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import TextField from '@material-ui/core/TextField';
-import MenuItem from 'react-bootstrap/lib/MenuItem';
-import DropdownButton from 'react-bootstrap/lib/DropdownButton';
+import TextField from '@mui/material/TextField';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 import PropTypes, {connect, storeUtil} from '../PropTypes';
 import * as playerActions from '../../actions/playerActions';
 
@@ -81,9 +81,9 @@ class AdminBoardMembers extends Component<AdminBoardMembersProps, AdminBoardMemb
           bsSize="large"
         >
           {clubManagerTypes.map(button => (
-            <MenuItem eventKey={button.key} key={button.key} onSelect={() => this.setState({boardFunction: button.text})}>
+            <Dropdown.Item eventKey={button.key} key={button.key} onSelect={() => this.setState({boardFunction: button.text})}>
               {this.context.t(`clubs.managerTypes.${button.text}`)}
-            </MenuItem>
+            </Dropdown.Item>
           ))}
         </DropdownButton>
 

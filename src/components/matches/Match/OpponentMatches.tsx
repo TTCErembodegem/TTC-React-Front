@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import cn from 'classnames';
 
-import Table from 'react-bootstrap/lib/Table';
+import Table from 'react-bootstrap/Table';
 import PropTypes, {withViewport} from '../../PropTypes';
 import {OtherMatchPlayerResultsTableRow} from './OtherMatchPlayerResults';
 import {MatchPlayerRankings} from '../controls/MatchPlayerRankings';

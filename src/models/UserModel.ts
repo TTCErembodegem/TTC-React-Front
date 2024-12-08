@@ -1,4 +1,4 @@
-import keyMirror from 'fbjs/lib/keyMirror';
+import {default as keyMirror} from 'keymirror';
 import moment from 'moment';
 import storeUtil from '../storeUtil';
 import {IPlayer, ITeam, IMatch} from './model-interfaces';

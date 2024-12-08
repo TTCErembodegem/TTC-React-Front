@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import cn from 'classnames';
-import Table from 'react-bootstrap/lib/Table';
+import Table from 'react-bootstrap/Table';
 import PropTypes, {connect} from '../../PropTypes';
 import {PlayerFrenoyLink} from '../PlayerCard';
 import {PlayerPlayingStyleForm} from '../PlayerPlayingStyle';

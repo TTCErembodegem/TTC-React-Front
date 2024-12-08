@@ -1,4 +1,3 @@
-// TODO: disableEditing doesn't work: https://github.com/wangzuo/react-medium-editor/issues/15
 const blacklist = require('blacklist');
 const React = require('react');
 const ReactDOM = require('react-dom');

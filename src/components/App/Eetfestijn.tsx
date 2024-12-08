@@ -1,5 +1,5 @@
 import React from 'react';
-import Paper from '@material-ui/core/Paper';
+import Paper from '@mui/material/Paper';
 
 const eetfesijnStyle = {
   padding: 0,
@@ -32,16 +32,16 @@ export const Eetfestijn = () => (
   <Paper style={eetfesijnStyle}>
     <div id="eetfestijn">
       <h1 style={{fontSize: 26}}>
-          Eetfestijn TTC Erembodegem
+        Eetfestijn TTC Aalst
         <br />
         {eetfestijnSets.date}
       </h1>
 
-        Van {eetfestijnSets.startHour} tot {eetfestijnSets.endHour} in zaal
-        &nbsp;
+      Van {eetfestijnSets.startHour} tot {eetfestijnSets.endHour} in zaal
+      &nbsp;
       <a className="eetfestijn" href={eetfestijnGoogleMaps} target="_blank" rel="noopener noreferrer">Sint-Paulus</a>
       <br />
-        Botermelkstraat 63, 9300 Aalst
+      Botermelkstraat 63, 9300 Aalst
 
       <br /><br />
 

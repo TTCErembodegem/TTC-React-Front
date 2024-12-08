@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import cn from 'classnames';
-import Table from 'react-bootstrap/lib/Table';
+import Table from 'react-bootstrap/Table';
 import PropTypes, {connect, withViewport, storeUtil} from '../../PropTypes';
 import {matchOutcome} from '../../../models/MatchModel';
 import {OpponentPlayerLabel} from './OpponentPlayer';

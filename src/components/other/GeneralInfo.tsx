@@ -28,6 +28,10 @@ class GeneralInfo extends Component {
             {this.props.params.competitionDays}
             <br />
             {this.props.params.trainingDays}
+            Hello?
+            <br />{this.context.t('clubs.training.trainingDays2')}
+            <br />{this.context.t('clubs.training.trainingDays3')}
+            <br />{this.context.t('clubs.training.extra')}
             <br /><br />
             <strong>VTTL</strong> {this.props.params.frenoyClubIdVttl}<br />
             <strong>Sporta</strong> {this.props.params.frenoyClubIdSporta}<br />

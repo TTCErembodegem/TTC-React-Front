@@ -1,15 +1,14 @@
-import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import Select from 'react-select';
 
-export default class PlayerStyleAutocomplete extends Component {
-  static propTypes = {
-    t: PropTypes.func.isRequired,
-    style: PropTypes.object,
-    onChange: PropTypes.func.isRequired,
-    value: PropTypes.string,
-  }
+type PlayerStyleAutocompleteProps = {
+  t: Function;
+  style?: CSSProperties;
+  onChange: Function;
+  value?: string;
+}
 
+export default class PlayerStyleAutocomplete extends Component<PlayerStyleAutocompleteProps> {
   _onChange(option) {
     this.props.onChange(option.value);
   }

@@ -5,7 +5,7 @@ export const WeirdLocaleYearInfo = ({params}: any) => ( // eslint-disable-line
     <h2>
       WIJZIGING ZAAL
     </h2>
-    <b>Opgelet: TTC Erembodegem speelt niet meer op Groeneweg 28</b>
+    <b>Opgelet: TTC Aalst speelt niet meer op Groeneweg 28</b>
 
     <br />
 

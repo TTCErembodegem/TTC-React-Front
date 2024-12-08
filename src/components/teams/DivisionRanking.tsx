@@ -1,5 +1,5 @@
 import React from 'react';
-import Table from 'react-bootstrap/lib/Table';
+import Table from 'react-bootstrap/Table';
 import cn from 'classnames';
 import PropTypes from '../PropTypes';
 import {OwnClubId} from '../../models/ClubModel';

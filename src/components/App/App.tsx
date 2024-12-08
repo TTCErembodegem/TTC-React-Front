@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import Grid from 'react-bootstrap/lib/Grid';
-import Snackbar from '@material-ui/core/Snackbar';
-import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
+import Grid from 'react-bootstrap/Grid';
+import Snackbar from '@mui/material/Snackbar';
+import {ThemeProvider, createTheme} from '@mui/material/styles';
 import {connect, withViewport, withContext} from '../PropTypes';
 import Header from '../skeleton/Header/Header';
 import Footer from '../skeleton/Footer/Footer';
@@ -32,7 +32,7 @@ class App extends Component<AppProps> {
 
     return (
       <div id="react">
-        <MuiThemeProvider theme={createMuiTheme()}>
+        <ThemeProvider theme={createTheme()}>
           <div style={{height: '100%'}}>
             <div className="wrapper">
               <Header user={this.props.user} />
@@ -49,7 +49,7 @@ class App extends Component<AppProps> {
               onClose={() => this._onCloseSnackbar()}
             />
           </div>
-        </MuiThemeProvider>
+        </ThemeProvider>
       </div>
     );
   }

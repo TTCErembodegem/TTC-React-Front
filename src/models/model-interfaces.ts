@@ -39,7 +39,7 @@ type TranslatorFn = (key: string, params?: any) => string;
 export type Translator = TranslatorFn & {
   reverseRoute: (baseRoute: string, translatedRoute: string) => string;
   route: (routeName: string, params?: any) => string;
-  timeAgo(): () => any;
+  timeAgo(): any;
 };
 
 /* ****************************************************
@@ -89,7 +89,7 @@ export interface IMatchCommon {
 /** If you are unsure what kind of match it is */
 export interface IMatch extends IMatchCommon, IMatchOwn, IMatchOther {}
 
-/** If you know it needs a TTC Erembodegem match, use this one */
+/** If you know it needs a TTC Aalst match, use this one */
 export interface IFullMatchOwn extends IMatchCommon, IMatchOwn {}
 
 /** If you know it needs a ReadonlyMatch, use this one */
@@ -97,7 +97,7 @@ export interface IFullMatcOther extends IMatchCommon, IMatchOther {}
 
 /**
  * This interface applies only to MatchModels in which
- * one of the two teams is TTC Erembodegem
+ * one of the two teams is TTC Aalst
  * */
 export interface IMatchOwn {
   isHomeMatch: boolean;
@@ -122,18 +122,18 @@ export interface IMatchOwn {
 
 /**
  * This interface applies only to MatchModels in which
- * TTC Erembodegem is not considered 'special' or is not playing in.
+ * TTC Aalst is not considered 'special' or is not playing in.
  * These are loaded in the context of other Teams.
  */
 export interface IMatchOther {
   home: ITeamOpponent;
   away: ITeamOpponent;
-  /** Is TTC Erembodegem home or away team? */
+  /** Is TTC Aalst home or away team? */
   isOurMatch: boolean;
   /** If isOurMatch, get the IMatchOwn MatchModel */
   getOurMatch: () => IMatch;
 
-  getClub(which: 'home' | 'away'): IClub | undefined;
+  getClub(which: "home" | "away"): IClub | undefined;
   won(opponent: ITeamOpponent): boolean;
 }
 
@@ -184,7 +184,7 @@ export interface IMatchComment {
   matchId: number;
   playerId: number;
   text: string;
-  /** Hidden is only visible for TTC Erembodegem players */
+  /** Hidden is only visible for TTC Aalst players */
   hidden: boolean;
   postedOn: any;
   imageUrl: string;

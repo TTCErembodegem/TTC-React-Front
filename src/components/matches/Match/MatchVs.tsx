@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+import {Link} from 'react-router';
 import cn from 'classnames';
 import PropTypes, {browseTo} from '../../PropTypes';
 import {Icon} from '../../controls/Icons/Icon';

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import Table from 'react-bootstrap/lib/Table';
-import TextField from '@material-ui/core/TextField';
+import Table from 'react-bootstrap/Table';
+import TextField from '@mui/material/TextField';
 import {connect, withViewport} from '../PropTypes';
 import {updateClub} from '../../actions/clubActions';
 import AdminClubForm from './AdminClubForm';

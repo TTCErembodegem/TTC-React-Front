@@ -1,4 +1,3 @@
-import Promise from 'bluebird';
 import ActionTypes from './ActionTypes';
 import http from '../utils/httpClient';
 import {simpleLoaded, loaded as matchesLoaded} from './matchActions';
@@ -57,7 +56,7 @@ export function fetchClub(clubId: number) {
   return fetchData(`/clubs/${clubId}`, clubsLoaded); // TODO: not implemented on backend (required by SignalR once we update a club)
 }
 
-export default function () {
+export default function() {
   function initialRequest(dispatch, url, loadedAction) {
     return http.get(url)
       .then(data => {
@@ -97,7 +96,7 @@ export default function () {
     initialRequest(dispatch, '/clubs', clubsLoaded),
     initialRequest(dispatch, '/config', configLoaded),
   ]).then(initialLoad => {
-      console.info('initialLoadCompleted'); // eslint-disable-line
+      console.info('initialLoadCompleted');
     dispatch(initialLoadCompleted());
 
     const players = initialLoad[1];
@@ -115,6 +114,6 @@ export default function () {
     p = p.then(() => loadTeamRankings(teams, dispatch));
 
     return p;
-    }).then(() => console.info('secundary load completed')) // eslint-disable-line
-      .catch(err => console.error('initial load failed', err)) // eslint-disable-line
+    }).then(() => console.info('secundary load completed'))
+      .catch(err => console.error('initial load failed', err))
 }

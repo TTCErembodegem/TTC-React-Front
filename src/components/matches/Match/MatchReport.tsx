@@ -1,7 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import React, {Component} from 'react';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 import PropTypes, {connect, storeUtil} from '../../PropTypes';
 import * as matchActions from '../../../actions/matchActions';
 import PlayerAutoComplete from '../../players/PlayerAutoComplete';

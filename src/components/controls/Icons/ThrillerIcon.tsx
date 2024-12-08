@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import Tooltip from 'react-bootstrap/lib/Tooltip';
-import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import PropTypes from '../../PropTypes';
 import {Icon} from './Icon';
 import {IMatch, Translator} from '../../../models/model-interfaces';

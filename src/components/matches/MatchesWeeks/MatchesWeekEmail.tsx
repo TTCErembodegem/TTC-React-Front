@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Button from 'react-bootstrap/lib/Button';
+import Button from 'react-bootstrap/Button';
 import {Modal} from 'react-bootstrap';
 import PropTypes, {connect} from '../../PropTypes';
 import * as adminActions from '../../../actions/adminActions';

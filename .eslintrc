@@ -1,38 +1,39 @@
-module.exports = {
-  env: {
-    browser: true,
-    es6: true,
-    jasmine: true,
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "es6": true,
+    "jest": true
   },
-  extends: ["plugin:react/recommended", "airbnb"],
-  globals: {
-    Atomics: "readonly",
-    SharedArrayBuffer: "readonly"
+  "extends": ["plugin:react/recommended", "airbnb"],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
   },
 
-  parser: "@typescript-eslint/parser",
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
-      // legacyDecorators: true
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
     },
-    ecmaVersion: 2015,
-    sourceType: "module"
+    "ecmaVersion": 2015,
+    "sourceType": "module"
   },
-  ignorePatterns: ["node_modules", "public", ".vscode"],
-  plugins: ["react", "react-hooks", "@typescript-eslint", "jasmine"],
-  rules: {
+  "ignorePatterns": ["node_modules", "public", ".vscode"],
+  "plugins": ["react", "react-hooks", "@typescript-eslint"],
+  "rules": {
+    "quotes": 0,
     "implicit-arrow-linebreak": ["error", "beside"],
-    "no-unused-vars": [0, { args: 'none' }], // https://github.com/typescript-eslint/typescript-eslint/issues/46
+    "no-unused-vars": [0, { "args": "none" }], // https://github.com/typescript-eslint/typescript-eslint/issues/46
     "no-use-before-define": [0],
-    "react/jsx-filename-extension": [1, { extensions: [".tsx"] }],
+    "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
     "no-underscore-dangle": [0],
     "object-curly-spacing": [2, "never"],
     "import/extensions": [0],
     "react/destructuring-assignment": [0],
     "import/prefer-default-export": [0],
     "no-shadow": [1],
-    "no-multiple-empty-lines": ["error", { max: 7 }],
+    "no-multiple-empty-lines": ["error", { "max": 7 }],
     "linebreak-style": [0],
     "max-len": ["error", { "code": 160 }],
     "dot-notation": [1],
@@ -54,7 +55,6 @@ module.exports = {
     "react/sort-comp": [0],
     "jsx-a11y/click-events-have-key-events": [0],
     "react/jsx-no-bind": [0],
-    // "typescript/no-non-null-assertion": [0],
   },
   "settings": {
     "import/resolver": {
@@ -62,5 +62,5 @@ module.exports = {
         "extensions": [".js", ".ts", ".tsx"]
       }
     }
-  },
-};
+  }
+}

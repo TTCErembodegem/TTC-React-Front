@@ -1,6 +1,4 @@
-import PropTypes from 'prop-types'; // eslint-disable-line no-unused-vars
 import React, {Component} from 'react';
-import invariant from 'fbjs/lib/invariant';
 
 let count = 0;
 
@@ -36,7 +34,6 @@ function withStyles(styles) {
     }
 
     componentWillMount() {
-      invariant(styles.use, 'The style-loader must be configured with reference-counted API.');
       styles.use();
     }
 

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Table from 'react-bootstrap/lib/Table';
+import Table from 'react-bootstrap/Table';
 import PropTypes, {connect, withViewport} from '../../PropTypes';
 import {TeamOverviewPlayerStats} from './TeamOverviewPlayerStats';
 import {PlayerCompetitionLabel} from '../../players/PlayerCard';

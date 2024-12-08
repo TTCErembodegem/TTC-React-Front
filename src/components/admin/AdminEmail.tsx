@@ -78,7 +78,7 @@ class AdminEmailComponent extends Component<AdminEmailComponentProps, AdminEmail
         />
 
         <span style={{marginLeft: 6}}>
-          # {selectedPlayers.size}
+          # {selectedPlayers.length}
         </span>
 
         <div className="row" style={{marginTop: 25}}>

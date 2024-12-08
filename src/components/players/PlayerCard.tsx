@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
-import Panel from 'react-bootstrap/lib/Panel';
+import {Link} from 'react-router';
+import Card from 'react-bootstrap/Card';
 import PropTypes, {connect, browseTo, withViewport} from '../PropTypes';
 import PlayerImage from './PlayerImage';
 import {PlayerPlayingStyleForm} from './PlayerPlayingStyle';
@@ -30,8 +30,8 @@ class PlayerCard extends Component<PlayerCardProps> {
     const {player, showSideBySide} = this.props;
     const showAddressBelow = !showSideBySide;
     return (
-      <Panel style={{height: this.props.user.playerId && showAddressBelow ? 410 : 300, marginBottom: 20}}>
-        <Panel.Heading>
+      <Card style={{height: this.props.user.playerId && showAddressBelow ? 410 : 300, marginBottom: 20}}>
+        <Card.Header>
           <div style={{height: 40}}>
             <div style={{float: 'left'}}>
               <strong><PlayerLink player={player} /></strong>
@@ -44,11 +44,11 @@ class PlayerCard extends Component<PlayerCardProps> {
             </div>
             <div style={{clear: 'both'}} />
           </div>
-        </Panel.Heading>
+        </Card.Header>
 
         <PlayerPlayingStyleForm player={player} iconStyle="edit-icon" style={{color: '#d3d3d3', position: 'absolute', top: 75, right: 27}} />
 
-        <Panel.Body>
+        <Card.Body>
           {!this.props.user.playerId || showAddressBelow ? (
             <div>
               <PlayerImage playerId={player.id} center shape="thumbnail" />
@@ -65,8 +65,8 @@ class PlayerCard extends Component<PlayerCardProps> {
               </div>
             </div>
           )}
-        </Panel.Body>
-      </Panel>
+        </Card.Body>
+      </Card>
     );
   }
 }

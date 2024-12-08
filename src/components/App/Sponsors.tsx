@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Paper from '@material-ui/core/Paper';
+import Paper from '@mui/material/Paper';
 import PropTypes from '../PropTypes';
 import {Location} from '../controls/controls/Location';
 

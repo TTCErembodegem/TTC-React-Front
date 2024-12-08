@@ -9,6 +9,8 @@ import {IPlayer, ITeam, IMatch, IClub} from '../../../models/model-interfaces';
 import {AchievementsCalculator} from './AchievementsCalculator';
 import {Strike} from '../../controls/controls/Strike';
 
+// TODO: This thing crashes on PlayerLink --> Probably when there is someone in the achievements that has left the club
+
 require('./achievements.css');
 
 type EndOfSeasonProps = {

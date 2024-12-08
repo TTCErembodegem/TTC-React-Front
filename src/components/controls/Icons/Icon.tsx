@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import cn from 'classnames';
-import PropTypes, {withTooltip} from '../../PropTypes';
+import {withTooltip} from '../../PropTypes';
 
 export type IconProps = {
   fa: string;
@@ -11,8 +11,6 @@ export type IconProps = {
 }
 
 class IconComponent extends Component<IconProps> {
-  static contextTypes = PropTypes.contextTypes;
-
   render() {
     const {fa, color, style, onClick, className, ...props} = this.props;
     if (!onClick) {

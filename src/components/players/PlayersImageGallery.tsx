@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import cn from 'classnames';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
+import ImageListItemBar from '@mui/material/ImageListItemBar';
 import {playerUtils} from '../../models/PlayerModel';
 import * as playerActions from '../../actions/playerActions';
 import PropTypes, {connect, withContext, withViewport} from '../PropTypes';
@@ -64,16 +64,16 @@ class PlayersImageGallery extends Component {
       // big image gallery
       return (
         <div style={gridStyles.root}>
-          <GridList
-            cellHeight={PlayersImageHeight}
+          <ImageList
+            rowHeight={PlayersImageHeight}
             cols={Math.min(5, Math.floor((viewport.width / this.props.viewportWidthContainerCount) / PlayersImageWidth))}
             style={gridStyles.gridList}
           >
             {players.map(ply => {
               const comp = ply.getCompetition(competition);
               return (
-                <GridListTile key={ply.id}>
-                  <GridListTileBar
+                <ImageListItem key={ply.id}>
+                  <ImageListItemBar
                     title={(
                       <span>
                         <PlayerLink player={ply} style={{color: 'white'}} />
@@ -84,10 +84,10 @@ class PlayersImageGallery extends Component {
                   />
                   <PlayerPlayingStyleForm player={ply} iconStyle="edit-icon" style={editStyleIcon} />
                   <PlayerImage playerId={ply.id} />
-                </GridListTile>
+                </ImageListItem>
               );
             })}
-          </GridList>
+          </ImageList>
         </div>
       );
     }

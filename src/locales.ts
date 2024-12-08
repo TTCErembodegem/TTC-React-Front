@@ -3,7 +3,7 @@ import {Translator} from './models/model-interfaces';
 
 const {trans, routes, timeAgo} = LocalesUtils;
 
-const translate: Translator = (key: string, params: any = {}): string => {
+const translate: any = (key: string, params: any = {}): string => {
   let str;
   if (key.indexOf('.') === -1) {
     str = trans[key];
@@ -39,11 +39,11 @@ translate.reverseRoute = (baseRoute: string, translatedRoute: string): string =>
 };
 
 translate.route = (routeName: string, params: any): string => {
-  let route;
+  let route: string;
   if (routeName.indexOf('.') === -1) {
     route = routes[routeName];
   } else {
-    route = routeName.split('.').reduce((o, i) => o[i], routes);
+    route = routeName.split('.').reduce((o, i) => o[i], routes) as unknown as string;
   }
 
   if (!params) {
@@ -58,4 +58,4 @@ translate.route = (routeName: string, params: any): string => {
 
 translate.timeAgo = () => timeAgo;
 
-export default translate;
+export default translate as Translator;

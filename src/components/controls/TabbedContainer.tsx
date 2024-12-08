@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {withRouter} from 'react-router-dom';
-import Nav from 'react-bootstrap/lib/Nav';
-import NavItem from 'react-bootstrap/lib/NavItem';
-import PanelGroup from 'react-bootstrap/lib/PanelGroup';
-import Panel from 'react-bootstrap/lib/Panel';
+import {withRouter} from 'react-router';
+import Nav from 'react-bootstrap/Nav';
+import NavItem from 'react-bootstrap/NavItem';
+import CardGroup from 'react-bootstrap/CardGroup';
+import Card from 'react-bootstrap/Card';
 import PropTypes, {withViewport} from '../PropTypes';
 import {TabbedContainerEventKeyRouteProps, Viewport, Historian} from '../../models/model-interfaces';
 
@@ -67,9 +67,9 @@ class TabbedContainerComponent extends Component<TabbedContainerComponentProps, 
     if (this._showAccordion()) {
       // Accordion
       return (
-        <PanelGroup defaultActiveKey={!this.state.forceClose ? openTabKey : null} style={this.props.style} id={openTabKey}>
+        <CardGroup defaultActiveKey={!this.state.forceClose ? openTabKey : null} style={this.props.style} id={openTabKey}>
           {this.props.tabKeys.filter(tab => tab.show !== false).map(tab => this._renderTabHeader(tab))}
-        </PanelGroup>
+        </CardGroup>
       );
     }
 
@@ -111,17 +111,17 @@ class TabbedContainerComponent extends Component<TabbedContainerComponentProps, 
 
     const isOpen = this.state.openTabKey === tab.key && !this.state.forceClose;
     return (
-      <Panel
+      <Card
         defaultExpanded={isOpen}
         eventKey={tab.key}
         className="match-card-panel"
         key={tab.key}
       >
-        <Panel.Heading>
+        <Card.Header>
           {header}
-        </Panel.Heading>
+        </Card.Header>
         {isOpen ? this.props.tabRenderer(tab.key) : null}
-      </Panel>
+      </Card>
     );
   }
 

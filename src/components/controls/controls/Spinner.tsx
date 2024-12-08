@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from '@mui/material/CircularProgress';
 import {Icon} from '../Icons/Icon';
 
 type SpinnerProps = {

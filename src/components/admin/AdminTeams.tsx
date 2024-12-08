@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import Immutable from 'immutable';
 import _ from 'lodash';
-import Paper from '@material-ui/core/Paper';
-import TextField from '@material-ui/core/TextField';
-import Button from 'react-bootstrap/lib/Button';
-import MenuItem from '@material-ui/core/MenuItem';
+import Paper from '@mui/material/Paper';
+import TextField from '@mui/material/TextField';
+import Button from 'react-bootstrap/Button';
+import MenuItem from '@mui/material/MenuItem';
 import {frenoyTeamSync} from '../../actions/matchActions';
 import {toggleTeamPlayer} from '../../actions/playerActions';
 import PropTypes, {connect, withViewport} from '../PropTypes';

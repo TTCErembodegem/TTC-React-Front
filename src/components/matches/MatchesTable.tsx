@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import _ from 'lodash';
-import Table from 'react-bootstrap/lib/Table';
-import FormControl from 'react-bootstrap/lib/FormControl';
+import Table from 'react-bootstrap/Table';
+import FormControl from 'react-bootstrap/FormControl';
 import PropTypes, {connect, withViewport, storeUtil} from '../PropTypes';
 import {getPlayingStatusClass} from '../../models/PlayerModel';
 

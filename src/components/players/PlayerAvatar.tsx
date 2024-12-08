@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Avatar from '@material-ui/core/Avatar';
+import Avatar from '@mui/material/Avatar';
 import PropTypes, {withTooltip} from '../PropTypes';
 
 import {playerUtils} from '../../models/PlayerModel';

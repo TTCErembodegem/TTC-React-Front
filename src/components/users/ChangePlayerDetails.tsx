@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import TextField from '@material-ui/core/TextField';
+import TextField from '@mui/material/TextField';
 import PropTypes, {connect} from '../PropTypes';
 import * as playerActions from '../../actions/playerActions';
 import {MaterialButton} from '../controls/Buttons/MaterialButton';

@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {BrowserRouter, Route, Switch} from 'react-router';
 import {ComponentWithLayout} from './components/App/ComponentWithLayout';
 import Players from './components/players/Players';
 import {Player} from './components/players/Player';

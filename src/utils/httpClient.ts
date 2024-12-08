@@ -1,6 +1,5 @@
 /* eslint-disable arrow-body-style */
-import Promise from 'bluebird';
-import request from 'superagent-bluebird-promise';
+import request from 'superagent';
 import querystring from 'querystring';
 import assert from 'assert';
 import moment from 'moment';
@@ -30,7 +29,7 @@ function bearer(req) {
 
 const HttpClient = {
   download: path => request.get(getUrl(path)).accept('json').use(bearer),
-  get: (path, qs) => {
+  get: (path: string, qs?: any) => {
     const fullUrl = `GET ${qs ? `${path}?${querystring.encode(qs)}` : path}`;
     return Promise.try(() => {
       if (LogRequestTimes) {

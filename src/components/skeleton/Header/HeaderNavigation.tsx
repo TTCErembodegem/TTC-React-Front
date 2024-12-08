@@ -1,31 +1,28 @@
-import PropTypes from 'prop-types';
 import React, {Component} from 'react';
-import {Link, withRouter} from 'react-router-dom';
+import {Link, withRouter} from 'react-router';
 
 import enhanceWithClickOutside from 'react-click-outside';
-import {withStyles} from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import MenuItem from '@material-ui/core/MenuItem';
-import Divider from '@material-ui/core/Divider';
-import Badge from '@material-ui/core/Badge';
-import AppBar from '@material-ui/core/AppBar';
-import Typography from '@material-ui/core/Typography';
-import Toolbar from '@material-ui/core/Toolbar';
+import {withStyles} from '@mui/material/styles';
+import Drawer from '@mui/material/Drawer';
+import MenuItem from '@mui/material/MenuItem';
+import Divider from '@mui/material/Divider';
+import Badge from '@mui/material/Badge';
+import AppBar from '@mui/material/AppBar';
+import Typography from '@mui/material/Typography';
+import Toolbar from '@mui/material/Toolbar';
 import storeUtil from '../../../storeUtil';
-import {contextTypes} from '../../../utils/decorators/withContext';
+
+type NavigationProps = {
+  toggleNav: Function,
+  navOpen: boolean,
+  isNavOpening: boolean,
+  history: any,
+  classes: any,
+}
+
 
 // using @connect decorator breaks enhanceWithClickOutside
-class Navigation extends Component {
-  static contextTypes = contextTypes;
-
-  static propTypes = {
-    toggleNav: PropTypes.func.isRequired,
-    navOpen: PropTypes.bool.isRequired,
-    isNavOpening: PropTypes.bool.isRequired,
-    history: PropTypes.any.isRequired,
-    classes: PropTypes.any.isRequired,
-  }
-
+class Navigation extends Component<NavigationProps> {
   todayTimeout = undefined;
 
   constructor() {

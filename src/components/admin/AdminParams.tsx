@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Table from 'react-bootstrap/lib/Table';
+import Table from 'react-bootstrap/Table';
 import PropTypes, {connect} from '../PropTypes';
 import * as configActions from '../../actions/configActions';
 

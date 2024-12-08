@@ -1,102 +1,440 @@
 
-> confac-front@0.1.0 lint C:\code\ttc\react-redux\erembodegem-front
+> ttc-front@0.1.0 lint
 > eslint --ext js,ts,tsx src
 
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\controls\TabbedContainer.tsx
-   16:5   error  propType "match" is not required, but has no corresponding defaultProps declaration        react/require-default-props
-   21:5   error  propType "tabKeys" is not required, but has no corresponding defaultProps declaration      react/require-default-props
-   29:5   error  propType "onTabSelect" is not required, but has no corresponding defaultProps declaration  react/require-default-props
-   32:5   error  Prop type `object` is forbidden                                                            react/forbid-prop-types
-   32:5   error  propType "style" is not required, but has no corresponding defaultProps declaration        react/require-default-props
-   39:5   error  propType "viewport" is not required, but has no corresponding defaultProps declaration     react/require-default-props
-   40:5   error  Prop type `any` is forbidden                                                               react/forbid-prop-types
-  100:7   error  Static HTML elements with event handlers require a role                                    jsx-a11y/no-static-element-interactions
-  138:62  error  Use callback in setState when referencing the previous state                               react/no-access-state-in-setstate
-  138:88  error  Use callback in setState when referencing the previous state                               react/no-access-state-in-setstate
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\actions\initialLoad.ts
+  59:16  warning  Unexpected unnamed function  func-names
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\matches\Match\MatchCardHeader.tsx
-  135:9  error  Static HTML elements with event handlers require a role  jsx-a11y/no-static-element-interactions
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\App\App.tsx
+   2:18  error  Unable to resolve path to module 'react-bootstrap/lib/Grid'    import/no-unresolved
+   3:22  error  Unable to resolve path to module '@material-ui/core/Snackbar'  import/no-unresolved
+   4:48  error  Unable to resolve path to module '@material-ui/core/styles'    import/no-unresolved
+  21:3   error  'viewport' PropType is defined but prop is never used          react/no-unused-prop-types
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\matches\Match\MatchReport.tsx
-   88:51  warning  Dangerous property 'dangerouslySetInnerHTML' found                                           react/no-danger
-  197:70  error    Use callback in setState when referencing the previous state                                 react/no-access-state-in-setstate
-  245:37  error    Use callback in setState when referencing the previous state                                 react/no-access-state-in-setstate
-  260:33  error    Use callback in setState when referencing the previous state                                 react/no-access-state-in-setstate
-  264:33  error    Use callback in setState when referencing the previous state                                 react/no-access-state-in-setstate
-  264:62  error    Use callback in setState when referencing the previous state                                 react/no-access-state-in-setstate
-  268:33  error    Use callback in setState when referencing the previous state                                 react/no-access-state-in-setstate
-  282:5   error    propType "deleteComment" is not required, but has no corresponding defaultProps declaration  react/require-default-props
-  315:18  error    'comment.imageUrl' is missing in props validation                                            react/prop-types
-  316:34  error    'comment.imageUrl' is missing in props validation                                            react/prop-types
-  318:16  warning  Dangerous property 'dangerouslySetInnerHTML' found                                           react/no-danger
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\App\Eetfestijn.tsx
+   2:19  error  Unable to resolve path to module '@material-ui/core/Paper'  import/no-unresolved
+  31:27  error  Function component is not a function declaration            react/function-component-definition
+  34:34  error  Expected indentation of 8 space characters but found 10     react/jsx-indent
+  38:12  error  Expected indentation of 6 space characters but found 8      react/jsx-indent
+  43:13  error  Expected indentation of 6 space characters but found 8      react/jsx-indent
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\matches\Match\MatchVs.tsx
-  13:5  error  propType "opponentOnly" is required and should not have a defaultProps declaration         react/require-default-props
-  15:5  error  propType "ownTeamLink" is not required, but has no corresponding defaultProps declaration  react/require-default-props
-  16:5  error  propType "withLinks" is not required, but has no corresponding defaultProps declaration    react/require-default-props
-  22:5  error  defaultProp "opponentOnly" defined for isRequired propType                                 react/default-props-match-prop-types
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\App\Intro.tsx
+    3:17  error  Unable to resolve path to module 'react-bootstrap/lib/Row'  import/no-unresolved
+    4:17  error  Unable to resolve path to module 'react-bootstrap/lib/Col'  import/no-unresolved
+   73:17  error  Function component is not a function declaration            react/function-component-definition
+   99:3   error  'players' PropType is defined but prop is never used        react/no-unused-prop-types
+  101:3   error  'teams' PropType is defined but prop is never used          react/no-unused-prop-types
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\matches\Match\OpponentMatches.tsx
-   18:5   error  Prop type `object` is forbidden                                                                  react/forbid-prop-types
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\App\IntroSponsors.tsx
+   2:17  error  Unable to resolve path to module 'react-bootstrap/lib/Row'                    import/no-unresolved
+   3:17  error  Unable to resolve path to module 'react-bootstrap/lib/Col'                    import/no-unresolved
+  24:13  error  Imported JSX component itenium must be in PascalCase or SCREAMING_SNAKE_CASE  react/jsx-pascal-case
+  43:11  error  Imported JSX component itenium must be in PascalCase or SCREAMING_SNAKE_CASE  react/jsx-pascal-case
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\App\Sponsors.tsx
+   2:19  error  Unable to resolve path to module '@material-ui/core/Paper'                         import/no-unresolved
+  50:28  error  Function component is not a function declaration                                   react/function-component-definition
+  51:24  error  Function component is not a function declaration                                   react/function-component-definition
+  52:35  error  Function component is not a function declaration                                   react/function-component-definition
+  54:24  error  Function component is not a function declaration                                   react/function-component-definition
+  73:3   error  propType "url" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\PropTypes.js
+  11:26  error  Unable to resolve path to module 'react-router-dom'  import/no-unresolved
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\admin\Admin.tsx
+  30:3  error  'config' PropType is defined but prop is never used   react/no-unused-prop-types
+  32:3  error  'matches' PropType is defined but prop is never used  react/no-unused-prop-types
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\admin\AdminBoardMembers.tsx
+   2:23  error  Unable to resolve path to module '@material-ui/core/TextField'         import/no-unresolved
+   3:22  error  Unable to resolve path to module 'react-bootstrap/lib/MenuItem'        import/no-unresolved
+   4:28  error  Unable to resolve path to module 'react-bootstrap/lib/DropdownButton'  import/no-unresolved
+  24:3   error  'onEnd' PropType is defined but prop is never used                     react/no-unused-prop-types
+  96:47  error  Invalid radix parameter, must be an integer between 2 and 36           radix
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\admin\AdminChangePassword.tsx
+  2:23  error  Unable to resolve path to module '@material-ui/core/TextField'  import/no-unresolved
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\admin\AdminClubForm.tsx
+  2:23  error  Unable to resolve path to module '@material-ui/core/TextField'  import/no-unresolved
+  3:19  error  Unable to resolve path to module '@material-ui/core/Paper'      import/no-unresolved
+  4:22  error  Unable to resolve path to module '@material-ui/core/Checkbox'   import/no-unresolved
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\admin\AdminClubs.tsx
+   2:19  error  Unable to resolve path to module 'react-bootstrap/lib/Table'    import/no-unresolved
+   3:23  error  Unable to resolve path to module '@material-ui/core/TextField'  import/no-unresolved
+  13:3   error  'viewport' PropType is defined but prop is never used           react/no-unused-prop-types
+  62:20  error  Function component is not a function declaration                react/function-component-definition
+  94:22  error  Function component is not a function declaration                react/function-component-definition
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\admin\AdminDev.tsx
+  12:3  error  'matches' PropType is defined but prop is never used          react/no-unused-prop-types
+  13:3  error  'teams' PropType is defined but prop is never used            react/no-unused-prop-types
+  14:3  error  'clubs' PropType is defined but prop is never used            react/no-unused-prop-types
+  15:3  error  'config' PropType is defined but prop is never used           react/no-unused-prop-types
+  16:3  error  'user' PropType is defined but prop is never used             react/no-unused-prop-types
+  17:3  error  'readonlyMatches' PropType is defined but prop is never used  react/no-unused-prop-types
+  19:3  error  'admin' PropType is defined but prop is never used            react/no-unused-prop-types
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\admin\AdminEmail.tsx
+    9:3   error  'teams' PropType is defined but prop is never used  react/no-unused-prop-types
+  110:21  error  Function component is not a function declaration    react/function-component-definition
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\admin\AdminMatches.tsx
+  7:3  error  'matches' PropType is defined but prop is never used  react/no-unused-prop-types
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\admin\AdminParams.tsx
+  2:19  error  Unable to resolve path to module 'react-bootstrap/lib/Table'  import/no-unresolved
+  7:3   error  'propTypes' PropType is defined but prop is never used        react/no-unused-prop-types
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\admin\AdminPlayerForm.tsx
+  2:23  error  Unable to resolve path to module '@material-ui/core/TextField'  import/no-unresolved
+  3:19  error  Unable to resolve path to module '@material-ui/core/Paper'      import/no-unresolved
+  4:19  error  Unable to resolve path to module 'react-bootstrap/lib/Panel'    import/no-unresolved
+  5:22  error  Unable to resolve path to module '@material-ui/core/MenuItem'   import/no-unresolved
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\admin\AdminPlayerLineup.tsx
+   2:20  error  Unable to resolve path to module 'react-bootstrap/lib/Button'  import/no-unresolved
+  11:3   error  'matches' PropType is defined but prop is never used           react/no-unused-prop-types
+  12:3   error  'viewport' PropType is defined but prop is never used          react/no-unused-prop-types
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\admin\AdminPlayers.tsx
+    4:19  error  Unable to resolve path to module 'react-bootstrap/lib/Table'    import/no-unresolved
+    5:23  error  Unable to resolve path to module '@material-ui/core/TextField'  import/no-unresolved
+  159:22  error  Function component is not a function declaration                react/function-component-definition
+  232:24  error  Function component is not a function declaration                react/function-component-definition
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\admin\AdminTeams.tsx
+    4:19  error  Unable to resolve path to module '@material-ui/core/Paper'      import/no-unresolved
+    5:23  error  Unable to resolve path to module '@material-ui/core/TextField'  import/no-unresolved
+    6:20  error  Unable to resolve path to module 'react-bootstrap/lib/Button'   import/no-unresolved
+    7:22  error  Unable to resolve path to module '@material-ui/core/MenuItem'   import/no-unresolved
+   62:3   error  'viewport' PropType is defined but prop is never used           react/no-unused-prop-types
+   63:3   error  'user' PropType is defined but prop is never used               react/no-unused-prop-types
+  125:27  error  Function component is not a function declaration                react/function-component-definition
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\controls\Buttons\Button.tsx
+  10:3  error  propType "className" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  11:3  error  propType "style" is not required, but has no corresponding defaultProps declaration      react/require-default-props
+  39:3  error  propType "style" is not required, but has no corresponding defaultProps declaration      react/require-default-props
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\controls\Buttons\ButtonStack.tsx
+   3:22  error  Unable to resolve path to module 'react-bootstrap/lib/MenuItem'                      import/no-unresolved
+   4:28  error  Unable to resolve path to module 'react-bootstrap/lib/DropdownButton'                import/no-unresolved
+   9:3   error  propType "small" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  17:28  error  Function component is not a function declaration                                     react/function-component-definition
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\controls\Buttons\CommentButton.tsx
+  2:20  error  Unable to resolve path to module 'react-bootstrap/lib/Button'  import/no-unresolved
+  6:30  error  Function component is not a function declaration               react/function-component-definition
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\controls\Buttons\EditButton.tsx
+  5:27  error  Function component is not a function declaration  react/function-component-definition
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\controls\Buttons\EmailButton.tsx
+  2:20  error  Unable to resolve path to module 'react-bootstrap/lib/Button'  import/no-unresolved
+  6:28  error  Function component is not a function declaration               react/function-component-definition
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\controls\Buttons\FrenoyButton.tsx
+   8:40  error  Function component is not a function declaration                                         react/function-component-definition
+  17:27  error  Function component is not a function declaration                                         react/function-component-definition
+  40:3   error  propType "className" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  72:3   error  propType "className" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  73:3   error  propType "style" is not required, but has no corresponding defaultProps declaration      react/require-default-props
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\controls\Buttons\MaterialButton.tsx
+   2:20  error  Unable to resolve path to module '@material-ui/core/Button'                              import/no-unresolved
+   8:3   error  propType "primary" is not required, but has no corresponding defaultProps declaration    react/require-default-props
+   9:3   error  propType "secondary" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  10:3   error  propType "color" is not required, but has no corresponding defaultProps declaration      react/require-default-props
+  13:3   error  propType "style" is not required, but has no corresponding defaultProps declaration      react/require-default-props
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\controls\Buttons\SaveButton.tsx
+  5:27  error  Function component is not a function declaration  react/function-component-definition
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\controls\Editor.tsx
+  13:3   error  propType "tag" is required and should not have a defaultProps declaration                                                                                                                                                                                                                                    react/require-default-props
+  28:26  error  defaultProp "tag" defined for isRequired propType                                                                                                                                                                                                                                                            react/default-props-match-prop-types
+  28:37  error  Missing semicolon                                                                                                                                                                                                                                                                                            semi
+  45:3   error  componentWillReceiveProps is deprecated since React 16.9.0, use UNSAFE_componentWillReceiveProps instead, see https://reactjs.org/docs/react-component.html#unsafe_componentwillreceiveprops. Use https://github.com/reactjs/react-codemod#rename-unsafe-lifecycles to automatically update your components  react/no-deprecated
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\controls\Icons\BackIcon.tsx
+  20:32  error  'history.goBack' is missing in props validation  react/prop-types
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\controls\Icons\CommentIcon.tsx
+  5:28  error  Function component is not a function declaration  react/function-component-definition
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\controls\Icons\EditIcon.tsx
+  5:25  error  Function component is not a function declaration  react/function-component-definition
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\controls\Icons\Icon.tsx
+   7:3  error  propType "color" is not required, but has no corresponding defaultProps declaration      react/require-default-props
+   8:3  error  propType "style" is not required, but has no corresponding defaultProps declaration      react/require-default-props
+   9:3  error  propType "onClick" is not required, but has no corresponding defaultProps declaration    react/require-default-props
+  10:3  error  propType "className" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\controls\Icons\SortIconDropDown.tsx
+   2:22  error  Unable to resolve path to module 'react-bootstrap/lib/MenuItem'                           import/no-unresolved
+   3:28  error  Unable to resolve path to module 'react-bootstrap/lib/DropdownButton'                     import/no-unresolved
+  16:3   error  propType "activeSort" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  25:4   error  Missing semicolon                                                                         semi
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\controls\Icons\ThrillerIcon.tsx
+   2:21  error  Unable to resolve path to module 'react-bootstrap/lib/Tooltip'                          import/no-unresolved
+   3:28  error  Unable to resolve path to module 'react-bootstrap/lib/OverlayTrigger'                   import/no-unresolved
+   8:29  error  Function component is not a function declaration                                        react/function-component-definition
+   8:52  error  propType "color" is not required, but has no corresponding defaultProps declaration     react/require-default-props
+  20:3   error  propType "style" is not required, but has no corresponding defaultProps declaration     react/require-default-props
+  21:3   error  propType "children" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  22:3   error  propType "tooltip" is not required, but has no corresponding defaultProps declaration   react/require-default-props
+  47:30  error  Function component is not a function declaration                                        react/function-component-definition
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\controls\Icons\ThumbsIcons.tsx
+   6:29  error  Function component is not a function declaration  react/function-component-definition
+  17:31  error  Function component is not a function declaration  react/function-component-definition
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\controls\Icons\TrophyIcon.tsx
+  4:27  error  Function component is not a function declaration  react/function-component-definition
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\controls\TabbedContainer.tsx
+    2:26  error  Unable to resolve path to module 'react-router-dom'                                        import/no-unresolved
+    3:17  error  Unable to resolve path to module 'react-bootstrap/lib/Nav'                                 import/no-unresolved
+    4:21  error  Unable to resolve path to module 'react-bootstrap/lib/NavItem'                             import/no-unresolved
+    5:24  error  Unable to resolve path to module 'react-bootstrap/lib/PanelGroup'                          import/no-unresolved
+    6:19  error  Unable to resolve path to module 'react-bootstrap/lib/Panel'                               import/no-unresolved
+   21:3   error  propType "onTabSelect" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+   24:3   error  propType "style" is not required, but has no corresponding defaultProps declaration        react/require-default-props
+   49:4   error  Missing semicolon                                                                          semi
+   56:7   error  Unused state field: 'forceTabs'                                                            react/no-unused-state
+  145:62  error  Use callback in setState when referencing the previous state                               react/no-access-state-in-setstate
+  145:88  error  Use callback in setState when referencing the previous state                               react/no-access-state-in-setstate
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\controls\controls\Email.tsx
+  7:3  error  propType "showIcon" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\controls\controls\Location.tsx
+  12:25  error  Function component is not a function declaration  react/function-component-definition
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\controls\controls\PercentageLabel.tsx
+  6:3   error  propType "decimals" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  9:32  error  Function component is not a function declaration                                        react/function-component-definition
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\controls\controls\Spinner.tsx
+   2:30  error  Unable to resolve path to module '@material-ui/core/CircularProgress'       import/no-unresolved
+   6:3   error  propType "size" is required and should not have a defaultProps declaration  react/require-default-props
+  11:5   error  defaultProp "size" defined for isRequired propType                          react/default-props-match-prop-types
+  24:34  error  Function component is not a function declaration                            react/function-component-definition
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\controls\controls\Strike.tsx
+   6:3   error  propType "textStyle" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+   8:3   error  propType "style" is not required, but has no corresponding defaultProps declaration      react/require-default-props
+  11:23  error  Function component is not a function declaration                                         react/function-component-definition
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\controls\controls\Telephone.tsx
+  14:3  error  propType "hideIcon" is required and should not have a defaultProps declaration  react/require-default-props
+  20:5  error  defaultProp "hideIcon" defined for isRequired propType                          react/default-props-match-prop-types
+  21:4  error  Missing semicolon                                                               semi
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\controls\controls\TimeAgo.tsx
+   9:3  error  propType "live" is required and should not have a defaultProps declaration       react/require-default-props
+  10:3  error  propType "component" is required and should not have a defaultProps declaration  react/require-default-props
+  11:3  error  propType "minPeriod" is required and should not have a defaultProps declaration  react/require-default-props
+  12:3  error  propType "maxPeriod" is required and should not have a defaultProps declaration  react/require-default-props
+  20:5  error  defaultProp "live" defined for isRequired propType                               react/default-props-match-prop-types
+  21:5  error  defaultProp "component" defined for isRequired propType                          react/default-props-match-prop-types
+  22:5  error  defaultProp "minPeriod" defined for isRequired propType                          react/default-props-match-prop-types
+  23:5  error  defaultProp "maxPeriod" defined for isRequired propType                          react/default-props-match-prop-types
+  24:4  error  Missing semicolon                                                                semi
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\controls\controls\WonLostLabel.tsx
+  4:29  error  Function component is not a function declaration  react/function-component-definition
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\controls\image\ImageDropzone.tsx
+   9:3  error  'fileUploaded' PropType is defined but prop is never used                           react/no-unused-prop-types
+  10:3  error  propType "type" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\controls\image\ImageEditor.tsx
+   3:20  error  Unable to resolve path to module '@material-ui/lab/Slider'  import/no-unresolved
+  84:4   error  Missing semicolon                                           semi
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\matches\MatchScore.tsx
+   2:20  error  Unable to resolve path to module 'react-router-dom'                                                                                                                                                                                                                                                          import/no-unresolved
+  27:3   error  propType "style" is not required, but has no corresponding defaultProps declaration                                                                                                                                                                                                                          react/require-default-props
+  28:3   error  propType "className" is not required, but has no corresponding defaultProps declaration                                                                                                                                                                                                                      react/require-default-props
+  29:3   error  propType "forceDisplay" is required and should not have a defaultProps declaration                                                                                                                                                                                                                           react/require-default-props
+  30:3   error  propType "showComments" is not required, but has no corresponding defaultProps declaration                                                                                                                                                                                                                   react/require-default-props
+  42:5   error  defaultProp "forceDisplay" defined for isRequired propType                                                                                                                                                                                                                                                   react/default-props-match-prop-types
+  44:4   error  Missing semicolon                                                                                                                                                                                                                                                                                            semi
+  53:3   error  componentWillReceiveProps is deprecated since React 16.9.0, use UNSAFE_componentWillReceiveProps instead, see https://reactjs.org/docs/react-component.html#unsafe_componentwillreceiveprops. Use https://github.com/reactjs/react-codemod#rename-unsafe-lifecycles to automatically update your components  react/no-deprecated
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\matches\Match\IndividualMatches.tsx
+    3:19  error  Unable to resolve path to module 'react-bootstrap/lib/Table'                        import/no-unresolved
+  160:3   error  propType "game" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\matches\Match\MatchCard.tsx
+  42:3  error  propType "viewportWidthContainerCount" is required and should not have a defaultProps declaration  react/require-default-props
+  43:3  error  propType "big" is not required, but has no corresponding defaultProps declaration                  react/require-default-props
+  44:3  error  propType "small" is not required, but has no corresponding defaultProps declaration                react/require-default-props
+  45:3  error  propType "isOpen" is not required, but has no corresponding defaultProps declaration               react/require-default-props
+  46:3  error  propType "params" is not required, but has no corresponding defaultProps declaration               react/require-default-props
+  58:5  error  defaultProp "viewportWidthContainerCount" defined for isRequired propType                          react/default-props-match-prop-types
+  59:4  error  Missing semicolon                                                                                  semi
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\matches\Match\MatchCardHeader.tsx
+    2:20  error  Unable to resolve path to module 'react-router-dom'                                        import/no-unresolved
+   19:3   error  propType "children" is not required, but has no corresponding defaultProps declaration     react/require-default-props
+   19:3   error  propType "children" is not required, but has no corresponding defaultProps declaration     react/require-default-props
+   22:3   error  'forceEdit' PropType is defined but prop is never used                                     react/no-unused-prop-types
+   22:3   error  propType "forceEdit" is not required, but has no corresponding defaultProps declaration    react/require-default-props
+   22:3   error  propType "forceEdit" is not required, but has no corresponding defaultProps declaration    react/require-default-props
+   56:3   error  propType "noScoreEdit" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+   57:3   error  propType "width" is not required, but has no corresponding defaultProps declaration        react/require-default-props
+   58:3   error  propType "routed" is not required, but has no corresponding defaultProps declaration       react/require-default-props
+   82:3   error  propType "children" is not required, but has no corresponding defaultProps declaration     react/require-default-props
+   85:3   error  propType "forceEdit" is not required, but has no corresponding defaultProps declaration    react/require-default-props
+   87:3   error  propType "noScoreEdit" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+   88:3   error  propType "width" is not required, but has no corresponding defaultProps declaration        react/require-default-props
+   89:3   error  'routed' PropType is defined but prop is never used                                        react/no-unused-prop-types
+   89:3   error  propType "routed" is not required, but has no corresponding defaultProps declaration       react/require-default-props
+  172:35  error  Function component is not a function declaration                                           react/function-component-definition
+  199:22  error  Function component is not a function declaration                                           react/function-component-definition
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\matches\Match\MatchForm.tsx
+   15:3   error  't' PropType is defined but prop is never used                                                                                                                                                                                                                                                               react/no-unused-prop-types
+   17:3   error  propType "big" is not required, but has no corresponding defaultProps declaration                                                                                                                                                                                                                            react/require-default-props
+   39:3   error  componentWillReceiveProps is deprecated since React 16.9.0, use UNSAFE_componentWillReceiveProps instead, see https://reactjs.org/docs/react-component.html#unsafe_componentwillreceiveprops. Use https://github.com/reactjs/react-codemod#rename-unsafe-lifecycles to automatically update your components  react/no-deprecated
+  119:3   error  propType "style" is not required, but has no corresponding defaultProps declaration                                                                                                                                                                                                                          react/require-default-props
+  122:3   error  propType "big" is not required, but has no corresponding defaultProps declaration                                                                                                                                                                                                                            react/require-default-props
+  123:3   error  propType "isHome" is not required, but has no corresponding defaultProps declaration                                                                                                                                                                                                                         react/require-default-props
+  126:27  error  Function component is not a function declaration                                                                                                                                                                                                                                                             react/function-component-definition
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\matches\Match\MatchPlayerResults.tsx
+  11:28  error  Function component is not a function declaration  react/function-component-definition
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\matches\Match\MatchReport.tsx
+    3:30  error    Unable to resolve path to module '@material-ui/core/FormControlLabel'  import/no-unresolved
+    4:22  error    Unable to resolve path to module '@material-ui/core/Checkbox'          import/no-unresolved
+   29:3   error    't' PropType is defined but prop is never used                         react/no-unused-prop-types
+   82:51  warning  Dangerous property 'dangerouslySetInnerHTML' found                     react/no-danger
+  310:16  warning  Dangerous property 'dangerouslySetInnerHTML' found                     react/no-danger
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\matches\Match\MatchVs.tsx
+   2:20  error  Unable to resolve path to module 'react-router-dom'                                      import/no-unresolved
+  11:3   error  propType "opponentOnly" is required and should not have a defaultProps declaration       react/require-default-props
+  14:3   error  propType "withLinks" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  29:5   error  defaultProp "opponentOnly" defined for isRequired propType                               react/default-props-match-prop-types
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\matches\Match\OpponentClubLocations.tsx
+  5:31  error  Function component is not a function declaration  react/function-component-definition
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\matches\Match\OpponentMatchScore.tsx
+  5:35  error  Function component is not a function declaration  react/function-component-definition
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\matches\Match\OpponentMatches.tsx
+    4:19  error  Unable to resolve path to module 'react-bootstrap/lib/Table'                                     import/no-unresolved
    20:5   error  propType "viewport" is not required, but has no corresponding defaultProps declaration           react/require-default-props
    21:5   error  propType "roundSwitchButton" is not required, but has no corresponding defaultProps declaration  react/require-default-props
    22:5   error  propType "opponent" is not required, but has no corresponding defaultProps declaration           react/require-default-props
+   26:4   error  Missing semicolon                                                                                semi
    64:60  error  Use callback in setState when referencing the previous state                                     react/no-access-state-in-setstate
   124:5   error  propType "viewport" is not required, but has no corresponding defaultProps declaration           react/require-default-props
   128:5   error  propType "isMarked" is not required, but has no corresponding defaultProps declaration           react/require-default-props
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\matches\Match\OpponentsFormation.tsx
-  52:30  error  Unexpected mix of '/' and '*'  no-mixed-operators
-  52:49  error  Unexpected mix of '/' and '*'  no-mixed-operators
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\matches\Match\OpponentPlayer.tsx
+   8:3   error  propType "fullName" is required and should not have a defaultProps declaration  react/require-default-props
+  13:5   error  defaultProp "fullName" defined for isRequired propType                          react/default-props-match-prop-types
+  14:4   error  Missing semicolon                                                               semi
+  37:24  error  Function component is not a function declaration                                react/function-component-definition
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\matches\Match\OpponentsLastMatches.tsx
-   8:9   error  There should be no space after '{'                            object-curly-spacing
-   8:60  error  There should be no space before '}'                           object-curly-spacing
-  68:60  error  Use callback in setState when referencing the previous state  react/no-access-state-in-setstate
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\matches\Match\OpponentsFormation.tsx
+   2:19  error  Unable to resolve path to module 'react-bootstrap/lib/Table'                                import/no-unresolved
+  52:30  error  Unexpected mix of '/' and '*'. Use parentheses to clarify the intended order of operations  no-mixed-operators
+  52:49  error  Unexpected mix of '/' and '*'. Use parentheses to clarify the intended order of operations  no-mixed-operators
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\matches\Match\OpponentsTeamFormation.tsx
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\matches\Match\OpponentsLastMatches.tsx
+   2:19  error  Unable to resolve path to module 'react-bootstrap/lib/Table'     import/no-unresolved
+   3:24  error  Unable to resolve path to module '@material-ui/core/IconButton'  import/no-unresolved
+   8:9   error  There should be no space after '{'                               object-curly-spacing
+   8:60  error  There should be no space before '}'                              object-curly-spacing
+  68:60  error  Use callback in setState when referencing the previous state     react/no-access-state-in-setstate
+  95:15  error  A control must be associated with a text label                   jsx-a11y/control-has-associated-label
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\matches\Match\OpponentsTeamFormation.tsx
+   2:19  error  Unable to resolve path to module 'react-bootstrap/lib/Table'                              import/no-unresolved
+  12:5   error  'viewport' PropType is defined but prop is never used                                     react/no-unused-prop-types
   12:5   error  propType "viewport" is not required, but has no corresponding defaultProps declaration    react/require-default-props
-  12:15  error  'viewport' PropType is defined but prop is never used                                     react/no-unused-prop-types
   14:5   error  propType "opponent" is not required, but has no corresponding defaultProps declaration    react/require-default-props
   18:5   error  propType "hideHeader" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  19:4   error  Missing semicolon                                                                         semi
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\matches\Match\OtherMatchPlayerResults.tsx
-  24:9    error  Missing an explicit type attribute for button                                          react/button-has-type
-  24:110  error  Use callback in setState when referencing the previous state                           react/no-access-state-in-setstate
-  73:3    error  propType "show" is not required, but has no corresponding defaultProps declaration     react/require-default-props
-  74:3    error  propType "colSpan" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\matches\Match\OtherMatchPlayerResults.tsx
+  11:4    error  Missing semicolon                                                                                                                                                                                                                                                                                                                                  semi
+  22:26   error  Do not define components during render. React will see a new component type on every render and destroy the entire subtreeΓÇÖs DOM nodes and state (https://reactjs.org/docs/reconciliation.html#elements-of-different-types). Instead, move this component definition out of the parent component ΓÇ£OtherMatchPlayerResultsΓÇ¥ and pass data as props  react/no-unstable-nested-components
+  22:26   error  Function component is not a function declaration                                                                                                                                                                                                                                                                                                   react/function-component-definition
+  24:9    error  Missing an explicit type attribute for button                                                                                                                                                                                                                                                                                                      react/button-has-type
+  24:84   error  Stateless functional components should not use `this`                                                                                                                                                                                                                                                                                              react/no-this-in-sfc
+  24:110  error  Use callback in setState when referencing the previous state                                                                                                                                                                                                                                                                                       react/no-access-state-in-setstate
+  24:110  error  Stateless functional components should not use `this`                                                                                                                                                                                                                                                                                              react/no-this-in-sfc
+  25:12   error  Stateless functional components should not use `this`                                                                                                                                                                                                                                                                                              react/no-this-in-sfc
+  56:48   error  Function component is not a function declaration                                                                                                                                                                                                                                                                                                   react/function-component-definition
+  73:3    error  propType "show" is not required, but has no corresponding defaultProps declaration                                                                                                                                                                                                                                                                 react/require-default-props
+  74:3    error  propType "colSpan" is not required, but has no corresponding defaultProps declaration                                                                                                                                                                                                                                                              react/require-default-props
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\matches\Match\OwnPlayer.tsx
-  41:3  error  Prop type `object` is forbidden                                                              react/forbid-prop-types
-  42:3  error  propType "playerAsBadge" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\matches\Match\OtherMatchTeamTitle.tsx
+  5:36  error  Function component is not a function declaration  react/function-component-definition
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\matches\Match\RoutedMatchCard.tsx
-   9:5  error  propType "match" is not required, but has no corresponding defaultProps declaration     react/require-default-props
-  15:5  error  propType "viewport" is not required, but has no corresponding defaultProps declaration  react/require-default-props
-  17:5  error  Prop type `any` is forbidden                                                            react/forbid-prop-types
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\matches\Match\OwnPlayer.tsx
+  10:19  error  Function component is not a function declaration                                             react/function-component-definition
+  42:3   error  propType "playerAsBadge" is not required, but has no corresponding defaultProps declaration  react/require-default-props
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\matches\Match\Scoresheet.tsx
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\matches\Match\RoutedMatchCard.tsx
+   9:5  error  propType "match" is not required, but has no corresponding defaultProps declaration                                                                                                                                                                                                                          react/require-default-props
+  15:5  error  propType "viewport" is not required, but has no corresponding defaultProps declaration                                                                                                                                                                                                                       react/require-default-props
+  18:4  error  Missing semicolon                                                                                                                                                                                                                                                                                            semi
+  29:3  error  componentWillReceiveProps is deprecated since React 16.9.0, use UNSAFE_componentWillReceiveProps instead, see https://reactjs.org/docs/react-component.html#unsafe_componentwillreceiveprops. Use https://github.com/reactjs/react-codemod#rename-unsafe-lifecycles to automatically update your components  react/no-deprecated
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\matches\Match\Scoresheet.tsx
+   2:19  error  Unable to resolve path to module 'react-bootstrap/lib/Table'                            import/no-unresolved
   11:5   error  propType "match" is not required, but has no corresponding defaultProps declaration     react/require-default-props
   13:5   error  propType "viewport" is not required, but has no corresponding defaultProps declaration  react/require-default-props
-  32:15  error  A control must be associated with a text label                                          jsx-a11y/control-has-associated-label
+  14:4   error  Missing semicolon                                                                       semi
+  54:15  error  A control must be associated with a text label                                          jsx-a11y/control-has-associated-label
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\matches\Match\SelectPlayersForm.tsx
-   22:14  error  'players' PropType is defined but prop is never used                                           react/no-unused-prop-types
-   24:11  error  'user' PropType is defined but prop is never used                                              react/no-unused-prop-types
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\matches\Match\SelectPlayersForm.tsx
+    3:20  error  Unable to resolve path to module '@material-ui/core/Avatar'                                    import/no-unresolved
+    4:18  error  Unable to resolve path to module '@material-ui/core/List'                                      import/no-unresolved
+    5:22  error  Unable to resolve path to module '@material-ui/core/ListItem'                                  import/no-unresolved
+    6:26  error  Unable to resolve path to module '@material-ui/core/ListItemIcon'                              import/no-unresolved
+    7:26  error  Unable to resolve path to module '@material-ui/core/ListItemText'                              import/no-unresolved
+    9:21  error  Unable to resolve path to module '@material-ui/core/Divider'                                   import/no-unresolved
+   22:5   error  'players' PropType is defined but prop is never used                                           react/no-unused-prop-types
+   24:5   error  'user' PropType is defined but prop is never used                                              react/no-unused-prop-types
+   26:4   error  Missing semicolon                                                                              semi
    63:5   error  propType "players" is not required, but has no corresponding defaultProps declaration          react/require-default-props
+   69:4   error  Missing semicolon                                                                              semi
+   91:37  error  Function component is not a function declaration                                               react/function-component-definition
   104:5   error  propType "backgroundColor" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  105:4   error  Missing semicolon                                                                              semi
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\matches\Matches.tsx
-  13:5  error  Prop type `object` is forbidden  react/forbid-prop-types
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\matches\Match\TheirTeamTitle.tsx
+  5:31  error  Function component is not a function declaration  react/function-component-definition
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\matches\MatchesTable.tsx
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\matches\Matches.tsx
+  16:4  error  Missing semicolon  semi
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\matches\MatchesTable.tsx
+    3:19  error  Unable to resolve path to module 'react-bootstrap/lib/Table'                                       import/no-unresolved
+    4:25  error  Unable to resolve path to module 'react-bootstrap/lib/FormControl'                                 import/no-unresolved
    33:5   error  propType "viewport" is not required, but has no corresponding defaultProps declaration             react/require-default-props
    39:5   error  propType "team" is not required, but has no corresponding defaultProps declaration                 react/require-default-props
    40:5   error  propType "onTablePlayerSelect" is not required, but has no corresponding defaultProps declaration  react/require-default-props
-   41:5   error  Prop type `array` is forbidden                                                                     react/forbid-prop-types
    41:5   error  propType "tablePlayers" is not required, but has no corresponding defaultProps declaration         react/require-default-props
    43:5   error  propType "ownTeamLink" is not required, but has no corresponding defaultProps declaration          react/require-default-props
+   44:4   error  Missing semicolon                                                                                  semi
+   51:4   error  Missing semicolon                                                                                  semi
+   86:13  error  A control must be associated with a text label                                                     jsx-a11y/control-has-associated-label
   217:7   error  Unused state field: 'edit'                                                                         react/no-unused-state
   240:35  error  Use callback in setState when referencing the previous state                                       react/no-access-state-in-setstate
   248:35  error  Use callback in setState when referencing the previous state                                       react/no-access-state-in-setstate
@@ -104,16 +442,35 @@ C:\code\ttc\react-redux\erembodegem-front\src\components\matches\MatchesTable.ts
   318:19  error  Do not nest ternary expressions                                                                    no-nested-ternary
   328:71  error  Use callback in setState when referencing the previous state                                       react/no-access-state-in-setstate
   328:98  error  Use callback in setState when referencing the previous state                                       react/no-access-state-in-setstate
-  448:3   error  Prop type `any` is forbidden                                                                       react/forbid-prop-types
+  382:15  error  A control must be associated with a text label                                                     jsx-a11y/control-has-associated-label
+  397:30  error  Function component is not a function declaration                                                   react/function-component-definition
+  434:21  error  Function component is not a function declaration                                                   react/function-component-definition
   448:3   error  propType "model" is not required, but has no corresponding defaultProps declaration                react/require-default-props
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\matches\MatchesToday.tsx
-  13:5   error  Prop type `object` is forbidden                                                         react/forbid-prop-types
-  15:14  error  'players' PropType is defined but prop is never used                                    react/no-unused-prop-types
-  16:14  error  'matches' PropType is defined but prop is never used                                    react/no-unused-prop-types
-  18:5   error  propType "viewport" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\matches\MatchesToday.tsx
+  15:5  error  'players' PropType is defined but prop is never used                                    react/no-unused-prop-types
+  16:5  error  'matches' PropType is defined but prop is never used                                    react/no-unused-prop-types
+  18:5  error  propType "viewport" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  19:4  error  Missing semicolon                                                                       semi
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\matches\MatchesWeeks\htmlBuilder.js
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\matches\MatchesWeek.tsx
+   53:3   error  componentWillReceiveProps is deprecated since React 16.9.0, use UNSAFE_componentWillReceiveProps instead, see https://reactjs.org/docs/react-component.html#unsafe_componentwillreceiveprops. Use https://github.com/reactjs/react-codemod#rename-unsafe-lifecycles to automatically update your components  react/no-deprecated
+  149:35  error  Function component is not a function declaration                                                                                                                                                                                                                                                             react/function-component-definition
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\matches\MatchesWeeks\MatchesWeekEmail.tsx
+   2:20  error  Unable to resolve path to module 'react-bootstrap/lib/Button'                                                                                                                                                                                                                                                import/no-unresolved
+  24:5   error  propType "compFilter" is not required, but has no corresponding defaultProps declaration                                                                                                                                                                                                                     react/require-default-props
+  26:4   error  Missing semicolon                                                                                                                                                                                                                                                                                            semi
+  43:3   error  componentWillReceiveProps is deprecated since React 16.9.0, use UNSAFE_componentWillReceiveProps instead, see https://reactjs.org/docs/react-component.html#unsafe_componentwillreceiveprops. Use https://github.com/reactjs/react-codemod#rename-unsafe-lifecycles to automatically update your components  react/no-deprecated
+  64:28  error  Use callback in setState when referencing the previous state                                                                                                                                                                                                                                                 react/no-access-state-in-setstate
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\matches\MatchesWeeks\WeekTitle.tsx
+  11:5  error  propType "weekChange" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  12:5  error  propType "viewport" is not required, but has no corresponding defaultProps declaration    react/require-default-props
+  13:5  error  propType "style" is not required, but has no corresponding defaultProps declaration       react/require-default-props
+  14:4  error  Missing semicolon                                                                         semi
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\matches\MatchesWeeks\htmlBuilder.js
    41:1  error  This line has a length of 161. Maximum allowed is 160  max-len
    43:1  error  This line has a length of 239. Maximum allowed is 160  max-len
    63:1  error  This line has a length of 161. Maximum allowed is 160  max-len
@@ -125,216 +482,435 @@ C:\code\ttc\react-redux\erembodegem-front\src\components\matches\MatchesWeeks\ht
    83:1  error  This line has a length of 216. Maximum allowed is 160  max-len
   244:9  error  Use array destructuring                                prefer-destructuring
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\matches\MatchesWeeks\MatchesWeekEmail.tsx
-  22:5   error  Prop type `any` is forbidden                                                              react/forbid-prop-types
-  23:5   error  Prop type `any` is forbidden                                                              react/forbid-prop-types
-  24:5   error  propType "compFilter" is not required, but has no corresponding defaultProps declaration  react/require-default-props
-  64:28  error  Use callback in setState when referencing the previous state                              react/no-access-state-in-setstate
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\matches\controls\CannotEditMatchIcon.tsx
+  5:36  error  Function component is not a function declaration  react/function-component-definition
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\matches\MatchesWeeks\WeekTitle.tsx
-  11:5  error  propType "weekChange" is not required, but has no corresponding defaultProps declaration  react/require-default-props
-  12:5  error  propType "viewport" is not required, but has no corresponding defaultProps declaration    react/require-default-props
-  13:5  error  Prop type `any` is forbidden                                                              react/forbid-prop-types
-  13:5  error  propType "style" is not required, but has no corresponding defaultProps declaration       react/require-default-props
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\matches\controls\DivisionRankingLabel.tsx
+  10:37  error  Function component is not a function declaration  react/function-component-definition
+  20:40  error  Function component is not a function declaration  react/function-component-definition
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\other\Administration.tsx
-  14:14  error  'players' PropType is defined but prop is never used  react/no-unused-prop-types
-  15:12  error  'clubs' PropType is defined but prop is never used    react/no-unused-prop-types
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\matches\controls\OpenMatchForEditButton.tsx
+  12:39  error  Function component is not a function declaration  react/function-component-definition
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\other\EndOfSeason\PlayerAchievements.ts
-    4:53  error  Unexpected mix of '/' and '*'  no-mixed-operators
-    4:65  error  Unexpected mix of '/' and '*'  no-mixed-operators
-   90:75  error  Unexpected mix of '/' and '*'  no-mixed-operators
-   90:92  error  Unexpected mix of '/' and '*'  no-mixed-operators
-  106:79  error  Unexpected mix of '/' and '*'  no-mixed-operators
-  106:96  error  Unexpected mix of '/' and '*'  no-mixed-operators
-  114:55  error  Unexpected mix of '/' and '*'  no-mixed-operators
-  114:72  error  Unexpected mix of '/' and '*'  no-mixed-operators
-  140:55  error  Unexpected mix of '/' and '*'  no-mixed-operators
-  140:72  error  Unexpected mix of '/' and '*'  no-mixed-operators
-  175:71  error  Unexpected mix of '/' and '*'  no-mixed-operators
-  175:83  error  Unexpected mix of '/' and '*'  no-mixed-operators
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\matches\controls\SaveMatchButtons.tsx
+  14:33  error  Function component is not a function declaration  react/function-component-definition
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\other\GeneralInfo.tsx
-  11:5  error  Prop type `object` is forbidden  react/forbid-prop-types
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\matches\controls\ViewMatchDetailsButton.tsx
+  2:20  error  Unable to resolve path to module 'react-router-dom'  import/no-unresolved
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\other\Links.tsx
-  16:49  error  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
-  19:53  error  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
-  22:71  error  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
-  25:51  error  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
-  28:51  error  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
-  31:73  error  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
-  34:77  error  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
-  46:92  error  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
-  53:94  error  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
-  59:63  error  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
-  62:56  error  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
-  65:57  error  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
-  68:65  error  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\other\Administration.tsx
+   2:19  error  Unable to resolve path to module 'react-bootstrap/lib/Panel'  import/no-unresolved
+  14:5   error  'players' PropType is defined but prop is never used          react/no-unused-prop-types
+  15:5   error  'clubs' PropType is defined but prop is never used            react/no-unused-prop-types
+  16:4   error  Missing semicolon                                             semi
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\players\controls\PlayerAddress.tsx
-   8:5  error  propType "contact" is not required, but has no corresponding defaultProps declaration  react/require-default-props
-  12:5  error  Prop type `object` is forbidden                                                        react/forbid-prop-types
-  12:5  error  propType "style" is not required, but has no corresponding defaultProps declaration    react/require-default-props
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\other\ClubLocationInstructions.tsx
+  5:3  error  'params' PropType is defined but prop is never used  react/no-unused-prop-types
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\players\Player\PlayerCompetition.tsx
-  39:13  warning  Unexpected constant condition  no-constant-condition
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\other\EndOfSeason\EndOfSeason.tsx
+  19:3  error  'clubs' PropType is defined but prop is never used  react/no-unused-prop-types
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\players\Player\PlayerIndividual.tsx
-  13:5   error  propType "viewport" is not required, but has no corresponding defaultProps declaration  react/require-default-props
-  13:15  error  'viewport' PropType is defined but prop is never used                                   react/no-unused-prop-types
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\other\EndOfSeason\Kampioenen.tsx
+   2:20  error  Unable to resolve path to module 'react-router-dom'  import/no-unresolved
+  13:27  error  Function component is not a function declaration     react/function-component-definition
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\players\Player.tsx
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\other\EndOfSeason\NextSeasonChanges.tsx
+  39:34  error  Function component is not a function declaration  react/function-component-definition
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\other\EndOfSeason\PlayerAchievements.ts
+    4:53  error  Unexpected mix of '/' and '*'. Use parentheses to clarify the intended order of operations  no-mixed-operators
+    4:65  error  Unexpected mix of '/' and '*'. Use parentheses to clarify the intended order of operations  no-mixed-operators
+   90:75  error  Unexpected mix of '/' and '*'. Use parentheses to clarify the intended order of operations  no-mixed-operators
+   90:92  error  Unexpected mix of '/' and '*'. Use parentheses to clarify the intended order of operations  no-mixed-operators
+  106:79  error  Unexpected mix of '/' and '*'. Use parentheses to clarify the intended order of operations  no-mixed-operators
+  106:96  error  Unexpected mix of '/' and '*'. Use parentheses to clarify the intended order of operations  no-mixed-operators
+  114:55  error  Unexpected mix of '/' and '*'. Use parentheses to clarify the intended order of operations  no-mixed-operators
+  114:72  error  Unexpected mix of '/' and '*'. Use parentheses to clarify the intended order of operations  no-mixed-operators
+  140:55  error  Unexpected mix of '/' and '*'. Use parentheses to clarify the intended order of operations  no-mixed-operators
+  140:72  error  Unexpected mix of '/' and '*'. Use parentheses to clarify the intended order of operations  no-mixed-operators
+  175:71  error  Unexpected mix of '/' and '*'. Use parentheses to clarify the intended order of operations  no-mixed-operators
+  175:83  error  Unexpected mix of '/' and '*'. Use parentheses to clarify the intended order of operations  no-mixed-operators
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\other\Links.tsx
+  34:1  error  This line has a length of 166. Maximum allowed is 160  max-len
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\players\Player.tsx
   14:5  error  propType "viewport" is not required, but has no corresponding defaultProps declaration  react/require-default-props
   16:5  error  propType "match" is not required, but has no corresponding defaultProps declaration     react/require-default-props
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\players\PlayerAvatar.tsx
-  22:7  error  Unused state field: 'img'  react/no-unused-state
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\players\PlayerAutoComplete.tsx
+   9:3  error  propType "clearOnSelect" is required and should not have a defaultProps declaration  react/require-default-props
+  21:5  error  defaultProp "clearOnSelect" defined for isRequired propType                          react/default-props-match-prop-types
+  22:4  error  Missing semicolon                                                                    semi
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\players\PlayerBadges.tsx
-  10:5  error  Prop type `object` is forbidden                                                                react/forbid-prop-types
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\players\PlayerAvatar.tsx
+   2:20  error  Unable to resolve path to module '@material-ui/core/Avatar'  import/no-unresolved
+  11:4   error  Missing semicolon                                            semi
+  22:7   error  Unused state field: 'img'                                    react/no-unused-state
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\players\PlayerBadges.tsx
   15:5  error  propType "competition" is not required, but has no corresponding defaultProps declaration      react/require-default-props
+  16:4  error  Missing semicolon                                                                              semi
+  20:4  error  Missing semicolon                                                                              semi
   48:5  error  propType "actionIconClass" is not required, but has no corresponding defaultProps declaration  react/require-default-props
-  49:5  error  Prop type `object` is forbidden                                                                react/forbid-prop-types
   49:5  error  propType "style" is not required, but has no corresponding defaultProps declaration            react/require-default-props
   50:5  error  propType "competition" is not required, but has no corresponding defaultProps declaration      react/require-default-props
+  51:4  error  Missing semicolon                                                                              semi
   58:7  error  Missing an explicit type attribute for button                                                  react/button-has-type
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\players\PlayerCard.tsx
-   19:5   error  propType "viewport" is not required, but has no corresponding defaultProps declaration                                        react/require-default-props
-   19:15  error  'viewport' PropType is defined but prop is never used                                                                         react/no-unused-prop-types
-  143:3   error  propType "withName" is not required, but has no corresponding defaultProps declaration                                        react/require-default-props
-  152:36  error  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
-  158:3   error  Prop type `object` is forbidden                                                                                               react/forbid-prop-types
-  159:3   error  Prop type `object` is forbidden                                                                                               react/forbid-prop-types
-  159:3   error  propType "style" is not required, but has no corresponding defaultProps declaration                                           react/require-default-props
-  160:3   error  Prop type `any` is forbidden                                                                                                  react/forbid-prop-types
-  160:3   error  propType "children" is not required, but has no corresponding defaultProps declaration                                        react/require-default-props
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\players\PlayerCard.tsx
+    2:20  error  Unable to resolve path to module 'react-router-dom'                                     import/no-unresolved
+    3:19  error  Unable to resolve path to module 'react-bootstrap/lib/Panel'                            import/no-unresolved
+   16:3   error  'viewport' PropType is defined but prop is never used                                   react/no-unused-prop-types
+   27:4   error  Missing semicolon                                                                       semi
+   80:26  error  Function component is not a function expression                                         react/function-component-definition
+   94:38  error  Function component is not a function declaration                                        react/function-component-definition
+  104:32  error  Function component is not a function declaration                                        react/function-component-definition
+  118:39  error  Function component is not a function declaration                                        react/function-component-definition
+  148:3   error  propType "style" is not required, but has no corresponding defaultProps declaration     react/require-default-props
+  149:3   error  propType "children" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  152:33  error  Function component is not a function declaration                                        react/function-component-definition
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\players\PlayerPlayingStyle.tsx
-  34:3   error  Prop type `object` is forbidden                                                          react/forbid-prop-types
-  35:3   error  propType "allowEdit" is not required, but has no corresponding defaultProps declaration  react/require-default-props
-  47:5   error  Prop type `object` is forbidden                                                          react/forbid-prop-types
-  47:5   error  propType "style" is not required, but has no corresponding defaultProps declaration      react/require-default-props
-  48:5   error  Prop type `any` is forbidden                                                             react/forbid-prop-types
-  48:5   error  propType "classes" is not required, but has no corresponding defaultProps declaration    react/require-default-props
-  74:34  error  Use callback in setState when referencing the previous state                             react/no-access-state-in-setstate
-  78:34  error  Use callback in setState when referencing the previous state                             react/no-access-state-in-setstate
-  97:9   error  Static HTML elements with event handlers require a role                                  jsx-a11y/no-static-element-interactions
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\players\PlayerPlayingStyle.tsx
+   2:20  error  Unable to resolve path to module '@material-ui/core/Dialog'                                                                                                                                        import/no-unresolved
+   3:25  error  Unable to resolve path to module '@material-ui/core/DialogTitle'                                                                                                                                   import/no-unresolved
+   4:27  error  Unable to resolve path to module '@material-ui/core/DialogContent'                                                                                                                                 import/no-unresolved
+   5:27  error  Unable to resolve path to module '@material-ui/core/DialogActions'                                                                                                                                 import/no-unresolved
+   6:23  error  Unable to resolve path to module '@material-ui/core/TextField'                                                                                                                                     import/no-unresolved
+  24:35  error  Function component is not a function declaration                                                                                                                                                   react/function-component-definition
+  35:3   error  propType "allowEdit" is not required, but has no corresponding defaultProps declaration                                                                                                            react/require-default-props
+  47:5   error  propType "style" is not required, but has no corresponding defaultProps declaration                                                                                                                react/require-default-props
+  48:5   error  propType "classes" is not required, but has no corresponding defaultProps declaration                                                                                                              react/require-default-props
+  49:4   error  Missing semicolon                                                                                                                                                                                  semi
+  74:34  error  Use callback in setState when referencing the previous state                                                                                                                                       react/no-access-state-in-setstate
+  78:34  error  Use callback in setState when referencing the previous state                                                                                                                                       react/no-access-state-in-setstate
+  97:9   error  Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element  jsx-a11y/no-static-element-interactions
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\players\Players\PlayersSporta.tsx
-  15:5  error  propType "filter" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\players\PlayerStyleAutocomplete.tsx
+  6:3   error  propType "style" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  6:11  error  'CSSProperties' is not defined                                                       no-undef
+  8:3   error  propType "value" is not required, but has no corresponding defaultProps declaration  react/require-default-props
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\players\Players\PlayersToolbar.tsx
-  15:5  error  propType "canSort" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\players\Player\PlayerCompetition.tsx
+   2:19  error    Unable to resolve path to module 'react-bootstrap/lib/Panel'  import/no-unresolved
+  12:4   error    Missing semicolon                                             semi
+  39:13  warning  Unexpected constant condition                                 no-constant-condition
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\players\Players\PlayersVttl.tsx
-  14:5  error  propType "filter" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\players\Player\PlayerIndividual.tsx
+   2:19  error  Unable to resolve path to module 'react-bootstrap/lib/Table'                            import/no-unresolved
+  13:5   error  'viewport' PropType is defined but prop is never used                                   react/no-unused-prop-types
+  13:5   error  propType "viewport" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  17:4   error  Missing semicolon                                                                       semi
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\players\PlayersCardGallery.tsx
-  14:5  error  propType "viewport" is not required, but has no corresponding defaultProps declaration     react/require-default-props
-  15:5  error  propType "competition" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\players\Players.tsx
+  115:11  error  Expected no line gap between ΓÇ£onFilterChangeΓÇ¥ and ΓÇ£canSortΓÇ¥  react/jsx-props-no-multi-spaces
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\players\PlayersImageGallery.tsx
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\players\PlayersCardGallery.tsx
+   2:18  error  Unable to resolve path to module '@material-ui/core/Card'                                  import/no-unresolved
+   3:25  error  Unable to resolve path to module '@material-ui/core/CardContent'                           import/no-unresolved
+  14:5   error  propType "viewport" is not required, but has no corresponding defaultProps declaration     react/require-default-props
+  15:5   error  propType "competition" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\players\PlayersImageGallery.tsx
+    3:22  error  Unable to resolve path to module '@material-ui/core/GridList'                                      import/no-unresolved
+    4:26  error  Unable to resolve path to module '@material-ui/core/GridListTile'                                  import/no-unresolved
+    5:29  error  Unable to resolve path to module '@material-ui/core/GridListTileBar'                               import/no-unresolved
    43:5   error  propType "players" is not required, but has no corresponding defaultProps declaration              react/require-default-props
    48:5   error  propType "viewport" is not required, but has no corresponding defaultProps declaration             react/require-default-props
    49:5   error  propType "viewportWidthContainerCount" is required and should not have a defaultProps declaration  react/require-default-props
    50:5   error  propType "subtitle" is not required, but has no corresponding defaultProps declaration             react/require-default-props
    51:5   error  propType "forceSmall" is not required, but has no corresponding defaultProps declaration           react/require-default-props
+   52:4   error  Missing semicolon                                                                                  semi
    55:5   error  defaultProp "viewportWidthContainerCount" defined for isRequired propType                          react/default-props-match-prop-types
+   56:4   error  Missing semicolon                                                                                  semi
   119:20  error  'ply.getCompetition' is missing in props validation                                                react/prop-types
   122:78  error  'ply.style' is missing in props validation                                                         react/prop-types
   122:84  error  'ply.style.name' is missing in props validation                                                    react/prop-types
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\players\PlayerStyleAutocomplete.tsx
-   8:5  error  Prop type `object` is forbidden                                                      react/forbid-prop-types
-   8:5  error  propType "style" is not required, but has no corresponding defaultProps declaration  react/require-default-props
-  10:5  error  propType "value" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\players\Players\PlayersAllBig.tsx
+   2:19  error  Unable to resolve path to module 'react-bootstrap/lib/Table'  import/no-unresolved
+  11:30  error  Function component is not a function declaration              react/function-component-definition
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\skeleton\Footer\CookieNotice.tsx
-  18:9  error  Static HTML elements with event handlers require a role  jsx-a11y/no-static-element-interactions
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\players\Players\PlayersAllNotLoggedIn.tsx
+  2:19  error  Unable to resolve path to module 'react-bootstrap/lib/Table'  import/no-unresolved
+  8:38  error  Function component is not a function declaration              react/function-component-definition
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\skeleton\Footer\Footer.tsx
-  13:5  error  Prop type `object` is forbidden  react/forbid-prop-types
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\players\Players\PlayersAllSmall.tsx
+  2:19  error  Unable to resolve path to module 'react-bootstrap/lib/Table'  import/no-unresolved
+  9:32  error  Function component is not a function declaration              react/function-component-definition
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\skeleton\Header\HeaderNavigation.tsx
-  25:5   error  Prop type `any` is forbidden                                  react/forbid-prop-types
-  26:5   error  Prop type `any` is forbidden                                  react/forbid-prop-types
-  37:65  error  Use callback in setState when referencing the previous state  react/no-access-state-in-setstate
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\players\Players\PlayersSporta.tsx
+   3:19  error  Unable to resolve path to module 'react-bootstrap/lib/Table'                          import/no-unresolved
+  15:5   error  propType "filter" is not required, but has no corresponding defaultProps declaration  react/require-default-props
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\teams\controls\DivisionHeader.tsx
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\players\Players\PlayersToolbar.tsx
+   2:23  error  Unable to resolve path to module '@material-ui/core/TextField'                         import/no-unresolved
+  15:5   error  propType "canSort" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\players\Players\PlayersVttl.tsx
+   3:19  error  Unable to resolve path to module 'react-bootstrap/lib/Table'                          import/no-unresolved
+  14:5   error  propType "filter" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\players\controls\PlayerAddress.tsx
+   8:5  error  propType "contact" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  12:5  error  propType "style" is not required, but has no corresponding defaultProps declaration    react/require-default-props
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\players\controls\PlayerLink.tsx
+   2:20  error  Unable to resolve path to module 'react-router-dom'                                     import/no-unresolved
+   8:3   error  propType "alias" is not required, but has no corresponding defaultProps declaration     react/require-default-props
+   9:3   error  propType "children" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  11:3   error  propType "style" is not required, but has no corresponding defaultProps declaration     react/require-default-props
+  17:4   error  Missing semicolon                                                                       semi
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\skeleton\Footer\CookieNotice.tsx
+  18:9  error  Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element  jsx-a11y/no-static-element-interactions
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\skeleton\Header\Header.tsx
+   2:20  error  Unable to resolve path to module 'react-router-dom'              import/no-unresolved
+   3:20  error  Unable to resolve path to module '@material-ui/core/AppBar'      import/no-unresolved
+   4:21  error  Unable to resolve path to module '@material-ui/core/Toolbar'     import/no-unresolved
+   5:20  error  Unable to resolve path to module '@material-ui/core/Button'      import/no-unresolved
+   6:24  error  Unable to resolve path to module '@material-ui/core/Typography'  import/no-unresolved
+   7:24  error  Unable to resolve path to module '@material-ui/core/IconButton'  import/no-unresolved
+   8:22  error  Unable to resolve path to module '@material-ui/icons/Menu'       import/no-unresolved
+   9:48  error  Unable to resolve path to module '@material-ui/core/styles'      import/no-unresolved
+  31:22  error  Function component is not a function declaration                 react/function-component-definition
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\skeleton\Header\HeaderNavigation.tsx
+   2:32  error  Unable to resolve path to module 'react-router-dom'                   import/no-unresolved
+   5:26  error  Unable to resolve path to module '@material-ui/core/styles'           import/no-unresolved
+   6:20  error  Unable to resolve path to module '@material-ui/core/Drawer'           import/no-unresolved
+   7:22  error  Unable to resolve path to module '@material-ui/core/MenuItem'         import/no-unresolved
+   8:21  error  Unable to resolve path to module '@material-ui/core/Divider'          import/no-unresolved
+   9:19  error  Unable to resolve path to module '@material-ui/core/Badge'            import/no-unresolved
+  10:20  error  Unable to resolve path to module '@material-ui/core/AppBar'           import/no-unresolved
+  11:24  error  Unable to resolve path to module '@material-ui/core/Typography'       import/no-unresolved
+  12:21  error  Unable to resolve path to module '@material-ui/core/Toolbar'          import/no-unresolved
+  34:65  error  Use callback in setState when referencing the previous state          react/no-access-state-in-setstate
+  43:3   error  Unused method or property "handleClickOutside" of class "Navigation"  react/no-unused-class-component-methods
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\teams\DivisionRanking.tsx
+  2:19  error  Unable to resolve path to module 'react-bootstrap/lib/Table'  import/no-unresolved
+  8:32  error  Function component is not a function declaration              react/function-component-definition
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\teams\OpponentOverview.tsx
+  15:5  error  'matches' PropType is defined but prop is never used          react/no-unused-prop-types
+  17:5  error  'readonlyMatches' PropType is defined but prop is never used  react/no-unused-prop-types
+  27:4  error  Missing semicolon                                             semi
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\teams\SwitchBetweenFirstAndLastRoundButton.tsx
+  6:53  error  Function component is not a function declaration  react/function-component-definition
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\teams\TeamMatchesWeek.tsx
+  13:5  error  'matches' PropType is defined but prop is never used                                                                                                                                                                                                                                                         react/no-unused-prop-types
+  17:4  error  Missing semicolon                                                                                                                                                                                                                                                                                            semi
+  30:3  error  componentWillReceiveProps is deprecated since React 16.9.0, use UNSAFE_componentWillReceiveProps instead, see https://reactjs.org/docs/react-component.html#unsafe_componentwillreceiveprops. Use https://github.com/reactjs/react-codemod#rename-unsafe-lifecycles to automatically update your components  react/no-deprecated
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\teams\TeamOverview.tsx
+  11:29  error  Function component is not a function declaration  react/function-component-definition
+  46:29  error  Function component is not a function declaration  react/function-component-definition
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\teams\Teams.tsx
+   26:5   error  'config' PropType is defined but prop is never used                                                                                                                                                                                                                                                          react/no-unused-prop-types
+   28:5   error  'matches' PropType is defined but prop is never used                                                                                                                                                                                                                                                         react/no-unused-prop-types
+   30:5   error  propType "viewport" is not required, but has no corresponding defaultProps declaration                                                                                                                                                                                                                       react/require-default-props
+   41:4   error  Missing semicolon                                                                                                                                                                                                                                                                                            semi
+   53:3   error  componentWillReceiveProps is deprecated since React 16.9.0, use UNSAFE_componentWillReceiveProps instead, see https://reactjs.org/docs/react-component.html#unsafe_componentwillreceiveprops. Use https://github.com/reactjs/react-codemod#rename-unsafe-lifecycles to automatically update your components  react/no-deprecated
+  128:19  error  Missing an explicit type attribute for button                                                                                                                                                                                                                                                                react/button-has-type
+  141:58  error  Use callback in setState when referencing the previous state                                                                                                                                                                                                                                                 react/no-access-state-in-setstate
+  199:15  error  Expected no line gap between ΓÇ£editModeΓÇ¥ and ΓÇ£tableFormΓÇ¥                                                                                                                                                                                                                                                      react/jsx-props-no-multi-spaces
+  203:70  error  Use callback in setState when referencing the previous state                                                                                                                                                                                                                                                 react/no-access-state-in-setstate
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\teams\controls\DivisionHeader.tsx
   13:5  error  propType "opponent" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  18:4  error  Missing semicolon                                                                       semi
+  22:4  error  Missing semicolon                                                                       semi
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\teams\controls\OpponentLink.tsx
-  11:5  error  propType "opponent" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\teams\controls\OpponentLink.tsx
+   2:20  error  Unable to resolve path to module 'react-router-dom'                                     import/no-unresolved
+  11:5   error  propType "opponent" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  16:4   error  Missing semicolon                                                                       semi
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\teams\controls\TeamOverviewPlayers.tsx
-  11:5  error  propType "viewport" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\teams\controls\TeamHeader.tsx
+  5:27  error  Function component is not a function declaration  react/function-component-definition
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\teams\controls\TeamOverviewRanking.tsx
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\teams\controls\TeamOverviewPlayerStats.tsx
+  6:40  error  Function component is not a function declaration  react/function-component-definition
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\teams\controls\TeamOverviewPlayers.tsx
+   2:19  error  Unable to resolve path to module 'react-bootstrap/lib/Table'                            import/no-unresolved
+  11:5   error  propType "viewport" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\teams\controls\TeamOverviewRanking.tsx
+  14:4   error  Missing semicolon              semi
   18:19  error  Unused state field: 'showAll'  react/no-unused-state
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\teams\controls\TeamPlayerAvatars.tsx
-  10:5  error  Prop type `object` is forbidden                                                      react/forbid-prop-types
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\teams\controls\TeamPlayerAvatars.tsx
   10:5  error  propType "style" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  11:4  error  Missing semicolon                                                                    semi
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\teams\controls\TeamPosition.tsx
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\teams\controls\TeamPosition.tsx
   10:5  error  propType "opponent" is not required, but has no corresponding defaultProps declaration  react/require-default-props
-  14:5  error  Prop type `object` is forbidden                                                         react/forbid-prop-types
+  15:4  error  Missing semicolon                                                                       semi
+  19:4  error  Missing semicolon                                                                       semi
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\teams\controls\TeamRankingBadges.tsx
-  11:5  error  propType "opponent" is not required, but has no corresponding defaultProps declaration  react/require-default-props
-  37:5  error  Prop type `object` is forbidden                                                         react/forbid-prop-types
-  37:5  error  propType "style" is not required, but has no corresponding defaultProps declaration     react/require-default-props
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\teams\controls\TeamRankingBadges.tsx
+  11:5   error  propType "opponent" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  15:4   error  Missing semicolon                                                                       semi
+  37:5   error  propType "style" is not required, but has no corresponding defaultProps declaration     react/require-default-props
+  38:4   error  Missing semicolon                                                                       semi
+  56:27  error  Function component is not a function declaration                                        react/function-component-definition
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\teams\controls\TeamTabTitle.tsx
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\teams\controls\TeamTabTitle.tsx
   12:5  error  propType "opponent" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  16:4  error  Missing semicolon                                                                       semi
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\teams\OpponentOverview.tsx
-  15:14  error  'matches' PropType is defined but prop is never used          react/no-unused-prop-types
-  17:22  error  'readonlyMatches' PropType is defined but prop is never used  react/no-unused-prop-types
-  26:5   error  Prop type `any` is forbidden                                  react/forbid-prop-types
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\users\ChangePassword.tsx
+   2:23  error  Unable to resolve path to module '@material-ui/core/TextField'  import/no-unresolved
+  13:4   error  Missing semicolon                                               semi
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\teams\TeamMatchesWeek.tsx
-  13:14  error  'matches' PropType is defined but prop is never used  react/no-unused-prop-types
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\users\ChangePlayerDetails.tsx
+   2:23  error  Unable to resolve path to module '@material-ui/core/TextField'  import/no-unresolved
+  14:4   error  Missing semicolon                                               semi
+  19:7   error  Unused state field: 'email'                                     react/no-unused-state
+  20:7   error  Unused state field: 'mobile'                                    react/no-unused-state
+  21:7   error  Unused state field: 'address'                                   react/no-unused-state
+  22:7   error  Unused state field: 'city'                                      react/no-unused-state
+  41:41  error  Unused state field: 'email'                                     react/no-unused-state
+  48:41  error  Unused state field: 'mobile'                                    react/no-unused-state
+  54:41  error  Unused state field: 'address'                                   react/no-unused-state
+  60:41  error  Unused state field: 'city'                                      react/no-unused-state
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\teams\Teams.tsx
-   26:5   error  Prop type `object` is forbidden                                                         react/forbid-prop-types
-   26:13  error  'config' PropType is defined but prop is never used                                     react/no-unused-prop-types
-   28:14  error  'matches' PropType is defined but prop is never used                                    react/no-unused-prop-types
-   30:5   error  propType "viewport" is not required, but has no corresponding defaultProps declaration  react/require-default-props
-   32:5   error  Prop type `any` is forbidden                                                            react/forbid-prop-types
-  128:19  error  Missing an explicit type attribute for button                                           react/button-has-type
-  141:58  error  Use callback in setState when referencing the previous state                            react/no-access-state-in-setstate
-  203:70  error  Use callback in setState when referencing the previous state                            react/no-access-state-in-setstate
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\users\ForgotPassword.tsx
+   2:21  error  Unable to resolve path to module 'react-router-dom'                                  import/no-unresolved
+   3:23  error  Unable to resolve path to module '@material-ui/core/TextField'                       import/no-unresolved
+   4:19  error  Unable to resolve path to module '@material-ui/core/Paper'                           import/no-unresolved
+  17:4   error  Missing semicolon                                                                    semi
+  72:5   error  propType "match" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  77:4   error  Missing semicolon                                                                    semi
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\users\ChangePlayerDetails.tsx
-  19:7   error  Unused state field: 'email'    react/no-unused-state
-  20:7   error  Unused state field: 'mobile'   react/no-unused-state
-  21:7   error  Unused state field: 'address'  react/no-unused-state
-  22:7   error  Unused state field: 'city'     react/no-unused-state
-  41:41  error  Unused state field: 'email'    react/no-unused-state
-  48:41  error  Unused state field: 'mobile'   react/no-unused-state
-  54:41  error  Unused state field: 'address'  react/no-unused-state
-  60:41  error  Unused state field: 'city'     react/no-unused-state
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\users\Login.tsx
+   2:20  error  Unable to resolve path to module 'react-router-dom'             import/no-unresolved
+   3:23  error  Unable to resolve path to module '@material-ui/core/TextField'  import/no-unresolved
+   4:19  error  Unable to resolve path to module '@material-ui/core/Paper'      import/no-unresolved
+  26:4   error  Missing semicolon                                               semi
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\users\ForgotPassword.tsx
-  72:5  error  propType "match" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\users\PlayerLineup.tsx
+    5:19  error  Unable to resolve path to module 'react-bootstrap/lib/Table'          import/no-unresolved
+    6:27  error  Unable to resolve path to module 'react-bootstrap/lib/ButtonToolbar'  import/no-unresolved
+    7:20  error  Unable to resolve path to module 'react-bootstrap/lib/Button'         import/no-unresolved
+    8:26  error  Unable to resolve path to module 'react-bootstrap/lib/ControlLabel'   import/no-unresolved
+    9:25  error  Unable to resolve path to module 'react-bootstrap/lib/FormControl'    import/no-unresolved
+   22:5   error  'matches' PropType is defined but prop is never used                  react/no-unused-prop-types
+   27:4   error  Missing semicolon                                                     semi
+   66:15  error  Missing an explicit type attribute for button                         react/button-has-type
+  135:22  error  Do not nest ternary expressions                                       no-nested-ternary
+  150:22  error  Do not nest ternary expressions                                       no-nested-ternary
+  170:17  error  Function component is not a function declaration                      react/function-component-definition
+  183:25  error  Function component is not a function declaration                      react/function-component-definition
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\users\PlayerLineup.tsx
-   22:14  error  'matches' PropType is defined but prop is never used  react/no-unused-prop-types
-   66:15  error  Missing an explicit type attribute for button         react/button-has-type
-  135:22  error  Do not nest ternary expressions                       no-nested-ternary
-  150:22  error  Do not nest ternary expressions                       no-nested-ternary
-  179:3   error  Prop type `object` is forbidden                       react/forbid-prop-types
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\users\Profile.tsx
+  122:30  error  Function component is not a function declaration  react/function-component-definition
 
-C:\code\ttc\react-redux\erembodegem-front\src\components\users\ProfilePhotoForm.tsx
-  54:7    error  Unused state field: 'croppingRect'  react/no-unused-state
-  60:29   error  Unused state field: 'croppingRect'  react/no-unused-state
-  94:102  error  Unused state field: 'croppingRect'  react/no-unused-state
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\components\users\ProfilePhotoForm.tsx
+  14:3    error  propType "admin" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  17:39   error  Function component is not a function declaration                                     react/function-component-definition
+  24:3    error  propType "size" is required and should not have a defaultProps declaration           react/require-default-props
+  25:3    error  propType "type" is required and should not have a defaultProps declaration           react/require-default-props
+  28:3    error  propType "borderRadius" is required and should not have a defaultProps declaration   react/require-default-props
+  43:5    error  defaultProp "size" defined for isRequired propType                                   react/default-props-match-prop-types
+  44:5    error  defaultProp "type" defined for isRequired propType                                   react/default-props-match-prop-types
+  45:5    error  defaultProp "borderRadius" defined for isRequired propType                           react/default-props-match-prop-types
+  47:4    error  Missing semicolon                                                                    semi
+  54:7    error  Unused state field: 'croppingRect'                                                   react/no-unused-state
+  59:3    error  Unused method or property "_updateImage" of class "ProfilePhotoForm"                 react/no-unused-class-component-methods
+  60:29   error  Unused state field: 'croppingRect'                                                   react/no-unused-state
+  94:102  error  Unused state field: 'croppingRect'                                                   react/no-unused-state
 
-C:\code\ttc\react-redux\erembodegem-front\src\models\spec\TeamModelSpec.js
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\index.tsx
+  3:9  error  ReactDOM.render is deprecated since React 18.0.0, use createRoot instead, see https://reactjs.org/link/switch-to-createroot  react/no-deprecated
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\models\MatchModel.ts
+    2:20  error    Use default import syntax to import 'keyMirror'         import/no-named-default
+   47:17  error    Strings must use singlequote                            quotes
+   49:11  error    Strings must use singlequote                            quotes
+   72:33  error    There should be no space after '{'                      object-curly-spacing
+   72:49  error    There should be no space before '}'                     object-curly-spacing
+   89:43  error    Unexpected parentheses around single function argument  arrow-parens
+  102:23  error    There should be no line break before or after '='       operator-linebreak
+  110:27  error    Strings must use singlequote                            quotes
+  110:33  error    Strings must use singlequote                            quotes
+  112:20  error    Strings must use singlequote                            quotes
+  113:31  error    Strings must use singlequote                            quotes
+  115:20  error    Strings must use singlequote                            quotes
+  116:31  error    Strings must use singlequote                            quotes
+  120:31  error    Strings must use singlequote                            quotes
+  122:29  error    Strings must use singlequote                            quotes
+  127:31  error    Strings must use singlequote                            quotes
+  129:29  error    Strings must use singlequote                            quotes
+  144:18  error    Strings must use singlequote                            quotes
+  144:27  error    Strings must use singlequote                            quotes
+  146:7   warning  Unexpected console statement                            no-console
+  147:9   error    Strings must use singlequote                            quotes
+  147:72  error    Missing trailing comma                                  comma-dangle
+  150:19  error    Strings must use singlequote                            quotes
+  153:19  error    Strings must use singlequote                            quotes
+  156:5   warning  Unexpected console statement                            no-console
+  157:7   error    Unexpected string concatenation                         prefer-template
+  157:7   error    Strings must use singlequote                            quotes
+  158:7   error    Strings must use singlequote                            quotes
+  158:31  error    Missing trailing comma                                  comma-dangle
+  180:44  error    '&&' should be placed at the beginning of the line      operator-linebreak
+  195:14  error    Strings must use singlequote                            quotes
+  205:33  error    Strings must use singlequote                            quotes
+  212:10  error    Unexpected parentheses around single function argument  arrow-parens
+  213:11  error    Expected no linebreak before this expression            implicit-arrow-linebreak
+  213:36  error    '&&' should be placed at the beginning of the line      operator-linebreak
+  214:54  error    '&&' should be placed at the beginning of the line      operator-linebreak
+  215:58  error    '&&' should be placed at the beginning of the line      operator-linebreak
+  216:29  error    Missing trailing comma                                  comma-dangle
+  224:20  error    Strings must use singlequote                            quotes
+  224:31  error    Missing trailing comma                                  comma-dangle
+  230:8   error    Unexpected parentheses around single function argument  arrow-parens
+  230:35  error    Missing trailing comma                                  comma-dangle
+  236:31  error    Strings must use singlequote                            quotes
+  236:45  error    Strings must use singlequote                            quotes
+  236:54  error    Strings must use singlequote                            quotes
+  236:63  error    Missing trailing comma                                  comma-dangle
+  242:43  error    Strings must use singlequote                            quotes
+  244:16  error    There should be no space after '{'                      object-curly-spacing
+  244:23  error    There should be no space before '}'                     object-curly-spacing
+  246:29  error    Strings must use singlequote                            quotes
+  253:30  error    Strings must use singlequote                            quotes
+  257:27  error    Strings must use singlequote                            quotes
+  257:49  error    Strings must use singlequote                            quotes
+  259:33  error    Strings must use singlequote                            quotes
+  260:17  error    Unexpected parentheses around single function argument  arrow-parens
+  261:9   error    Expected no linebreak before this expression            implicit-arrow-linebreak
+  261:36  error    Strings must use singlequote                            quotes
+  261:46  error    '&&' should be placed at the beginning of the line      operator-linebreak
+  262:36  error    Strings must use singlequote                            quotes
+  264:17  error    Unexpected parentheses around single function argument  arrow-parens
+  268:16  error    Unexpected parentheses around single function argument  arrow-parens
+  269:13  error    Unexpected parentheses around single function argument  arrow-parens
+  279:31  error    Strings must use singlequote                            quotes
+  279:45  error    Strings must use singlequote                            quotes
+  279:54  error    Strings must use singlequote                            quotes
+  279:63  error    Missing trailing comma                                  comma-dangle
+  281:55  error    Unexpected parentheses around single function argument  arrow-parens
+  286:16  error    Unexpected parentheses around single function argument  arrow-parens
+  292:16  error    Unexpected parentheses around single function argument  arrow-parens
+  297:31  error    Unexpected parentheses around single function argument  arrow-parens
+  306:28  error    Unexpected parentheses around single function argument  arrow-parens
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\models\UserModel.ts
+  1:20  error  Use default import syntax to import 'keyMirror'  import/no-named-default
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\models\model-interfaces.ts
+  136:18  error  Strings must use singlequote  quotes
+  136:27  error  Strings must use singlequote  quotes
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\models\spec\TeamModelSpec.js
    19:16  warning  Unexpected unnamed function  func-names
    71:66  warning  Unexpected unnamed function  func-names
    80:50  warning  Unexpected unnamed function  func-names
@@ -344,6 +920,359 @@ C:\code\ttc\react-redux\erembodegem-front\src\models\spec\TeamModelSpec.js
   103:52  warning  Unexpected unnamed function  func-names
   109:44  warning  Unexpected unnamed function  func-names
 
-✖ 229 problems (218 errors, 11 warnings)
-  2 errors and 0 warnings potentially fixable with the `--fix` option.
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\models\utils\rankingSorter.ts
+  3:16  warning  Unexpected unnamed function  func-names
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\routes.tsx
+   2:44  error  Unable to resolve path to module 'react-router-dom'  import/no-unresolved
+  24:16  error  Function component is not a function declaration     react/function-component-definition
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\store.ts
+  1:1  error  Cannot use import declarations in modules that export using CommonJS (module.exports = 'foo' or exports.bar = 'hi')  import/no-import-module-exports
+  4:1  error  Cannot use import declarations in modules that export using CommonJS (module.exports = 'foo' or exports.bar = 'hi')  import/no-import-module-exports
+  6:1  error  Cannot use import declarations in modules that export using CommonJS (module.exports = 'foo' or exports.bar = 'hi')  import/no-import-module-exports
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\utils\decorators\withStyles.tsx
+  36:5  error  componentWillMount is deprecated since React 16.9.0, use UNSAFE_componentWillMount instead, see https://reactjs.org/docs/react-component.html#unsafe_componentwillmount. Use https://github.com/reactjs/react-codemod#rename-unsafe-lifecycles to automatically update your components  react/no-deprecated
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\utils\decorators\withTooltip.tsx
+   4:21  error  Unable to resolve path to module 'react-bootstrap/lib/Tooltip'                           import/no-unresolved
+   5:28  error  Unable to resolve path to module 'react-bootstrap/lib/OverlayTrigger'                    import/no-unresolved
+   9:3   error  propType "tooltip" is not required, but has no corresponding defaultProps declaration    react/require-default-props
+  10:3   error  propType "title" is not required, but has no corresponding defaultProps declaration      react/require-default-props
+  11:3   error  propType "translate" is not required, but has no corresponding defaultProps declaration  react/require-default-props
+  22:6   error  Missing semicolon                                                                        semi
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\utils\decorators\withTracker.tsx
+  32:5  error  componentWillReceiveProps is deprecated since React 16.9.0, use UNSAFE_componentWillReceiveProps instead, see https://reactjs.org/docs/react-component.html#unsafe_componentwillreceiveprops. Use https://github.com/reactjs/react-codemod#rename-unsafe-lifecycles to automatically update your components  react/no-deprecated
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\utils\locales-nl.ts
+    5:9    error  Strings must use singlequote                       quotes
+    7:12   error  Strings must use singlequote                       quotes
+    8:21   error  Strings must use singlequote                       quotes
+    9:14   error  Strings must use singlequote                       quotes
+   11:13   error  Strings must use singlequote                       quotes
+   12:20   error  Strings must use singlequote                       quotes
+   13:20   error  Strings must use singlequote                       quotes
+   14:19   error  Strings must use singlequote                       quotes
+   15:21   error  Strings must use singlequote                       quotes
+   16:21   error  Strings must use singlequote                       quotes
+   19:14   error  Strings must use singlequote                       quotes
+   21:13   error  Strings must use singlequote                       quotes
+   22:13   error  Strings must use singlequote                       quotes
+   23:15   error  Strings must use singlequote                       quotes
+   24:16   error  Strings must use singlequote                       quotes
+   26:13   error  Strings must use singlequote                       quotes
+   28:14   error  Strings must use singlequote                       quotes
+   29:19   error  Strings must use singlequote                       quotes
+   30:18   error  Strings must use singlequote                       quotes
+   31:12   error  Strings must use singlequote                       quotes
+   33:16   error  Strings must use singlequote                       quotes
+   34:26   error  Strings must use singlequote                       quotes
+   35:15   error  Strings must use singlequote                       quotes
+   36:21   error  Strings must use singlequote                       quotes
+   37:19   error  Strings must use singlequote                       quotes
+   38:25   error  Strings must use singlequote                       quotes
+   39:27   error  Strings must use singlequote                       quotes
+   40:14   error  Strings must use singlequote                       quotes
+   43:12   error  Strings must use singlequote                       quotes
+   44:15   error  Strings must use singlequote                       quotes
+   46:12   error  Strings must use singlequote                       quotes
+   47:12   error  Strings must use singlequote                       quotes
+   48:12   error  Strings must use singlequote                       quotes
+   49:21   error  Strings must use singlequote                       quotes
+   50:18   error  Strings must use singlequote                       quotes
+   53:19   error  Strings must use singlequote                       quotes
+   54:15   error  Strings must use singlequote                       quotes
+   55:22   error  Strings must use singlequote                       quotes
+   58:19   error  Strings must use singlequote                       quotes
+   59:16   error  Strings must use singlequote                       quotes
+   61:13   error  Strings must use singlequote                       quotes
+   62:15   error  Strings must use singlequote                       quotes
+   64:15   error  Strings must use singlequote                       quotes
+   65:22   error  Strings must use singlequote                       quotes
+   66:23   error  Strings must use singlequote                       quotes
+   67:20   error  Strings must use singlequote                       quotes
+   68:13   error  Strings must use singlequote                       quotes
+   69:14   error  Strings must use singlequote                       quotes
+   70:12   error  Strings must use singlequote                       quotes
+   71:20   error  Strings must use singlequote                       quotes
+   72:15   error  Strings must use singlequote                       quotes
+   74:13   error  Strings must use singlequote                       quotes
+   75:15   error  Strings must use singlequote                       quotes
+   79:21   error  Strings must use singlequote                       quotes
+   82:16   error  Strings must use singlequote                       quotes
+   83:21   error  Strings must use singlequote                       quotes
+   84:20   error  Strings must use singlequote                       quotes
+   85:18   error  Strings must use singlequote                       quotes
+   86:20   error  Strings must use singlequote                       quotes
+   87:16   error  Strings must use singlequote                       quotes
+   88:14   error  Strings must use singlequote                       quotes
+   89:14   error  Strings must use singlequote                       quotes
+   90:14   error  Strings must use singlequote                       quotes
+   91:13   error  Strings must use singlequote                       quotes
+   92:18   error  Strings must use singlequote                       quotes
+   93:14   error  Strings must use singlequote                       quotes
+   94:23   error  Strings must use singlequote                       quotes
+   95:20   error  Strings must use singlequote                       quotes
+   98:16   error  Strings must use singlequote                       quotes
+   99:13   error  Strings must use singlequote                       quotes
+  100:21   error  Strings must use singlequote                       quotes
+  101:20   error  Strings must use singlequote                       quotes
+  102:20   error  Strings must use singlequote                       quotes
+  103:19   error  Strings must use singlequote                       quotes
+  104:21   error  Strings must use singlequote                       quotes
+  106:21   error  Strings must use singlequote                       quotes
+  107:18   error  Strings must use singlequote                       quotes
+  108:21   error  Strings must use singlequote                       quotes
+  109:19   error  Strings must use singlequote                       quotes
+  110:22   error  Strings must use singlequote                       quotes
+  111:23   error  Strings must use singlequote                       quotes
+  112:27   error  Strings must use singlequote                       quotes
+  116:14   error  Strings must use singlequote                       quotes
+  118:9    error  Strings must use singlequote                       quotes
+  118:85   error  '+' should be placed at the beginning of the line  operator-linebreak
+  119:9    error  Strings must use singlequote                       quotes
+  119:116  error  '+' should be placed at the beginning of the line  operator-linebreak
+  120:9    error  Strings must use singlequote                       quotes
+  121:21   error  Strings must use singlequote                       quotes
+  123:22   error  Strings must use singlequote                       quotes
+  124:16   error  Strings must use singlequote                       quotes
+  125:20   error  Strings must use singlequote                       quotes
+  128:14   error  Strings must use singlequote                       quotes
+  130:9    error  Strings must use singlequote                       quotes
+  131:18   error  Strings must use singlequote                       quotes
+  132:17   error  Strings must use singlequote                       quotes
+  133:21   error  Strings must use singlequote                       quotes
+  134:20   error  Strings must use singlequote                       quotes
+  135:21   error  Strings must use singlequote                       quotes
+  136:13   error  Strings must use singlequote                       quotes
+  137:17   error  Strings must use singlequote                       quotes
+  140:20   error  Strings must use singlequote                       quotes
+  141:20   error  Strings must use singlequote                       quotes
+  142:20   error  Strings must use singlequote                       quotes
+  143:19   error  Strings must use singlequote                       quotes
+  144:22   error  Strings must use singlequote                       quotes
+  145:22   error  Strings must use singlequote                       quotes
+  146:31   error  Strings must use singlequote                       quotes
+  147:28   error  Strings must use singlequote                       quotes
+  150:22   error  Strings must use singlequote                       quotes
+  151:23   error  Strings must use singlequote                       quotes
+  152:30   error  Strings must use singlequote                       quotes
+  153:20   error  Strings must use singlequote                       quotes
+  154:16   error  Strings must use singlequote                       quotes
+  155:13   error  Strings must use singlequote                       quotes
+  158:20   error  Strings must use singlequote                       quotes
+  160:13   error  Strings must use singlequote                       quotes
+  161:14   error  Strings must use singlequote                       quotes
+  163:14   error  Strings must use singlequote                       quotes
+  164:12   error  Strings must use singlequote                       quotes
+  165:16   error  Strings must use singlequote                       quotes
+  166:13   error  Strings must use singlequote                       quotes
+  168:14   error  Strings must use singlequote                       quotes
+  169:19   error  Strings must use singlequote                       quotes
+  171:19   error  Strings must use singlequote                       quotes
+  172:19   error  Strings must use singlequote                       quotes
+  173:21   error  Strings must use singlequote                       quotes
+  176:16   error  Strings must use singlequote                       quotes
+  177:18   error  Strings must use singlequote                       quotes
+  178:21   error  Strings must use singlequote                       quotes
+  179:16   error  Strings must use singlequote                       quotes
+  180:16   error  Strings must use singlequote                       quotes
+  183:28   error  Strings must use singlequote                       quotes
+  184:28   error  Strings must use singlequote                       quotes
+  185:25   error  Strings must use singlequote                       quotes
+  188:18   error  Strings must use singlequote                       quotes
+  189:15   error  Strings must use singlequote                       quotes
+  190:15   error  Strings must use singlequote                       quotes
+  191:17   error  Strings must use singlequote                       quotes
+  195:14   error  Strings must use singlequote                       quotes
+  196:16   error  Strings must use singlequote                       quotes
+  197:21   error  Strings must use singlequote                       quotes
+  199:23   error  Strings must use singlequote                       quotes
+  200:22   error  Strings must use singlequote                       quotes
+  201:20   error  Strings must use singlequote                       quotes
+  204:22   error  Strings must use singlequote                       quotes
+  206:19   error  Strings must use singlequote                       quotes
+  207:18   error  Strings must use singlequote                       quotes
+  208:27   error  Strings must use singlequote                       quotes
+  210:9    error  Strings must use singlequote                       quotes
+  213:14   error  Strings must use singlequote                       quotes
+  214:15   error  Strings must use singlequote                       quotes
+  215:16   error  Strings must use singlequote                       quotes
+  217:13   error  Strings must use singlequote                       quotes
+  218:16   error  Strings must use singlequote                       quotes
+  220:22   error  Strings must use singlequote                       quotes
+  221:30   error  Strings must use singlequote                       quotes
+  225:16   error  Strings must use singlequote                       quotes
+  226:18   error  Strings must use singlequote                       quotes
+  227:19   error  Strings must use singlequote                       quotes
+  228:19   error  Strings must use singlequote                       quotes
+  229:21   error  Strings must use singlequote                       quotes
+  230:21   error  Strings must use singlequote                       quotes
+  231:20   error  Strings must use singlequote                       quotes
+  232:17   error  Strings must use singlequote                       quotes
+  233:16   error  Strings must use singlequote                       quotes
+  234:16   error  Strings must use singlequote                       quotes
+  237:16   error  Strings must use singlequote                       quotes
+  239:24   error  Strings must use singlequote                       quotes
+  241:18   error  Strings must use singlequote                       quotes
+  242:19   error  Strings must use singlequote                       quotes
+  243:20   error  Strings must use singlequote                       quotes
+  244:20   error  Strings must use singlequote                       quotes
+  245:15   error  Strings must use singlequote                       quotes
+  246:17   error  Strings must use singlequote                       quotes
+  250:20   error  Strings must use singlequote                       quotes
+  251:22   error  Strings must use singlequote                       quotes
+  252:19   error  Strings must use singlequote                       quotes
+  253:21   error  Strings must use singlequote                       quotes
+  254:21   error  Strings must use singlequote                       quotes
+  256:18   error  Strings must use singlequote                       quotes
+  257:16   error  Strings must use singlequote                       quotes
+  260:26   error  Strings must use singlequote                       quotes
+  261:24   error  Strings must use singlequote                       quotes
+  262:24   error  Strings must use singlequote                       quotes
+  263:26   error  Strings must use singlequote                       quotes
+  265:24   error  Strings must use singlequote                       quotes
+  266:26   error  Strings must use singlequote                       quotes
+  268:30   error  Strings must use singlequote                       quotes
+  269:22   error  Strings must use singlequote                       quotes
+  270:26   error  Strings must use singlequote                       quotes
+  271:23   error  Strings must use singlequote                       quotes
+  273:13   error  Strings must use singlequote                       quotes
+  274:21   error  Strings must use singlequote                       quotes
+  275:20   error  Strings must use singlequote                       quotes
+  276:22   error  Strings must use singlequote                       quotes
+  277:13   error  Strings must use singlequote                       quotes
+  278:11   error  Strings must use singlequote                       quotes
+  279:17   error  Strings must use singlequote                       quotes
+  280:22   error  Strings must use singlequote                       quotes
+  281:25   error  Strings must use singlequote                       quotes
+  282:31   error  Strings must use singlequote                       quotes
+  283:30   error  Strings must use singlequote                       quotes
+  284:26   error  Strings must use singlequote                       quotes
+  285:16   error  Strings must use singlequote                       quotes
+  287:18   error  Strings must use singlequote                       quotes
+  288:23   error  Strings must use singlequote                       quotes
+  289:18   error  Strings must use singlequote                       quotes
+  290:23   error  Strings must use singlequote                       quotes
+  291:17   error  Strings must use singlequote                       quotes
+  292:22   error  Strings must use singlequote                       quotes
+  293:15   error  Strings must use singlequote                       quotes
+  294:20   error  Strings must use singlequote                       quotes
+  295:21   error  Strings must use singlequote                       quotes
+  296:27   error  Strings must use singlequote                       quotes
+  297:32   error  Strings must use singlequote                       quotes
+  298:34   error  Strings must use singlequote                       quotes
+  299:16   error  Strings must use singlequote                       quotes
+  302:16   error  Strings must use singlequote                       quotes
+  303:19   error  Strings must use singlequote                       quotes
+  304:22   error  Strings must use singlequote                       quotes
+  305:22   error  Strings must use singlequote                       quotes
+  306:19   error  Strings must use singlequote                       quotes
+  307:22   error  Strings must use singlequote                       quotes
+  308:23   error  Strings must use singlequote                       quotes
+  309:26   error  Strings must use singlequote                       quotes
+  310:24   error  Strings must use singlequote                       quotes
+  311:27   error  Strings must use singlequote                       quotes
+  312:34   error  Strings must use singlequote                       quotes
+  313:24   error  Strings must use singlequote                       quotes
+  314:31   error  Strings must use singlequote                       quotes
+  315:24   error  Strings must use singlequote                       quotes
+  316:25   error  Strings must use singlequote                       quotes
+  317:25   error  Strings must use singlequote                       quotes
+  318:24   error  Strings must use singlequote                       quotes
+  320:23   error  Strings must use singlequote                       quotes
+  321:28   error  Strings must use singlequote                       quotes
+  322:30   error  Strings must use singlequote                       quotes
+  323:15   error  Strings must use singlequote                       quotes
+  324:16   error  Strings must use singlequote                       quotes
+  326:21   error  Strings must use singlequote                       quotes
+  327:20   error  Strings must use singlequote                       quotes
+  328:22   error  Strings must use singlequote                       quotes
+  331:19   error  Strings must use singlequote                       quotes
+  332:19   error  Strings must use singlequote                       quotes
+  333:17   error  Strings must use singlequote                       quotes
+  334:18   error  Strings must use singlequote                       quotes
+  335:22   error  Strings must use singlequote                       quotes
+  336:17   error  Strings must use singlequote                       quotes
+  337:20   error  Strings must use singlequote                       quotes
+  338:26   error  Strings must use singlequote                       quotes
+  340:21   error  Strings must use singlequote                       quotes
+  342:24   error  Strings must use singlequote                       quotes
+  343:26   error  Strings must use singlequote                       quotes
+  344:23   error  Strings must use singlequote                       quotes
+  346:26   error  Strings must use singlequote                       quotes
+  351:26   error  Strings must use singlequote                       quotes
+  354:20   error  Strings must use singlequote                       quotes
+  355:13   error  Strings must use singlequote                       quotes
+  356:16   error  Strings must use singlequote                       quotes
+  357:15   error  Strings must use singlequote                       quotes
+  358:13   error  Strings must use singlequote                       quotes
+  359:13   error  Strings must use singlequote                       quotes
+  360:20   error  Strings must use singlequote                       quotes
+  361:22   error  Strings must use singlequote                       quotes
+  362:14   error  Strings must use singlequote                       quotes
+  363:27   error  Strings must use singlequote                       quotes
+  364:27   error  Strings must use singlequote                       quotes
+  365:26   error  Strings must use singlequote                       quotes
+  366:15   error  Strings must use singlequote                       quotes
+  367:18   error  Strings must use singlequote                       quotes
+  368:25   error  Strings must use singlequote                       quotes
+  371:19   error  Strings must use singlequote                       quotes
+  372:18   error  Strings must use singlequote                       quotes
+  373:17   error  Strings must use singlequote                       quotes
+  374:17   error  Strings must use singlequote                       quotes
+  375:24   error  Strings must use singlequote                       quotes
+  378:22   error  Strings must use singlequote                       quotes
+  379:30   error  Strings must use singlequote                       quotes
+  380:14   error  Strings must use singlequote                       quotes
+  381:14   error  Strings must use singlequote                       quotes
+  382:17   error  Strings must use singlequote                       quotes
+  383:13   error  Strings must use singlequote                       quotes
+  384:19   error  Strings must use singlequote                       quotes
+  385:20   error  Strings must use singlequote                       quotes
+  386:20   error  Strings must use singlequote                       quotes
+  387:15   error  Strings must use singlequote                       quotes
+  388:16   error  Strings must use singlequote                       quotes
+  390:24   error  Strings must use singlequote                       quotes
+  391:27   error  Strings must use singlequote                       quotes
+  392:25   error  Strings must use singlequote                       quotes
+  393:25   error  Strings must use singlequote                       quotes
+  394:20   error  Strings must use singlequote                       quotes
+  397:15   error  Strings must use singlequote                       quotes
+  398:18   error  Strings must use singlequote                       quotes
+  399:18   error  Strings must use singlequote                       quotes
+  400:23   error  Strings must use singlequote                       quotes
+  401:18   error  Strings must use singlequote                       quotes
+  402:15   error  Strings must use singlequote                       quotes
+  404:19   error  Strings must use singlequote                       quotes
+  405:22   error  Strings must use singlequote                       quotes
+  406:22   error  Strings must use singlequote                       quotes
+  407:19   error  Strings must use singlequote                       quotes
+  408:28   error  Strings must use singlequote                       quotes
+  413:15   error  Strings must use singlequote                       quotes
+  414:14   error  Strings must use singlequote                       quotes
+  415:24   error  Strings must use singlequote                       quotes
+  416:15   error  Strings must use singlequote                       quotes
+  422:20   error  Strings must use singlequote                       quotes
+  423:16   error  Strings must use singlequote                       quotes
+  425:14   error  Strings must use singlequote                       quotes
+  426:13   error  Strings must use singlequote                       quotes
+  427:14   error  Strings must use singlequote                       quotes
+  428:11   error  Strings must use singlequote                       quotes
+  429:12   error  Strings must use singlequote                       quotes
+  430:10   error  Strings must use singlequote                       quotes
+  431:11   error  Strings must use singlequote                       quotes
+  432:12   error  Strings must use singlequote                       quotes
+  433:13   error  Strings must use singlequote                       quotes
+  434:11   error  Strings must use singlequote                       quotes
+  435:12   error  Strings must use singlequote                       quotes
+  436:20   error  Strings must use singlequote                       quotes
+
+C:\Users\wouter\Dropbox\Personal\Programming\UnixCode\projects\ttc\react-redux\erembodegem-front\src\utils\timeAgoInWords.ts
+  6:16  warning  Unexpected unnamed function  func-names
+
+Γ£û 993 problems (977 errors, 16 warnings)
+  548 errors and 0 warnings potentially fixable with the `--fix` option.
 

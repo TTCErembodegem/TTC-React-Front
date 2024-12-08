@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 
-import Avatar from '@material-ui/core/Avatar';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+import Avatar from '@mui/material/Avatar';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
 
-import Divider from '@material-ui/core/Divider';
+import Divider from '@mui/material/Divider';
 import PropTypes, {connect} from '../../PropTypes';
 
 import PlayerAutoComplete from '../../players/PlayerAutoComplete';

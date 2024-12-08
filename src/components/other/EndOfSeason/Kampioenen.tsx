@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link} from 'react-router';
 import {TrophyIcon} from '../../controls/Icons/TrophyIcon';
 import {TeamRankingBadges} from '../../teams/controls/TeamRankingBadges';
 import {TeamPlayerAvatars} from '../../teams/controls/TeamPlayerAvatars';

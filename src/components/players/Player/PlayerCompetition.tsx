@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Panel from 'react-bootstrap/lib/Panel';
+import Card from 'react-bootstrap/Card';
 import PropTypes from '../../PropTypes';
 
 import {DivisionHeader} from '../../teams/controls/DivisionHeader';
@@ -20,8 +20,8 @@ export class PlayerCompetition extends Component {
 
     const team = player.getTeam(competition);
     return (
-      <Panel>
-        <Panel.Heading>
+      <Card>
+        <Card.Header>
           <div style={{fontSize: 22}}>
             {competition} {team ? team.teamCode : null}
 
@@ -31,9 +31,9 @@ export class PlayerCompetition extends Component {
               </span>
             ) : null}
           </div>
-        </Panel.Heading>
+        </Card.Header>
 
-        <Panel.Body>
+        <Card.Body>
           <PlayerIndividual player={player} competition={competition} />
 
           {(false && comp.nextRanking) ? (
@@ -50,8 +50,8 @@ export class PlayerCompetition extends Component {
               )}
             </div>
           ) : null}
-        </Panel.Body>
-      </Panel>
+        </Card.Body>
+      </Card>
     );
   }
 }

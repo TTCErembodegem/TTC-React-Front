@@ -1,5 +1,5 @@
 import React from 'react';
-import Table from 'react-bootstrap/lib/Table';
+import Table from 'react-bootstrap/Table';
 import PropTypes from '../../PropTypes';
 import {PlayerAllCompetitions} from '../PlayerCard';
 import {PlayerPlayingStyle} from '../PlayerPlayingStyle';

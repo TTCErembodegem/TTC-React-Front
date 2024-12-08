@@ -1,8 +1,8 @@
 /* eslint-disable react/prefer-stateless-function */
 import React, {Component} from 'react';
 
-import Tooltip from 'react-bootstrap/lib/Tooltip';
-import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import t from '../../locales';
 
 type WithTooltipProps = {
@@ -14,9 +14,6 @@ type WithTooltipProps = {
 
 export function withTooltip(ComposedComponent) {
   return class WithTooltip extends Component<WithTooltipProps> {
-    // TODO: Tslint: this wasnt doing anything?
-    // static contextTypes = PropTypes.contextTypes;
-
     static defaultProps = {
       tooltipPlacement: 'top',
     }

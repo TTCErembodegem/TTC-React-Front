@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import Table from 'react-bootstrap/lib/Table';
-import IconButton from '@material-ui/core/IconButton';
+import Table from 'react-bootstrap/Table';
+import IconButton from '@mui/material/IconButton';
 import PropTypes, {withViewport} from '../../PropTypes';
 import {OtherMatchPlayerResultsTableRow} from './OtherMatchPlayerResults';
 import {MatchPlayerRankings} from '../controls/MatchPlayerRankings';
