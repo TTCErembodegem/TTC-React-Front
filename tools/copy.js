@@ -4,6 +4,8 @@ import task from './lib/task';
 import copy from './lib/copy';
 import watch from './lib/watch';
 
+const DEBUG = true;
+
 /**
  * Copies static files such as robots.txt, favicon.ico to the
  * output (build) folder.
