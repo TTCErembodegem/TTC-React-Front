@@ -1,16 +1,17 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 import cn from 'classnames';
 import PropTypes, {browseTo} from '../../PropTypes';
 import {Icon} from '../../controls/Icons/Icon';
 import {DivisionRankingLabel, OurDivisionRankingLabel} from '../controls/DivisionRankingLabel';
-import {IMatch} from '../../../models/model-interfaces';
+import {IMatch, OwnTeamLink} from '../../../models/model-interfaces';
+
 
 type MatchVsProps = {
   match: IMatch;
   opponentOnly: boolean;
   themOnly?: boolean;
-  ownTeamLink: 'main' | 'matches' | 'ranking' | 'players' | 'matchesTable' | 'week';
+  ownTeamLink: OwnTeamLink;
   withLinks?: boolean;
   withPosition?: boolean;
 }

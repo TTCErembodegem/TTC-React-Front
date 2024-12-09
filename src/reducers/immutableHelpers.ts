@@ -1,12 +1,9 @@
-import Immutable from 'immutable';
-
 function replaceModel(state, model, classify) {
   const toReplaceIndex = state.findIndex(m => m.id === model.id);
   if (toReplaceIndex === -1) {
     return state.push(classify(model));
   }
   return state.update(toReplaceIndex, () => classify(model));
-
 }
 
 export function merge(state, payload, classify, filter) {
@@ -24,7 +21,7 @@ export function merge(state, payload, classify, filter) {
       // }
       result = result.filter(filter);
     }
-    return Immutable.List(result.map(classify));
+    return result.map(classify);
 
   } if (payload instanceof Array) {
     let newState = state;

@@ -7,13 +7,7 @@ import {showSnackbar, setSetting} from './configActions';
 import trans from '../locales';
 import {IMatch} from '../models/model-interfaces';
 import {broadcastReload} from './otherActions';
-
-export function simpleLoaded(data) {
-  return {
-    type: ActionTypes.MATCHES_LOADED,
-    payload: data,
-  };
-}
+import {simpleLoaded} from '../reducers/matchesReducer';
 
 const shouldSync = (match: IMatch) => !match.isSyncedWithFrenoy && moment().isAfter(match.date) && match.shouldBePlayed;
 
@@ -115,7 +109,7 @@ export function selectPlayer(matchId: number, status, statusNote: string, player
         matchId: match.id,
         playerId: player.id,
         home: match.isHomeMatch,
-        position: match.players.size + 1,
+        position: match.players.length + 1,
         ranking: comp.ranking,
         name: player.alias,
         alias: player.alias,

@@ -42,6 +42,8 @@ export type Translator = TranslatorFn & {
   timeAgo(): any;
 };
 
+export type OwnTeamLink = 'main' | 'matches' | 'ranking' | 'players' | 'matchesTable' | 'week';
+
 /* ****************************************************
 *                       MATCHES
 **************************************************** */

@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
 
 import * as reducers from './reducers';
-import matches from './matchReducers';
+import matches from './matchesReducer';
 import user from './userReducers';
 
 const rootReducer = combineReducers({

@@ -1,76 +1,64 @@
-import React, {Component} from 'react';
+import React from 'react';
 import moment from 'moment';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import PropTypes, {connect, withViewport, withContext} from '../PropTypes';
+import t from '../../locales';
 import ClubLocationInstructions from '../other/ClubLocationInstructions';
 import {Strike} from '../controls/controls/Strike';
-import {SmallMatchCardHeader} from '../matches/Match/MatchCardHeader';
+// import {SmallMatchCardHeader} from '../matches/Match/MatchCardHeader';
 import EndOfSeason from '../other/EndOfSeason/EndOfSeason';
 import {Eetfestijn} from './Eetfestijn';
 import IntroClub from './IntroClub';
 import {WeirdLocaleYearInfo} from './WeirdLocaleYearInfo';
 import IntroSponsors from './IntroSponsors';
 import {IMatch, IConfig, IPlayer, ITeam, Viewport} from '../../models/model-interfaces';
-import {IUser} from '../../models/UserModel';
-
+// import {IUser} from '../../models/UserModel';
+import { useViewport } from '../../utils/hooks/useViewport';
+import { useTtcSelector } from '../../utils/hooks/storeHooks';
 
 require('./App.css');
 
-type IntroProps = {
-  config: IConfig;
-  user: IUser;
-  players: IPlayer[];
-  matches: IMatch[];
-  teams: ITeam[];
-  viewport: Viewport;
-}
-
-class Intro extends Component<IntroProps> {
-  static contextTypes = PropTypes.contextTypes;
-
-  render() {
-    if (this.props.config.get('endOfSeason')) {
-      return <EndOfSeason />;
-    }
-
-    const big = this.props.viewport.width > 830;
-    return (
-      <div>
-        <Row style={{marginTop: big ? 25 : undefined}}>
-          <Col sm={6} style={{verticalAlign: 'top'}}>
-            <IntroClub />
-            <WeirdLocaleYearInfo params={this.props.config.get('params')} />
-            <ClubLocationInstructions />
-          </Col>
-          <Col sm={6}>
-            {!this.props.config.get('initialLoadCompleted') ? (
-              <Loading t={this.context.t} bigScreen={this.props.viewport.width > 768} />
-            ) : (
-              <div>
-                <div style={{clear: 'both'}} />
-                {false && <Eetfestijn />}
-                <TodaysEvents {...this.props} />
-              </div>
-            )}
-          </Col>
-        </Row>
-        <IntroSponsors />
-      </div>
-    );
+const Intro = () => {
+  const viewport = useViewport();
+  // const config = useTtcSelector(state => state.config);
+  const config = {
+    get: str => false
   }
+
+  if (config.get('endOfSeason')) {
+    return <EndOfSeason />;
+  }
+
+  const big = viewport.width > 830;
+  return (
+    <div>
+      <Row style={{marginTop: big ? 25 : undefined}}>
+        <Col sm={6} style={{verticalAlign: 'top'}}>
+          <IntroClub />
+          <WeirdLocaleYearInfo params={config.get('params')} />
+          <ClubLocationInstructions />
+        </Col>
+        <Col sm={6}>
+          {!config.get('initialLoadCompleted') ? (
+            <Loading bigScreen={viewport.width > 768} />
+          ) : (
+            <div>
+              <div style={{clear: 'both'}} />
+              {false && <Eetfestijn />}
+              <TodaysEvents />
+            </div>
+          )}
+        </Col>
+      </Row>
+      <IntroSponsors />
+    </div>
+  );
 }
 
-export default withContext(withViewport(connect(state => ({
-  config: state.config,
-  user: state.user,
-  players: state.players,
-  matches: state.matches,
-  teams: state.teams,
-}))(Intro)));
+export default Intro;
 
 
-const Loading = ({t, bigScreen}) => (
+const Loading = ({bigScreen}: {bigScreen: boolean}) => (
   <div style={bigScreen ? undefined : {width: 310, margin: 'auto', marginBottom: 15, marginTop: 15}}>
     <img
       src="/img/schlager.gif"
@@ -87,63 +75,42 @@ const Loading = ({t, bigScreen}) => (
   </div>
 );
 
-Loading.propTypes = {
-  t: PropTypes.func.isRequired,
-  bigScreen: PropTypes.bool.isRequired,
-};
 
+const TodayEventMatches = ({matches}: {matches: IMatch[]}) => (
+  matches.map(match => (
+    <div style={{padding: 5}} key={match.id}>
+      {/* <SmallMatchCardHeader match2={match} user={this.props.user} isOpen={false} config={this.props.config} noScoreEdit /> */}
+    </div>
+  ))
+)
 
-type TodaysEventsProps = {
-  config: IConfig;
-  user: IUser;
-  players: IPlayer[];
-  matches: IMatch[];
-  teams: ITeam[];
-}
+const TodaysEvents = () => {
+  const matches = useTtcSelector(state => state.matches);
+  const today = moment();
 
-class TodaysEvents extends Component<TodaysEventsProps> {
-  static contextTypes = PropTypes.contextTypes;
+  const matchesToday = matches.filter(cal => cal.date.isSame(today, 'day'));
+  if (matchesToday.length) {
+    return (
+      <div>
+        <Strike text={t('intro.matchesToday')} />
+        <TodayEventMatches matches={matchesToday} />
+      </div>
+    );
+  }
 
-  render() {
-    const {t} = this.context;
-    const today = moment();
+  const lastPlayedMatches = matches
+    .filter(cal => cal.date.isBefore(today, 'day'))
+    .sort((a, b) => b.date.valueOf() - a.date.valueOf())
+    .slice(0, 2);
 
-    const matchesToday = this.props.matches.filter(cal => cal.date.isSame(today, 'day'));
-    if (matchesToday.size) {
-      return (
+  return (
+    <div>
+      {lastPlayedMatches.length && (
         <div>
-          <Strike text={t('intro.matchesToday')} />
-          {this._renderMatches(matchesToday)}
+          <Strike text={t('intro.playedMatches')} />
+          <TodayEventMatches matches={lastPlayedMatches} />
         </div>
-      );
-    }
-
-    const lastPlayedMatches = this.props.matches
-      .filter(cal => cal.date.isBefore(today, 'day'))
-      .sort((a, b) => b.date - a.date)
-      .take(2);
-
-    return (
-      <div>
-        {lastPlayedMatches.size ? (
-          <div>
-            <Strike text={t('intro.playedMatches')} />
-            {this._renderMatches(lastPlayedMatches)}
-          </div>
-        ) : null}
-      </div>
-    );
-  }
-
-  _renderMatches(matches: IMatch[]) {
-    return (
-      <div>
-        {matches.map(match => (
-          <div style={{padding: 5}} key={match.id}>
-            <SmallMatchCardHeader match2={match} user={this.props.user} isOpen={false} config={this.props.config} noScoreEdit />
-          </div>
-        ))}
-      </div>
-    );
-  }
+      )}
+    </div>
+  );
 }

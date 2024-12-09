@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 import t from '../../../locales';
 import {IPlayer} from '../../../models/model-interfaces';
 

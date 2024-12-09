@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 import PropTypes, {browseTo} from '../../PropTypes';
 import storeUtil from '../../../storeUtil';
 import {DivisionRankingLabel} from '../../matches/controls/DivisionRankingLabel';

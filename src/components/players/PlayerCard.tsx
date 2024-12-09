@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import PropTypes, {connect, browseTo, withViewport} from '../PropTypes';
 import PlayerImage from './PlayerImage';
