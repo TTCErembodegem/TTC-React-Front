@@ -1,0 +1,9 @@
+// Fix for react-select
+.react-select-fix__menu {
+  z-index: 9999 !important;
+}
+
+// Fix for PlayerPlayingStyle Dialog
+.overflow-visible {
+  overflow: visible;
+}

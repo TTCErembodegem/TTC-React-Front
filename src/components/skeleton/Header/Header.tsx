@@ -1,32 +1,18 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/material/Menu';
-import {withStyles as withMaterialStyles} from '@mui/material/styles';
-import Navigation from './HeaderNavigation';
-import {Icon} from '../../controls/Icons/Icon';
-import PropTypes, {withViewport} from '../../PropTypes';
-import {Viewport} from '../../../models/model-interfaces';
-import {IUser} from '../../../models/UserModel';
+import MenuIcon from '@mui/icons-material/Menu';
+import { Navigation } from './HeaderNavigation';
+import { Icon } from '../../controls/Icons/Icon';
+import { t } from '../../../locales';
+import { useViewport } from '../../../utils/hooks/useViewport';
+import { useTtcSelector } from '../../../utils/hooks/storeHooks';
 
 require('./Header.css');
-
-const styles = {
-  root: {
-    flexGrow: 1,
-  },
-  grow: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20,
-  },
-};
 
 const HeaderButton = ({label, href}: {label: string, href: string}) => (
   <Link to={href}>
@@ -37,87 +23,53 @@ const HeaderButton = ({label, href}: {label: string, href: string}) => (
 );
 
 
-type HeaderProps = {
-  viewport: Viewport;
-  user: IUser;
-  classes: any;
-}
+export const Header = () => {
+  const user = useTtcSelector(state => state.user);
+  const viewport = useViewport();
+  const showExtraNavigationButtons = viewport.width > 700;
+  const [navOpen, setNavOpen] = useState(false);
 
-type HeaderState = {
-  navOpen: boolean;
-  isNavOpening: boolean;
-}
+  return (
+    <div style={{flexGrow: 1}}>
+      <AppBar position="sticky">
+        <Toolbar variant="dense">
+          <IconButton
+            style={{marginLeft: -12, marginRight: 20}}
+            color="inherit"
+            aria-label="Menu"
+            onClick={() => setNavOpen(!navOpen)}
+          >
+            <MenuIcon />
+          </IconButton>
 
+          <Typography variant="subtitle1" color="inherit" style={{flexGrow: 1, fontSize: '1.7rem'}}>
+            <Link className="Header-link" to="/">{navOpen ? null : t('clubName')}</Link>
+          </Typography>
 
-export default withViewport(withMaterialStyles(styles)(class Header extends Component<HeaderProps, HeaderState> {
-  static contextTypes = PropTypes.contextTypes;
+          <div>
+            {showExtraNavigationButtons ? (
+              <div style={{display: 'inline-block', textAlign: 'center', width: 300}}>
+                <HeaderButton label={t('common.vttl')} href={t.route('teams', {competition: 'Vttl'})} />
+                <HeaderButton label={t('common.sporta')} href={t.route('teams', {competition: 'Sporta'})} />
+                <HeaderButton label={t('nav.players')} href={t.route('players')} />
+              </div>
+            ) : null}
 
-  constructor(props) {
-    super(props);
-    this.state = {navOpen: false, isNavOpening: false};
-  }
+            {!user.playerId ? (
+              <HeaderButton label={t('nav.login')} href={t.route('login')} />
+            ) : (
+              <Link className="Header-icon-right" to={t.route('profile')}>
+                <Icon fa="fa fa-2x fa-user" translate tooltip="profile.tooltip" tooltipPlacement="left" />
+              </Link>
+            )}
+          </div>
+        </Toolbar>
+      </AppBar>
 
-  render() {
-    const {t} = this.context;
-    const showExtraNavigationButtons = this.props.viewport.width > 700;
-    const {classes} = this.props;
-
-    return (
-      <div className={classes.root}>
-        <AppBar position="sticky">
-          <Toolbar variant="dense">
-            <IconButton
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="Menu"
-              onClick={() => this.setState(prevState => ({navOpen: !prevState.navOpen}))}
-            >
-              <MenuIcon />
-            </IconButton>
-
-            <Typography variant="title" color="inherit" className={classes.grow}>
-              <Link className="Header-link" to="/">{this.state.navOpen ? null : t('clubName')}</Link>
-            </Typography>
-
-            <div>
-              {showExtraNavigationButtons ? (
-                <div style={{display: 'inline-block', textAlign: 'center', width: 300}}>
-                  <HeaderButton label={t('common.vttl')} href={t.route('teams', {competition: 'Vttl'})} />
-                  <HeaderButton label={t('common.sporta')} href={t.route('teams', {competition: 'Sporta'})} />
-                  <HeaderButton label={t('nav.players')} href={t.route('players')} />
-                </div>
-              ) : null}
-
-              {!this.props.user.playerId ? (
-                <HeaderButton label={t('nav.login')} href={t.route('login')} />
-              ) : (
-                <Link className="Header-link Header-icon-right" to={t.route('profile')}>
-                  <Icon fa="fa fa-2x fa-user" translate tooltip="profile.tooltip" tooltipPlacement="left" />
-                </Link>
-              )}
-            </div>
-          </Toolbar>
-        </AppBar>
-
-        <Navigation
-          navOpen={this.state.navOpen}
-          isNavOpening={this.state.isNavOpening}
-          toggleNav={newState => this.setState({navOpen: newState})}
-        />
-      </div>
-    );
-  }
-
-  _openNav() {
-    this.setState({navOpen: true, isNavOpening: true});
-
-    // onTouchStart vs onClick:
-    // Scenario: Use clicks on the bars to open the Nav
-    // First onTouchStart which opened the Navigation
-    // Immediately followed by onOutsideClick which closed the Nav
-
-    // TODO: creates bug on mobile that has visual 'selection' of first item in the navigation...
-    // (solution: put some sort of icon at the top of the navigation so its non-clickabel?:)
-    setTimeout(() => this.setState({isNavOpening: false}), 1000);
-  }
-}));
+      <Navigation
+        navOpen={navOpen}
+        closeNav={() => setNavOpen(false)}
+      />
+    </div>
+  );
+};

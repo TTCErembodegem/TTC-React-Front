@@ -3,8 +3,8 @@ import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
 import {MaterialButton} from '../controls/Buttons/MaterialButton';
-import PropTypes from '../PropTypes';
 import {IClub} from '../../models/model-interfaces';
+import { t } from '../../locales';
 
 type AdminClubFormProps = {
   club: IClub;
@@ -13,8 +13,6 @@ type AdminClubFormProps = {
 }
 
 export default class AdminClubForm extends Component<AdminClubFormProps, IClub> {
-  static contextTypes = PropTypes.contextTypes;
-
   constructor(props) {
     super(props);
     this.state = props.club;
@@ -32,14 +30,14 @@ export default class AdminClubForm extends Component<AdminClubFormProps, IClub> 
             <h4>Gegevens</h4>
             <TextField
               style={{width: 200, marginRight: fieldMargin}}
-              label={this.context.t('Naam')}
+              label={t('Naam')}
               defaultValue={club.name}
               onChange={e => this.setState({name: e.target.value})}
             />
 
             <TextField
               style={{width: 200, marginRight: fieldMargin}}
-              label={this.context.t('Website')}
+              label={t('Website')}
               defaultValue={club.website || ''}
               onChange={e => this.setState({website: e.target.value})}
             />
@@ -49,13 +47,13 @@ export default class AdminClubForm extends Component<AdminClubFormProps, IClub> 
               onChange={() => this.setState(prevState => ({shower: !prevState.shower}))}
               value="hasShower"
             />
-            {this.context.t('Shower')}
+            {t('Shower')}
           </Paper>
         </div>
         <MaterialButton
           variant="contained"
-          label={this.context.t('common.save')}
-          primary
+          label={t('common.save')}
+          color="primary"
           style={{marginTop: 5}}
           onClick={() => {
             this.props.updateClub(this.state);
@@ -65,7 +63,7 @@ export default class AdminClubForm extends Component<AdminClubFormProps, IClub> 
 
         <MaterialButton
           variant="contained"
-          label={this.context.t('common.cancel')}
+          label={t('common.cancel')}
           style={{marginTop: 5, marginLeft: 10}}
           onClick={() => this.props.onEnd()}
         />

@@ -3,7 +3,6 @@ import Select from 'react-select';
 
 type PlayerStyleAutocompleteProps = {
   t: Function;
-  style?: CSSProperties;
   onChange: Function;
   value?: string;
 }
@@ -23,11 +22,11 @@ export default class PlayerStyleAutocomplete extends Component<PlayerStyleAutoco
     return (
       <Select
         isSearchable
-        style={this.props.style}
         onChange={option => this._onChange(option)}
         value={({value: this.props.value, label: this.props.value})}
         placeholder={this.props.t('player.editStyle.style')}
         options={playingStyles.map(style => ({label: style, value: style}))}
+        classNamePrefix="react-select-fix"
       />
     );
   }

@@ -1,212 +1,210 @@
 /* eslint-disable */
 import React, {Component} from 'react';
-import {contextTypes} from '../../utils/decorators/withContext';
-
 import CardGroup from 'react-bootstrap/CardGroup';
 import Card from 'react-bootstrap/Card';
+import Accordion from 'react-bootstrap/Accordion';
+import { t } from '../../locales';
 
 export default class Facts extends Component {
-  static contextTypes = contextTypes;
-
   render() {
     return (
-       <CardGroup accordion style={{marginTop: 10}} id="navigation">
-          <Card eventKey="1">
-            <Card.Header>
-              <Card.Title toggle><b>{this.context.t('facts.service')}</b></Card.Title>
-            </Card.Header>
-            <Card.Body collapsible>
-              <h1>{this.context.t('facts.serviceHeaderOne')}</h1>
+       <Accordion style={{marginTop: 10}} id="navigation">
+          <Accordion.Item eventKey="1">
+            <Accordion.Header>
+              <b>{t('facts.service')}</b>
+            </Accordion.Header>
+            <Accordion.Body>
+              <h1>{t('facts.serviceHeaderOne')}</h1>
               <p>
-                {this.context.t('facts.serviceSectionOneComponentOne')}
+                {t('facts.serviceSectionOneComponentOne')}
               </p>
               <br />
-              <h1>{this.context.t('facts.serviceSectionOneComponentTwo')}</h1>
-              <p>{this.context.t('facts.serviceSectionOneComponentThree')}</p>
+              <h1>{t('facts.serviceSectionOneComponentTwo')}</h1>
+              <p>{t('facts.serviceSectionOneComponentThree')}</p>
               <ul>
-                <li><strong>{this.context.t('facts.serviceSectionOneComponentFour')}</strong>{this.context.t('facts.serviceSectionOneComponentFive')}</li>
-                <li><strong>{this.context.t('facts.serviceSectionOneComponentSix')}</strong>{this.context.t('facts.serviceSectionOneComponentSeven')}</li>
-                <li><strong>{this.context.t('facts.serviceSectionOneComponentEight')}</strong>{this.context.t('facts.serviceSectionOneComponentNine')}</li>
-                <li><strong>{this.context.t('facts.serviceSectionOneComponentTen')}</strong>{this.context.t('facts.serviceSectionOneComponentEleven')}</li>
-                <li><strong>{this.context.t('facts.serviceSectionOneComponentTwelve')}</strong>{this.context.t('facts.serviceSectionOneComponentThirteen')}</li>
+                <li><strong>{t('facts.serviceSectionOneComponentFour')}</strong>{t('facts.serviceSectionOneComponentFive')}</li>
+                <li><strong>{t('facts.serviceSectionOneComponentSix')}</strong>{t('facts.serviceSectionOneComponentSeven')}</li>
+                <li><strong>{t('facts.serviceSectionOneComponentEight')}</strong>{t('facts.serviceSectionOneComponentNine')}</li>
+                <li><strong>{t('facts.serviceSectionOneComponentTen')}</strong>{t('facts.serviceSectionOneComponentEleven')}</li>
+                <li><strong>{t('facts.serviceSectionOneComponentTwelve')}</strong>{t('facts.serviceSectionOneComponentThirteen')}</li>
               </ul>
               <br />
-              <h1>{this.context.t('facts.serviceSectionOneComponentFourteen')}</h1>
+              <h1>{t('facts.serviceSectionOneComponentFourteen')}</h1>
               <p>
-                {this.context.t('facts.serviceSectionOneComponentFifteen')}
+                {t('facts.serviceSectionOneComponentFifteen')}
               </p>
               <br />
-              <h1>{this.context.t('facts.serviceSectionOneComponentSixteen')}</h1>
+              <h1>{t('facts.serviceSectionOneComponentSixteen')}</h1>
               <p>
-                {this.context.t('facts.serviceSectionOneComponentSeventeen')}
+                {t('facts.serviceSectionOneComponentSeventeen')}
               </p>
                 <figure style={{textAlign: 'center'}}>
                   <img src="/img/facts/service1.gif" alt="serviceFigureOne" />
-                  <figcaption>{this.context.t('facts.serviceFigureCaptionOne')}</figcaption>
+                  <figcaption>{t('facts.serviceFigureCaptionOne')}</figcaption>
                 </figure>
               <br />
-              <h4>{this.context.t('facts.serviceSectionOneComponentEightteen')}</h4>
+              <h4>{t('facts.serviceSectionOneComponentEightteen')}</h4>
               <p>
-                {this.context.t('facts.serviceSectionOneComponentNineteen')}
+                {t('facts.serviceSectionOneComponentNineteen')}
               </p>
                 <br />
                   <figure style={{textAlign: 'center'}}>
                     <img src="/img/facts/service2.gif" alt="serviceFigureTwo" />
-                    <figcaption>{this.context.t('facts.serviceFigureCaptionTwo')}</figcaption>
+                    <figcaption>{t('facts.serviceFigureCaptionTwo')}</figcaption>
                   </figure>
               <p>
                 <br /><br />
-                {this.context.t('facts.serviceSectionOneComponentTwenty')}
+                {t('facts.serviceSectionOneComponentTwenty')}
                 <br /><br />
-                {this.context.t('facts.serviceSectionOneComponentTwentyOne')}
+                {t('facts.serviceSectionOneComponentTwentyOne')}
                 <br /><br />
-                {this.context.t('facts.serviceSectionOneComponentTwentyTwo')}
+                {t('facts.serviceSectionOneComponentTwentyTwo')}
               </p>
               <br />
               <h4></h4>
               <p>
-                {this.context.t('facts.serviceSectionOneComponentTwentyFour')}
+                {t('facts.serviceSectionOneComponentTwentyFour')}
               </p>
               <br />
-              <h4>{this.context.t('facts.serviceSectionOneComponentTwentyFive')}</h4>
+              <h4>{t('facts.serviceSectionOneComponentTwentyFive')}</h4>
               <p>
-                {this.context.t('facts.serviceSectionOneComponentTwentySix')}
+                {t('facts.serviceSectionOneComponentTwentySix')}
                 <br /><br />
-                {this.context.t('facts.serviceSectionOneComponentTwentySeven')}
+                {t('facts.serviceSectionOneComponentTwentySeven')}
                 <br /><br />
-                {this.context.t('facts.serviceSectionOneComponentTwentyEight')}
+                {t('facts.serviceSectionOneComponentTwentyEight')}
                 <br />
-                {this.context.t('facts.serviceSectionOneComponentTwentyNine')}
+                {t('facts.serviceSectionOneComponentTwentyNine')}
               </p>
-            </Card.Body>
-          </Card>
+            </Accordion.Body>
+          </Accordion.Item>
 
 
-          <Card eventKey="2">
-          <Card.Header>
-            <Card.Title toggle><b>{this.context.t('facts.longpimples')}</b></Card.Title>
-          </Card.Header>
-          <Card.Body collapsible>
+          <Accordion.Item eventKey="2">
+          <Accordion.Header>
+            <b>{t('facts.longpimples')}</b>
+          </Accordion.Header>
+          <Accordion.Body>
             <p>
-                {this.context.t('facts.serviceSectionTwoComponentOne')}
+                {t('facts.serviceSectionTwoComponentOne')}
                 <br /><br />
-                {this.context.t('facts.serviceSectionTwoComponentTwo')}
+                {t('facts.serviceSectionTwoComponentTwo')}
                 <br /><br />
-                {this.context.t('facts.serviceSectionTwoComponentThree')}
+                {t('facts.serviceSectionTwoComponentThree')}
                 <br /><br />
-                {this.context.t('facts.serviceSectionTwoComponentFour')}
+                {t('facts.serviceSectionTwoComponentFour')}
             </p>
             <figure>
               <img src="/img/facts/longpimples.jpg" className="img-responsive center-block" alt="longPimples" />
             </figure>
             <br />
             <p>
-              {this.context.t('facts.serviceSectionTwoComponentFive')}
+              {t('facts.serviceSectionTwoComponentFive')}
               <br /><br />
-              {this.context.t('facts.serviceSectionTwoComponentSix')}
+              {t('facts.serviceSectionTwoComponentSix')}
               <br /><br />
-              {this.context.t('facts.serviceSectionTwoComponentSeven')}
+              {t('facts.serviceSectionTwoComponentSeven')}
               <br /><br />
-              {this.context.t('facts.serviceSectionTwoComponentEight')}
+              {t('facts.serviceSectionTwoComponentEight')}
               <br /><br />
-              {this.context.t('facts.serviceSectionTwoComponentNine')}
+              {t('facts.serviceSectionTwoComponentNine')}
               <br /><br />
-              {this.context.t('facts.serviceSectionTwoComponentTen')}
+              {t('facts.serviceSectionTwoComponentTen')}
             </p>
-          </Card.Body>
-          </Card>
+          </Accordion.Body>
+          </Accordion.Item>
 
 
-          <Card eventKey="3">
-            <Card.Header>
-              <Card.Title toggle><b>{this.context.t('facts.speed')}</b></Card.Title>
-            </Card.Header>
-            <Card.Body collapsible>
+          <Accordion.Item eventKey="3">
+            <Accordion.Header>
+              <b>{t('facts.speed')}</b>
+            </Accordion.Header>
+            <Accordion.Body>
               <p>
-                {this.context.t('facts.serviceSectionThreeComponentOne')}
+                {t('facts.serviceSectionThreeComponentOne')}
               </p>
               <ol>
-                <li>{this.context.t('facts.serviceSectionThreeComponentTwo')}</li>
-                <li>{this.context.t('facts.serviceSectionThreeComponentThree')}</li>
-                <li>{this.context.t('facts.serviceSectionThreeComponentFour')}</li>
-                <li>{this.context.t('facts.serviceSectionThreeComponentFive')}</li>
+                <li>{t('facts.serviceSectionThreeComponentTwo')}</li>
+                <li>{t('facts.serviceSectionThreeComponentThree')}</li>
+                <li>{t('facts.serviceSectionThreeComponentFour')}</li>
+                <li>{t('facts.serviceSectionThreeComponentFive')}</li>
               </ol>
               <p>
-                {this.context.t('facts.serviceSectionThreeComponentSix')}
+                {t('facts.serviceSectionThreeComponentSix')}
               </p>
-              <strong>{this.context.t('facts.serviceSectionThreeComponentSeven')}</strong>
+              <strong>{t('facts.serviceSectionThreeComponentSeven')}</strong>
               <br /><br />
               <p>
-                {this.context.t('facts.serviceSectionThreeComponentEight')}
+                {t('facts.serviceSectionThreeComponentEight')}
               </p>
               <ol>
-                <li>{this.context.t('facts.serviceSectionThreeComponentNine')}</li>
-                <li>{this.context.t('facts.serviceSectionThreeComponentTen')}</li>
-                <li>{this.context.t('facts.serviceSectionThreeComponentEleven')}</li>
-                <li>{this.context.t('facts.serviceSectionThreeComponentTwelve')}</li>
-                <li>{this.context.t('facts.serviceSectionThreeComponentThirteen')}</li>
-                <li>{this.context.t('facts.serviceSectionThreeComponentFourteen')}</li>
-                <li>{this.context.t('facts.serviceSectionThreeComponentFifteen')}</li>
-                <li>{this.context.t('facts.serviceSectionThreeComponentSixteen')}</li>
-                <li>{this.context.t('facts.serviceSectionThreeComponentSeventeen')}</li>
+                <li>{t('facts.serviceSectionThreeComponentNine')}</li>
+                <li>{t('facts.serviceSectionThreeComponentTen')}</li>
+                <li>{t('facts.serviceSectionThreeComponentEleven')}</li>
+                <li>{t('facts.serviceSectionThreeComponentTwelve')}</li>
+                <li>{t('facts.serviceSectionThreeComponentThirteen')}</li>
+                <li>{t('facts.serviceSectionThreeComponentFourteen')}</li>
+                <li>{t('facts.serviceSectionThreeComponentFifteen')}</li>
+                <li>{t('facts.serviceSectionThreeComponentSixteen')}</li>
+                <li>{t('facts.serviceSectionThreeComponentSeventeen')}</li>
               </ol>
               <p>
-                {this.context.t('facts.serviceSectionThreeComponentEightteen')}
+                {t('facts.serviceSectionThreeComponentEightteen')}
               </p>
-            </Card.Body>
-          </Card>
+            </Accordion.Body>
+          </Accordion.Item>
 
 
-          <Card eventKey="4">
-            <Card.Header>
-              <Card.Title toggle><b>{this.context.t('facts.astrology')}</b></Card.Title>
-            </Card.Header>
-            <Card.Body collapsible>
-              <h1>{this.context.t('facts.serviceSectionFourComponentOne')}</h1>
+          <Accordion.Item eventKey="4">
+            <Accordion.Header>
+              <b>{t('facts.astrology')}</b>
+            </Accordion.Header>
+            <Accordion.Body>
+              <h1>{t('facts.serviceSectionFourComponentOne')}</h1>
               <p>
-                {this.context.t('facts.serviceSectionFourComponentTwo')}
+                {t('facts.serviceSectionFourComponentTwo')}
               </p>
               <p>
-                {this.context.t('facts.serviceSectionFourComponentThree')}
+                {t('facts.serviceSectionFourComponentThree')}
               </p>
               <ul>
-                <li><strong>{this.context.t('facts.serviceSectionFourComponentFour')}</strong> {this.context.t('facts.serviceSectionFourComponentFive')}</li>
-                <li><strong>{this.context.t('facts.serviceSectionFourComponentSix')}</strong> {this.context.t('facts.serviceSectionFourComponentSeven')}</li>
-                <li><strong>{this.context.t('facts.serviceSectionFourComponentEight')}</strong> {this.context.t('facts.serviceSectionFourComponentNine')}</li>
-                <li><strong>{this.context.t('facts.serviceSectionFourComponentTen')}</strong> {this.context.t('facts.serviceSectionFourComponentEleven')}</li>
-                <li><strong>{this.context.t('facts.serviceSectionFourComponentTwelve')}</strong> {this.context.t('facts.serviceSectionFourComponentThirteen')}</li>
-                <li><strong>{this.context.t('facts.serviceSectionFourComponentFourteen')}</strong> {this.context.t('facts.serviceSectionFourComponentFifteen')}</li>
-                <li><strong>{this.context.t('facts.serviceSectionFourComponentSixteen')}</strong> {this.context.t('facts.serviceSectionFourComponentSeventeen')}</li>
-                <li><strong>{this.context.t('facts.serviceSectionFourComponentEightteen')}</strong> {this.context.t('facts.serviceSectionFourComponentNineteen')}</li>
-                <li><strong>{this.context.t('facts.serviceSectionFourComponentTwenty')}</strong> {this.context.t('facts.serviceSectionFourComponentTwentyOne')}</li>
-                <li><strong>{this.context.t('facts.serviceSectionFourComponentTwentyTwo')}</strong> {this.context.t('facts.serviceSectionFourComponentTwentyThree')}</li>
-                <li><strong>{this.context.t('facts.serviceSectionFourComponentTwentyFour')}</strong> {this.context.t('facts.serviceSectionFourComponentTwentyFive')}</li>
-                <li><strong>{this.context.t('facts.serviceSectionFourComponentTwentySix')}</strong> {this.context.t('facts.serviceSectionFourComponentTwentySeven')}</li>
+                <li><strong>{t('facts.serviceSectionFourComponentFour')}</strong> {t('facts.serviceSectionFourComponentFive')}</li>
+                <li><strong>{t('facts.serviceSectionFourComponentSix')}</strong> {t('facts.serviceSectionFourComponentSeven')}</li>
+                <li><strong>{t('facts.serviceSectionFourComponentEight')}</strong> {t('facts.serviceSectionFourComponentNine')}</li>
+                <li><strong>{t('facts.serviceSectionFourComponentTen')}</strong> {t('facts.serviceSectionFourComponentEleven')}</li>
+                <li><strong>{t('facts.serviceSectionFourComponentTwelve')}</strong> {t('facts.serviceSectionFourComponentThirteen')}</li>
+                <li><strong>{t('facts.serviceSectionFourComponentFourteen')}</strong> {t('facts.serviceSectionFourComponentFifteen')}</li>
+                <li><strong>{t('facts.serviceSectionFourComponentSixteen')}</strong> {t('facts.serviceSectionFourComponentSeventeen')}</li>
+                <li><strong>{t('facts.serviceSectionFourComponentEightteen')}</strong> {t('facts.serviceSectionFourComponentNineteen')}</li>
+                <li><strong>{t('facts.serviceSectionFourComponentTwenty')}</strong> {t('facts.serviceSectionFourComponentTwentyOne')}</li>
+                <li><strong>{t('facts.serviceSectionFourComponentTwentyTwo')}</strong> {t('facts.serviceSectionFourComponentTwentyThree')}</li>
+                <li><strong>{t('facts.serviceSectionFourComponentTwentyFour')}</strong> {t('facts.serviceSectionFourComponentTwentyFive')}</li>
+                <li><strong>{t('facts.serviceSectionFourComponentTwentySix')}</strong> {t('facts.serviceSectionFourComponentTwentySeven')}</li>
               </ul>
-            </Card.Body>
-          </Card>
+            </Accordion.Body>
+          </Accordion.Item>
 
 
-          <Card eventKey="5">
-            <Card.Header>
-              <Card.Title toggle><b>{this.context.t('facts.history')}</b></Card.Title>
-            </Card.Header>
-            <Card.Body collapsible>
-              <h1>{this.context.t('facts.serviceSectionFiveComponentOne')}</h1>
+          <Accordion.Item eventKey="5">
+            <Accordion.Header>
+              <b>{t('facts.history')}</b>
+            </Accordion.Header>
+            <Accordion.Body>
+              <h1>{t('facts.serviceSectionFiveComponentOne')}</h1>
               <p>
-              {this.context.t('facts.serviceSectionFiveComponentTwo')}
+              {t('facts.serviceSectionFiveComponentTwo')}
               </p>
-              <h1>{this.context.t('facts.serviceSectionFiveComponentThree')}</h1>
+              <h1>{t('facts.serviceSectionFiveComponentThree')}</h1>
               <p>
-              {this.context.t('facts.serviceSectionFiveComponentFour')}
+              {t('facts.serviceSectionFiveComponentFour')}
               </p>
-              <h1>{this.context.t('facts.serviceSectionFiveComponentFive')}</h1>
+              <h1>{t('facts.serviceSectionFiveComponentFive')}</h1>
               <p>
-              {this.context.t('facts.serviceSectionFiveComponentSix')}
+              {t('facts.serviceSectionFiveComponentSix')}
               </p>
-            </Card.Body>
-          </Card>
-       </CardGroup>
+            </Accordion.Body>
+          </Accordion.Item>
+      </Accordion>
     );
   }
 }

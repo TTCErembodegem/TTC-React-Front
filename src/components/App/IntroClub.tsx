@@ -1,31 +1,20 @@
-import React, {Component} from 'react';
-import PropTypes, {connect, withContext} from '../PropTypes';
+import React from 'react';
+import { t } from '../../locales';
+import { useTtcSelector } from '../../utils/hooks/storeHooks';
 
-class IntroClub extends Component {
-  static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    players: PropTypes.PlayerModelList.isRequired,
-    teams: PropTypes.TeamModelList.isRequired,
+export const IntroClub = () => {
+  const players = useTtcSelector(state => state.players);
+  const teams = useTtcSelector(state => state.teams);
+  const inClub = {
+    players: players.length,
+    teamsSporta: teams.filter(team => team.competition === 'Sporta').length,
+    teamsVttl: teams.filter(team => team.competition === 'Vttl').length,
   };
 
-  render() {
-    const inClub = {
-      players: this.props.players.size,
-      teamsSporta: this.props.teams.filter(t => t.competition === 'Sporta').size,
-      teamsVttl: this.props.teams.filter(t => t.competition === 'Vttl').size,
-    };
-
-    return (
-      <div>
-        <h3>{this.context.t('intro.title')}</h3>
-        {this.context.t('intro.text', inClub)}
-      </div>
-    );
-  }
-}
-
-export default withContext(connect(state => ({
-  players: state.players,
-  teams: state.teams,
-}))(IntroClub));
+  return (
+    <div>
+      <h3>{t('intro.title')}</h3>
+      {t('intro.text', inClub)}
+    </div>
+  );
+};

@@ -1,73 +1,89 @@
-const blacklist = require('blacklist');
-const React = require('react');
-const ReactDOM = require('react-dom');
+import React, { forwardRef, useEffect, useLayoutEffect, useRef } from 'react';
+import Quill from 'quill';
+import { t } from '../../locales';
 
-if (typeof document !== 'undefined') {
-  // eslint-disable-next-line vars-on-top, no-var, global-require
-  var MediumEditor = require('medium-editor');
-}
-
-type EditorProps = {
-  text: string,
-  options: any,
-  tag: string,
-  onChange: Function,
-  contentEditable: boolean,
-}
-
-type EditorState = {
+type QuillEditorProps = {
   text: string;
+  style: React.CSSProperties;
+  onChange: (text: string) => void;
+  readOnly: boolean;
 }
 
-export class Editor extends React.Component<EditorProps, EditorState> {
-  constructor(props) {
-    super(props);
-    this.state = {text: this.props.text};
-  }
+export const QuillEditor = (props: QuillEditorProps) => {
+  const quillRef = useRef<any>();
+  return <Editor ref={quillRef} {...props} />;
+};
 
-  static defaultProps = {tag: 'div'}
 
-  componentDidMount() {
-    // eslint-disable-next-line react/no-find-dom-node
-    const dom = ReactDOM.findDOMNode(this);
-    // eslint-disable-next-line block-scoped-var
-    this.medium = new MediumEditor(dom, this.props.options);
-    this.medium.subscribe('editableInput', () => {
-      this._updated = true;
-      this.change(dom.innerHTML);
+type EditorRef = Quill | null;
+
+const Editor = forwardRef<EditorRef, QuillEditorProps>(
+  ({ readOnly, text, onChange, style }, ref) => {
+    const containerRef = useRef<HTMLDivElement | null>(null);
+    const textRef = useRef<any>(text);
+    const onTextChangeRef = useRef(onChange);
+    // const onSelectionChangeRef = useRef(onSelectionChange);
+
+    useLayoutEffect(() => {
+      onTextChangeRef.current = onChange;
+      // onSelectionChangeRef.current = onSelectionChange;
     });
-  }
 
-  componentWillUnmount() {
-    this.medium.destroy();
-  }
+    useEffect(() => {
+      const container = containerRef.current;
+      if (!container) {
+        return;
+      }
+      const editorContainer = container.appendChild(
+        container.ownerDocument.createElement('div'),
+      );
+      const editorOptions = {
+        placeholder: t('match.report.placeHolder'),
+        modules: {
+          toolbar: true,
+        },
+        theme: 'snow',
+      };
+      const quill = new Quill(editorContainer, editorOptions);
+      if (ref) {
+        if (typeof ref === 'function') {
+          ref(quill);
+        } else {
+          (ref as React.MutableRefObject<EditorRef>).current = quill;
+        }
+      }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.text !== this.state.text && !this._updated) {
-      this.setState({text: nextProps.text});
-    }
+      if (textRef.current) {
+        const delta = quill.clipboard.convert(textRef.current);
+        quill.setContents(delta);
+        // quill.setContents(textRef.current);
+      }
 
-    if (this._updated) {
-      this._updated = false;
-    }
-  }
+      quill.on(Quill.events.TEXT_CHANGE, (...args) => {
+        // args contains the json delta
+        onTextChangeRef.current?.(quill.root.innerHTML);
+      });
 
-  render() {
-    const {tag} = this.props;
-    let props = blacklist(this.props, 'tag', 'dangerouslySetInnerHTML', 'text', 'options');
+      // quill.on(Quill.events.SELECTION_CHANGE, (...args) => {
+      //   onSelectionChangeRef.current?.(...args);
+      // });
 
-    props = {
-      ...props,
-      contentEditable: this.props.contentEditable, // TODO: real fix = !this.props.options.disableEditing?
-      dangerouslySetInnerHTML: {__html: this.state.text},
-    };
+      return () => { // eslint-disable-line
+        if (ref && typeof ref !== 'function') {
+          (ref as React.MutableRefObject<EditorRef>).current = null;
+        }
+        container.innerHTML = '';
+      };
+    }, [ref]);
 
-    return React.createElement(tag, props);
-  }
+    useEffect(() => {
+      if (ref && typeof ref !== 'function') {
+        ref.current?.enable(!readOnly);
+      }
+    }, [ref, readOnly]);
 
-  change(text: string) {
-    if (this.props.onChange) {
-      this.props.onChange(text, this.medium);
-    }
-  }
-}
+    return <div style={style} ref={containerRef} />;
+  },
+);
+
+Editor.displayName = 'Editor';

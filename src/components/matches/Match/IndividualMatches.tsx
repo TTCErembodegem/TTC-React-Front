@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
 import cn from 'classnames';
 import Table from 'react-bootstrap/Table';
-import PropTypes, {connect, withViewport, storeUtil} from '../../PropTypes';
 import {matchOutcome} from '../../../models/MatchModel';
 import {OpponentPlayerLabel} from './OpponentPlayer';
 import {TrophyIcon} from '../../controls/Icons/TrophyIcon';
 import {PlayerLink} from '../../players/controls/PlayerLink';
 import {FrenoyLink} from '../../controls/Buttons/FrenoyButton';
-import {IMatch, Competition, Viewport} from '../../../models/model-interfaces';
+import {IMatch, Competition, IGetGameMatches, IFullMatchOther} from '../../../models/model-interfaces';
+import { t } from '../../../locales';
+import storeUtil from '../../../storeUtil';
+import { useViewport } from '../../../utils/hooks/useViewport';
 
 type IndividualMatchesProps = {
   match: IMatch;
@@ -18,24 +20,22 @@ type IndividualMatchesState = {
   pinnedPlayerId: number;
 }
 
-class IndividualMatches extends Component<IndividualMatchesProps, IndividualMatchesState> {
-  static contextTypes = PropTypes.contextTypes;
 
+export class IndividualMatches extends Component<IndividualMatchesProps, IndividualMatchesState> {
   constructor(props) {
     super(props);
     this.state = {pinnedPlayerId: props.ownPlayerId};
   }
 
   render() {
-    const {t} = this.context;
     const matchResult = {home: 0, out: 0};
 
     return (
-      <Table condensed striped className="match-card-tab-table">
+      <Table size="sm" striped className="match-card-tab-table">
         <thead>
           <tr>
             <th colSpan={2}>{t('match.individual.matchTitle')} {this.props.match.frenoyMatchId}</th>
-            <th className="hidden-xs">{t('match.individual.setsTitle')}</th>
+            <th className="d-none d-sm-table-cell">{t('match.individual.setsTitle')}</th>
             <th>{t('match.individual.resultTitle')}</th>
           </tr>
         </thead>
@@ -65,7 +65,7 @@ class IndividualMatches extends Component<IndividualMatchesProps, IndividualMatc
                     {t('match.double')}
                   </td>
                 )}
-                <td key="3" className="hidden-xs">{game.homeSets}-{game.outSets}</td>
+                <td key="3" className="d-none d-sm-table-cell">{game.homeSets}-{game.outSets}</td>
                 <td key="4">{matchResult.home}-{matchResult.out}</td>
               </tr>
             );
@@ -98,25 +98,22 @@ class IndividualMatches extends Component<IndividualMatchesProps, IndividualMatc
 
 
 
-export class ReadonlyIndividualMatches extends Component<{match: IMatch}> {
-  static contextTypes = PropTypes.contextTypes;
-
+export class ReadonlyIndividualMatches extends Component<{match: IMatch}, {pinnedPlayerIndex: number}> {
   constructor(props) {
     super(props);
-    this.state = {pinnedPlayerIndex: null};
+    this.state = {pinnedPlayerIndex: 0};
   }
 
   render() {
-    const {t} = this.context;
     const matchResult = {home: 0, out: 0};
 
     return (
-      <Table striped condensed className="match-card-tab-table">
+      <Table striped size="sm" className="match-card-tab-table">
         <thead>
           <tr>
             <th colSpan={2}>{t('match.report.title')}</th>
             <th>{t('match.individual.setsTitle')}</th>
-            <th><span className="hidden-xs">{t('match.individual.resultTitle')}</span></th>
+            <th><span className="d-none d-sm-inline">{t('match.individual.resultTitle')}</span></th>
           </tr>
         </thead>
         <tbody>
@@ -156,39 +153,30 @@ export class ReadonlyIndividualMatches extends Component<{match: IMatch}> {
   }
 }
 
-type ReadonlyMatchPlayerLabelComponentProps = {
-  game?: any;
+type ReadonlyMatchPlayerLabelProps = {
+  game: IGetGameMatches;
   homePlayer: boolean;
   competition: Competition;
-  viewport: Viewport;
   onClick: Function;
 }
 
 
-class ReadonlyMatchPlayerLabelComponent extends Component<ReadonlyMatchPlayerLabelComponentProps> {
-  static contextTypes = PropTypes.contextTypes;
-
-  render() {
-    const {game, homePlayer, competition, viewport, onClick} = this.props;
-    const ply = homePlayer ? game.home : game.out;
-    const won = (homePlayer && game.outcome === matchOutcome.Won) || (!homePlayer && game.outcome === matchOutcome.Lost);
-    return (
-      <span className={cn({accentuate: won})} style={{display: 'inline-block'}}>
-        {won && viewport.width > 500 ? <TrophyIcon style={{marginRight: 8}} /> : null}
-        <span role="button" onClick={onClick} className="clickable" tabIndex={0}>
-          {viewport.width > 800 ? ply.name : ply.alias}
-        </span>
-        &nbsp;&nbsp;
-        {viewport.width > 350 && (
-          <FrenoyLink competition={competition} uniqueIndex={ply.uniqueIndex}>
-            {viewport.width > 400 ? `${ply.ranking} ` : null}
-          </FrenoyLink>
-        )}
+const ReadonlyMatchPlayerLabel = ({game, homePlayer, competition, onClick}: ReadonlyMatchPlayerLabelProps) => {
+  const viewport = useViewport();
+  const ply = homePlayer ? game.home : game.out;
+  const won = (homePlayer && game.outcome === matchOutcome.Won) || (!homePlayer && game.outcome === matchOutcome.Lost);
+  return (
+    <span className={cn({accentuate: won})} style={{display: 'inline-block'}}>
+      {won && viewport.width > 500 ? <TrophyIcon style={{marginRight: 8}} /> : null}
+      <span role="button" onClick={() => onClick()} className="clickable" tabIndex={0}>
+        {viewport.width > 800 ? ply.name : ply.alias}
       </span>
-    );
-  }
-}
-
-const ReadonlyMatchPlayerLabel = withViewport(ReadonlyMatchPlayerLabelComponent);
-
-export default connect(state => ({ownPlayerId: state.user.playerId}))(IndividualMatches);
+      &nbsp;&nbsp;
+      {viewport.width > 350 && (
+        <FrenoyLink competition={competition} uniqueIndex={ply.uniqueIndex}>
+          {viewport.width > 400 ? `${ply.ranking} ` : null}
+        </FrenoyLink>
+      )}
+    </span>
+  );
+};

@@ -1,66 +1,55 @@
-import React, {Component} from 'react';
-import PropTypes, {connect} from '../PropTypes';
-import ClubLocationInstructions from './ClubLocationInstructions';
+import React from 'react';
 import {OwnEmail} from '../controls/controls/Email';
 import {GoogleMap} from '../controls/controls/GoogleMap';
+import { t } from '../../locales';
+import { useTtcSelector } from '../../utils/hooks/storeHooks';
 
-class GeneralInfo extends Component {
-  static contextTypes = PropTypes.contextTypes;
+export const GeneralInfo = () => {
+  const params = useTtcSelector(state => state.config.params);
 
-  static propTypes = {
-    params: PropTypes.object.isRequired,
-  };
+  return (
+    <div style={{marginTop: 10, marginBottom: 10}}>
+      <h2>{t('clubs.generalInfo.title')}</h2>
+      <div className="row">
+        <div className="col-md-6">
+          <h1>{t('clubs.generalInfo.contact')}</h1>
+          <strong>{t('clubs.generalInfo.ourAddress')}</strong> {params.location}
+          <div><strong>{t('clubs.generalInfo.ourEmail')}</strong> <OwnEmail /></div>
+          <strong>{t('clubs.generalInfo.orgNr')}</strong> {params.clubOrgNr}<br />
 
-  render() {
-    return (
-      <div style={{marginTop: 10, marginBottom: 10}}>
-        <h2>{this.context.t('clubs.generalInfo.title')}</h2>
-        <div className="row">
-          <div className="col-md-6">
-            <ClubLocationInstructions />
+          <h1>{t('clubs.generalInfo.openDays')}</h1>
+          {params.competitionDays}
+          <br />
+          {params.trainingDays}
+          Hello?
+          <br />{t('clubs.training.trainingDays2')}
+          <br />{t('clubs.training.trainingDays3')}
+          <br />{t('clubs.training.extra')}
+          <br /><br />
+          <strong>VTTL</strong> {params.frenoyClubIdVttl}<br />
+          <strong>Sporta</strong> {params.frenoyClubIdSporta}<br />
+          <br />
+          <strong>{t('clubs.generalInfo.balls')}</strong><br />
+          {params.compBalls}<br />
 
-            <h1>{this.context.t('clubs.generalInfo.contact')}</h1>
-            <strong>{this.context.t('clubs.generalInfo.ourAddress')}</strong> {this.props.params.location}
-            <div><strong>{this.context.t('clubs.generalInfo.ourEmail')}</strong> <OwnEmail /></div>
-            <strong>{this.context.t('clubs.generalInfo.orgNr')}</strong> {this.props.params.clubOrgNr}<br />
+          <h1>{t('clubs.generalInfo.moneyMoney')}</h1>
+          {params.adultMembership}
+          <br />
+          {params.youthMembership}
+          <br />
+          {params.recreationalMembers}
 
-            <h1>{this.context.t('clubs.generalInfo.openDays')}</h1>
-            {this.props.params.competitionDays}
-            <br />
-            {this.props.params.trainingDays}
-            Hello?
-            <br />{this.context.t('clubs.training.trainingDays2')}
-            <br />{this.context.t('clubs.training.trainingDays3')}
-            <br />{this.context.t('clubs.training.extra')}
-            <br /><br />
-            <strong>VTTL</strong> {this.props.params.frenoyClubIdVttl}<br />
-            <strong>Sporta</strong> {this.props.params.frenoyClubIdSporta}<br />
-            <br />
-            <strong>{this.context.t('clubs.generalInfo.balls')}</strong><br />
-            {this.props.params.compBalls}<br />
+          <div style={{marginTop: 16, fontSize: 12}}>{params.additionalMembership}</div>
 
+          <br />
+          <strong>{t('clubs.generalInfo.bankNr')}</strong> {params.clubBankNr}<br />
 
-            <h1>{this.context.t('clubs.generalInfo.moneyMoney')}</h1>
-            {this.props.params.adultMembership}
-            <br />
-            {this.props.params.youthMembership}
-            <br />
-            {this.props.params.recreationalMembers}
-
-            <div style={{marginTop: 16, fontSize: 12}}>{this.props.params.additionalMembership}</div>
-
-            <br />
-            <strong>{this.context.t('clubs.generalInfo.bankNr')}</strong> {this.props.params.clubBankNr}<br />
-
-          </div>
-          <div className="col-md-6">
-            <h1 className="visible-sm">{this.context.t('clubs.generalInfo.googleMap')}</h1>
-            <GoogleMap />
-          </div>
+        </div>
+        <div className="col-md-6">
+          <h1 className="d-block d-md-none">{t('clubs.generalInfo.googleMap')}</h1>
+          <GoogleMap />
         </div>
       </div>
-    );
-  }
-}
-
-export default connect(state => ({params: state.config.get('params')}))(GeneralInfo);
+    </div>
+  );
+};

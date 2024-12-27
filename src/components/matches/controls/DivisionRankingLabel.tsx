@@ -19,7 +19,7 @@ export const DivisionRankingLabel = ({divisionRanking}: DivisionRankingLabelProp
 
 export const OurDivisionRankingLabel = ({team}: {team: ITeam}) => {
   const divisionRanking = team.getDivisionRanking('our-ranking');
-  if (!divisionRanking || !divisionRanking.position) {
+  if (divisionRanking.empty || !divisionRanking.position) {
     return null;
   }
 

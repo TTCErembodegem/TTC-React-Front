@@ -1,16 +1,23 @@
-import React, {Component} from 'react';
+import React, {Component, MouseEventHandler} from 'react';
 import cn from 'classnames';
-import {withTooltip} from '../../PropTypes';
+import { withTooltip } from '../../../utils/decorators/withTooltip';
 
 export type IconProps = {
   fa: string;
   color?: string | undefined;
   style?: React.CSSProperties;
-  onClick?: () => void;
+  onClick?: MouseEventHandler<any> | undefined;
   className?: string;
 }
 
 class IconComponent extends Component<IconProps> {
+  static defaultProps = {
+    color: undefined,
+    style: undefined,
+    onClick: undefined,
+    className: undefined,
+  };
+
   render() {
     const {fa, color, style, onClick, className, ...props} = this.props;
     if (!onClick) {

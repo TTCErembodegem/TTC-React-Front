@@ -1,25 +1,20 @@
 import React, {Component} from 'react';
-import Immutable from 'immutable';
-import _ from 'lodash';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Button from 'react-bootstrap/Button';
 import MenuItem from '@mui/material/MenuItem';
-import {frenoyTeamSync} from '../../actions/matchActions';
-import {toggleTeamPlayer} from '../../actions/playerActions';
-import PropTypes, {connect, withViewport} from '../PropTypes';
-import PlayerAutoComplete from '../players/PlayerAutoComplete';
-import PlayersImageGallery from '../players/PlayersImageGallery';
-import {teamPlayerType, ITeam, Viewport, Competition} from '../../models/model-interfaces';
-import {IUser} from '../../models/UserModel';
+import { connect } from 'react-redux';
+import {PlayerAutoComplete} from '../players/PlayerAutoComplete';
+import {PlayersImageGallery} from '../players/PlayersImageGallery';
+import {teamPlayerType, ITeam, Competition, TeamPlayerType} from '../../models/model-interfaces';
+import { frenoyTeamSync } from '../../reducers/matchesReducer';
+import { toggleTeamPlayer } from '../../reducers/teamsReducer';
 
 
 type AdminTeamsProps = {
   teams: ITeam[];
-  toggleTeamPlayer: Function;
-  frenoyTeamSync: Function;
-  viewport: Viewport;
-  user: IUser;
+  toggleTeamPlayer: typeof toggleTeamPlayer;
+  frenoyTeamSync: typeof frenoyTeamSync;
 }
 
 type AdminTeamsState = {
@@ -33,21 +28,19 @@ class AdminTeams extends React.Component<AdminTeamsProps, AdminTeamsState> {
     this.state = {filter: 'Vttl'};
   }
 
-  _toggleTeamPlayer(teamId: number, playerId: number, role) {
-    this.props.toggleTeamPlayer(teamId, playerId, role);
+  _toggleTeamPlayer(teamId: number, playerId: number, role: TeamPlayerType) {
+    this.props.toggleTeamPlayer({teamId, playerId, role});
   }
 
   render() {
     return (
       <div>
         <AdminTeamsToolbar onFilterChange={newFilter => this.setState({filter: newFilter})} />
-        {this.props.teams.filter(team => team.competition === this.state.filter).sort((a, b) => a.teamCode - b.teamCode).map(team => (
+        {this.props.teams.filter(team => team.competition === this.state.filter).sort((a, b) => a.teamCode.localeCompare(b.teamCode)).map(team => (
           <AdminTeamPlayers
             key={team.id}
             team={team}
             toggleTeamPlayer={this._toggleTeamPlayer.bind(this, team.id)}
-            viewport={this.props.viewport}
-            user={this.props.user}
             onFrenoySync={this.props.frenoyTeamSync}
           />
         ))}
@@ -58,13 +51,15 @@ class AdminTeams extends React.Component<AdminTeamsProps, AdminTeamsState> {
 
 type AdminTeamPlayersProps = {
   team: ITeam;
-  toggleTeamPlayer: Function;
-  viewport: Viewport;
-  user: IUser;
-  onFrenoySync: Function;
+  toggleTeamPlayer: (playerId: number, role: TeamPlayerType) => void;
+  onFrenoySync: typeof frenoyTeamSync;
 }
 
-class AdminTeamPlayers extends Component<AdminTeamPlayersProps> {
+type AdminTeamPlayersState = {
+  role: TeamPlayerType;
+}
+
+class AdminTeamPlayers extends Component<AdminTeamPlayersProps, AdminTeamPlayersState> {
   constructor(props) {
     super(props);
     this.state = {role: 'Standard'};
@@ -91,11 +86,13 @@ class AdminTeamPlayers extends Component<AdminTeamPlayersProps> {
         <Paper style={{padding: 20, marginBottom: 20}}>
           <h4>
             {team.renderOwnTeamTitle()}
-            <Button style={{marginLeft: 20}} onClick={() => this.props.onFrenoySync(team.id)}>Frenoy Sync</Button>
+            <Button style={{marginLeft: 20}} onClick={() => this.props.onFrenoySync({teamId: team.id})}>
+              Frenoy Sync
+            </Button>
           </h4>
 
           <PlayersImageGallery
-            players={Immutable.List(team.getPlayers().map(ply => ply.player))}
+            players={team.getPlayers().map(ply => ply.player)}
             competition={team.competition}
             subtitle={this._renderPlayerSubtitle.bind(this, team)}
             forceSmall
@@ -104,15 +101,13 @@ class AdminTeamPlayers extends Component<AdminTeamPlayersProps> {
           <div style={{clear: 'both'}} />
 
           <TextField select value={this.state.role} onChange={e => this._onRoleChange(e)} style={{width: 100, marginRight: 10}}>
-            {_.toArray(teamPlayerType).map(role => <MenuItem key={role} value={role}>{role}</MenuItem>)}
+            {Object.values(teamPlayerType).map(role => <MenuItem key={role} value={role}>{role}</MenuItem>)}
           </TextField>
 
           <div style={{width: 250}}>
             <PlayerAutoComplete
-              clearOnSelect
               selectPlayer={playerId => this._onToggleTeamPlayer(playerId)}
-              fullWidth
-              placeholder="Selecteer speler"
+              label="Selecteer speler"
               competition={team.competition}
             />
           </div>
@@ -122,15 +117,16 @@ class AdminTeamPlayers extends Component<AdminTeamPlayersProps> {
   }
 }
 
-const AdminTeamsToolbar = ({onFilterChange}) => (
+const AdminTeamsToolbar = ({onFilterChange}: {onFilterChange: (comp: Competition) => void}) => (
   <div style={{padding: 10}}>
-    <Button bsStyle="info" style={{marginRight: 10}} onClick={() => onFilterChange('Vttl')}>Vttl</Button>
-    <Button bsStyle="info" onClick={() => onFilterChange('Sporta')}>Sporta</Button>
+    <Button variant="info" style={{marginRight: 10}} onClick={() => onFilterChange('Vttl')}>Vttl</Button>
+    <Button variant="info" onClick={() => onFilterChange('Sporta')}>Sporta</Button>
   </div>
 );
 
-AdminTeamsToolbar.propTypes = {
-  onFilterChange: PropTypes.func.isRequired,
-};
+const mapDispatchToProps = (dispatch: any) => ({
+  toggleTeamPlayer: (data: Parameters<typeof toggleTeamPlayer>[0]) => dispatch(toggleTeamPlayer(data)),
+  frenoyTeamSync: (data: {teamId: number}) => dispatch(frenoyTeamSync(data)),
+});
 
-export default withViewport(connect(state => ({user: state.user}), {toggleTeamPlayer, frenoyTeamSync})(AdminTeams));
+export default connect(null, mapDispatchToProps)(AdminTeams);

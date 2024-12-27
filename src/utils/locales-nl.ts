@@ -51,8 +51,9 @@ export default {
   },
   trans: {
     fullClubName: "TTC Aalst",
-    clubName: "Erembodegem",
+    clubName: "Aalst",
     systemUserAlias: "Clublokaal",
+    space: " ",
 
     common: {
       apiSuccess: "Greato success",
@@ -115,9 +116,9 @@ export default {
     intro: {
       title: "Tafeltennisclub TTC Aalst",
       text:
-        "Een kleine, toffe club met ${players} leden. Ondanks onze beperkte kern, " +
-        "slagen we er toch in om met ${teamsVttl} ploegen VTTL en ${teamsSporta} Sporta in competitie te treden. " +
-        "Fairplay en gezelligheid staan centraal bij al onze tafeltennis-activiteiten!",
+        "Een toffe club met ${players} leden. "
+        + "We zijn een groeiende club en spelen met ${teamsVttl} ploegen VTTL & ${teamsSporta} Sporta in competitie verband. "
+        + "Fairplay en gezelligheid staan centraal bij al onze tafeltennis-activiteiten!",
       matchesToday: "matchen vandaag",
       // trainingToday: 'vandaag training vanaf 19u30',
       playedMatches: "laatst gespeelde matchen",
@@ -233,6 +234,11 @@ export default {
         orgNr: "BTW nummer vzw",
         balls: "Wij spelen met",
       },
+      training: {
+        trainingDays2: 'Geleide Training: 2 wekelijks woensdag 20u30 tot 22u',
+        trainingDays3: 'Jeugd Training: Elke woensdag 19u30 tot 20u30',
+        extra: 'We beschikken over interne en externe (TT Progress) gediplomeerde trainers',
+      },
       location: {
         title: "Instructies naar ons lokaal",
       },
@@ -244,6 +250,7 @@ export default {
         Treasurer: "Penningmeester",
         Vttl: "Competitie Vttl",
         Sporta: "Competitie Sporta",
+        Other: "Ander",
       },
     },
     match: {
@@ -254,7 +261,7 @@ export default {
       scoreComment: "Match met wedstrijdverslag",
       block: {
         Captain: "Geblokkeerd door de kapitein",
-        Major: "Geblokkeerd door Jelle",
+        Major: "Geblokkeerd door Arne",
       },
       plys: {
         saveAndBlockAll: "Bewaren en Blokkeren",
@@ -361,11 +368,9 @@ export default {
       sportaResults: "Resultaten Sporta",
       varia: "Varia",
       vttlCalculationOne: "Klassementsberekening VTTL (TTC Sint-Pauwels)",
-      vttlCalculationTwo: "Klassementsberekening TTC De Pinte",
       sportaCalculation: "Klassementsberekening Sporta (TTC Sint-Pauwels)",
       dandoy: "Dandoy (Tafeltenniswinkel)",
       killypong: "Killypong (Tafeltenniswinkel)",
-      tabletennisDaily: "TableTennisDaily",
     },
     week: {
       emailTitle: "Opstelling mailen",
@@ -416,24 +421,5 @@ export default {
         sort: "Sortering",
       },
     },
-  },
-  timeAgo: {
-    prefixAgo: null,
-    prefixFromNow: "over",
-    suffixAgo: "geleden",
-    suffixFromNow: null,
-    seconds: "minder dan een minuut",
-    minute: "ongeveer een minuut",
-    minutes: "%d minuten",
-    hour: "ongeveer een uur",
-    hours: "ongeveer %d uur",
-    day: "een dag",
-    days: "%d dagen",
-    month: "ongeveer een maand",
-    months: "%d maanden",
-    year: "ongeveer een jaar",
-    years: "%d jaar",
-    wordSeparator: " ",
-    numbers: [],
   },
 };

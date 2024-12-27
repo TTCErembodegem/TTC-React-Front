@@ -1,31 +1,30 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import cn from 'classnames';
-import PropTypes, {browseTo, withRouter} from '../../PropTypes';
-
 import MatchForm from './MatchForm';
-import MatchScore from '../MatchScore';
+import {MatchScore} from '../MatchScore';
 import {TheirTeamTitle} from './TheirTeamTitle';
 import {ThrillerBadge, ThrillerIcon} from '../../controls/Icons/ThrillerIcon';
 import {CommentIcon} from '../../controls/Icons/CommentIcon';
-import {IMatch, Translator, IConfig} from '../../../models/model-interfaces';
+import {IMatch} from '../../../models/model-interfaces';
 import {IUser} from '../../../models/UserModel';
+import { t } from '../../../locales';
+import { browseTo } from '../../../routes';
+import { selectUser, useTtcSelector } from '../../../utils/hooks/storeHooks';
 
 const thrillerIconWith = 25;
 const ThrillerIconSpan = <span key="1" style={{width: thrillerIconWith, float: 'left'}}>&nbsp;</span>;
 
 type BigMatchCardHeaderProps = {
+  /** Called match2 because withRouter injected a match prop */
   match2: IMatch;
   children?: any;
   user: IUser;
   isOpen: boolean;
-  forceEdit?: boolean;
 }
 
 /** BigMatchCardHeader == MatchesToday on Club monitor */
 export class BigMatchCardHeader extends Component<BigMatchCardHeaderProps> {
-  static contextTypes = PropTypes.contextTypes;
-
   render() {
     const match = this.props.match2;
     const team = match.getTeam();
@@ -36,10 +35,10 @@ export class BigMatchCardHeader extends Component<BigMatchCardHeaderProps> {
       <div className="match-card" style={{backgroundColor: '#fafafa'}}>
         <div className="match-card-header">
           <div className="match-card-score">
-            <MatchForm match={match} t={this.context.t} user={this.props.user} big />
+            <MatchForm match={match} user={this.props.user} big />
           </div>
           <span style={{fontSize: 34}}>{match.isHomeMatch ? `${us} vs ${them}` : `${them} vs ${us}`}</span>
-          <ThrillerBadge t={this.context.t} match={match} />
+          <ThrillerBadge match={match} />
         </div>
         {this.props.isOpen ? (
           <div className="match-card-body">
@@ -52,32 +51,30 @@ export class BigMatchCardHeader extends Component<BigMatchCardHeaderProps> {
 }
 
 
-type SmallMatchCardHeaderComponentProps = BigMatchCardHeaderProps & {
+type SmallMatchCardHeaderProps = Omit<BigMatchCardHeaderProps, 'user'> & {
   noScoreEdit?: boolean;
   width?: number;
   routed?: boolean;
-  history: any;
 }
 
 
-export class SmallMatchCardHeaderComponent extends Component<SmallMatchCardHeaderComponentProps> {
-  static contextTypes = PropTypes.contextTypes;
+export const SmallMatchCardHeader = ({match2, ...props}: SmallMatchCardHeaderProps) => {
+  const navigate = useNavigate();
+  const hasNewComment = useTtcSelector(state => state.config.newMatchComments[match2.id]);
+  const user = useTtcSelector(selectUser);
 
-  render() {
-    const {match, match2, history, location, ...props} = this.props; // eslint-disable-line
-    const newProps = {match: match2, onOpen: () => this._onOpen(), ...props};
-    return <MatchCardHeader {...newProps} />;
-  }
+  const onOpen = (/* isOpen */) => {
+    const matchRoute = t.route('match', {matchId: match2.id});
+    navigate(matchRoute);
+  };
 
-  _onOpen(/* isOpen */) {
-    const matchRoute = this.context.t.route('match', {matchId: this.props.match2.id});
-    this.props.history.push(matchRoute);
-  }
-}
+  const newProps = {match: match2, onOpen: () => onOpen(), hasNewComment, user, ...props};
+  return <MatchCardHeader {...newProps} />;
+};
 
 
 type MatchCardHeaderProps = {
-  config: IConfig;
+  hasNewComment: boolean;
   match: IMatch;
   children?: any;
   user: IUser;
@@ -86,12 +83,9 @@ type MatchCardHeaderProps = {
   onOpen: Function;
   noScoreEdit?: boolean;
   width?: number;
-  routed?: boolean;
 }
 
 class MatchCardHeader extends Component<MatchCardHeaderProps> {
-  static contextTypes = PropTypes.contextTypes;
-
   render() {
     const {match} = this.props;
     const iPlay = this.props.user.playsIn(match.teamId);
@@ -100,8 +94,7 @@ class MatchCardHeader extends Component<MatchCardHeaderProps> {
       && (match.isBeingPlayed() || this.props.forceEdit)
       && this.props.user.canChangeMatchScore(this.props.match);
 
-    // const scoreFormInHeader = !!this.props.routed;
-    const smallAndScoring = scoreFormVisible && this.props.width < 480;
+    const smallAndScoring = !!scoreFormVisible && !!this.props.width && this.props.width < 480;
 
     const subtitle: React.ReactNode[] = [];
     subtitle.push(ThrillerIconSpan);
@@ -109,22 +102,22 @@ class MatchCardHeader extends Component<MatchCardHeaderProps> {
     if (!smallAndScoring) {
       // The date and scoring form overlapped on small devices
       // --> ScoreForm is on Today matches, so displaying the date is not really necessary
-      subtitle.push(<span key="2">{this.context.t('match.date', match.getDisplayDate())}</span>);
+      subtitle.push(<span key="2">{t('match.date', match.getDisplayDate())}</span>);
     }
 
-    if (match.comments.size || match.description) {
-      const hasNewComment = this.props.config.get(`newMatchComment${match.id}`);
+    if (match.comments.length || match.description) {
+      const {hasNewComment} = this.props;
       subtitle.push(
         <span key="3" style={{marginLeft: 9, color: hasNewComment ? '#E3170D' : '#d3d3d3'}}>
-          {match.comments.size ? <small>{match.comments.size}</small> : null}
-          <CommentIcon translate tooltip={hasNewComment ? 'match.hasNewComments' : undefined} />
+          {match.comments.length ? <small>{match.comments.length}</small> : null}
+          <CommentIcon tooltip={hasNewComment ? 'match.hasNewComments' : undefined} />
         </span>,
       );
     }
 
     const matchForm = (
       <div className={cn({'match-card-score': !smallAndScoring, 'match-card-score-inline': smallAndScoring})}>
-        <MatchForm match={match} t={this.context.t} user={this.props.user} />
+        <MatchForm match={match} user={this.props.user} />
       </div>
     );
 
@@ -135,7 +128,7 @@ class MatchCardHeader extends Component<MatchCardHeaderProps> {
         <div className="match-card-header" style={{height: smallAndScoring ? 110 : 60}} onClick={onOpenHandler} role="button" tabIndex={0}>
           {!scoreFormVisible ? <MatchScore match={match} className="match-card-score" /> : null}
           {scoreFormVisible && !smallAndScoring ? matchForm : null}
-          <MatchCardHeaderSmallTitle match={match} t={this.context.t} withLinks={this.props.isOpen} />
+          <MatchCardHeaderSmallTitle match={match} withLinks={this.props.isOpen} />
           <div className="match-card-header-subtitle">{subtitle}</div>
           {scoreFormVisible && smallAndScoring ? matchForm : null}
         </div>
@@ -149,8 +142,6 @@ class MatchCardHeader extends Component<MatchCardHeaderProps> {
   }
 
   _onExpandChange(event) {
-    // console.log('event', event.target.nodeName, event.target);
-
     const {nodeName} = event.target;
     if (nodeName === 'INPUT' || nodeName === 'A' || nodeName === '') {
       return;
@@ -166,10 +157,9 @@ class MatchCardHeader extends Component<MatchCardHeaderProps> {
 type MatchCardHeaderSmallTitleProps = {
   match: IMatch;
   withLinks: boolean;
-  t: Translator;
 };
 
-const MatchCardHeaderSmallTitle = ({match, withLinks, t}: MatchCardHeaderSmallTitleProps) => {
+const MatchCardHeaderSmallTitle = ({match, withLinks}: MatchCardHeaderSmallTitleProps) => {
   const team = match.getTeam();
 
   const ourTitle = <OwnTeamTitle match={match} withLinks={withLinks} />;
@@ -207,12 +197,10 @@ const OwnTeamTitle = ({match, withLinks}: OwnTeamTitleProps) => {
 
   return (
     <span>
-      {divisionRanking.position ? <small>{`${divisionRanking.position}. `}</small> : ''}
+      {!divisionRanking.empty && divisionRanking.position ? <small>{`${divisionRanking.position}. `}</small> : ''}
       <Link to={browseTo.getTeam(team)} className="link-hover-underline">
         {title}
       </Link>
     </span>
   );
 };
-
-export const SmallMatchCardHeader = withRouter(SmallMatchCardHeaderComponent);

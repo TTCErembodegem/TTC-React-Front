@@ -1,22 +1,24 @@
-import React, {Component} from 'react';
-import PropTypes from '../../PropTypes';
+import React, { Component } from 'react';
 import PlayerAvatar from '../../players/PlayerAvatar';
+import { IPlayer, ITeam } from '../../../models/model-interfaces';
+import { t } from '../../../locales';
 
-export class TeamPlayerAvatars extends Component {
-  static contextTypes = PropTypes.contextTypes;
+type TeamPlayerAvatarsProps = {
+  team: ITeam;
+  style?: React.CSSProperties;
+}
 
-  static propTypes = {
-    team: PropTypes.TeamModel.isRequired,
-    style: PropTypes.object,
-  }
+const getSortKey = (player: IPlayer, team: ITeam) => player.getCompetition(team.competition).position;
 
+export class TeamPlayerAvatars extends Component<TeamPlayerAvatarsProps> {
   render() {
-    const {t} = this.context;
     const {team} = this.props;
+    const teamPlayers = team.getPlayers('standard')
+      .sort((a, b) => getSortKey(a.player, team) - getSortKey(b.player, team));
 
     return (
       <div style={{textAlign: 'center', ...this.props.style}}>
-        {team.getPlayers('standard').sort((a, b) => a.position - b.position).map(ply => {
+        {teamPlayers.map(ply => {
           let tooltip = ply.player.name;
 
           const isCaptain = team.isCaptain(ply.player);

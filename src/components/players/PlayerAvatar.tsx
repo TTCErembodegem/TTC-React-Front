@@ -1,15 +1,21 @@
 import React, {Component} from 'react';
 import Avatar from '@mui/material/Avatar';
-import PropTypes, {withTooltip} from '../PropTypes';
-
 import {playerUtils} from '../../models/PlayerModel';
 import {PlayerLink} from './controls/PlayerLink';
+import { withTooltip } from '../../utils/decorators/withTooltip';
+import { IStorePlayer } from '../../models/model-interfaces';
 
-class PlayerAvatar extends Component {
-  static propTypes = {
-    player: PropTypes.PlayerModel.isRequired,
-  }
+type PlayerAvatarProps = {
+  player: IStorePlayer;
+  style?: React.CSSProperties;
+}
 
+type PlayerAvatarState = {
+  isLoaded: boolean;
+  img: string;
+}
+
+class PlayerAvatar extends Component<PlayerAvatarProps, PlayerAvatarState> {
   constructor(props) {
     super(props);
 
@@ -24,7 +30,7 @@ class PlayerAvatar extends Component {
   }
 
   render() {
-    const {player, ...props} = this.props; // eslint-disable-line
+    const {player, ...props} = this.props;
     if (!this.state.isLoaded) {
       return (
         <PlayerLink player={player}>
@@ -35,7 +41,7 @@ class PlayerAvatar extends Component {
 
     return (
       <PlayerLink player={player}>
-        <Avatar {...props} src={playerUtils.getAvatarImageUrl(player.id)} />
+        <Avatar {...props} src={this.state.img} />
       </PlayerLink>
     );
   }

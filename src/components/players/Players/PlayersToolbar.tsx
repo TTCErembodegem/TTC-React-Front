@@ -1,26 +1,22 @@
 import React, {Component} from 'react';
 import TextField from '@mui/material/TextField';
-import PropTypes from '../../PropTypes';
-import http from '../../../utils/httpClient';
-import {SortIconDropDown} from '../../controls/Icons/SortIconDropDown';
+import { downloadPlayersExcel } from '../../../utils/httpClient';
+import {SortDirection, SortIconDropDown} from '../../controls/Icons/SortIconDropDown';
 import {ExcelButton} from '../../controls/Buttons/ExcelButton';
+import { t } from '../../../locales';
 
-export class PlayersToolbar extends Component {
-  static contextTypes = PropTypes.contextTypes;
+type PlayersToolbarProps = {
+  marginLeft: number;
+  onFilterChange: Function;
+  canSort: boolean;
+  activeSort: string;
+  activeSortDirection: SortDirection;
+  onSortChange: Function;
+  onSortDirectionChange: (dir: SortDirection) => void;
+};
 
-  static propTypes = {
-    marginLeft: PropTypes.number.isRequired,
-    onFilterChange: PropTypes.func.isRequired,
-
-    canSort: PropTypes.bool,
-    activeSort: PropTypes.string.isRequired,
-    activeSortDirection: PropTypes.oneOf(['asc', 'desc']).isRequired,
-    onSortChange: PropTypes.func.isRequired,
-    onSortDirectionChange: PropTypes.func.isRequired,
-  };
-
+export class PlayersToolbar extends Component<PlayersToolbarProps> {
   render() {
-    const {t} = this.context;
     const {marginLeft, onFilterChange} = this.props;
 
     const sortConfig = [
@@ -32,7 +28,7 @@ export class PlayersToolbar extends Component {
     return (
       <div style={{marginRight: 5, marginLeft, marginBottom: 5}}>
         <TextField
-          placeholder={this.context.t('players.search')}
+          placeholder={t('players.search')}
           onChange={e => onFilterChange(e.target.value.toLowerCase())}
           style={{width: 150, marginTop: 8}}
         />
@@ -49,8 +45,9 @@ export class PlayersToolbar extends Component {
           ) : null}
 
           <ExcelButton
-            onClick={() => http.download.playersExcel(this.context.t('players.downloadExcelFileName'))}
-            tooltip={this.context.t('players.downloadExcel')}
+            onClick={() => downloadPlayersExcel(t('players.downloadExcelFileName'))}
+            tooltip={t('players.downloadExcel')}
+            className="btn-outline-secondary"
           />
         </div>
       </div>

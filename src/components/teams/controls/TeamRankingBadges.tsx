@@ -1,19 +1,16 @@
 import React, {Component} from 'react';
-import PropTypes from '../../PropTypes';
 import {Badgy} from '../../controls/Icons/ThrillerIcon';
 import {Icon} from '../../controls/Icons/Icon';
+import { ITeam, ITeamOpponent, ITeamRanking } from '../../../models/model-interfaces';
+import { t } from '../../../locales';
 
-export class TeamRankingBadges extends Component {
-  static contextTypes = PropTypes.contextTypes;
+type TeamRankingBadgesProps = {
+  team: ITeam;
+  opponent?: ITeamOpponent;
+  style?: React.CSSProperties;
+}
 
-  static propTypes = {
-    team: PropTypes.TeamModel.isRequired,
-    opponent: PropTypes.shape({
-      clubId: PropTypes.number.isRequired,
-      teamCode: PropTypes.string,
-    }),
-  }
-
+export class TeamRankingBadges extends Component<TeamRankingBadgesProps> {
   render() {
     const {team, opponent, ...props} = this.props;
     const ranking = team.getDivisionRanking(opponent);
@@ -25,20 +22,13 @@ export class TeamRankingBadges extends Component {
   }
 }
 
-class TeamRankingBadgesCore extends Component {
-  static contextTypes = PropTypes.contextTypes;
+type TeamRankingBadgesCoreProps = {
+  ranking: ITeamRanking;
+  style?: React.CSSProperties;
+}
 
-  static propTypes = {
-    ranking: PropTypes.shape({
-      gamesWon: PropTypes.number.isRequired,
-      gamesDraw: PropTypes.number.isRequired,
-      gamesLost: PropTypes.number.isRequired,
-    }).isRequired,
-    style: PropTypes.object,
-  }
-
+class TeamRankingBadgesCore extends Component<TeamRankingBadgesCoreProps> {
   render() {
-    const {t} = this.context;
     const {ranking} = this.props;
     return (
       <div style={({display: 'inline', ...(this.props.style || {fontSize: 14, marginTop: -10})})}>
@@ -53,16 +43,16 @@ class TeamRankingBadgesCore extends Component {
 
 
 
-const TeamOverviewBadge = ({amount, colorClass, fa, tooltip}) => (
+const TeamOverviewBadge = ({amount, colorClass, fa, tooltip}: TeamOverviewBadgeProps) => (
   <Badgy type={colorClass} style={{marginLeft: 12}} tooltip={tooltip}>
     <Icon fa={`fa ${fa}`} style={{marginRight: 6}} />
     {amount}
   </Badgy>
 );
 
-TeamOverviewBadge.propTypes = {
-  amount: PropTypes.number.isRequired,
-  colorClass: PropTypes.string.isRequired,
-  fa: PropTypes.string.isRequired,
-  tooltip: PropTypes.string.isRequired,
+type TeamOverviewBadgeProps = {
+  amount: number,
+  colorClass: string,
+  fa: string,
+  tooltip: string,
 };

@@ -47,7 +47,7 @@ export const Eetfestijn = () => (
 
       <table width="100%">
         <tbody>
-          <tr><th colSpan={2} style={{textAlign: 'center'}}><font size="+1">Menu</font></th></tr>
+          <tr><th colSpan={2} style={{textAlign: 'center'}}>Menu</th></tr>
           <tr>
             <td width="99%"><b>Varkenshaasje</b> met sla, tomaten<br /> en saus naar keuze</td><td width="1%">&euro;{eetfestijnSets.meat.price}</td>
           </tr>
@@ -55,7 +55,7 @@ export const Eetfestijn = () => (
             <td><b>Tongrolletjes</b></td><td>&euro;{eetfestijnSets.fish.price}</td>
           </tr>
           <tr>
-            <td><b>Kindermenu</b>: kip met appelmoes</td><td><font size="-1">&euro;{eetfestijnSets.child.price}</font></td>
+            <td><b>Kindermenu</b>: kip met appelmoes</td><td>&euro;{eetfestijnSets.child.price}</td>
           </tr>
         </tbody>
       </table>

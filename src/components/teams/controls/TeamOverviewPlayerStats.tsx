@@ -1,9 +1,9 @@
 import React from 'react';
-import PropTypes from '../../PropTypes';
-import {ThumbsUpIcon, ThumbsDownIcon} from '../../controls/Icons/ThumbsIcons';
-import {PercentageLabel} from '../../controls/controls/PercentageLabel';
+import { ThumbsUpIcon, ThumbsDownIcon } from '../../controls/Icons/ThumbsIcons';
+import { PercentageLabel } from '../../controls/controls/PercentageLabel';
+import { ITeamPlayerStats } from '../../../models/model-interfaces';
 
-export const TeamOverviewPlayerStats = ({stat}) => (
+export const TeamOverviewPlayerStats = ({stat}: {stat: ITeamPlayerStats}) => (
   <span>
     <ThumbsUpIcon /> {stat.victories}
     <ThumbsDownIcon style={{marginLeft: 8}} /> {stat.games - stat.victories}
@@ -11,10 +11,3 @@ export const TeamOverviewPlayerStats = ({stat}) => (
     <PercentageLabel won={stat.victories} lost={stat.games - stat.victories} />
   </span>
 );
-
-TeamOverviewPlayerStats.propTypes = {
-  stat: PropTypes.shape({
-    victories: PropTypes.number.isRequired,
-    games: PropTypes.number.isRequired,
-  }).isRequired,
-};

@@ -1,14 +1,14 @@
 import React from 'react';
 import OpponentPlayer from './OpponentPlayer';
 import OwnPlayer from './OwnPlayer';
-import {IMatch, Translator} from '../../../models/model-interfaces';
+import {IMatch} from '../../../models/model-interfaces';
+import { t } from '../../../locales';
 
 type MatchPlayerResultsProps = {
   match: IMatch;
-  t: Translator;
 }
 
-const MatchPlayerResults = ({match, t}: MatchPlayerResultsProps) => (
+const MatchPlayerResults = ({match}: MatchPlayerResultsProps) => (
   <div className="match-card-tab-content">
     <div>
       <h3>{t('match.playersVictoryTitle')}</h3>

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import PropTypes from '../../PropTypes';
 import {getMatchPlayerRankings} from '../../../storeUtil';
 import {IMatch} from '../../../models/model-interfaces';
 
@@ -32,8 +31,6 @@ type MatchPlayerRankingsProps = {
 }
 
 export class MatchPlayerRankings extends Component<MatchPlayerRankingsProps> {
-  static contextTypes = PropTypes.contextTypes;
-
   render() {
     const formation = getMatchPlayerRankings(this.props.match, this.props.homeTeam);
     return <PlayerRankings formation={formation} />;

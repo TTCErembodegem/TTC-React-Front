@@ -1,24 +1,15 @@
-import React, {Component} from 'react';
-import PropTypes, {connect} from '../../PropTypes';
+import React from 'react';
+import { useTtcSelector } from '../../../utils/hooks/storeHooks';
 
-type GoogleMapComponentProps = {
-  googleMapsUrl: string;
-}
-
-export class GoogleMapComponent extends Component<GoogleMapComponentProps> {
-  static contextTypes = PropTypes.contextTypes;
-
-  render() {
-    return (
-      <iframe
-        title="Google Maps Clublokaal"
-        src={this.props.googleMapsUrl}
-        frameBorder={0}
-        style={{border: 0, width: '100%', height: 450}}
-        allowFullScreen
-      />
-    );
-  }
-}
-
-export const GoogleMap = connect(state => ({googleMapsUrl: state.config.get('params').googleMapsUrl}))(GoogleMapComponent);
+export const GoogleMap = () => {
+  const googleMapsUrl = useTtcSelector(state => state.config.params.googleMapsUrl);
+  return (
+    <iframe
+      title="Google Maps Clublokaal"
+      src={googleMapsUrl}
+      frameBorder={0}
+      style={{border: 0, width: '100%', height: 450}}
+      allowFullScreen
+    />
+  );
+};

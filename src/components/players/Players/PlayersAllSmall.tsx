@@ -1,13 +1,14 @@
 import React from 'react';
 import Table from 'react-bootstrap/Table';
 import cn from 'classnames';
-import PropTypes from '../../PropTypes';
 import {PlayerLink} from '../controls/PlayerLink';
 import {Email} from '../../controls/controls/Email';
 import {Telephone} from '../../controls/controls/Telephone';
+import { t } from '../../../locales';
+import { IPlayer } from '../../../models/model-interfaces';
 
-export const PlayersAllSmall = ({players, t}) => (
-  <Table condensed hover className="players row-by-two">
+export const PlayersAllSmall = ({players}: {players: IPlayer[]}) => (
+  <Table size="sm" hover className="players row-by-two">
     <thead>
       <tr>
         <th>{t('player.name')}</th>
@@ -37,8 +38,3 @@ export const PlayersAllSmall = ({players, t}) => (
     </tbody>
   </Table>
 );
-
-PlayersAllSmall.propTypes = {
-  t: PropTypes.func.isRequired,
-  players: PropTypes.PlayerModelList.isRequired,
-};

@@ -1,20 +1,15 @@
-import React, {Component} from 'react';
-import PropTypes from '../../PropTypes';
-import {TeamRankingBadges} from './TeamRankingBadges';
-import {TeamPosition} from './TeamPosition';
+import React, { Component } from 'react';
+import { TeamRankingBadges } from './TeamRankingBadges';
+import { TeamPosition } from './TeamPosition';
+import { ITeam, ITeamOpponent } from '../../../models/model-interfaces';
 
-export class TeamTabTitle extends Component {
-  static contextTypes = PropTypes.contextTypes;
+type TeamTabTitleProps = {
+  team: ITeam;
+  showRanking: boolean;
+  opponent?: ITeamOpponent;
+}
 
-  static propTypes = {
-    team: PropTypes.TeamModel.isRequired,
-    showRanking: PropTypes.bool.isRequired,
-    opponent: PropTypes.shape({
-      clubId: PropTypes.number.isRequired,
-      teamCode: PropTypes.string,
-    }),
-  }
-
+export class TeamTabTitle extends Component<TeamTabTitleProps> {
   render() {
     const {team, opponent, showRanking} = this.props;
     return (

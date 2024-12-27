@@ -1,25 +1,21 @@
 import React, {Component} from 'react';
-import PropTypes from '../../PropTypes';
 
 import {TeamRankingBadges} from './TeamRankingBadges';
 import {TeamPosition} from './TeamPosition';
+import { ITeam, ITeamOpponent } from '../../../models/model-interfaces';
 
+type DivisionHeaderProps = {
+  team: ITeam;
+  opponent?: ITeamOpponent;
+  withVictoryBadges?: boolean;
+}
 
-export class DivisionHeader extends Component {
-  static contextTypes = PropTypes.contextTypes;
+const resetStyle = {/* reset fontSize */};
 
-  static propTypes = {
-    team: PropTypes.TeamModel.isRequired,
-    opponent: PropTypes.shape({
-      clubId: PropTypes.number.isRequired,
-      teamCode: PropTypes.string,
-    }),
-    withVictoryBadges: PropTypes.bool,
-  }
-
+export class DivisionHeader extends Component<DivisionHeaderProps> {
   static defaultProps = {
     withVictoryBadges: true,
-  }
+  };
 
   render() {
     const {team, opponent, withVictoryBadges} = this.props;
@@ -27,7 +23,7 @@ export class DivisionHeader extends Component {
       <div>
         <TeamPosition team={team} opponent={opponent} />
         {team.getDivisionDescription()}
-        {withVictoryBadges ? <TeamRankingBadges team={team} opponent={opponent} style={{/* reset fontSize */}} /> : null}
+        {withVictoryBadges ? <TeamRankingBadges team={team} opponent={opponent} style={resetStyle} /> : null}
       </div>
     );
   }

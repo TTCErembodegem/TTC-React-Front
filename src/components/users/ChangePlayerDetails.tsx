@@ -1,76 +1,61 @@
-import React, {Component} from 'react';
+import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
-import PropTypes, {connect} from '../PropTypes';
-import * as playerActions from '../../actions/playerActions';
-import {MaterialButton} from '../controls/Buttons/MaterialButton';
+import { MaterialButton } from '../controls/Buttons/MaterialButton';
+import { t } from '../../locales';
+import { IStorePlayer } from '../../models/model-interfaces';
+import { useTtcDispatch } from '../../utils/hooks/storeHooks';
+import { updatePlayer } from '../../reducers/playersReducer';
 
+export const ChangePlayerDetails = ({player}: {player: IStorePlayer}) => {
+  const [email, setEmail] = useState(player.contact.email);
+  const [mobile, setMobile] = useState(player.contact.mobile);
+  const [address, setAddress] = useState(player.contact.address);
+  const [city, setCity] = useState(player.contact.city);
+  const dispatch = useTtcDispatch();
 
-class ChangePlayerDetails extends Component {
-  static contextTypes = PropTypes.contextTypes;
+  const paperStyle: React.CSSProperties = {
+    width: 290,
+    margin: 0,
+    textAlign: 'center',
+    display: 'inline-block',
+  };
+  return (
+    <div style={paperStyle}>
+      <h3>{t('profile.editDetails')}</h3>
 
-  static propTypes = {
-    player: PropTypes.PlayerModel.isRequired,
-    updatePlayer: PropTypes.func.isRequired,
-  }
+      <TextField
+        label={t('player.email')}
+        defaultValue={email}
+        onChange={e => setEmail(e.target.value)}
+      />
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: props.player.contact.email,
-      mobile: props.player.contact.mobile,
-      address: props.player.contact.address,
-      city: props.player.contact.city,
-    };
-  }
+      <TextField
+        label={t('player.gsm')}
+        type="number"
+        defaultValue={mobile}
+        onChange={e => setMobile(e.target.value)}
+      />
 
-  render() {
-    const {player} = this.props;
-    const paperStyle = {
-      width: 290,
-      margin: 0,
-      textAlign: 'center',
-      display: 'inline-block',
-    };
-    return (
-      <div style={paperStyle}>
-        <h3>{this.context.t('profile.editDetails')}</h3>
+      <TextField
+        label={t('player.address')}
+        defaultValue={address}
+        onChange={e => setAddress(e.target.value)}
+      />
 
-        <TextField
-          label={this.context.t('player.email')}
-          defaultValue={player.contact.email}
-          onChange={e => this.setState({email: e.target.value})}
-        />
+      <TextField
+        label={t('player.city')}
+        defaultValue={city}
+        onChange={e => setCity(e.target.value)}
+      />
 
-        <TextField
-          label={this.context.t('player.gsm')}
-          type="number"
-          defaultValue={player.contact.mobile}
-          onChange={e => this.setState({mobile: e.target.value})}
-        />
+      <MaterialButton
+        variant="contained"
+        label={t('profile.editDetails')}
+        color="primary"
+        style={{marginTop: 15}}
+        onClick={() => dispatch(updatePlayer({player: {...player, ...{contact: {playerId: player.id, email, mobile, address, city}}}}))}
+      />
 
-        <TextField
-          label={this.context.t('player.address')}
-          defaultValue={player.contact.address}
-          onChange={e => this.setState({address: e.target.value})}
-        />
-
-        <TextField
-          label={this.context.t('player.city')}
-          defaultValue={player.contact.city}
-          onChange={e => this.setState({city: e.target.value})}
-        />
-
-        <MaterialButton
-          variant="contained"
-          label={this.context.t('profile.editDetails')}
-          primary
-          style={{marginTop: 15}}
-          onClick={() => this.props.updatePlayer(Object.assign(this.props.player, {contact: this.state}))}
-        />
-
-      </div>
-    );
-  }
-}
-
-export default connect(() => ({}), playerActions)(ChangePlayerDetails);
+    </div>
+  );
+};

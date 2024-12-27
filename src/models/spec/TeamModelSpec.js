@@ -1,6 +1,3 @@
-// import proxyquire from 'proxyquire';
-import {List} from 'immutable';
-
 import {getPlayerStats} from '../TeamModel';
 import MatchModel from '../MatchModel';
 

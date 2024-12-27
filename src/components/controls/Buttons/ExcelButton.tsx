@@ -1,52 +1,40 @@
-import React, {Component} from 'react';
+import React, { useState } from 'react';
 import cn from 'classnames';
-import PropTypes, {connect} from '../../PropTypes';
-import {Icon} from '../Icons/Icon';
-import {ButtonComponentProps} from './Button';
-import {IUser} from '../../../models/UserModel';
+import { Icon } from '../Icons/Icon';
+import { IconButtonComponentProps } from './Button';
+import { selectUser, useTtcSelector } from '../../../utils/hooks/storeHooks';
 
-type ExcelButtonComponentProps = ButtonComponentProps & {
-  user: IUser;
+type ExcelButtonComponentProps = Omit<IconButtonComponentProps, 'onClick' | 'fa'> & {
+  tooltip?: string;
+  onClick: () => Promise<void>;
 }
 
-type ExcelButtonComponentState = {
-  isDownloading: boolean;
-}
+export const ExcelButton = (props: ExcelButtonComponentProps) => {
+  const [isDownloading, setIsDownloading] = useState(false);
+  const user = useTtcSelector(selectUser);
 
-class ExcelButtonComponent extends Component<ExcelButtonComponentProps, ExcelButtonComponentState> {
-  static contextTypes = PropTypes.contextTypes;
-
-  constructor(props) {
-    super(props);
-    this.state = {isDownloading: false};
-  }
-
-  _onDownload() {
-    if (this.state.isDownloading) {
+  const onDownload = () => {
+    if (isDownloading) {
       return;
     }
-    this.setState({isDownloading: true});
+    setIsDownloading(true);
 
-    this.props.onClick()
+    props.onClick()
       .catch(err => {
         console.error('err', err); // eslint-disable-line
       })
-      .then(() => this.setState({isDownloading: false}));
-  }
+      .then(() => setIsDownloading(false));
+  };
 
-  render() {
-    if (!this.props.user.playerId) {
-      return <div />;
-    }
-    return (
-      <button type="button" onClick={() => this._onDownload()} className={cn('btn btn-default', this.props.className)} style={this.props.style}>
-        <Icon
-          fa={cn('fa-2x', this.state.isDownloading ? 'fa fa-spinner fa-pulse' : 'fa fa-file-excel-o')}
-          tooltip={this.props.tooltip}
-        />
-      </button>
-    );
+  if (!user.playerId) {
+    return <div />;
   }
-}
-
-export const ExcelButton = connect(state => ({user: state.user}))(ExcelButtonComponent);
+  return (
+    <button type="button" onClick={() => onDownload()} className={cn('btn ', props.className)} style={props.style}>
+      <Icon
+        fa={cn('fa-2x', isDownloading ? 'fa fa-spinner fa-pulse' : 'fa fa-file-excel-o')}
+        tooltip={props.tooltip}
+      />
+    </button>
+  );
+};

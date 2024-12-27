@@ -1,159 +1,136 @@
-import React, {Component} from 'react';
-import PropTypes, {connect, withViewport} from '../PropTypes';
-
-import {TabbedContainer} from '../controls/TabbedContainer';
-import PlayersCardGallery from './PlayersCardGallery';
-import {PlayersToolbar} from './Players/PlayersToolbar';
-import {PlayersVttl} from './Players/PlayersVttl';
-import {PlayersSporta} from './Players/PlayersSporta';
-import {PlayersAllNotLoggedIn} from './Players/PlayersAllNotLoggedIn';
-import {PlayersAllSmall} from './Players/PlayersAllSmall';
-import {PlayersAllBig} from './Players/PlayersAllBig';
-import {Viewport, TabbedContainerEventKeyRouteProps, IPlayer, Competition} from '../../models/model-interfaces';
-import {IUser} from '../../models/UserModel';
+import React, { useState } from 'react';
+import { TabbedContainer } from '../controls/TabbedContainer';
+import { PlayersCardGallery } from './PlayersCardGallery';
+import { PlayersToolbar } from './Players/PlayersToolbar';
+import { PlayersVttl } from './Players/PlayersVttl';
+import { PlayersSporta } from './Players/PlayersSporta';
+import { PlayersAllNotLoggedIn } from './Players/PlayersAllNotLoggedIn';
+import { PlayersAllSmall } from './Players/PlayersAllSmall';
+import { PlayersAllBig } from './Players/PlayersAllBig';
+import { IPlayer, Competition } from '../../models/model-interfaces';
+import { t } from '../../locales';
+import { useViewport } from '../../utils/hooks/useViewport';
+import { selectPlayers, selectUser, useTtcSelector } from '../../utils/hooks/storeHooks';
+import { SortDirection } from '../controls/Icons/SortIconDropDown';
 
 import './Players.css';
 
-type PlayersProps = {
-  players: IPlayer[];
-  user: IUser;
-  viewport: Viewport;
-  match: TabbedContainerEventKeyRouteProps;
-}
+export const Players = () => {
+  const [filter, setFilter] = useState('');
+  const [sort, setSort] = useState<Competition>('Vttl');
+  const [sortDir, setSortDir] = useState<SortDirection>('asc');
+  const viewport = useViewport();
 
-type PlayersState = {
-  filter: string;
-  sort: Competition;
-  sortDir: 'asc' | 'desc';
-}
-
-class Players extends Component<PlayersProps, PlayersState> {
-  static contextTypes = PropTypes.contextTypes;
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      filter: '',
-      sort: 'Vttl',
-      sortDir: 'asc',
-    };
+  let players = useTtcSelector(selectPlayers).slice();
+  if (filter) {
+    players = players.filter(x => x.name.toLowerCase().includes(filter));
   }
 
-  _renderTabAll() {
-    const players = this._getAllPlayers();
-    if (!this.props.user.playerId) {
-      return <PlayersAllNotLoggedIn players={players} t={this.context.t} />;
-    }
-    if (this.props.viewport.width < 700) {
-      return <PlayersAllSmall players={players} t={this.context.t} />;
-    }
-
-    return <PlayersAllBig players={players} t={this.context.t} />;
+  let filterFn: (plyA: IPlayer, plyB: IPlayer) => number;
+  switch (sort) {
+    case 'Vttl':
+    case 'Sporta':
+      filterFn = (plyA, plyB) => {
+        const compA = plyA.getCompetition(sort);
+        const compB = plyB.getCompetition(sort);
+        if (!compA.ranking && !compB.ranking) {
+          return 0;
+        }
+        if (!compA.ranking) {
+          return 1;
+        }
+        if (!compB.ranking) {
+          return -1;
+        }
+        return compA.position - compB.position;
+      };
+      break;
+    default:
+      filterFn = (plyA, plyB) => plyA.name.localeCompare(plyB.name);
   }
 
-  _getAllPlayers() {
-    let {players} = this.props;
-    if (this.state.filter) {
-      players = players.filter(x => x.name.toLowerCase().includes(this.state.filter));
-    }
-
-    let filter;
-    switch (this.state.sort) {
-      case 'Vttl':
-      case 'Sporta':
-        filter = (plyA, plyB) => {
-          const compA = plyA.getCompetition(this.state.sort);
-          const compB = plyB.getCompetition(this.state.sort);
-          if (!compA.ranking && !compB.ranking) {
-            return 0;
-          }
-          if (!compA.ranking) {
-            return 1;
-          }
-          if (!compB.ranking) {
-            return -1;
-          }
-          return compA.position - compB.position;
-        };
-        break;
-      default:
-        filter = (plyA, plyB) => plyA.name.localeCompare(plyB.name);
-    }
-
-    players = players.sort(filter);
-    if (this.state.sortDir === 'desc') {
-      players = players.reverse();
-    }
-
-    return players;
+  players = players.sort(filterFn);
+  if (sortDir === 'desc') {
+    players = players.reverse();
   }
 
-  _renderTabContent(tabKey) {
+  const renderTabContent = (tabKey: string) => {
     let tabContent;
     switch (tabKey) {
       case 'list':
-        tabContent = this._renderTabAll();
+        tabContent = <AllPlayers players={players} />;
         break;
       case 'vttl':
-        tabContent = <PlayersVttl filter={this.state.filter} />;
+        tabContent = <PlayersVttl filter={filter} />;
         break;
       case 'sporta':
-        tabContent = <PlayersSporta filter={this.state.filter} />;
+        tabContent = <PlayersSporta filter={filter} />;
         break;
       case 'gallery':
-        tabContent = <PlayersCardGallery players={this._getAllPlayers()} />;
-        break;
       default:
-        tabContent = '';
+        tabContent = <PlayersCardGallery players={players} />;
+        break;
     }
     return (
       <div>
         <PlayersToolbar
           marginLeft={15}
-          onFilterChange={text => this.setState({filter: text})}
-
+          onFilterChange={text => setFilter(text)}
           canSort={tabKey !== 'vttl' && tabKey !== 'sporta'}
-          onSortChange={key => this.setState({sort: key})}
-          onSortDirectionChange={key => this.setState({sortDir: key})}
-          activeSort={this.state.sort}
-          activeSortDirection={this.state.sortDir}
+          onSortChange={key => setSort(key)}
+          onSortDirectionChange={key => setSortDir(key)}
+          activeSort={sort}
+          activeSortDirection={sortDir}
         />
         {tabContent}
       </div>
     );
+  };
+
+  const tabKeysConfig = [{
+    key: 'gallery',
+    title: t('players.gallery'),
+  }, {
+    key: 'vttl',
+    title: 'Vttl',
+  }, {
+    key: 'sporta',
+    title: 'Sporta',
+  }, {
+    key: 'list',
+    title: t('players.list'),
+  }];
+  // console.log('config', tabKeysConfig);
+  // let selectedTab = viewport.width < 450 ? 'list' : 'gallery';
+  // console.log('tabKey', tabKey);
+  // if (tabKey) {
+  //   selectedTab = tabKeysConfig.find(x => x.title === tabKey)?.key ?? selectedTab;
+  // }
+  // console.log('selectedTab', selectedTab);
+
+  return (
+    <div style={{marginTop: 20, marginBottom: 10}}>
+      <TabbedContainer
+        selectedTab={viewport.width < 450 ? 'list' : 'gallery'}
+        tabKeys={tabKeysConfig}
+        tabRenderer={eventKey => renderTabContent(eventKey)}
+        route={{base: t.route('players'), subs: 'playersTabs'}}
+        forceTabs
+      />
+    </div>
+  );
+};
+
+const AllPlayers = ({players}: {players: IPlayer[]}) => {
+  const viewport = useViewport();
+  const user = useTtcSelector(selectUser);
+
+  if (!user.playerId) {
+    return <PlayersAllNotLoggedIn players={players} />;
+  }
+  if (viewport.width < 700) {
+    return <PlayersAllSmall players={players} />;
   }
 
-  render() {
-    const tabKeysConfig = [{
-      key: 'gallery',
-      title: this.context.t('players.gallery'),
-    }, {
-      key: 'vttl',
-      title: 'Vttl',
-    }, {
-      key: 'sporta',
-      title: 'Sporta',
-    }, {
-      key: 'list',
-      title: this.context.t('players.list'),
-    }];
-
-    return (
-      <div style={{marginTop: 20, marginBottom: 10}}>
-        <TabbedContainer
-          match={this.props.match}
-          defaultTabKey={this.props.viewport.width < 450 ? 'list' : 'gallery'}
-          tabKeys={tabKeysConfig}
-          tabRenderer={eventKey => this._renderTabContent(eventKey)}
-          route={{base: this.context.t.route('players'), subs: 'playersTabs'}}
-          forceTabs
-        />
-      </div>
-    );
-  }
-}
-
-export default withViewport(connect(state => ({
-  players: state.players,
-  user: state.user,
-}))(Players));
+  return <PlayersAllBig players={players} />;
+};

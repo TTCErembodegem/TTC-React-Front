@@ -1,15 +1,14 @@
 import React, {Component} from 'react';
 import {Icon} from '../Icons/Icon';
 import {Telephone} from './Telephone';
-import {Translator} from '../../../models/model-interfaces';
+import { t } from '../../../locales';
 
 type LocationProps = {
-  t: Translator;
   loc: any;
-  noTelephoneLink: boolean;
+  noTelephoneLink?: boolean;
 };
 
-export const Location = ({loc, t, noTelephoneLink = false}: LocationProps) => (
+export const Location = ({loc, noTelephoneLink = false}: LocationProps) => (
   <div>
     <div className="iconize">
       <Icon fa="fa fa-map-marker" style={{verticalAlign: 'top'}} />

@@ -1,20 +1,20 @@
 import React from 'react';
 import {EditIcon} from '../../controls/Icons/EditIcon';
 import {Icon} from '../../controls/Icons/Icon';
-import {IMatch, Translator} from '../../../models/model-interfaces';
+import {IMatch} from '../../../models/model-interfaces';
+import { t } from '../../../locales';
 
 type OpenMatchForEditButtonProps = {
-  onClick: Function;
+  onClick: () => void;
   match: IMatch;
-  t: Translator;
 }
 
-export const OpenMatchForEditButton = ({onClick, match, t}: OpenMatchForEditButtonProps) => (
+export const OpenMatchForEditButton = ({onClick, match}: OpenMatchForEditButtonProps) => (
   <button
     type="button"
     tabIndex={0}
     onClick={onClick}
-    className="btn btn-default pull-right"
+    className="btn btn-outline-secondary pull-right"
     style={{marginRight: 5}}
     title={t('match.plys.tooltipOpenForm')}
   >

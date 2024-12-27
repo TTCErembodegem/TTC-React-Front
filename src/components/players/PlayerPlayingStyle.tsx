@@ -1,23 +1,25 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, {Component} from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import TextField from '@mui/material/TextField';
-import * as playerActions from '../../actions/playerActions';
-import PropTypes, {connect, withContext, storeUtil} from '../PropTypes';
+import { connect } from 'react-redux';
 import {MaterialButton} from '../controls/Buttons/MaterialButton';
 import {EditIcon} from '../controls/Icons/EditIcon';
-import PlayerAutoComplete from './PlayerAutoComplete';
+import {PlayerAutoComplete} from './PlayerAutoComplete';
 import PlayerStyleAutocomplete from './PlayerStyleAutocomplete';
 import PlayerAvatar from './PlayerAvatar';
-import {IPlayer} from '../../models/model-interfaces';
+import { IPlayerStyle, IStorePlayer } from '../../models/model-interfaces';
+import { RootState } from '../../store';
+import UserModel from '../../models/UserModel';
+import { t } from '../../locales';
+import { updateStyle } from '../../reducers/playersReducer';
 
-// TODO: need to put this in some css file?
-// @withStyles({dialog: {overflow: 'visible'}})
 
 type PlayerPlayingStyleProps = {
-  ply: IPlayer;
+  ply: IStorePlayer;
   allowEdit?: boolean;
 }
 
@@ -30,24 +32,21 @@ export const PlayerPlayingStyle = ({ply, allowEdit = true}: PlayerPlayingStylePr
   </span>
 );
 
-PlayerPlayingStyle.propTypes = {
-  ply: PropTypes.object.isRequired,
-  allowEdit: PropTypes.bool,
-};
+type PlayerPlayingStyleFormProps = {
+  player: IStorePlayer;
+  user: UserModel;
+  updateStyle: typeof updateStyle;
+  iconStyle: 'avatar' | 'edit-icon';
+  style?: React.CSSProperties,
+}
 
+type PlayerPlayingStyleFormState = {
+  editingPlayer: null | IStorePlayer;
+  newStyle: Omit<IPlayerStyle, 'playerId'>;
+  editingBy: null | number | 'system';
+}
 
-class PlayerPlayingStyleFormComponent extends Component {
-  static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    player: PropTypes.PlayerModel.isRequired,
-    user: PropTypes.UserModel.isRequired,
-    updateStyle: PropTypes.func.isRequired,
-    iconStyle: PropTypes.oneOf(['avatar', 'edit-icon']).isRequired,
-    style: PropTypes.object,
-    classes: PropTypes.any,
-  }
-
+class PlayerPlayingStyleFormComponent extends Component<PlayerPlayingStyleFormProps, PlayerPlayingStyleFormState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -58,7 +57,7 @@ class PlayerPlayingStyleFormComponent extends Component {
   }
 
   _openStyle(ply) {
-    this.setState({editingPlayer: ply, newStyle: {...ply.style}, editingBy: storeUtil.getUser().playerId});
+    this.setState({editingPlayer: ply, newStyle: {...ply.style}, editingBy: this.props.user.playerId});
   }
 
   _closeStyle() {
@@ -66,24 +65,27 @@ class PlayerPlayingStyleFormComponent extends Component {
   }
 
   _saveStyle() {
-    this.props.updateStyle(this.state.editingPlayer, this.state.newStyle, this.state.editingBy);
+    this.props.updateStyle({
+      player: this.state.editingPlayer!,
+      newStyle: this.state.newStyle,
+      updatedBy: this.state.editingBy!,
+    });
     this._closeStyle();
   }
 
-  _changeStyle(text) {
-    this.setState({newStyle: {...this.state.newStyle, name: text}});
+  _changeStyle(text: string) {
+    this.setState(state => ({newStyle: {...state.newStyle, name: text}}));
   }
 
   _changeBestStroke(e) {
-    this.setState({newStyle: {...this.state.newStyle, bestStroke: e.target.value}});
+    this.setState(state => ({newStyle: {...state.newStyle, bestStroke: e.target.value}}));
   }
 
-  _changePlayer(playerId) {
+  _changePlayer(playerId: number | 'system') {
     this.setState({editingBy: playerId});
   }
 
   render() {
-    const {t} = this.context;
     const ply = this.props.player;
 
     const canChangeStyle = this.props.user.playerId && this.props.user.playerId !== ply.id;
@@ -124,13 +126,13 @@ class PlayerPlayingStyleFormComponent extends Component {
       <MaterialButton
         key="1"
         label={t('common.cancel')}
-        secondary
+        color="secondary"
         onClick={() => this._closeStyle()}
       />,
       <MaterialButton
         key="2"
         label={t('common.save')}
-        primary
+        color="primary"
         onClick={() => this._saveStyle()}
       />,
     ];
@@ -140,11 +142,11 @@ class PlayerPlayingStyleFormComponent extends Component {
         open={!!this.state.editingPlayer}
         onClose={() => this._closeStyle()}
         scroll="body"
-        classes={{paperScrollPaper: this.props.classes.dialog, paperScrollBody: this.props.classes.dialog}}
+        classes={{paperScrollPaper: 'overflow-visible', paperScrollBody: 'overflow-visible'}}
       >
-        <DialogTitle className={this.props.classes.dialog}>{t('player.editStyle.title', this.props.player.alias)}</DialogTitle>
+        <DialogTitle style={{overflow: 'visible'}}>{t('player.editStyle.title', this.props.player.alias)}</DialogTitle>
 
-        <DialogContent className={this.props.classes.dialog}>
+        <DialogContent style={{overflow: 'visible'}}>
           <PlayerStyleAutocomplete
             t={t}
             value={this.state.newStyle.name || ''}
@@ -180,4 +182,11 @@ class PlayerPlayingStyleFormComponent extends Component {
   }
 }
 
-export const PlayerPlayingStyleForm = withContext(connect(state => ({user: state.user}), playerActions)(PlayerPlayingStyleFormComponent));
+const mapDispatchToProps = (dispatch: any) => ({
+  updateStyle: (data: Parameters<typeof updateStyle>[0]) => dispatch(updateStyle(data)),
+});
+
+export const PlayerPlayingStyleForm = connect(
+  (state: RootState) => ({user: new UserModel(state.user)}),
+  mapDispatchToProps,
+)(PlayerPlayingStyleFormComponent);

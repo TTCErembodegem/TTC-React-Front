@@ -1,19 +1,18 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
 import _ from 'lodash';
-import PropTypes, {connect} from '../../PropTypes';
-import * as matchActions from '../../../actions/matchActions';
-import MatchScore from '../MatchScore';
+import {MatchScore} from '../MatchScore';
 import {Icon} from '../../controls/Icons/Icon';
 import {IUser} from '../../../models/UserModel';
-import {IMatch, Translator, IMatchScore} from '../../../models/model-interfaces';
+import {IMatch, IMatchScore} from '../../../models/model-interfaces';
+import { updateScore } from '../../../reducers/matchesReducer';
 
 const scoreOrDefault = (match: IMatch): IMatchScore => match.score || {home: 0, out: 0};
 
 type MatchFormProps = {
   user: IUser;
   match: IMatch;
-  t: Translator;
-  updateScore: Function;
+  updateScore: typeof updateScore;
   big?: boolean;
 }
 
@@ -24,8 +23,6 @@ type MatchFormState = {
 }
 
 class MatchForm extends Component<MatchFormProps, MatchFormState> {
-  static contextTypes = PropTypes.contextTypes;
-
   constructor(props) {
     super(props);
     this.state = {
@@ -36,7 +33,7 @@ class MatchForm extends Component<MatchFormProps, MatchFormState> {
     this._onUpdateScoreDebounced = _.debounce(this._onUpdateScoreDebounced, 1000);
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this.setState({currentScore: scoreOrDefault(nextProps.match)});
   }
 
@@ -50,7 +47,7 @@ class MatchForm extends Component<MatchFormProps, MatchFormState> {
         <form>
           <div className="form-group">
             <input onChange={e => this.setState({inputScore: e.target.value})} placeholder="xx-xx" style={{width: 70, height: 30}} />
-            <button type="button" className="btn btn-default" onClick={e => this._onInputScoreUpdate(e)} style={{marginLeft: 7}}>
+            <button type="button" className="btn btn-outline-secondary" onClick={e => this._onInputScoreUpdate(e)} style={{marginLeft: 7}}>
               <Icon fa="fa fa-floppy-o" />
             </button>
           </div>
@@ -110,7 +107,7 @@ class MatchForm extends Component<MatchFormProps, MatchFormState> {
   }
 
   _onUpdateScoreDebounced(matchScore) {
-    this.props.updateScore(matchScore).then(() => this.setState({currentScore: scoreOrDefault(this.props.match)}));
+    this.props.updateScore(matchScore);
   }
 }
 
@@ -128,7 +125,7 @@ const MatchManipulation = ({style, plusClick, minClick, big, isHome}: MatchManip
     <div style={{verticalAlign: 'top'}}>
       <Icon
         fa="fa fa-plus-circle fa-2x"
-        onClick={plusClick}
+        onClick={() => plusClick()}
         translate
         tooltip={isHome ? 'match.scoreHomeUp' : 'match.scoreOutUp'}
         tooltipPlacement="left"
@@ -137,7 +134,7 @@ const MatchManipulation = ({style, plusClick, minClick, big, isHome}: MatchManip
     <div style={{verticalAlign: 'bottom'}}>
       <Icon
         fa="fa fa-minus-circle fa-2x"
-        onClick={minClick}
+        onClick={() => minClick()}
         translate
         tooltip={isHome ? 'match.scoreHomeDown' : 'match.scoreOutDown'}
         tooltipPlacement="bottom"
@@ -146,4 +143,8 @@ const MatchManipulation = ({style, plusClick, minClick, big, isHome}: MatchManip
   </div>
 );
 
-export default connect(() => ({}), matchActions)(MatchForm);
+const mapDispatchToProps = (dispatch: any) => ({
+  updateScore: (data: Parameters<typeof updateScore>[0]) => dispatch(updateScore(data)),
+});
+
+export default connect(null, mapDispatchToProps)(MatchForm);

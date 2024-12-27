@@ -1,23 +1,17 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import cn from 'classnames';
-import PropTypes, {storeUtil} from '../../PropTypes';
-import {OwnClubId} from '../../../models/ClubModel';
-import {OpponentLink} from './OpponentLink';
+import { OwnClubId } from '../../../models/ClubModel';
+import { OpponentLink } from './OpponentLink';
+import { ITeam } from '../../../models/model-interfaces';
+import { t } from '../../../locales';
+import storeUtil from '../../../storeUtil';
 
+type TeamOverviewRankingProps = {
+  team: ITeam;
+  small: boolean;
+}
 
-export class TeamOverviewRanking extends Component {
-  static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    team: PropTypes.TeamModel.isRequired,
-    small: PropTypes.bool.isRequired,
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {showAll: !props.small};
-  }
-
+export class TeamOverviewRanking extends Component<TeamOverviewRankingProps> {
   render() {
     const {team, small} = this.props;
     let {ranking} = team;
@@ -32,7 +26,7 @@ export class TeamOverviewRanking extends Component {
     }
     return (
       <div>
-        <h3>{this.context.t('teamCalendar.view.ranking')}</h3>
+        <h3>{t('teamCalendar.view.ranking')}</h3>
         {ranking.map(teamRanking => {
           const isOwnClub = teamRanking.clubId === OwnClubId;
           const points = isOwnClub ? teamRanking.points : `(${teamRanking.points})`;

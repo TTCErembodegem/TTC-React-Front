@@ -1,34 +1,27 @@
-import React, {Component} from 'react';
-import PropTypes, {connect} from '../../PropTypes';
-import {forceFrenoySync} from '../../../actions/matchActions';
-import {IMatch} from '../../../models/model-interfaces';
+import React from 'react';
+import { IMatch } from '../../../models/model-interfaces';
+import { useTtcDispatch } from '../../../utils/hooks/storeHooks';
+import { frenoyMatchSync } from '../../../reducers/matchesReducer';
 
-type MatchCardAdminComponentProps = {
-  forceFrenoySync: Function;
+type MatchCardAdminProps = {
   match: IMatch;
 }
 
-class MatchCardAdminComponent extends Component<MatchCardAdminComponentProps> {
-  static contextTypes = PropTypes.contextTypes;
+export const MatchCardAdmin = ({match}: MatchCardAdminProps) => {
+  const dispatch = useTtcDispatch();
+  return (
+    <div style={{padding: 7}}>
+      <button type="button" onClick={() => dispatch(frenoyMatchSync({match, forceSync: true}))} className="btn btn-outline-secondary pull-right">
+        Nu synchroniseren
+      </button>
 
-  render() {
-    const {match} = this.props;
-    return (
-      <div style={{padding: 7}}>
-        <button type="button" onClick={() => this.props.forceFrenoySync(match.id)} className="btn btn-default pull-right">
-          Nu synchroniseren
-        </button>
+      ID={match.id}<br />FrenoyId={match.frenoyMatchId}
 
-        ID={match.id}<br />FrenoyId={match.frenoyMatchId}
+      <div style={{clear: 'both'}} />
 
-        <div style={{clear: 'both'}} />
-
-        <pre>
-          {JSON.stringify(match, null, 4)}
-        </pre>
-      </div>
-    );
-  }
-}
-
-export const MatchCardAdmin = connect(null, {forceFrenoySync})(MatchCardAdminComponent);
+      <pre>
+        {JSON.stringify(match, null, 4)}
+      </pre>
+    </div>
+  );
+};

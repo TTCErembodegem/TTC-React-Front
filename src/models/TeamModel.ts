@@ -2,7 +2,8 @@ import moment from 'moment';
 import storeUtil from '../storeUtil';
 import {TeamFrenoyModel} from './TeamFrenoyModel';
 import {ITeam, Competition, ITeamOpponent, ITeamPlayer, ITeamRanking, ITeamFrenoy, teamPlayerType,
-  IPlayer, IMatch, ITeamPlayerInfo, ITeamPlayerStats} from './model-interfaces';
+  IPlayer, IMatch, ITeamPlayerInfo, ITeamPlayerStats,
+  IStoreTeam} from './model-interfaces';
 
 export default class TeamModel implements ITeam {
   competition: Competition;
@@ -16,7 +17,7 @@ export default class TeamModel implements ITeam {
   ranking: ITeamRanking[];
   frenoy: ITeamFrenoy;
 
-  constructor(json: TeamModel) {
+  constructor(json: IStoreTeam) {
     this.competition = json.competition; // 'Sporta' or 'Vttl'
     this.divisionName = json.divisionName;
     this.id = json.id;
@@ -49,12 +50,15 @@ export default class TeamModel implements ITeam {
     return `Prov ${this.divisionName}`;
   }
 
-  getDivisionRanking(opponent: 'our-ranking' | ITeamOpponent | undefined = 'our-ranking'): ITeamRanking | {empty: true} {
+  getDivisionRanking(opponent: 'our-ranking' | ITeamOpponent | undefined = 'our-ranking'): ITeamRanking & {empty: false} | {empty: true} {
     if (opponent === 'our-ranking') {
       return this.getDivisionRanking({clubId: this.clubId, teamCode: this.teamCode});
     }
     const result = this.ranking.find(x => x.clubId === opponent.clubId && x.teamCode === opponent.teamCode);
-    return result || {empty: true};
+    if (!result) {
+      return {empty: true};
+    }
+    return {...result, empty: false};
   }
 
   getThriller(match: IMatch): undefined | 'topMatch' | 'degradationMatch' {
@@ -114,23 +118,25 @@ export default class TeamModel implements ITeam {
       .filter(match => match.teamId === this.id);
   }
 
-  getPlayerStats() {
+  getPlayerStats(): ITeamPlayerStats[] {
     const matches = this.getMatches().filter(m => m.isSyncedWithFrenoy);
     return getPlayerStats(matches);
   }
 
-  isTopper(opponent: ITeamOpponent): boolean {
-    return this.getDivisionRanking(opponent).position < 3;
+  isTopper(opponent?: ITeamOpponent): boolean {
+    const ranking = this.getDivisionRanking(opponent);
+    return ranking.empty ? false : ranking.position < 3;
   }
 
-  isInDegradationZone(opponent: ITeamOpponent): boolean {
-    return this.getDivisionRanking(opponent).position >= (this.ranking.length - 2);
+  isInDegradationZone(opponent?: ITeamOpponent): boolean {
+    const ranking = this.getDivisionRanking(opponent);
+    return ranking.empty ? false : ranking.position >= (this.ranking.length - 2);
   }
 }
 
 export function getPlayerStats(matches: IMatch[], withBelles = false): ITeamPlayerStats[] {
   // ATTN: There are tests for this one...
-  const result = {};
+  const result: {[playerId: number]: ITeamPlayerStats} = {};
   matches.forEach(match => {
     const gameResults = match.getGameMatches();
     // const homeOrOut = match.isHomeMatch ? 'home' : 'out';

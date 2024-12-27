@@ -1,58 +1,39 @@
-import React, {Component} from 'react';
-import PropTypes, {connect, withViewport, storeUtil} from '../../PropTypes';
+import React from 'react';
+import { useParams } from 'react-router-dom';
 import MatchCard from './MatchCard';
-import {fetchMatch} from '../../../actions/initialLoad';
-import {FullScreenSpinner} from '../../controls/controls/Spinner';
+import { FullScreenSpinner } from '../../controls/controls/Spinner';
+import { selectMatches, useTtcSelector } from '../../../utils/hooks/storeHooks';
+import { useViewport } from '../../../utils/hooks/useViewport';
 
-class RoutedMatchCard extends Component {
-  static propTypes = {
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        matchId: PropTypes.string.isRequired,
-        tabKey: PropTypes.string,
-      }),
-    }),
-    viewport: PropTypes.viewport,
-    fetchMatch: PropTypes.func.isRequired,
-    history: PropTypes.any.isRequired,
+export const RoutedMatchCard = () => {
+  const params = useParams<{matchId: string, tabKey: string}>();
+  const viewport = useViewport();
+  const matches = useTtcSelector(selectMatches);
+  const match = !!params.matchId && matches.find(x => x.id === parseInt(params.matchId as string, 10));
+
+  // TODO: fetch the match by id if it's not present in the store?
+  // TODO: passed tabKey -- should open that tab
+  // const getMatch = (props) => {
+  //   const matchId = parseInt(props.match.params.matchId, 10);
+  //   const match = storeUtil.getMatch(matchId);
+  //   if (!match) {
+  //     this.props.fetchMatch(this.props.match.params.matchId);
+  //   }
+  //   return match;
+  // }
+
+  if (!match) {
+    return <FullScreenSpinner />;
   }
 
-  _getMatch(props) {
-    const matchId = parseInt(props.match.params.matchId, 10);
-    const match = storeUtil.getMatch(matchId);
-    if (!match) {
-      this.props.fetchMatch(this.props.match.params.matchId);
-    }
-    return match;
-  }
-
-  componentWillReceiveProps(props) {
-    this.setState({match: this._getMatch(props)});
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {match: this._getMatch(props)};
-  }
-
-  render() {
-    if (!this.state.match) {
-      return <FullScreenSpinner />;
-    }
-
-    return (
-      <div style={{marginBottom: 20, marginTop: 20, marginLeft: 5, marginRight: 5}}>
-        <MatchCard
-          match={this.state.match}
-          isOpen
-          width={this.props.viewport.width}
-          routed
-          params={this.props.match.params}
-          history={this.props.history}
-        />
-      </div>
-    );
-  }
-}
-
-export default withViewport(connect(state => ({matches: state.matches}), {fetchMatch})(RoutedMatchCard));
+  return (
+    <div style={{marginBottom: 20, marginTop: 20, marginLeft: 5, marginRight: 5}}>
+      <MatchCard
+        match={match}
+        isOpen
+        params={params}
+        viewport={viewport}
+      />
+    </div>
+  );
+};

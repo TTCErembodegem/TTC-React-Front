@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import t from '../../../locales';
-import {IPlayer} from '../../../models/model-interfaces';
+import {IStorePlayer} from '../../../models/model-interfaces';
+import PlayerModel from '../../../models/PlayerModel';
 
 type PlayerLinkProps = {
-  player: IPlayer;
+  player: IStorePlayer;
   alias?: boolean;
   children?: any;
   className?: string;
@@ -14,12 +15,13 @@ type PlayerLinkProps = {
 export class PlayerLink extends Component<PlayerLinkProps> {
   static defaultProps = {
     className: 'link-hover-underline',
-  }
+  };
 
   render() {
-    const {player, alias, children, className, staticContext, ...props} = this.props; // eslint-disable-line
+    const {player, alias, children, className, ...props} = this.props;
+    const ply = new PlayerModel(player);
 
-    const url = t.route('player').replace(':playerId', encodeURI(player.slug));
+    const url = t.route('player').replace(':playerId', encodeURI(ply.slug));
     return (
       <Link to={url} className={className} {...props}>
         {this.getContent()}
@@ -32,6 +34,6 @@ export class PlayerLink extends Component<PlayerLinkProps> {
     if (children) {
       return children;
     }
-    return alias ? player.alias : player.name;
+    return alias ? player.alias : `${player.firstName} ${player.lastName}`;
   }
 }

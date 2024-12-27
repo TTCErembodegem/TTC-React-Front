@@ -5,30 +5,19 @@ import Button from '@mui/material/Button';
 
 type MaterialButtonProps = {
   label: string;
-  primary?: boolean;
-  secondary?: boolean;
-  color?: string;
-  onClick: Function;
+  color?: 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
+  onClick: React.MouseEventHandler<any>;
+  disabled?: boolean;
 
   style?: React.CSSProperties;
-  variant: string; // TODO: is primary/secondary/color actually doing something?
+  variant?: 'text' | 'outlined' | 'contained';
 }
 
 export class MaterialButton extends React.Component<MaterialButtonProps> {
-  getColor(primary: boolean, secondary: boolean, color: string): string {
-    if (primary) {
-      return 'primary';
-    }
-    if (secondary) {
-      return 'secondary';
-    }
-    return color;
-  }
-
   render() {
-    const {label, primary, secondary, color, ...props} = this.props;
+    const {label, ...props} = this.props;
     return (
-      <Button {...props} color={this.getColor(primary, secondary, color)}>
+      <Button {...props}>
         {label}
       </Button>
     );

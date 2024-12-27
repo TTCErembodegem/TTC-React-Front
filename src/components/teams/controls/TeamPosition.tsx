@@ -1,22 +1,17 @@
 import React, {Component} from 'react';
-import PropTypes from '../../PropTypes';
 import {Badgy} from '../../controls/Icons/ThrillerIcon';
+import { ITeam, ITeamOpponent } from '../../../models/model-interfaces';
 
-export class TeamPosition extends Component {
-  static contextTypes = PropTypes.contextTypes;
+type TeamPositionProps = {
+  team: ITeam;
+  opponent?: ITeamOpponent;
+  style?: React.CSSProperties;
+}
 
-  static propTypes = {
-    team: PropTypes.TeamModel.isRequired,
-    opponent: PropTypes.shape({
-      clubId: PropTypes.number.isRequired,
-      teamCode: PropTypes.string,
-    }),
-    style: PropTypes.object,
-  }
-
+export class TeamPosition extends Component<TeamPositionProps> {
   static defaultProps = {
     style: {marginRight: 8, marginTop: -5},
-  }
+  };
 
   render() {
     const {team, opponent} = this.props;
@@ -35,7 +30,7 @@ export class TeamPosition extends Component {
     }
 
     return (
-      <Badgy type={positionClassName} style={this.props.style} translate tooltip="teamCalendar.teamRanking">
+      <Badgy type={positionClassName} style={this.props.style} tooltip="teamCalendar.teamRanking">
         {ranking.position} / {team.ranking.length}
       </Badgy>
     );

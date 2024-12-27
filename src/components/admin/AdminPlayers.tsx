@@ -1,142 +1,123 @@
 /* eslint-disable no-nested-ternary */
-import React, {Component} from 'react';
+import React, { ReactElement, useState } from 'react';
 import moment from 'moment';
 import Table from 'react-bootstrap/Table';
 import TextField from '@mui/material/TextField';
-import {updatePlayer, frenoySync, deletePlayer} from '../../actions/playerActions';
-import {connect, withViewport} from '../PropTypes';
 import AdminPlayerForm from './AdminPlayerForm';
 import AdminChangePassword from './AdminChangePassword';
-import AdminBoardMembers from './AdminBoardMembers';
+import {AdminBoardMembers} from './AdminBoardMembers';
 import {ButtonStack} from '../controls/Buttons/ButtonStack';
 import {EditButton} from '../controls/Buttons/EditButton';
 import {Icon} from '../controls/Icons/Icon';
-import {IPlayer, Viewport, Competition} from '../../models/model-interfaces';
+import {IPlayer, Competition, IStorePlayer} from '../../models/model-interfaces';
+import { displayMobile } from '../../models/PlayerModel';
+import { useViewport } from '../../utils/hooks/useViewport';
+import { selectPlayers, useTtcDispatch, useTtcSelector } from '../../utils/hooks/storeHooks';
+import { deletePlayer, frenoySync, updatePlayer } from '../../reducers/playersReducer';
 
 const keepTrackOfPlayerKeys = false;
 
-type AdminPlayersProps = {
-  players: IPlayer[];
-  recreantAndQuitters: any;
-  updatePlayer: Function;
-  deletePlayer: Function;
-  viewport: Viewport;
-  frenoySync: Function;
-}
+type Pages = 'active' | 'new-player' | 'Speler editeren' | 'set-password' | 'inactive' | 'bestuur';
 
-type AdminPlayersState = {
-  filter: 'active' | 'new-player' | 'Speler editeren' | 'set-password' | 'inactive' | 'bestuur';
-  playerFilter: string;
-  selectedPlayer: IPlayer;
-}
+export const AdminPlayers = () => {
+  const [filter, setFilter] = useState<Pages>('active');
+  const [playerFilter, setPlayerFilter] = useState('');
+  const [selectedPlayer, setSelectedPlayer] = useState<IPlayer | null>(null);
+  const players = useTtcSelector(selectPlayers);
+  const playersQuitters = useTtcSelector(state => state.playersQuitters);
+  const viewport = useViewport();
+  const dispatch = useTtcDispatch();
 
-class AdminPlayers extends Component<AdminPlayersProps, AdminPlayersState> {
-  constructor(props) {
-    super(props);
-    this.state = {filter: 'active', playerFilter: ''};
-  }
+  let playersContent: ReactElement | null = null;
+  let otherContent: ReactElement | null = null;
+  switch (filter) {
+    case 'new-player':
+      otherContent = <AdminPlayerForm onEnd={() => setFilter('active')} />;
+      break;
 
-  _setDefaultForm() {
-    this.setState({filter: 'active'});
-  }
+    case 'Speler editeren':
+      otherContent = <AdminPlayerForm player={selectedPlayer!} onEnd={() => setFilter('active')} />;
+      break;
 
-  render() {
-    let players;
-    let playersContent;
-    let otherContent = null;
-    switch (this.state.filter) {
-      case 'new-player':
-        otherContent = <AdminPlayerForm onEnd={() => this._setDefaultForm()} />;
-        break;
+    case 'set-password':
+      otherContent = <AdminChangePassword onEnd={() => setFilter('active')} />;
+      break;
 
-      case 'Speler editeren':
-        otherContent = <AdminPlayerForm player={this.state.selectedPlayer} onEnd={() => this._setDefaultForm()} />;
-        break;
+    case 'bestuur':
+      otherContent = <AdminBoardMembers />;
+      break;
 
-      case 'set-password':
-        otherContent = <AdminChangePassword onEnd={() => this._setDefaultForm()} />;
-        break;
-
-      case 'bestuur':
-        otherContent = <AdminBoardMembers onEnd={() => this._setDefaultForm()} />;
-        break;
-
-      case 'inactive':
-        players = this.props.recreantAndQuitters;
-        if (this.state.filter) {
-          players = players.filter(x => x.name.toLowerCase().includes(this.state.playerFilter));
-        }
-        playersContent = <InactivesTable players={players} onUpdatePlayer={this.props.updatePlayer} onDeletePlayer={this.props.deletePlayer} />;
-        break;
-
-      case 'active':
-      default:
-        players = this.props.players;
-        if (this.state.playerFilter) {
-          players = players.filter(x => x.name.toLowerCase().includes(this.state.playerFilter));
-        }
-        playersContent = (
-          <ActivesTable
-            players={players}
-            onEditPlayer={ply => this.setState({filter: 'Speler editeren', selectedPlayer: ply})}
-            onUpdatePlayer={this.props.updatePlayer}
-          />
-        );
-        break;
+    case 'inactive': {
+      let quitters = playersQuitters;
+      if (filter) {
+        quitters = quitters.filter(x => `${x.firstName} ${x.lastName}`.toLowerCase().includes(playerFilter));
+      }
+      playersContent = <InactivesTable players={quitters} />;
+      break;
     }
 
-    const viewsConfig = [{
-      key: 'active',
-      text: 'Spelers beheren',
-    }, {
-      key: 'inactive',
-      text: 'Activeren / Verwijderen',
-    }, {
-      key: 'new-player',
-      text: 'Nieuw lid',
-    }, {
-      key: 'set-password',
-      text: 'Paswoord reset',
-    }, {
-      key: 'bestuur',
-      text: 'Bestuur',
-    }];
-    return (
-      <div>
-        <div style={{marginTop: 5, marginLeft: 5}}>
-          <ButtonStack
-            config={viewsConfig}
-            small={this.props.viewport.width < 550}
-            activeView={this.state.filter}
-            onClick={newFilter => this.setState({filter: newFilter})}
-          />
-        </div>
-        <br />
-
-        {playersContent ? (
-          <div>
-            <TextField
-              placeholder="Zoek speler"
-              onChange={e => this.setState({playerFilter: e.target.value.toLowerCase()})}
-              style={{width: 150, marginLeft: 10}}
-            />
-
-            <button
-              type="button"
-              className="btn btn-default pull-right"
-              style={{marginRight: 15}}
-              onClick={() => this.props.frenoySync()}
-            >
-              Frenoy Sync
-            </button>
-
-            {playersContent}
-          </div>
-        ) : otherContent}
-      </div>
-    );
+    case 'active':
+    default: {
+      let activePlayers = players;
+      if (playerFilter) {
+        activePlayers = players.filter(x => x.name.toLowerCase().includes(playerFilter));
+      }
+      playersContent = (
+        <ActivesTable
+          players={activePlayers}
+          onEditPlayer={ply => {
+            setFilter('Speler editeren');
+            setSelectedPlayer(ply);
+          }}
+        />
+      );
+      break;
+    }
   }
-}
+
+  const viewsConfig = [
+    { key: 'active', text: 'Spelers beheren' },
+    { key: 'inactive', text: 'Activeren / Verwijderen' },
+    { key: 'new-player', text: 'Nieuw lid' },
+    { key: 'set-password', text: 'Paswoord reset' },
+    { key: 'bestuur', text: 'Bestuur' },
+  ];
+  return (
+    <div>
+      <div style={{marginTop: 5, marginLeft: 5}}>
+        <ButtonStack
+          config={viewsConfig}
+          small={viewport.width < 550}
+          activeView={filter}
+          onClick={newFilter => setFilter(newFilter as Pages)}
+        />
+      </div>
+      <br />
+
+      {playersContent ? (
+        <div>
+          <TextField
+            placeholder="Zoek speler"
+            onChange={e => setPlayerFilter(e.target.value.toLowerCase())}
+            style={{width: 200, marginLeft: 10}}
+          />
+
+          <button
+            type="button"
+            className="btn btn-outline-secondary pull-right"
+            style={{marginRight: 15}}
+            onClick={() => dispatch(frenoySync())}
+          >
+            Frenoy Sync
+          </button>
+
+          {playersContent}
+        </div>
+      ) : otherContent}
+    </div>
+  );
+};
+
 
 function concatCompetitions(vttl: boolean, sporta: boolean): string {
   const comps: Competition[] = [];
@@ -153,126 +134,129 @@ function concatCompetitions(vttl: boolean, sporta: boolean): string {
 type ActivesTableProps = {
   players: IPlayer[];
   onEditPlayer: Function;
-  onUpdatePlayer: Function;
 };
 
-const ActivesTable = ({players, onEditPlayer, onUpdatePlayer}: ActivesTableProps) => (
-  <Table condensed hover>
-    <thead>
-      <tr>
-        <th>Speler</th>
-        <th className="hidden-xs">Competities</th>
-        <th className="hidden-xs">Toegang</th>
-        <th>Acties</th>
-      </tr>
-    </thead>
-    <tbody>
-      {players.sort((a, b) => a.name.localeCompare(b.name)).map(ply => (
-        <tr key={ply.id}>
-          <td>
-            <strong>{ply.name}</strong> <small className="hidden-xs">({ply.alias})</small>
-            <br />
-            <small>
-              <a href={`mailto:${ply.contact.email}`}>{ply.contact.email}</a>
-              <span style={{marginLeft: 20, marginRight: 20}} className="hidden-sm hidden-xs">{`${ply.contact.address}, ${ply.contact.city}`}</span>
-              <br className="visible-sm visible-xs" />
-              <span>{ply.contact.getMobile()}</span>
-            </small>
-          </td>
-          <td className="hidden-xs">{concatCompetitions(ply.vttl, ply.sporta)}</td>
-          <td className="hidden-xs">{ply.security === 'Player' ? '' : ply.security}</td>
-          <td>
-            <EditButton onClick={() => onEditPlayer(ply)} style={{fontSize: 26}} />
-
-            {keepTrackOfPlayerKeys ? (
-              <button
-                type="button"
-                className="btn btn-default"
-                style={{marginLeft: 5}}
-                onClick={() => {
-                  ply.hasKey = ply.hasKey === false ? null : !ply.hasKey;
-                  onUpdatePlayer(ply, {activeChanged: true});
-                }}
-              >
-                <Icon fa="fa fa-key fa-2x" color={ply.hasKey ? 'green' : (ply.hasKey === false ? 'red' : undefined)} />
-              </button>
-            ) : null}
-
-            {!ply.vttl && !ply.sporta ? (
-              <button
-                type="button"
-                className="btn btn-default"
-                style={{marginLeft: 10}}
-                onClick={() => {
-                  ply.active = false;
-                  ply.quitYear = moment().year();
-                  ply.security = 'Player';
-                  onUpdatePlayer(ply, {activeChanged: true});
-                }}
-              >
-                <span className="hidden-xs">Recreant deactiveren</span>
-                <span className="visible-xs">X</span>
-              </button>
-            ) : null}
-          </td>
+const ActivesTable = ({players, onEditPlayer}: ActivesTableProps) => {
+  const dispatch = useTtcDispatch();
+  return (
+    <Table size="sm" hover>
+      <thead>
+        <tr>
+          <th>Speler</th>
+          <th className="d-none d-md-table-cell">Competities</th>
+          <th className="d-none d-md-table-cell">Toegang</th>
+          <th>Acties</th>
         </tr>
-      ))}
-    </tbody>
-  </Table>
-);
+      </thead>
+      <tbody>
+        {players.sort((a, b) => a.name.localeCompare(b.name)).map(ply => (
+          <tr key={ply.id}>
+            <td>
+              <strong>{ply.name}</strong> <small className="d-none d-md-inline">({ply.alias})</small>
+              <br />
+              <small>
+                <a href={`mailto:${ply.contact.email}`}>{ply.contact.email}</a>
+                <span style={{marginLeft: 20, marginRight: 20}} className="d-none d-lg-inline">
+                  {`${ply.contact.address}, ${ply.contact.city}`}
+                </span>
+                <br className="d-block d-lg-none" />
+                <span>{displayMobile(ply.contact.mobile)}</span>
+              </small>
+            </td>
+            <td className="d-none d-md-table-cell">{concatCompetitions(!!ply.vttl, !!ply.sporta)}</td>
+            <td className="d-none d-md-table-cell">{ply.security === 'Player' ? '' : ply.security}</td>
+            <td>
+              <EditButton onClick={() => onEditPlayer(ply)} style={{fontSize: 26}} />
+
+              {keepTrackOfPlayerKeys ? (
+                <button
+                  type="button"
+                  className="btn btn-outline-secondary"
+                  style={{marginLeft: 5}}
+                  onClick={() => {
+                    ply.hasKey = ply.hasKey === false ? null : !ply.hasKey;
+                    dispatch(updatePlayer({player: ply}));
+                  }}
+                >
+                  <Icon fa="fa fa-key fa-2x" color={ply.hasKey ? 'green' : (ply.hasKey === false ? 'red' : undefined)} />
+                </button>
+              ) : null}
+
+              {!ply.vttl && !ply.sporta ? (
+                <button
+                  type="button"
+                  className="btn btn-outline-secondary"
+                  style={{marginLeft: 10}}
+                  onClick={() => {
+                    ply.active = false;
+                    ply.quitYear = moment().year();
+                    ply.security = 'Player';
+                    dispatch(updatePlayer({player: ply, switchActive: true}));
+                  }}
+                >
+                  <span className="d-none d-xl-inline">Recreant deactiveren</span>
+                  <span className="d-inline d-xl-none">X</span>
+                </button>
+              ) : null}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </Table>
+  );
+};
 
 
 type InactivesTableProps = {
-  players: IPlayer[];
-  onUpdatePlayer: Function;
-  onDeletePlayer: Function;
+  players: IStorePlayer[];
 };
 
 
-const InactivesTable = ({players, onUpdatePlayer, onDeletePlayer}: InactivesTableProps) => (
-  <Table condensed hover>
-    <thead>
-      <tr>
-        <th>Speler</th>
-        <th className="hidden-xs">Alias</th>
-        <th className="hidden-xs">Gestopt</th>
-        <th>Acties</th>
-      </tr>
-    </thead>
-    <tbody>
-      {players.sort((a, b) => b.quitYear - a.quitYear).map(ply => (
-        <tr key={ply.id}>
-          <td>{ply.name}</td>
-          <td className="hidden-xs">{ply.alias}</td>
-          <td className="hidden-xs">{ply.quitYear}</td>
-          <td>
-            <button
-              type="button"
-              className="btn btn-default"
-              onClick={() => {
-                ply.active = true;
-                ply.quitYear = null;
-                ply.security = 'Player';
-                onUpdatePlayer(ply, {activeChanged: true});
-              }}
-            >
-              Recreant activeren
-            </button>
+const InactivesTable = ({players}: InactivesTableProps) => {
+  const dispatch = useTtcDispatch();
 
-            <button
-              type="button"
-              style={{marginLeft: 8}}
-              className="btn btn-default"
-              onClick={() => onDeletePlayer(ply)}
-            >
-              Permanent verwijderen
-            </button>
-          </td>
+  return (
+    <Table size="sm" hover>
+      <thead>
+        <tr>
+          <th>Speler</th>
+          <th className="d-none d-sm-table-cell">Alias</th>
+          <th className="d-none d-sm-table-cell">Gestopt</th>
+          <th>Acties</th>
         </tr>
-      ))}
-    </tbody>
-  </Table>
-);
+      </thead>
+      <tbody>
+        {players.sort((a, b) => (b.quitYear || 0) - (a.quitYear || 0)).map(ply => (
+          <tr key={ply.id}>
+            <td>{ply.firstName} {ply.lastName}</td>
+            <td className="d-none d-sm-table-cell">{ply.alias}</td>
+            <td className="d-none d-sm-table-cell">{ply.quitYear}</td>
+            <td>
+              <button
+                type="button"
+                className="btn btn-outline-secondary"
+                onClick={() => {
+                  ply.active = true;
+                  ply.quitYear = null;
+                  ply.security = 'Player';
+                  dispatch(updatePlayer({player: ply, switchActive: true}));
+                }}
+              >
+                Recreant activeren
+              </button>
 
-
-export default withViewport(connect(() => ({}), {updatePlayer, frenoySync, deletePlayer})(AdminPlayers));
+              <button
+                type="button"
+                style={{marginLeft: 8}}
+                className="btn btn-outline-secondary"
+                onClick={() => dispatch(deletePlayer({playerId: ply.id}))}
+              >
+                Permanent verwijderen
+              </button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </Table>
+  );
+};

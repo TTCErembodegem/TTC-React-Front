@@ -1,23 +1,25 @@
-import {default as keyMirror} from 'keymirror';
 import moment from 'moment';
 import storeUtil from '../storeUtil';
 import {IPlayer, ITeam, IMatch} from './model-interfaces';
 
-export const userRoles = ['Player', 'Board', 'Dev', 'System'];
+export const userRoles = ['Player', 'Board', 'Dev', 'System'] as const;
+export type UserRoles = typeof userRoles[number];
 
-const security = keyMirror({
-  CAN_MANAGETEAM: '',
-  CAN_EDITALLREPORTS: '',
-  IS_ADMIN: '',
-  IS_DEV: '',
-  IS_SYSTEM: '',
-});
+const security = {
+  CAN_MANAGETEAM: 'CAN_MANAGETEAM',
+  CAN_EDITALLREPORTS: 'CAN_EDITALLREPORTS',
+  IS_ADMIN: 'IS_ADMIN',
+  IS_DEV: 'IS_DEV',
+  IS_SYSTEM: 'IS_SYSTEM',
+};
 
-export interface IUser {
+export interface IStoreUser {
   playerId: number;
   teams: number[];
-  _security: string[];
+  security: string[];
+}
 
+export interface IUser extends IStoreUser {
   playsIn(teamId: number): boolean;
   getPlayer(): IPlayer;
   getTeams(): ITeam[];
@@ -36,12 +38,12 @@ export interface IUser {
 export default class UserModel implements IUser {
   playerId: number;
   teams: number[];
-  _security: string[];
+  security: string[];
 
   constructor(json) {
     this.playerId = json.playerId;
-    this.teams = json.teams; // : number[]
-    this._security = json.security;
+    this.teams = json.teams;
+    this.security = json.security;
   }
 
   playsIn(teamId: number): boolean {
@@ -57,7 +59,7 @@ export default class UserModel implements IUser {
   }
 
   can(what: string): boolean {
-    return this._security.indexOf(what) !== -1;
+    return this.security.indexOf(what) !== -1;
   }
 
   canManageTeams(): boolean {
@@ -69,8 +71,7 @@ export default class UserModel implements IUser {
       return true;
     }
 
-    // eslint-disable-next-line prefer-spread
-    const captains: number[] = [].concat.apply([], this.getTeams().map(team => team.getCaptainPlayerIds()));
+    const captains: number[] = this.getTeams().map(team => team.getCaptainPlayerIds()).flat();
     return captains.indexOf(this.playerId) !== -1;
   }
 
@@ -100,7 +101,7 @@ export default class UserModel implements IUser {
       return true;
     }
 
-    return this.playerId && match.date.isSame(moment(), 'day');
+    return !!this.playerId && match.date.isSame(moment(), 'day');
   }
 
   canPostReport(teamId: number): boolean {

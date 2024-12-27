@@ -1,24 +1,25 @@
-import React, {Component} from 'react';
-import {withRouter} from 'react-router';
+import React, { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import Nav from 'react-bootstrap/Nav';
-import NavItem from 'react-bootstrap/NavItem';
 import CardGroup from 'react-bootstrap/CardGroup';
 import Card from 'react-bootstrap/Card';
-import PropTypes, {withViewport} from '../PropTypes';
-import {TabbedContainerEventKeyRouteProps, Viewport, Historian} from '../../models/model-interfaces';
+import { t } from '../../locales';
+import { useViewport } from '../../utils/hooks/useViewport';
+
+
+type TabKey = {
+  key: string;
+  title: string;
+  label?: string;
+  show?: boolean;
+  headerChildren?: any;
+}
 
 type TabbedContainerComponentProps = {
-  defaultTabKey: string;
-  match: TabbedContainerEventKeyRouteProps;
-  tabKeys: {
-    key: string;
-    title: string;
-    label?: string;
-    show?: boolean;
-    headerChildren?: any;
-  }[];
-  tabRenderer: Function;
-  onTabSelect?: Function;
+  selectedTab: string;
+  tabKeys: TabKey[];
+  tabRenderer: (eventKey: string) => (React.ReactElement | null);
+  onTabSelect?: (eventKey: string) => void;
   forceTabs?: boolean;
   widthTreshold?: number;
   style?: React.CSSProperties;
@@ -27,140 +28,114 @@ type TabbedContainerComponentProps = {
     subs?: string;
     suffix?: string;
   };
-
-  viewport: Viewport;
-  history: Historian;
-}
-
-type TabbedContainerComponentState = {
-  openTabKey: string;
-  forceClose: boolean;
-  forceTabs: boolean;
-  // widthTreshold: number;
 }
 
 
-class TabbedContainerComponent extends Component<TabbedContainerComponentProps, TabbedContainerComponentState> {
-  static contextTypes = PropTypes.contextTypes;
+export const TabbedContainer = (props: TabbedContainerComponentProps) => {
+  const viewport = useViewport();
+  const navigate = useNavigate();
+  const [openTabKey, setOpenTabKey] = useState(props.selectedTab);
+  const [forceClose, setForceClose] = useState(false);
+  const routeTranslatedTabKey = useParams().tabKey;
 
-  static defaultProps = {
-    forceTabs: false,
-    widthTreshold: 700,
-  }
+  // Otherwise show tabs
+  const showAccordion = !!props.widthTreshold
+    && viewport.width < props.widthTreshold
+    && !props.forceTabs;
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      openTabKey: props.defaultTabKey,
-      forceClose: false,
-      forceTabs: false,
-    };
-  }
+  const getUrl = (eventKey: string): string => {
+    let url: string;
+    if (props.route.subs) {
+      url = `${props.route.base}/${t.route(`${props.route.subs}.${eventKey}`)}`;
+    } else {
+      url = `${props.route.base}/${eventKey}`;
+    }
+    if (props.route.suffix) {
+      url += `/${props.route.suffix}`;
+    }
+    return url;
+  };
 
-  _showAccordion() {
-    // Otherwise show tabs
-    return this.props.viewport.width < this.props.widthTreshold && !this.props.forceTabs;
-  }
-
-  render() {
-    const openTabKey = this._getTabKey();
-    if (this._showAccordion()) {
-      // Accordion
-      return (
-        <CardGroup defaultActiveKey={!this.state.forceClose ? openTabKey : null} style={this.props.style} id={openTabKey}>
-          {this.props.tabKeys.filter(tab => tab.show !== false).map(tab => this._renderTabHeader(tab))}
-        </CardGroup>
-      );
+  const onTabSelect = (eventKey: string | null) => {
+    if (!eventKey) {
+      return;
     }
 
-    // Tabs
-    return (
-      <div style={this.props.style}>
-        <Nav bsStyle="tabs" activeKey={openTabKey} onSelect={eventKey => this._onTabSelect(eventKey)}>
-          {this.props.tabKeys.filter(tab => tab.show !== false).map(tab => this._renderTabHeader(tab))}
-        </Nav>
-        <div className="match-card-tab">
-          {this.props.tabRenderer(openTabKey)}
-        </div>
-      </div>
-    );
-  }
+    const url = getUrl(eventKey);
+    navigate(url);
 
-  _renderTabHeader(tab) {
-    if (!this._showAccordion()) {
+    setOpenTabKey(eventKey);
+    setForceClose(showAccordion && eventKey === openTabKey && !forceClose);
+
+    if (props.onTabSelect) {
+      props.onTabSelect(eventKey);
+    }
+  };
+
+  const getTabKey = () => {
+    // Translate from route
+    if (!props.route.subs) {
+      return openTabKey;
+    }
+
+    if (routeTranslatedTabKey) {
+      return t.reverseRoute(props.route.subs, routeTranslatedTabKey);
+    }
+    return openTabKey;
+  };
+
+  const renderTabHeader = (tab: TabKey) => {
+    if (!showAccordion) {
       // Tabs
       return (
-        <NavItem
-          eventKey={tab.key}
+        <Nav.Item
           title={tab.label ? tab.title : undefined}
           key={tab.key}
-          href={this._getUrl(tab.key)}
           onClick={e => e.preventDefault()}
         >
-          {tab.label || tab.title} {tab.headerChildren}
-        </NavItem>
+          <Nav.Link eventKey={tab.key} href={getUrl(tab.key)}>
+            {tab.label || tab.title} {tab.headerChildren}
+          </Nav.Link>
+        </Nav.Item>
       );
     }
 
     // Accordion
     const header = (
-      <div className="clickable" onClick={this._onTabSelect.bind(this, tab.key)} role="button" tabIndex={0}>
+      <div className="clickable" onClick={() => onTabSelect(tab.key)} role="button" tabIndex={0}>
         {tab.title} {tab.headerChildren}
       </div>
     );
 
-    const isOpen = this.state.openTabKey === tab.key && !this.state.forceClose;
+    const isOpen = openTabKey === tab.key && !forceClose;
     return (
-      <Card
-        defaultExpanded={isOpen}
-        eventKey={tab.key}
-        className="match-card-panel"
-        key={tab.key}
-      >
-        <Card.Header>
-          {header}
-        </Card.Header>
-        {isOpen ? this.props.tabRenderer(tab.key) : null}
+      <Card className="match-card-panel" key={tab.key}>
+        <Card.Header>{header}</Card.Header>
+        {isOpen ? props.tabRenderer(tab.key) : null}
       </Card>
+    );
+  };
+
+  const activeTabKey = getTabKey();
+  if (showAccordion) {
+    // Accordion
+    // TODO: Accordian is not implemented!
+    return (
+      <CardGroup style={props.style} id={activeTabKey}>
+        {props.tabKeys.filter(tab => tab.show !== false).map(tab => renderTabHeader(tab))}
+      </CardGroup>
     );
   }
 
-  _getUrl(eventKey: string): string {
-    let url: string;
-    if (this.props.route.subs) {
-      url = `${this.props.route.base}/${this.context.t.route(`${this.props.route.subs}.${eventKey}`)}`;
-    } else {
-      url = `${this.props.route.base}/${eventKey}`;
-    }
-    if (this.props.route.suffix) {
-      url += `/${this.props.route.suffix}`;
-    }
-    return url;
-  }
-
-  _onTabSelect(eventKey: string) {
-    const url = this._getUrl(eventKey);
-    this.props.history.push(url);
-
-    const forceClose = this._showAccordion() && eventKey === this.state.openTabKey && !this.state.forceClose;
-    this.setState({openTabKey: eventKey, forceClose});
-
-    if (this.props.onTabSelect) {
-      this.props.onTabSelect(eventKey);
-    }
-  }
-
-  _getTabKey() {
-    // Translate from route
-    const tabKey = this.props.match ? this.props.match.params.tabKey : null;
-    if (!tabKey) {
-      return this.props.defaultTabKey;
-    }
-    if (!this.props.route.subs) {
-      return tabKey;
-    }
-    return this.context.t.reverseRoute(this.props.route.subs, tabKey);
-  }
-}
-
-export const TabbedContainer = withRouter(withViewport(TabbedContainerComponent));
+  // Tabs
+  return (
+    <div style={props.style}>
+      <Nav variant="tabs" activeKey={activeTabKey} onSelect={eventKey => onTabSelect(eventKey)}>
+        {props.tabKeys.filter(tab => tab.show !== false).map(tab => renderTabHeader(tab))}
+      </Nav>
+      <div className="match-card-tab">
+        {props.tabRenderer(activeTabKey)}
+      </div>
+    </div>
+  );
+};

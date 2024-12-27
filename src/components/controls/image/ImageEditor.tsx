@@ -1,14 +1,13 @@
 /* eslint-disable react/no-string-refs */
 import React from 'react';
-import Slider from '@material-ui/lab/Slider';
+import Slider from '@mui/material/Slider';
 import AvatarEditor from 'react-avatar-editor';
 import {MaterialButton} from '../Buttons/MaterialButton';
-import {Translator} from '../../../models/model-interfaces';
+import { t } from '../../../locales';
 
 // TODO: Check to replace with: http://blog.mmcfarland.net/react-darkroom/
 
 type ImageEditorProps = {
-  t: Translator,
   image: string,
   updateImage: Function,
   size: {
@@ -54,16 +53,15 @@ export default class ImageEditor extends React.Component<ImageEditorProps, Image
           min={1}
           max={5}
           step={0.01}
-          ref="scale"
           style={{width: 230, marginBottom: 20, marginTop: 20}}
-          onChange={(event, newScale) => this.setState({scale: newScale})}
+          onChange={(event, newScale) => this.setState({scale: newScale as number})}
         />
 
         <br />
 
         <MaterialButton
-          label={this.props.t('photos.preview')}
-          secondary
+          label={t('photos.preview')}
+          color="secondary"
           style={{marginTop: -40, marginBottom: 10}}
           onClick={this.onClickSave}
         />
@@ -81,5 +79,5 @@ export default class ImageEditor extends React.Component<ImageEditorProps, Image
       // const canvasScaled = this.editor.getImageScaledToCanvas();
       this.props.updateImage(canvas, {});
     }
-  }
+  };
 }

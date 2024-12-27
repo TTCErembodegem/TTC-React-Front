@@ -3,31 +3,26 @@ import moment from 'moment';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import t from '../../locales';
-import ClubLocationInstructions from '../other/ClubLocationInstructions';
-import {Strike} from '../controls/controls/Strike';
-// import {SmallMatchCardHeader} from '../matches/Match/MatchCardHeader';
-import EndOfSeason from '../other/EndOfSeason/EndOfSeason';
-import {Eetfestijn} from './Eetfestijn';
-import IntroClub from './IntroClub';
-import {WeirdLocaleYearInfo} from './WeirdLocaleYearInfo';
-import IntroSponsors from './IntroSponsors';
-import {IMatch, IConfig, IPlayer, ITeam, Viewport} from '../../models/model-interfaces';
-// import {IUser} from '../../models/UserModel';
+import { Strike } from '../controls/controls/Strike';
+import { SmallMatchCardHeader } from '../matches/Match/MatchCardHeader';
+// import EndOfSeason from '../other/EndOfSeason/EndOfSeason';
+import { Eetfestijn } from './Eetfestijn';
+import { IntroClub } from './IntroClub';
+import { WeirdLocaleYearInfo } from './WeirdLocaleYearInfo';
+import { IntroSponsors } from './IntroSponsors';
+import { IMatch } from '../../models/model-interfaces';
 import { useViewport } from '../../utils/hooks/useViewport';
-import { useTtcSelector } from '../../utils/hooks/storeHooks';
+import { selectMatches, selectMatchesToday, useTtcSelector } from '../../utils/hooks/storeHooks';
 
-require('./App.css');
 
 const Intro = () => {
   const viewport = useViewport();
-  // const config = useTtcSelector(state => state.config);
-  const config = {
-    get: str => false
-  }
+  const config = useTtcSelector(state => state.config);
 
-  if (config.get('endOfSeason')) {
-    return <EndOfSeason />;
-  }
+  // TODO: end of season
+  // if (config.endOfSeason) {
+  //   return <EndOfSeason />;
+  // }
 
   const big = viewport.width > 830;
   return (
@@ -35,11 +30,10 @@ const Intro = () => {
       <Row style={{marginTop: big ? 25 : undefined}}>
         <Col sm={6} style={{verticalAlign: 'top'}}>
           <IntroClub />
-          <WeirdLocaleYearInfo params={config.get('params')} />
-          <ClubLocationInstructions />
+          <WeirdLocaleYearInfo params={config.params} />
         </Col>
         <Col sm={6}>
-          {!config.get('initialLoadCompleted') ? (
+          {!config.initialLoadCompleted ? (
             <Loading bigScreen={viewport.width > 768} />
           ) : (
             <div>
@@ -53,7 +47,7 @@ const Intro = () => {
       <IntroSponsors />
     </div>
   );
-}
+};
 
 export default Intro;
 
@@ -77,18 +71,19 @@ const Loading = ({bigScreen}: {bigScreen: boolean}) => (
 
 
 const TodayEventMatches = ({matches}: {matches: IMatch[]}) => (
-  matches.map(match => (
-    <div style={{padding: 5}} key={match.id}>
-      {/* <SmallMatchCardHeader match2={match} user={this.props.user} isOpen={false} config={this.props.config} noScoreEdit /> */}
-    </div>
-  ))
-)
+  <>
+    {matches.map(match => (
+      <div style={{padding: 5}} key={match.id}>
+        <SmallMatchCardHeader match2={match} isOpen={false} noScoreEdit />
+      </div>
+    ))}
+  </>
+);
+
 
 const TodaysEvents = () => {
-  const matches = useTtcSelector(state => state.matches);
-  const today = moment();
-
-  const matchesToday = matches.filter(cal => cal.date.isSame(today, 'day'));
+  const matches = useTtcSelector(selectMatches);
+  const matchesToday = useTtcSelector(selectMatchesToday);
   if (matchesToday.length) {
     return (
       <div>
@@ -98,6 +93,7 @@ const TodaysEvents = () => {
     );
   }
 
+  const today = moment();
   const lastPlayedMatches = matches
     .filter(cal => cal.date.isBefore(today, 'day'))
     .sort((a, b) => b.date.valueOf() - a.date.valueOf())
@@ -113,4 +109,4 @@ const TodaysEvents = () => {
       )}
     </div>
   );
-}
+};

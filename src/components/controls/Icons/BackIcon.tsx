@@ -1,29 +1,20 @@
-import React, {Component} from 'react';
-import PropTypes, {withViewport, withRouter} from '../../PropTypes';
-import {Icon} from './Icon';
-import {Viewport} from '../../../models/model-interfaces';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Icon, IconProps } from './Icon';
+import { t } from '../../../locales';
+import { useViewport } from '../../../utils/hooks/useViewport';
 
-type BackIconProps = {
-  viewport: Viewport;
-}
-
-class BackIconComponent extends Component<BackIconProps> {
-  static contextTypes = PropTypes.contextTypes;
-
-  render() {
-    const {t} = this.context;
-    const {viewport, staticContext, history, location, match, ...props} = this.props; // eslint-disable-line
-    return (
-      <Icon
-        fa={`fa fa-times-circle ${viewport.width > 400 ? 'fa-3x' : 'fa-2x'}`}
-        color="red"
-        onClick={() => history.goBack()}
-        tooltip={t('common.close')}
-        tooltipPlacement="left"
-        {...props}
-      />
-    );
-  }
-}
-
-export const BackIcon = withRouter(withViewport(BackIconComponent));
+export const BackIcon = (props: Omit<IconProps, 'fa'>) => {
+  const viewport = useViewport();
+  const navigate = useNavigate();
+  return (
+    <Icon
+      fa={`fa fa-times-circle ${viewport.width > 400 ? 'fa-3x' : 'fa-2x'}`}
+      color="red"
+      onClick={() => navigate(-1)}
+      tooltip={t('common.close')}
+      tooltipPlacement="left"
+      {...props}
+    />
+  );
+};

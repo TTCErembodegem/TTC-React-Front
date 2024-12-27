@@ -1,317 +1,250 @@
 /* eslint-disable no-nested-ternary */
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import PropTypes, {connect, storeUtil} from '../../PropTypes';
-import * as matchActions from '../../../actions/matchActions';
-import PlayerAutoComplete from '../../players/PlayerAutoComplete';
+import {PlayerAutoComplete} from '../../players/PlayerAutoComplete';
 import ImageDropzone from '../../controls/image/ImageDropzone';
-import {Editor} from '../../controls/Editor';
+import {QuillEditor} from '../../controls/Editor';
 import {MaterialButton} from '../../controls/Buttons/MaterialButton';
 import {Icon} from '../../controls/Icons/Icon';
 import {EditIcon} from '../../controls/Icons/EditIcon';
 import {TimeAgo} from '../../controls/controls/TimeAgo';
-import {IUser} from '../../../models/UserModel';
-import {IMatch, Translator, Viewport, IMatchComment} from '../../../models/model-interfaces';
+import {IMatch, IMatchComment} from '../../../models/model-interfaces';
+import { t } from '../../../locales';
+import storeUtil from '../../../storeUtil';
+import { selectUser, useTtcDispatch, useTtcSelector } from '../../../utils/hooks/storeHooks';
+import { deleteComment, postComment, postReport } from '../../../reducers/matchesReducer';
+import { useViewport } from '../../../utils/hooks/useViewport';
 
 function getEmptyComment(matchId: number, playerId: number): IMatchComment {
   return {
+    id: 0,
     matchId,
     playerId,
     text: '',
     hidden: false,
+    postedOn: null,
+    imageUrl: '',
   };
 }
 
 type MatchReportProps = {
-  user: IUser;
   match: IMatch;
-  t: Translator;
-  viewport: Viewport;
-  postReport: Function;
-  postComment: Function;
-  deleteComment: Function;
 }
 
 
+export const MatchReport = ({match}: MatchReportProps) => {
+  const user = useTtcSelector(selectUser);
+  const dispatch = useTtcDispatch();
+  const viewport = useViewport();
+  const [text, setText] = useState(match.description);
+  const [commentImageFormOpen, setCommentImageFormOpen] = useState(false);
+  const [commentFormOpen, setCommentFormOpen] = useState(false);
+  const [comment, setComment] = useState(getEmptyComment(match.id, user.playerId));
+  const [reportFormOpen, setReportFormOpen] = useState(false);
 
-type MatchReportState = {
-  text: string;
-  commentImageFormOpen: boolean;
-  commentFormOpen: boolean;
-  comment: IMatchComment;
-  reportFormOpen: boolean;
-}
+  const onCommentImageUploaded = (fileName: string) => {
+    setCommentFormOpen(false);
+    dispatch(postComment({...getEmptyComment(match.id, user.playerId), imageUrl: fileName}));
+  };
 
-class MatchReport extends Component<MatchReportProps, MatchReportState> {
-  static contextTypes = PropTypes.contextTypes;
+  const openPictureForm = () => {
+    setCommentImageFormOpen(!commentImageFormOpen);
+    setCommentFormOpen(false);
+  };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      text: props.match.description,
-      commentImageFormOpen: false,
-      commentFormOpen: false,
-      comment: getEmptyComment(this.props.match.id, props.user.playerId),
-      reportFormOpen: false,
-    };
-  }
+  const editorHeight = 200;
 
-  render() {
-    const editorHeight = 200;
-    const editorOptions = {
-      buttonLabels: 'fontawesome',
-      placeholder: {
-        text: this.context.t('match.report.placeHolder'),
-      },
-      toolbar: {
-        buttons: ['bold', 'italic', 'underline', 'h2', 'h3', 'anchor'],
-      },
-    };
-
-    let reportWriterText: React.ReactNode;
-    const reportWriter = storeUtil.getPlayer(this.props.match.reportPlayerId);
-    if (reportWriter) {
-      reportWriterText = (
-        <div style={{marginTop: -10, color: '#736F6E'}}>
-          <small>{this.context.t('match.report.reportWrittenBy', reportWriter.alias)}</small>
-        </div>
-      );
-    }
-
-    const readonlyReport = this.state.text ? <pre dangerouslySetInnerHTML={{__html: this.state.text}} style={{marginRight: 15}} /> : null;
-
-    let reportText;
-    const canComment = !!this.props.user.playerId;
-    const showComments = canComment || this.props.match.comments.size;
-    const canPostReport = this.props.user.canPostReport(this.props.match.teamId) && this.props.match.isScoreComplete();
-    if (this.props.match.isScoreComplete()) {
-      reportText = (
-        <div>
-          {reportWriterText}
-          {canPostReport ? (
-            <div>
-              {this.state.reportFormOpen ? (
-                <div>
-                  <Editor
-                    tag="pre"
-                    text={this.state.text}
-                    style={{height: canPostReport ? editorHeight : undefined, marginRight: 15}}
-                    onChange={text => this._reportTextChange(text)}
-                    options={{...editorOptions, disableEditing: !canPostReport}}
-                    contentEditable={canPostReport}
-                  />
-
-                  <MaterialButton
-                    variant="contained"
-                    label={this.context.t('common.save')}
-                    primary
-                    style={{float: 'right', marginBottom: 65, marginRight: 15}}
-                    onClick={() => this._onPostReport()}
-                  />
-                </div>
-              ) : readonlyReport}
-            </div>
-          ) : readonlyReport}
-        </div>
-      );
-    } else if (this.state.text) {
-      reportText = readonlyReport;
-    }
-
-    if (!canPostReport && !this.state.text && !showComments) {
-      reportText = this.context.t('match.report.noReport');
-    }
-
-    const {width} = this.props.viewport;
-    const canDeleteComment = this.props.user.isAdmin();
-
-    let comments;
-    if (showComments) {
-      comments = (
-        <div>
-          {this.state.text || this.state.reportFormOpen ? (
-            <h3 style={{marginTop: this.state.reportFormOpen ? 55 : 0}}>
-              {this.context.t('match.report.commentsTitle')}
-            </h3>
-          ) : null}
-          {this.props.match.comments.map(comment => (
-            <Comment
-              key={comment.id}
-              comment={comment}
-              deleteComment={canDeleteComment || comment.playerId === this.props.user.playerId ? this.props.deleteComment : null}
-            />
-          ))}
-          {this.state.commentFormOpen ? (
-            <div>
-              {this.props.user.isSystem() ? (
-                <PlayerAutoComplete
-                  selectPlayer={playerId => this._reportCommentPlayerChange(playerId)}
-                  placeholder={this.context.t('system.playerSelect')}
-                />
-              ) : null}
-              <Editor
-                tag="pre"
-                text={this.state.comment.text}
-                style={{height: 55, marginRight: 15}}
-                onChange={text => this._reportCommentChange(text)}
-                options={{...editorOptions, disableEditing: !canComment}}
-                contentEditable={canComment}
-              />
-            </div>
-          ) : this.state.commentImageFormOpen ? (
-            <ImageDropzone t={this.context.t} fileUploaded={fileName => this._onCommentImageUploaded(fileName)} type="match" />
-          ) : null}
-
-          {this.props.user.playerId ? (
-            <div style={{width: '100%'}}>
-              {this.state.commentFormOpen ? (
-                <FormControlLabel
-                  style={width > 450 ? {float: 'right', textAlign: 'right'} : {}}
-                  control={(
-                    <Checkbox
-                      checked={!this.state.comment.hidden}
-                      onChange={() => this._reportHiddenChange()}
-                      value="hidden"
-                      color="primary"
-                    />
-                  )}
-                  label={this.context.t('match.report.commentVisible')}
-                />
-              ) : null}
-
-              <MaterialButton
-                label={this.context.t(`match.report.commentsOpenForm${this.state.commentFormOpen ? 'Confirm' : ''}`)}
-                onClick={() => this._onCommentForm()}
-              />
-
-
-              <Icon
-                fa="fa fa-picture-o btn btn-default"
-                onClick={() => this.setState(prevState => ({commentImageFormOpen: !prevState.commentImageFormOpen, commentFormOpen: false}))}
-                style={{marginLeft: 15}}
-                translate
-                tooltip="match.report.commentsPhotoTooltip"
-                tooltipPlacement="right"
-              />
-
-            </div>
-          ) : null}
-        </div>
-      );
-    }
-
-    // TODO: replace #D3D3D3 with #999? (iPhone visibility)
-    return (
-      <div className="match-card-tab-content">
-        <h3>
-          {this.context.t('match.report.title')}
-          {canPostReport ? (
-            <small>
-              <EditIcon
-                tooltip={this.context.t('match.report.editTooltip')}
-                onClick={() => this._onReportFormOpen()}
-                style={{marginLeft: 5, color: '#D3D3D3'}}
-              />
-            </small>
-          ) : null}
-        </h3>
-        {reportText}
-        {comments}
+  let reportWriterText: React.ReactNode;
+  const reportWriter = storeUtil.getPlayer(match.reportPlayerId);
+  if (match.reportPlayerId && reportWriter) {
+    reportWriterText = (
+      <div style={{marginTop: -10, color: '#736F6E'}}>
+        <small>{t('match.report.reportWrittenBy', reportWriter.alias)}</small>
       </div>
     );
   }
 
-  _onCommentImageUploaded(fileName) {
-    this.setState({commentImageFormOpen: false});
-    this.props.postComment({...getEmptyComment(this.props.match.id, this.props.user.playerId), imageUrl: fileName});
+  const readonlyReport = text ? <pre dangerouslySetInnerHTML={{__html: text}} style={{marginRight: 15}} /> : null; // eslint-disable-line
+
+  let reportText: any;
+  const canComment = !!user.playerId;
+  const showComments = canComment || match.comments.length;
+  const canPostReport = user.canPostReport(match.teamId) && match.isScoreComplete();
+  if (match.isScoreComplete()) {
+    reportText = (
+      <div>
+        {reportWriterText}
+        {canPostReport ? (
+          <div>
+            {reportFormOpen ? (
+              <div>
+                <QuillEditor
+                  text={text}
+                  style={{height: editorHeight, marginRight: 15}}
+                  onChange={txt => setText(txt)}
+                  readOnly={!canPostReport}
+                />
+
+                <div style={{paddingTop: 50}}>
+                  <MaterialButton
+                    variant="contained"
+                    label={t('common.save')}
+                    color="primary"
+                    style={{float: 'right', marginRight: 15}}
+                    onClick={() => dispatch(postReport({matchId: match.id, text, playerId: user.playerId}))}
+                  />
+                </div>
+              </div>
+            ) : readonlyReport}
+          </div>
+        ) : readonlyReport}
+      </div>
+    );
+  } else if (text) {
+    reportText = readonlyReport;
   }
 
-  _reportTextChange(text) {
-    this.setState({text});
+  if (!canPostReport && !text && !showComments) {
+    reportText = t('match.report.noReport');
   }
 
-  _onPostReport() {
-    this.props.postReport(this.props.match.id, this.state.text);
+  let comments: any;
+  if (showComments) {
+    comments = (
+      <div>
+        {text || reportFormOpen ? (
+          <h3 style={{marginTop: reportFormOpen ? 55 : 0}}>
+            {t('match.report.commentsTitle')}
+          </h3>
+        ) : null}
+        {match.comments.map(c => (
+          <Comment key={c.id} comment={c} />
+        ))}
+        {commentFormOpen ? (
+          <div>
+            {user.isSystem() ? (
+              <div style={{marginBottom: 12, paddingRight: 15}}>
+                <PlayerAutoComplete
+                  selectPlayer={playerId => typeof playerId === 'number' && setComment({...comment, playerId})}
+                  label={t('system.playerSelect')}
+                />
+              </div>
+            ) : null}
+            <QuillEditor
+              text={comment.text}
+              style={{height: editorHeight, marginRight: 15}}
+              onChange={txt => setComment({...comment, text: txt})}
+              readOnly={!canComment}
+            />
+          </div>
+        ) : commentImageFormOpen ? (
+          <div style={{marginBottom: 12}}>
+            <ImageDropzone fileUploaded={fileName => onCommentImageUploaded(fileName)} type="match" />
+          </div>
+        ) : null}
+
+        {user.playerId ? (
+          <div style={{width: '100%', paddingTop: commentFormOpen ? 50 : 0}}>
+            {commentFormOpen && (
+              <FormControlLabel
+                style={viewport.width > 450 ? {float: 'right', textAlign: 'right'} : {}}
+                control={(
+                  <Checkbox
+                    checked={!comment.hidden}
+                    onChange={() => setComment({...comment, hidden: !comment.hidden})}
+                    value="hidden"
+                    color="primary"
+                  />
+                )}
+                label={t('match.report.commentVisible')}
+              />
+            )}
+
+            <MaterialButton
+              label={t(`match.report.commentsOpenForm${commentFormOpen ? 'Confirm' : ''}`)}
+              color="primary"
+              variant={commentFormOpen ? 'contained' : 'outlined'}
+              onClick={() => {
+                if (commentFormOpen) {
+                  if (comment.text) {
+                    dispatch(postComment(comment));
+                    setComment(getEmptyComment(match.id, user.playerId));
+                    setCommentFormOpen(false);
+                  }
+                } else {
+                  setCommentFormOpen(true);
+                }
+              }}
+            />
+
+
+            <button type="button" className="btn btn-outline-primary" style={{marginLeft: 15}} onClick={openPictureForm}>
+              <Icon fa="fa fa-picture-o" translate tooltip="match.report.commentsPhotoTooltip" tooltipPlacement="right" />
+            </button>
+          </div>
+        ) : null}
+      </div>
+    );
   }
 
-  _onReportFormOpen() {
-    this.setState(prevState => ({reportFormOpen: !prevState.reportFormOpen}));
-  }
+  return (
+    <div className="match-card-tab-content">
+      <h3>
+        {t('match.report.title')}
+        {canPostReport ? (
+          <small>
+            <EditIcon
+              tooltip={t('match.report.editTooltip')}
+              onClick={() => setReportFormOpen(!reportFormOpen)}
+              style={{marginLeft: 5, color: '#D3D3D3'}}
+            />
+          </small>
+        ) : null}
+      </h3>
+      {reportText}
+      {comments}
+    </div>
+  );
+};
 
-  _onCommentForm() {
-    if (this.state.commentFormOpen) {
-      if (this.state.comment.text) {
-        this.props.postComment(this.state.comment);
-        this.setState({comment: getEmptyComment(this.props.match.id, this.props.user.playerId), commentFormOpen: false});
-      }
-    } else {
-      this.setState({commentFormOpen: true});
-    }
-  }
-
-  _reportCommentChange(text/* , medium */) {
-    this.setState(prevState => ({comment: {...prevState.comment, text}}));
-  }
-
-  _reportHiddenChange() {
-    this.setState(prevState => ({comment: {...prevState.comment, hidden: !prevState.comment.hidden}}));
-  }
-
-  _reportCommentPlayerChange(playerId) {
-    this.setState(prevState => ({comment: {...prevState.comment, playerId}}));
-  }
-}
 
 
 type CommentProps = {
   comment: IMatchComment;
-  deleteComment: Function;
 }
 
-type CommentState = {
-  hover: boolean;
-}
+const Comment = ({comment}: CommentProps) => {
+  const [hover, setHover] = useState(false);
+  const user = useTtcSelector(selectUser);
+  const dispatch = useTtcDispatch();
 
-class Comment extends Component<CommentProps, CommentState> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      hover: false,
-    };
-  }
+  const canDeleteComment = user.isAdmin() || comment.playerId === user.playerId;
+  const poster = storeUtil.getPlayer(comment.playerId) || {alias: 'SYSTEM'};
 
-  render() {
-    const {comment} = this.props;
-    const poster = storeUtil.getPlayer(comment.playerId) || {alias: 'SYSTEM'};
-    const canDeleteComment = !!this.props.deleteComment;
+  return (
+    <div
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={({padding: 6, marginRight: 10, ...(hover ? {backgroundColor: '#EEE9E9'} : {})})}
+    >
 
-    return (
-      <div
-        onMouseEnter={() => this.setState({hover: true})}
-        onMouseLeave={() => this.setState({hover: false})}
-        style={({padding: 6, marginRight: 10, ...(this.state.hover ? {backgroundColor: '#EEE9E9'} : {})})}
-      >
-
-        <div style={{display: 'inline-block', width: '100%'}}>
-          {this.state.hover && canDeleteComment ? (
-            <div className="pull-right" style={{marginTop: 6}}>
-              <Icon fa="fa fa-trash-o fa-lg" onClick={this.props.deleteComment.bind(this, comment.id)} />
-            </div>
-          ) : null}
-          {comment.hidden ? <Icon fa="fa fa-user-secret" translate tooltip="match.report.commentHidden" /> : null}
-          <strong style={{marginRight: 6}}>{poster.alias}</strong>
-          <TimeAgo date={comment.postedOn} style={{color: '#999'}} />
-        </div>
-
-        {comment.imageUrl ? (
-          <div><img src={comment.imageUrl} style={{maxWidth: '95%'}} alt="Door de speler opgeladen" /></div>
-        ) : (
-          <div dangerouslySetInnerHTML={{__html: comment.text}} />
-        )}
+      <div style={{display: 'inline-block', width: '100%'}}>
+        {hover && canDeleteComment ? (
+          <div className="pull-right" style={{marginTop: 6}}>
+            <Icon fa="fa fa-trash-o fa-lg" onClick={() => dispatch(deleteComment({id: comment.id}))} />
+          </div>
+        ) : null}
+        {comment.hidden ? <Icon fa="fa fa-user-secret" translate tooltip="match.report.commentHidden" /> : null}
+        <strong style={{marginRight: 6}}>{poster.alias}</strong>
+        <TimeAgo date={comment.postedOn} />
       </div>
-    );
-  }
-}
 
-export default connect(() => ({}), matchActions)(MatchReport);
+      {comment.imageUrl ? (
+        <div><img src={comment.imageUrl} style={{maxWidth: '95%'}} alt="Door de speler opgeladen" /></div>
+      ) : (
+        <div dangerouslySetInnerHTML={{__html: comment.text}} /> // eslint-disable-line
+      )}
+    </div>
+  );
+};

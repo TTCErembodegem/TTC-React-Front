@@ -1,9 +1,17 @@
 import React from 'react';
 import moment from 'moment';
-import PropTypes from '../PropTypes';
 import {ButtonStack} from '../controls/Buttons/ButtonStack';
+import { t } from '../../locales';
+import { IStoreMatchCommon } from '../../models/model-interfaces';
 
-export const SwitchBetweenFirstAndLastRoundButton = ({t, setState, matchesFilter}) => (
+type Filters = 'all' | 'first' | 'last';
+
+type SwitchBetweenFirstAndLastRoundButtonProps = {
+  setState: Function,
+  matchesFilter: Filters,
+};
+
+export const SwitchBetweenFirstAndLastRoundButton = ({setState, matchesFilter}: SwitchBetweenFirstAndLastRoundButtonProps) => (
   <div style={{textAlign: 'center'}}>
     <ButtonStack
       config={[
@@ -21,17 +29,8 @@ export const SwitchBetweenFirstAndLastRoundButton = ({t, setState, matchesFilter
   </div>
 );
 
-SwitchBetweenFirstAndLastRoundButton.propTypes = {
-  t: PropTypes.func.isRequired,
-  setState: PropTypes.func.isRequired,
-  matchesFilter: PropTypes.string.isRequired,
-};
 
-
-
-
-
-export function getFirstOrLastMatches(allMatchesToCome, filter) {
+export function getFirstOrLastMatches(allMatchesToCome: IStoreMatchCommon[], filter: Filters) {
   if (filter === 'all') {
     return {
       matches: allMatchesToCome,

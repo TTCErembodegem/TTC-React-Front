@@ -1,63 +1,50 @@
-import React, {Component} from 'react';
+import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
-import PropTypes, {connect} from '../PropTypes';
-import * as userActions from '../../actions/userActions';
-import {MaterialButton} from '../controls/Buttons/MaterialButton';
+import { MaterialButton } from '../controls/Buttons/MaterialButton';
+import { t } from '../../locales';
+import { selectUser, useTtcDispatch, useTtcSelector } from '../../utils/hooks/storeHooks';
+import { changePassword } from '../../reducers/userReducer';
 
-class ChangePassword extends Component {
-  static contextTypes = PropTypes.contextTypes;
+export const ChangePassword = () => {
+  const user = useTtcSelector(selectUser);
+  const [oldPassword, setOld] = useState('');
+  const [newPassword, setNew] = useState('');
+  const dispatch = useTtcDispatch();
 
-  static propTypes = {
-    user: PropTypes.UserModel.isRequired,
-    changePassword: PropTypes.func.isRequired,
-  }
+  const paperStyle: React.CSSProperties = {
+    marginLeft: 20,
+    textAlign: 'center',
+    display: 'inline-block',
+  };
+  return (
+    <div style={paperStyle}>
+      <h3>{t('password.changeTitle')}</h3>
 
-  constructor() {
-    super();
-    this.state = {
-      oldpassword: null,
-      newpassword: null,
-    };
-  }
+      <TextField
+        label={t('password.oldPassword')}
+        type="password"
+        onChange={e => setOld(e.target.value)}
+      />
 
-  render() {
-    const paperStyle = {
-      marginLeft: 20,
-      textAlign: 'center',
-      display: 'inline-block',
-    };
-    return (
-      <div style={paperStyle}>
-        <h3>{this.context.t('password.changeTitle')}</h3>
+      <br />
 
-        <TextField
-          label={this.context.t('password.oldPassword')}
-          type="password"
-          onChange={e => this.setState({oldpassword: e.target.value})}
-        />
+      <TextField
+        label={t('password.newPassword')}
+        type="password"
+        onChange={e => setNew(e.target.value)}
+      />
 
-        <br />
+      <br />
 
-        <TextField
-          label={this.context.t('password.newPassword')}
-          type="password"
-          onChange={e => this.setState({newpassword: e.target.value})}
-        />
+      <MaterialButton
+        variant="contained"
+        label={t('profile.editPassword')}
+        color="primary"
+        style={{marginTop: 15}}
+        onClick={() => dispatch(changePassword({playerId: user.playerId, oldPassword, newPassword}))}
+        disabled={!oldPassword || !newPassword}
+      />
 
-        <br />
-
-        <MaterialButton
-          variant="contained"
-          label={this.context.t('profile.editPassword')}
-          primary
-          style={{marginTop: 15}}
-          onClick={() => this.props.changePassword(this.props.user.playerId, this.state)}
-          disabled={!this.state.oldpassword && !this.state.newpassword}
-        />
-
-      </div>
-    );
-  }
-}
-
-export default connect(state => ({user: state.user}), userActions)(ChangePassword);
+    </div>
+  );
+};

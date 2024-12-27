@@ -1,29 +1,27 @@
 import React, {Component} from 'react';
 import TextField from '@mui/material/TextField';
-import PropTypes, {connect} from '../PropTypes';
-import * as userActions from '../../actions/userActions';
-
-import PlayerAutoComplete from '../players/PlayerAutoComplete';
+import { connect } from 'react-redux';
+import {PlayerAutoComplete} from '../players/PlayerAutoComplete';
 import {MaterialButton} from '../controls/Buttons/MaterialButton';
+import { t } from '../../locales';
+import { adminSetNewPassword } from '../../reducers/userReducer';
 
 type AdminChangePasswordProps = {
-  adminSetNewPassword: Function;
-  onEnd: Function;
+  adminSetNewPassword: typeof adminSetNewPassword;
+  onEnd: () => void;
 }
 
 type AdminChangePasswordState = {
-  playerId: null | number;
-  newPassword: null | string;
+  playerId: number | string;
+  newPassword: string;
 }
 
 class AdminChangePassword extends Component<AdminChangePasswordProps, AdminChangePasswordState> {
-  static contextTypes = PropTypes.contextTypes;
-
   constructor(props) {
     super(props);
     this.state = {
-      playerId: null,
-      newPassword: null,
+      playerId: '',
+      newPassword: '',
     };
   }
 
@@ -35,17 +33,17 @@ class AdminChangePassword extends Component<AdminChangePasswordProps, AdminChang
     };
     return (
       <div style={paperStyle}>
-        <h3>{this.context.t('password.changeTitle')}</h3>
+        <h3>{t('password.changeTitle')}</h3>
 
         <PlayerAutoComplete
           selectPlayer={playerId => this.setState({playerId})}
-          placeholder={this.context.t('login.loginName')}
+          label={t('login.loginName')}
         />
 
         <br />
 
         <TextField
-          label={this.context.t('password.newPassword')}
+          label={t('password.newPassword')}
           type="password"
           onChange={e => this.setState({newPassword: e.target.value})}
         />
@@ -54,8 +52,8 @@ class AdminChangePassword extends Component<AdminChangePasswordProps, AdminChang
 
         <MaterialButton
           variant="contained"
-          label={this.context.t('profile.editPassword')}
-          primary
+          label={t('profile.editPassword')}
+          color="primary"
           style={{marginTop: 15}}
           onClick={() => {
             this.props.adminSetNewPassword(this.state);
@@ -68,4 +66,8 @@ class AdminChangePassword extends Component<AdminChangePasswordProps, AdminChang
   }
 }
 
-export default connect(() => ({}), userActions)(AdminChangePassword);
+const mapDispatchToProps = (dispatch: any) => ({
+  adminSetNewPassword: (data: Parameters<typeof adminSetNewPassword>[0]) => dispatch(adminSetNewPassword(data)),
+});
+
+export default connect(null, mapDispatchToProps)(AdminChangePassword);

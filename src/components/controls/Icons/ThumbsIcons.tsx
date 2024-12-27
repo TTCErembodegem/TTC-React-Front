@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import PropTypes from '../../PropTypes';
 import {Icon, IconProps} from './Icon';
+import {t} from '../../../locales';
 
 
-export const ThumbsUpIcon = ({style, ...props}: IconProps) => (
+export const ThumbsUpIcon = ({style, ...props}: Omit<IconProps, 'fa'>) => (
   <Icon
     fa="fa fa-thumbs-o-up"
     color="#D3D3D3"
@@ -14,7 +14,7 @@ export const ThumbsUpIcon = ({style, ...props}: IconProps) => (
   />
 );
 
-export const ThumbsDownIcon = ({style, ...props}: IconProps) => (
+export const ThumbsDownIcon = ({style, ...props}: Omit<IconProps, 'fa'>) => (
   <Icon
     fa="fa fa-thumbs-o-down"
     color="#D3D3D3"
@@ -27,11 +27,8 @@ export const ThumbsDownIcon = ({style, ...props}: IconProps) => (
 
 
 
-export class ThumbsGreatIcon extends Component<IconProps> {
-  static contextTypes = PropTypes.contextTypes;
-
+export class ThumbsGreatIcon extends Component<Omit<IconProps, 'fa'>> {
   render() {
-    const {t} = this.context;
     return (
       <Icon
         fa="fa fa-thumbs-up"

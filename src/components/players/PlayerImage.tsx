@@ -5,6 +5,8 @@ type PlayerImageProps = {
   playerId: number;
   center?: boolean;
   shape?: 'rounded' | 'thumbnail' | 'circle';
+  className?: string;
+  style?: React.CSSProperties;
 }
 
 type PlayerImageState = {
@@ -32,7 +34,7 @@ export default class PlayerImage extends Component<PlayerImageProps, PlayerImage
   }
 
   render() {
-    const {center, playerId, shape, ...props} = this.props; // eslint-disable-line
+    const {center, playerId, shape, ...props} = this.props;
     const align = center ? 'center' : undefined;
     if (!this.state.isLoaded) {
       return (

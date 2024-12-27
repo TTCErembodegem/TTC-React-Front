@@ -1,19 +1,25 @@
 import React from 'react';
 import Table from 'react-bootstrap/Table';
 import cn from 'classnames';
-import PropTypes from '../PropTypes';
 import {OwnClubId} from '../../models/ClubModel';
 import {OpponentLink} from './controls/OpponentLink';
+import { t } from '../../locales';
+import { ITeam } from '../../models/model-interfaces';
 
-export const DivisionRanking = ({team, t}) => (
-  <Table condensed hover>
+
+type DivisionRankingProps = {
+  team: ITeam;
+};
+
+export const DivisionRanking = ({team}: DivisionRankingProps) => (
+  <Table size="sm" hover>
     <thead>
       <tr>
         <th>{t('teamCalendar.position')}</th>
         <th>{t('teamCalendar.name')}</th>
-        <th className="hidden-xs">{t('teamCalendar.matchesWon')}</th>
-        <th className="hidden-xs">{t('teamCalendar.matchesLost')}</th>
-        <th className="hidden-xs">{t('teamCalendar.matchesDraw')}</th>
+        <th className="d-none d-sm-table-cell">{t('teamCalendar.matchesWon')}</th>
+        <th className="d-none d-sm-table-cell">{t('teamCalendar.matchesLost')}</th>
+        <th className="d-none d-sm-table-cell">{t('teamCalendar.matchesDraw')}</th>
         <th>{t('teamCalendar.points')}</th>
       </tr>
     </thead>
@@ -27,17 +33,12 @@ export const DivisionRanking = ({team, t}) => (
           <td>
             <OpponentLink team={team} opponent={{clubId: teamRanking.clubId, teamCode: teamRanking.teamCode}} withPosition={false} />
           </td>
-          <td className="hidden-xs">{teamRanking.gamesWon}</td>
-          <td className="hidden-xs">{teamRanking.gamesLost}</td>
-          <td className="hidden-xs">{teamRanking.gamesDraw}</td>
+          <td className="d-none d-sm-table-cell">{teamRanking.gamesWon}</td>
+          <td className="d-none d-sm-table-cell">{teamRanking.gamesLost}</td>
+          <td className="d-none d-sm-table-cell">{teamRanking.gamesDraw}</td>
           <td>{teamRanking.points}</td>
         </tr>
       ))}
     </tbody>
   </Table>
 );
-
-DivisionRanking.propTypes = {
-  t: PropTypes.func.isRequired,
-  team: PropTypes.TeamModel.isRequired,
-};

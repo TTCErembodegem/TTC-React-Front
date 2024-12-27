@@ -1,12 +1,18 @@
 import { useState, useEffect } from 'react';
 
+export type Viewport = {
+  width: number;
+  height: number;
+}
+
 export const useViewport = () => {
-  const [width, setWidth] = useState(0);
-  const [height, setHeight] = useState(0);
+  const [width, setWidth] = useState(window.innerWidth);
+  const [height, setHeight] = useState(window.innerHeight);
 
   useEffect(() => {
     const setSizes = () => {
       if (window.innerWidth !== width) {
+        // console.log('width', window.innerWidth);
         setWidth(window.innerWidth);
       }
 

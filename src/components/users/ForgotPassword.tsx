@@ -1,121 +1,83 @@
-import React, {Component} from 'react';
-import {Route} from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
-import PropTypes, {connect} from '../PropTypes';
-import * as loginActions from '../../actions/userActions';
-import {paperStyle} from './Login';
-import PlayerAutoComplete from '../players/PlayerAutoComplete';
-import {MaterialButton} from '../controls/Buttons/MaterialButton';
+import { paperStyle } from './Login';
+import { PlayerAutoComplete } from '../players/PlayerAutoComplete';
+import { MaterialButton } from '../controls/Buttons/MaterialButton';
+import { t } from '../../locales';
+import { requestResetPasswordLink, setNewPasswordFromGuid } from '../../reducers/userReducer';
+import { useTtcDispatch } from '../../utils/hooks/storeHooks';
 
 
-class ForgotPassword extends Component {
-  static contextTypes = PropTypes.contextTypes;
+export const ForgotPassword = () => {
+  const [playerId, setPlayerId] = useState<number | 'system'>(0);
+  const [email, setEmail] = useState('');
+  const navigate = useNavigate();
+  const dispatch = useTtcDispatch();
 
-  static propTypes = {
-    requestResetPasswordLink: PropTypes.func.isRequired,
-  }
+  return (
+    <Paper style={{...paperStyle, height: 280}}>
+      <h3>{t('password.newPassword')}</h3>
+      <PlayerAutoComplete
+        selectPlayer={id => setPlayerId(id)}
+        label={t('login.loginName')}
+      />
 
-  constructor() {
-    super();
-    this.state = {
-      playerId: null,
-      email: null,
-    };
-  }
+      <br />
 
-  render() {
-    const {t} = this.context;
-    return (
-      <Paper style={{...paperStyle, height: 280}}>
-        <h3>{t('password.newPassword')}</h3>
-        <PlayerAutoComplete
-          selectPlayer={id => this.setState({playerId: id})}
-          label={t('login.loginName')}
-        />
+      <TextField
+        label={t('player.email')}
+        onChange={e => setEmail(e.target.value)}
+        fullWidth
+      />
 
-        <br />
+      <br />
+      <br />
 
-        <TextField
-          label={this.context.t('player.email')}
-          onChange={e => this.setState({email: e.target.value})}
-          fullWidth
-        />
-
-        <br />
-        <br />
-
-        <MaterialButton
-          variant="contained"
-          label={t('password.sendNewButton')}
-          primary
-          style={{marginTop: 15, width: '100%'}}
-          onClick={() => this.props.requestResetPasswordLink(this.state)}
-          disabled={!this.state.playerId && !this.state.email}
-        />
-
-      </Paper>
-    );
-  }
-}
-
-export default connect(() => ({}), loginActions)(ForgotPassword);
+      <MaterialButton
+        variant="contained"
+        label={t('password.sendNewButton')}
+        color="primary"
+        style={{marginTop: 15, width: '100%'}}
+        onClick={() => dispatch(requestResetPasswordLink({email, playerId, navigate}))}
+        disabled={!playerId || !email}
+      />
+    </Paper>
+  );
+};
 
 
+export const ForgotPasswordReset = () => {
+  const params = useParams();
+  const [playerId, setPlayerId] = useState<number>(0);
+  const [password, setPassword] = useState('');
+  const dispatch = useTtcDispatch();
+  const navigate = useNavigate();
 
+  return (
+    <Paper style={{...paperStyle, height: 210}}>
+      <br />
+      <PlayerAutoComplete
+        selectPlayer={id => setPlayerId(id === 'system' ? -1 : id)}
+        label={t('login.loginName')}
+      />
 
-class ForgotPasswordResetComponent extends Component {
-  static contextTypes = PropTypes.contextTypes;
+      <TextField
+        label={t('password.newPassword')}
+        type="password"
+        onChange={e => setPassword(e.target.value)}
+        fullWidth
+      />
 
-  static propTypes = {
-    setNewPasswordFromGuid: PropTypes.func.isRequired,
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        guid: PropTypes.string.isRequired,
-      }),
-    }),
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      guid: props.match.params.guid,
-      playerId: null,
-      password: null,
-    };
-  }
-
-  render() {
-    const {t} = this.context;
-    return (
-      <Paper style={{...paperStyle, height: 210}}>
-        <br />
-        <PlayerAutoComplete
-          selectPlayer={id => this.setState({playerId: id})}
-          label={t('login.loginName')}
-        />
-
-        <TextField
-          label={this.context.t('password.newPassword')}
-          type="password"
-          onChange={e => this.setState({password: e.target.value})}
-          fullWidth
-        />
-
-        <Route render={({history}) => (
-          <MaterialButton
-            variant="contained"
-            label={t('password.changeTitle')}
-            primary
-            style={{marginTop: 15}}
-            onClick={() => this.props.setNewPasswordFromGuid(this.state).then(() => history.push('/'))}
-            disabled={!this.state.playerId && !this.state.password}
-          />
-        )}
-        />
-      </Paper>
-    );
-  }
-}
-
-export const ForgotPasswordReset = connect(() => ({}), loginActions)(ForgotPasswordResetComponent);
+      <MaterialButton
+        variant="contained"
+        label={t('password.changeTitle')}
+        color="primary"
+        style={{marginTop: 15}}
+        onClick={() => dispatch(setNewPasswordFromGuid({playerId, password, guid: params.guid || '', navigate}))}
+        disabled={!playerId || !password}
+      />
+    </Paper>
+  );
+};

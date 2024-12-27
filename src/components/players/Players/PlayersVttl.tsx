@@ -1,56 +1,51 @@
-import React, {Component} from 'react';
+import React from 'react';
 import cn from 'classnames';
 import Table from 'react-bootstrap/Table';
-import PropTypes, {connect} from '../../PropTypes';
 import {PlayerFrenoyLink} from '../PlayerCard';
 import {PlayerPlayingStyleForm} from '../PlayerPlayingStyle';
 import {PlayerLink} from '../controls/PlayerLink';
+import { t } from '../../../locales';
+import { selectPlayers, useTtcSelector } from '../../../utils/hooks/storeHooks';
 
-class PlayersVttlComponent extends Component {
-  static contextTypes = PropTypes.contextTypes;
+type PlayersVttlProps = {
+  filter: string;
+};
 
-  static propTypes = {
-    players: PropTypes.PlayerModelList.isRequired,
-    filter: PropTypes.string,
-  };
-
-  render() {
-    let players = this.props.players.filter(x => x.vttl);
-    if (this.props.filter) {
-      players = players.filter(x => x.name.toLowerCase().includes(this.props.filter));
-    }
-    players = players.sort((a, b) => a.vttl.position - b.vttl.position);
-    return (
-      <Table condensed hover>
-        <thead>
-          <tr>
-            <th>{this.context.t('comp.index')}</th>
-            <th>{this.context.t('comp.vttl.uniqueIndex')}</th>
-            <th>{this.context.t('player.name')}</th>
-            <th><span className="hidden-xs">{this.context.t('comp.ranking')}</span></th>
-            <th className="hidden-xs">{this.context.t('player.style')}</th>
-            <th className="hidden-xs">{this.context.t('player.bestStroke')}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {players.map(ply => (
-            <tr key={ply.id} className={cn({'match-won': ply.isMe()})}>
-              <td>{ply.vttl.rankingIndex}</td>
-              <td>{ply.vttl.uniqueIndex}</td>
-              <td className="hidden-xs"><PlayerLink player={ply} /></td>
-              <td className="visible-xs"><PlayerLink player={ply} alias /></td>
-              <td>{ply.vttl.ranking} <PlayerFrenoyLink comp={ply.vttl} /></td>
-              <td className="hidden-xs">{ply.style.name}</td>
-              <td className="hidden-xs">
-                <PlayerPlayingStyleForm player={ply} iconStyle="edit-icon" style={{color: '#d3d3d3', float: 'right'}} />
-                {ply.style.bestStroke}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-    );
+export const PlayersVttl = ({filter}: PlayersVttlProps) => {
+  const allPlayers = useTtcSelector(selectPlayers);
+  let players = allPlayers.filter(x => x.vttl);
+  if (filter) {
+    players = players.filter(x => x.name.toLowerCase().includes(filter));
   }
-}
-
-export const PlayersVttl = connect(state => ({players: state.players}))(PlayersVttlComponent);
+  players = players.sort((a, b) => a.vttl!.position - b.vttl!.position);
+  return (
+    <Table size="sm" hover>
+      <thead>
+        <tr>
+          <th>{t('comp.index')}</th>
+          <th>{t('comp.vttl.uniqueIndex')}</th>
+          <th>{t('player.name')}</th>
+          <th><span className="d-none d-sm-table-cell">{t('comp.ranking')}</span></th>
+          <th className="d-none d-sm-table-cell">{t('player.style')}</th>
+          <th className="d-none d-md-table-cell">{t('player.bestStroke')}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {players.map(ply => (
+          <tr key={ply.id} className={cn({'match-won': ply.isMe()})}>
+            <td>{ply.vttl!.rankingIndex}</td>
+            <td>{ply.vttl!.uniqueIndex}</td>
+            <td className="d-none d-sm-table-cell"><PlayerLink player={ply} /></td>
+            <td className="d-table-cell d-sm-none"><PlayerLink player={ply} alias /></td>
+            <td>{ply.vttl!.ranking} <PlayerFrenoyLink comp={ply.vttl!} /></td>
+            <td className="d-none d-sm-table-cell">{ply.style.name}</td>
+            <td className="d-none d-md-table-cell">
+              <PlayerPlayingStyleForm player={ply} iconStyle="edit-icon" style={{color: '#d3d3d3', float: 'right'}} />
+              {ply.style.bestStroke}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </Table>
+  );
+};

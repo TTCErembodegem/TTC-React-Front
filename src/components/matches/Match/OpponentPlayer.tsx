@@ -5,13 +5,13 @@ import {Competition, IMatchPlayer, Translator} from '../../../models/model-inter
 type OpponentPlayerLabelProps = {
   player: IMatchPlayer;
   competition: Competition;
-  fullName: boolean;
+  fullName?: boolean;
 }
 
 export class OpponentPlayerLabel extends Component<OpponentPlayerLabelProps> {
   static defaultProps = {
     fullName: true,
-  }
+  };
 
   render() {
     const {competition, player, fullName} = this.props;

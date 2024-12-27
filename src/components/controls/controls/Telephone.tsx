@@ -1,24 +1,25 @@
 import React, {Component} from 'react';
 import {Icon} from '../Icons/Icon';
 import {displayMobile} from '../../../models/PlayerModel';
-import {IPlayer} from '../../../models/model-interfaces';
+import {IStorePlayer} from '../../../models/model-interfaces';
 
-function callFormat(n) {
+function callFormat(n: string) {
   return n;
   // return '+32' + n.substr(1);
 }
 
 type TelephoneProps = {
   number?: string,
-  player?: IPlayer,
-  hideIcon: boolean,
+  player?: IStorePlayer,
+  hideIcon?: boolean,
   noLink?: boolean,
+  style?: React.CSSProperties,
 }
 
 export class Telephone extends Component<TelephoneProps> {
   static defaultProps = {
     hideIcon: false,
-  }
+  };
 
   render() {
     if (!this.props.number && !this.props.player) {

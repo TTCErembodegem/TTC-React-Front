@@ -1,97 +1,100 @@
 import React, {Component} from 'react';
-import PropTypes, {connect, withContext, storeUtil} from '../PropTypes';
-import {uploadPlayer} from '../../actions/userActions';
+import { connect } from 'react-redux';
 import {MaterialButton} from '../controls/Buttons/MaterialButton';
 import ImageEditor from '../controls/image/ImageEditor';
 import {playerUtils} from '../../models/PlayerModel';
 import ImageDropzone from '../controls/image/ImageDropzone';
-import PlayerAutoComplete from '../players/PlayerAutoComplete';
+import {PlayerAutoComplete} from '../players/PlayerAutoComplete';
 import PlayerImage from '../players/PlayerImage';
 import PlayerAvatar from '../players/PlayerAvatar';
 import {IUser} from '../../models/UserModel';
-
-type ProfilePhotoAvatarFormProps = {
-  admin?: boolean;
-}
-
-export const ProfilePhotoAvatarForm = ({admin, ...props}: ProfilePhotoAvatarFormProps) => (
-  <ProfilePhotoForm {...props} admin={admin} size={playerUtils.getPlayerAvatarImageSize()} type="player-avatar" borderRadius={19} />
-);
+import { t } from '../../locales';
+import storeUtil from '../../storeUtil';
+import { uploadPlayer } from '../../reducers/userReducer';
+import { selectUser, useTtcSelector } from '../../utils/hooks/storeHooks';
 
 
+export const ProfilePhotoAvatarForm = () => {
+  const user = useTtcSelector(selectUser);
+  return (
+    <ProfilePhotoFormComponent
+      user={user}
+      size={playerUtils.getPlayerAvatarImageSize()}
+      type="player-avatar"
+      borderRadius={19}
+    />
+  );
+};
 
-type ProfilePhotoFormProps = ProfilePhotoAvatarFormProps & {
-  size: {width: number, height: number},
-  type: 'player-photo' | 'player-avatar',
+
+
+type ProfilePhotoFormProps = {
+  size?: {width: number, height: number},
+  type?: 'player-photo' | 'player-avatar',
   user: IUser;
-  uploadPlayer: Function,
-  borderRadius: number;
+  uploadPlayer: typeof uploadPlayer,
+  borderRadius?: number;
 }
 
 type ProfilePhotoFormState = {
-  fileName: null | string;
-  preview: null | string;
-  croppingRect: null | string;
-  playerId: null | number;
+  fileName: string;
+  preview: string;
+  playerId: number;
 }
 
 
 class ProfilePhotoForm extends Component<ProfilePhotoFormProps, ProfilePhotoFormState> {
-  static contextTypes = PropTypes.contextTypes;
-
   static defaultProps = {
     size: playerUtils.getPlayerImageSize(),
-    type: 'player-photo',
+    type: 'player-photo' as const,
     borderRadius: 0,
-    admin: false,
-  }
+  };
 
   constructor(props) {
     super(props);
     this.state = {
-      fileName: null,
-      preview: null,
-      croppingRect: null,
-      playerId: null,
+      fileName: '',
+      preview: '',
+      playerId: 0,
     };
   }
 
-  _updateImage(preview, croppingRect) {
-    this.setState({preview, croppingRect});
-  }
-
   _saveImage() {
-    this.props.uploadPlayer(this.state.preview, this.state.playerId || this.props.user.playerId, this.props.type);
+    this.props.uploadPlayer({
+      imageBase64: this.state.preview,
+      playerId: this.state.playerId || this.props.user.playerId,
+      type: this.props.type || '',
+    });
   }
 
   render() {
-    const {t} = this.context;
     const tmpFileName = this.state.fileName;
     return (
       <div style={{marginBottom: 10, paddingLeft: 10}} className="row">
-        <div className="col-sm-6">
+        <div className="col-xs-10 col-sm-8 col-lg-6">
           <h3>
             {t('photos.uploadNewTitle')}
-            <small> ({this.props.size.width}px x {this.props.size.height}px)</small>
+            <small> ({this.props.size!.width}px x {this.props.size!.height}px)</small>
           </h3>
 
-          {this.props.admin ? (
+          {this.props.user.isAdmin() ? (
             <PlayerAutoComplete
-              selectPlayer={playerId => this.setState({playerId})}
-              placeholder={this.context.t('system.playerSelect')}
+              selectPlayer={playerId => this.setState({playerId: playerId === 'system' ? -1 : playerId})}
+              label={t('system.playerSelect')}
             />
           ) : null}
 
-          <ImageDropzone t={t} fileUploaded={fileName => this.setState({fileName})} />
+          <div style={{marginTop: 16}}>
+            <ImageDropzone fileUploaded={fileName => this.setState({fileName})} />
+          </div>
           {this.state.fileName ? (
             <div>
               <h3>{t('photos.adjustTitle')}</h3>
               <ImageEditor
-                t={t}
-                size={this.props.size}
-                image={tmpFileName}
-                borderRadius={this.props.borderRadius}
-                updateImage={(preview, croppingRect) => this.setState({preview: preview.toDataURL(), croppingRect})}
+                size={this.props.size!}
+                image={tmpFileName || ''}
+                borderRadius={this.props.borderRadius!}
+                updateImage={(preview, croppingRect) => this.setState({preview: preview.toDataURL()})}
               />
             </div>
           ) : null}
@@ -102,15 +105,15 @@ class ProfilePhotoForm extends Component<ProfilePhotoFormProps, ProfilePhotoForm
               <img
                 src={this.state.preview}
                 style={{marginTop: 7, borderRadius: 19}}
-                width={this.props.size.width}
-                height={this.props.size.height}
+                width={this.props.size!.width}
+                height={this.props.size!.height}
                 alt="Preview"
               />
 
               <div className="caption" style={{textAlign: 'center', marginTop: 40}}>
                 <MaterialButton
                   label={t('photos.save')}
-                  primary
+                  color="primary"
                   style={{marginTop: -40}}
                   onClick={() => this._saveImage()}
                 />
@@ -118,7 +121,7 @@ class ProfilePhotoForm extends Component<ProfilePhotoFormProps, ProfilePhotoForm
             </div>
           </div>
         ) : null}
-        {!this.props.admin ? (
+        {!this.props.user.isAdmin() ? (
           <div className="col-sm-6">
             <h3>{t('photos.existingTitle')}</h3>
             {this.props.type === 'player-photo' ? (
@@ -133,4 +136,9 @@ class ProfilePhotoForm extends Component<ProfilePhotoFormProps, ProfilePhotoForm
   }
 }
 
-export default withContext(connect(state => ({user: state.user}), {uploadPlayer})(ProfilePhotoForm));
+const mapDispatchToProps = (dispatch: any) => ({
+  uploadPlayer: (data: Parameters<typeof uploadPlayer>[0]) => dispatch(uploadPlayer(data)),
+});
+
+const ProfilePhotoFormComponent = connect(null, mapDispatchToProps)(ProfilePhotoForm);
+export default ProfilePhotoFormComponent;

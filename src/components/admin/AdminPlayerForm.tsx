@@ -1,29 +1,51 @@
+/* eslint-disable react/no-unused-state */
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
+import { MenuItem } from '@mui/material';
 import Card from 'react-bootstrap/Card';
-import Dropdown from 'react-bootstrap/Dropdown';
-import PropTypes, {connect} from '../PropTypes';
-import * as playerActions from '../../actions/playerActions';
-import {userRoles} from '../../models/UserModel';
-import PlayerModel from '../../models/PlayerModel';
+import {UserRoles, userRoles} from '../../models/UserModel';
 import {MaterialButton} from '../controls/Buttons/MaterialButton';
 import PlayerStyleAutocomplete from '../players/PlayerStyleAutocomplete';
-import {IPlayer} from '../../models/model-interfaces';
+import {IPlayer, IStorePlayer} from '../../models/model-interfaces';
+import { t } from '../../locales';
+import { updatePlayer } from '../../reducers/playersReducer';
 
 type AdminPlayerFormProps = {
-  player: IPlayer;
-  updatePlayer: Function;
-  onEnd: Function;
+  player?: IPlayer;
+  updatePlayer: typeof updatePlayer;
+  onEnd: () => void;
 }
 
-class AdminPlayerForm extends Component<AdminPlayerFormProps, IPlayer> {
-  static contextTypes = PropTypes.contextTypes;
-
+class AdminPlayerForm extends Component<AdminPlayerFormProps, IStorePlayer> {
   constructor(props) {
     super(props);
     if (!props.player) {
-      this.state = new PlayerModel();
+      this.state = {
+        alias: '',
+        contact: {
+          playerId: 0,
+          email: '',
+          mobile: '',
+          address: '',
+          city: '',
+        },
+        id: 0,
+        active: true,
+        firstName: '',
+        lastName: '',
+        sporta: undefined,
+        vttl: undefined,
+        style: {
+          playerId: 0,
+          name: '',
+          bestStroke: '',
+        },
+        quitYear: null,
+        security: 'Player' as UserRoles,
+        hasKey: null,
+      };
     } else {
       this.state = props.player;
     }
@@ -34,27 +56,27 @@ class AdminPlayerForm extends Component<AdminPlayerFormProps, IPlayer> {
     const fieldMargin = 30;
     return (
       <div style={{marginLeft: 10, marginRight: 10}}>
-        <h3>{!player.firstName && !player.lastName ? 'Nieuw lid' : (`${player.firstName} ${player.lastName}`)}</h3>
+        <h3>{!player.firstName && !player.lastName ? 'Nieuw lid' : (`${player.firstName || ''} ${player.lastName || ''}`)}</h3>
         <div>
           <Paper style={{padding: 15}}>
             <h4>Persoonlijk</h4>
             <TextField
               style={{width: 200, marginRight: fieldMargin}}
-              label={this.context.t('Voornaam')}
+              label={t('Voornaam')}
               defaultValue={player.firstName}
               onChange={e => this.setState({firstName: e.target.value})}
             />
 
             <TextField
               style={{width: 200, marginRight: fieldMargin}}
-              label={this.context.t('Achternaam')}
+              label={t('Achternaam')}
               defaultValue={player.lastName}
               onChange={e => this.setState({lastName: e.target.value})}
             />
 
             <TextField
               style={{width: 200}}
-              label={this.context.t('player.alias')}
+              label={t('player.alias')}
               defaultValue={player.alias}
               onChange={e => this.setState({alias: e.target.value})}
             />
@@ -64,7 +86,7 @@ class AdminPlayerForm extends Component<AdminPlayerFormProps, IPlayer> {
 
             <div style={{maxWidth: 250, marginBottom: 7}}>
               <PlayerStyleAutocomplete
-                t={this.context.t}
+                t={t}
                 value={player.style.name || ''}
                 onChange={text => this.setState({style: {...player.style, name: text}})}
               />
@@ -72,7 +94,7 @@ class AdminPlayerForm extends Component<AdminPlayerFormProps, IPlayer> {
 
             <TextField
               style={{width: 230}}
-              label={this.context.t('player.editStyle.bestStroke')}
+              label={t('player.editStyle.bestStroke')}
               defaultValue={player.style.bestStroke}
               onChange={e => this.setState({style: {...player.style, bestStroke: e.target.value}})}
             />
@@ -80,7 +102,7 @@ class AdminPlayerForm extends Component<AdminPlayerFormProps, IPlayer> {
             <br />
             <br />
 
-            <PlayerSecuritySelectField value={player.security} onChange={event => this.setState({security: event.target.value})} />
+            <PlayerSecuritySelectField value={player.security} onChange={security => this.setState({security})} />
           </Paper>
 
 
@@ -88,7 +110,7 @@ class AdminPlayerForm extends Component<AdminPlayerFormProps, IPlayer> {
             <h4>Contact</h4>
             <TextField
               style={{width: 200, marginRight: fieldMargin}}
-              label={this.context.t('player.email')}
+              label={t('player.email')}
               defaultValue={player.contact.email}
               onChange={e => this.setState({contact: {...player.contact, email: e.target.value}})}
             />
@@ -96,7 +118,7 @@ class AdminPlayerForm extends Component<AdminPlayerFormProps, IPlayer> {
             <TextField
               style={{width: 200}}
               type="number"
-              label={this.context.t('player.gsm')}
+              label={t('player.gsm')}
               defaultValue={player.contact.mobile}
               onChange={e => this.setState({contact: {...player.contact, mobile: e.target.value}})}
             />
@@ -105,34 +127,52 @@ class AdminPlayerForm extends Component<AdminPlayerFormProps, IPlayer> {
 
             <TextField
               style={{width: 200, marginRight: fieldMargin}}
-              label={this.context.t('player.address')}
+              label={t('player.address')}
               defaultValue={player.contact.address}
               onChange={e => this.setState({contact: {...player.contact, address: e.target.value}})}
             />
 
             <TextField
               style={{width: 200}}
-              label={this.context.t('player.city')}
+              label={t('player.city')}
               defaultValue={player.contact.city}
               onChange={e => this.setState({contact: {...player.contact, city: e.target.value}})}
             />
 
           </Card>
+
+          {/* <Card style={{marginTop: 20, padding: 15}}>
+            <h4>Einde Seizoen</h4>
+            <TextField
+              style={{width: 200, marginRight: fieldMargin}}
+              label="Volgend Klassement VTTL"
+              defaultValue={player.vttl?.nextRanking}
+              onChange={e => this.setState({vttl: {...player.vttl, nextRanking: e.target.value}})}
+              placeholder={`Huidig: ${player.vttl?.ranking}`}
+            />
+            <TextField
+              style={{width: 200, marginRight: fieldMargin}}
+              label="Volgend Klassement Sporta"
+              defaultValue={player.sporta?.nextRanking}
+              onChange={e => this.setState({sporta: {...player.sporta, nextRanking: e.target.value}})}
+              placeholder={`Huidig: ${player.sporta?.ranking}`}
+            />
+          </Card> */}
         </div>
         <MaterialButton
           variant="contained"
-          label={this.context.t('common.save')}
-          primary
+          label={t('common.save')}
+          color="primary"
           style={{marginTop: 5}}
           onClick={() => {
-            this.props.updatePlayer(this.state);
+            this.props.updatePlayer({player: this.state});
             this.props.onEnd();
           }}
         />
 
         <MaterialButton
           variant="contained"
-          label={this.context.t('common.cancel')}
+          label={t('common.cancel')}
           style={{marginTop: 5, marginLeft: 10}}
           onClick={() => this.props.onEnd()}
         />
@@ -144,17 +184,29 @@ class AdminPlayerForm extends Component<AdminPlayerFormProps, IPlayer> {
 
 type PlayerSecuritySelectFieldProps = {
   value: string;
-  onChange: Function;
+  onChange: (security: UserRoles) => void;
 }
 
-class PlayerSecuritySelectField extends React.Component<PlayerSecuritySelectFieldProps> {
-  render() {
-    return (
-      <TextField select style={{width: 100}} value={this.props.value} onChange={e => this.props.onChange(e)} label="Toegang">
-        {userRoles.map(role => <Dropdown.Item key={role} value={role}>{role}</Dropdown.Item>)}
-      </TextField>
-    );
-  }
-}
+const PlayerSecuritySelectField = ({ value, onChange }: PlayerSecuritySelectFieldProps) => (
+  <TextField
+    select
+    style={{ width: 100 }}
+    value={value}
+    onChange={e => onChange(e.target.value as UserRoles)}
+    label="Toegang"
+  >
+    {userRoles.map(role => (
+      <MenuItem key={role} value={role}>
+        {role}
+      </MenuItem>
+    ))}
+  </TextField>
+);
 
-export default connect(() => ({}), playerActions)(AdminPlayerForm);
+
+const mapDispatchToProps = (dispatch: any) => ({
+  updatePlayer: (data: Parameters<typeof updatePlayer>[0]) => dispatch(updatePlayer(data)),
+});
+
+
+export default connect(null, mapDispatchToProps)(AdminPlayerForm);

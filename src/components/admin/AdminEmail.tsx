@@ -1,21 +1,21 @@
-import React, {Component} from 'react';
-import PropTypes, {connect} from '../PropTypes';
-import {ButtonStack} from '../controls/Buttons/ButtonStack';
-import {IPlayer, ITeam} from '../../models/model-interfaces';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { ButtonStack } from '../controls/Buttons/ButtonStack';
+import { IStorePlayer } from '../../models/model-interfaces';
+import { RootState } from '../../store';
 
 type AdminEmailComponentProps = {
-  players: IPlayer[];
-  inactivePlayers: IPlayer[];
-  teams: ITeam[];
+  players: IStorePlayer[];
+  inactivePlayers: IStorePlayer[];
 }
 
+type Pages = 'all' | 'inactive' | 'comp' | 'vttl' | 'sporta';
+
 type AdminEmailComponentState = {
-  filter: 'all' | 'inactive' | 'comp' | 'vttl' | 'sporta';
+  filter: Pages;
 }
 
 class AdminEmailComponent extends Component<AdminEmailComponentProps, AdminEmailComponentState> {
-  static contextTypes = PropTypes.contextTypes;
-
   constructor(props) {
     super(props);
     this.state = {filter: 'all'};
@@ -42,7 +42,7 @@ class AdminEmailComponent extends Component<AdminEmailComponentProps, AdminEmail
   }
 
   render() {
-    const viewsConfig = [
+    const viewsConfig: {key: Pages, text: string}[] = [
       {key: 'all', text: 'Alle'},
       {key: 'comp', text: 'Competitie'},
       {key: 'vttl', text: 'Vttl'},
@@ -50,20 +50,8 @@ class AdminEmailComponent extends Component<AdminEmailComponentProps, AdminEmail
       {key: 'inactive', text: 'Inactives'},
     ];
 
-    // if (this.state.filter === 'vttl' || this.state.filter === 'sporta')
-    // --> also allow filtering on Sporta A, Sporta B etc
-    // console.log('teams', this.props.teams.toArray());
-
-    // --> if vttl|sporta: display ranking in badge
-    // --> group players per team
-
-    // --> Allow manual player inclusion / exclusion
-    // --> button for all board member emails
-
-    // --> and do fix the layout...
-
     const selectedPlayers = this._filterPlayers().sort((a, b) => a.alias.localeCompare(b.alias));
-    const emails = selectedPlayers.filter(p => p.contact && p.contact.email).map(p => `"${p.name}" <${p.contact.email.trim()}>`);
+    const emails = selectedPlayers.filter(p => p.contact && p.contact.email).map(p => `"${p.firstName} ${p.lastName}" <${p.contact.email.trim()}>`);
     const emailsWithoutName = selectedPlayers.filter(p => p.contact && p.contact.email).map(p => p.contact.email.trim());
 
     // "John Smith" <johnsemail@hisserver.com>
@@ -74,7 +62,7 @@ class AdminEmailComponent extends Component<AdminEmailComponentProps, AdminEmail
         <ButtonStack
           config={viewsConfig}
           activeView={this.state.filter}
-          onClick={newFilter => this.setState({filter: newFilter})}
+          onClick={newFilter => this.setState({filter: newFilter as Pages})}
         />
 
         <span style={{marginLeft: 6}}>
@@ -107,19 +95,19 @@ class AdminEmailComponent extends Component<AdminEmailComponentProps, AdminEmail
   }
 }
 
-const PlayerEmail = ({player}: {player: IPlayer}) => (
+const PlayerEmail = ({player}: {player: IStorePlayer}) => (
   <span style={{whiteSpace: 'normal', marginRight: 7, paddingTop: 15}}>
     <span className="label label-as-badge label-success" key={player.id} style={{fontSize: 12, fontWeight: 'normal'}}>
-      {player.name}
+      {player.firstName} {player.lastName}
     </span>
     {' '}
   </span>
 );
 
-PlayerEmail.propTypes = {
-  player: PropTypes.PlayerModel.isRequired,
-};
 
 export const AdminEmail = connect(
-  state => ({players: state.players, inactivePlayers: state.admin.players, teams: state.teams}),
+  (state: RootState) => ({
+    players: state.players,
+    inactivePlayers: state.playersQuitters,
+  }),
 )(AdminEmailComponent);

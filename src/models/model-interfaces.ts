@@ -1,45 +1,32 @@
 /* eslint-disable no-use-before-define */
 import {Moment} from 'moment';
+import { UserRoles } from './UserModel';
+import { PlayerRanking } from './utils/rankingSorter';
 
 export interface ITeamPlayerStats {
-  // TODO interface ITeamPlayerStats
+  ply: IPlayer;
+  won: {[ranking: string]: number};
+  lost: {[ranking: string]: number};
+  games: number;
+  victories: number,
+  isDoubles: boolean;
+  belles: {[ranking: string]: {
+    won: number;
+    lost: number;
+  }};
+  belleVictories: number;
+  belleGames: number;
 }
-
-
-export interface IConfig {
-  // TODO: interface IConfig
-  [key: string]: any;
-}
-
-export type Historian = {
-  push: Function;
-}
-
-
 
 /* ****************************************************
 *                       UTILITY
 **************************************************** */
 
-export type Viewport = {
-  width: number;
-  height: number;
-}
-
-export type TabbedContainerEventKeyRouteProps = {
-  match: {
-    params: {
-      tabKey: string,
-    }
-  }
-}
-
-type TranslatorFn = (key: string, params?: any) => string;
+export type TranslatorFn = (key?: string, params?: any) => string;
 
 export type Translator = TranslatorFn & {
   reverseRoute: (baseRoute: string, translatedRoute: string) => string;
   route: (routeName: string, params?: any) => string;
-  timeAgo(): any;
 };
 
 export type OwnTeamLink = 'main' | 'matches' | 'ranking' | 'players' | 'matchesTable' | 'week';
@@ -61,7 +48,7 @@ export interface IMatchScore {
   out: number;
 }
 
-export interface IMatchCommon {
+export interface IStoreMatchCommon {
   id: number;
   frenoyMatchId: string;
   shouldBePlayed: boolean;
@@ -76,7 +63,9 @@ export interface IMatchCommon {
   players: IMatchPlayer[];
   formationComment: string;
   games: IMatchGame[];
+}
 
+interface IMatchCommon extends IStoreMatchCommon {
   getDisplayDate(format?: 's' | 'd'): string;
   getDisplayTime(): string;
   isStandardStartTime(): boolean;
@@ -95,13 +84,12 @@ export interface IMatch extends IMatchCommon, IMatchOwn, IMatchOther {}
 export interface IFullMatchOwn extends IMatchCommon, IMatchOwn {}
 
 /** If you know it needs a ReadonlyMatch, use this one */
-export interface IFullMatcOther extends IMatchCommon, IMatchOther {}
+export interface IFullMatchOther extends IMatchCommon, IMatchOther {}
 
-/**
- * This interface applies only to MatchModels in which
- * one of the two teams is TTC Aalst
- * */
-export interface IMatchOwn {
+export interface IFullStoreMatchOwn extends IStoreMatchCommon, IStoreMatchOwn {}
+export interface IFullStoreMatchOther extends IStoreMatchCommon, IStoreMatchOther {}
+
+interface IStoreMatchOwn {
   isHomeMatch: boolean;
   teamId: number;
   description: string;
@@ -110,16 +98,30 @@ export interface IMatchOwn {
   comments: IMatchComment[];
   opponent: ITeamOpponent;
   isDerby: boolean;
+}
 
+/**
+ * This interface applies only to MatchModels in which
+ * one of the two teams is TTC Aalst
+ * */
+interface IMatchOwn extends IStoreMatchOwn {
   renderOpponentTitle(): string;
-  getOpponentClub(): IClub | {};
+  getOpponentClub(): IClub;
   isScoreComplete(): boolean;
   getTeam: () => ITeam;
   getPreviousMatch(): IMatch | undefined;
   plays: (playerId: number | IPlayer, statusFilter?: 'onlyFinal') => IMatchPlayer | undefined;
   getPlayerFormation(statusFilter: undefined | 'onlyFinal' | 'Play' | 'Captain'): IMatchPlayerInfo[];
-  getOwnPlayerModels(statusFilter: undefined | 'onlyFinal' | 'Play' | 'Captain'): IPlayer[];
+  getOwnPlayerModels(statusFilter?: undefined | 'onlyFinal' | 'Play' | 'Captain'): IPlayer[];
   getGameMatches(): IGetGameMatches[];
+}
+
+
+interface IStoreMatchOther {
+  home: ITeamOpponent;
+  away: ITeamOpponent;
+  /** Is TTC Aalst home or away team? */
+  isOurMatch: boolean;
 }
 
 /**
@@ -127,11 +129,7 @@ export interface IMatchOwn {
  * TTC Aalst is not considered 'special' or is not playing in.
  * These are loaded in the context of other Teams.
  */
-export interface IMatchOther {
-  home: ITeamOpponent;
-  away: ITeamOpponent;
-  /** Is TTC Aalst home or away team? */
-  isOurMatch: boolean;
+interface IMatchOther extends IStoreMatchOther {
   /** If isOurMatch, get the IMatchOwn MatchModel */
   getOurMatch: () => IMatch;
 
@@ -147,7 +145,7 @@ export interface IMatchPlayer {
   statusNote: string;
   position: number;
   name: string;
-  ranking: string;
+  ranking: PlayerRanking;
   uniqueIndex: number;
   won: number;
   home: boolean;
@@ -170,14 +168,14 @@ export interface IMatchGame {
 
 export interface IGetGameMatches {
   matchNumber: number;
-  home: {} | IMatchPlayer;
-  out: {} | IMatchPlayer;
+  home: IMatchPlayer;
+  out: IMatchPlayer;
   homeSets: number;
   outSets: number;
   outcome: MatchGameOutcome;
 
   isDoubles: boolean;
-  ownPlayer: {} | IPlayer;
+  ownPlayer: {playerId: 0} | IMatchPlayer;
 }
 
 
@@ -197,7 +195,7 @@ export interface IMatchComment {
 *                       PLAYERS
 **************************************************** */
 
-export interface IPlayer {
+export interface IStorePlayer {
   alias: string;
   contact: IPlayerContact;
   id: number;
@@ -207,13 +205,15 @@ export interface IPlayer {
   sporta?: IPlayerCompetition;
   vttl?: IPlayerCompetition;
   style: IPlayerStyle;
-  quitYear: number;
-  security: string | 'Player';
-  hasKey: boolean;
+  quitYear: number | null;
+  security: UserRoles;
+  hasKey: boolean | null;
+}
 
+export interface IPlayer extends IStorePlayer {
   name: string;
   slug: string;
-  getCompetition: (competition: Competition) => IPlayerCompetition | {};
+  getCompetition: (competition: Competition) => IPlayerCompetition;
   isMe(): boolean;
   getTeam(comp: Competition): ITeam;
 }
@@ -232,7 +232,7 @@ export interface IPlayerCompetition {
   frenoyLink: string;
   /** Index */
   position: number;
-  ranking: string;
+  ranking: PlayerRanking;
   nextRanking: string | null;
   uniqueIndex: number;
   rankingIndex: number;
@@ -250,15 +250,16 @@ export interface IPlayerStyle {
 *                       TEAMS
 **************************************************** */
 
-export type TeamPlayerType = 'Standard' | 'Captain' | 'Reserve'; // TODO: lowercase or uppercase???
+export type TeamPlayerType = typeof teamPlayerType[keyof typeof teamPlayerType]
 
 export const teamPlayerType = {
   standard: 'Standard',
   captain: 'Captain',
   reserve: 'Reserve',
-};
+} as const;
 
-export interface ITeam {
+
+export interface IStoreTeam {
   competition: Competition;
   divisionName: string;
   id: number;
@@ -269,21 +270,23 @@ export interface ITeam {
   players: ITeamPlayer[];
   ranking: ITeamRanking[];
   frenoy: ITeamFrenoy;
+}
 
+export interface ITeam extends IStoreTeam {
   getTeamPlayerCount(): 3 | 4;
   getScoreCount(): 16 | 10;
   renderOwnTeamTitle(): string;
   getDivisionDescription(): string;
-  getDivisionRanking(opponent?: 'our-ranking' | ITeamOpponent): ITeamRanking | {empty: true};
+  getDivisionRanking(opponent?: 'our-ranking' | ITeamOpponent): ITeamRanking & {empty: false} | {empty: true};
   getThriller(match: IMatch): undefined | 'topMatch' | 'degradationMatch';
   isCaptain: (player: IPlayer) => boolean;
   getCaptainPlayerIds: () => number[];
   getPlayers(type?: 'reserve' | 'standard'): ITeamPlayerInfo[];
   plays(playerId: number): boolean;
   getMatches(): IMatch[];
-  getPlayerStats(): any[]; // TODO: still need strong typing
-  isInDegradationZone(opponent: ITeamOpponent): boolean;
-  isTopper(opponent: ITeamOpponent): boolean;
+  getPlayerStats(): ITeamPlayerStats[];
+  isInDegradationZone(opponent?: ITeamOpponent): boolean;
+  isTopper(opponent?: ITeamOpponent): boolean;
 }
 
 export interface ITeamOpponent {
@@ -325,6 +328,9 @@ export interface ITeamFrenoy {
   teamId: string;
   seasonId: number;
   teamCompetition: Competition;
+
+  getUrl(type: 'results' | 'ranking'): string;
+  getWeekUrl(weekName: number): string;
 }
 
 

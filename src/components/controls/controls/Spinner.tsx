@@ -1,24 +1,16 @@
-import React, {Component} from 'react';
+import React from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import {Icon} from '../Icons/Icon';
 
 type SpinnerProps = {
-  size: number;
+  size?: number;
 }
 
-export class Spinner extends Component<SpinnerProps> {
-  static defaultProps = {
-    size: 1,
-  };
-
-  render() {
-    return (
-      <div>
-        <Icon fa={`fa fa-spinner fa-pulse fa-${this.props.size}x`} />
-      </div>
-    );
-  }
-}
+export const Spinner = ({size = 1}: SpinnerProps) => (
+  <div>
+    <Icon fa={`fa fa-spinner fa-pulse fa-${size}x`} />
+  </div>
+);
 
 
 export const FullScreenSpinner = () => (

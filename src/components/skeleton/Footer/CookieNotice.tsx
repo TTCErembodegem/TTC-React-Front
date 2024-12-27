@@ -1,13 +1,10 @@
 import React, {Component} from 'react';
-import {contextTypes} from '../../../utils/decorators/withContext';
+import { t } from '../../../locales';
 
 import './CookieNotice.css';
 
 export class CookieNotice extends Component {
-  static contextTypes = contextTypes;
-
   render() {
-    const {t} = this.context;
     if (localStorage.getItem('cookieNoticeKilled')) {
       return null;
     }
@@ -15,19 +12,21 @@ export class CookieNotice extends Component {
     return (
       <div className="cookie-notice">
         {t('footer.cookieNotice')}
-        <u
-          className="clickable"
+        <button
+          type="button"
+          className="btn btn-link"
           style={{marginLeft: 8}}
-          onClick={() => this._killCookieNotice()}
+          onClick={e => this._killCookieNotice(e)}
         >
           {t('footer.cookieNoticeClose')}
-        </u>
+        </button>
       </div>
     );
   }
 
-  _killCookieNotice() {
-    localStorage.setItem('cookieNoticeKilled', true);
+  _killCookieNotice(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    e.preventDefault();
+    localStorage.setItem('cookieNoticeKilled', "true");
     this.forceUpdate();
   }
 }

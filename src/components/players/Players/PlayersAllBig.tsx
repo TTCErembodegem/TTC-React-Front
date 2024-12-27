@@ -1,21 +1,27 @@
 import React from 'react';
 import Table from 'react-bootstrap/Table';
 import cn from 'classnames';
-import PropTypes from '../../PropTypes';
 import {PlayerAllCompetitions} from '../PlayerCard';
 import {PlayerPlayingStyle} from '../PlayerPlayingStyle';
 import {PlayerLink} from '../controls/PlayerLink';
 import {Email} from '../../controls/controls/Email';
 import {Telephone} from '../../controls/controls/Telephone';
+import { t } from '../../../locales';
+import { IPlayer } from '../../../models/model-interfaces';
 
-export const PlayersAllBig = ({players, t}) => (
-  <Table condensed hover className="players">
+type PlayersAllBigProps = {
+  players: IPlayer[];
+};
+
+
+export const PlayersAllBig = ({players}: PlayersAllBigProps) => (
+  <Table size="sm" hover className="players">
     <thead>
       <tr>
         <th>{t('player.name')}</th>
         <th>{t('player.address')}</th>
         <th>{t('common.competition')}</th>
-        <th className="hidden-sm hidden-xs">{t('player.style')}</th>
+        <th className="d-none d-md-table-cell">{t('player.style')}</th>
       </tr>
     </thead>
     <tbody>
@@ -34,9 +40,9 @@ export const PlayersAllBig = ({players, t}) => (
             {ply.contact.city}
           </td>
           <td>
-            <PlayerAllCompetitions player={ply} t={t} />
+            <PlayerAllCompetitions player={ply} />
           </td>
-          <td className="hidden-sm hidden-xs">
+          <td className="d-none d-md-table-cell">
             <PlayerPlayingStyle ply={ply} />
           </td>
         </tr>
@@ -44,8 +50,3 @@ export const PlayersAllBig = ({players, t}) => (
     </tbody>
   </Table>
 );
-
-PlayersAllBig.propTypes = {
-  t: PropTypes.func.isRequired,
-  players: PropTypes.PlayerModelList.isRequired,
-};

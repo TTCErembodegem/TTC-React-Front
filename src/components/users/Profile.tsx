@@ -1,131 +1,112 @@
-import React, {Component} from 'react';
-import PropTypes, {connect, keyMirror, withRouter} from '../PropTypes';
-import * as loginActions from '../../actions/userActions';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {MaterialButton} from '../controls/Buttons/MaterialButton';
 import {TabbedContainer} from '../controls/TabbedContainer';
-import ChangePassword from './ChangePassword';
-import ChangePlayerDetails from './ChangePlayerDetails';
+import {ChangePassword} from './ChangePassword';
+import { ChangePlayerDetails } from './ChangePlayerDetails';
 import ProfilePhotoForm, {ProfilePhotoAvatarForm} from './ProfilePhotoForm';
-import PlayerLineup from './PlayerLineup';
-import {IUser} from '../../models/UserModel';
-import {TabbedContainerEventKeyRouteProps, Historian, IPlayer, Translator} from '../../models/model-interfaces';
+// import PlayerLineup from './PlayerLineup';
+import { IPlayer } from '../../models/model-interfaces';
+import { t } from '../../locales';
+import { selectUser, useTtcDispatch, useTtcSelector } from '../../utils/hooks/storeHooks';
+import { displayMobile } from '../../models/PlayerModel';
+import { logout } from '../../reducers/userReducer';
 
-const tabEventKeys = keyMirror({
-  main: '',
-  editDetails: '',
-  editPicture: '',
-  editAvatar: '',
-  editPassword: '',
-  editHolidays: '',
-});
+const tabEventKeys = {
+  main: 'main',
+  editDetails: 'editDetails',
+  editPicture: 'editPicture',
+  editAvatar: 'editAvatar',
+  editPassword: 'editPassword',
+  editHolidays: 'editHolidays',
+};
 
 
-type ProfileProps = {
-  user: IUser;
-  logout: Function;
-  match: TabbedContainerEventKeyRouteProps;
-  history: Historian;
-}
+export const Profile = () => {
+  const navigate = useNavigate();
+  const user = useTtcSelector(selectUser);
+  const player = useTtcSelector(state => state.players.find(x => x.id === user.playerId))!;
+  const dispatch = useTtcDispatch();
 
-class Profile extends Component<ProfileProps> {
-  static contextTypes = PropTypes.contextTypes;
+  const logoutAndGoHome = () => {
+    dispatch(logout());
+    navigate('/');
+  };
 
-  _logout() {
-    this.props.logout();
-    this.props.history.push('/');
-  }
-
-  _renderTabContent(eventKey: string) {
-    const player = this.props.user.getPlayer();
+  const renderTabContent = (eventKey: string) => {
     switch (eventKey) {
       case tabEventKeys.main:
-        return <ProfilePlayerDetails t={this.context.t} player={player} logout={() => this._logout()} />;
+        return <ProfilePlayerDetails player={user.getPlayer()} logoutAndGoHome={logoutAndGoHome} />;
       case tabEventKeys.editDetails:
         return <ChangePlayerDetails player={player} />;
       case tabEventKeys.editPicture:
-        return <ProfilePhotoForm />;
+        return <ProfilePhotoForm user={user} />;
       case tabEventKeys.editAvatar:
         return <ProfilePhotoAvatarForm />;
       case tabEventKeys.editPassword:
         return <ChangePassword />;
-      case tabEventKeys.editHolidays: {
-        const {user} = this.props;
-        return <PlayerLineup teams={user.getTeams()} playerId={user.playerId} />;
-      }
+      // case tabEventKeys.editHolidays: {
+      //   return <PlayerLineup teams={user.getTeams()} playerId={user.playerId} />;
+      // }
       default:
         return null;
     }
+  };
+
+  if (!user.playerId) {
+    return <div />;
   }
 
-  render() {
-    if (!this.props.user.playerId) {
-      return <div />;
-    }
+  const tabConfig = [
+    { key: tabEventKeys.main, title: t('profile.main') },
+    // { key: tabEventKeys.editHolidays, title: t('profile.editHolidays') },
+    { key: tabEventKeys.editPassword, title: t('profile.editPassword') },
+    { key: tabEventKeys.editDetails, title: t('profile.editDetails') },
+    { key: tabEventKeys.editPicture, title: t('profile.editPicture') },
+    { key: tabEventKeys.editAvatar, title: t('profile.editAvatar') },
+  ];
 
-    const {t} = this.context;
-    const tabConfig = [{
-      key: tabEventKeys.main,
-      title: t('profile.main'),
-    }, {
-      key: tabEventKeys.editHolidays,
-      title: t('profile.editHolidays'),
-    }, {
-      key: tabEventKeys.editPassword,
-      title: t('profile.editPassword'),
-    }, {
-      key: tabEventKeys.editDetails,
-      title: t('profile.editDetails'),
-    }, {
-      key: tabEventKeys.editPicture,
-      title: t('profile.editPicture'),
-    }, {
-      key: tabEventKeys.editAvatar,
-      title: t('profile.editAvatar'),
-    }];
-
-    if (this.props.user.isSystem()) {
-      return (
-        <div>
-          <h1>SYSTEM USER</h1>
-          <MaterialButton
-            variant="contained"
-            label={t('login.logoutButton')}
-            secondary
-            style={{marginTop: -15}}
-            onClick={this.props.logout}
-          />
-        </div>
-      );
-    }
-
+  if (user.isSystem()) {
     return (
-      <div style={{marginTop: 15, marginBottom: 20}}>
-        <TabbedContainer
-          widthTreshold={760}
-          match={this.props.match}
-          defaultTabKey={tabEventKeys.main}
-          tabKeys={tabConfig}
-          route={{base: this.context.t.route('profile'), subs: 'profileTabs'}}
-          tabRenderer={eventKey => this._renderTabContent(eventKey)}
+      <div>
+        <h1>SYSTEM USER</h1>
+        <MaterialButton
+          variant="contained"
+          label={t('login.logoutButton')}
+          color="secondary"
+          style={{marginTop: -15}}
+          onClick={logoutAndGoHome}
         />
       </div>
     );
   }
-}
+
+  return (
+    <div style={{marginTop: 15, marginBottom: 20}}>
+      <TabbedContainer
+        widthTreshold={760}
+        selectedTab={tabEventKeys.main}
+        tabKeys={tabConfig}
+        route={{base: t.route('profile'), subs: 'profileTabs'}}
+        tabRenderer={eventKey => renderTabContent(eventKey)}
+      />
+    </div>
+  );
+};
+
 
 type ProfilePlayerDetailsProps = {
   player: IPlayer,
-  t: Translator,
-  logout: Function,
+  logoutAndGoHome: () => void,
 };
 
-const ProfilePlayerDetails = ({player, t, logout}: ProfilePlayerDetailsProps) => (
+const ProfilePlayerDetails = ({player, logoutAndGoHome}: ProfilePlayerDetailsProps) => (
   <div style={{padding: 10}}>
     <h3>{player.name}</h3>
     <p>
       <strong>{t('player.email')}</strong>&nbsp;{player.contact.email}
       <br />
-      <strong>{t('player.gsm')}</strong>&nbsp;{player.contact.getMobile()}
+      <strong>{t('player.gsm')}</strong>&nbsp;{displayMobile(player.contact.mobile)}
       <br />
       <strong>{t('player.address')}</strong>&nbsp;{player.contact.address}
       <br />
@@ -135,11 +116,9 @@ const ProfilePlayerDetails = ({player, t, logout}: ProfilePlayerDetailsProps) =>
     <MaterialButton
       variant="contained"
       label={t('login.logoutButton')}
-      secondary
+      color="secondary"
       style={{marginTop: 15}}
-      onClick={() => logout()}
+      onClick={() => logoutAndGoHome()}
     />
   </div>
 );
-
-export default withRouter(connect(state => ({user: state.user}), loginActions)(Profile));

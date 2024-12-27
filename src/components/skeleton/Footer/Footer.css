@@ -35,11 +35,12 @@ html, body, #app, #react {
 .Footer-container {
   margin: 0 auto;
   padding: 20px 10px;
+  padding-bottom: 0;
   max-width: var(--max-content-width);
   text-align: center;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 955px) {
   .Footer, .push {
     height: var(--footer-height-mobile);
   }
@@ -49,7 +50,7 @@ html, body, #app, #react {
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 955px) {
   .Footer, .push {
     height: var(--footer-height-desktop);
   }

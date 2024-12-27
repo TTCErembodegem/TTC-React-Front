@@ -1,17 +1,18 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import cn from 'classnames';
-import PropTypes, {browseTo} from '../../PropTypes';
 import {Icon} from '../../controls/Icons/Icon';
 import {DivisionRankingLabel, OurDivisionRankingLabel} from '../controls/DivisionRankingLabel';
 import {IMatch, OwnTeamLink} from '../../../models/model-interfaces';
+import { browseTo } from '../../../routes';
+import { t } from '../../../locales';
 
 
 type MatchVsProps = {
   match: IMatch;
-  opponentOnly: boolean;
+  opponentOnly?: boolean;
   themOnly?: boolean;
-  ownTeamLink: OwnTeamLink;
+  ownTeamLink?: OwnTeamLink;
   withLinks?: boolean;
   withPosition?: boolean;
 }
@@ -23,8 +24,6 @@ type MatchVsState = {
 }
 
 export default class MatchVs extends Component<MatchVsProps, MatchVsState> {
-  static contextTypes = PropTypes.contextTypes;
-
   static defaultProps = {
     themOnly: false,
     opponentOnly: false,
@@ -32,13 +31,12 @@ export default class MatchVs extends Component<MatchVsProps, MatchVsState> {
   };
 
   render() {
-    const {t} = this.context;
     const {match, opponentOnly, themOnly} = this.props;
     const team = match.getTeam();
     const divisionRanking = team.getDivisionRanking(match.opponent);
     let them = (
       <span>
-        {this.props.withPosition ? <DivisionRankingLabel divisionRanking={divisionRanking} /> : null}
+        {this.props.withPosition && !divisionRanking.empty ? <DivisionRankingLabel divisionRanking={divisionRanking} /> : null}
 
         {this.props.withLinks ? (
           <Link className="link-hover-underline" to={browseTo.getOpponent(match.competition, match.opponent)}>
@@ -50,7 +48,7 @@ export default class MatchVs extends Component<MatchVsProps, MatchVsState> {
       </span>
     );
 
-    if (divisionRanking.isForfait) {
+    if (!divisionRanking.empty && divisionRanking.isForfait) {
       them = <s>{them}</s>;
     }
 
@@ -59,7 +57,7 @@ export default class MatchVs extends Component<MatchVsProps, MatchVsState> {
     }
 
 
-    const usClasses = cn('label label-as-badge label-info', {clickable: this.props.ownTeamLink});
+    const usClasses = cn('label label-as-badge label-info', {clickable: !!this.props.ownTeamLink});
     let us;
     if (this.props.ownTeamLink) {
       us = (

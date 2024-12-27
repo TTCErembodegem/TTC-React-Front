@@ -1,82 +1,68 @@
-import React, {Component} from 'react';
-import _ from 'lodash';
-import PropTypes, {connect, withViewport, storeUtil} from '../PropTypes';
-
-import * as configActions from '../../actions/configActions';
+import React, { useEffect } from 'react';
 import MatchCard from './Match/MatchCard';
+import storeUtil from '../../storeUtil';
+import { IMatch } from '../../models/model-interfaces';
+import { useViewport } from '../../utils/hooks/useViewport';
+import { useTtcDispatch } from '../../utils/hooks/storeHooks';
+import { setSetting } from '../../reducers/configReducer';
 
+export const MatchesToday = () => {
+  const viewport = useViewport();
+  const dispatch = useTtcDispatch();
+  useEffect(() => {
+    dispatch(setSetting({key: 'container100PerWidth', value: true}));
+    return () => {
+      dispatch(setSetting({key: 'container100PerWidth', value: false}));
+    };
+  }, []);
 
-class MatchesToday extends Component {
-  static contextTypes = PropTypes.contextTypes;
-
-  static propTypes = {
-    config: PropTypes.object.isRequired,
-    user: PropTypes.UserModel.isRequired,
-    players: PropTypes.PlayerModelList.isRequired,
-    matches: PropTypes.MatchModelList.isRequired,
-    setSetting: PropTypes.func.isRequired,
-    viewport: PropTypes.viewport,
+  const matchesToday = storeUtil.matches.getTodayMatches();
+  if (matchesToday.length === 0) {
+    return <div />;
   }
 
-  componentDidMount() {
-    this.props.setSetting('container100PerWidth', true);
+  if (viewport.width > 1500) {
+    return (
+      <div>
+        <BigMatches matches={matchesToday.slice(0, 2)} />
+        {matchesToday.length > 2 && <BigMatches matches={matchesToday.slice(3)} />}
+      </div>
+    );
   }
 
-  componentWillUnmount() {
-    this.props.setSetting('container100PerWidth', false);
-  }
-
-  render() {
-    const matchesToday = storeUtil.matches.getTodayMatches();
-    if (matchesToday.size === 0) {
-      return <div />;
-    }
-
-    if (this.props.viewport.width > 1500) {
-      return (
-        <div>
-          {this._renderBigMatches(_.take(matchesToday.toArray(), 2))}
-          {matchesToday.size > 2 ? this._renderBigMatches(matchesToday.shift().shift()) : null}
+  // on small devices
+  // onOpen={null} == default behavior == open match card
+  return (
+    <div className="row">
+      {matchesToday.map(match => (
+        <div className="col-lg-6" style={{paddingBottom: 5, paddingTop: 5}} key={match.id}>
+          <MatchCard
+            match={match}
+            isOpen={false}
+            viewportWidthContainerCount={viewport.width > 1200 ? 2 : 1}
+            viewport={viewport}
+          />
         </div>
-      );
-    }
+      ))}
+    </div>
+  );
+};
 
-    // on small devices
-    // onOpen={null} == default behavior == open match card
-    return (
-      <div className="row">
-        {matchesToday.map(match => (
-          <div className="col-lg-6" style={{paddingBottom: 5, paddingTop: 5}} key={match.id}>
-            <MatchCard
-              match={match}
-              user={this.props.user}
-              isOpen={false}
-              width={this.props.viewport.width}
-              viewportWidthContainerCount={this.props.viewport.width > 1200 ? 2 : 1}
-              config={this.props.config}
-            />
-          </div>
-        ))}
-      </div>
-    );
-  }
-
-  _renderBigMatches(matches) {
-    return (
-      <div className="row">
-        {matches.map(match => (
-          <div className="col-md-6" style={{paddingBottom: 5, paddingTop: 5}} key={match.id}>
-            <MatchCard match={match} user={this.props.user} isOpen viewportWidthContainerCount={2} big config={this.props.config} />
-          </div>
-        ))}
-      </div>
-    );
-  }
-}
-
-export default withViewport(connect(state => ({
-  config: state.config,
-  user: state.user,
-  players: state.players,
-  matches: state.matches,
-}), configActions)(MatchesToday));
+const BigMatches = ({matches}: {matches: IMatch[]}) => {
+  const viewport = useViewport();
+  return (
+    <div className="row">
+      {matches.map(match => (
+        <div className="col-md-6" style={{paddingBottom: 5, paddingTop: 5}} key={match.id}>
+          <MatchCard
+            match={match}
+            isOpen
+            viewportWidthContainerCount={2}
+            big
+            viewport={viewport}
+          />
+        </div>
+      ))}
+    </div>
+  );
+};

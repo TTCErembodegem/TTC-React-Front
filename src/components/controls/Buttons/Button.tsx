@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import cn from 'classnames';
-import PropTypes, {withTooltip} from '../../PropTypes';
-import {Icon} from '../Icons/Icon';
+import { Icon } from '../Icons/Icon';
+import { withTooltip } from '../../../utils/decorators/withTooltip';
 
 export type ButtonComponentProps = {
   onClick: () => void;
@@ -12,13 +12,11 @@ export type ButtonComponentProps = {
 }
 
 class ButtonComponent extends Component<ButtonComponentProps> {
-  static contextTypes = PropTypes.contextTypes;
-
   render() {
     return (
       <a
         onClick={this.props.onClick}
-        className={cn(this.props.className, 'btn btn-default')}
+        className={cn(this.props.className, 'btn btn-outline-secondary')}
         style={this.props.style}
         role="button"
         tabIndex={0}
@@ -35,18 +33,16 @@ export const Button = withTooltip(ButtonComponent);
 export type IconButtonComponentProps = {
   onClick: () => void;
   fa: string;
-  className: string;
+  className?: string;
   style?: React.CSSProperties;
 }
 
 class IconButtonComponent extends Component<IconButtonComponentProps> {
-  static contextTypes = PropTypes.contextTypes;
-
   render() {
     return (
       <a
         onClick={this.props.onClick}
-        className={cn(this.props.className, 'btn btn-default')}
+        className={cn(this.props.className, 'btn btn-outline-secondary')}
         style={this.props.style}
         role="button"
         tabIndex={0}

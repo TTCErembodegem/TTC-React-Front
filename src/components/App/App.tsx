@@ -1,65 +1,60 @@
-import React, {Component} from 'react';
-import Grid from 'react-bootstrap/Grid';
+import React from 'react';
+import Container from 'react-bootstrap/Container';
 import Snackbar from '@mui/material/Snackbar';
-import {ThemeProvider, createTheme} from '@mui/material/styles';
-import {connect, withViewport, withContext} from '../PropTypes';
-import Header from '../skeleton/Header/Header';
-import Footer from '../skeleton/Footer/Footer';
-import * as configActions from '../../actions/configActions';
-import {IConfig, Viewport} from '../../models/model-interfaces';
-import {IUser} from '../../models/UserModel';
-
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { Header } from '../skeleton/Header/Header';
+import { Footer } from '../skeleton/Footer/Footer';
+import { FullScreenSpinner } from '../controls/controls/Spinner';
+import { useTtcDispatch, useTtcSelector } from '../../utils/hooks/storeHooks';
+import { clearSnackbar } from '../../reducers/configReducer';
 
 import './App.css';
 
+export const App = ({Component}: {Component: any}) => {
+  const config = useTtcSelector(state => state.config);
+  const dispatch = useTtcDispatch();
+  if (!config.initialLoadCompleted) {
+    return <FullScreenSpinner />;
+  }
 
-type AppProps = {
-  config: IConfig;
-  user: IUser;
-  children: any;
-  clearSnackbar: Function;
-  viewport: Viewport;
-}
+  const containerStyle: React.CSSProperties = {width: undefined};
+  const isBigTodayMatches = config.settings.container100PerWidth;
+  if (isBigTodayMatches) {
+    containerStyle.width = '100%';
+  }
 
-class App extends Component<AppProps> {
-  render() {
-    const containerStyle: React.CSSProperties = {width: undefined};
-
-    const isBigTodayMatches = this.props.config.get('container100PerWidth');
-    if (isBigTodayMatches) {
-      containerStyle.width = '100%';
-    }
-
-    return (
-      <div id="react">
-        <ThemeProvider theme={createTheme()}>
-          <div style={{height: '100%'}}>
-            <div className="wrapper">
-              <Header user={this.props.user} />
-              <Grid style={containerStyle}>
-                {this.props.children}
-              </Grid>
-              <div className="push" />
-            </div>
-            {!isBigTodayMatches ? <Footer /> : null}
-            <Snackbar
-              open={!!this.props.config.get('snackbar')}
-              message={this.props.config.get('snackbar') || ''}
-              autoHideDuration={4000}
-              onClose={() => this._onCloseSnackbar()}
-            />
+  return (
+    <div id="react">
+      <ThemeProvider theme={createTheme()}>
+        <div style={{height: '100%'}}>
+          <div className="wrapper">
+            <Header />
+            <Container style={containerStyle}>
+              <Component />
+            </Container>
+            <div className="push" />
           </div>
-        </ThemeProvider>
-      </div>
-    );
-  }
-
-  _onCloseSnackbar() {
-    this.props.clearSnackbar();
-  }
-}
-
-export default withViewport(withContext(connect(state => ({
-  config: state.config,
-  user: state.user,
-}), configActions)(App)));
+          {!isBigTodayMatches ? <Footer /> : null}
+          <Snackbar
+            open={!!config.snackbar}
+            message={config.snackbar}
+            autoHideDuration={3000}
+            onClose={() => dispatch(clearSnackbar())}
+            action={(
+              <IconButton
+                size="small"
+                aria-label="close"
+                color="inherit"
+                onClick={() => dispatch(clearSnackbar())}
+              >
+                <CloseIcon fontSize="small" />
+              </IconButton>
+            )}
+          />
+        </div>
+      </ThemeProvider>
+    </div>
+  );
+};

@@ -1,45 +1,56 @@
 import React, {Component} from 'react';
-import PropTypes, {connect, withViewport, keyMirror, storeUtil} from '../../PropTypes';
-import * as matchActions from '../../../actions/matchActions';
-import {setSetting} from '../../../actions/configActions';
+import { connect } from 'react-redux';
+// import * as matchActions from '../../../actions/matchActions';
+// import {setSetting} from '../../../actions/configActions';
 import {SmallMatchCardHeader, BigMatchCardHeader} from './MatchCardHeader';
 import MatchPlayerResults from './MatchPlayerResults';
-import IndividualMatches from './IndividualMatches';
-import OpponentClubLocations from './OpponentClubLocations';
-import SelectPlayersForm from './SelectPlayersForm';
-import OpponentsLastMatches from './OpponentsLastMatches';
-import OpponentsFormation from './OpponentsFormation';
-import MatchReport from './MatchReport';
-import Scoresheet from './Scoresheet';
-import PlayersImageGallery from '../../players/PlayersImageGallery';
+import {IndividualMatches} from './IndividualMatches';
+import {OpponentClubLocations} from './OpponentClubLocations';
+// import SelectPlayersForm from './SelectPlayersForm';
+import {OpponentsLastMatches} from './OpponentsLastMatches';
+// import OpponentsFormation from './OpponentsFormation';
+import {MatchReport} from './MatchReport';
+import {Scoresheet} from './Scoresheet';
+import {PlayersImageGallery} from '../../players/PlayersImageGallery';
 import {MatchOtherRoundButton} from '../controls/ViewMatchDetailsButton';
 import {MatchCardAdmin} from './MatchCardAdmin';
 import {TabbedContainer} from '../../controls/TabbedContainer';
 import {CommentIcon} from '../../controls/Icons/CommentIcon';
 import {EditIcon} from '../../controls/Icons/EditIcon';
-import {IConfig, IMatch, Viewport} from '../../../models/model-interfaces';
-import {IUser} from '../../../models/UserModel';
+import {IMatch} from '../../../models/model-interfaces';
+import UserModel, {IUser} from '../../../models/UserModel';
+import { t } from '../../../locales';
+import storeUtil from '../../../storeUtil';
+import { Viewport } from '../../../utils/hooks/useViewport';
+import { RootState } from '../../../store';
+import { setNewMatchComment, setSetting } from '../../../reducers/configReducer';
+import { getOpponentMatches } from '../../../reducers/matchesReducer';
 
-const tabEventKeys = keyMirror({
-  players: '',
-  individualMatches: '',
-  report: '',
-  opponentClub: '',
-  scoresheet: '',
-  opponentsRanking: '',
-  opponentsFormation: '',
-  admin: '',
-});
+const tabEventKeys = {
+  players: 'players',
+  individualMatches: 'individualMatches',
+  report: 'report',
+  opponentClub: 'opponentClub',
+  scoresheet: 'scoresheet',
+  opponentsRanking: 'opponentsRanking',
+  opponentsFormation: 'opponentsFormation',
+  admin: 'admin',
+};
 
 type MatchCardProps = {
-  config: IConfig;
+  // Store mapped
+  newComments: {[matchId: number]: boolean};
   user: IUser;
   readonlyMatches: IMatch[];
+
+  getOpponentMatches: typeof getOpponentMatches;
+  setSetting: typeof setSetting;
+  setNewMatchComment: typeof setNewMatchComment;
+
+  // Actual props
   viewport: Viewport;
-  getOpponentMatches: Function;
-  setSetting: Function;
   match: IMatch;
-  viewportWidthContainerCount: number;
+  viewportWidthContainerCount?: number;
   big?: boolean;
   small?: boolean;
   isOpen?: boolean;
@@ -52,15 +63,13 @@ type MatchCardState = {
 
 
 class MatchCard extends Component<MatchCardProps, MatchCardState> {
-  static contextTypes = PropTypes.contextTypes;
-
   static defaultProps = {
     viewportWidthContainerCount: 1, // The amount of containers next to eachother that display a PlayersImageGallery
-  }
+  };
 
   constructor(props) {
     if (props.small) { // TODO: remove this if small prop is never passed (doesn't seem to be the case...)
-      console.error('passed props.small to MatchCard'); // eslint-disable-line
+      console.error('passed props.small to MatchCard');
     }
     super(props);
     this.state = {
@@ -69,7 +78,7 @@ class MatchCard extends Component<MatchCardProps, MatchCardState> {
   }
 
   componentDidMount() {
-    this.props.getOpponentMatches(this.props.match.teamId, this.props.match.opponent);
+    this.props.getOpponentMatches({teamId: this.props.match.teamId, opponent: this.props.match.opponent});
   }
 
   render() {
@@ -77,36 +86,36 @@ class MatchCard extends Component<MatchCardProps, MatchCardState> {
 
     const tabConfig = [{
       key: tabEventKeys.players,
-      title: this.context.t('match.tabs.playersTitle'),
-      label: this.context.t('match.tabs.players'),
+      title: t('match.tabs.playersTitle'),
+      label: t('match.tabs.players'),
       headerChildren: this._getPlayersEditIcon(),
     }, {
       key: tabEventKeys.report,
-      title: this.context.t('match.tabs.reportTitle'),
-      label: this.context.t('match.tabs.report'),
+      title: t('match.tabs.reportTitle'),
+      label: t('match.tabs.report'),
       headerChildren: this._getCommentsIcon(),
     }, {
       key: tabEventKeys.individualMatches,
-      title: this.context.t('match.tabs.matchesTitle'),
-      label: this.context.t('match.tabs.matches'),
-      show: match.games.size !== 0,
+      title: t('match.tabs.matchesTitle'),
+      label: t('match.tabs.matches'),
+      show: match.games.length !== 0,
     }, {
       key: tabEventKeys.scoresheet,
-      title: this.context.t('match.tabs.scoresheet'),
+      title: t('match.tabs.scoresheet'),
       show: match.isBeingPlayed(),
     }, {
       key: tabEventKeys.opponentClub,
-      title: this.context.t('match.tabs.clubTitle'),
-      label: this.context.t('match.tabs.club'),
+      title: t('match.tabs.clubTitle'),
+      label: t('match.tabs.club'),
       show: !match.isHomeMatch && !match.isPlayed,
     }, {
       key: tabEventKeys.opponentsRanking,
-      title: this.context.t('match.tabs.opponentsRankingTitle'),
-      label: this.context.t('match.tabs.opponentsRanking'),
+      title: t('match.tabs.opponentsRankingTitle'),
+      label: t('match.tabs.opponentsRanking'),
     }, {
       key: tabEventKeys.opponentsFormation,
-      title: this.context.t('match.tabs.opponentsFormationTitle'),
-      label: this.context.t('common.teamFormation'),
+      title: t('match.tabs.opponentsFormationTitle'),
+      label: t('common.teamFormation'),
     }, {
       key: tabEventKeys.admin,
       title: 'admin',
@@ -119,27 +128,24 @@ class MatchCard extends Component<MatchCardProps, MatchCardState> {
       <HeaderComponent
         {...this.props}
         match2={this.props.match}
-        backgroundColor="#fafafa"
-        isOpen={this.props.isOpen}
-        style={{margin: 50}}
-        config={this.props.config}
-        forceEdit={this.state.forceEditPlayers}
+        isOpen={!!this.props.isOpen}
+        // forceEdit={this.state.forceEditPlayers}
       >
         <TabbedContainer
-          match={{match: this.props.params}}
+          // match={{match: this.props.params}}
           style={{marginBottom: -18}}
-          defaultTabKey={tabEventKeys.players}
+          selectedTab={tabEventKeys.players}
           tabKeys={tabConfig}
           tabRenderer={evenyKey => this._renderTabContent(evenyKey)}
           onTabSelect={evenyKey => this._onTabSelect(evenyKey)}
-          route={{base: this.context.t.route('match').replace(':matchId', match.id), subs: 'matchTabs'}}
+          route={{base: t.route('match').replace(':matchId', match.id.toString()), subs: 'matchTabs'}}
         />
       </HeaderComponent>
     );
   }
 
   _getCommentsIcon(): React.ReactNode {
-    const hasNewComment = this.props.config.get(`newMatchComment${this.props.match.id}`);
+    const hasNewComment = false; // this.props.config.get(`newMatchComment${this.props.match.id}`);
     if (!hasNewComment) {
       return null;
     }
@@ -160,7 +166,7 @@ class MatchCard extends Component<MatchCardProps, MatchCardState> {
 
   _onTabSelect(eventKey: string) {
     if (eventKey === tabEventKeys.report) {
-      this.props.setSetting(`newMatchComment${this.props.match.id}`, false);
+      this.props.setNewMatchComment({matchId: this.props.match.id, isNew: false});
     }
   }
 
@@ -170,28 +176,28 @@ class MatchCard extends Component<MatchCardProps, MatchCardState> {
         return this._renderPlayers();
 
       case tabEventKeys.individualMatches:
-        return <IndividualMatches match={this.props.match} />;
+        return <IndividualMatches match={this.props.match} ownPlayerId={this.props.user.playerId} />;
 
       case tabEventKeys.report:
-        return <MatchReport match={this.props.match} t={this.context.t} user={this.props.user} viewport={this.props.viewport} />;
+        return <MatchReport match={this.props.match} />;
 
       case tabEventKeys.opponentClub:
-        return <OpponentClubLocations club={this.props.match.getOpponentClub()} t={this.context.t} />;
+        return <OpponentClubLocations club={this.props.match.getOpponentClub()} />;
 
       case tabEventKeys.scoresheet:
-        return <Scoresheet match={this.props.match} t={this.context.t} viewport={this.props.viewport} />;
+        return <Scoresheet match={this.props.match} />;
 
       case tabEventKeys.opponentsRanking:
         return this._renderOpponentsRanking();
 
-      case tabEventKeys.opponentsFormation:
-        return <OpponentsFormation match={this.props.match} opponent={this.props.match.opponent} />;
+        // case tabEventKeys.opponentsFormation:
+        //   return <OpponentsFormation match={this.props.match} opponent={this.props.match.opponent} />;
 
       case tabEventKeys.admin:
         return <MatchCardAdmin match={this.props.match} />;
 
       default:
-        return 'Unknown';
+        return <span>Unknown</span>;
     }
   }
 
@@ -217,15 +223,15 @@ class MatchCard extends Component<MatchCardProps, MatchCardState> {
     const team = match.getTeam();
 
     if (match.isSyncedWithFrenoy) {
-      return <MatchPlayerResults match={match} t={this.context.t} />;
+      return <MatchPlayerResults match={match} />;
     }
 
     const playingPlayers = match.getPlayerFormation('onlyFinal').map(x => x.player);
-    if (this.state.forceEditPlayers || (this.props.user.canEditPlayersOnMatchDay(match) && playingPlayers.size < team.getTeamPlayerCount())) {
-      return <SelectPlayersForm match={match} user={this.props.user} />;
-    }
+    // if (this.state.forceEditPlayers || (this.props.user.canEditPlayersOnMatchDay(match) && playingPlayers.length < team.getTeamPlayerCount())) {
+    //   return <SelectPlayersForm match={match} user={this.props.user} />;
+    // }
 
-    if (playingPlayers.size === 0) {
+    if (playingPlayers.length === 0) {
       const standardPlayers = team.getPlayers('standard').map(ply => ply.player);
       return (
         <PlayersImageGallery
@@ -246,8 +252,14 @@ class MatchCard extends Component<MatchCardProps, MatchCardState> {
   }
 }
 
-export default withViewport(connect(state => ({
-  config: state.config,
-  user: state.user,
+const mapDispatchToProps = (dispatch: any) => ({
+  setSetting: (data: Parameters<typeof setSetting>[0]) => dispatch(setSetting(data)),
+  getOpponentMatches: (data: Parameters<typeof getOpponentMatches>[0]) => dispatch(getOpponentMatches(data)),
+  setNewMatchComment: (data: Parameters<typeof setNewMatchComment>[0]) => dispatch(setNewMatchComment(data)),
+});
+
+export default connect((state: RootState) => ({
+  newComments: state.config.newMatchComments,
+  user: new UserModel(state.user),
   readonlyMatches: state.readonlyMatches,
-}), {...matchActions, setSetting})(MatchCard));
+}), mapDispatchToProps)(MatchCard);

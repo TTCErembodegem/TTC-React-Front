@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
 import Table from 'react-bootstrap/Table';
 import TextField from '@mui/material/TextField';
-import {connect, withViewport} from '../PropTypes';
-import {updateClub} from '../../actions/clubActions';
+import { connect } from 'react-redux';
 import AdminClubForm from './AdminClubForm';
 import {EditButton} from '../controls/Buttons/EditButton';
-import {IClub, Viewport, IClubLocation} from '../../models/model-interfaces';
+import {IClub, IClubLocation} from '../../models/model-interfaces';
+import { updateClub } from '../../reducers/clubsReducer';
+import { RootState } from '../../store';
 
 type AdminClubsProps = {
   clubs: IClub[];
   updateClub: Function;
-  viewport: Viewport;
 }
 
 type AdminClubsState = {
@@ -60,25 +60,25 @@ class AdminClubs extends Component<AdminClubsProps, AdminClubsState> {
 
 
 const ClubsTable = ({clubs, onEditClub}: {clubs: IClub[], onEditClub: (club: IClub) => void}) => (
-  <Table condensed hover>
+  <Table size="sm" hover>
     <thead>
       <tr>
         <th>Club</th>
-        <th className="hidden-xs">Vttl</th>
-        <th className="hidden-xs">Sporta</th>
+        <th className="d-none d-sm-table-cell">Vttl</th>
+        <th className="d-none d-sm-table-cell">Sporta</th>
         <th>Acties</th>
       </tr>
     </thead>
     <tbody>
-      {clubs.sort((a, b) => a.name.localeCompare(b.name)).map(club => (
+      {clubs.slice().sort((a, b) => a.name.localeCompare(b.name)).map(club => (
         <tr key={club.id}>
           <td>
             <b>{club.name}</b>
             <br />
             <ClubLocation location={club.mainLocation} />
           </td>
-          <td className="hidden-xs">{club.codeVttl}</td>
-          <td className="hidden-xs">{club.codeSporta}</td>
+          <td className="d-none d-sm-table-cell">{club.codeVttl}</td>
+          <td className="d-none d-sm-table-cell">{club.codeSporta}</td>
           <td>
             <EditButton onClick={() => onEditClub(club)} style={{fontSize: 26}} />
           </td>
@@ -88,7 +88,11 @@ const ClubsTable = ({clubs, onEditClub}: {clubs: IClub[], onEditClub: (club: ICl
   </Table>
 );
 
-export default withViewport(connect(() => ({}), {updateClub})(AdminClubs));
+const mapDispatchToProps = (dispatch: any) => ({
+  updateClub: (data: {club: IClub}) => dispatch(updateClub(data)),
+});
+
+export default connect((state: RootState) => ({clubs: state.clubs}), mapDispatchToProps)(AdminClubs);
 
 
 const ClubLocation = ({location}: {location: IClubLocation}) => (

@@ -1,15 +1,18 @@
 /* eslint-disable arrow-body-style */
 import request from 'superagent';
-import querystring from 'querystring';
-import assert from 'assert';
 import moment from 'moment';
 import t from '../locales';
+import { IMatch } from '../models/model-interfaces';
 
 const LogRequestTimes = false;
 
 export function getUrl(path, appendApi = true) {
-  assert(path[0] === '/', 'HttpClient: path passed should start with a /');
-  assert(path.substring(0, 5) !== '/api/', 'HttpClient: path passed should not be prefixed with /api');
+  if (path[0] !== '/') {
+    console.error('HttpClient: path passed should start with a /');
+  }
+  if (path.substring(0, 5) === '/api/') {
+    console.error('HttpClient: path passed should not be prefixed with /api');
+  }
   if (appendApi) {
     // eslint-disable-next-line no-param-reassign
     path = `/api${path}`;
@@ -17,7 +20,7 @@ export function getUrl(path, appendApi = true) {
 
   return window.location.hostname !== 'localhost'
     ? `http://${window.location.hostname}${path}`
-    : `http://localhost:49731${path}`;
+    : `http://localhost:5193${path}`;
 }
 
 function bearer(req) {
@@ -28,57 +31,49 @@ function bearer(req) {
 }
 
 const HttpClient = {
-  download: path => request.get(getUrl(path)).accept('json').use(bearer),
-  get: (path: string, qs?: any) => {
-    const fullUrl = `GET ${qs ? `${path}?${querystring.encode(qs)}` : path}`;
-    return Promise.try(() => {
+  download: (path: string) => request.get(getUrl(path)).accept('json').use(bearer),
+  get: <T>(path: string, qs?: any): Promise<T> => {
+    const fullUrl = `GET ${qs ? `${path}?${new URLSearchParams(qs).toString()}` : path}`;
+    return (async () => {
       if (LogRequestTimes) {
-        console.time(fullUrl); // eslint-disable-line
+        console.time(fullUrl);
       }
-      return null;
-    }).then(() => request
-      .get(getUrl(path))
-      .query(qs)
-      .use(bearer)
-      .accept('application/json')).tap(() => {
-      if (LogRequestTimes) {
-        console.timeEnd(fullUrl); // eslint-disable-line
-      }
-    }).then(res => res.body, err => {
-      if (err.status === 408) {
-        // 408 Request Timeout: Usually mysql_max_connections = retry
-        return Promise.delay(300).then(() => HttpClient.get(path, qs));
-      }
-      return Promise.reject(err);
 
-    });
+      const response = await request
+        .get(getUrl(path))
+        .query(qs)
+        .use(bearer)
+        .accept('application/json');
+
+      if (LogRequestTimes) {
+        console.timeEnd(fullUrl);
+      }
+
+      return response.body;
+    })();
   },
-  post: (url, data) => {
+  post: <T>(url: string, data?: any): Promise<T> => {
     const fullUrl = `POST ${url}`;
-    return Promise.try(() => {
+    return (async () => {
       if (LogRequestTimes) {
-        console.time(fullUrl); // eslint-disable-line
+        console.time(fullUrl);
       }
-      return null;
-    }).then(() => request
-      .post(getUrl(url))
-      .send(data)
-      .use(bearer)
-      .set('Accept', 'application/json')
-      .set('Content-Type', 'application/json')).tap(() => {
-      if (LogRequestTimes) {
-        console.timeEnd(fullUrl); // eslint-disable-line
-      }
-    }).then(res => res.body, err => {
-      if (err.status === 408) {
-        // 408 Request Timeout: Usually mysql_max_connections = retry
-        return Promise.delay(300).then(() => HttpClient.post(url, data));
-      }
-      return Promise.reject(err);
 
-    });
+      const response = await request
+        .post(getUrl(url))
+        .send(data)
+        .use(bearer)
+        .set('Accept', 'application/json')
+        .set('Content-Type', 'application/json');
+
+      if (LogRequestTimes) {
+        console.timeEnd(fullUrl);
+      }
+
+      return response.body;
+    })();
   },
-  upload: (files, type = 'temp') => new Promise((resolve, reject) => {
+  upload: (files, type = 'temp') => new Promise<{fileName?: string}>((resolve, reject) => {
     const req = request
       .post(getUrl('/upload'))
       .accept('application/json')
@@ -98,7 +93,7 @@ const HttpClient = {
       }
     });
   }),
-  uploadImage: (imageBase64, dataId, type) => new Promise((resolve, reject) => {
+  uploadImage: (imageBase64: string, dataId: number, type: string) => new Promise((resolve, reject) => {
     request
       .post(getUrl('/upload/image'))
       .send({image: imageBase64, dataId, type})
@@ -116,11 +111,11 @@ const HttpClient = {
   }),
 };
 
-function b64ToBlob(b64Data, contentType = '', sliceSize = 512) {
+function b64ToBlob(b64Data: string, contentType = '', sliceSize = 512) {
   contentType = contentType || 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 
   const byteCharacters = atob(b64Data);
-  const byteArrays = [];
+  const byteArrays = [] as Uint8Array[];
 
   for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
     const slice = byteCharacters.slice(offset, offset + sliceSize);
@@ -137,41 +132,34 @@ function b64ToBlob(b64Data, contentType = '', sliceSize = 512) {
   return blob;
 }
 
-function downloadExcel(respBody, fileName, addTimestampToFileName = false) {
+function downloadExcel(respBody: string, fileName: string, addTimestampToFileName = false) {
   const blob = b64ToBlob(respBody);
   if (addTimestampToFileName) {
     fileName += ` ${moment().format('YYYY-MM-DD')}.xlsx`;
   }
 
-  if (window.navigator.msSaveOrOpenBlob) {
-    window.navigator.msSaveBlob(blob, fileName);
-  } else {
-    const link = document.createElement('a');
-    link.download = fileName;
-    link.href = URL.createObjectURL(blob);
-    link.style.display = 'none';
-    document.body.appendChild(link);
-    link.click();
-  }
+  const link = document.createElement('a');
+  link.download = fileName;
+  link.href = URL.createObjectURL(blob);
+  link.style.display = 'none';
+  document.body.appendChild(link);
+  link.click();
 }
 
 
-HttpClient.download.playersExcel = fileName => {
-  return HttpClient.download('/players/ExcelExport').then(res => {
-    downloadExcel(res.body, fileName, true);
-  });
+export const downloadPlayersExcel = async (fileName: string): Promise<void> => {
+  const res = await HttpClient.download('/players/ExcelExport');
+  downloadExcel(res.body, fileName, true);
 };
 
-// link.href = 'data:application/octet-stream;base64,' + res.body;
-// --> Does not work in IE
 
-HttpClient.download.scoresheetExcel = match => {
+export const downloadScoresheetExcel = (match: IMatch) => {
   return HttpClient.download(`/matches/ExcelScoresheet/${match.id}`).then(res => {
     // fileName: '{frenoyId} Sporta {teamCode} vs {theirClub} {theirTeam}.xlsx',
     const fileName = t('comp.scoresheetFileName', {
       frenoyId: match.frenoyMatchId.replace('/', '-'),
       teamCode: match.getTeam().teamCode,
-      theirClub: match.getOpponentClub().name,
+      theirClub: match.getOpponentClub()?.name,
       theirTeam: match.opponent.teamCode,
     });
 
@@ -179,7 +167,7 @@ HttpClient.download.scoresheetExcel = match => {
   });
 };
 
-HttpClient.download.teamsExcel = fileName => {
+export const downloadTeamsExcel = (fileName: string) => {
   return HttpClient.download('/teams/ExcelExport').then(res => {
     downloadExcel(res.body, fileName, true);
   });

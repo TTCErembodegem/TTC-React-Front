@@ -1,5 +1,6 @@
 import storeUtil from '../storeUtil';
 import {IPlayer, IPlayerContact, IPlayerCompetition, IPlayerStyle, Competition, ITeam, MatchPlayerStatus} from './model-interfaces';
+import { UserRoles } from './UserModel';
 
 
 export default class PlayerModel implements IPlayer {
@@ -13,12 +14,12 @@ export default class PlayerModel implements IPlayer {
   vttl: IPlayerCompetition;
   style: IPlayerStyle;
   quitYear: number;
-  security: string | 'Player';
+  security: UserRoles;
   hasKey: boolean;
 
   constructor(json: any = {security: 'Player'}) {
     this.alias = json.alias || json.name || '';
-    this.contact = new PlayerContactModel(json.contact); // playerId, email, mobile, address, city
+    this.contact = new PlayerContactModel(json.contact || {}); // playerId, email, mobile, address, city
     this.id = json.id;
     this.active = json.active;
     this.firstName = json.firstName;
@@ -39,11 +40,7 @@ export default class PlayerModel implements IPlayer {
     return this.name.toLowerCase().replace(/\s/g, '-');
   }
 
-  getCompetition(competition: Competition): IPlayerCompetition | {} {
-    if (!competition) {
-      return {};
-    }
-
+  getCompetition(competition: Competition): IPlayerCompetition {
     const comp = competition === 'Vttl' ? this.vttl : this.sporta;
     return comp || {};
   }
@@ -57,7 +54,7 @@ export default class PlayerModel implements IPlayer {
       .filter(team => team.competition === competition)
       .filter(team => team.players.some(tp => tp.playerId === this.id && (tp.type === 'Captain' || tp.type === 'Standard')));
 
-    return teams.first();
+    return teams[0];
   }
 }
 
@@ -133,9 +130,9 @@ export function createFrenoyLinkByUniqueId(comp: Competition, uniqueId: number):
 
 }
 
-export function getPlayingStatusClass(playingStatus): null | 'success' | 'danger' | 'info' {
+export function getPlayingStatusClass(playingStatus): undefined | 'success' | 'danger' | 'info' {
   if (!playingStatus) {
-    return null;
+    return undefined;
   }
 
   switch (playingStatus.status) {
@@ -148,7 +145,7 @@ export function getPlayingStatusClass(playingStatus): null | 'success' | 'danger
     case 'Maybe':
       return 'info';
     default:
-      return null;
+      return undefined;
   }
 }
 
