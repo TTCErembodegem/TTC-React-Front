@@ -57,7 +57,7 @@ export default class MatchVs extends Component<MatchVsProps, MatchVsState> {
     }
 
 
-    const usClasses = cn('label label-as-badge label-info', {clickable: !!this.props.ownTeamLink});
+    const usClasses = cn('badge label-as-badge bg-info', {clickable: !!this.props.ownTeamLink});
     let us;
     if (this.props.ownTeamLink) {
       us = (

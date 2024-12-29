@@ -30,7 +30,7 @@ export class Badgy extends Component<BadgyProps> {
 
     return (
       <OverlayTrigger placement="top" overlay={<Tooltip id={tooltip}>{t(tooltip)}</Tooltip>}>
-        <span className={`label label-as-badge ${type}`} style={style}>
+        <span className={`badge label-as-badge ${type}`} style={style}>
           {children}
         </span>
       </OverlayTrigger>
@@ -53,7 +53,7 @@ export const ThrillerBadge = ({match}: {match: IMatch}) => {
       paddingRight: 13,
     };
     return (
-      <span className="label label-as-badge label-danger" style={thrillerStyle}>
+      <span className="badge label-as-badge bg-danger" style={thrillerStyle}>
         <ThrillerIcon />
         {t(`match.${thrillerType}`)}
       </span>

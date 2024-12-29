@@ -78,8 +78,8 @@
   color: #707070;
 }
 
-.label-info.clickable:hover,
-.label-info.clickable:focus {
+.bg-info.clickable:hover,
+.bg-info.clickable:focus {
   background-color: #31b0d5;
 }
 

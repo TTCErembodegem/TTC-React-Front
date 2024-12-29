@@ -34,7 +34,7 @@ export class TeamOverviewRanking extends Component<TeamOverviewRankingProps> {
             <div
               key={teamRanking.clubId + teamRanking.teamCode}
               style={{marginRight: 15, display: 'inline-block', fontSize: isOwnClub ? 14 : undefined, fontWeight: isOwnClub ? 'bold' : undefined}}
-              className={cn({'label label-as-badge label-info': isOwnClub && !small})}
+              className={cn({'badge label-as-badge bg-info': isOwnClub && !small})}
             >
               {!isOwnClub ? (
                 <OpponentLink team={team} opponent={{clubId: teamRanking.clubId, teamCode: teamRanking.teamCode}} />

@@ -34,7 +34,7 @@ pre {
 .label-as-badge {
   border-radius: 1em;
 }
-.clickable.label-success:hover {
+.clickable.bg-success:hover {
   background-color: #449d44;
   border-color: #398439;
 }

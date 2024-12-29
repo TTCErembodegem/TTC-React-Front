@@ -44,7 +44,7 @@ export const MatchScore = ({showThrophy = true, ...props}: MatchScoreProps) => {
       return (
         <Link to={t.route('match', {matchId: match.id})}>
           <span
-            className={cn('label label-as-badge clickable', classColor2, props.className)}
+            className={cn('badge label-as-badge clickable', classColor2, props.className)}
             title={t('match.previousEncounterScore')}
             style={props.style}
           >
@@ -61,10 +61,9 @@ export const MatchScore = ({showThrophy = true, ...props}: MatchScoreProps) => {
   const classColor = match.isDerby ? 'match-won' : getClassName(match.isHomeMatch, score.home, score.out);
   return (
     <span
-      className={cn('label label-as-badge clickable', props.className, classColor)}
+      className={cn('badge label-as-badge clickable', props.className, classColor)}
       style={props.style}
     >
-
       <span>
         {classColor === 'match-won' && !match.isDerby && viewport.width > 350 && showThrophy ? (
           <TrophyIcon style={{marginRight: 7, marginTop: 4, fontWeight: 'normal'}} color="#FFE568" />

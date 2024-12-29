@@ -97,7 +97,7 @@ class AdminEmailComponent extends Component<AdminEmailComponentProps, AdminEmail
 
 const PlayerEmail = ({player}: {player: IStorePlayer}) => (
   <span style={{whiteSpace: 'normal', marginRight: 7, paddingTop: 15}}>
-    <span className="label label-as-badge label-success" key={player.id} style={{fontSize: 12, fontWeight: 'normal'}}>
+    <span className="badge label-as-badge bg-success" key={player.id} style={{fontSize: 12, fontWeight: 'normal'}}>
       {player.firstName} {player.lastName}
     </span>
     {' '}
