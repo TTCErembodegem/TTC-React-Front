@@ -2,6 +2,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import http from '../utils/httpClient';
 import { t } from "../locales";
+import { ITeamOpponent } from '../models/model-interfaces';
 
 type IConfig = typeof defaultConfigState.params;
 
@@ -42,6 +43,7 @@ const defaultConfigState = {
     container100PerWidth: false,
   },
   newMatchComments: {} as {[matchId: number]: boolean},
+  opponentMatchesLoaded: {} as {[opponentKey: string]: boolean},
 };
 
 type Settings = typeof defaultConfigState.settings;
@@ -71,6 +73,11 @@ export const configSlice = createSlice({
       const {matchId, isNew} = action.payload;
       state.newMatchComments[matchId] = isNew;
     },
+    setOpponentMatchesLoaded: (state, action: PayloadAction<{teamId: number, opponent: ITeamOpponent}>) => {
+      const {teamId, opponent} = action.payload;
+      const key = `${teamId}-${opponent.teamCode}-${opponent.clubId}`;
+      state.opponentMatchesLoaded[key] = true;
+    },
   },
   extraReducers: builder => {
     builder.addCase(fetchConfig.fulfilled, (state, action) => {
@@ -86,6 +93,6 @@ export const configSlice = createSlice({
   },
 });
 
-export const { initialLoadCompleted, clearSnackbar, showSnackbar, setSetting, setNewMatchComment } = configSlice.actions;
+export const { initialLoadCompleted, clearSnackbar, showSnackbar, setSetting, setNewMatchComment, setOpponentMatchesLoaded } = configSlice.actions;
 
 export default configSlice.reducer;

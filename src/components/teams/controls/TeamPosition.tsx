@@ -26,7 +26,7 @@ export class TeamPosition extends Component<TeamPositionProps> {
     } else if (team.isInDegradationZone(opponent)) {
       positionClassName = 'match-lost';
     } else {
-      positionClassName = 'label-default';
+      positionClassName = 'bg-secondary';
     }
 
     return (

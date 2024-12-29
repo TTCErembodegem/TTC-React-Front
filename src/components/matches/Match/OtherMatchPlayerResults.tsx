@@ -12,7 +12,7 @@ export const OtherMatchPlayerResults = ({match}: {match: IMatch}) => {
   }
 
   const SwitchButton = (
-    <div className="row text-center">
+    <div className="col-12 text-center">
       <button type="button" className="btn btn-outline-secondary" style={{marginTop: 15}} onClick={() => setFullView(!fullView)}>
         {fullView ? t('match.report.viewDetails') : t('match.report.viewFull')}
       </button>

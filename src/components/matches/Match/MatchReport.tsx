@@ -92,7 +92,10 @@ export const MatchReport = ({match}: MatchReportProps) => {
                     label={t('common.save')}
                     color="primary"
                     style={{float: 'right', marginRight: 15}}
-                    onClick={() => dispatch(postReport({matchId: match.id, text, playerId: user.playerId}))}
+                    onClick={() => {
+                      dispatch(postReport({matchId: match.id, text, playerId: user.playerId}));
+                      setReportFormOpen(false);
+                    }}
                   />
                 </div>
               </div>

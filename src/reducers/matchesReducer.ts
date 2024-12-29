@@ -1,10 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import moment from 'moment';
 import { mergeInStore2 } from './immutableHelpers';
-import { IFullStoreMatchOwn, IMatchComment, IStoreMatchCommon, ITeamOpponent } from '../models/model-interfaces';
+import { IFullStoreMatchOwn, IMatchComment, IStoreMatchCommon, MatchPlayerStatus } from '../models/model-interfaces';
 import http from '../utils/httpClient';
 import { t } from '../locales';
 import { showSnackbar } from './configReducer';
+import storeUtil from '../storeUtil';
+import { MatchPlayerRankings } from '../components/matches/controls/MatchPlayerRankings';
 
 export const fetchMatches = createAsyncThunk(
   'matches/Get',
@@ -14,7 +16,7 @@ export const fetchMatches = createAsyncThunk(
   },
 );
 
-const shouldSync = (match: IStoreMatchCommon) => !match.isSyncedWithFrenoy
+export const shouldSync = (match: IStoreMatchCommon) => !match.isSyncedWithFrenoy
   && moment().isAfter(match.date)
   && match.shouldBePlayed;
 
@@ -92,6 +94,52 @@ export const deleteComment = createAsyncThunk(
 );
 
 
+export const selectPlayer = createAsyncThunk(
+  'matches/SelectPlayer',
+  async (data: {matchId: number, status: MatchPlayerStatus, statusNote: string | null, playerId: number}, { dispatch }) => {
+    const match = storeUtil.getMatch(data.matchId);
+    const player = storeUtil.getPlayer(data.playerId);
+    const comp = player.getCompetition(match.competition);
+
+    let matchPlayer = match.plays(player);
+    if (!matchPlayer) {
+      matchPlayer = {
+        id: 0,
+        matchId: match.id,
+        playerId: player.id,
+        home: match.isHomeMatch,
+        position: match.players.length + 1,
+        ranking: comp.ranking,
+        name: player.alias,
+        alias: player.alias,
+        uniqueIndex: comp.uniqueIndex,
+        status: data.status,
+        statusNote: data.statusNote || '',
+        won: 0,
+      };
+    } else {
+      matchPlayer = {
+        ...matchPlayer,
+        status: data.status,
+      };
+    }
+
+    const isMyFormation = data.statusNote !== null;
+    if (isMyFormation) {
+      matchPlayer.statusNote = data.statusNote || '';
+    }
+
+    try {
+      const newMatch = await http.post<IFullStoreMatchOwn>(`/matches/${isMyFormation ? 'SetMyFormation' : 'TogglePlayer'}`, matchPlayer);
+      dispatch(simpleLoaded(newMatch));
+      // broadcastReload('match', newMatch.id);
+    } catch (err) {
+      console.error('selectPlayer', data, err);
+    }
+  },
+);
+
+
 /** New season team sync */
 export const frenoyTeamSync = createAsyncThunk(
   'matches/FrenoyTeamSync',
@@ -105,74 +153,36 @@ export const frenoyTeamSync = createAsyncThunk(
   },
 );
 
-export const getOpponentMatches = createAsyncThunk(
-  'matches/GetOpponentMatches',
-  async (data: {teamId: number, opponent: ITeamOpponent}, { dispatch }) => {
-    // try {
-    //   await http.post('/matches/GetOpponentMatches');
-    //   dispatch(showSnackbar(t('common.apiSuccess')));
-    // } catch (err) {
-    //   dispatch(showSnackbar(t('common.apiFail')));
-    // }
-  },
-);
-
-// export function getOpponentMatches(teamId, opponent = {}) {
-//   const key = 'GetOpponentMatches' + teamId + opponent.teamCode + opponent.clubId;
-//   if (storeUtil.getConfig().get(key)) {
-//     return {type: 'empty', payload: ''};
-//   }
-
-//   return dispatch => {
-//     return http.get('/matches/GetOpponentMatches', {teamId, ...opponent})
-//       .then(function(matches) {
-//         dispatch(setSetting(key, true));
-
-//         if (!matches || !matches.length) {
-//           return;
-//         }
-
-//         dispatch(readOnlyLoaded(matches));
-
-//         matches.forEach(m => {
-//           dispatch(frenoyReadOnlyMatchSync(m));
-//         });
-//         return null;
-
-//       }, function(err) {
-//         console.log('GetOpponentMatches!', err); // eslint-disable-line
-//       });
-//   };
-// }
-
 
 export const matchesSlice = createSlice({
   name: 'matches',
   initialState: [] as IFullStoreMatchOwn[],
   reducers: {
-    simpleLoaded: (state, action: PayloadAction<IFullStoreMatchOwn | IFullStoreMatchOwn[]>) => { // eslint-disable-line arrow-body-style
-      return mergeInStore2(state, action.payload, m => m.shouldBePlayed);
+    simpleLoaded: (state, action: PayloadAction<IFullStoreMatchOwn | IFullStoreMatchOwn[]>) => {
+      const newState = mergeInStore2(state, action.payload, m => m.shouldBePlayed);
+      return newState;
     },
   },
   extraReducers: builder => {
-    builder.addCase(fetchMatches.fulfilled, (state, action) => mergeInStore2(state, action.payload));
+    builder.addCase(fetchMatches.fulfilled, (state, action) => mergeInStore2(state, action.payload, m => m.shouldBePlayed));
   },
 });
 
 
-// export function freeMatches(state = Immutable.List([]), action = null) {
-//   const {type, payload} = action;
-//   switch (type) {
-//     case ActionTypes.MATCHES_LOADED:
-//       return immutableHelpers.merge(state, payload, x => new MatchModel(x), x => !x.shouldBePlayed);
-//     default:
-//       return state;
-//   }
-// }
-
+export const freeMatchesSlice = createSlice({
+  name: 'freeMatches',
+  initialState: [] as IFullStoreMatchOwn[],
+  reducers: {
+    simpleLoaded: (state, action: PayloadAction<IFullStoreMatchOwn | IFullStoreMatchOwn[]>) => {
+      const newState = mergeInStore2(state, action.payload, m => !m.shouldBePlayed);
+      return newState;
+    },
+  },
+  extraReducers: builder => {
+    builder.addCase(fetchMatches.fulfilled, (state, action) => mergeInStore2(state, action.payload, m => !m.shouldBePlayed));
+  },
+});
 
 export const { simpleLoaded } = matchesSlice.actions;
 
 export default matchesSlice.reducer;
-
-// readonlyMatches reducer is in ./reducers.js

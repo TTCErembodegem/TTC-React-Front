@@ -1,14 +1,12 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-// import * as matchActions from '../../../actions/matchActions';
-// import {setSetting} from '../../../actions/configActions';
 import {SmallMatchCardHeader, BigMatchCardHeader} from './MatchCardHeader';
 import MatchPlayerResults from './MatchPlayerResults';
 import {IndividualMatches} from './IndividualMatches';
 import {OpponentClubLocations} from './OpponentClubLocations';
-// import SelectPlayersForm from './SelectPlayersForm';
+import {SelectPlayersForm} from './SelectPlayersForm';
 import {OpponentsLastMatches} from './OpponentsLastMatches';
-// import OpponentsFormation from './OpponentsFormation';
+import {OpponentsFormation} from './OpponentsFormation';
 import {MatchReport} from './MatchReport';
 import {Scoresheet} from './Scoresheet';
 import {PlayersImageGallery} from '../../players/PlayersImageGallery';
@@ -20,11 +18,10 @@ import {EditIcon} from '../../controls/Icons/EditIcon';
 import {IMatch} from '../../../models/model-interfaces';
 import UserModel, {IUser} from '../../../models/UserModel';
 import { t } from '../../../locales';
-import storeUtil from '../../../storeUtil';
 import { Viewport } from '../../../utils/hooks/useViewport';
 import { RootState } from '../../../store';
 import { setNewMatchComment, setSetting } from '../../../reducers/configReducer';
-import { getOpponentMatches } from '../../../reducers/matchesReducer';
+import { getOpponentMatches } from '../../../reducers/readonlyMatchesReducer';
 
 const tabEventKeys = {
   players: 'players',
@@ -41,7 +38,6 @@ type MatchCardProps = {
   // Store mapped
   newComments: {[matchId: number]: boolean};
   user: IUser;
-  readonlyMatches: IMatch[];
 
   getOpponentMatches: typeof getOpponentMatches;
   setSetting: typeof setSetting;
@@ -52,7 +48,6 @@ type MatchCardProps = {
   match: IMatch;
   viewportWidthContainerCount?: number;
   big?: boolean;
-  small?: boolean;
   isOpen?: boolean;
   params?: {tabKey?: string};
 }
@@ -68,9 +63,6 @@ class MatchCard extends Component<MatchCardProps, MatchCardState> {
   };
 
   constructor(props) {
-    if (props.small) { // TODO: remove this if small prop is never passed (doesn't seem to be the case...)
-      console.error('passed props.small to MatchCard');
-    }
     super(props);
     this.state = {
       forceEditPlayers: false,
@@ -129,10 +121,9 @@ class MatchCard extends Component<MatchCardProps, MatchCardState> {
         {...this.props}
         match2={this.props.match}
         isOpen={!!this.props.isOpen}
-        // forceEdit={this.state.forceEditPlayers}
+        // TODO: forceEdit={this.state.forceEditPlayers} --> can no longer edit scores or something?
       >
         <TabbedContainer
-          // match={{match: this.props.params}}
           style={{marginBottom: -18}}
           selectedTab={tabEventKeys.players}
           tabKeys={tabConfig}
@@ -145,7 +136,7 @@ class MatchCard extends Component<MatchCardProps, MatchCardState> {
   }
 
   _getCommentsIcon(): React.ReactNode {
-    const hasNewComment = false; // this.props.config.get(`newMatchComment${this.props.match.id}`);
+    const hasNewComment = this.props.newComments[this.props.match.id];
     if (!hasNewComment) {
       return null;
     }
@@ -190,8 +181,8 @@ class MatchCard extends Component<MatchCardProps, MatchCardState> {
       case tabEventKeys.opponentsRanking:
         return this._renderOpponentsRanking();
 
-        // case tabEventKeys.opponentsFormation:
-        //   return <OpponentsFormation match={this.props.match} opponent={this.props.match.opponent} />;
+      case tabEventKeys.opponentsFormation:
+        return <OpponentsFormation match={this.props.match} opponent={this.props.match.opponent} />;
 
       case tabEventKeys.admin:
         return <MatchCardAdmin match={this.props.match} />;
@@ -202,18 +193,10 @@ class MatchCard extends Component<MatchCardProps, MatchCardState> {
   }
 
   _renderOpponentsRanking() {
-    const matches = storeUtil.matches
-      .getFromOpponent(this.props.match)
-      .filter(match => match.id !== this.props.match.id);
-
-    const theirOtherMatches = matches
-      .filter(match => match.score && (match.score.home || match.score.out))
-      .sort((a, b) => (a.date.isBefore(b.date) ? 1 : -1));
-
     return (
       <div>
         <MatchOtherRoundButton match={this.props.match} />
-        <OpponentsLastMatches opponent={this.props.match.opponent} readonlyMatches={theirOtherMatches} />
+        <OpponentsLastMatches match={this.props.match} />
       </div>
     );
   }
@@ -227,9 +210,9 @@ class MatchCard extends Component<MatchCardProps, MatchCardState> {
     }
 
     const playingPlayers = match.getPlayerFormation('onlyFinal').map(x => x.player);
-    // if (this.state.forceEditPlayers || (this.props.user.canEditPlayersOnMatchDay(match) && playingPlayers.length < team.getTeamPlayerCount())) {
-    //   return <SelectPlayersForm match={match} user={this.props.user} />;
-    // }
+    if (this.state.forceEditPlayers || (this.props.user.canEditPlayersOnMatchDay(match) && playingPlayers.length < team.getTeamPlayerCount())) {
+      return <SelectPlayersForm match={match} />;
+    }
 
     if (playingPlayers.length === 0) {
       const standardPlayers = team.getPlayers('standard').map(ply => ply.player);
@@ -261,5 +244,4 @@ const mapDispatchToProps = (dispatch: any) => ({
 export default connect((state: RootState) => ({
   newComments: state.config.newMatchComments,
   user: new UserModel(state.user),
-  readonlyMatches: state.readonlyMatches,
 }), mapDispatchToProps)(MatchCard);

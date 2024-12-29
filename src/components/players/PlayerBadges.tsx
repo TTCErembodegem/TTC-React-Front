@@ -25,7 +25,7 @@ export class PlayerCompetitionBadge extends Component<PlayerCompetitionBadgeProp
     return (
       <PlayerLink player={plyInfo.player} className="clickable">
         <span
-          className={`clickable label label-as-badge label-${getPlayingStatusClass(plyInfo.matchPlayer.status) || 'default'}`}
+          className={`clickable badge label-as-badge bg-${getPlayingStatusClass(plyInfo.matchPlayer.status) || 'primary'}`}
           key={plyInfo.player.id + plyInfo.matchPlayer.status}
           style={({fontSize: 14, display: 'inline-block', ...this.props.style})}
         >

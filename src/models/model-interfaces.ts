@@ -94,7 +94,7 @@ interface IStoreMatchOwn {
   teamId: number;
   description: string;
   reportPlayerId: 0 | number;
-  block: 'Major' | string;
+  block: MatchPlayerStatus | '';
   comments: IMatchComment[];
   opponent: ITeamOpponent;
   isDerby: boolean;
@@ -250,7 +250,7 @@ export interface IPlayerStyle {
 *                       TEAMS
 **************************************************** */
 
-export type TeamPlayerType = typeof teamPlayerType[keyof typeof teamPlayerType]
+export type TeamPlayerType = typeof teamPlayerType[keyof typeof teamPlayerType] | 'Invaller';
 
 export const teamPlayerType = {
   standard: 'Standard',

@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import matchesReducer from './reducers/matchesReducer';
+import matchesReducer, { freeMatchesSlice } from './reducers/matchesReducer';
 import configReducer from './reducers/configReducer';
 import userReducer from './reducers/userReducer';
 import playersReducer, { playersQuittersSlice } from './reducers/playersReducer';
@@ -12,6 +12,7 @@ export const store = configureStore({
     config: configReducer,
     user: userReducer,
     matches: matchesReducer,
+    freeMatches: freeMatchesSlice.reducer,
     readonlyMatches: readonlyMatchesReducer,
     teams: teamsReducer,
     players: playersReducer,

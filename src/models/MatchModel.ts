@@ -4,7 +4,8 @@ import PlayerModel from './PlayerModel';
 import {OwnClubId} from './ClubModel';
 import {sortMappedPlayers} from './TeamModel';
 import {IMatch, ITeam, Competition, IMatchScore, MatchScoreType, IMatchPlayer, IMatchGame,
-  ITeamOpponent, IClub, IMatchPlayerInfo, IPlayer, IGetGameMatches} from './model-interfaces';
+  ITeamOpponent, IClub, IMatchPlayerInfo, IPlayer, IGetGameMatches,
+  MatchPlayerStatus} from './model-interfaces';
 
 // TODO: Duplicted in backend. Should be in db.
 const defaultStartHour = 20;
@@ -44,7 +45,7 @@ export default class MatchModel implements IMatch {
   teamId = 0;
   description = "";
   reportPlayerId = 0;
-  block = "";
+  block = "" as MatchPlayerStatus | '';
   comments: any[] = [];
   opponent: ITeamOpponent = {teamCode: '', clubId: 0};
   isDerby = false;
@@ -138,8 +139,8 @@ export default class MatchModel implements IMatch {
   }
 
   getClub(which: "home" | "away"): IClub | undefined {
-    if (this.opponent) {
-      console.warn("MatchModel.getClub: use getOpponentClub for TTC Aalst matches");
+    if (this.opponent?.clubId) {
+      console.warn("MatchModel.getClub: use getOpponentClub for TTC Aalst matches", this.opponent);
     }
     if (which === "home") {
       return storeUtil.getClub(this.home.clubId);

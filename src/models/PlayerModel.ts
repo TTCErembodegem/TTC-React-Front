@@ -150,7 +150,7 @@ export function getPlayingStatusClass(playingStatus): undefined | 'success' | 'd
 }
 
 
-export function getPlayingStatusColor(playingStatus: {status: MatchPlayerStatus}): null | string {
+export function getPlayingStatusColor(playingStatus?: {status: MatchPlayerStatus}): null | string {
   if (!playingStatus) {
     return null;
   }

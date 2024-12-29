@@ -7,20 +7,29 @@ import {Spinner} from '../../controls/controls/Spinner';
 import { IMatch, ITeamOpponent } from '../../../models/model-interfaces';
 import { t } from '../../../locales';
 import { useViewport } from '../../../utils/hooks/useViewport';
+import { selectReadOnlyMatches, useTtcSelector } from '../../../utils/hooks/storeHooks';
 
 const AmountOfOpponentMatchesToShow = 5;
 
 type OpponentsLastMatchesProps = {
-  opponent: ITeamOpponent;
-  readonlyMatches: IMatch[];
+  match: IMatch;
 }
 
-export const OpponentsLastMatches = ({opponent, readonlyMatches}: OpponentsLastMatchesProps) => {
+export const OpponentsLastMatches = ({match}: OpponentsLastMatchesProps) => {
   const [showAll, setShowAll] = useState(false);
   const [showDetails, setShowDetails] = useState<{[matchId: number]: boolean}>({});
   const viewport = useViewport();
+  const allReadOnlyMatches = useTtcSelector(selectReadOnlyMatches);
 
-  const widthRemoveColumn = 500; // combine Home&Away columns to just one Opponent column on small devices
+  const isOpponent = (opp: ITeamOpponent) => opp.clubId === match.opponent.clubId && opp.teamCode === match.opponent.teamCode;
+  let readonlyMatches = allReadOnlyMatches
+    .filter(m => isOpponent(m.home) || isOpponent(m.away))
+    .filter(m => m.competition === match.competition && m.frenoyDivisionId === match.frenoyDivisionId)
+    .filter(m => m.score && (m.score.home || m.score.out))
+    .filter(m => m.id !== match.id)
+    .sort((a, b) => a.date.valueOf() - b.date.valueOf());
+
+  const widthRemoveColumn = 750; // combine Home&Away columns to just one Opponent column on small devices
 
   if (!showAll) {
     readonlyMatches = readonlyMatches.slice(0, AmountOfOpponentMatchesToShow);
@@ -35,7 +44,7 @@ export const OpponentsLastMatches = ({opponent, readonlyMatches}: OpponentsLastM
       <thead>
         <tr>
           <th key="1">{t('common.date')}</th>
-          <th key="7" className="d-none d-sm-table-cell">{t('common.frenoy')}</th>
+          <th key="7" className="d-none d-md-table-cell">{t('common.frenoy')}</th>
           {viewport.width > widthRemoveColumn ? [
             <th key="2">{t('match.opponents.homeTeam')}</th>,
             <th key="3">{t('match.opponents.awayTeam')}</th>,
@@ -47,35 +56,35 @@ export const OpponentsLastMatches = ({opponent, readonlyMatches}: OpponentsLastM
         </tr>
       </thead>
       <tbody>
-        {readonlyMatches.map(match => {
-          const isHomeMatch = match.home.clubId === opponent.clubId && match.home.teamCode === opponent.teamCode;
+        {readonlyMatches.map(m => {
+          const isHomeMatch = m.home.clubId === match.opponent.clubId && m.home.teamCode === match.opponent.teamCode;
           return [
             <tr
-              key={match.id}
-              className={`clickable ${match.won(opponent) ? 'accentuate success' : ''}`}
-              onClick={() => setShowDetails({...showDetails, [match.id]: !showDetails[match.id]})}
+              key={m.id}
+              className={`clickable ${m.won(match.opponent) ? 'accentuate success' : ''}`}
+              onClick={() => setShowDetails({...showDetails, [m.id]: !showDetails[m.id]})}
             >
 
-              <td key="1">{match.getDisplayDate(viewport.width > widthRemoveColumn ? 'd' : 's')}</td>
-              <td key="7" className="d-none d-sm-table-cell">{match.frenoyMatchId}</td>
+              <td key="1">{m.getDisplayDate(viewport.width > widthRemoveColumn ? 'd' : 's')}</td>
+              <td key="7" className="d-none d-md-table-cell">{m.frenoyMatchId}</td>
               {viewport.width > widthRemoveColumn ? [
-                <td key="2">{match.getClub('home')?.name} {match.home.teamCode}</td>,
-                <td key="3">{match.getClub('away')?.name} {match.away.teamCode}</td>,
+                <td key="2">{m.getClub('home')?.name} {m.home.teamCode}</td>,
+                <td key="3">{m.getClub('away')?.name} {m.away.teamCode}</td>,
               ] : (
                 <td key="4">
                   {isHomeMatch ? (
-                    `${match.getClub('away')?.name} ${match.away.teamCode}`
+                    `${m.getClub('away')?.name} ${m.away.teamCode}`
                   ) : (
-                    `${match.getClub('home')?.name} ${match.home.teamCode}`
+                    `${m.getClub('home')?.name} ${m.home.teamCode}`
                   )}
                 </td>
               )}
 
-              <td key="5"><MatchPlayerRankings match={match} homeTeam={isHomeMatch} /></td>
+              <td key="5"><MatchPlayerRankings match={m} homeTeam={isHomeMatch} /></td>
 
-              <td key="6">{match.score.home}&nbsp;-&nbsp;{match.score.out}</td>
+              <td key="6">{m.score.home}&nbsp;-&nbsp;{m.score.out}</td>
             </tr>,
-            <OtherMatchPlayerResultsTableRow key="8" show={showDetails[match.id]} match={match} colSpan={5} />,
+            <OtherMatchPlayerResultsTableRow key="8" show={showDetails[m.id]} match={m} colSpan={5} />,
           ];
         })}
         {!showAll && readonlyMatches.length > AmountOfOpponentMatchesToShow ? (
