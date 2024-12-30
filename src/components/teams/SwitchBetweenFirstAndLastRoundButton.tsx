@@ -30,7 +30,7 @@ export const SwitchBetweenFirstAndLastRoundButton = ({setMatchesFilter, matchesF
 );
 
 
-export function getFirstOrLastMatches(allMatchesToCome: IStoreMatchCommon[], filter: Filters) {
+export function getFirstOrLastMatches<T extends IStoreMatchCommon>(allMatchesToCome: T[], filter: Filters) {
   if (filter === 'all') {
     return {
       matches: allMatchesToCome,

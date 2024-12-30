@@ -10,7 +10,7 @@ import {TeamTabTitle} from './controls/TeamTabTitle';
 import {SwitchBetweenFirstAndLastRoundButton, getFirstOrLastMatches, getFirstOrLast} from './SwitchBetweenFirstAndLastRoundButton';
 import {PlayersCardGallery} from '../players/PlayersCardGallery';
 import MatchesTable from '../matches/MatchesTable';
-// import {TeamMatchesWeek} from './TeamMatchesWeek';
+import {TeamMatchesWeek} from './TeamMatchesWeek';
 import {ButtonStack} from '../controls/Buttons/ButtonStack';
 import {SaveButton} from '../controls/Buttons/SaveButton';
 import {EditButton} from '../controls/Buttons/EditButton';
@@ -30,7 +30,7 @@ export const Teams = () => {
   const params = useParams();
   const navigate = useNavigate();
   const teams = useTtcSelector(selectTeams);
-  const matches = useTtcSelector(selectMatches);
+  const allMatches = useTtcSelector(selectMatches);
   const [editMode, setEditMode] = useState(false);
   const [matchesFilter, setMatchesFilter] = useState<ReturnType<typeof getFirstOrLast>>(getFirstOrLast());
 
@@ -38,7 +38,7 @@ export const Teams = () => {
   const getAlreadyPicked = (): PickedPlayer[] => {
     if (user.canEditMatchesOrIsCaptain()) {
       let alreadyPicked: PickedPlayer[] = [];
-      matches.forEach(match => {
+      allMatches.forEach(match => {
         const formation = match.getPlayerFormation(playerStatus);
         const matchPicked = formation.map(frm => ({...frm, matchId: match.id}));
         alreadyPicked = alreadyPicked.concat(matchPicked);
@@ -60,7 +60,7 @@ export const Teams = () => {
       if (yourTeams.length === 1) {
         return yourTeams[0].teamCode;
       }
-      const notReserve = yourTeams.find(t => t.getPlayers('standard').some(p => p.player.id === user.playerId));
+      const notReserve = yourTeams.find(x => x.getPlayers('standard').some(p => p.player.id === user.playerId));
       return notReserve ? notReserve.teamCode : yourTeams[0].teamCode;
     }
     return 'A';
@@ -206,8 +206,8 @@ export const Teams = () => {
       case 'players':
         return <PlayersCardGallery players={team.getPlayers().map(x => x.player)} competition={team.competition} />;
 
-        // case 'week':
-        //   return <TeamMatchesWeek team={team} />;
+      case 'week':
+        return <TeamMatchesWeek team={team} />;
 
       case 'main':
       default:

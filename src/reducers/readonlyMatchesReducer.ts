@@ -8,8 +8,8 @@ import { shouldSync } from './matchesReducer';
 
 export const getOpponentMatches = createAsyncThunk(
   'matches/GetOpponentMatches',
-  async (data: {teamId: number, opponent: ITeamOpponent}, { dispatch, getState }) => {
-    const key = `${data.teamId}-${data.opponent.teamCode}-${data.opponent.clubId}`;
+  async (data: {teamId: number, opponent?: ITeamOpponent}, { dispatch, getState }) => {
+    const key = `${data.teamId}-${data.opponent?.teamCode}-${data.opponent?.clubId}`;
     const store = getState() as RootState;
     const hasBeenFetched = store.config.opponentMatchesLoaded[key];
     if (hasBeenFetched) {

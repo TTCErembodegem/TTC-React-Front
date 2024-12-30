@@ -73,9 +73,9 @@ export const configSlice = createSlice({
       const {matchId, isNew} = action.payload;
       state.newMatchComments[matchId] = isNew;
     },
-    setOpponentMatchesLoaded: (state, action: PayloadAction<{teamId: number, opponent: ITeamOpponent}>) => {
+    setOpponentMatchesLoaded: (state, action: PayloadAction<{teamId: number, opponent?: ITeamOpponent}>) => {
       const {teamId, opponent} = action.payload;
-      const key = `${teamId}-${opponent.teamCode}-${opponent.clubId}`;
+      const key = `${teamId}-${opponent?.teamCode}-${opponent?.clubId}`;
       state.opponentMatchesLoaded[key] = true;
     },
   },
