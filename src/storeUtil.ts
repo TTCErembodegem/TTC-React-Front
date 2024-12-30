@@ -19,13 +19,14 @@ export interface IOponnentFormation {
   value: number;
 }
 
-export function getOpponentMatchesForTeam(competition: Competition, clubId: number, teamCode: string): IFullMatchOther[] {
+export function getOpponentMatchesForTeam(competition: Competition, clubId: number, teamCode: string): IMatch[] {
   return store.getState().readonlyMatches
     .filter(m => m.competition === competition)
     .filter(m => m.home && m.away)
     .filter(m => (m.home.clubId === clubId && m.home.teamCode === teamCode) || (m.away.clubId === clubId && m.away.teamCode === teamCode))
     .filter(m => m.shouldBePlayed)
-    .sort((a, b) => a.date.valueOf() - b.date.valueOf());
+    .sort((a, b) => a.date.valueOf() - b.date.valueOf())
+    .map(m => new MatchModel(m));
 }
 
 
