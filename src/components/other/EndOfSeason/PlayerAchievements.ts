@@ -1,7 +1,7 @@
 import {getRankingValue} from '../../../models/utils/playerRankingValueMapper';
 import storeUtil from '../../../storeUtil';
 
-const getPerGames = cur => Math.floor(cur.victories / cur.games * 1000) / 10;
+const getPerGames = cur => Math.floor((cur.victories / cur.games) * 1000) / 10;
 
 
 export function getMostMatchesWon(playerStats) {
@@ -87,7 +87,7 @@ export function getMostBellesPlayed(playerStats) {
     title: 'Grootste uitslover',
     desc: 'Meeste belles gespeeld',
     players: players.map(cur => ({
-      throphy: `${cur.belleGames} belles (${Math.floor(cur.belleVictories / cur.belleGames * 100)}% gewonnen)`,
+      throphy: `${cur.belleGames} belles (${Math.floor((cur.belleVictories / cur.belleGames) * 100)}% gewonnen)`,
       player: cur.ply,
     })),
   };
@@ -103,7 +103,7 @@ export function getMostBellesWon(playerStats) {
     title: 'Meest Koelbloedig',
     desc: 'Meeste belles gewonnen',
     players: players.map(cur => ({
-      throphy: `${cur.belleVictories} belles (${Math.floor(cur.belleVictories / cur.belleGames * 100)}% gewonnen)`,
+      throphy: `${cur.belleVictories} belles (${Math.floor((cur.belleVictories / cur.belleGames) * 100)}% gewonnen)`,
       player: cur.ply,
     })),
   };
@@ -111,7 +111,7 @@ export function getMostBellesWon(playerStats) {
 
 
 export function getMostBellesPercentageWon(playerStats) {
-  const getPer = cur => Math.floor(cur.belleVictories / cur.belleGames * 1000) / 10;
+  const getPer = cur => Math.floor((cur.belleVictories / cur.belleGames) * 1000) / 10;
 
   const highest = playerStats.reduce((acc, cur) => {
     if (!acc.belleGames) {
@@ -137,7 +137,7 @@ export function getMostBellesPercentageWon(playerStats) {
 
 
 export function getMostBellesPercentageLost(playerStats) {
-  const getPer = cur => Math.floor(cur.belleVictories / cur.belleGames * 1000) / 10;
+  const getPer = cur => Math.floor((cur.belleVictories / cur.belleGames) * 1000) / 10;
 
   const highest = playerStats.reduce((acc, cur) => {
     if (!acc.belleGames) {
@@ -172,7 +172,7 @@ export function getMostGamesPlayer(playerStats) {
     title: 'Altijd Paraat',
     desc: 'Meeste aantredingen',
     players: players.map(cur => ({
-      throphy: `${cur.games} aantredingen (${Math.floor(cur.victories / cur.games * 100)}% gewonnen)`,
+      throphy: `${cur.games} aantredingen (${Math.floor((cur.victories / cur.games) * 100)}% gewonnen)`,
       player: cur.ply,
     })),
   };

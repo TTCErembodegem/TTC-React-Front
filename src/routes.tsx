@@ -13,7 +13,7 @@ import { Administration } from './components/other/Administration';
 import { GeneralInfo } from './components/other/GeneralInfo';
 import { Matches } from './components/matches/Matches';
 import { MatchesToday } from './components/matches/MatchesToday';
-// import MatchesWeek from './components/matches/MatchesWeek';
+import { MatchesWeek } from './components/matches/MatchesWeek';
 import { RoutedMatchCard } from './components/matches/Match/RoutedMatchCard';
 import Facts from './components/other/Facts';
 import { Teams } from './components/teams/Teams';
@@ -29,8 +29,7 @@ const Routes = () => {
   return (
     <BrowserRouter>
       <Switch>
-        {/* <Route path={`${t.route('matchesWeek')}/:tabKey?/:comp?`} element={<App Component={MatchesWeek} />} /> */}
-
+        <Route path={`${t.route('matchesWeek')}/:week?/:comp?`} element={<App Component={MatchesWeek} />} />
         <Route path={`${t.route('teams')}/:tabKey?/:view?`} element={<App Component={Teams} />} />
         <Route path={t.route('opponent')} element={<App Component={OpponentOverview} />} />
 

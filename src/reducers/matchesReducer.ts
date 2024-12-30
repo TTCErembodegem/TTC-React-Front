@@ -179,6 +179,19 @@ export const frenoyTeamSync = createAsyncThunk(
 );
 
 
+export const emailFormation = createAsyncThunk(
+  'matches/WeekCompetitionEmail',
+  async (data: {title: string, email: string}, { dispatch }) => {
+    try {
+      await http.post('/matches/WeekCompetitionEmail', data);
+      dispatch(showSnackbar(t('week.formationMailed')));
+    } catch (err) {
+      dispatch(showSnackbar('Fout bij versturen email!?'));
+    }
+  },
+);
+
+
 export const matchesSlice = createSlice({
   name: 'matches',
   initialState: [] as IFullStoreMatchOwn[],

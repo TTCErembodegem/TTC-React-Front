@@ -27,6 +27,11 @@ export const selectMatches = createSelector(
   matches => matches.map(m => new MatchModel(m) as IMatch),
 );
 
+export const selectFreeMatches = createSelector(
+  [(state: RootState) => state.freeMatches],
+  matches => matches.map(m => new MatchModel(m) as IMatch),
+);
+
 export const selectReadOnlyMatches = createSelector(
   [(state: RootState) => state.readonlyMatches],
   matches => matches.map(m => new MatchModel(m) as IMatch),
