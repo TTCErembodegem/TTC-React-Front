@@ -24,15 +24,14 @@ const Intro = () => {
   //   return <EndOfSeason />;
   // }
 
-  const big = viewport.width > 830;
   return (
     <div>
-      <Row style={{marginTop: big ? 25 : undefined}}>
-        <Col sm={6} style={{verticalAlign: 'top'}}>
+      <Row style={{marginTop: 25}}>
+        <Col md={6} style={{verticalAlign: 'top'}}>
           <IntroClub />
           <WeirdLocaleYearInfo params={config.params} />
         </Col>
-        <Col sm={6}>
+        <Col md={6}>
           {!config.initialLoadCompleted ? (
             <Loading bigScreen={viewport.width > 768} />
           ) : (

@@ -124,12 +124,12 @@ class MatchCard extends Component<MatchCardProps, MatchCardState> {
         // TODO: forceEdit={this.state.forceEditPlayers} --> can no longer edit scores or something?
       >
         <TabbedContainer
-          style={{marginBottom: -18}}
           selectedTab={tabEventKeys.players}
           tabKeys={tabConfig}
           tabRenderer={evenyKey => this._renderTabContent(evenyKey)}
           onTabSelect={evenyKey => this._onTabSelect(evenyKey)}
           route={{base: t.route('match').replace(':matchId', match.id.toString()), subs: 'matchTabs'}}
+          widthTreshold={700}
         />
       </HeaderComponent>
     );

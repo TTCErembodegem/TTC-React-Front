@@ -26,7 +26,7 @@ export const Matches = () => {
     .slice(0, matchesToShow);
 
   return (
-    <div>
+    <div style={{paddingLeft: 12, paddingRight: 12}}>
       {matchesToday.length ? <Strike text={t('match.todayMatches')} style={{marginTop: 15}} /> : null}
       <MatchHeaders matches={matchesToday} />
       {matchesNext.length ? <Strike text={t('match.nextMatches')} style={{marginTop: 15}} /> : null}
@@ -46,7 +46,7 @@ const MatchHeaders = ({matches}: {matches: IMatch[]}) => {
   return (
     <div className="row">
       {matches.map(match => (
-        <div className="col-lg-4 col-md-6" style={{paddingBottom: 5, paddingTop: 5}} key={match.id}>
+        <div className="col-xl-4 col-md-6" style={{paddingBottom: 5, paddingTop: 5}} key={match.id}>
           <SmallMatchCardHeader match2={match} isOpen={false} noScoreEdit />
         </div>
       ))}

@@ -228,7 +228,7 @@ export const Teams = () => {
         tabKeys={tabConfig}
         tabRenderer={eventKey => renderTabContent(eventKey)}
         route={{base: t.route('teams', {competition: params.competition}), suffix: params.view}}
-        widthTreshold={750}
+        widthTreshold={900}
       />
     </div>
   );

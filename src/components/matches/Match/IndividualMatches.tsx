@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import cn from 'classnames';
 import Table from 'react-bootstrap/Table';
 import {matchOutcome} from '../../../models/MatchModel';
@@ -6,7 +6,7 @@ import {OpponentPlayerLabel} from './OpponentPlayer';
 import {TrophyIcon} from '../../controls/Icons/TrophyIcon';
 import {PlayerLink} from '../../players/controls/PlayerLink';
 import {FrenoyLink} from '../../controls/Buttons/FrenoyButton';
-import {IMatch, Competition, IGetGameMatches, IFullMatchOther} from '../../../models/model-interfaces';
+import {IMatch, Competition, IGetGameMatches, IFullMatchOther, IMatchPlayer} from '../../../models/model-interfaces';
 import { t } from '../../../locales';
 import storeUtil from '../../../storeUtil';
 import { useViewport } from '../../../utils/hooks/useViewport';
@@ -16,81 +16,75 @@ type IndividualMatchesProps = {
   ownPlayerId: number;
 }
 
-type IndividualMatchesState = {
-  pinnedPlayerId: number;
+
+export const IndividualMatches = ({match, ownPlayerId}: IndividualMatchesProps) => {
+  const [pinnedPlayerId, setPinnedPlayerId] = useState<number | null>(ownPlayerId);
+  const matchResult = {home: 0, out: 0};
+
+  return (
+    <Table size="sm" striped className="match-card-tab-table">
+      <thead>
+        <tr>
+          <th colSpan={2}>{t('match.individual.matchTitle')} {match.frenoyMatchId}</th>
+          <th className="d-none d-sm-table-cell">{t('match.individual.setsTitle')}</th>
+          <th>{t('match.individual.resultTitle')}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {match.getGameMatches().sort((a, b) => a.matchNumber - b.matchNumber).map(game => {
+          matchResult[game.homeSets > game.outSets ? 'home' : 'out']++;
+          const matchWonTrophy = game.outcome === matchOutcome.Won ? <TrophyIcon style={{marginRight: 6}} /> : null;
+          return (
+            <tr
+              key={game.matchNumber}
+              className={cn({
+                success: game.ownPlayer.playerId === pinnedPlayerId && game.outcome === matchOutcome.Won,
+                danger: game.ownPlayer.playerId === pinnedPlayerId && game.outcome !== matchOutcome.Won,
+                accentuate: game.ownPlayer.playerId === ownPlayerId,
+              })}
+              onClick={() => setPinnedPlayerId(pinnedPlayerId === game.ownPlayer.playerId ? null : game.ownPlayer.playerId)}
+            >
+              {!game.isDoubles ? ([
+                <td className={cn({accentuate: game.outcome === matchOutcome.Won})} key="1">
+                  {matchWonTrophy}
+                  <PlayerDesc player={game.home} competition={match.competition} />
+                </td>,
+                <td className={cn({accentuate: game.outcome === matchOutcome.Won})} key="2">
+                  <PlayerDesc player={game.out} competition={match.competition} />
+                </td>,
+              ]) : (
+                <td className={cn({accentuate: game.outcome === matchOutcome.Won})} key="2" colSpan={2}>
+                  {matchWonTrophy}
+                  {t('match.double')}
+                </td>
+              )}
+              <td key="3" className="d-none d-sm-table-cell">{game.homeSets}-{game.outSets}</td>
+              <td key="4">{matchResult.home}-{matchResult.out}</td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </Table>
+  );
+};
+
+type PlayerDescProps = {
+  player: IMatchPlayer;
+  competition: Competition;
 }
 
-
-export class IndividualMatches extends Component<IndividualMatchesProps, IndividualMatchesState> {
-  constructor(props) {
-    super(props);
-    this.state = {pinnedPlayerId: props.ownPlayerId};
+const PlayerDesc = ({player, competition}: PlayerDescProps) => {
+  const viewport = useViewport();
+  if (!player.playerId) {
+    return <OpponentPlayerLabel player={player} competition={competition} fullName />;
   }
 
-  render() {
-    const matchResult = {home: 0, out: 0};
-
-    return (
-      <Table size="sm" striped className="match-card-tab-table">
-        <thead>
-          <tr>
-            <th colSpan={2}>{t('match.individual.matchTitle')} {this.props.match.frenoyMatchId}</th>
-            <th className="d-none d-sm-table-cell">{t('match.individual.setsTitle')}</th>
-            <th>{t('match.individual.resultTitle')}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {this.props.match.getGameMatches().sort((a, b) => a.matchNumber - b.matchNumber).map(game => {
-            matchResult[game.homeSets > game.outSets ? 'home' : 'out']++;
-            const matchWonTrophy = game.outcome === matchOutcome.Won ? <TrophyIcon style={{marginRight: 6}} /> : null;
-            return (
-              <tr
-                key={game.matchNumber}
-                className={cn({
-                  success: game.ownPlayer.playerId === this.state.pinnedPlayerId && game.outcome === matchOutcome.Won,
-                  danger: game.ownPlayer.playerId === this.state.pinnedPlayerId && game.outcome !== matchOutcome.Won,
-                  accentuate: game.ownPlayer.playerId === this.props.ownPlayerId,
-                })}
-                onClick={this._onIndividualMatchChange.bind(this, game.ownPlayer.playerId)}
-              >
-                {!game.isDoubles ? ([
-                  <td className={cn({accentuate: game.outcome === matchOutcome.Won})} key="1">
-                    {matchWonTrophy}
-                    {this._getPlayerDesc(game.home)}
-                  </td>,
-                  <td className={cn({accentuate: game.outcome === matchOutcome.Won})} key="2">{this._getPlayerDesc(game.out)}</td>,
-                ]) : (
-                  <td className={cn({accentuate: game.outcome === matchOutcome.Won})} key="2" colSpan={2}>
-                    {matchWonTrophy}
-                    {t('match.double')}
-                  </td>
-                )}
-                <td key="3" className="d-none d-sm-table-cell">{game.homeSets}-{game.outSets}</td>
-                <td key="4">{matchResult.home}-{matchResult.out}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
-    );
+  const realPlayer = storeUtil.getPlayer(player.playerId);
+  if (realPlayer) {
+    return <PlayerLink player={realPlayer} alias={viewport.width < 700} />;
   }
-
-  _getPlayerDesc(player) {
-    if (!player.playerId) {
-      return <OpponentPlayerLabel player={player} competition={this.props.match.competition} fullName />;
-    }
-
-    const realPlayer = storeUtil.getPlayer(player.playerId);
-    if (realPlayer) {
-      return <PlayerLink player={realPlayer} />;
-    }
-    return player.alias;
-  }
-
-  _onIndividualMatchChange(selectedPlayerId) {
-    this.setState(prevState => ({pinnedPlayerId: prevState.pinnedPlayerId === selectedPlayerId ? null : selectedPlayerId}));
-  }
-}
+  return <span>{player.alias}</span>;
+};
 
 
 

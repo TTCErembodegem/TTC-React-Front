@@ -97,6 +97,18 @@
   z-index: 1;
 }
 
+.accordion-button.collapsed {
+  background-color: #F5F5F5;
+}
+
+.accordion-collapse.collapse.show {
+  padding-bottom: 12px;
+}
+
+.accordion-body {
+  padding: 0;
+}
+
 .match-card-header {
   padding: 15px;
   font-weight: bold;

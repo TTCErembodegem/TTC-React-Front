@@ -6,6 +6,7 @@ import PlayerModel from '../../../models/PlayerModel';
 
 type PlayerLinkProps = {
   player: IStorePlayer;
+  /** Allow to show alias */
   alias?: boolean;
   children?: any;
   className?: string;

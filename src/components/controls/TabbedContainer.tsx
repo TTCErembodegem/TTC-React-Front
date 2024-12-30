@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Nav from 'react-bootstrap/Nav';
-import CardGroup from 'react-bootstrap/CardGroup';
-import Card from 'react-bootstrap/Card';
+import Accordion from 'react-bootstrap/Accordion';
 import { t } from '../../locales';
 import { useViewport } from '../../utils/hooks/useViewport';
 
@@ -101,29 +100,25 @@ export const TabbedContainer = (props: TabbedContainerComponentProps) => {
     }
 
     // Accordion
-    const header = (
-      <div className="clickable" onClick={() => onTabSelect(tab.key)} role="button" tabIndex={0}>
-        {tab.title} {tab.headerChildren}
-      </div>
-    );
-
-    const isOpen = openTabKey === tab.key && !forceClose;
     return (
-      <Card className="match-card-panel" key={tab.key}>
-        <Card.Header>{header}</Card.Header>
-        {isOpen ? props.tabRenderer(tab.key) : null}
-      </Card>
+      <Accordion.Item className="match-card-panel" eventKey={tab.key} key={tab.key}>
+        <Accordion.Header>
+          <div className="clickable" onClick={() => onTabSelect(tab.key)} role="button" tabIndex={0}>
+            <div style={{fontSize: 24}}>{tab.title} {tab.headerChildren}</div>
+          </div>
+        </Accordion.Header>
+        <Accordion.Body>{props.tabRenderer(tab.key)}</Accordion.Body>
+      </Accordion.Item>
     );
   };
 
   const activeTabKey = getTabKey();
   if (showAccordion) {
     // Accordion
-    // TODO: Accordian is not implemented!
     return (
-      <CardGroup style={props.style} id={activeTabKey}>
+      <Accordion style={props.style} defaultActiveKey={activeTabKey} onSelect={eventKey => typeof eventKey === 'string' && onTabSelect(eventKey)}>
         {props.tabKeys.filter(tab => tab.show !== false).map(tab => renderTabHeader(tab))}
-      </CardGroup>
+      </Accordion>
     );
   }
 
