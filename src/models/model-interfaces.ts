@@ -39,7 +39,7 @@ export type Competition = 'Vttl' | 'Sporta';
 
 export type MatchScoreType = 'NotYetPlayed' | 'Won' | 'Lost' | 'Draw' | 'WalkOver' | 'BeingPlayed';
 
-export type MatchPlayerStatus = 'Play' | 'Major' | 'Captain' | 'NotPlay' | 'Maybe';
+export type MatchPlayerStatus = 'Play' | 'Major' | 'Captain' | 'NotPlay' | 'Maybe' | 'DontKnow';
 
 export type MatchGameOutcome = 'NotYetPlayed' | 'Won' | 'Lost' | 'Draw' | 'WalkOver';
 
@@ -111,7 +111,7 @@ interface IMatchOwn extends IStoreMatchOwn {
   getTeam: () => ITeam;
   getPreviousMatch(): IMatch | undefined;
   plays: (playerId: number | IPlayer, statusFilter?: 'onlyFinal') => IMatchPlayer | undefined;
-  getPlayerFormation(statusFilter: undefined | 'onlyFinal' | 'Play' | 'Captain'): IMatchPlayerInfo[];
+  getPlayerFormation(statusFilter: undefined | 'onlyFinal' | 'Play' | 'Captain' | 'Major'): IMatchPlayerInfo[];
   getOwnPlayerModels(statusFilter?: undefined | 'onlyFinal' | 'Play' | 'Captain'): IPlayer[];
   getGameMatches(): IGetGameMatches[];
 }
@@ -309,6 +309,18 @@ export interface IMatchPlayerInfo {
   id: number;
   player: IPlayer,
   matchPlayer: IMatchPlayer,
+}
+
+/** Selecting players for a match form */
+export type PickedPlayer = {
+  /** PlayerId */
+  id: number;
+  matchId: number;
+  player: IPlayer;
+  matchPlayer: {
+    status: MatchPlayerStatus | '';
+    statusNote: string;
+  };
 }
 
 export interface ITeamRanking {

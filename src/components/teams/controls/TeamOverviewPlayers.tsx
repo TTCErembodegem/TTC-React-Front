@@ -8,7 +8,7 @@ import { useViewport } from '../../../utils/hooks/useViewport';
 import { selectUser, useTtcSelector } from '../../../utils/hooks/storeHooks';
 
 
-export const TeamOverviewPlayersComponent = ({team}: {team: ITeam}) => {
+export const TeamOverviewPlayers = ({team}: {team: ITeam}) => {
   const viewport = useViewport();
   const user = useTtcSelector(selectUser);
 

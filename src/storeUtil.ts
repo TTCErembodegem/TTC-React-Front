@@ -31,7 +31,7 @@ export function getOpponentMatchesForTeam(competition: Competition, clubId: numb
 
 const createKey = (form: IOpponentFormationRankingInfo[]): string => form.reduce((key, f) => key + f.amount + f.ranking, '');
 
-export function getOpponentFormations(matches: IMatch[], opponent: ITeamOpponent): IOponnentFormation[] {
+export function getOpponentFormations(matches: IMatch[], opponent?: ITeamOpponent): IOponnentFormation[] {
   return matches.filter(match => match.isSyncedWithFrenoy).reduce((acc: IOponnentFormation[], match) => {
     let isHomeTeam: boolean;
     if (!opponent) {

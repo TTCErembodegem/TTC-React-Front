@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
-import {getPlayingStatusClass} from '../../models/PlayerModel';
-import {PlayerLink} from './controls/PlayerLink';
-import {CommentIcon} from '../controls/Icons/CommentIcon';
-import {Icon} from '../controls/Icons/Icon';
-import { Competition, IMatchPlayer, IPlayer, MatchPlayerStatus } from '../../models/model-interfaces';
+import React, { Component } from 'react';
+import { getPlayingStatusClass } from '../../models/PlayerModel';
+import { PlayerLink } from './controls/PlayerLink';
+import { CommentIcon } from '../controls/Icons/CommentIcon';
+import { Icon } from '../controls/Icons/Icon';
+import { Competition, IPlayer, MatchPlayerStatus, PickedPlayer } from '../../models/model-interfaces';
 
 type PlayerCompetitionBadgeProps = {
   style?: React.CSSProperties;
@@ -38,10 +38,7 @@ export class PlayerCompetitionBadge extends Component<PlayerCompetitionBadgeProp
 }
 
 type PlayerCompetitionButtonProps = {
-  plyInfo: {
-    matchPlayer: IMatchPlayer;
-    player: IPlayer;
-  };
+  plyInfo: PickedPlayer;
   onButtonClick: Function;
   isPicked: boolean;
   actionIconClass: string;
@@ -58,7 +55,7 @@ export class PlayerCompetitionButton extends Component<PlayerCompetitionButtonPr
       <button
         type="button"
         key={plyInfo.player.id + matchPlayer.status}
-        className={`btn btn-xs btn-${getPlayingStatusClass(matchPlayer) || 'default'}`}
+        className={`btn btn-xs btn-${getPlayingStatusClass(matchPlayer) || 'outline-primary'}`}
         title={matchPlayer.statusNote}
         style={({marginBottom: 5, ...this.props.style})}
         onClick={() => this.props.onButtonClick()}

@@ -7,11 +7,11 @@ import { IStoreMatchCommon } from '../../models/model-interfaces';
 type Filters = 'all' | 'first' | 'last';
 
 type SwitchBetweenFirstAndLastRoundButtonProps = {
-  setState: Function,
+  setMatchesFilter: (f: Filters) => void,
   matchesFilter: Filters,
 };
 
-export const SwitchBetweenFirstAndLastRoundButton = ({setState, matchesFilter}: SwitchBetweenFirstAndLastRoundButtonProps) => (
+export const SwitchBetweenFirstAndLastRoundButton = ({setMatchesFilter, matchesFilter}: SwitchBetweenFirstAndLastRoundButtonProps) => (
   <div style={{textAlign: 'center'}}>
     <ButtonStack
       config={[
@@ -22,7 +22,7 @@ export const SwitchBetweenFirstAndLastRoundButton = ({setState, matchesFilter}: 
       small={false}
       activeView={matchesFilter}
       onClick={newFilter => {
-        setState({matchesFilter: newFilter});
+        setMatchesFilter(newFilter as Filters);
         window.scrollTo(0, 0);
       }}
     />
@@ -55,7 +55,7 @@ export function getFirstOrLastMatches(allMatchesToCome: IStoreMatchCommon[], fil
 
 
 
-export function getFirstOrLast() {
+export function getFirstOrLast(): Filters {
   const today = moment();
   return today.month() >= 7 && !(today.month() === 11 && today.date() > 20) ? 'first' : 'last';
 }

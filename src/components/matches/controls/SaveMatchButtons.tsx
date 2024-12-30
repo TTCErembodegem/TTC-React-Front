@@ -1,17 +1,17 @@
 import React from 'react';
-import {CommentButton} from '../../controls/Buttons/CommentButton';
-import {Icon} from '../../controls/Icons/Icon';
-import {SaveButton} from '../../controls/Buttons/SaveButton';
-import {Translator} from '../../../models/model-interfaces';
+import { CommentButton } from '../../controls/Buttons/CommentButton';
+import { Icon } from '../../controls/Icons/Icon';
+import { SaveButton } from '../../controls/Buttons/SaveButton';
+import { t } from '../../../locales';
+
 
 type SaveMatchButtonsProps = {
   onSave: () => void;
   onBlock: () => void;
   onCommentsToggle: Function;
-  t: Translator;
 }
 
-export const SaveMatchButtons = ({onSave, onBlock, onCommentsToggle, t}: SaveMatchButtonsProps) => (
+export const SaveMatchButtons = ({onSave, onBlock, onCommentsToggle}: SaveMatchButtonsProps) => (
   <div className="pull-right" style={{whiteSpace: 'nowrap'}}>
     <CommentButton onClick={() => onCommentsToggle()} style={{marginRight: 5}} />
     <button

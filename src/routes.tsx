@@ -16,7 +16,7 @@ import { MatchesToday } from './components/matches/MatchesToday';
 // import MatchesWeek from './components/matches/MatchesWeek';
 import { RoutedMatchCard } from './components/matches/Match/RoutedMatchCard';
 import Facts from './components/other/Facts';
-// import Teams from './components/teams/Teams';
+import { Teams } from './components/teams/Teams';
 import Admin from './components/admin/Admin';
 // import {OpponentOverview} from './components/teams/OpponentOverview';
 import Intro from './components/App/Intro';
@@ -32,8 +32,9 @@ const Routes = () => {
         {/*
         <Route path={`${t.route('matchesWeek')}/:tabKey?/:comp?`} element={<App Component={MatchesWeek} />} />
 
-        <Route path={`${t.route('teams')}/:tabKey?/:view?`} element={<App Component={Teams} />} />
         <Route path={t.route('opponent')} element={<App Component={OpponentOverview} />} /> */}
+
+        <Route path={`${t.route('teams')}/:tabKey?/:view?`} element={<App Component={Teams} />} />
 
         <Route path={t.route('matchesToday')} element={<App Component={MatchesToday} />} />
         <Route path={t.route('matches')} element={<App Component={Matches} />} />

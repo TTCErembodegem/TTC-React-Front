@@ -216,7 +216,7 @@ export default class MatchModel implements IMatch {
     return playerInfo ? playerInfo.matchPlayer : undefined;
   }
 
-  getPlayerFormation(statusFilter: undefined | "onlyFinal" | "Play" | "Captain"): IMatchPlayerInfo[] {
+  getPlayerFormation(statusFilter: undefined | "onlyFinal" | "Play" | "Captain" | "Major"): IMatchPlayerInfo[] {
     const team = this.getTeam();
     const plys = this.getOwnPlayers();
 

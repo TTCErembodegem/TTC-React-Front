@@ -139,6 +139,32 @@ export const selectPlayer = createAsyncThunk(
   },
 );
 
+export type EditMatchPlayersParams = {
+  matchId: number,
+  playerIds: number[],
+  blockAlso: boolean,
+  newStatus: string,
+  comment: string,
+}
+
+export const editMatchPlayers = createAsyncThunk(
+  'matches/EditMatchPlayers',
+  async (data: EditMatchPlayersParams, { dispatch }) => {
+    try {
+      const result = await http.post<IFullStoreMatchOwn>('/matches/EditMatchPlayers', data);
+      dispatch(simpleLoaded(result));
+      // broadcastReload('match', data.matchId);
+      // if (data.doShowSnackbar) {
+      //   const msg = !data.blockAlso ? 'snackbarSaved' : 'snackbarBlocked';
+      //   dispatch(showSnackbar(t(`match.plys.${msg}`)));
+      // }
+      dispatch(showSnackbar(t('common.apiSuccess')));
+    } catch (err) {
+      console.error('editMatchPlayers', data, err);
+    }
+  },
+);
+
 
 /** New season team sync */
 export const frenoyTeamSync = createAsyncThunk(

@@ -4,7 +4,7 @@ import {CommentIcon} from '../Icons/CommentIcon';
 import {ButtonComponentProps} from './Button';
 
 export const CommentButton = (props: Omit<ButtonComponentProps, 'label'>) => (
-  <Button {...props}>
+  <Button variant="outline-secondary" {...props}>
     <CommentIcon />
   </Button>
 );

@@ -9,7 +9,7 @@ import storeUtil from '../../../storeUtil';
 
 type ViewMatchDetailsButtonProps = {
   match: IMatch;
-  size: 'xs';
+  size: 'xs' | null;
 }
 
 export class ViewMatchDetailsButton extends Component<ViewMatchDetailsButtonProps> {
