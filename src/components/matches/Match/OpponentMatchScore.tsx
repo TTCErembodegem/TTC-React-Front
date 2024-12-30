@@ -5,7 +5,7 @@ import { IMatch } from '../../../models/model-interfaces';
 export const OpponentMatchScore = ({readonlyMatch}: {readonlyMatch: IMatch}) => {
   if (readonlyMatch.isOurMatch) {
     const match = readonlyMatch.getOurMatch();
-    return <ViewMatchDetailsButton match={match} size="xs" />;
+    return <ViewMatchDetailsButton match={match} size="sm" />;
   }
 
   if (readonlyMatch.scoreType === 'WalkOver') {

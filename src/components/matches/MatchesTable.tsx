@@ -313,9 +313,13 @@ class MatchesTable extends Component<MatchesTableProps, MatchesTableState> {
     const showDate = viewWidth > 350 || this.props.matches.some(match => !match.isSyncedWithFrenoy);
 
     this.props.matches.forEach((match, i) => {
+      const singleMatchRows: any[] = [];
+
       const stripeColor = {backgroundColor: i % 2 === 0 && !this.props.tableForm ? '#f9f9f9' : undefined};
       if (this.props.user.playerId && !this.props.striped) {
-        stripeColor.backgroundColor = match.plays(this.props.user.playerId) || match.getTeam().plays(this.props.user.playerId) ? '#f9f9f9' : undefined; // eslint-disable-line
+        const playsThisMatch = match.plays(this.props.user.playerId);
+        const playsThisTeam = match.getTeam().plays(this.props.user.playerId);
+        stripeColor.backgroundColor = playsThisMatch || playsThisTeam ? '#f9f9f9' : undefined;
       }
 
       let thrillerIcon: any;
@@ -327,7 +331,7 @@ class MatchesTable extends Component<MatchesTableProps, MatchesTableState> {
       }
 
       // Complexity galore
-      matchRows.push(
+      singleMatchRows.push(
         <tr key={match.id} style={stripeColor}>
           {showDate ? (
             <td>
@@ -351,7 +355,7 @@ class MatchesTable extends Component<MatchesTableProps, MatchesTableState> {
           {this.props.tableForm ? null : (
             <td>
               {!this.props.editMode || match.isSyncedWithFrenoy ? (
-                <ViewMatchDetailsButton match={match} size={viewWidth < 450 ? 'xs' : null} />
+                <ViewMatchDetailsButton match={match} size={viewWidth < 600 ? 'sm' : null} />
 
               ) : !this.props.user.canEditMatchPlayers(match) ? (
                 <CannotEditMatchIcon />
@@ -376,7 +380,7 @@ class MatchesTable extends Component<MatchesTableProps, MatchesTableState> {
       if (!this.props.tableForm && this.props.editMode && this.props.user.canEditMatchPlayers(match)
         && ((this.state.editMatch.id === match.id && (this.state.comment.edit || this.state.comment.value)) || match.formationComment)) {
 
-        matchRows.push(
+        singleMatchRows.push(
           <tr key={`${match.id}_b`} style={stripeColor}>
             <td colSpan={4} style={{border: 'none'}}>
               {this.state.editMatch.id === match.id ? (
@@ -392,7 +396,7 @@ class MatchesTable extends Component<MatchesTableProps, MatchesTableState> {
       // Display the players of the match (non TableForm)
       const isMatchInEdit = this.props.editMode && this.state.editMatch.id === match.id && this.props.user.canEditMatchPlayers(match);
       if (!this.props.tableForm && (isMatchInEdit || match.block || match.isSyncedWithFrenoy)) {
-        matchRows.push(
+        singleMatchRows.push(
           <tr key={`${match.id}_c`} style={stripeColor}>
             <td colSpan={4} style={{border: 'none'}}>
               {isMatchInEdit ? this._renderEditMatchPlayers() : <ReadOnlyMatchPlayers match={match} />}
@@ -400,10 +404,16 @@ class MatchesTable extends Component<MatchesTableProps, MatchesTableState> {
           </tr>,
         );
       }
+
+      matchRows.push(
+        <tbody>
+          {singleMatchRows}
+        </tbody>,
+      );
     });
 
     return (
-      <Table>
+      <Table className="matches-table">
         <thead>
           <tr>
             {showDate ? <th>{t('common.date')}</th> : null}
@@ -413,20 +423,18 @@ class MatchesTable extends Component<MatchesTableProps, MatchesTableState> {
             {this.props.tableForm ? this._getTablePlayerHeaders() : null}
           </tr>
         </thead>
-        <tbody>
-          {matchRows}
-          {this.props.tableForm && this.props.editMode ? (
-            <tr>
-              <td colSpan={3}>&nbsp;</td>
-              {this._getTablePlayers().map(ply => {
-                const played = this.props.matches.filter(match => this.props.tablePlayers?.find(frm => frm.matchId === match.id && frm.id === ply.player.id));
-                return (
-                  <td key={ply.player.id} style={{textAlign: 'center', fontWeight: 'bold'}}>{played.length}</td>
-                );
-              })}
-            </tr>
-          ) : null}
-        </tbody>
+        {matchRows}
+        {this.props.tableForm && this.props.editMode ? (
+          <tr>
+            <td colSpan={3}>&nbsp;</td>
+            {this._getTablePlayers().map(ply => {
+              const played = this.props.matches.filter(match => this.props.tablePlayers?.find(frm => frm.matchId === match.id && frm.id === ply.player.id));
+              return (
+                <td key={ply.player.id} style={{textAlign: 'center', fontWeight: 'bold'}}>{played.length}</td>
+              );
+            })}
+          </tr>
+        ) : null}
       </Table>
     );
   }

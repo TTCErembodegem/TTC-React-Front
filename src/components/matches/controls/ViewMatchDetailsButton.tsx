@@ -9,7 +9,7 @@ import storeUtil from '../../../storeUtil';
 
 type ViewMatchDetailsButtonProps = {
   match: IMatch;
-  size: 'xs' | null;
+  size: 'sm' | null;
 }
 
 export class ViewMatchDetailsButton extends Component<ViewMatchDetailsButtonProps> {
@@ -26,7 +26,7 @@ export class ViewMatchDetailsButton extends Component<ViewMatchDetailsButtonProp
         className={cn({'btn btn-outline-secondary': !score, clickable: !!score, [`btn-${size}`]: !!size})}
         to={t.route('match', {matchId: match.id})}
       >
-        {score ? <MatchScore match={match} style={{fontSize: size === 'xs' ? 12 : 16}} showComments /> : t('match.details')}
+        {score ? <MatchScore match={match} style={{fontSize: size === 'sm' ? 12 : 16}} showComments /> : t('match.details')}
       </Link>
     );
   }
