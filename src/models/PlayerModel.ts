@@ -115,9 +115,9 @@ export function createFrenoyLink(comp: IPlayerCompetition): string {
     return createFrenoyLinkByUniqueId(comp.competition, comp.uniqueIndex);
   }
   if (comp.competition === 'Vttl') {
-    return `https://competitie.vttl.be/index.php?menu=6&result=1&sel=${comp.frenoyLink}`;
+    return `https://competitie.vttl.be/?menu=6&result=1&sel=${comp.frenoyLink}`;
   }
-  return `https://ttonline.sporta.be/competitie/index.php?menu=6&result=1&sel=${comp.frenoyLink}`;
+  return `https://ttonline.sporta.be/?menu=6&result=1&sel=${comp.frenoyLink}`;
 
 }
 
@@ -126,8 +126,7 @@ export function createFrenoyLinkByUniqueId(comp: Competition, uniqueId: number):
   if (comp === 'Vttl') {
     return `https://competitie.vttl.be/${uniqueId}`;
   }
-  return `https://ttonline.sporta.be/competitie/${(`000000${uniqueId}`).slice(-6)}`;
-
+  return `https://ttonline.sporta.be/${(`000000${uniqueId}`).slice(-6)}`;
 }
 
 export function getPlayingStatusClass(playingStatus): undefined | 'success' | 'danger' | 'info' {

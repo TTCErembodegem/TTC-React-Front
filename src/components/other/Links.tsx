@@ -26,7 +26,7 @@ export default class Links extends Component {
               <td><a href="https://www.ettu.org/" target="_blank" rel="noopener noreferrer">{t('links.ettu')}</a></td>
             </tr>
             <tr>
-              <td><a href="https://competitie.vttl.be/index.php?menu=0" target="_blank" rel="noopener noreferrer">{t('links.vttlResults')}</a></td>
+              <td><a href="https://competitie.vttl.be/?menu=0" target="_blank" rel="noopener noreferrer">{t('links.vttlResults')}</a></td>
             </tr>
             <tr>
               <td><a href="https://ttonline.sporta.be/" target="_blank" rel="noopener noreferrer">{t('links.sportaResults')}</a></td>
