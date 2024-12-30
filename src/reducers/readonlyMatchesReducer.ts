@@ -26,7 +26,6 @@ export const getOpponentMatches = createAsyncThunk(
       otherMatches.forEach(m => {
         dispatch(frenoyReadOnlyMatchSync(m));
       });
-      // dispatch(showSnackbar(t('common.apiSuccess')));
     } catch (err) {
       console.error('getOpponentMatches', err);
     }
@@ -44,7 +43,7 @@ export const frenoyReadOnlyMatchSync = createAsyncThunk(
       const newMatch = await http.post<IMatch>('/matches/FrenoyOtherMatchSync', {id: match.id});
       dispatch(simpleLoaded(newMatch));
     } catch (err) {
-      // dispatch(showSnackbar(t('common.apiFail')));
+      console.error('frenoyReadOnlyMatchSync', match, err);
     }
   },
 );

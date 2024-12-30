@@ -29,6 +29,19 @@ export const toggleTeamPlayer = createAsyncThunk(
   },
 );
 
+export const loadTeamRanking = createAsyncThunk(
+  'teams/Ranking',
+  async (data: {teamId: number}, { dispatch }) => {
+    try {
+      const response = await http.get<IStoreTeam>('/teams/Ranking', data);
+      dispatch(simpleLoaded(response));
+    } catch (err) {
+      console.error('teams/Ranking', data, err);
+    }
+  },
+);
+
+
 export const teamsSlice = createSlice({
   name: 'teams',
   initialState: [] as IStoreTeam[],
@@ -43,13 +56,3 @@ export const teamsSlice = createSlice({
 export const { simpleLoaded } = teamsSlice.actions;
 
 export default teamsSlice.reducer;
-
-// export function teams(state = Immutable.List([]), action = null) {
-//   const {type, payload} = action;
-//   switch (type) {
-//     case ActionTypes.TEAMS_LOADED:
-//       return immutableHelpers.merge(state, payload, x => new TeamModel(x));
-//     default:
-//       return state;
-//   }
-// }

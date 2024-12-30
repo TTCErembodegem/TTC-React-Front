@@ -31,7 +31,7 @@ class TeamRankingBadgesCore extends Component<TeamRankingBadgesCoreProps> {
   render() {
     const {ranking} = this.props;
     return (
-      <div style={({display: 'inline', ...(this.props.style || {fontSize: 14, marginTop: -10})})}>
+      <div style={({display: 'inline', ...(this.props.style || {fontSize: 26, marginTop: -10})})}>
         <TeamOverviewBadge amount={ranking.gamesWon} colorClass="match-won" fa="fa-thumbs-up" tooltip={t('teamCalendar.matchesWonBadge')} />
         <TeamOverviewBadge amount={ranking.gamesDraw} colorClass="match-draw" fa="fa-meh-o" tooltip={t('teamCalendar.matchesDrawBadge')} />
         <TeamOverviewBadge amount={ranking.gamesLost} colorClass="match-lost" fa="fa-thumbs-down" tooltip={t('teamCalendar.matchesLostBadge')} />

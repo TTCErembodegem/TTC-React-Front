@@ -162,19 +162,3 @@ export const playersQuittersSlice = createSlice({
 export const { simpleLoaded } = playersSlice.actions;
 
 export default playersSlice.reducer;
-
-// export function players(state = Immutable.List([]), action = null) {
-//   const {type, payload} = action;
-//   switch (type) {
-//     case ActionTypes.PLAYERS_LOADED:
-//       return immutableHelpers.merge(state, payload, x => new PlayerModel(x), x => x.active);
-
-//     case ActionTypes.PLAYER_ACTIVE_CHANGED:
-//       if (!payload.isActive) {
-//         return state.filter(x => x.id !== payload.playerId);
-//       }
-//       return state;
-//     default:
-//       return state;
-//   }
-// }

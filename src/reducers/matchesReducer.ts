@@ -6,7 +6,6 @@ import http from '../utils/httpClient';
 import { t } from '../locales';
 import { showSnackbar } from './configReducer';
 import storeUtil from '../storeUtil';
-import { MatchPlayerRankings } from '../components/matches/controls/MatchPlayerRankings';
 
 export const fetchMatches = createAsyncThunk(
   'matches/Get',
