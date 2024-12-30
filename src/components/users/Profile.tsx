@@ -5,7 +5,7 @@ import {TabbedContainer} from '../controls/TabbedContainer';
 import {ChangePassword} from './ChangePassword';
 import { ChangePlayerDetails } from './ChangePlayerDetails';
 import ProfilePhotoForm, {ProfilePhotoAvatarForm} from './ProfilePhotoForm';
-// import PlayerLineup from './PlayerLineup';
+import PlayerLineup from './PlayerLineup';
 import { IPlayer } from '../../models/model-interfaces';
 import { t } from '../../locales';
 import { selectUser, useTtcDispatch, useTtcSelector } from '../../utils/hooks/storeHooks';
@@ -45,9 +45,8 @@ export const Profile = () => {
         return <ProfilePhotoAvatarForm />;
       case tabEventKeys.editPassword:
         return <ChangePassword />;
-      // case tabEventKeys.editHolidays: {
-      //   return <PlayerLineup teams={user.getTeams()} playerId={user.playerId} />;
-      // }
+      case tabEventKeys.editHolidays:
+        return <PlayerLineup teams={user.getTeams()} playerId={user.playerId} />;
       default:
         return null;
     }
@@ -59,7 +58,7 @@ export const Profile = () => {
 
   const tabConfig = [
     { key: tabEventKeys.main, title: t('profile.main') },
-    // { key: tabEventKeys.editHolidays, title: t('profile.editHolidays') },
+    { key: tabEventKeys.editHolidays, title: t('profile.editHolidays') },
     { key: tabEventKeys.editPassword, title: t('profile.editPassword') },
     { key: tabEventKeys.editDetails, title: t('profile.editDetails') },
     { key: tabEventKeys.editPicture, title: t('profile.editPicture') },

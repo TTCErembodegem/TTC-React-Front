@@ -70,7 +70,7 @@ class ProfilePhotoForm extends Component<ProfilePhotoFormProps, ProfilePhotoForm
   render() {
     const tmpFileName = this.state.fileName;
     return (
-      <div style={{marginBottom: 10, paddingLeft: 10}} className="row">
+      <div style={{marginBottom: 10, padding: 10}} className="row">
         <div className="col-xs-10 col-sm-8 col-lg-6">
           <h3>
             {t('photos.uploadNewTitle')}

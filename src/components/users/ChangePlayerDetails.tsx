@@ -15,7 +15,7 @@ export const ChangePlayerDetails = ({player}: {player: IStorePlayer}) => {
 
   const paperStyle: React.CSSProperties = {
     width: 290,
-    margin: 0,
+    margin: 12,
     textAlign: 'center',
     display: 'inline-block',
   };

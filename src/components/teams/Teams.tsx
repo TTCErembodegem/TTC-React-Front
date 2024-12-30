@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import _ from 'lodash';
 import { downloadTeamsExcel } from '../../utils/httpClient';
 import {TabbedContainer} from '../controls/TabbedContainer';
 import {DivisionRanking} from './DivisionRanking';

@@ -40,6 +40,7 @@ export const frenoySync = createAsyncThunk(
   },
 );
 
+// TODO: player sync?
 // export function frenoySync() {
 //   return dispatch => {
 //     return http.post('/players/FrenoySync')
