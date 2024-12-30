@@ -5,8 +5,8 @@ import { AdminPlayers } from './AdminPlayers';
 import AdminTeams from './AdminTeams';
 import AdminClubs from './AdminClubs';
 import AdminDev from './AdminDev';
-// import AdminPlayerLineup from './AdminPlayerLineup';
-// import ProfilePhotoForm, {ProfilePhotoAvatarForm} from '../users/ProfilePhotoForm';
+import { AdminPlayerLineup } from './AdminPlayerLineup';
+import ProfilePhotoForm, {ProfilePhotoAvatarForm} from '../users/ProfilePhotoForm';
 import { AdminEmail } from './AdminEmail';
 import { AdminMatches } from './AdminMatches';
 import { AdminParams } from './AdminParams';
@@ -42,18 +42,18 @@ const Admin = () => {
         return <AdminPlayers />;
       case tabEventKeys.clubs:
         return <AdminClubs />;
-      // case tabEventKeys.formation:
-      //   return <AdminPlayerLineup />;
-      // case tabEventKeys.pictures:
-      //   return (
-      //     <div>
-      //       <h1 style={{marginLeft: 25}}>Foto</h1>
-      //       <ProfilePhotoForm admin />
-      //       <hr style={{marginTop: 50}} />
-      //       <h1 style={{marginLeft: 25}}>Avatar</h1>
-      //       <ProfilePhotoAvatarForm admin />
-      //     </div>
-      //   );
+      case tabEventKeys.formation:
+        return <AdminPlayerLineup />;
+      case tabEventKeys.pictures:
+        return (
+          <div>
+            <h1 style={{marginLeft: 25}}>Foto</h1>
+            <ProfilePhotoForm user={user} />
+            <hr style={{marginTop: 50}} />
+            <h1 style={{marginLeft: 25}}>Avatar</h1>
+            <ProfilePhotoAvatarForm />
+          </div>
+        );
       case tabEventKeys.emails:
         return <AdminEmail />;
       case tabEventKeys.dev:

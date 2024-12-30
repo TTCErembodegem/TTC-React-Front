@@ -21,14 +21,14 @@ export const MatchesWeek = () => {
   const realMatches = useTtcSelector(selectMatches);
   const freeMatches = useTtcSelector(selectFreeMatches);
 
-  const onChangeWeek = (currentWeek: number, weekDiff: number) => {
+  const onChangeWeek = (curWeek: number, weekDiff: number) => {
     const compFilter = comp && comp !== 'all' ? `/${comp}` : '';
-    navigate(`${t.route('matchesWeek')}/${currentWeek + weekDiff}${compFilter}`);
-    setCurrentWeek(currentWeek + weekDiff);
+    navigate(`${t.route('matchesWeek')}/${curWeek + weekDiff}${compFilter}`);
+    setCurrentWeek(curWeek + weekDiff);
   };
 
-  const onChangeCompetition = (currentWeek: number, comp) => {
-    navigate(`${t.route('matchesWeek')}/${currentWeek}${comp && comp !== 'all' ? `/${comp}` : ''}`);
+  const onChangeCompetition = (curWeek: number, competition) => {
+    navigate(`${t.route('matchesWeek')}/${curWeek}${competition && competition !== 'all' ? `/${comp}` : ''}`);
   };
 
   let allMatches = realMatches;
