@@ -1,5 +1,5 @@
 import {getPlayerStats} from '../../../models/TeamModel';
-import PlayerAchievements from './PlayerAchievements';
+import PlayerAchievements, { AchievementInfo } from './PlayerAchievements';
 import {getRankingValue} from '../../../models/utils/playerRankingValueMapper';
 import {IPlayer, IMatch, ITeam, Competition, ITeamPlayerStats} from '../../../models/model-interfaces';
 
@@ -53,13 +53,13 @@ export class AchievementsCalculator {
     }, [] as ITeam[]);
   }
 
-  getAchievements(type) {
+  getAchievements(type: Competition | 'belles') {
     const {playerStats, matches} = this.getPlayerStats(type);
     if (playerStats.length !== 0) {
       return PlayerAchievements[type].reduce((acc, achievementGetter) => {
         acc = acc.concat(achievementGetter(playerStats, matches));
         return acc;
-      }, []);
+      }, [] as AchievementInfo[]);
     }
     return [];
   }

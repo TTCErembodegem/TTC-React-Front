@@ -30,7 +30,7 @@ export const EndOfSeason = () => {
           <Strike text="Save the date! Eetfestijn 2019 op zaterdag 28 september" />
         </div> */}
       </div>
-      <h2>Einde Seizoen {new Date().getFullYear()-1}-{new Date().getFullYear()}</h2>
+      <h2>Einde Seizoen {new Date().getFullYear() - 1}-{new Date().getFullYear()}</h2>
       <Kampioenen topTeams={calcer.getTopRankedTeams()} />
       <NextSeasonChanges calcer={calcer} />
       <Achievements calcer={calcer} />

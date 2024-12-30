@@ -5,7 +5,7 @@ import Col from 'react-bootstrap/Col';
 import t from '../../locales';
 import { Strike } from '../controls/controls/Strike';
 import { SmallMatchCardHeader } from '../matches/Match/MatchCardHeader';
-// import EndOfSeason from '../other/EndOfSeason/EndOfSeason';
+import { EndOfSeason } from '../other/EndOfSeason/EndOfSeason';
 import { Eetfestijn } from './Eetfestijn';
 import { IntroClub } from './IntroClub';
 import { WeirdLocaleYearInfo } from './WeirdLocaleYearInfo';
@@ -19,10 +19,9 @@ const Intro = () => {
   const viewport = useViewport();
   const config = useTtcSelector(state => state.config);
 
-  // TODO: end of season
-  // if (config.endOfSeason) {
-  //   return <EndOfSeason />;
-  // }
+  if (config.params.endOfSeason) {
+    return <EndOfSeason />;
+  }
 
   return (
     <div>

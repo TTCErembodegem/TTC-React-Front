@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {PlayerLink} from '../../players/controls/PlayerLink';
 import {AchievementsCalculator} from './AchievementsCalculator';
+import { AchievementInfo } from './PlayerAchievements';
 
 type AchievementsProps = {
   calcer: AchievementsCalculator;
@@ -42,8 +43,8 @@ export default class Achievements extends Component<AchievementsProps> {
 }
 
 
-const Achievement = ({achievement}) => {
-  let nodes = [];
+const Achievement = ({achievement}: {achievement: AchievementInfo}) => {
+  let nodes: any[] = [];
   if (achievement.players) {
     nodes = achievement.players.map((player, index) => (
       <dd key={index}>
@@ -54,11 +55,11 @@ const Achievement = ({achievement}) => {
   } else {
     // ATTN: This isn't actually happening anymore:
     //       All Achievements are PlayerAchievements
-    nodes = achievement.teams.map((team, index) => (
-      <dd key={index}>
-        <span>{team.renderOwnTeamTitle()}</span>
-      </dd>
-    ));
+    // nodes = achievement.teams.map((team, index) => (
+    //   <dd key={index}>
+    //     <span>{team.renderOwnTeamTitle()}</span>
+    //   </dd>
+    // ));
   }
 
 
@@ -68,7 +69,7 @@ const Achievement = ({achievement}) => {
         {achievement.title ? <b>{achievement.title}&nbsp;</b> : null}
         <small> {achievement.desc}</small>
       </dt>,
-      {...nodes}
+      {nodes}
     </>
   );
 };
