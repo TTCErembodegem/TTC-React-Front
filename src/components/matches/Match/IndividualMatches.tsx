@@ -119,7 +119,7 @@ export class ReadonlyIndividualMatches extends Component<{match: IMatch}, {pinne
         <tbody>
           {this.props.match.getGameMatches().sort((a, b) => a.matchNumber - b.matchNumber).map(game => {
             matchResult[game.homeSets > game.outSets ? 'home' : 'out']++;
-            const highlightRow = game.home.uniqueIndex === this.state.pinnedPlayerIndex || game.out.uniqueIndex === this.state.pinnedPlayerIndex;
+            const highlightRow = game.home?.uniqueIndex === this.state.pinnedPlayerIndex || game.out?.uniqueIndex === this.state.pinnedPlayerIndex;
             return (
               <tr key={game.matchNumber} className={cn({success: highlightRow})}>
                 {!game.isDoubles ? ([
