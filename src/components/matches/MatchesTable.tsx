@@ -397,7 +397,7 @@ class MatchesTable extends Component<MatchesTableProps, MatchesTableState> {
       }
 
       matchRows.push(
-        <tbody>
+        <tbody key={match.id}>
           {singleMatchRows}
         </tbody>,
       );
