@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ReactGA from 'react-ga4';
 import { useLocation } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
@@ -11,6 +11,7 @@ import { Footer } from '../skeleton/Footer/Footer';
 import { FullScreenSpinner } from '../controls/controls/Spinner';
 import { useTtcDispatch, useTtcSelector } from '../../utils/hooks/storeHooks';
 import { clearSnackbar } from '../../reducers/configReducer';
+import { useOnClickOutside } from '../../utils/hooks/useOnClickOutside';
 
 import './App.css';
 
@@ -18,6 +19,9 @@ export const App = ({Component}: {Component: any}) => {
   const config = useTtcSelector(state => state.config);
   const dispatch = useTtcDispatch();
   const location = useLocation();
+  const [navOpen, setNavOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  useOnClickOutside(ref, () => setNavOpen(false));
 
   useEffect(() => {
     ReactGA.send({ hitType: 'pageview', page: location.pathname + location.search });
@@ -38,8 +42,8 @@ export const App = ({Component}: {Component: any}) => {
       <ThemeProvider theme={createTheme()}>
         <div style={{height: '100%'}}>
           <div className="wrapper">
-            <Header />
-            <Container style={containerStyle}>
+            <Header navOpen={navOpen} setNavOpen={setNavOpen} />
+            <Container style={containerStyle} ref={ref}>
               <Component />
             </Container>
             <div className="push" />

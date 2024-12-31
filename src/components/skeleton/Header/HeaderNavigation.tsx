@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import {Link, useNavigate} from 'react-router-dom';
+import React from 'react';
+import {useNavigate} from 'react-router-dom';
 import Drawer from '@mui/material/Drawer';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
@@ -9,7 +9,6 @@ import Typography from '@mui/material/Typography';
 import Toolbar from '@mui/material/Toolbar';
 import { t } from '../../../locales';
 import { selectMatchesBeingPlayed, selectUser, useTtcSelector } from '../../../utils/hooks/storeHooks';
-import { useOnClickOutside } from '../../../utils/hooks/useOnClickOutside';
 
 type NavigationProps = {
   closeNav: () => void,
@@ -20,8 +19,6 @@ export const Navigation = ({navOpen, closeNav}: NavigationProps) => {
   const matchesToday = useTtcSelector(selectMatchesBeingPlayed);
   const navigate = useNavigate();
   const user = useTtcSelector(selectUser);
-  const ref = useRef(null);
-  useOnClickOutside(ref, closeNav);
 
   const handleClickHelpButton = () => {
     window.open('https://ttc-aalst.github.io/onboarding/', '_blank');

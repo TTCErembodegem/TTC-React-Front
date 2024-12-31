@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -23,11 +23,15 @@ const HeaderButton = ({label, href}: {label: string, href: string}) => (
 );
 
 
-export const Header = () => {
+type HeaderProps = {
+  navOpen: boolean,
+  setNavOpen: (open: boolean) => void,
+}
+
+export const Header = ({navOpen, setNavOpen}: HeaderProps) => {
   const user = useTtcSelector(state => state.user);
   const viewport = useViewport();
   const showExtraNavigationButtons = viewport.width > 700;
-  const [navOpen, setNavOpen] = useState(false);
 
   return (
     <div style={{flexGrow: 1}}>
