@@ -1,7 +1,7 @@
 Front: React-Redux
 ==================
 
-The port for the backend is atm hardcoded in:  
+Port `5193` for the development backend is hardcoded in:  
 `src/utils/httpClient.js`
 
 Database:  
@@ -11,6 +11,12 @@ docker run --name ttc-mysql -p 33060:3306 -e MYSQL_ROOT_PASSWORD=my-secret-pw -d
 
 create database ttc_erembodegem
 -- and load some sql script
+```
+
+## Deploy gh-pages
+
+```sh
+npm run deploy
 ```
 
 
