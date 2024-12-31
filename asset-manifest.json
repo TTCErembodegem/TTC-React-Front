@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/TTC-React-Front/static/css/main.6258748d.css",
+    "main.js": "/TTC-React-Front/static/js/main.6c92bfdd.js",
+    "index.html": "/TTC-React-Front/index.html",
+    "main.6258748d.css.map": "/TTC-React-Front/static/css/main.6258748d.css.map",
+    "main.6c92bfdd.js.map": "/TTC-React-Front/static/js/main.6c92bfdd.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6258748d.css",
+    "static/js/main.6c92bfdd.js"
+  ]
+}
