@@ -24,8 +24,7 @@ export const Navigation = ({navOpen, closeNav}: NavigationProps) => {
   useOnClickOutside(ref, closeNav);
 
   const handleClickHelpButton = () => {
-    // TODO: change github name so this becomes ttc-aalst.github.io
-    window.open('https://ttcerembodegem.github.io/onboarding/', '_blank');
+    window.open('https://ttc-aalst.github.io/onboarding/', '_blank');
   };
 
   const goto = (url: string) => {
