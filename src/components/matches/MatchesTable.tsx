@@ -1,7 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import _ from 'lodash';
 import Table from 'react-bootstrap/Table';
 import FormControl from 'react-bootstrap/FormControl';
 import {getPlayingStatusClass} from '../../models/PlayerModel';
@@ -75,7 +74,12 @@ class MatchesTable extends Component<MatchesTableProps, MatchesTableState> {
 
   _getTablePlayers() {
     // Matches the sorting with the Excel output (which happens on the backend)
-    return _.sortBy(this.props.team.getPlayers(), ply => (ply.type === 'Reserve' ? '1' : '0') + ply.player.alias);
+    return this.props.team.getPlayers()
+      .sort((a, b) => {
+        const keyA = (a.type === 'Reserve' ? '1' : '0') + a.player.alias;
+        const keyB = (b.type === 'Reserve' ? '1' : '0') + b.player.alias;
+        return keyA.localeCompare(keyB);
+      });
   }
 
   _getTablePlayerHeaders() {
