@@ -3,6 +3,7 @@ import request from 'superagent';
 import moment from 'moment';
 import t from '../locales';
 import { IMatch } from '../models/model-interfaces';
+import { config } from '../config';
 
 const LogRequestTimes = false;
 
@@ -19,7 +20,7 @@ export function getUrl(path, appendApi = true) {
   }
 
   return window.location.hostname !== 'localhost'
-    ? `http://${window.location.hostname}${path}`
+    ? `${config.backend}${path}`
     : `http://localhost:5193${path}`;
 }
 

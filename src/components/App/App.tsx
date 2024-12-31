@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import ReactGA from 'react-ga4';
+import { useLocation } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
@@ -15,6 +17,12 @@ import './App.css';
 export const App = ({Component}: {Component: any}) => {
   const config = useTtcSelector(state => state.config);
   const dispatch = useTtcDispatch();
+  const location = useLocation();
+
+  useEffect(() => {
+    ReactGA.send({ hitType: 'pageview', page: location.pathname + location.search });
+  }, [location]);
+
   if (!config.initialLoadCompleted) {
     return <FullScreenSpinner />;
   }
