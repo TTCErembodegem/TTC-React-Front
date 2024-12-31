@@ -1,0 +1,53 @@
+@import '../../variables.css';
+
+html, body, #app, #react {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.wrapper {
+  flex: 1;
+  padding-bottom: 20px;
+}
+
+
+.Footer {
+  background: #333233;
+  color: #fff;
+  text-align: right;
+  padding-top: 26px;
+  padding-bottom: 26px;
+
+  .Footer-text {
+    text-align: left;
+  }
+
+  .Footer-link,
+  .Footer-link:active,
+  .Footer-link:hover,
+  .Footer-link:visited {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .Footer-link:hover {
+    text-decoration: underline;
+  }
+
+  .container {
+    max-width: 90% !important;
+  }
+
+  .logo {
+    text-align: center;
+    padding-bottom: 32px;
+
+    img {
+      max-width: 80%;
+    }
+  }
+}
