@@ -75,7 +75,7 @@ class PlayerLineup extends Component<PlayerLineupProps, PlayerLineupState> {
             {[allText, 'Vttl', 'Sporta'].map(button => (
               <button
                 type="button"
-                className={cn('btn', button === activeFilter ? 'btn-info' : 'btn-default')}
+                className={cn('btn', button === activeFilter ? 'btn-info' : 'btn-outline-secondary')}
                 key={button}
                 onClick={() => this.setState({filter: button === allText ? null : button})}
               >
@@ -88,8 +88,8 @@ class PlayerLineup extends Component<PlayerLineupProps, PlayerLineupState> {
         <Table size="sm">
           <thead>
             <tr>
-              <th className="hidden-xs">{t('common.frenoy')}</th>
-              <th className="hidden-xs">{t('common.date')}</th>
+              <th className="d-none d-lg-table-cell">{t('common.frenoy')}</th>
+              <th className="d-none d-sm-table-cell">{t('common.date')}</th>
               <th>{t('teamCalendar.match')}</th>
               <th>{t('profile.play.tableTitle')}</th>
             </tr>
@@ -102,7 +102,7 @@ class PlayerLineup extends Component<PlayerLineupProps, PlayerLineupState> {
               const getOnChangePlaying = status => this._onChangePlaying.bind(this, match, status, statusNote);
               let buttons;
               if (match.block) {
-                buttons = CannotEditMatchIcon;
+                buttons = <CannotEditMatchIcon />;
               } else {
                 buttons = (
                   <ButtonToolbar>
@@ -119,7 +119,7 @@ class PlayerLineup extends Component<PlayerLineupProps, PlayerLineupState> {
                       {t('profile.play.canDontKnow')}
                     </Button>
                     {this.state.showCommentId !== match.id ? (
-                      <CommentButton onClick={() => this.setState({showCommentId: match.id, comment: statusNote})} className="hidden-xs" />
+                      <CommentButton onClick={() => this.setState({showCommentId: match.id, comment: statusNote})} className="d-none d-sm-inline" />
                     ) : null}
                   </ButtonToolbar>
                 );
@@ -127,10 +127,10 @@ class PlayerLineup extends Component<PlayerLineupProps, PlayerLineupState> {
 
               return (
                 <tr key={match.id} className={getPlayingStatusClass(matchPlayer)}>
-                  <td className="hidden-xs">{match.frenoyMatchId}</td>
-                  <td className="hidden-xs">{t('match.date', match.getDisplayDate())}</td>
+                  <td className="d-none d-lg-table-cell">{match.frenoyMatchId}</td>
+                  <td className="d-none d-sm-table-cell">{t('match.date', match.getDisplayDate())}</td>
                   <td>
-                    <span className="visible-xs">
+                    <span className="d-block d-md-none">
                       {t('match.date', match.getDisplayDate())}
                       <br />
                     </span>
@@ -139,24 +139,24 @@ class PlayerLineup extends Component<PlayerLineupProps, PlayerLineupState> {
                     {this.state.showCommentId !== match.id && !match.block ? (
                       <CommentButton
                         onClick={() => this.setState({showCommentId: match.id, comment: matchPlayer ? matchPlayer.statusNote : ''})}
-                        className="visible-xs"
+                        className="d-block d-md-none"
                         style={{marginTop: 8}}
                       />
                     ) : null}
                     {this.state.showCommentId === match.id ? (
-                      <div className="visible-xs" style={{marginTop: 12}}>
+                      <div className="d-block d-md-none" style={{marginTop: 12}}>
                         <br />
                         <br />
                         <CommentEditForm onChange={e => this.setState({comment: e.target.value})} value={this.state.comment || ''} />
                       </div>
                     ) : matchPlayer && matchPlayer.statusNote ? (
-                      <div className="visible-xs">
+                      <div className="d-block d-md-none">
                         <Comment matchPlayer={matchPlayer} />
                       </div>
                     ) : null}
                   </td>
-                  <td style={{width: '1%'}} className="visible-xs">{buttons}</td>
-                  <td className="hidden-xs">
+                  <td style={{width: '1%'}} className="d-table-cell d-md-none">{buttons}</td>
+                  <td className="d-none d-md-table-cell">
                     {buttons}
                     {this.state.showCommentId === match.id ? (
                       <CommentEditForm onChange={e => this.setState({comment: e.target.value})} value={this.state.comment || ''} />

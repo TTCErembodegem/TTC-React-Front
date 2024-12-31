@@ -1,6 +1,7 @@
 import moment from 'moment';
 import storeUtil from '../storeUtil';
-import {IPlayer, ITeam, IMatch} from './model-interfaces';
+import {IPlayer, ITeam, IMatch, IStoreTeam} from './model-interfaces';
+import TeamModel from './TeamModel';
 
 export const userRoles = ['Player', 'Board', 'Dev', 'System'] as const;
 export type UserRoles = typeof userRoles[number];
@@ -22,7 +23,7 @@ export interface IStoreUser {
 export interface IUser extends IStoreUser {
   playsIn(teamId: number): boolean;
   getPlayer(): IPlayer;
-  getTeams(): ITeam[];
+  getTeams(): IStoreTeam[];
   can(what: string): boolean;
   canManageTeams(): boolean;
   canEditMatchesOrIsCaptain(): boolean;
@@ -54,7 +55,7 @@ export default class UserModel implements IUser {
     return storeUtil.getPlayer(this.playerId);
   }
 
-  getTeams(): ITeam[] {
+  getTeams(): IStoreTeam[] {
     return this.teams.map(storeUtil.getTeam);
   }
 
@@ -71,7 +72,9 @@ export default class UserModel implements IUser {
       return true;
     }
 
-    const captains: number[] = this.getTeams().map(team => team.getCaptainPlayerIds()).flat();
+    const captains: number[] = this.getTeams()
+      .map(team => new TeamModel(team))
+      .map(team => team.getCaptainPlayerIds()).flat();
     return captains.indexOf(this.playerId) !== -1;
   }
 

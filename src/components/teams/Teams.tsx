@@ -52,7 +52,10 @@ export const Teams = () => {
 
   const getDefaultTeam = () => {
     if (user.playerId) {
-      const yourTeams = user.getTeams().filter(team => team.competition === params.competition);
+      const yourTeams = teams
+        .filter(team => user.teams.includes(team.id))
+        .filter(team => team.competition === params.competition);
+
       if (yourTeams.length === 0) {
         return 'A';
       }

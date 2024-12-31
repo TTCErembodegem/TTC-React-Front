@@ -8,7 +8,7 @@ import ProfilePhotoForm, {ProfilePhotoAvatarForm} from './ProfilePhotoForm';
 import PlayerLineup from './PlayerLineup';
 import { IPlayer } from '../../models/model-interfaces';
 import { t } from '../../locales';
-import { selectUser, useTtcDispatch, useTtcSelector } from '../../utils/hooks/storeHooks';
+import { selectTeams, selectUser, useTtcDispatch, useTtcSelector } from '../../utils/hooks/storeHooks';
 import { displayMobile } from '../../models/PlayerModel';
 import { logout } from '../../reducers/userReducer';
 
@@ -27,6 +27,8 @@ export const Profile = () => {
   const user = useTtcSelector(selectUser);
   const player = useTtcSelector(state => state.players.find(x => x.id === user.playerId))!;
   const dispatch = useTtcDispatch();
+  const allTeams = useTtcSelector(selectTeams);
+  const yourTeams = allTeams.filter(team => user.teams.includes(team.id));
 
   const logoutAndGoHome = () => {
     dispatch(logout());
@@ -46,7 +48,7 @@ export const Profile = () => {
       case tabEventKeys.editPassword:
         return <ChangePassword />;
       case tabEventKeys.editHolidays:
-        return <PlayerLineup teams={user.getTeams()} playerId={user.playerId} />;
+        return <PlayerLineup teams={yourTeams} playerId={user.playerId} />;
       default:
         return null;
     }
