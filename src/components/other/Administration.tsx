@@ -1,12 +1,12 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import PlayerImage from '../players/PlayerImage';
-import {Email} from '../controls/controls/Email';
-import {Telephone} from '../controls/controls/Telephone';
-import {PlayerAddress} from '../players/controls/PlayerAddress';
+import { Email } from '../controls/controls/Email';
+import { Telephone } from '../controls/controls/Telephone';
+import { PlayerAddress } from '../players/controls/PlayerAddress';
 import { t } from '../../locales';
 import { OwnClubId } from '../../models/ClubModel';
-import { useTtcSelector } from '../../utils/hooks/storeHooks';
+import { selectPlayers, selectUser, useTtcSelector } from '../../utils/hooks/storeHooks';
 import { IClubManager } from '../../models/model-interfaces';
 
 /**
@@ -29,6 +29,7 @@ function getManagerDescription(manager: IClubManager) {
 
 export const Administration = () => {
   const club = useTtcSelector(state => state.clubs.find(c => c.id === OwnClubId));
+  const user = useTtcSelector(selectUser);
   if (!club) {
     return <div />;
   }
@@ -51,17 +52,30 @@ export const Administration = () => {
 
               <Card.Body>
                 <PlayerImage playerId={manager.playerId} center shape="circle" />
-                <br />
-                <Email email={manager.contact.email} showIcon />
-                <br />
-                <Telephone number={manager.contact.mobile} style={{marginTop: 5}} />
-
-                <PlayerAddress contact={manager.contact} style={{marginTop: 5}} />
+                {!!user.playerId && <PlayerDetails playerId={manager.playerId} />}
               </Card.Body>
             </Card>
           </div>
         ))}
       </div>
     </div>
+  );
+};
+
+const PlayerDetails = ({playerId}: {playerId: number}) => {
+  const player = useTtcSelector(selectPlayers).find(x => x.id === playerId);
+  if (!player) {
+    return null;
+  }
+
+  return (
+    <>
+      <br />
+      <Email email={player.contact.email} showIcon />
+      <br />
+      <Telephone number={player.contact.mobile} style={{marginTop: 5}} />
+
+      <PlayerAddress contact={player.contact} style={{marginTop: 5}} />
+    </>
   );
 };

@@ -377,6 +377,5 @@ export interface IClubManager {
   playerId: number;
   description: string;
   name: string;
-  contact: IPlayerContact;
   sortOrder: number;
 }
