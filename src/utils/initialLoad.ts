@@ -19,7 +19,11 @@ export const useInitialLoad = () => {
       const token = localStorage.getItem('token');
       if (token && !playerId) {
         console.log('Validating Token');
-        await dispatch(validateToken(token)).unwrap();
+        try {
+          await dispatch(validateToken(token)).unwrap();
+        } catch (e) {
+          console.error('Token validation failed', e);
+        }
       }
 
       if (token && !config.initialLoadStart) {

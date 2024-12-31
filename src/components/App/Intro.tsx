@@ -99,7 +99,7 @@ const TodaysEvents = () => {
 
   return (
     <div>
-      {lastPlayedMatches.length && (
+      {!!lastPlayedMatches.length && (
         <div>
           <Strike text={t('intro.playedMatches')} />
           <TodayEventMatches matches={lastPlayedMatches} />
