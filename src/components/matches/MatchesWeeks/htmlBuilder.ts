@@ -347,7 +347,7 @@ function getMatches(matches: IMatch[], compFilter: Competition) {
 }
 
 function getFullUrl(pathname: string) {
-  return `http://ttc-aalst.be${pathname}`;
+  return `https://ttc-aalst.be${pathname}`;
 }
 
 function getLink(url: string, label: string) {
