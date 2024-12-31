@@ -135,19 +135,6 @@ class MatchesTable extends Component<MatchesTableProps, MatchesTableState> {
           };
         }
 
-        // TODO: oh god... :)
-        // Zie problem: als Major gedeeltelijke Captain/Major table:
-        // --> Momenteel zie je als Major enkel de Captains bij non-edit
-        // --> In edit mode: een anchor icon om aan te geven dat kapitein dat gekozen heeft?
-
-        // --> Different logins: Major, Captain, Member
-        // --> Member can see Edit buttons but can then not change anything
-        // --> Non edit view with backgroundColors is no good: use the badges instead
-        // --> The count at the bottom are incorrect: they count only captain, not major???
-        // --> Add anchor before the table
-
-        // --> This'll be for next season? :)
-
         const onButtonClick = this._toggleTablePlayer.bind(this, plyInfo.player.id, match);
         return (
           <td

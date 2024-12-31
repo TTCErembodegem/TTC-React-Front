@@ -109,8 +109,6 @@ type MatchesWeekPerCompetitionProps = {
 
 const MatchesWeekPerCompetition = ({comp, editMode, matches}: MatchesWeekPerCompetitionProps) => {
   const viewport = useViewport();
-  // TODO: fixed sort by team now... adding sorting should only be done after serious refactoring of MatchesTable
-  // const matchSorter = (a, b) => a.date - b.date;
   const matchSorter = (a, b) => a.getTeam().teamCode.localeCompare(b.getTeam().teamCode);
 
   matches = matches.filter(x => x.competition === comp);

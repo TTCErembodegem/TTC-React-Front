@@ -12,7 +12,6 @@ export const RoutedMatchCard = () => {
   const match = !!params.matchId && matches.find(x => x.id === parseInt(params.matchId as string, 10));
 
   // TODO: fetch the match by id if it's not present in the store?
-  // TODO: passed tabKey -- should open that tab
   // const getMatch = (props) => {
   //   const matchId = parseInt(props.match.params.matchId, 10);
   //   const match = storeUtil.getMatch(matchId);

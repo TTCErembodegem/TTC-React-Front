@@ -17,8 +17,6 @@ export class WeekCalcer {
 
   getMatches() {
     const week = this.getWeek();
-    // TODO: the includeFreeMatches is broken because this.weeks needs a weekSorta and weekVttl prop...
-    // const matchFilter = match => match.date.isBetween(week.start, week.end) || (this.includeFreeMatches && match.week === this.currentWeek);
     return this.matches.filter(match => match.date.isBetween(week.start, week.end));
   }
 
