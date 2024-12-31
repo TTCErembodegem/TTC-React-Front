@@ -15,12 +15,6 @@ import {store} from './store';
 //   store.dispatch(showSnackbar(`Something went wrong: ${message}`));
 // };
 
-import {validateToken} from './reducers/userReducer';
-const token = localStorage.getItem('token');
-if (token) {
-  store.dispatch(validateToken(token));
-}
-
 const root = ReactDOM.createRoot(document.getElementById('app')!);
 root.render(
   <Provider store={store}>

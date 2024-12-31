@@ -5,17 +5,29 @@ import { fetchConfig, initialLoadCompleted } from '../reducers/configReducer';
 import { fetchPlayers } from '../reducers/playersReducer';
 import { fetchTeams, loadTeamRanking } from '../reducers/teamsReducer';
 import { fetchMatches, frenoyMatchSync } from '../reducers/matchesReducer';
-
+import { validateToken } from '../reducers/userReducer';
 
 export const useInitialLoad = () => {
   const dispatch = useTtcDispatch();
-  const user = useTtcSelector(state => state.user.playerId);
-  const isLoaded = useTtcSelector(state => state.config.initialLoadCompleted);
+  const playerId = useTtcSelector(state => state.user.playerId);
+  const config = useTtcSelector(state => state.config);
   const matches = useTtcSelector(state => state.matches);
   const teams = useTtcSelector(state => state.teams);
 
   useEffect(() => {
     const initialLoad = async () => {
+      const token = localStorage.getItem('token');
+      if (token && !playerId) {
+        console.log('Validating Token');
+        await dispatch(validateToken(token)).unwrap();
+      }
+
+      if (token && !config.initialLoadStart) {
+        console.log('Skipping Initial Load');
+        return;
+      }
+
+      console.log('Start Initial Load', playerId);
       await Promise.all([
         dispatch(fetchClubs()).unwrap(),
         dispatch(fetchConfig()).unwrap(),
@@ -28,10 +40,10 @@ export const useInitialLoad = () => {
       console.log('Initial Load Complete');
       dispatch(initialLoadCompleted());
     });
-  }, [user]);
+  }, [playerId, config.initialLoadStart]);
 
   useEffect(() => {
-    if (isLoaded) {
+    if (config.initialLoadCompleted) {
       console.log('Secondary load started');
       teams.forEach(team => {
         if (!team.ranking || team.ranking.length === 0) {
@@ -43,5 +55,5 @@ export const useInitialLoad = () => {
         dispatch(frenoyMatchSync({match}));
       });
     }
-  }, [isLoaded]);
+  }, [config.initialLoadCompleted]);
 };

@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import http from '../utils/httpClient';
 import { t } from "../locales";
 import { ITeamOpponent } from '../models/model-interfaces';
+import { validateToken } from "./userReducer";
 
 type IConfig = typeof defaultConfigState.params;
 
@@ -31,6 +32,7 @@ export const saveConfig = createAsyncThunk(
 
 
 const defaultConfigState = {
+  initialLoadStart: false,
   initialLoadCompleted: false,
   params: {
     email: '', googleMapsUrl: '', location: '', trainingDays: '', competitionDays: '',
@@ -89,6 +91,10 @@ export const configSlice = createSlice({
 
     builder.addCase(saveConfig.fulfilled, (state, action) => {
       state.params[action.payload.key] = action.payload.value;
+    });
+
+    builder.addCase(validateToken.fulfilled, (state, action) => {
+      state.initialLoadStart = true;
     });
   },
 });

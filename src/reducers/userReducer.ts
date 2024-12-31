@@ -4,7 +4,7 @@ import http from '../utils/httpClient';
 import { IStoreUser } from '../models/UserModel';
 import { showSnackbar } from './configReducer';
 import { t } from '../locales';
-import storeUtil from '../storeUtil';
+import { RootState } from '../store';
 
 
 const startState = {
@@ -22,10 +22,11 @@ type ValidateUser = IStoreUser & {
 
 export const login = createAsyncThunk(
   'users/Login',
-  async (data: {playerId: number | string, password: string, navigate: NavigateFunction}, {dispatch}) => {
+  async (data: {playerId: number | string, password: string, navigate: NavigateFunction}, {dispatch, getState}) => {
     let playerName: string;
     if (typeof data.playerId === 'number') {
-      const player = storeUtil.getPlayer(data.playerId);
+      const store = getState() as RootState;
+      const player = store.players.find(x => x.id === data.playerId);
       playerName = player ? player.alias : 'John Doe';
     } else {
       data.playerId = -1;
@@ -145,7 +146,6 @@ export const userSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(validateToken.fulfilled, (state, action) => {
-      console.log('ValidateToken', action.payload);
       if (action.payload) {
         // if (payload.redirect) {
         //   window.history.back();
