@@ -1,11 +1,20 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import _ from 'lodash';
 import {MatchScore} from '../MatchScore';
 import {Icon} from '../../controls/Icons/Icon';
 import {IUser} from '../../../models/UserModel';
 import {IMatch, IMatchScore} from '../../../models/model-interfaces';
 import { updateScore } from '../../../reducers/matchesReducer';
+
+function debounce(cb: Function, duration: number) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      cb(...args);
+    }, duration);
+  };
+}
 
 const scoreOrDefault = (match: IMatch): IMatchScore => match.score || {home: 0, out: 0};
 
@@ -30,7 +39,7 @@ class MatchForm extends Component<MatchFormProps, MatchFormState> {
       inputScore: '',
       currentScore: scoreOrDefault(props.match),
     };
-    this._onUpdateScoreDebounced = _.debounce(this._onUpdateScoreDebounced, 1000);
+    this._onUpdateScoreDebounced = this._onUpdateScoreDebounced.bind(this);
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -106,9 +115,9 @@ class MatchForm extends Component<MatchFormProps, MatchFormState> {
     this._onUpdateScoreDebounced(matchScore);
   }
 
-  _onUpdateScoreDebounced(matchScore) {
+  _onUpdateScoreDebounced = debounce(matchScore => {
     this.props.updateScore(matchScore);
-  }
+  }, 1000);
 }
 
 
