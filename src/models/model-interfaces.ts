@@ -214,7 +214,6 @@ export interface IPlayer extends IStorePlayer {
   name: string;
   slug: string;
   getCompetition: (competition: Competition) => IPlayerCompetition;
-  isMe(): boolean;
   getTeam(comp: Competition): ITeam;
 }
 

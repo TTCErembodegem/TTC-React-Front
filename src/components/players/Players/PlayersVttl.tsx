@@ -5,13 +5,14 @@ import {PlayerFrenoyLink} from '../PlayerCard';
 import {PlayerPlayingStyleForm} from '../PlayerPlayingStyle';
 import {PlayerLink} from '../controls/PlayerLink';
 import { t } from '../../../locales';
-import { selectPlayers, useTtcSelector } from '../../../utils/hooks/storeHooks';
+import { selectPlayers, selectUser, useTtcSelector } from '../../../utils/hooks/storeHooks';
 
 type PlayersVttlProps = {
   filter: string;
 };
 
 export const PlayersVttl = ({filter}: PlayersVttlProps) => {
+  const user = useTtcSelector(selectUser);
   const allPlayers = useTtcSelector(selectPlayers);
   let players = allPlayers.filter(x => x.vttl);
   if (filter) {
@@ -32,7 +33,7 @@ export const PlayersVttl = ({filter}: PlayersVttlProps) => {
       </thead>
       <tbody>
         {players.map(ply => (
-          <tr key={ply.id} className={cn({'match-won': ply.isMe()})}>
+          <tr key={ply.id} className={cn({'match-won': ply.id === user.playerId})}>
             <td>{ply.vttl!.rankingIndex}</td>
             <td>{ply.vttl!.uniqueIndex}</td>
             <td className="d-none d-sm-table-cell"><PlayerLink player={ply} /></td>

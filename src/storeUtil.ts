@@ -91,16 +91,6 @@ function getOpponentMatches(match: IMatch, opponentIn?: ITeamOpponent): {home: I
 }
 
 const util = {
-  getConfig() {
-    return store.getState().config;
-  },
-  getUser(): IUser {
-    return new UserModel(store.getState().user);
-  },
-  getUserPlayer(): IPlayer {
-    return util.getPlayer(util.getUser().playerId);
-  },
-
   getTeam(teamId: number): ITeam {
     const {teams} = store.getState();
     const singleTeam = teams.find(team => team.id === teamId)!;

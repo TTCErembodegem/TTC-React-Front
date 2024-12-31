@@ -45,10 +45,6 @@ export default class PlayerModel implements IPlayer {
     return comp || {};
   }
 
-  isMe(): boolean {
-    return this.id === storeUtil.getUser().playerId;
-  }
-
   getTeam(competition: Competition): ITeam {
     const teams = storeUtil.getTeams()
       .filter(team => team.competition === competition)
