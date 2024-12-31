@@ -35,7 +35,6 @@
     "@mui/material": "^6.1.10",
     "@reduxjs/toolkit": "^2.2.0",
     "classnames": "2.5.1",
-    "eventemitter3": "1.1.1",
     "font-awesome-animation": "0.0.8",
     "lodash": "4.17.21",
     "moment": "2.30.1",
