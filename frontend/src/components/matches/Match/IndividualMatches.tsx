@@ -55,7 +55,14 @@ export const IndividualMatches = ({ match, ownPlayerId }: IndividualMatchesProps
   const matchResult = { home: 0, out: 0 };
 
   if (match.games.length === 0) {
-    return <PreviousEncounters match={match} />;
+    return (
+      <>
+        <div style={{ fontWeight: 600, marginBottom: 8 }}>
+          {t('match.individual.matchTitle')} <FrenoyWeekLink match={match} />
+        </div>
+        <PreviousEncounters match={match} />
+      </>
+    );
   }
 
   const games = match.getGameMatches().sort((a, b) => a.matchNumber - b.matchNumber);

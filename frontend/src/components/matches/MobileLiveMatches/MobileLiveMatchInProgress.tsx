@@ -188,7 +188,7 @@ const MatchActionButtons = ({ match, compact = false }: { match: IMatch; compact
               {!isMobile && <span style={{ marginLeft: 4 }}>{t('match.tabs.report')}</span>}
             </Button>
           </OverlayTrigger>
-          {match.games.length > 0 && (
+          {(match.games.length > 0 || match.date.isSame(dayjs(), 'day')) && (
             <OverlayTrigger placement="top" overlay={<Tooltip>{t('match.tabs.matchesTitle')}</Tooltip>}>
               <Button variant={showGames ? 'secondary' : 'outline-secondary'} onClick={() => setShowGames(!showGames)}>
                 <Icon fa="fa fa-list-ol" />

@@ -291,4 +291,20 @@ describe('OwnPlayerSelector gating (AC9: login, AC10: games played)', () => {
       expect(fetchMatchCalls()).toHaveLength(0);
     });
   });
+
+  describe('individual matches button', () => {
+    const getIndividualButton = () => document.querySelector('.fa-list-ol');
+
+    it('is shown on the day of the match, even without games', () => {
+      renderMatch(createMockMatch({ date: dayjs() } as unknown as Partial<IMatch>), 1);
+
+      expect(getIndividualButton()).toBeInTheDocument();
+    });
+
+    it('is hidden before the day of the match when there are no games', () => {
+      renderMatch(createMockMatch({ date: dayjs().add(1, 'day') } as unknown as Partial<IMatch>), 1);
+
+      expect(getIndividualButton()).not.toBeInTheDocument();
+    });
+  });
 });
