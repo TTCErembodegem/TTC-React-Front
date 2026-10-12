@@ -365,7 +365,6 @@ export default {
         previousEncountersTitle: 'Onderlinge duels',
         admin: 'Dev',
         division: 'Afdeling',
-        sportaEncode: 'Invullen op Sporta',
         vsMe: 'VS mij',
       },
       report: {

@@ -219,20 +219,6 @@ const MatchActionButtons = ({ match, compact = false }: { match: IMatch; compact
               </Button>
             </OverlayTrigger>
           )}
-          {competition === 'Sporta' && user.playerId > 0 && (
-            <OverlayTrigger placement="top" overlay={<Tooltip>{t('match.tabs.sportaEncode')}</Tooltip>}>
-              <Button
-                variant="outline-secondary"
-                aria-label="sporta"
-                href={team.frenoy.getSportaEncodeUrl(match.week)}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Icon fa="fa fa-external-link" />
-                {!isMobile && <span style={{ marginLeft: 4 }}>{t('match.tabs.sportaEncode')}</span>}
-              </Button>
-            </OverlayTrigger>
-          )}
           {user.isDev() && (
             <Button variant="outline-secondary" aria-label="admin" onClick={() => setShowAdminModal(true)}>
               <Icon fa="fa fa-cog" />
