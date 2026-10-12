@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { MobileLiveMatchCard } from '../MobileLiveMatches/MobileLiveMatchCard';
 import { FullScreenSpinner } from '../../controls/controls/Spinner';
@@ -9,6 +10,10 @@ export const RoutedMatchCard = () => {
   const matches = useTtcSelector(selectMatches);
   const initialLoad = useTtcSelector(state => state.config.initialLoad);
   const match = !!params.matchId && matches.find(x => x.id === parseInt(params.matchId as string, 10));
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [params.matchId]);
 
   if (!match) {
     if (initialLoad === 'done') {
