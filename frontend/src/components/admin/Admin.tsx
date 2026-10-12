@@ -89,6 +89,7 @@ const Admin = () => {
       route={{ base: t.route('admin') }}
       tabKeys={tabConfig}
       tabRenderer={eventKey => renderSection(eventKey)}
+      widthTreshold={900}
     />
   );
 };

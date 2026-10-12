@@ -102,7 +102,7 @@ export const TabbedContainer = (props: TabbedContainerComponentProps) => {
             </div>
           </div>
         </Accordion.Header>
-        <Accordion.Body>{props.tabRenderer(tab.key)}</Accordion.Body>
+        <Accordion.Body>{tab.key === getTabKey() ? props.tabRenderer(tab.key) : null}</Accordion.Body>
       </Accordion.Item>
     );
   };
