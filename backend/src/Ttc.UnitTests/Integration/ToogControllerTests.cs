@@ -1,6 +1,8 @@
 using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Ttc.DataEntities;
@@ -21,9 +23,17 @@ public class ToogControllerTests : IntegrationTestBase
     private const int HomeMatchId = 950;
     private const int SameDayHomeMatchId = 951;
     private const int AwayMatchId = 952;
+    private const int PastVttlMatchId = 953;
+    private const int PastSportaMatchId = 954;
 
     private static readonly DateTime HomeDay = DateTime.Today.AddDays(7).AddHours(20);
     private static readonly DateTime AwayDay = DateTime.Today.AddDays(9).AddHours(20);
+    private static readonly DateTime PastDay = DateTime.Today.AddDays(-3).AddHours(20);
+
+    private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web)
+    {
+        Converters = { new JsonStringEnumConverter() },
+    };
 
     public ToogControllerTests(TtcWebApplicationFactory factory) : base(factory)
     {
@@ -50,6 +60,8 @@ public class ToogControllerTests : IntegrationTestBase
             context.Matches.Add(NewMatch(HomeMatchId, HomeDay, TeamId, isHome: true));
             context.Matches.Add(NewMatch(SameDayHomeMatchId, HomeDay.AddHours(-1), SecondTeamId, isHome: true));
             context.Matches.Add(NewMatch(AwayMatchId, AwayDay, TeamId, isHome: false));
+            context.Matches.Add(NewMatch(PastVttlMatchId, PastDay, TeamId, isHome: true));
+            context.Matches.Add(NewMatch(PastSportaMatchId, PastDay.AddHours(-1), SecondTeamId, isHome: true, Competition.Sporta));
             await context.SaveChangesAsync();
         }
 
@@ -67,13 +79,13 @@ public class ToogControllerTests : IntegrationTestBase
         Security = access,
     };
 
-    private static MatchEntity NewMatch(int id, DateTime date, int teamId, bool isHome) => new()
+    private static MatchEntity NewMatch(int id, DateTime date, int teamId, bool isHome, Competition competition = Competition.Vttl) => new()
     {
         Id = id,
         Date = date,
         ShouldBePlayed = true,
         Week = 1,
-        Competition = Competition.Vttl,
+        Competition = competition,
         FrenoySeason = 25,
         FrenoyDivisionId = 1,
         HomeTeamId = isHome ? teamId : null,
@@ -305,5 +317,34 @@ public class ToogControllerTests : IntegrationTestBase
         var row = Assert.Single(assigned!);
         Assert.Equal(HomeDay.Date, row.Date.Date);
         Assert.Equal(PlainPlayerId, row.PlayerId);
+    }
+
+    [Fact]
+    public async Task GetDone_AsPlainPlayer_IsForbidden()
+    {
+        using var client = CreateClientFor(PlainPlayerId);
+
+        var response = await client.GetAsync("api/toog/done");
+
+        Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task GetDone_ListsOnlyPastAssignmentsWithTheirCompetitions()
+    {
+        await using (var context = GetDbContext())
+        {
+            context.Toog.Add(new ToogEntity { Date = PastDay.Date, PlayerId = PlainPlayerId, Assigned = true });
+            context.Toog.Add(new ToogEntity { Date = HomeDay.Date, PlayerId = PlainPlayerId, Assigned = true });
+            await context.SaveChangesAsync();
+        }
+
+        using var board = CreateClientFor(BoardPlayerId);
+        var done = await board.GetFromJsonAsync<ToogDone[]>("api/toog/done", JsonOptions);
+
+        var row = Assert.Single(done!);
+        Assert.Equal(PastDay.Date, row.Date.Date);
+        Assert.Equal(PlainPlayerId, row.PlayerId);
+        Assert.Equal([Competition.Vttl, Competition.Sporta], row.Competitions);
     }
 }

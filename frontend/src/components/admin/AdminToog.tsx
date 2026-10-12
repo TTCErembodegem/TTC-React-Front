@@ -2,13 +2,27 @@ import { useEffect } from 'react';
 import dayjs from 'dayjs';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
+import Tabs from 'react-bootstrap/Tabs';
+import Tab from 'react-bootstrap/Tab';
+import { AdminToogDone } from './AdminToogDone';
 import { PlayerAutoComplete } from '../players/PlayerAutoComplete';
 import { Icon } from '../controls/Icons/Icon';
 import { t } from '../../locales';
 import { assignToog, fetchToogAdmin } from '../../reducers/toogReducer';
 import { selectPlayers, selectTeams, useTtcDispatch, useTtcSelector } from '../../utils/hooks/storeHooks';
 
-export const AdminToog = () => {
+export const AdminToog = () => (
+  <Tabs defaultActiveKey="planning" mountOnEnter>
+    <Tab eventKey="planning" title={t('admin.toog.tabPlanning')}>
+      <AdminToogPlanning />
+    </Tab>
+    <Tab eventKey="done" title={t('admin.toog.tabDone')}>
+      <AdminToogDone />
+    </Tab>
+  </Tabs>
+);
+
+const AdminToogPlanning = () => {
   const dispatch = useTtcDispatch();
   const days = useTtcSelector(state => state.toog.admin);
   const players = useTtcSelector(selectPlayers);

@@ -447,6 +447,12 @@ export type IToogAdminDay = {
   assignedPlayerId: number | null;
 };
 
+export type IToogDone = {
+  date: string;
+  playerId: number;
+  competitions: Competition[];
+};
+
 export type IToogAssignment = {
   date: string;
   playerId: number;

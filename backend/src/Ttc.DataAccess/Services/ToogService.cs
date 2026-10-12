@@ -165,6 +165,45 @@ public class ToogService
             .ToArrayAsync();
     }
 
+    /// <summary>Wie dit seizoen al aan de toog stond, tot en met vandaag: de basis voor de vergoeding.</summary>
+    public async Task<ToogDone[]> GetDone()
+    {
+        int currentFrenoySeason = _context.CurrentFrenoySeason;
+        var tomorrow = TtcDbContext.GetCurrentBelgianDateTime().Date.AddDays(1);
+
+        var homeMatches = await _context.Matches
+            .Where(x => x.FrenoySeason == currentFrenoySeason)
+            .Where(x => x.ShouldBePlayed)
+            .Where(x => x.HomeTeamId != null)
+            .Where(x => x.Date < tomorrow)
+            .Select(x => new { x.Date, x.Competition })
+            .ToArrayAsync();
+
+        if (homeMatches.Length == 0)
+        {
+            return [];
+        }
+
+        var competitions = homeMatches
+            .GroupBy(x => x.Date.Date)
+            .ToDictionary(x => x.Key, x => x.Select(m => m.Competition).Distinct().OrderBy(c => c).ToArray());
+
+        var from = homeMatches.Min(x => x.Date).Date;
+        var rows = await _context.Toog
+            .Where(x => x.Assigned && x.Date >= from && x.Date < tomorrow)
+            .OrderBy(x => x.Date)
+            .ToArrayAsync();
+
+        return rows
+            .Select(x => new ToogDone
+            {
+                Date = x.Date,
+                PlayerId = x.PlayerId,
+                Competitions = competitions.TryGetValue(x.Date, out var dayCompetitions) ? dayCompetitions : [],
+            })
+            .ToArray();
+    }
+
     public async Task<ToogAdminDay[]> Assign(DateTime date, int? playerId)
     {
         var day = date.Date;

@@ -1,3 +1,5 @@
+using Ttc.Model.Players;
+
 namespace Ttc.Model.Toog;
 
 /// <summary>Eén clubthuisdag, gezien door de ingelogde speler.</summary>
@@ -23,6 +25,14 @@ public class ToogAssignment
 {
     public DateTime Date { get; set; }
     public int PlayerId { get; set; }
+}
+
+/// <summary>Een voorbije toogbeurt van dit seizoen, met de competities die die dag thuis speelden.</summary>
+public class ToogDone
+{
+    public DateTime Date { get; set; }
+    public int PlayerId { get; set; }
+    public Competition[] Competitions { get; set; } = [];
 }
 
 public class ToogAvailabilityRequest

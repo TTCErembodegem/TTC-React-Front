@@ -3,12 +3,13 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import http from '../utils/httpClient';
 import { showSnackbar } from './configReducer';
 import { t } from '../locales';
-import { IToogAdminDay, IToogAssignment, IToogDay } from '../models/model-interfaces';
+import { IToogAdminDay, IToogAssignment, IToogDay, IToogDone } from '../models/model-interfaces';
 
 type ToogState = {
   mine: IToogDay[];
   admin: IToogAdminDay[];
   assigned: IToogAssignment[];
+  done: IToogDone[];
 };
 
 const dayKey = (date: string) => dayjs(date).format('YYYY-MM-DD');
@@ -28,6 +29,8 @@ export const toggleMyToog = createAsyncThunk('toog/SetMine', async (params: { da
 
 export const fetchToogAdmin = createAsyncThunk('toog/Get', async () => http.get<IToogAdminDay[]>('/toog'));
 
+export const fetchToogDone = createAsyncThunk('toog/GetDone', async () => http.get<IToogDone[]>('/toog/done'));
+
 export const assignToog = createAsyncThunk('toog/Assign', async (params: { date: string; playerId: number | null }, { dispatch }) => {
   try {
     return await http.post<IToogAdminDay[]>('/toog/assign', params);
@@ -39,12 +42,13 @@ export const assignToog = createAsyncThunk('toog/Assign', async (params: { date:
 
 const toogSlice = createSlice({
   name: 'toog',
-  initialState: { mine: [], admin: [], assigned: [] } as ToogState,
+  initialState: { mine: [], admin: [], assigned: [], done: [] } as ToogState,
   reducers: {},
   extraReducers: builder => {
     builder.addCase(fetchMyToog.fulfilled, (state, action) => ({ ...state, mine: action.payload }));
     builder.addCase(toggleMyToog.fulfilled, (state, action) => ({ ...state, mine: action.payload }));
     builder.addCase(fetchToogAdmin.fulfilled, (state, action) => ({ ...state, admin: action.payload }));
+    builder.addCase(fetchToogDone.fulfilled, (state, action) => ({ ...state, done: action.payload }));
     builder.addCase(fetchToogAssigned.fulfilled, (state, action) => ({ ...state, assigned: action.payload }));
     builder.addCase(assignToog.fulfilled, (state, action) => {
       const adminDays = new Set(action.payload.map(day => dayKey(day.date)));

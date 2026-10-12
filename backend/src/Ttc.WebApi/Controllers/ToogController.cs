@@ -50,6 +50,17 @@ public class ToogController
         return await _service.Get();
     }
 
+    [HttpGet("done")]
+    public async Task<ActionResult<ToogDone[]>> GetDone()
+    {
+        if (!await _service.IsBoardMember())
+        {
+            return new StatusCodeResult(StatusCodes.Status403Forbidden);
+        }
+
+        return await _service.GetDone();
+    }
+
     [HttpPost("assign")]
     public async Task<ActionResult<ToogAdminDay[]>> Assign([FromBody] ToogAssignRequest request)
     {

@@ -83,4 +83,15 @@ describe('AdminToog', () => {
 
     await waitFor(() => expect(http.post).toHaveBeenCalledWith('/toog/assign', { date: homeDay.toISOString(), playerId: null }));
   });
+
+  it('switches to the done tab', async () => {
+    renderAdminToog([unassignedDay]);
+    await screen.findByRole('button', { name: 'Wouter' });
+    vi.mocked(http.get).mockResolvedValue([{ date: homeDay.toISOString(), playerId: 2, competitions: ['Vttl'] }]);
+
+    fireEvent.click(screen.getByRole('tab', { name: 'Gedaan dit seizoen' }));
+
+    expect(await screen.findByText('Jorn Theunissen')).toBeInTheDocument();
+    expect(http.get).toHaveBeenCalledWith('/toog/done');
+  });
 });
