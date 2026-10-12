@@ -67,7 +67,8 @@ jobs:
       run: bun run test:e2e
 
     - name: Dependency audit
-      run: bun audit --audit-level=high
+      # GHSA-vfj7-8cjw-p6xm: braces (via knip, dev only) has no patched release yet
+      run: bun audit --audit-level=high --ignore=GHSA-vfj7-8cjw-p6xm
 
   backend:
     runs-on: ubuntu-latest
