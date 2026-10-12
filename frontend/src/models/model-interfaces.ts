@@ -388,6 +388,7 @@ export interface ITeamFrenoy {
 
   getUrl(type: 'results' | 'ranking'): string;
   getWeekUrl(weekName: number): string;
+  getSportaEncodeUrl(weekName: number): string;
 }
 
 /* ****************************************************

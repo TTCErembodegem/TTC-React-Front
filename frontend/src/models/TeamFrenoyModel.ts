@@ -3,6 +3,8 @@ import { ITeamFrenoy, Competition, ITeam } from './model-interfaces';
 // https://competitie.vttl.be/?menu=4&season=18&province=5&club_id=282&div_id=3275_A&week_name=03
 // https://competitie.vttl.be/?menu=4&div_id=3275_A&modif=0&week_name=03
 
+const padWeekName = (weekName: number) => (weekName < 10 ? `0${weekName}` : `${weekName}`);
+
 export class TeamFrenoyModel implements ITeamFrenoy {
   divisionId: number;
   linkId: string;
@@ -40,8 +42,12 @@ export class TeamFrenoyModel implements ITeamFrenoy {
     throw new Error('Unknown TeamFrenoyModel.getUrl type');
   }
 
+  getSportaEncodeUrl(weekName: number): string {
+    return `https://ttonline.sporta.be/index.php?menu=4&week_name=${padWeekName(weekName)}&div_id=${this.linkId}`;
+  }
+
   getWeekUrl(weekName: number): string {
-    const paddedWeekName = weekName < 10 ? `0${weekName}` : weekName;
+    const paddedWeekName = padWeekName(weekName);
     if (this.teamCompetition === 'Vttl' || this.teamCompetition === 'Jeugd') {
       return `https://competitie.vttl.be/?menu=4&season=${this.seasonId}&province=5&club_id=282&div_id=${this.linkId}&modif=0&week_name=${paddedWeekName}`;
     }
