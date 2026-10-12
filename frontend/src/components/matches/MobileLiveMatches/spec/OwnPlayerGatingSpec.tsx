@@ -6,6 +6,7 @@ import { MobileLiveMatchInProgress } from '../MobileLiveMatchInProgress';
 import { IMatch, IStorePlayer, IPlayerCompetition, IPlayerStyle, IMatchGame, IMatchPlayerInfo, IMatchPlayer } from '../../../../models/model-interfaces';
 import { PlayerRanking } from '../../../../models/utils/rankingSorter';
 import { UserRoles } from '../../../../models/UserModel';
+import http from '../../../../utils/httpClient';
 
 vi.mock('../../../../storeUtil', () => ({
   default: {
@@ -236,6 +237,58 @@ describe('OwnPlayerSelector gating (AC9: login, AC10: games played)', () => {
       );
 
       expect(getEditIcons().length).toBe(0);
+    });
+  });
+
+  describe('anonymous user (not logged in)', () => {
+    it('hides "Selecteer tegenstanders" within an hour of the match', () => {
+      renderMatch(createMockMatch(), 0);
+
+      expect(screen.queryByRole('button', { name: /selecteer tegenstanders/i })).not.toBeInTheDocument();
+    });
+
+    it('shows "Selecteer tegenstanders" for a logged in user within an hour of the match', () => {
+      renderMatch(createMockMatch(), 1);
+
+      expect(screen.getByRole('button', { name: /selecteer tegenstanders/i })).toBeInTheDocument();
+    });
+  });
+
+  describe('formation reveal for anonymous users (30min before start)', () => {
+    beforeEach(() => {
+      vi.useFakeTimers({ shouldAdvanceTime: true });
+      vi.mocked(http.get).mockClear();
+    });
+
+    afterEach(() => {
+      vi.useRealTimers();
+    });
+
+    const matchIn = (minutes: number) => createMockMatch({ date: dayjs().add(minutes, 'minute') } as unknown as Partial<IMatch>);
+    const fetchMatchCalls = () => vi.mocked(http.get).mock.calls.filter(([url]) => url === '/matches/1');
+
+    it('refetches the match when the formation becomes public', () => {
+      renderMatch(matchIn(45), 0);
+
+      vi.advanceTimersByTime(14 * 60 * 1000);
+      expect(fetchMatchCalls()).toHaveLength(0);
+
+      vi.advanceTimersByTime(2 * 60 * 1000);
+      expect(fetchMatchCalls()).toHaveLength(1);
+    });
+
+    it('does not refetch for logged in users', () => {
+      renderMatch(matchIn(45), 1);
+
+      vi.advanceTimersByTime(20 * 60 * 1000);
+      expect(fetchMatchCalls()).toHaveLength(0);
+    });
+
+    it('does not refetch when the formation is already public', () => {
+      renderMatch(matchIn(20), 0);
+
+      vi.advanceTimersByTime(20 * 60 * 1000);
+      expect(fetchMatchCalls()).toHaveLength(0);
     });
   });
 });

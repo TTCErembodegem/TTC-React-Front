@@ -32,7 +32,7 @@ public class OtherMatch : ITtcConfidential
     {
         // Duplicated below
         // ATTN: I'd expect this to be filled in only after the Frenoy sync?
-        if (!(IsPlayed || IsSyncedWithFrenoy || Helpers.HasMatchStarted(Date)))
+        if (!(IsPlayed || IsSyncedWithFrenoy || Games.Count > 0 || Helpers.HasMatchStarted(Date)))
         {
             Players = [];
         }
@@ -105,7 +105,7 @@ public class Match : ITtcConfidential
         FormationComment = "";
 
         // Duplicated above
-        if (!(IsPlayed || IsSyncedWithFrenoy || Helpers.HasMatchStarted(Date)))
+        if (!(IsPlayed || IsSyncedWithFrenoy || Games.Count > 0 || Helpers.HasMatchStarted(Date)))
         {
             Players = [];
             Block = "";

@@ -27,6 +27,7 @@ import { OwnPlayerSelector } from './OwnPlayerSelector';
 import { TeamRankingBadges } from '../../teams/controls/TeamRankingBadges';
 import { MatchOtherRoundButton } from '../controls/ViewMatchDetailsButton';
 import { MatchCardAdmin } from '../Match/MatchCardAdmin';
+import { fetchMatch } from '../../../reducers/matchesReducer';
 
 type MobileLiveMatchInProgressProps = {
   match: IMatch;
@@ -38,7 +39,25 @@ type MobileLiveMatchInProgressProps = {
 // have a final result but no games) and before any games have been entered.
 const canPickPlayers = (match: IMatch) => !match.isSyncedWithFrenoy && match.games.length === 0;
 
+const ANONYMOUS_FORMATION_REVEAL_MINUTES = 30;
+
+const useRevealFormationForAnonymous = (match: IMatch) => {
+  const dispatch = useTtcDispatch();
+  const isAnonymous = !useTtcSelector(selectUser).playerId;
+  const revealAt = isAnonymous ? match.date.subtract(ANONYMOUS_FORMATION_REVEAL_MINUTES, 'minute').valueOf() : 0;
+
+  useEffect(() => {
+    const revealIn = revealAt - Date.now();
+    if (!isAnonymous || !(revealIn > 0 && revealIn <= 24 * 60 * 60 * 1000)) {
+      return undefined;
+    }
+    const timer = setTimeout(() => dispatch(fetchMatch({ id: match.id })), revealIn + 1000);
+    return () => clearTimeout(timer);
+  }, [dispatch, isAnonymous, match.id, revealAt]);
+};
+
 export const MobileLiveMatchInProgress = ({ match, compact = false }: MobileLiveMatchInProgressProps) => {
+  useRevealFormationForAnonymous(match);
   const hasPlayersOrGames = match.games.length || match.getTheirPlayers().length;
   const hasStarted = match.date.isBefore(dayjs());
   const canEnterOpponents = match.date.subtract(1, 'hour').isBefore(dayjs());
@@ -420,7 +439,12 @@ const AwayMatchDetails = ({ match }: { match: IMatch }) => {
 };
 
 const OpponentPlayersPreStart = ({ match }: { match: IMatch }) => {
+  const user = useTtcSelector(selectUser);
   const canEdit = canPickPlayers(match);
+
+  if (!user.playerId) {
+    return null;
+  }
 
   return (
     <div>
