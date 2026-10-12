@@ -61,6 +61,28 @@ public class ToogController
         return await _service.GetDone();
     }
 
+    [HttpPost("done")]
+    public async Task<ActionResult<ToogDone[]>> AddDone([FromBody] ToogDoneRequest request)
+    {
+        if (!await _service.MayEditDone(request.Date))
+        {
+            return new StatusCodeResult(StatusCodes.Status403Forbidden);
+        }
+
+        return await _service.AddDone(request.Date, request.PlayerId);
+    }
+
+    [HttpPost("done/remove")]
+    public async Task<ActionResult<ToogDone[]>> RemoveDone([FromBody] ToogDoneRequest request)
+    {
+        if (!await _service.MayEditDone(request.Date))
+        {
+            return new StatusCodeResult(StatusCodes.Status403Forbidden);
+        }
+
+        return await _service.RemoveDone(request.Date, request.PlayerId);
+    }
+
     [HttpPost("assign")]
     public async Task<ActionResult<ToogAdminDay[]>> Assign([FromBody] ToogAssignRequest request)
     {

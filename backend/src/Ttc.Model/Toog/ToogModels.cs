@@ -46,3 +46,9 @@ public class ToogAssignRequest
     public DateTime Date { get; set; }
     public int? PlayerId { get; set; }
 }
+
+public class ToogDoneRequest
+{
+    public DateTime Date { get; set; }
+    public int PlayerId { get; set; }
+}

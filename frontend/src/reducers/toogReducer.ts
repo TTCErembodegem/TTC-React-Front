@@ -31,6 +31,24 @@ export const fetchToogAdmin = createAsyncThunk('toog/Get', async () => http.get<
 
 export const fetchToogDone = createAsyncThunk('toog/GetDone', async () => http.get<IToogDone[]>('/toog/done'));
 
+export const addToogDone = createAsyncThunk('toog/AddDone', async (params: { date: string; playerId: number }, { dispatch }) => {
+  try {
+    return await http.post<IToogDone[]>('/toog/done', params);
+  } catch (err) {
+    dispatch(showSnackbar(t('common.apiFail')));
+    throw err;
+  }
+});
+
+export const removeToogDone = createAsyncThunk('toog/RemoveDone', async (params: { date: string; playerId: number }, { dispatch }) => {
+  try {
+    return await http.post<IToogDone[]>('/toog/done/remove', params);
+  } catch (err) {
+    dispatch(showSnackbar(t('common.apiFail')));
+    throw err;
+  }
+});
+
 export const assignToog = createAsyncThunk('toog/Assign', async (params: { date: string; playerId: number | null }, { dispatch }) => {
   try {
     return await http.post<IToogAdminDay[]>('/toog/assign', params);
@@ -49,6 +67,8 @@ const toogSlice = createSlice({
     builder.addCase(toggleMyToog.fulfilled, (state, action) => ({ ...state, mine: action.payload }));
     builder.addCase(fetchToogAdmin.fulfilled, (state, action) => ({ ...state, admin: action.payload }));
     builder.addCase(fetchToogDone.fulfilled, (state, action) => ({ ...state, done: action.payload }));
+    builder.addCase(addToogDone.fulfilled, (state, action) => ({ ...state, done: action.payload }));
+    builder.addCase(removeToogDone.fulfilled, (state, action) => ({ ...state, done: action.payload }));
     builder.addCase(fetchToogAssigned.fulfilled, (state, action) => ({ ...state, assigned: action.payload }));
     builder.addCase(assignToog.fulfilled, (state, action) => {
       const adminDays = new Set(action.payload.map(day => dayKey(day.date)));

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
-import { screen, fireEvent, within } from '@testing-library/react';
+import { screen, fireEvent, within, waitFor } from '@testing-library/react';
 import { renderWithProviders } from '../../../utils/test-utils';
 import { AdminToogDone } from '../AdminToogDone';
 import http from '../../../utils/httpClient';
@@ -75,6 +75,33 @@ describe('AdminToogDone', () => {
     fireEvent.click(screen.getByText('Wouter Van Schandevijl'));
 
     expect(screen.queryByText('za 19/09/2026')).not.toBeInTheDocument();
+  });
+
+  it('removes a day through the trash icon', async () => {
+    renderDone(done);
+    vi.spyOn(http, 'post').mockResolvedValue(done.slice(0, 2));
+
+    fireEvent.click(await screen.findByText('Wouter Van Schandevijl'));
+    fireEvent.click(screen.getAllByRole('button', { name: 'Verwijderen' })[1]!);
+
+    await waitFor(() => expect(http.post).toHaveBeenCalledWith('/toog/done/remove', { date: '2026-09-26T00:00:00', playerId: 1 }));
+    await waitFor(() => expect(screen.queryByText('za 26/09/2026')).not.toBeInTheDocument());
+  });
+
+  it('adds an extra day for a player', async () => {
+    renderDone([]);
+    vi.spyOn(http, 'post').mockResolvedValue([{ date: '2026-10-03T00:00:00', playerId: 2, competitions: ['Vttl'] }]);
+    await screen.findByText('Nog niemand stond dit seizoen aan de toog');
+
+    const add = screen.getByRole('button', { name: 'Toevoegen' });
+    expect(add).toBeDisabled();
+    fireEvent.change(screen.getByRole('combobox'), { target: { value: 'Jorn' } });
+    fireEvent.click(await screen.findByText('Jorn Theunissen'));
+    fireEvent.change(screen.getByLabelText('Datum'), { target: { value: '2026-10-03' } });
+    fireEvent.click(add);
+
+    await waitFor(() => expect(http.post).toHaveBeenCalledWith('/toog/done', { date: '2026-10-03', playerId: 2 }));
+    expect(await screen.findByRole('cell', { name: /Jorn Theunissen/ })).toBeInTheDocument();
   });
 
   it('says nobody did the toog yet', async () => {

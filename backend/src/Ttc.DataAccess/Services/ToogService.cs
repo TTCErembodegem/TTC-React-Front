@@ -204,6 +204,47 @@ public class ToogService
             .ToArray();
     }
 
+    /// <summary>Correcties op de lijst "gedaan": enkel voor het bestuur en enkel tot en met vandaag.</summary>
+    public async Task<bool> MayEditDone(DateTime date)
+    {
+        if (!await IsBoardMember())
+        {
+            return false;
+        }
+
+        return date.Date <= TtcDbContext.GetCurrentBelgianDateTime().Date;
+    }
+
+    public async Task<ToogDone[]> AddDone(DateTime date, int playerId)
+    {
+        var day = date.Date;
+        var existing = await _context.Toog.SingleOrDefaultAsync(x => x.PlayerId == playerId && x.Date == day);
+        if (existing == null)
+        {
+            _context.Toog.Add(new ToogEntity { Date = day, PlayerId = playerId, Assigned = true });
+        }
+        else
+        {
+            existing.Assigned = true;
+        }
+
+        await _context.SaveChangesAsync();
+        return await GetDone();
+    }
+
+    public async Task<ToogDone[]> RemoveDone(DateTime date, int playerId)
+    {
+        var day = date.Date;
+        var existing = await _context.Toog.SingleOrDefaultAsync(x => x.PlayerId == playerId && x.Date == day);
+        if (existing != null)
+        {
+            _context.Toog.Remove(existing);
+            await _context.SaveChangesAsync();
+        }
+
+        return await GetDone();
+    }
+
     public async Task<ToogAdminDay[]> Assign(DateTime date, int? playerId)
     {
         var day = date.Date;

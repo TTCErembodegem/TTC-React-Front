@@ -347,4 +347,58 @@ public class ToogControllerTests : IntegrationTestBase
         Assert.Equal(PlainPlayerId, row.PlayerId);
         Assert.Equal([Competition.Vttl, Competition.Sporta], row.Competitions);
     }
+
+    [Fact]
+    public async Task AddDone_AsPlainPlayer_IsForbidden()
+    {
+        using var client = CreateClientFor(PlainPlayerId);
+
+        var response = await client.PostAsJsonAsync("api/toog/done", new ToogDoneRequest { Date = PastDay.Date, PlayerId = PlainPlayerId });
+
+        Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
+        await using var context = GetDbContext();
+        Assert.Empty(await context.Toog.ToArrayAsync());
+    }
+
+    [Fact]
+    public async Task AddDone_InTheFuture_IsForbidden()
+    {
+        using var board = CreateClientFor(BoardPlayerId);
+
+        var response = await board.PostAsJsonAsync("api/toog/done", new ToogDoneRequest { Date = HomeDay.Date, PlayerId = PlainPlayerId });
+
+        Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task AddDone_AddsAnAssignedRow()
+    {
+        using var board = CreateClientFor(BoardPlayerId);
+
+        var response = await board.PostAsJsonAsync("api/toog/done", new ToogDoneRequest { Date = PastDay.Date, PlayerId = OtherPlayerId });
+
+        response.EnsureSuccessStatusCode();
+        var done = await response.Content.ReadFromJsonAsync<ToogDone[]>(JsonOptions);
+        var row = Assert.Single(done!);
+        Assert.Equal(OtherPlayerId, row.PlayerId);
+        Assert.Equal(PastDay.Date, row.Date.Date);
+    }
+
+    [Fact]
+    public async Task RemoveDone_DeletesTheRow()
+    {
+        await using (var context = GetDbContext())
+        {
+            context.Toog.Add(new ToogEntity { Date = PastDay.Date, PlayerId = PlainPlayerId, Assigned = true, Volunteered = true });
+            await context.SaveChangesAsync();
+        }
+
+        using var board = CreateClientFor(BoardPlayerId);
+        var response = await board.PostAsJsonAsync("api/toog/done/remove", new ToogDoneRequest { Date = PastDay.Date, PlayerId = PlainPlayerId });
+
+        response.EnsureSuccessStatusCode();
+        Assert.Empty((await response.Content.ReadFromJsonAsync<ToogDone[]>(JsonOptions))!);
+        await using var check = GetDbContext();
+        Assert.Empty(await check.Toog.ToArrayAsync());
+    }
 }

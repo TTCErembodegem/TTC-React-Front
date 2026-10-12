@@ -516,6 +516,8 @@ export default {
         times: 'Aantal keer',
         competition: 'Competitie',
         noneDone: 'Nog niemand stond dit seizoen aan de toog',
+        addDone: 'Toevoegen',
+        removeDone: 'Verwijderen',
       },
     },
   },

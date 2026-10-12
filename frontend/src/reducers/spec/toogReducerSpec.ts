@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import toogReducer, { assignToog, fetchToogAssigned, fetchToogDone } from '../toogReducer';
+import toogReducer, { addToogDone, assignToog, fetchToogAssigned, fetchToogDone, removeToogDone } from '../toogReducer';
 import { IToogAdminDay, IToogAssignment, IToogDone } from '../../models/model-interfaces';
 
 const day1 = '2026-10-10T00:00:00';
@@ -42,5 +42,11 @@ describe('toogReducer done', () => {
     const done: IToogDone[] = [{ date: pastDay, playerId: 1, competitions: ['Vttl'] }];
     const state = toogReducer(undefined, { type: fetchToogDone.fulfilled.type, payload: done });
     expect(state.done).toEqual(done);
+  });
+
+  it('replaces the done list after adding or removing a day', () => {
+    const done: IToogDone[] = [{ date: pastDay, playerId: 2, competitions: [] }];
+    expect(toogReducer(undefined, { type: addToogDone.fulfilled.type, payload: done }).done).toEqual(done);
+    expect(toogReducer({ mine: [], admin: [], assigned: [], done }, { type: removeToogDone.fulfilled.type, payload: [] }).done).toEqual([]);
   });
 });
